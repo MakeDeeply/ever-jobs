@@ -20,13 +20,19 @@ export interface RipplingPayRangeDetail {
   interval?: string | null;
 }
 
+export interface RipplingDescription {
+  company?: string | null;
+  role?: string | null;
+}
+
 export interface RipplingJob {
   uuid?: string | null;
   id?: string | null;
   name?: string | null;
   title?: string | null;
   url?: string | null;
-  description?: Record<string, string> | null;
+  applyUrl?: string | null;
+  description?: RipplingDescription | null;
   workLocations?: string[] | null;
   locations?: RipplingLocation[] | null;
   department?: Record<string, unknown> | null;

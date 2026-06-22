@@ -15,6 +15,17 @@
 
 ---
 
+## 2026-06-22 — Run #438 — Spec 744: Rippling pagination and job details
+
+**Scope:** Extended the upstream Rippling source with zero-based multi-page retrieval, stable-ID
+deduplication, strict rejection of dehydrated filter records, and complete job descriptions from
+the public `/api/v2/board/{slug}/jobs/{id}` detail endpoint. Detail enrichment is bounded to five
+simultaneous requests and isolated per job. Final output also supports requested description
+formats and complete type, URL, email, and location mapping.
+
+**Verification:** Focused Rippling suite passed: 16 cases. Package-focused TypeScript check
+passed.
+
 ## 2026-06-22 — Run #437 — Spec 743: source company plugin for Anatar
 
 **Scope:** Added the complete Anatar company-source package for its first-party Next.js careers
