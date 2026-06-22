@@ -15,6 +15,17 @@
 
 ---
 
+## 2026-06-22 — Run #436 — Spec 742: shared job-location parser
+
+**Scope:** Added a dependency-free `@ever-jobs/common` parser for conservative US `City, ST`
+normalization. It recognizes case-insensitive hybrid and remote qualifiers in parentheses or
+slash-delimited components on either side of the geography, returns canonical
+`workFromHomeType` values and a remote signal, and preserves the complete input when parsing is
+unsafe.
+
+**Verification:** Focused common-package suite, package-focused TypeScript check, and doc-lint
+passed.
+
 ## 2026-06-18 — Scheduled run #435 (**new Source ATS Plugin: Beisen / iTalent** — Spec 741)
 
 **Scope:** Add a generic, multi-tenant **Beisen (北森 / "iTalent")** ATS source adapter — the

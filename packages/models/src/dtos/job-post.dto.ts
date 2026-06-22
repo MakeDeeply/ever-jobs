@@ -38,13 +38,13 @@ export class JobPostDto {
   // LinkedIn only
   jobFunction?: string | null;
 
-  // Naukri specific
+  // originally for Naukri; may be be used by others
   skills?: string[] | null;
   experienceRange?: string | null;
   companyRating?: number | null;
   companyReviewsCount?: number | null;
   vacancyCount?: number | null;
-  workFromHomeType?: string | null;
+  workFromHomeType?: string | null;  // e.g. for Hybrid
 
   // Salary enrichment metadata (set during post-processing)
   salarySource?: string | null;
