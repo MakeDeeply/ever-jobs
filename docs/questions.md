@@ -10,6 +10,28 @@
 
 ---
 
+## Q-068 — How should one `LocationDto` represent a multi-location Workday job?
+
+**Context.** Workday's list endpoint may collapse geography to `"2 Locations"`; its detail
+endpoint exposes a primary `location` and `additionalLocations[]`. The shared `JobPostDto` accepts
+only one `LocationDto`, and `LocationDto` has scalar `city`, `state`, and `country` fields rather
+than a location array. Spec 745 must preserve every concrete label without changing the public DTO.
+
+**Options.**
+
+- **A — Join concrete labels in `city` with `; ` (chosen default).** Lossless within the existing
+  contract, deterministic, human-readable, and distinguishable from commas inside each location.
+- **B — Emit only the primary location.** Structurally pure but silently discards valid cities.
+- **C — Add `locations: LocationDto[]` to `JobPostDto`.** Best long-term shape, but broadens a
+  targeted Workday bug fix into a public cross-source contract migration.
+
+**Default (proceeding):** **A** — deduplicate case-insensitively, keep source order, and join with
+`; `. A future DTO-versioning spec may adopt C across all multi-location sources.
+
+**Resolution.** _(pending human review — default A continues.)_
+
+---
+
 ## Q-067 — Liveness checker integration point: where should the aggregator invoke `ILivenessChecker`?
 
 **Context.** Spec 721 (ad-hoc session 2026-06-11) ships the `liveness-http` feature plugin bound

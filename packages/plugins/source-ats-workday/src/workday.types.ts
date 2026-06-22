@@ -7,6 +7,7 @@ export interface WorkdayJobListItem {
   externalPath?: string | null;
   locationsText?: string | null;
   postedOn?: string | null;
+  remoteType?: string | null;
   bulletFields?: string[] | null;
   subtitles?: Array<{
     instances?: Array<{ text?: string }>;
@@ -26,6 +27,11 @@ export interface WorkdayJobDetail {
     jobFamily?: Array<{ name?: string }> | null;
     timeType?: string | null;
     workerSubType?: string | null;
+    remoteType?: string | null;
+  } | null;
+  hiringOrganization?: {
+    name?: string | null;
+    url?: string | null;
   } | null;
 }
 

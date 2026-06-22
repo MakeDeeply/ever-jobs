@@ -15,6 +15,23 @@
 
 ---
 
+## 2026-06-22 — Run #439 — Spec 745: Workday job-detail enrichment
+
+**Scope:** Fixed the Workday source's summary-only mapping. Selected list records now fetch their
+public CXS detail endpoints in ordered batches of five, supplying full descriptions, expanded and
+deduplicated multi-location labels, requisition IDs, employment types, departments, remote flags,
+and canonical job URLs. Description output honors HTML, Markdown, and plain formats. A failed or
+unavailable detail request preserves the corresponding summary job, and pagination failures retain
+already-listed partial results. X-energy (`xenergy:5:X-energyUS`) was the live reproduction: its
+list endpoint omitted descriptions and collapsed some geography to counts, while its detail
+endpoint exposed the full fields. The mapper also consumes top-level `hiringOrganization.name`, so
+X-energy now emits the source-authored `X-Energy, LLC` instead of the tenant slug `xenergy`; missing,
+blank, or failed detail identity retains the slug fallback.
+
+**Verification:** Workday Jest suite passed: 35 cases across 2 suites. Package-focused TypeScript
+check passed. A live private-investigator comparison against X-energy matched the sampled company
+name with zero field differences and zero execution errors. `git diff --check` passed.
+
 ## 2026-06-22 — Run #438 — Spec 744: Rippling pagination and job details
 
 **Scope:** Extended the upstream Rippling source with zero-based multi-page retrieval, stable-ID

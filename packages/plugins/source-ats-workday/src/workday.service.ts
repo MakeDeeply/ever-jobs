@@ -13,17 +13,24 @@ import {
 import {
   createHttpClient,
   htmlToPlainText,
+  markdownConverter,
   extractEmails,
   randomSleep,
 } from '@ever-jobs/common';
 import {
   WORKDAY_HEADERS,
   WORKDAY_PAGE_SIZE,
+  WORKDAY_DETAIL_CONCURRENCY,
   parseWorkdaySlug,
   buildWorkdayUrl,
+  buildWorkdayDetailUrl,
   parseWorkdayPostedOn,
 } from './workday.constants';
-import { WorkdayJobListItem, WorkdaySearchResponse } from './workday.types';
+import {
+  WorkdayJobDetail,
+  WorkdayJobListItem,
+  WorkdaySearchResponse,
+} from './workday.types';
 
 @SourcePlugin({
   site: Site.WORKDAY,
@@ -53,13 +60,13 @@ export class WorkdayService implements IScraper {
     client.setHeaders(WORKDAY_HEADERS);
 
     const resultsWanted = input.resultsWanted ?? 100;
-    const jobPosts: JobPostDto[] = [];
+    const listingsToEnrich: WorkdayJobListItem[] = [];
     let offset = 0;
 
     try {
       this.logger.log(`Fetching Workday jobs for ${company} (wd${wdNumber}/${site})`);
 
-      while (jobPosts.length < resultsWanted) {
+      while (listingsToEnrich.length < resultsWanted) {
         const payload = {
           appliedFacets: {},
           limit: WORKDAY_PAGE_SIZE,
@@ -79,16 +86,8 @@ export class WorkdayService implements IScraper {
         );
 
         for (const listing of listings) {
-          if (jobPosts.length >= resultsWanted) break;
-
-          try {
-            const post = this.processListing(listing, company, wdNumber, site, input.descriptionFormat);
-            if (post) {
-              jobPosts.push(post);
-            }
-          } catch (err: any) {
-            this.logger.warn(`Error processing Workday listing: ${err.message}`);
-          }
+          if (listingsToEnrich.length >= resultsWanted) break;
+          listingsToEnrich.push(listing);
         }
 
         offset += listings.length;
@@ -100,41 +99,131 @@ export class WorkdayService implements IScraper {
         await randomSleep(1000, 2000);
       }
 
-      this.logger.log(`Workday total: ${jobPosts.length} jobs for ${company}`);
-      return new JobResponseDto(jobPosts);
     } catch (err: any) {
       this.logger.error(`Workday scrape error for ${company}: ${err.message}`);
-      return new JobResponseDto(jobPosts);
     }
+
+    return this.buildResponse(
+      client,
+      listingsToEnrich,
+      company,
+      wdNumber,
+      site,
+      input.descriptionFormat,
+    );
+  }
+
+  private async buildResponse(
+    client: ReturnType<typeof createHttpClient>,
+    listings: WorkdayJobListItem[],
+    company: string,
+    wdNumber: string,
+    site: string,
+    format?: DescriptionFormat,
+  ): Promise<JobResponseDto> {
+    const details = await this.fetchDetails(client, listings, company, wdNumber, site);
+    const jobPosts = listings
+      .map((listing, index) => {
+        try {
+          return this.processListing(
+            listing,
+            details[index] ?? null,
+            company,
+            wdNumber,
+            site,
+            format,
+          );
+        } catch (err: any) {
+          this.logger.warn(`Error processing Workday listing: ${err.message}`);
+          return null;
+        }
+      })
+      .filter((post): post is JobPostDto => post !== null);
+
+    this.logger.log(`Workday total: ${jobPosts.length} jobs for ${company}`);
+    return new JobResponseDto(jobPosts);
+  }
+
+  private async fetchDetails(
+    client: ReturnType<typeof createHttpClient>,
+    listings: WorkdayJobListItem[],
+    company: string,
+    wdNumber: string,
+    site: string,
+  ): Promise<Array<WorkdayJobDetail | null>> {
+    const details: Array<WorkdayJobDetail | null> = [];
+
+    for (let index = 0; index < listings.length; index += WORKDAY_DETAIL_CONCURRENCY) {
+      const batch = listings.slice(index, index + WORKDAY_DETAIL_CONCURRENCY);
+      const settled = await Promise.allSettled(
+        batch.map(async (listing): Promise<WorkdayJobDetail | null> => {
+          if (!listing.externalPath) return null;
+          const url = buildWorkdayDetailUrl(company, wdNumber, site, listing.externalPath);
+          const response = await client.get(url);
+          return (response.data as WorkdayJobDetail | undefined) ?? null;
+        }),
+      );
+
+      settled.forEach((result, batchIndex) => {
+        if (result.status === 'fulfilled') {
+          details.push(result.value);
+          return;
+        }
+        const listing = batch[batchIndex];
+        this.logger.warn(
+          `Workday detail failed for ${listing.externalPath ?? listing.title ?? 'unknown job'}: ${result.reason?.message ?? result.reason}`,
+        );
+        details.push(null);
+      });
+    }
+
+    return details;
   }
 
   private processListing(
     listing: WorkdayJobListItem,
+    detail: WorkdayJobDetail | null,
     company: string,
     wdNumber: string,
     site: string,
-    _format?: DescriptionFormat,
+    format?: DescriptionFormat,
   ): JobPostDto | null {
     const title = listing.title;
     if (!title) return null;
+    const info = detail?.jobPostingInfo;
+    const hiringOrganizationName = detail?.hiringOrganization?.name;
+    const companyName = hiringOrganizationName?.trim()
+      ? hiringOrganizationName
+      : company;
 
     // Extract job path for URL construction
     const externalPath = listing.externalPath ?? '';
-    const jobUrl = externalPath
+    const summaryJobUrl = externalPath
       ? `https://${company}.wd${wdNumber}.myworkdayjobs.com${externalPath.startsWith('/') ? '' : '/'}${externalPath}`
       : `https://${company}.wd${wdNumber}.myworkdayjobs.com/en-US/${site}/details/${encodeURIComponent(title)}`;
+    const jobUrl = info?.externalUrl ?? summaryJobUrl;
+
+    const description = this.formatDescription(info?.jobDescription, format);
 
     // Location
-    const locationStr = listing.locationsText ?? null;
+    const locationStr = this.mergeLocations(
+      info?.location,
+      info?.additionalLocations,
+      listing.locationsText,
+    );
     const location = locationStr
       ? new LocationDto({ city: locationStr })
       : null;
 
     // Remote detection
-    const isRemote = locationStr?.toLowerCase().includes('remote') ?? false;
+    const remoteText = [locationStr, info?.remoteType, listing.remoteType]
+      .filter(Boolean)
+      .join(' ')
+      .toLowerCase();
+    const isRemote = remoteText.includes('remote');
 
     // Date from postedOn (relative labels like "Posted 3 Days Ago" -> ISO date or null)
-    const datePosted = parseWorkdayPostedOn(listing.postedOn);
+    const datePosted = parseWorkdayPostedOn(info?.postedOn ?? listing.postedOn);
 
     // Extract subtitle info (often contains category/department)
     const subtitleTexts = listing.subtitles
@@ -143,21 +232,57 @@ export class WorkdayService implements IScraper {
 
     // Extract job ID from externalPath (e.g., "/job/123456")
     const jobIdMatch = externalPath.match(/\/(\d+)(?:\/|$)/);
-    const atsId = jobIdMatch?.[1] ?? (externalPath || null);
+    const atsId = info?.jobReqId ?? jobIdMatch?.[1] ?? (externalPath || null);
 
     return new JobPostDto({
       id: `wd-${company}-${atsId ?? title.replace(/\s+/g, '-').toLowerCase()}`,
       title,
-      companyName: company,
+      companyName,
       jobUrl,
       location,
+      description,
       datePosted,
+      emails: extractEmails(description),
       isRemote,
       site: Site.WORKDAY,
       // ATS-specific fields
       atsId,
       atsType: 'workday',
-      department: subtitleTexts[0] ?? null,
+      department: info?.jobFamily?.[0]?.name ?? subtitleTexts[0] ?? null,
+      employmentType: info?.timeType ?? info?.workerSubType ?? null,
     });
+  }
+
+  private formatDescription(
+    html?: string | null,
+    format?: DescriptionFormat,
+  ): string | null {
+    if (!html?.trim()) return null;
+    if (format === DescriptionFormat.HTML) return html;
+    if (format === DescriptionFormat.MARKDOWN) return markdownConverter(html);
+    return htmlToPlainText(html);
+  }
+
+  private mergeLocations(
+    primary?: string | null,
+    additional?: string[] | null,
+    summary?: string | null,
+  ): string | null {
+    const concrete = [primary, ...(additional ?? [])]
+      .map((location) => location?.trim())
+      .filter((location): location is string => !!location);
+    const summaryLocation = summary?.trim();
+    if (summaryLocation && (concrete.length === 0 || !/^\d+\s+locations?$/i.test(summaryLocation))) {
+      concrete.push(summaryLocation);
+    }
+
+    const seen = new Set<string>();
+    const unique = concrete.filter((location) => {
+      const key = location.toLowerCase();
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+    return unique.length > 0 ? unique.join('; ') : null;
   }
 }

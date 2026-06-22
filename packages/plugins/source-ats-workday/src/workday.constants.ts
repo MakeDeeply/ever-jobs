@@ -9,6 +9,9 @@
 /** Default page size for Workday pagination */
 export const WORKDAY_PAGE_SIZE = 20;
 
+/** Maximum number of public CXS detail requests in flight at once. */
+export const WORKDAY_DETAIL_CONCURRENCY = 5;
+
 /** Default headers for Workday API requests */
 export const WORKDAY_HEADERS: Record<string, string> = {
   Accept: 'application/json',
@@ -40,6 +43,17 @@ export function parseWorkdaySlug(slug: string): {
  */
 export function buildWorkdayUrl(company: string, wdNumber: string, site: string): string {
   return `https://${company}.wd${wdNumber}.myworkdayjobs.com/wday/cxs/${company}/${site}/jobs`;
+}
+
+/** Build the public CXS detail endpoint for a search result's external path. */
+export function buildWorkdayDetailUrl(
+  company: string,
+  wdNumber: string,
+  site: string,
+  externalPath: string,
+): string {
+  const path = externalPath.startsWith('/') ? externalPath : `/${externalPath}`;
+  return `https://${company}.wd${wdNumber}.myworkdayjobs.com/wday/cxs/${company}/${site}${path}`;
 }
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;

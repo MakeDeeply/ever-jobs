@@ -801,6 +801,7 @@
 | 742 | [Shared Job-Location Parser](../.specify/specs/742-shared-job-location-parser/spec.md) — [plan](../.specify/specs/742-shared-job-location-parser/plan.md) — [tasks](../.specify/specs/742-shared-job-location-parser/tasks.md) | Implemented 2026-06-22. Adds conservative US city/state splitting, case-insensitive hybrid/remote qualifier extraction, canonical workplace values, remote signaling, and lossless fallback under `@ever-jobs/common`. |
 | 743 | [Source Company Plugin: Anatar](../.specify/specs/743-source-company-anatar/spec.md) — [plan](../.specify/specs/743-source-company-anatar/plan.md) — [tasks](../.specify/specs/743-source-company-anatar/tasks.md) | Implemented 2026-06-22. Adds the complete first-party Anatar company source: bounded Next Flight parsing, semantic rendered-card fallback, stable deep links and IDs, shared type/email/location helpers, input filtering, graceful degradation, four-point registration, and fixture coverage. |
 | 744 | [Rippling Pagination and Job Details](../.specify/specs/744-source-ats-rippling-pagination-and-details/spec.md) — [plan](../.specify/specs/744-source-ats-rippling-pagination-and-details/plan.md) — [tasks](../.specify/specs/744-source-ats-rippling-pagination-and-details/tasks.md) | Implemented 2026-06-22. Extends the upstream Rippling source with complete pagination, strict record admission, stable-ID deduplication, bounded detail enrichment, HTML/Markdown/plain descriptions, and final type, URL, and location mappings. Focused suite: 16 tests green. |
+| 745 | [Workday Detail Enrichment](../.specify/specs/745-workday-detail-enrichment/spec.md) — [plan](../.specify/specs/745-workday-detail-enrichment/plan.md) — [tasks](../.specify/specs/745-workday-detail-enrichment/tasks.md) | Implemented 2026-06-22. Enriches selected Workday summaries through their public CXS detail endpoints in ordered batches of five. Adds HTML/Markdown/plain descriptions, deduplicated concrete multi-location labels, source-authored `hiringOrganization.name`, detail metadata, and per-job graceful fallback. Live-reproduced with X-energy; focused suite: 35 tests green. |
 
 ## 8. Templates
 
@@ -812,4 +813,4 @@
 
 ---
 
-_Last revised: 2026-06-11 (ad-hoc session — Specs 718–722: Solid.Jobs regional source plugin, Ashby public compensation opt-in + retry, Workday relative posted-date parsing, liveness-http feature plugin, dedup-hybrid performance gates + adaptive LSH banding with new Test (Feature Plugins) CI job)._
+_Last revised: 2026-06-22 (run #439 — Spec 745: Workday job-detail enrichment)._

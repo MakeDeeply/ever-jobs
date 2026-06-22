@@ -1,14 +1,16 @@
 import 'reflect-metadata';
 import { Test } from '@nestjs/testing';
-import { ScraperInputDto, Site } from '@ever-jobs/models';
+import { DescriptionFormat, ScraperInputDto, Site } from '@ever-jobs/models';
 
 const mockPost = jest.fn();
+const mockGet = jest.fn();
 jest.mock('@ever-jobs/common', () => {
   const actual = jest.requireActual('@ever-jobs/common');
   return {
     ...actual,
     createHttpClient: jest.fn(() => ({
       post: mockPost,
+      get: mockGet,
       setHeaders: jest.fn(),
     })),
   };
@@ -67,6 +69,8 @@ function isoDateOf(d: Date): string {
 describe('WorkdayService — Spec 720 / T05', () => {
   beforeEach(() => {
     mockPost.mockReset();
+    mockGet.mockReset();
+    mockGet.mockResolvedValue({ data: {} });
   });
 
   describe('registration scaffolding', () => {
@@ -173,6 +177,174 @@ describe('WorkdayService — Spec 720 / T05', () => {
         companySlug: 'tesla:5:Tesla',
       } as ScraperInputDto);
       expect(result.jobs).toEqual([]);
+    });
+  });
+
+  describe('detail enrichment — Spec 745', () => {
+    const DETAIL_PAGE = {
+      total: 1,
+      jobPostings: [
+        {
+          title: 'Reactor Engineer',
+          externalPath: '/job/Rockville-MD/Reactor-Engineer_R101234',
+          locationsText: '2 Locations',
+          postedOn: 'Posted Today',
+        },
+      ],
+    };
+
+    const DETAIL = {
+      hiringOrganization: {
+        name: 'X-Energy, LLC',
+        url: '',
+      },
+      jobPostingInfo: {
+        title: 'Reactor Engineer',
+        jobDescription:
+          '<p>Build the future with <strong>X-energy</strong>.</p><p>Email jobs@x-energy.com.</p>',
+        location: 'Rockville, MD',
+        additionalLocations: ['Oak Ridge, TN', 'Rockville, MD'],
+        postedOn: 'Posted Yesterday',
+        jobReqId: 'R101234',
+        externalUrl:
+          'https://xenergy.wd5.myworkdayjobs.com/X-energyUS/job/Rockville-MD/Reactor-Engineer_R101234',
+        timeType: 'Full time',
+        remoteType: 'Remote Eligible',
+        jobFamily: [{ name: 'Engineering' }],
+      },
+    };
+
+    async function scrapeOne(descriptionFormat?: DescriptionFormat) {
+      mockPost.mockResolvedValueOnce({ data: clone(DETAIL_PAGE) });
+      mockGet.mockResolvedValueOnce({ data: clone(DETAIL) });
+      return new WorkdayService().scrape({
+        siteType: [Site.WORKDAY],
+        companySlug: 'xenergy:5:X-energyUS',
+        descriptionFormat,
+      } as ScraperInputDto);
+    }
+
+    it('fetches the CXS detail and maps description, expanded locations, and metadata', async () => {
+      const result = await scrapeOne();
+
+      expect(mockGet).toHaveBeenCalledWith(
+        'https://xenergy.wd5.myworkdayjobs.com/wday/cxs/xenergy/X-energyUS/job/Rockville-MD/Reactor-Engineer_R101234',
+      );
+      expect(result.jobs).toHaveLength(1);
+      const job = result.jobs[0];
+      expect(job.companyName).toBe('X-Energy, LLC');
+      expect(job.description).toBe('Build the future with X-energy.\nEmail jobs@x-energy.com.');
+      expect(job.emails).toEqual(['jobs@x-energy.com']);
+      expect(job.location?.city).toBe('Rockville, MD; Oak Ridge, TN');
+      expect(job.location?.city).not.toContain('2 Locations');
+      expect(job.atsId).toBe('R101234');
+      expect(job.employmentType).toBe('Full time');
+      expect(job.department).toBe('Engineering');
+      expect(job.isRemote).toBe(true);
+      expect(job.jobUrl).toBe(DETAIL.jobPostingInfo.externalUrl);
+      expect(job.datePosted).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    });
+
+    it('honors HTML and Markdown description formats', async () => {
+      const html = await scrapeOne(DescriptionFormat.HTML);
+      expect(html.jobs[0].description).toBe(DETAIL.jobPostingInfo.jobDescription);
+
+      const markdown = await scrapeOne(DescriptionFormat.MARKDOWN);
+      expect(markdown.jobs[0].description).toContain('**X-energy**');
+      expect(markdown.jobs[0].description).not.toContain('<strong>');
+    });
+
+    it('falls back to the tenant slug when hiringOrganization.name is blank', async () => {
+      const detail = clone(DETAIL);
+      detail.hiringOrganization.name = '   ';
+      mockPost.mockResolvedValueOnce({ data: clone(DETAIL_PAGE) });
+      mockGet.mockResolvedValueOnce({ data: detail });
+
+      const result = await new WorkdayService().scrape({
+        siteType: [Site.WORKDAY],
+        companySlug: 'xenergy:5:X-energyUS',
+      } as ScraperInputDto);
+
+      expect(result.jobs[0].companyName).toBe('xenergy');
+    });
+
+    it('keeps sibling and summary jobs when one detail request fails', async () => {
+      const page = clone(DETAIL_PAGE);
+      page.total = 2;
+      page.jobPostings.push({
+        title: 'Fuel Engineer',
+        externalPath: '/job/Oak-Ridge-TN/Fuel-Engineer_R202345',
+        locationsText: 'Oak Ridge, TN',
+        postedOn: 'Posted Today',
+      });
+      mockPost.mockResolvedValueOnce({ data: page });
+      mockGet
+        .mockRejectedValueOnce(new Error('detail unavailable'))
+        .mockResolvedValueOnce({ data: clone(DETAIL) });
+
+      const result = await new WorkdayService().scrape({
+        siteType: [Site.WORKDAY],
+        companySlug: 'xenergy:5:X-energyUS',
+      } as ScraperInputDto);
+
+      expect(result.jobs).toHaveLength(2);
+      expect(result.jobs[0].description).toBeNull();
+      expect(result.jobs[0].companyName).toBe('xenergy');
+      expect(result.jobs[0].location?.city).toBe('2 Locations');
+      expect(result.jobs[1].companyName).toBe('X-Energy, LLC');
+      expect(result.jobs[1].description).toContain('Build the future');
+    });
+
+    it('does not request detail when externalPath is missing', async () => {
+      mockPost.mockResolvedValueOnce({
+        data: {
+          total: 1,
+          jobPostings: [{ title: 'Fallback Role', locationsText: 'Rockville, MD' }],
+        },
+      });
+
+      const result = await new WorkdayService().scrape({
+        siteType: [Site.WORKDAY],
+        companySlug: 'xenergy:5:X-energyUS',
+      } as ScraperInputDto);
+
+      expect(mockGet).not.toHaveBeenCalled();
+      expect(result.jobs).toHaveLength(1);
+      expect(result.jobs[0].location?.city).toBe('Rockville, MD');
+      expect(result.jobs[0].companyName).toBe('xenergy');
+    });
+
+    it('starts no more than five detail requests before the first batch settles', async () => {
+      const page = {
+        total: 6,
+        jobPostings: Array.from({ length: 6 }, (_, index) => ({
+          title: `Role ${index}`,
+          externalPath: `/job/Location/Role-${index}_R${index}`,
+          locationsText: 'Rockville, MD',
+        })),
+      };
+      mockPost.mockResolvedValueOnce({ data: page });
+
+      const resolvers: Array<() => void> = [];
+      mockGet.mockImplementation(
+        () => new Promise((resolve) => resolvers.push(() => resolve({ data: {} }))),
+      );
+
+      const scrapePromise = new WorkdayService().scrape({
+        siteType: [Site.WORKDAY],
+        companySlug: 'xenergy:5:X-energyUS',
+      } as ScraperInputDto);
+      await Promise.resolve();
+      await Promise.resolve();
+      expect(mockGet).toHaveBeenCalledTimes(5);
+
+      resolvers.splice(0).forEach((resolve) => resolve());
+      await new Promise((resolve) => setTimeout(resolve, 0));
+      expect(mockGet).toHaveBeenCalledTimes(6);
+      resolvers.splice(0).forEach((resolve) => resolve());
+
+      const result = await scrapePromise;
+      expect(result.jobs).toHaveLength(6);
     });
   });
 });

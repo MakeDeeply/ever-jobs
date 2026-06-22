@@ -2,6 +2,8 @@ import {
   parseWorkdayPostedOn,
   parseWorkdaySlug,
   buildWorkdayUrl,
+  buildWorkdayDetailUrl,
+  WORKDAY_DETAIL_CONCURRENCY,
 } from '../src/workday.constants';
 
 /**
@@ -132,5 +134,25 @@ describe('existing pure helpers — regression', () => {
     expect(buildWorkdayUrl('tesla', '5', 'Tesla')).toBe(
       'https://tesla.wd5.myworkdayjobs.com/wday/cxs/tesla/Tesla/jobs',
     );
+  });
+
+  it('buildWorkdayDetailUrl appends the external path below the career site', () => {
+    expect(
+      buildWorkdayDetailUrl(
+        'xenergy',
+        '5',
+        'X-energyUS',
+        '/job/Rockville-MD/Engineer_R101',
+      ),
+    ).toBe(
+      'https://xenergy.wd5.myworkdayjobs.com/wday/cxs/xenergy/X-energyUS/job/Rockville-MD/Engineer_R101',
+    );
+    expect(buildWorkdayDetailUrl('acme', '1', 'External', 'job/Test_R1')).toBe(
+      'https://acme.wd1.myworkdayjobs.com/wday/cxs/acme/External/job/Test_R1',
+    );
+  });
+
+  it('bounds detail enrichment to five requests', () => {
+    expect(WORKDAY_DETAIL_CONCURRENCY).toBe(5);
   });
 });
