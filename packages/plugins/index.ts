@@ -553,6 +553,7 @@ import { AmtechsoftwareModule } from './source-company-amtechsoftware';
 import { AmwellModule } from './source-company-amwell';
 import { AmylyxModule } from './source-company-amylyx';
 import { AnaplanModule } from './source-company-anaplan';
+import { AnatarModule } from './source-company-anatar';
 import { AnchantoModule } from './source-company-anchanto';
 import { AnimalmedicalcenterModule } from './source-company-animalmedicalcenter';
 import { AninebingModule } from './source-company-aninebing';
@@ -1428,6 +1429,7 @@ export const ALL_SOURCE_MODULES = [
   AmwellModule,
   AmylyxModule,
   AnaplanModule,
+  AnatarModule,
   AnchantoModule,
   AnimalmedicalcenterModule,
   AninebingModule,

@@ -15,6 +15,16 @@
 
 ---
 
+## 2026-06-22 — Run #437 — Spec 743: source company plugin for Anatar
+
+**Scope:** Added the complete Anatar company-source package for its first-party Next.js careers
+site. The plugin performs bounded Next Flight parsing with semantic rendered-card fallback,
+produces stable IDs and deep links, applies shared job-type and email helpers, supports standard
+filters and result limits, degrades safely, and is registered in all four required locations.
+Spec 742 normalizes Anatar geography while retaining hybrid and remote workplace meaning.
+
+**Verification:** Focused Anatar suite, package-focused TypeScript check, and doc-lint passed.
+
 ## 2026-06-22 — Run #436 — Spec 742: shared job-location parser
 
 **Scope:** Added a dependency-free `@ever-jobs/common` parser for conservative US `City, ST`

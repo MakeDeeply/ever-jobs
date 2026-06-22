@@ -801,6 +801,8 @@
 
 | 742 | [Shared Job-Location Parser](../.specify/specs/742-shared-job-location-parser/spec.md) — [plan](../.specify/specs/742-shared-job-location-parser/plan.md) — [tasks](../.specify/specs/742-shared-job-location-parser/tasks.md) | Implemented 2026-06-22. Adds conservative US city/state splitting, case-insensitive hybrid/remote qualifier extraction, canonical workplace values, remote signaling, and lossless fallback under `@ever-jobs/common`. |
 
+| 743 | [Source Company Plugin: Anatar](../.specify/specs/743-source-company-anatar/spec.md) — [plan](../.specify/specs/743-source-company-anatar/plan.md) — [tasks](../.specify/specs/743-source-company-anatar/tasks.md) | Implemented 2026-06-22. Adds the complete first-party Anatar company source: bounded Next Flight parsing, semantic rendered-card fallback, stable deep links and IDs, shared type/email/location helpers, input filtering, graceful degradation, four-point registration, and fixture coverage. |
+
 ## 8. Templates
 
 | File                                                           | Purpose             |

@@ -690,6 +690,7 @@ export enum Site {
   AMYLYX = 'amylyx',
   // Phase 277: Spec 267 — Source Company Plugin: Anaplan
   ANAPLAN = 'anaplan',
+  ANATAR = 'anatar',
   // Phase 278: Spec 268 — Source Company Plugin: Anchanto
   ANCHANTO = 'anchanto',
   // Phase 279: Spec 269 — Source Company Plugin: Schwarzman Animal Medical Center

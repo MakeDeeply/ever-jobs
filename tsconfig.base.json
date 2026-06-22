@@ -790,6 +790,7 @@
       "@ever-jobs/source-company-amwell": ["packages/plugins/source-company-amwell/src/index.ts"],
       "@ever-jobs/source-company-amylyx": ["packages/plugins/source-company-amylyx/src/index.ts"],
       "@ever-jobs/source-company-anaplan": ["packages/plugins/source-company-anaplan/src/index.ts"],
+      "@ever-jobs/source-company-anatar": ["packages/plugins/source-company-anatar/src/index.ts"],
       "@ever-jobs/source-company-anchanto": ["packages/plugins/source-company-anchanto/src/index.ts"],
       "@ever-jobs/source-company-animalmedicalcenter": ["packages/plugins/source-company-animalmedicalcenter/src/index.ts"],
       "@ever-jobs/source-company-aninebing": ["packages/plugins/source-company-aninebing/src/index.ts"],

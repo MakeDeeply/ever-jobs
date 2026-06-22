@@ -775,6 +775,7 @@ module.exports = {
     '^@ever-jobs/source-company-amwell$': '<rootDir>/packages/plugins/source-company-amwell/src/index.ts',
     '^@ever-jobs/source-company-amylyx$': '<rootDir>/packages/plugins/source-company-amylyx/src/index.ts',
     '^@ever-jobs/source-company-anaplan$': '<rootDir>/packages/plugins/source-company-anaplan/src/index.ts',
+    '^@ever-jobs/source-company-anatar$': '<rootDir>/packages/plugins/source-company-anatar/src/index.ts',
     '^@ever-jobs/source-company-anchanto$': '<rootDir>/packages/plugins/source-company-anchanto/src/index.ts',
     '^@ever-jobs/source-company-animalmedicalcenter$': '<rootDir>/packages/plugins/source-company-animalmedicalcenter/src/index.ts',
     '^@ever-jobs/source-company-aninebing$': '<rootDir>/packages/plugins/source-company-aninebing/src/index.ts',
