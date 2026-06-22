@@ -17,3 +17,6 @@ dist/
 .numbering.json
 .batch-input.json
 .index-rows.txt
+
+# macOS
+.DS_Store
