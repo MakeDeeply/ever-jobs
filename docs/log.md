@@ -15,6 +15,33 @@
 
 ---
 
+## 2026-06-23 — Run #448 — Spec 755: Workday compensation, workFromHomeType, multi-location, country, datePosted
+
+**Scope:** Fixed five field-mapping gaps in `source-ats-workday`, found from a
+fresh 2754-job / 7-board harvest (1116 with CXS detail) gap-checked against
+`makedeeply`. (1) **Compensation** was null on 100% of jobs; unlike
+Rippling/Lever the Workday CXS API has **no structured pay field**, so the only
+salary signal is the pay-transparency range in the description body — the plugin
+now runs the shared `extractSalary` over the body text and maps the result into
+`CompensationDto`, honoring the real interval. (2) **workFromHomeType** is now
+derived from `remoteType` (Hybrid/Fully Remote/Remote Eligible/Field-Customer
+Site → `Hybrid`/`Remote`/none), else from parsed labels. (3) **Multi-location**
+now routes `[location, ...additionalLocations, locationsText]` through the shared
+`parseLocationList` (dropping the bare "N Locations" count) instead of merging
+everything into one `city` string. (4) **Country** folds
+`jobRequisitionLocation.country.alpha2Code` into `LocationDto.country` via the
+zero-dep `regionNameFromCode` helper (Spec 752) when the parser left it bare.
+(5) **datePosted** now prefers the absolute `startDate` (drift-free, recovers the
+"30+ Days Ago" nulls) over the lossy relative `postedOn` label. Department is
+left as-is (Workday CXS exposes none on these boards; `jobFamily`/subtitle reads
+stay for other tenants). No change to `@ever-jobs/common` or `@ever-jobs/models`.
+
+**Verification:** `npx jest source-ats-workday` green (45 tests, 10 new),
+`npm run build` and `npm run lint:docs` pass. Spec triad
+`755-workday-field-mappings`. No change to other ATS plugins (per owner).
+
+---
+
 ## 2026-06-23 — Run #447 — Spec 754: Rippling compensation, workFromHomeType, multi-location
 
 **Scope:** Fixed three field-mapping gaps in `source-ats-rippling`, found from a

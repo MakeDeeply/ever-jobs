@@ -7,14 +7,19 @@ import {
   JobResponseDto,
   JobPostDto,
   LocationDto,
+  CompensationDto,
   Site,
   DescriptionFormat,
+  getCompensationInterval,
 } from '@ever-jobs/models';
 import {
   createHttpClient,
   htmlToPlainText,
   markdownConverter,
   extractEmails,
+  extractSalary,
+  parseLocationList,
+  regionNameFromCode,
   randomSleep,
 } from '@ever-jobs/common';
 import {
@@ -205,25 +210,45 @@ export class WorkdayService implements IScraper {
 
     const description = this.formatDescription(info?.jobDescription, format);
 
-    // Location
-    const locationStr = this.mergeLocations(
+    // Location: route every label (primary + additional + summary) through the
+    // shared parser so multi-location postings are split, then fold in the
+    // requisition's ISO-2 country code when the US-only parser left it bare.
+    // `locationsText` is sometimes a bare "N Locations" count rather than a
+    // place; drop it so the parser doesn't treat the count as a location.
+    const summaryText = listing.locationsText?.trim();
+    const locationLabels = [
       info?.location,
-      info?.additionalLocations,
-      listing.locationsText,
+      ...(info?.additionalLocations ?? []),
+      summaryText && !/^\d+\s+locations?$/i.test(summaryText) ? summaryText : null,
+    ];
+    const parsedLocations = parseLocationList(locationLabels);
+    const location = this.applyCountry(
+      parsedLocations.location,
+      info?.jobRequisitionLocation?.country?.alpha2Code,
     );
-    const location = locationStr
-      ? new LocationDto({ city: locationStr })
-      : null;
 
-    // Remote detection
-    const remoteText = [locationStr, info?.remoteType, listing.remoteType]
+    // Remote detection: Workday's remoteType enum, plus the parsed labels.
+    const remoteType = [info?.remoteType, listing.remoteType]
       .filter(Boolean)
       .join(' ')
       .toLowerCase();
-    const isRemote = remoteText.includes('remote');
+    const isRemote =
+      remoteType.includes('remote') || parsedLocations.remoteMentioned;
 
-    // Date from postedOn (relative labels like "Posted 3 Days Ago" -> ISO date or null)
-    const datePosted = parseWorkdayPostedOn(info?.postedOn ?? listing.postedOn);
+    // workFromHomeType: prefer Workday's structured remoteType, else parsed labels.
+    const workFromHomeType =
+      this.workFromHomeTypeFromRemoteType(info?.remoteType ?? listing.remoteType) ??
+      parsedLocations.workFromHomeType;
+
+    // Date: prefer the absolute startDate (drift-free), fall back to the
+    // relative postedOn label. Both go through the validated ISO/relative parser.
+    const datePosted =
+      parseWorkdayPostedOn(info?.startDate) ??
+      parseWorkdayPostedOn(info?.postedOn ?? listing.postedOn);
+
+    // Compensation: Workday CXS has no structured pay field; recover the
+    // pay-transparency range from the description body text.
+    const compensation = this.extractCompensationFromText(info?.jobDescription);
 
     // Extract subtitle info (often contains category/department)
     const subtitleTexts = listing.subtitles
@@ -241,9 +266,11 @@ export class WorkdayService implements IScraper {
       jobUrl,
       location,
       description,
+      compensation,
       datePosted,
       emails: extractEmails(description),
       isRemote,
+      ...(workFromHomeType ? { workFromHomeType } : {}),
       site: Site.WORKDAY,
       // ATS-specific fields
       atsId,
@@ -263,26 +290,59 @@ export class WorkdayService implements IScraper {
     return htmlToPlainText(html);
   }
 
-  private mergeLocations(
-    primary?: string | null,
-    additional?: string[] | null,
-    summary?: string | null,
-  ): string | null {
-    const concrete = [primary, ...(additional ?? [])]
-      .map((location) => location?.trim())
-      .filter((location): location is string => !!location);
-    const summaryLocation = summary?.trim();
-    if (summaryLocation && (concrete.length === 0 || !/^\d+\s+locations?$/i.test(summaryLocation))) {
-      concrete.push(summaryLocation);
-    }
+  /**
+   * Fold the requisition's ISO-2 country code into the parsed location when the
+   * (US-only) parser did not already derive a country. Uses the runtime CLDR
+   * table via `regionNameFromCode`, mirroring the Lever/Greenhouse passes.
+   */
+  private applyCountry(
+    location: LocationDto | null,
+    countryCode: string | null | undefined,
+  ): LocationDto | null {
+    const country = regionNameFromCode(countryCode);
+    if (!country) return location;
+    if (!location) return new LocationDto({ country });
+    if (location.country) return location;
+    return new LocationDto({ ...location, country });
+  }
 
-    const seen = new Set<string>();
-    const unique = concrete.filter((location) => {
-      const key = location.toLowerCase();
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
+  /**
+   * Map Workday's free-text `remoteType` ("Hybrid", "Fully Remote",
+   * "Remote Eligible", "Field/Customer Site") to a work-from-home label.
+   * On-site values (e.g. "Field/Customer Site") resolve to null.
+   */
+  private workFromHomeTypeFromRemoteType(
+    remoteType: string | null | undefined,
+  ): string | null {
+    const value = remoteType?.toLowerCase() ?? '';
+    if (value.includes('hybrid')) return 'Hybrid';
+    if (value.includes('remote')) return 'Remote';
+    return null;
+  }
+
+  /**
+   * Workday CXS exposes no structured pay field, so recover a pay-transparency
+   * salary range from the description body text via the shared `extractSalary`,
+   * honoring the real interval (yearly/hourly) rather than coercing.
+   */
+  private extractCompensationFromText(
+    html?: string | null,
+  ): CompensationDto | null {
+    const text = html?.trim() ? htmlToPlainText(html) : null;
+    if (!text) return null;
+
+    const parsed = extractSalary(text);
+    if (parsed.minAmount == null && parsed.maxAmount == null) return null;
+
+    const interval = parsed.interval
+      ? getCompensationInterval(parsed.interval)
+      : null;
+
+    return new CompensationDto({
+      interval: interval ?? undefined,
+      minAmount: parsed.minAmount ?? undefined,
+      maxAmount: parsed.maxAmount ?? undefined,
+      currency: parsed.currency ?? 'USD',
     });
-    return unique.length > 0 ? unique.join('; ') : null;
   }
 }
