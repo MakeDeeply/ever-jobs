@@ -14,10 +14,14 @@ export interface RipplingLocation {
 }
 
 export interface RipplingPayRangeDetail {
-  min_value?: number | null;
-  max_value?: number | null;
+  /** Per-band label: a location, work mode, or role level (e.g. "Oakland, CA", "Manager"). */
+  location?: string | null;
   currency?: string | null;
-  interval?: string | null;
+  /** Pay period, e.g. "YEAR" or "HOUR". */
+  frequency?: string | null;
+  rangeStart?: number | null;
+  rangeEnd?: number | null;
+  isRemote?: boolean | null;
 }
 
 export interface RipplingDescription {
