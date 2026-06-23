@@ -806,6 +806,7 @@
 | 748 | [Lever Complete Public Descriptions](../.specify/specs/748-lever-complete-public-descriptions/spec.md) — [plan](../.specify/specs/748-lever-complete-public-descriptions/plan.md) — [tasks](../.specify/specs/748-lever-complete-public-descriptions/tasks.md) | Implemented 2026-06-22. Assembles Lever public descriptions from combined/opening/body text, every `lists[]` heading/body section, and additional closing text using shared public/authenticated mapping. Enigma regression covered; focused suite green. |
 | 749 | [Shared Interval and Multi-Location Normalization](../.specify/specs/749-shared-interval-and-location-normalization/spec.md) — [plan](../.specify/specs/749-shared-interval-and-location-normalization/plan.md) — [tasks](../.specify/specs/749-shared-interval-and-location-normalization/tasks.md) | Implemented 2026-06-23. Adds conservative count-one compensation interval normalization, shared multi-location canonicalization, Ashby wiring, and private investigator reuse of repo normalization helpers. Ashby live check clean. |
 | 750 | [Ashby Field-Name Fallbacks](../.specify/specs/750-ashby-field-name-fallbacks/spec.md) — [plan](../.specify/specs/750-ashby-field-name-fallbacks/plan.md) — [tasks](../.specify/specs/750-ashby-field-name-fallbacks/tasks.md) | Implemented 2026-06-23. Maps `datePosted`, `department`, and `team` from the public job-board names (`publishedAt`, `department`, `team`) with authenticated-name fallbacks, fixing a 100% null rate on the public path across 1789 harvested jobs. Private investigator aligned to the same names. |
+| 751 | [Greenhouse Entity Content and Locations](../.specify/specs/751-greenhouse-entity-content-and-locations/spec.md) — [plan](../.specify/specs/751-greenhouse-entity-content-and-locations/plan.md) — [tasks](../.specify/specs/751-greenhouse-entity-content-and-locations/tasks.md) | Implemented 2026-06-23. Detects and pre-decodes entity-encoded `content` before `htmlToPlainText` (fixing literal-tag descriptions on 100% of public jobs), routes `location.name` through `parseLocationList` for `location`/`isRemote`/`workFromHomeType`, and maps `currency_range` metadata to `CompensationDto` plus `Employment Type` to `employmentType`. |
 
 ## 8. Templates
 
@@ -817,4 +818,4 @@
 
 ---
 
-_Last revised: 2026-06-23 (run #443 — Spec 750: Ashby field-name fallbacks)._
+_Last revised: 2026-06-23 (run #444 — Spec 751: Greenhouse entity content and locations)._
