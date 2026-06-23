@@ -15,6 +15,28 @@
 
 ---
 
+## 2026-06-23 — Run #444 — Spec 751: Greenhouse entity content and locations
+
+**Scope:** Fixed three gaps in the Greenhouse plugin found from a 1359-job
+harvest across 31 boards. (1) The public board returns `content` as HTML
+entity-encoded HTML (`&lt;div&gt;&lt;p&gt;…`), so the shared `htmlToPlainText`
+(which decodes entities only after stripping tags) left literal `<div>`/`<p>`
+markup in 100% of descriptions. The plugin now detects entity-encoding per job
+(no literal block tags but present entity-encoded block tags) and decodes the
+entity layer first, leaving real HTML untouched. (2) Location now flows through
+the shared `parseLocationList` — `location.name` is split on `;`/` or `/newlines
+into discrete labels, setting `location`, `isRemote`, and `workFromHomeType`;
+`location.name` stays the single source (offices used only as fallback). (3)
+Company-defined `metadata[]` is mapped by `value_type`: `currency_range` →
+yearly `CompensationDto`, `Employment Type` → `employmentType`. The description
+and location helpers also apply to the authenticated Harvest path.
+
+**Verification:** Focused Greenhouse Jest suite passed: 11 cases (6 new Spec 751
+cases for entity decoding, real-HTML pass-through, multi-site location parsing,
+remote inference, metadata mapping, and the no-metadata path, plus existing
+e2e coverage). The TypeScript build passed. The private ATS field investigator
+was updated to decode entity-encoded Greenhouse content before comparison.
+
 ## 2026-06-23 — Run #443 — Spec 750: Ashby field-name fallbacks
 
 **Scope:** Fixed the Ashby plugin's public path, which mapped `datePosted`,

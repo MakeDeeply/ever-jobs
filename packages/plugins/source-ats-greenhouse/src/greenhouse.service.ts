@@ -6,17 +6,32 @@ import {
   ScraperInputDto,
   JobResponseDto,
   JobPostDto,
-  LocationDto,
+  CompensationDto,
+  CompensationInterval,
   Site,
   DescriptionFormat,
 } from '@ever-jobs/models';
 import {
   createHttpClient,
   htmlToPlainText,
+  decodeHtmlEntities,
   extractEmails,
+  parseLocationList,
 } from '@ever-jobs/common';
 import { GREENHOUSE_API_URL, GREENHOUSE_HARVEST_API_URL, GREENHOUSE_HEADERS } from './greenhouse.constants';
-import { GreenhouseJob, GreenhouseResponse, GreenhouseHarvestJob } from './greenhouse.types';
+import {
+  GreenhouseJob,
+  GreenhouseResponse,
+  GreenhouseHarvestJob,
+  GreenhouseHarvestOffice,
+  GreenhouseMetadataItem,
+} from './greenhouse.types';
+
+/** Block-level HTML tag names used to detect whether `content` is real or
+ *  entity-encoded HTML. */
+const BLOCK_TAGS = 'p|div|br|ul|ol|li|h[1-6]|span|strong|em|table';
+const REAL_TAG_RE = new RegExp(`<(?:${BLOCK_TAGS})\\b`, 'i');
+const ENCODED_TAG_RE = new RegExp(`&lt;(?:${BLOCK_TAGS})\\b`, 'i');
 
 @SourcePlugin({
   site: Site.GREENHOUSE,
@@ -96,27 +111,14 @@ export class GreenhouseService implements IScraper {
     const title = job.title;
     if (!title) return null;
 
-    // Description is HTML content
-    let description: string | null = null;
-    if (job.content) {
-      if (format === DescriptionFormat.HTML) {
-        description = job.content;
-      } else {
-        description = htmlToPlainText(job.content);
-      }
-    }
+    const description = this.toDescription(job.content, format);
 
-    // Location from location object or offices
-    const locationName = job.location?.name ?? null;
-    const officeName = job.offices?.[0]?.name ?? null;
-    const locationStr = locationName ?? officeName;
-    const location = locationStr
-      ? new LocationDto({ city: locationStr })
-      : null;
-
-    // Remote detection
-    const isRemote =
-      locationStr?.toLowerCase().includes('remote') ?? false;
+    // The posting `location.name` is the role's location and is consistently
+    // equal-or-richer than the broader company `offices[]`; use it as the single
+    // source and only fall back to offices when it is missing.
+    const parsedLocations = parseLocationList(
+      this.locationLabels(job.location?.name ?? job.offices?.[0]?.name ?? null),
+    );
 
     // Department
     const department = job.departments?.[0]?.name ?? null;
@@ -124,17 +126,22 @@ export class GreenhouseService implements IScraper {
     // Date posted
     const datePosted = job.first_published ?? job.updated_at ?? null;
 
+    const { compensation, employmentType } = this.extractMetadata(job.metadata);
+
     return new JobPostDto({
       id: `gh-${job.id}`,
       title,
       companyName: job.company_name ?? companySlug,
       jobUrl: job.absolute_url ?? `https://boards.greenhouse.io/${companySlug}/jobs/${job.id}`,
-      location,
+      location: parsedLocations.location,
       description,
+      compensation,
       datePosted: datePosted
         ? new Date(datePosted).toISOString().split('T')[0]
         : null,
-      isRemote,
+      isRemote: parsedLocations.remoteMentioned,
+      workFromHomeType: parsedLocations.workFromHomeType,
+      employmentType,
       emails: extractEmails(description),
       site: Site.GREENHOUSE,
       // ATS-specific fields
@@ -142,6 +149,109 @@ export class GreenhouseService implements IScraper {
       atsType: 'greenhouse',
       department,
     });
+  }
+
+  /**
+   * Turn a raw Greenhouse `content`/`notes` string into a description.
+   *
+   * The public job-board API returns `content` as HTML-*entity-encoded* HTML
+   * (e.g. `&lt;div&gt;&lt;p&gt;`), so the shared `htmlToPlainText` — which
+   * decodes entities only after stripping tags — would leave literal `<div>` /
+   * `<p>` markup in the output. We detect that case per-job and decode the
+   * entity layer first, yielding the real HTML the shared helper expects. If
+   * Greenhouse later returns real HTML, the same content passes through
+   * unchanged.
+   */
+  private toDescription(
+    content: string | null | undefined,
+    format?: DescriptionFormat,
+  ): string | null {
+    const html = this.normalizeContentHtml(content);
+    if (!html) return null;
+    return format === DescriptionFormat.HTML ? html : htmlToPlainText(html);
+  }
+
+  private normalizeContentHtml(
+    content: string | null | undefined,
+  ): string | null {
+    if (!content) return null;
+    const isEntityEncoded =
+      !REAL_TAG_RE.test(content) && ENCODED_TAG_RE.test(content);
+    return isEntityEncoded ? decodeHtmlEntities(content) : content;
+  }
+
+  /**
+   * Split a single Greenhouse location label into the discrete labels
+   * `parseLocationList` expects. Greenhouse packs multiple sites into one
+   * string (e.g. `Boston, MA; Mountain View, CA`, `Paducah, KY or Los Angeles,
+   * CA`, `Alameda, CA or Remote in US`), so split on `;`, ` or `, and newlines.
+   */
+  private locationLabels(raw: string | null): string[] {
+    if (!raw) return [];
+    return raw
+      .split(/\s*;\s*|\s+or\s+|\r?\n/i)
+      .map((part) => part.trim())
+      .filter(Boolean);
+  }
+
+  /**
+   * Map Greenhouse company-defined `metadata[]` to structured fields.
+   *
+   * The field *name* is not standardized (`Salary` vs `Salary Range`), so the
+   * reliable key is `value_type`: any `currency_range` entry carries a
+   * `{unit, min_value, max_value}` shape that maps to `CompensationDto`
+   * (assumed yearly — Greenhouse currency ranges carry no period). The
+   * `Employment Type` single-select maps to `employmentType`.
+   */
+  private extractMetadata(
+    metadata: GreenhouseMetadataItem[] | null | undefined,
+  ): { compensation: CompensationDto | null; employmentType: string | null } {
+    let compensation: CompensationDto | null = null;
+    let employmentType: string | null = null;
+
+    for (const item of metadata ?? []) {
+      if (!item) continue;
+      const valueType = item.value_type?.toLowerCase() ?? '';
+      if (!compensation && valueType === 'currency_range') {
+        compensation = this.parseCurrencyRange(item.value);
+      }
+      if (!employmentType && item.name?.toLowerCase() === 'employment type') {
+        if (typeof item.value === 'string' && item.value.trim()) {
+          employmentType = item.value.trim();
+        }
+      }
+    }
+
+    return { compensation, employmentType };
+  }
+
+  private parseCurrencyRange(
+    value: GreenhouseMetadataItem['value'],
+  ): CompensationDto | null {
+    if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
+    const record = value as Record<string, unknown>;
+    const minAmount = this.toAmount(record.min_value);
+    const maxAmount = this.toAmount(record.max_value);
+    if (minAmount === null && maxAmount === null) return null;
+    const currency =
+      typeof record.unit === 'string' && record.unit.trim()
+        ? record.unit.trim()
+        : 'USD';
+    return new CompensationDto({
+      interval: CompensationInterval.YEARLY,
+      minAmount,
+      maxAmount,
+      currency,
+    });
+  }
+
+  private toAmount(value: unknown): number | null {
+    if (typeof value === 'number') return Number.isFinite(value) ? value : null;
+    if (typeof value === 'string' && value.trim()) {
+      const parsed = Number(value);
+      return Number.isFinite(parsed) ? parsed : null;
+    }
+    return null;
   }
 
   // ─── Harvest API (authenticated) ───────────────────────────────────
@@ -238,24 +348,13 @@ export class GreenhouseService implements IScraper {
 
     // The Harvest API does not return description/content on the
     // list endpoint — use notes if available (often HTML)
-    let description: string | null = null;
-    if (job.notes) {
-      if (format === DescriptionFormat.HTML) {
-        description = job.notes;
-      } else {
-        description = htmlToPlainText(job.notes);
-      }
-    }
+    const description = this.toDescription(job.notes, format);
 
-    // Location: prefer first office name, fall back to office location name
-    const office = job.offices?.[0] ?? null;
-    const locationStr = office?.name ?? office?.location?.name ?? null;
-    const location = locationStr
-      ? new LocationDto({ city: locationStr })
-      : null;
-
-    // Remote detection
-    const isRemote = locationStr?.toLowerCase().includes('remote') ?? false;
+    // Location: prefer office name, fall back to office location name
+    const office: GreenhouseHarvestOffice | null = job.offices?.[0] ?? null;
+    const parsedLocations = parseLocationList(
+      this.locationLabels(office?.name ?? office?.location?.name ?? null),
+    );
 
     // Department
     const department = job.departments?.[0]?.name ?? null;
@@ -268,12 +367,13 @@ export class GreenhouseService implements IScraper {
       title,
       companyName: companySlug,
       jobUrl: `https://boards.greenhouse.io/${companySlug}/jobs/${job.id}`,
-      location,
+      location: parsedLocations.location,
       description,
       datePosted: datePosted
         ? new Date(datePosted).toISOString().split('T')[0]
         : null,
-      isRemote,
+      isRemote: parsedLocations.remoteMentioned,
+      workFromHomeType: parsedLocations.workFromHomeType,
       emails: extractEmails(description),
       site: Site.GREENHOUSE,
       // ATS-specific fields
