@@ -115,7 +115,8 @@ describe('LeverService (E2E)', () => {
       'Enigma is an equal opportunity employer.',
     );
     expect(job.description).not.toContain('<li>');
-    expect(job.location?.city).toBe('San Francisco, CA');
+    expect(job.location?.city).toBe('San Francisco');
+    expect(job.location?.state).toBe('CA');
     expect(job.team).toBe('Engineering');
     expect(job.employmentType).toBe('Full-time');
     expect(job.applyUrl).toBe(

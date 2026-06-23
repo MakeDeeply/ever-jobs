@@ -6,8 +6,16 @@
 export interface LeverCategories {
   location?: string | null;
   team?: string | null;
+  department?: string | null;
   commitment?: string | null;
   allLocations?: string[] | null;
+}
+
+export interface LeverSalaryRange {
+  min?: number | null;
+  max?: number | null;
+  currency?: string | null;
+  interval?: string | null;
 }
 
 export interface LeverJob {
@@ -22,6 +30,7 @@ export interface LeverJob {
   text?: string | null;
   country?: string | null;
   workplaceType?: string | null;
+  salaryRange?: LeverSalaryRange | null;
   opening?: string | null;
   openingPlain?: string | null;
   descriptionBody?: string | null;

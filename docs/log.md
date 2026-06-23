@@ -15,6 +15,35 @@
 
 ---
 
+## 2026-06-23 — Run #445 — Spec 752: Lever compensation, department, multi-location, workFromHomeType, country
+
+**Scope:** Fixed four fields the Lever public path
+(`https://api.lever.co/v0/postings/{slug}?mode=json`) carries but never mapped,
+found from a 1116-job harvest across 21 boards. (1) `salaryRange`
+`{min, max, currency, interval}` (832/1116 jobs) now maps to `CompensationDto`,
+honoring the real interval — the `per-<unit>-<kind>` token (e.g.
+`per-year-salary`, `per-hour-wage`, `per-month-salary`) is resolved through the
+shared `getCompensationInterval` rather than coerced to yearly. (2)
+`categories.department` (1035/1116) now maps to `department`, independent of
+`team`. (3) Location now flows through the shared `parseLocationList`, preferring
+the multi-site `categories.allLocations` (171 jobs) over the single
+`categories.location`, so `location`, `isRemote`, and `workFromHomeType` come
+from the shared helper. (4) `workFromHomeType` is set from `workplaceType`
+(hybrid=226, remote=21) merged with the parser's inference. Lever's ISO-3166
+alpha-2 `country` code is folded into `LocationDto.country` via a new
+zero-dependency `regionNameFromCode` helper in `@ever-jobs/common` (native
+`Intl.DisplayNames`, `fallback: 'none'`, guarded), only when the parser left the
+country bare. Both the public and authenticated paths share one `buildJobPost`.
+
+**Verification:** Focused Lever Jest suite passed: 12 cases (9 new Spec 752 cases
+for compensation interval honoring, the no-compensation path, department vs team,
+multi-site location joining, hybrid/remote `workFromHomeType` + `isRemote`, and
+resolvable/unresolvable country folding, plus existing e2e coverage). The
+TypeScript build passed. The private ATS field investigator was updated to emit
+Lever `department` and `compensation`. (Two pre-existing `@ever-jobs/common`
+failures in `normalize.spec`/`canonical-key.spec` around `Remote`/`Anywhere`
+normalization are unrelated to this change and present on `makedeeply`.)
+
 ## 2026-06-23 — Run #444 — Spec 751: Greenhouse entity content and locations
 
 **Scope:** Fixed three gaps in the Greenhouse plugin found from a 1359-job
