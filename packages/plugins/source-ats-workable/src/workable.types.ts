@@ -38,6 +38,21 @@ export interface WorkableResponse {
 }
 
 /**
+ * Workable public per-job detail object.
+ * Returned by `GET /api/v2/accounts/{slug}/jobs/{shortcode}`.
+ * Carries the rich posting body and work-mode that the widget list omits.
+ */
+export interface WorkableJobDetail {
+  shortcode?: string | null;
+  description?: string | null;
+  requirements?: string | null;
+  benefits?: string | null;
+  /** Work-mode enum: "on_site" | "hybrid" | "remote" */
+  workplace?: string | null;
+  remote?: boolean | null;
+}
+
+/**
  * Workable API v3 job object.
  * @see https://workable.readme.io/reference/jobs
  */

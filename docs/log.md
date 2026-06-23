@@ -15,6 +15,34 @@
 
 ---
 
+## 2026-06-23 — Run #449 — Spec 756: Workable v2 detail fetch — description, workFromHomeType, jobFunction, isRemote
+
+**Scope:** Fixed two field-mapping gaps in `source-ats-workable`, found from a
+fresh 3-board harvest (shift-robotics 4, elastium 2; looking-glass-factory
+genuinely empty) gap-checked against `makedeeply`. Both share one root cause: the
+plugin reads only the v1 widget list (`/api/v1/widget/accounts/{slug}`), which
+carries no body text and no work-mode. (1) **description** was null on 100% of
+jobs; the plugin now overlays each job with its public **v2 per-job detail**
+(`/api/v2/accounts/{slug}/jobs/{shortcode}`) under bounded concurrency
+(`WORKABLE_DETAIL_CONCURRENCY = 5`, `Promise.allSettled`, fail-safe per
+Rippling/Workday) and concatenates the detail's `description` + `requirements` +
+`benefits` (ever-jobs has no distinct fields), rendered via the previously
+accepted-but-ignored `descriptionFormat`. (2) **workFromHomeType** is now derived
+from the v2 `workplace` enum (`hybrid` → `Hybrid`, `remote` → `Remote`,
+`on_site` → none). Plus: **jobFunction** now carries the widget `function`
+job-family taxonomy (owner's call to populate the otherwise LinkedIn-only field
+rather than discard it), and **isRemote** is broadened to union the widget
+`telecommuting` with the v2 `remote` boolean and `workplace === 'remote'`.
+Compensation and department are documented non-goals (no source in v1 or v2;
+0/6 jobs carry a body-text range). No change to `@ever-jobs/common` or
+`@ever-jobs/models`.
+
+**Verification:** `npx jest source-ats-workable` green (7 new service tests),
+`npm run build` and `npm run lint:docs` pass. Spec triad
+`756-workable-detail-fetch-fields`. No change to other ATS plugins (per owner).
+
+---
+
 ## 2026-06-23 — Run #448 — Spec 755: Workday compensation, workFromHomeType, multi-location, country, datePosted
 
 **Scope:** Fixed five field-mapping gaps in `source-ats-workday`, found from a
