@@ -803,6 +803,7 @@
 | 744 | [Rippling Pagination and Job Details](../.specify/specs/744-source-ats-rippling-pagination-and-details/spec.md) — [plan](../.specify/specs/744-source-ats-rippling-pagination-and-details/plan.md) — [tasks](../.specify/specs/744-source-ats-rippling-pagination-and-details/tasks.md) | Implemented 2026-06-22. Extends the upstream Rippling source with complete pagination, strict record admission, stable-ID deduplication, bounded detail enrichment, HTML/Markdown/plain descriptions, and final type, URL, and location mappings. Focused suite: 16 tests green. |
 | 745 | [Workday Detail Enrichment](../.specify/specs/745-workday-detail-enrichment/spec.md) — [plan](../.specify/specs/745-workday-detail-enrichment/plan.md) — [tasks](../.specify/specs/745-workday-detail-enrichment/tasks.md) | Implemented 2026-06-22. Enriches selected Workday summaries through their public CXS detail endpoints in ordered batches of five. Adds HTML/Markdown/plain descriptions, deduplicated concrete multi-location labels, source-authored `hiringOrganization.name`, detail metadata, and per-job graceful fallback. Live-reproduced with X-energy; focused suite: 35 tests green. |
 | 747 | [Rippling Authoritative Detail Fields](../.specify/specs/747-rippling-authoritative-detail-fields/spec.md) — [plan](../.specify/specs/747-rippling-authoritative-detail-fields/plan.md) — [tasks](../.specify/specs/747-rippling-authoritative-detail-fields/tasks.md) | Implemented 2026-06-22. Fetches every selected Rippling detail record and overlays source-authored company identity, complete creation timestamp, and raw employment-type label with list fallbacks and bounded failure isolation. Boom Supersonic regression covered; focused suite: 17 tests green. |
+| 748 | [Lever Complete Public Descriptions](../.specify/specs/748-lever-complete-public-descriptions/spec.md) — [plan](../.specify/specs/748-lever-complete-public-descriptions/plan.md) — [tasks](../.specify/specs/748-lever-complete-public-descriptions/tasks.md) | Implemented 2026-06-22. Assembles Lever public descriptions from combined/opening/body text, every `lists[]` heading/body section, and additional closing text using shared public/authenticated mapping. Enigma regression covered; focused suite green. |
 
 ## 8. Templates
 
@@ -814,4 +815,4 @@
 
 ---
 
-_Last revised: 2026-06-22 (run #440 — Spec 747: Rippling authoritative detail fields)._
+_Last revised: 2026-06-22 (run #441 — Spec 748: Lever complete public descriptions)._

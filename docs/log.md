@@ -15,6 +15,18 @@
 
 ---
 
+## 2026-06-22 — Run #441 — Spec 748: Lever complete public descriptions
+
+**Scope:** Fixed the Lever public mapper so descriptions include every source-authored component
+returned by the public postings payload: combined opening/body text, fallback split opening/body
+fields, each `lists[]` heading and HTML-stripped body, and optional additional/closing text. The
+same builder now serves public and authenticated paths. This addresses the Enigma (`crgo`) field
+investigation findings where Responsibilities, Desired Qualifications, and Great to have
+Qualifications and Skills were absent from plugin descriptions.
+
+**Verification:** Focused Lever suite, package-focused TypeScript validation, doc-lint, private
+field-investigator verification, and `git diff --check` were run for this change.
+
 ## 2026-06-22 — Run #440 — Spec 747: Rippling authoritative detail fields
 
 **Scope:** Corrected three incremental Rippling list/detail mismatches identified on Boom

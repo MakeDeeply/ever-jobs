@@ -170,34 +170,7 @@ export class LeverService implements IScraper {
     const title = job.text;
     if (!title) return null;
 
-    // Build description from available fields
-    let description =
-      job.descriptionPlain ?? job.descriptionBodyPlain ?? null;
-
-    if (!description && (job.description || job.descriptionBody)) {
-      const html = job.description ?? job.descriptionBody ?? '';
-      description = htmlToPlainText(html);
-    }
-
-    // Append list/content blocks (available in authenticated responses)
-    if (job.lists && job.lists.length > 0) {
-      const listContent = job.lists
-        .map((l) => {
-          const heading = l.text ? `${l.text}\n` : '';
-          const body = htmlToPlainText(l.content);
-          return `${heading}${body}`;
-        })
-        .join('\n\n');
-      description = description
-        ? `${description}\n\n${listContent}`
-        : listContent;
-    }
-
-    // Append additional/opening info if present
-    const additional = job.additionalPlain ?? null;
-    if (additional && description) {
-      description = `${description}\n\n${additional}`;
-    }
+    const description = this.buildDescription(job);
 
     // Location from categories
     const locationStr = job.categories?.location ?? null;
@@ -247,20 +220,7 @@ export class LeverService implements IScraper {
     const title = job.text;
     if (!title) return null;
 
-    // Build description from available fields
-    let description =
-      job.descriptionPlain ?? job.descriptionBodyPlain ?? null;
-
-    if (!description && (job.description || job.descriptionBody)) {
-      const html = job.description ?? job.descriptionBody ?? '';
-      description = htmlToPlainText(html);
-    }
-
-    // Append additional/opening info if present
-    const additional = job.additionalPlain ?? null;
-    if (additional && description) {
-      description = `${description}\n\n${additional}`;
-    }
+    const description = this.buildDescription(job);
 
     // Location from categories
     const locationStr = job.categories?.location ?? null;
@@ -297,5 +257,68 @@ export class LeverService implements IScraper {
       employmentType: commitment,
       applyUrl: job.applyUrl ?? null,
     });
+  }
+
+  private buildDescription(job: LeverJob): string | null {
+    const parts: string[] = [];
+
+    const combinedDescription = this.firstNonEmpty(
+      job.descriptionPlain,
+      job.description,
+    );
+
+    if (combinedDescription) {
+      parts.push(this.toPlainText(combinedDescription));
+    } else {
+      const opening = this.firstNonEmpty(job.openingPlain, job.opening);
+      const body = this.firstNonEmpty(
+        job.descriptionBodyPlain,
+        job.descriptionBody,
+      );
+      if (opening) parts.push(this.toPlainText(opening));
+      if (body) parts.push(this.toPlainText(body));
+    }
+
+    if (Array.isArray(job.lists)) {
+      for (const list of job.lists) {
+        const heading = this.firstNonEmpty(list.text);
+        const body = this.firstNonEmpty(list.content);
+        const listParts = [
+          heading ? this.toPlainText(heading) : null,
+          body ? this.toPlainText(body) : null,
+        ].filter((part): part is string => Boolean(part));
+
+        if (listParts.length > 0) {
+          parts.push(listParts.join('\n'));
+        }
+      }
+    }
+
+    const additional = this.firstNonEmpty(job.additionalPlain, job.additional);
+    if (additional) {
+      parts.push(this.toPlainText(additional));
+    }
+
+    const description = parts
+      .map((part) => part.trim())
+      .filter((part) => part.length > 0)
+      .join('\n\n');
+
+    return description || null;
+  }
+
+  private firstNonEmpty(...values: Array<string | null | undefined>): string | null {
+    for (const value of values) {
+      if (typeof value === 'string' && value.trim().length > 0) {
+        return value;
+      }
+    }
+    return null;
+  }
+
+  private toPlainText(value: string): string {
+    return value.includes('<') && value.includes('>')
+      ? htmlToPlainText(value)
+      : value.trim();
   }
 }
