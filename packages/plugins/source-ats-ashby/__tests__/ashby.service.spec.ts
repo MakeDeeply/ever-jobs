@@ -252,6 +252,81 @@ describe('AshbyService — Spec 719', () => {
     });
   });
 
+  /**
+   * Spec 750 — the public job-board API and the authenticated Posting API use
+   * different names for the same fields. The plugin must read both, preferring
+   * the public name.
+   */
+  describe('field-name fallbacks (Spec 750)', () => {
+    it('maps the authenticated-API field names (departmentName/teamName/publishedDate)', async () => {
+      mockGet.mockResolvedValueOnce({ data: clone(BOARD_RAW) });
+      const service = new AshbyService();
+      const result = await service.scrape({
+        siteType: [Site.ASHBY],
+        companySlug: SLUG,
+      } as ScraperInputDto);
+
+      const job = result.jobs.find(
+        (j) => j.id === `ashby-${BOARD_RAW.jobs[0].id}`,
+      );
+      expect(job?.department).toBe('Engineering');
+      expect(job?.team).toBe('Platform');
+      expect(job?.datePosted).toBe('2026-05-20');
+    });
+
+    it('maps the public job-board field names (department/team/publishedAt)', async () => {
+      const raw = clone(BOARD_RAW) as any;
+      const j = raw.jobs[0];
+      delete j.departmentName;
+      delete j.teamName;
+      delete j.publishedDate;
+      j.department = 'Hardware';
+      j.team = 'Avionics';
+      j.publishedAt = '2026-06-04T22:28:52.477+00:00';
+      mockGet.mockResolvedValueOnce({ data: raw });
+
+      const service = new AshbyService();
+      const result = await service.scrape({
+        siteType: [Site.ASHBY],
+        companySlug: SLUG,
+      } as ScraperInputDto);
+
+      const job = result.jobs.find(
+        (jb) => jb.id === `ashby-${BOARD_RAW.jobs[0].id}`,
+      );
+      expect(job?.department).toBe('Hardware');
+      expect(job?.team).toBe('Avionics');
+      // publishedAt is an ISO timestamp; datePosted is the date part only.
+      expect(job?.datePosted).toBe('2026-06-04');
+    });
+
+    it('prefers the public names when both are present', async () => {
+      const raw = clone(BOARD_RAW) as any;
+      const j = raw.jobs[0];
+      j.department = 'Hardware';
+      j.team = 'Avionics';
+      j.publishedAt = '2026-06-04T00:00:00.000+00:00';
+      // Authenticated-name values remain but must lose to the public ones.
+      j.departmentName = 'Engineering';
+      j.teamName = 'Platform';
+      j.publishedDate = '2026-05-20';
+      mockGet.mockResolvedValueOnce({ data: raw });
+
+      const service = new AshbyService();
+      const result = await service.scrape({
+        siteType: [Site.ASHBY],
+        companySlug: SLUG,
+      } as ScraperInputDto);
+
+      const job = result.jobs.find(
+        (jb) => jb.id === `ashby-${BOARD_RAW.jobs[0].id}`,
+      );
+      expect(job?.department).toBe('Hardware');
+      expect(job?.team).toBe('Avionics');
+      expect(job?.datePosted).toBe('2026-06-04');
+    });
+  });
+
   describe('retry resilience (public GET)', () => {
     it('retries after a timeout and returns jobs on the second attempt', async () => {
       mockGet

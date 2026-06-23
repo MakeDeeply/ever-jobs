@@ -235,6 +235,15 @@ export class AshbyService implements IScraper {
     // Compensation - extract from the rich tier structure
     const compensation = this.extractCompensation(job);
 
+    // The public job-board API and the authenticated Posting API disagree on
+    // these field names (publishedAt vs publishedDate, department vs
+    // departmentName, team vs teamName). Prefer the public name, fall back to
+    // the authenticated one so both paths populate.
+    const publishedRaw = job.publishedAt ?? job.publishedDate;
+    const datePosted = publishedRaw
+      ? new Date(publishedRaw).toISOString().split('T')[0]
+      : null;
+
     return new JobPostDto({
       id: `ashby-${job.id}`,
       title,
@@ -243,9 +252,7 @@ export class AshbyService implements IScraper {
       location: parsedLocations.location,
       description,
       compensation,
-      datePosted: job.publishedDate
-        ? new Date(job.publishedDate).toISOString().split('T')[0]
-        : null,
+      datePosted,
       isRemote: Boolean(job.isRemote) || parsedLocations.remoteMentioned,
       workFromHomeType: parsedLocations.workFromHomeType,
       emails: extractEmails(description),
@@ -253,8 +260,8 @@ export class AshbyService implements IScraper {
       // ATS-specific fields
       atsId: job.id ?? null,
       atsType: 'ashby',
-      department: job.departmentName ?? null,
-      team: job.teamName ?? null,
+      department: job.department ?? job.departmentName ?? null,
+      team: job.team ?? job.teamName ?? null,
       employmentType: job.employmentType ?? null,
       applyUrl: job.applyUrl ?? null,
     });

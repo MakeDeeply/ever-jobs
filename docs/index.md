@@ -805,6 +805,7 @@
 | 747 | [Rippling Authoritative Detail Fields](../.specify/specs/747-rippling-authoritative-detail-fields/spec.md) — [plan](../.specify/specs/747-rippling-authoritative-detail-fields/plan.md) — [tasks](../.specify/specs/747-rippling-authoritative-detail-fields/tasks.md) | Implemented 2026-06-22. Fetches every selected Rippling detail record and overlays source-authored company identity, complete creation timestamp, and raw employment-type label with list fallbacks and bounded failure isolation. Boom Supersonic regression covered; focused suite: 17 tests green. |
 | 748 | [Lever Complete Public Descriptions](../.specify/specs/748-lever-complete-public-descriptions/spec.md) — [plan](../.specify/specs/748-lever-complete-public-descriptions/plan.md) — [tasks](../.specify/specs/748-lever-complete-public-descriptions/tasks.md) | Implemented 2026-06-22. Assembles Lever public descriptions from combined/opening/body text, every `lists[]` heading/body section, and additional closing text using shared public/authenticated mapping. Enigma regression covered; focused suite green. |
 | 749 | [Shared Interval and Multi-Location Normalization](../.specify/specs/749-shared-interval-and-location-normalization/spec.md) — [plan](../.specify/specs/749-shared-interval-and-location-normalization/plan.md) — [tasks](../.specify/specs/749-shared-interval-and-location-normalization/tasks.md) | Implemented 2026-06-23. Adds conservative count-one compensation interval normalization, shared multi-location canonicalization, Ashby wiring, and private investigator reuse of repo normalization helpers. Ashby live check clean. |
+| 750 | [Ashby Field-Name Fallbacks](../.specify/specs/750-ashby-field-name-fallbacks/spec.md) — [plan](../.specify/specs/750-ashby-field-name-fallbacks/plan.md) — [tasks](../.specify/specs/750-ashby-field-name-fallbacks/tasks.md) | Implemented 2026-06-23. Maps `datePosted`, `department`, and `team` from the public job-board names (`publishedAt`, `department`, `team`) with authenticated-name fallbacks, fixing a 100% null rate on the public path across 1789 harvested jobs. Private investigator aligned to the same names. |
 
 ## 8. Templates
 
@@ -816,4 +817,4 @@
 
 ---
 
-_Last revised: 2026-06-23 (run #442 — Spec 749: shared interval and multi-location normalization)._
+_Last revised: 2026-06-23 (run #443 — Spec 750: Ashby field-name fallbacks)._
