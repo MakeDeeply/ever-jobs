@@ -111,7 +111,7 @@ export class RipplingService implements IScraper {
       if (newJobsOnPage === 0) break;
     }
 
-    const enrichedJobs = await this.enrichMissingDescriptions(
+    const enrichedJobs = await this.enrichJobsFromDetails(
       client,
       listedJobs,
       companySlug,
@@ -148,7 +148,7 @@ export class RipplingService implements IScraper {
       : null;
   }
 
-  private async enrichMissingDescriptions(
+  private async enrichJobsFromDetails(
     client: ReturnType<typeof createHttpClient>,
     jobs: RipplingJob[],
     companySlug: string,
@@ -162,7 +162,7 @@ export class RipplingService implements IScraper {
     ) {
       const batch = jobs.slice(index, index + RIPPLING_DETAIL_CONCURRENCY);
       const settled = await Promise.allSettled(
-        batch.map((job) => this.enrichJobDescription(client, job, companySlug)),
+        batch.map((job) => this.enrichJobFromDetail(client, job, companySlug)),
       );
 
       settled.forEach((result, batchIndex) => {
@@ -175,12 +175,11 @@ export class RipplingService implements IScraper {
     return enriched;
   }
 
-  private async enrichJobDescription(
+  private async enrichJobFromDetail(
     client: ReturnType<typeof createHttpClient>,
     job: RipplingJob,
     companySlug: string,
   ): Promise<RipplingJob> {
-    if (this.hasDescription(job.description)) return job;
     const sourceId = this.getSourceIdentity(job);
     if (!sourceId) return job;
 
@@ -196,7 +195,14 @@ export class RipplingService implements IScraper {
         description: this.hasDescription(detail.description)
           ? detail.description
           : job.description,
-        applyUrl: detail.applyUrl ?? job.applyUrl,
+        applyUrl: this.nonEmptyString(detail.applyUrl) ?? job.applyUrl,
+        companyName:
+          this.nonEmptyString(detail.companyName) ?? job.companyName,
+        createdOn: this.nonEmptyString(detail.createdOn) ?? job.createdOn,
+        employmentType:
+          this.nonEmptyString(detail.employmentType?.label) != null
+            ? detail.employmentType
+            : job.employmentType,
       };
     } catch (err: any) {
       this.logger.warn(
@@ -224,6 +230,11 @@ export class RipplingService implements IScraper {
         (part) => typeof part === "string" && part.trim().length > 0,
       )
     );
+  }
+
+  private nonEmptyString(value: string | null | undefined): string | null {
+    const trimmed = value?.trim();
+    return trimmed ? trimmed : null;
   }
 
   /**
@@ -330,16 +341,14 @@ export class RipplingService implements IScraper {
     return new JobPostDto({
       id: `rippling-${sourceId}`,
       title: title!.trim(),
-      companyName: job.companyName ?? companySlug,
+      companyName: this.nonEmptyString(job.companyName) ?? companySlug,
       companyUrl: `${RIPPLING_BASE_URL}/${encodeURIComponent(companySlug)}/jobs`,
       jobUrl,
       ...(applyUrl && applyUrl !== jobUrl ? { applyUrl } : {}),
       location,
       description,
       compensation,
-      datePosted: job.createdOn
-        ? new Date(job.createdOn).toISOString().split("T")[0]
-        : null,
+      datePosted: this.nonEmptyString(job.createdOn),
       isRemote,
       emails: extractEmails(description),
       site: Site.RIPPLING,
@@ -347,11 +356,8 @@ export class RipplingService implements IScraper {
       atsId: sourceId,
       atsType: "rippling",
       department,
-      ...(mappedJobType
-        ? { jobType: [mappedJobType] }
-        : employmentType
-          ? { employmentType }
-          : {}),
+      ...(employmentType ? { employmentType } : {}),
+      ...(mappedJobType ? { jobType: [mappedJobType] } : {}),
     });
   }
 

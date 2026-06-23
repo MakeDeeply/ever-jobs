@@ -15,6 +15,22 @@
 
 ---
 
+## 2026-06-22 — Run #440 — Spec 747: Rippling authoritative detail fields
+
+**Scope:** Corrected three incremental Rippling list/detail mismatches identified on Boom
+Supersonic (`boom-supersonic`). Every admitted, deduplicated selected job now fetches its public
+detail record in ordered batches of five, even when the list already contains a description.
+Non-empty detail values authoritatively overlay company identity, creation timestamp, and
+employment type while absent, malformed, or failed detail fields independently retain list
+fallbacks. `datePosted` now preserves Rippling's complete offset-bearing `createdOn` string.
+`employmentType` always preserves the raw label, while recognized labels additionally populate
+normalized `jobType`. Boom now emits `Boom Technology, Inc.`,
+`2025-09-30T14:03:21.450000-07:00`, and `SALARIED_FT` from the detail response.
+
+**Verification:** Focused Rippling Jest suite passed: 17 cases. Package-focused TypeScript check
+and doc-lint passed. The private investigator sampled the live Boom board and reported zero field
+differences and zero execution errors. `git diff --check` passed.
+
 ## 2026-06-22 — Run #439 — Spec 745: Workday job-detail enrichment
 
 **Scope:** Fixed the Workday source's summary-only mapping. Selected list records now fetch their

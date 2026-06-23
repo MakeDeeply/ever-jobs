@@ -60,7 +60,10 @@ function pageWithQueries(itemArrays: unknown[][]): string {
 }
 
 describe("RipplingService pagination", () => {
-  beforeEach(() => mockGet.mockReset());
+  beforeEach(() => {
+    mockGet.mockReset();
+    mockGet.mockResolvedValue({ data: {} });
+  });
 
   it("collects unique jobs across zero-based pages until exhaustion", async () => {
     mockGet
@@ -79,7 +82,11 @@ describe("RipplingService pagination", () => {
       uuid("b"),
       uuid("c"),
     ]);
-    expect(mockGet.mock.calls.map((call) => call[0])).toEqual([
+    expect(
+      mockGet.mock.calls
+        .map((call) => call[0])
+        .filter((url) => url.includes("jobs?page=")),
+    ).toEqual([
       "https://ats.rippling.com/boom-supersonic/jobs?page=0&jobBoardSlug=boom-supersonic",
       "https://ats.rippling.com/boom-supersonic/jobs?page=1&jobBoardSlug=boom-supersonic",
       "https://ats.rippling.com/boom-supersonic/jobs?page=2&jobBoardSlug=boom-supersonic",
@@ -96,7 +103,7 @@ describe("RipplingService pagination", () => {
 
     expect(result.jobs).toHaveLength(1);
     expect(result.jobs[0].atsId).toBe(uuid("a"));
-    expect(mockGet).toHaveBeenCalledTimes(1);
+    expect(mockGet).toHaveBeenCalledTimes(2);
   });
 
   it("fetches a missing description from the public detail endpoint", async () => {
@@ -129,6 +136,36 @@ describe("RipplingService pagination", () => {
     });
     expect(mockGet.mock.calls[1][0]).toBe(
       `https://ats.rippling.com/api/v2/board/boom-supersonic/jobs/${uuid("detail")}`,
+    );
+  });
+
+  it("prefers authoritative Boom detail identity, timestamp, and employment type", async () => {
+    const listed = job("authoritative", "Authoritative Role");
+    listed.createdOn = "2025-09-29T10:00:00Z";
+    listed.employmentType = { label: "Old list value" };
+    mockGet
+      .mockResolvedValueOnce({ data: page([listed]) })
+      .mockResolvedValueOnce({
+        data: {
+          companyName: "Boom Technology, Inc.",
+          createdOn: "2025-09-30T14:03:21.450000-07:00",
+          employmentType: { label: "SALARIED_FT" },
+        },
+      });
+
+    const result = await new RipplingService().scrape({
+      companySlug: "boom-supersonic",
+      resultsWanted: 1,
+    } as ScraperInputDto);
+
+    expect(result.jobs[0]).toMatchObject({
+      companyName: "Boom Technology, Inc.",
+      datePosted: "2025-09-30T14:03:21.450000-07:00",
+      employmentType: "SALARIED_FT",
+      description: "Description for Authoritative Role",
+    });
+    expect(mockGet.mock.calls[1][0]).toBe(
+      `https://ats.rippling.com/api/v2/board/boom-supersonic/jobs/${uuid("authoritative")}`,
     );
   });
 
@@ -165,6 +202,8 @@ describe("RipplingService pagination", () => {
   it("keeps a valid list job when its detail request fails", async () => {
     const listed = job("detail-failure");
     delete listed.description;
+    listed.createdOn = "2025-09-30T14:03:21.450000-07:00";
+    listed.employmentType = { label: "SALARIED_FT" };
     mockGet
       .mockResolvedValueOnce({ data: page([listed]) })
       .mockRejectedValueOnce(new Error("HTTP 503"));
@@ -176,6 +215,11 @@ describe("RipplingService pagination", () => {
 
     expect(result.jobs).toHaveLength(1);
     expect(result.jobs[0].description).toBeNull();
+    expect(result.jobs[0]).toMatchObject({
+      companyName: "Boom Supersonic",
+      datePosted: "2025-09-30T14:03:21.450000-07:00",
+      employmentType: "SALARIED_FT",
+    });
   });
 
   it("bounds detail enrichment to five simultaneous requests", async () => {
@@ -220,7 +264,7 @@ describe("RipplingService pagination", () => {
       uuid("a"),
       uuid("b"),
     ]);
-    expect(mockGet).toHaveBeenCalledTimes(2);
+    expect(mockGet).toHaveBeenCalledTimes(4);
   });
 
   it("deduplicates repeated IDs while retaining unseen jobs on later pages", async () => {
@@ -348,9 +392,9 @@ describe("RipplingService pagination", () => {
 
     expect(result.jobs[0]).toMatchObject({
       jobType: [JobType.FULL_TIME],
+      employmentType: "Full-time",
       location: { city: "Centennial Campus", state: "CO", country: "US" },
     });
-    expect(result.jobs[0]).not.toHaveProperty("employmentType");
     expect(result.jobs[0]).not.toHaveProperty("applyUrl");
     expect(result.jobs[1]).toMatchObject({
       employmentType: "Seasonal specialist",
