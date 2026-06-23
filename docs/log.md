@@ -15,6 +15,23 @@
 
 ---
 
+## 2026-06-23 — Run #443 — Spec 750: Ashby field-name fallbacks
+
+**Scope:** Fixed the Ashby plugin's public path, which mapped `datePosted`,
+`department`, and `team` by their authenticated Posting API names
+(`publishedDate`, `departmentName`, `teamName`). The unauthenticated job-board
+payload uses `publishedAt`, `department`, and `team`, so every public-path job
+emitted `null` for all three. The mapper now reads the public name first and
+falls back to the authenticated name; the `AshbyJob` type documents both
+variants. The private ATS field investigator was aligned to read the same public
+names with authenticated fallbacks so comparisons no longer agree on a false
+`null`.
+
+**Verification:** Focused Ashby Jest suite passed: 21 cases (3 new field-name
+fallback cases plus existing coverage). The TypeScript build passed. A 1789-job
+harvest across 39 live Ashby boards motivated the change (100% null rate on all
+three fields before the fix).
+
 ## 2026-06-23 — Run #442 — Spec 749: shared interval and multi-location normalization
 
 **Scope:** Moved Ashby's unambiguous `"1 YEAR"` compensation interval behavior into the shared

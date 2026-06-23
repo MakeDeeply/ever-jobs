@@ -65,7 +65,13 @@ export interface AshbyCompensation {
 export interface AshbyJob {
   id?: string | null;
   title?: string | null;
+  /** Public job-board name. */
+  department?: string | null;
+  /** Authenticated Posting API name. */
   departmentName?: string | null;
+  /** Public job-board name. */
+  team?: string | null;
+  /** Authenticated Posting API name. */
   teamName?: string | null;
   employmentType?: string | null;
   location?: string | null;
@@ -75,6 +81,9 @@ export interface AshbyJob {
     address?: AshbyAddress | null;
   }> | null;
   isRemote?: boolean | null;
+  /** Public job-board name (ISO timestamp). */
+  publishedAt?: string | null;
+  /** Authenticated Posting API name. */
   publishedDate?: string | null;
   descriptionHtml?: string | null;
   descriptionPlain?: string | null;
