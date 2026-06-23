@@ -15,6 +15,26 @@
 
 ---
 
+## 2026-06-23 — Run #446 — Spec 753: Fix stateful remote-token regex in normalizeLocation
+
+**Scope:** Fixed a pre-existing bug in `packages/common/src/normalize.ts`:
+`LOCATION_REMOTE_TOKENS` carried the global (`/g`) flag but is consumed by
+`RegExp.prototype.test`, which makes the shared module-level regex stateful —
+each match advances `lastIndex`, so consecutive `.test()` calls alternated
+match/no-match by call order. This caused `normalizeLocation('Anywhere')` →
+`'anywhere'` and `normalizeLocation('Remote, US')` → `'remote us'` instead of
+`'remote'`, and broke Remote-vs-Anywhere dedup in `canonicalKey`. The fix drops
+the `/g` flag (detection is a boolean match, never a global replace) and adds a
+regression test that calls `normalizeLocation` on remote inputs repeatedly and
+asserts a stable `'remote'`. Inherited from upstream `develop`; unrelated to any
+ATS plugin change.
+
+**Verification:** `npx jest packages/common` green (141 tests; the 3 previously
+failing `normalize.spec`/`canonical-key.spec` cases now pass), `npm run build`
+passes.
+
+---
+
 ## 2026-06-23 — Run #445 — Spec 752: Lever compensation, department, multi-location, workFromHomeType, country
 
 **Scope:** Fixed four fields the Lever public path

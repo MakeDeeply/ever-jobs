@@ -88,4 +88,13 @@ describe('normalizeLocation (Spec 003 / T04)', () => {
       expect(normalizeLocation(once)).toBe(once);
     }
   });
+
+  it('detects remote on every call regardless of call order', () => {
+    // Guards against a stateful /g regex whose lastIndex would make
+    // consecutive .test() calls alternate match/no-match.
+    for (let i = 0; i < 5; i++) {
+      expect(normalizeLocation('Anywhere')).toBe('remote');
+      expect(normalizeLocation('Remote, US')).toBe('remote');
+    }
+  });
 });

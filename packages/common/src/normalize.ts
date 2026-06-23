@@ -127,7 +127,7 @@ export function normalizeTitle(input: string | null | undefined): string {
  *  Location
  * ────────────────────────────────────────────────────────────────────── */
 
-const LOCATION_REMOTE_TOKENS = /\b(?:remote|work\s*from\s*home|wfh|anywhere|telecommute|virtual)\b/g;
+const LOCATION_REMOTE_TOKENS = /\b(?:remote|work\s*from\s*home|wfh|anywhere|telecommute|virtual)\b/;
 const LOCATION_DELIM_RE = /[,;]+/g;
 
 /** Two-letter US-state abbreviations (kept lowercase for matching). */
