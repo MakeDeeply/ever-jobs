@@ -16,8 +16,10 @@ import {
 import {
   createHttpClient,
   extractEmails,
+  extractSalary,
   htmlToPlainText,
   markdownConverter,
+  parseLocationList,
 } from "@ever-jobs/common";
 import {
   RIPPLING_BASE_URL,
@@ -203,6 +205,18 @@ export class RipplingService implements IScraper {
           this.nonEmptyString(detail.employmentType?.label) != null
             ? detail.employmentType
             : job.employmentType,
+        locations:
+          detail.locations && detail.locations.length > 0
+            ? detail.locations
+            : job.locations,
+        workLocations:
+          detail.workLocations && detail.workLocations.length > 0
+            ? detail.workLocations
+            : job.workLocations,
+        payRangeDetails:
+          detail.payRangeDetails && detail.payRangeDetails.length > 0
+            ? detail.payRangeDetails
+            : job.payRangeDetails,
       };
     } catch (err: any) {
       this.logger.warn(
@@ -303,25 +317,27 @@ export class RipplingService implements IScraper {
 
     const description = this.formatDescription(job.description, format);
 
-    const primaryLoc = job.locations?.[0];
-    const workLocation =
-      job.workLocations?.find((value) => value.trim().length > 0) ?? null;
-    const city = primaryLoc?.city ?? primaryLoc?.name ?? workLocation;
-    const state = primaryLoc?.state ?? primaryLoc?.stateCode ?? null;
-    const country = primaryLoc?.country ?? primaryLoc?.countryCode ?? null;
-    const location =
-      city || state || country
-        ? new LocationDto({ city: city ?? null, state, country })
-        : null;
+    const parsedLocations = parseLocationList(this.locationLabels(job));
+    const location = parsedLocations.location;
 
-    // Remote detection
+    // Remote detection: explicit per-location workplaceType, the parsed
+    // location labels, or a free-text workLocation mentioning remote.
     const isRemote =
-      primaryLoc?.workplaceType?.toLowerCase() === "remote" ||
-      job.workLocations?.some((loc) => loc.toLowerCase().includes("remote")) ||
+      this.hasRemoteWorkplaceType(job) ||
+      parsedLocations.remoteMentioned ||
       false;
 
-    // Compensation from payRangeDetails
-    const compensation = this.extractCompensation(job.payRangeDetails);
+    const workFromHomeType =
+      this.workFromHomeTypeFromWorkplaceType(job) ??
+      parsedLocations.workFromHomeType;
+
+    // Compensation: prefer the structured payRangeDetails, fall back to
+    // parsing the description free text (pay-transparency ranges in the body).
+    const structuredComp = this.extractCompensation(job.payRangeDetails);
+    const compensation =
+      structuredComp?.compensation ??
+      this.extractCompensationFromText(job.description);
+    const salarySource = structuredComp?.salarySource ?? null;
 
     const employmentType = job.employmentType?.label?.trim() || null;
     const mappedJobType = employmentType
@@ -350,6 +366,8 @@ export class RipplingService implements IScraper {
       compensation,
       datePosted: this.nonEmptyString(job.createdOn),
       isRemote,
+      ...(workFromHomeType ? { workFromHomeType } : {}),
+      ...(salarySource ? { salarySource } : {}),
       emails: extractEmails(description),
       site: Site.RIPPLING,
       // ATS-specific fields
@@ -415,22 +433,137 @@ export class RipplingService implements IScraper {
     return hasJobUrl || hasDescription || hasStructuredJobFields;
   }
 
+  /** Location labels for {@link parseLocationList}: structured locations first, then free-text workLocations. */
+  private locationLabels(job: RipplingJob): string[] {
+    const labels: string[] = [];
+
+    for (const loc of job.locations ?? []) {
+      const parts = [
+        loc.city ?? loc.name,
+        loc.state ?? loc.stateCode,
+        loc.country ?? loc.countryCode,
+      ]
+        .map((part) => part?.trim())
+        .filter((part): part is string => !!part);
+      if (parts.length > 0) labels.push(parts.join(", "));
+    }
+
+    for (const workLocation of job.workLocations ?? []) {
+      if (typeof workLocation === "string" && workLocation.trim().length > 0) {
+        labels.push(workLocation.trim());
+      }
+    }
+
+    return labels;
+  }
+
+  private hasRemoteWorkplaceType(job: RipplingJob): boolean {
+    return (
+      (job.locations ?? []).some(
+        (loc) => loc.workplaceType?.toUpperCase() === "REMOTE",
+      ) ||
+      (job.workLocations ?? []).some((loc) =>
+        loc.toLowerCase().includes("remote"),
+      )
+    );
+  }
+
+  /** Map Rippling's per-location workplaceType to a workFromHomeType label. ON_SITE yields none. */
+  private workFromHomeTypeFromWorkplaceType(job: RipplingJob): string | null {
+    const types = new Set(
+      (job.locations ?? [])
+        .map((loc) => loc.workplaceType?.toUpperCase())
+        .filter((value): value is string => !!value),
+    );
+    const hybrid = types.has("HYBRID");
+    const remote = types.has("REMOTE");
+    if (hybrid && remote) return "Hybrid or Remote";
+    if (hybrid) return "Hybrid";
+    if (remote) return "Remote";
+    return null;
+  }
+
+  /**
+   * Extract structured compensation from payRangeDetails. Multiple bands are
+   * collapsed into a min–max envelope (min rangeStart, max rangeEnd). When the
+   * bands carry distinct ranges (by location, work mode, or role level), the
+   * per-band detail is preserved in `salarySource`, semicolon-joined
+   * (e.g. "Oakland, CA 130,000–200,000; Sandy, UT 115,000–155,000").
+   */
   private extractCompensation(
     payRangeDetails?: RipplingPayRangeDetail[] | null,
+  ): { compensation: CompensationDto; salarySource: string | null } | null {
+    const details = (payRangeDetails ?? []).filter(
+      (detail) =>
+        detail && (detail.rangeStart != null || detail.rangeEnd != null),
+    );
+    if (details.length === 0) return null;
+
+    const starts = details
+      .map((detail) => detail.rangeStart)
+      .filter((value): value is number => value != null);
+    const ends = details
+      .map((detail) => detail.rangeEnd)
+      .filter((value): value is number => value != null);
+
+    const first = details[0];
+    const interval = getCompensationInterval(first.frequency ?? "");
+
+    const compensation = new CompensationDto({
+      interval: interval ?? undefined,
+      minAmount: starts.length > 0 ? Math.min(...starts) : undefined,
+      maxAmount: ends.length > 0 ? Math.max(...ends) : undefined,
+      currency: first.currency ?? "USD",
+    });
+
+    const distinctRanges = new Set(
+      details.map((detail) => `${detail.rangeStart}-${detail.rangeEnd}`),
+    );
+    const salarySource =
+      distinctRanges.size > 1
+        ? details.map((detail) => this.formatPayBand(detail)).join("; ")
+        : null;
+
+    return { compensation, salarySource };
+  }
+
+  /** Format one pay band as "<label> <start>–<end>", e.g. "Manager 140,000–170,000". */
+  private formatPayBand(detail: RipplingPayRangeDetail): string {
+    const range = [detail.rangeStart, detail.rangeEnd]
+      .filter((value): value is number => value != null)
+      .map((value) => Math.round(value).toLocaleString("en-US"))
+      .join("\u2013");
+    const label = detail.location?.trim();
+    return label ? `${label} ${range}` : range;
+  }
+
+  /** Fallback: parse a pay-transparency salary range from the description body text. */
+  private extractCompensationFromText(
+    source: RipplingJob["description"],
   ): CompensationDto | null {
-    if (!payRangeDetails || payRangeDetails.length === 0) return null;
+    const html = [source?.company, source?.role]
+      .filter(
+        (part): part is string =>
+          typeof part === "string" && part.trim().length > 0,
+      )
+      .join("\n\n");
+    if (!html) return null;
 
-    const detail = payRangeDetails[0];
-    if (detail.min_value == null && detail.max_value == null) return null;
+    const text = htmlToPlainText(html);
+    if (!text) return null;
 
-    const rawInterval = detail.interval?.toLowerCase() ?? "";
-    const interval = getCompensationInterval(rawInterval);
+    const parsed = extractSalary(text);
+    if (parsed.minAmount == null && parsed.maxAmount == null) return null;
+
+    const interval = parsed.interval
+      ? getCompensationInterval(parsed.interval)
+      : null;
 
     return new CompensationDto({
       interval: interval ?? undefined,
-      minAmount: detail.min_value ?? undefined,
-      maxAmount: detail.max_value ?? undefined,
-      currency: detail.currency ?? "USD",
+      minAmount: parsed.minAmount ?? undefined,
+      maxAmount: parsed.maxAmount ?? undefined,
+      currency: parsed.currency ?? "USD",
     });
   }
 }

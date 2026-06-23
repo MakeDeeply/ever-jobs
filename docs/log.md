@@ -15,6 +15,34 @@
 
 ---
 
+## 2026-06-23 — Run #447 — Spec 754: Rippling compensation, workFromHomeType, multi-location
+
+**Scope:** Fixed three field-mapping gaps in `source-ats-rippling`, found from a
+fresh 246-job / 15-board harvest gap-checked against `makedeeply`. (1)
+**Compensation** was null on 100% of jobs, broken two ways: `enrichJobFromDetail`
+never copied `payRangeDetails` from the detail payload, and `extractCompensation`
++ the `RipplingPayRangeDetail` type read the wrong field names
+(`min_value`/`max_value`/`interval` vs the live `rangeStart`/`rangeEnd`/
+`frequency`). The rewrite reads structured `payRangeDetails` first, collapses
+multiple bands into a min–max envelope, and preserves per-band detail in
+`salarySource` (semicolon-joined, e.g. `Oakland, CA 130,000–200,000; Sandy, UT
+115,000–155,000`) when the bands carry distinct ranges; when no structured range
+exists it falls back to the shared `extractSalary` over the description body
+(pay-transparency text). (2) **workFromHomeType** is now derived from the
+per-location `workplaceType` (HYBRID/REMOTE/both), else from parsed labels. (3)
+**Multi-location** now routes all location labels through the shared
+`parseLocationList` instead of using `locations[0]` only. Also copies
+`locations`/`workLocations` from the detail payload. No change to
+`@ever-jobs/common` or `@ever-jobs/models` (reuses `extractSalary`,
+`parseLocationList`, `getCompensationInterval`).
+
+**Verification:** `npx jest source-ats-rippling` green (26 tests, 10 new),
+`npm run build` and `npm run lint:docs` pass. Spec triad
+`754-rippling-compensation-workfromhometype`. No text-fallback for the other
+ATS plugins in this PR (separate follow-up, per owner).
+
+---
+
 ## 2026-06-23 — Run #446 — Spec 753: Fix stateful remote-token regex in normalizeLocation
 
 **Scope:** Fixed a pre-existing bug in `packages/common/src/normalize.ts`:

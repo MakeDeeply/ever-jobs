@@ -2,6 +2,7 @@ import "reflect-metadata";
 import { createHash } from "crypto";
 import {
   DescriptionFormat,
+  JobPostDto,
   JobType,
   ScraperInputDto,
   Site,
@@ -393,7 +394,11 @@ describe("RipplingService pagination", () => {
     expect(result.jobs[0]).toMatchObject({
       jobType: [JobType.FULL_TIME],
       employmentType: "Full-time",
-      location: { city: "Centennial Campus", state: "CO", country: "US" },
+      location: {
+        city: "Centennial Campus",
+        state: "CO",
+        country: "United States",
+      },
     });
     expect(result.jobs[0]).not.toHaveProperty("applyUrl");
     expect(result.jobs[1]).toMatchObject({
@@ -402,5 +407,212 @@ describe("RipplingService pagination", () => {
       isRemote: true,
     });
     expect(result.jobs[1]).not.toHaveProperty("jobType");
+  });
+});
+
+describe("RipplingService compensation and work mode", () => {
+  beforeEach(() => {
+    mockGet.mockReset();
+    mockGet.mockResolvedValue({ data: {} });
+  });
+
+  async function scrapeOne(listed: RipplingJob): Promise<JobPostDto> {
+    mockGet
+      .mockResolvedValueOnce({ data: page([listed]) })
+      .mockResolvedValueOnce({ data: page([]) });
+    const result = await new RipplingService().scrape({
+      companySlug: "boom-supersonic",
+      resultsWanted: 1,
+    } as ScraperInputDto);
+    return result.jobs[0];
+  }
+
+  it("maps a single structured pay band without a salarySource", async () => {
+    const listed = job("single-band");
+    listed.payRangeDetails = [
+      {
+        location: "Centennial, CO",
+        currency: "USD",
+        frequency: "YEAR",
+        rangeStart: 109000,
+        rangeEnd: 137000,
+        isRemote: false,
+      },
+    ];
+
+    const post = await scrapeOne(listed);
+
+    expect(post.compensation).toMatchObject({
+      interval: "yearly",
+      minAmount: 109000,
+      maxAmount: 137000,
+      currency: "USD",
+    });
+    expect(post).not.toHaveProperty("salarySource");
+  });
+
+  it("honors an hourly frequency", async () => {
+    const listed = job("hourly-band");
+    listed.payRangeDetails = [
+      {
+        location: "Centennial, CO",
+        currency: "USD",
+        frequency: "HOUR",
+        rangeStart: 39,
+        rangeEnd: 50,
+        isRemote: false,
+      },
+    ];
+
+    const post = await scrapeOne(listed);
+
+    expect(post.compensation).toMatchObject({
+      interval: "hourly",
+      minAmount: 39,
+      maxAmount: 50,
+    });
+  });
+
+  it("collapses distinct pay bands into a min-max envelope with per-band salarySource", async () => {
+    const listed = job("distinct-bands");
+    listed.payRangeDetails = [
+      {
+        location: "Oakland, CA",
+        currency: "USD",
+        frequency: "YEAR",
+        rangeStart: 130000,
+        rangeEnd: 200000,
+        isRemote: false,
+      },
+      {
+        location: "Sandy, UT",
+        currency: "USD",
+        frequency: "YEAR",
+        rangeStart: 115000,
+        rangeEnd: 155000,
+        isRemote: false,
+      },
+    ];
+
+    const post = await scrapeOne(listed);
+
+    expect(post.compensation).toMatchObject({
+      interval: "yearly",
+      minAmount: 115000,
+      maxAmount: 200000,
+      currency: "USD",
+    });
+    expect(post.salarySource).toBe(
+      "Oakland, CA 130,000\u2013200,000; Sandy, UT 115,000\u2013155,000",
+    );
+  });
+
+  it("does not emit salarySource when multiple bands share an identical range", async () => {
+    const listed = job("identical-bands");
+    listed.payRangeDetails = [
+      {
+        location: "Mytra, Inc.",
+        currency: "USD",
+        frequency: "YEAR",
+        rangeStart: 140000,
+        rangeEnd: 160000,
+        isRemote: false,
+      },
+      {
+        location: "Remote",
+        currency: "USD",
+        frequency: "YEAR",
+        rangeStart: 140000,
+        rangeEnd: 160000,
+        isRemote: true,
+      },
+    ];
+
+    const post = await scrapeOne(listed);
+
+    expect(post.compensation).toMatchObject({
+      minAmount: 140000,
+      maxAmount: 160000,
+    });
+    expect(post).not.toHaveProperty("salarySource");
+  });
+
+  it("falls back to parsing the description text when no structured pay range exists", async () => {
+    const listed = job("text-fallback");
+    listed.payRangeDetails = [];
+    listed.description = {
+      role: "<p>Base Salary Range: $109,000 - $137,000 per year.</p>",
+    };
+
+    const post = await scrapeOne(listed);
+
+    expect(post.compensation).toMatchObject({
+      interval: "yearly",
+      minAmount: 109000,
+      maxAmount: 137000,
+      currency: "USD",
+    });
+    expect(post).not.toHaveProperty("salarySource");
+  });
+
+  it("prefers structured compensation over description text", async () => {
+    const listed = job("structured-wins");
+    listed.payRangeDetails = [
+      {
+        currency: "USD",
+        frequency: "YEAR",
+        rangeStart: 200000,
+        rangeEnd: 250000,
+      },
+    ];
+    listed.description = {
+      role: "<p>Base Salary Range: $109,000 - $137,000 per year.</p>",
+    };
+
+    const post = await scrapeOne(listed);
+
+    expect(post.compensation).toMatchObject({
+      minAmount: 200000,
+      maxAmount: 250000,
+    });
+  });
+
+  it("derives workFromHomeType from a hybrid location workplaceType", async () => {
+    const listed = job("hybrid");
+    listed.locations = [
+      { city: "Centennial", state: "CO", country: "US", workplaceType: "HYBRID" },
+    ];
+
+    const post = await scrapeOne(listed);
+
+    expect(post.workFromHomeType).toBe("Hybrid");
+    expect(post.isRemote).toBe(false);
+  });
+
+  it("marks a remote location workplaceType as remote", async () => {
+    const listed = job("remote");
+    listed.locations = [
+      { name: "Remote", country: "US", workplaceType: "REMOTE" },
+    ];
+
+    const post = await scrapeOne(listed);
+
+    expect(post.workFromHomeType).toBe("Remote");
+    expect(post.isRemote).toBe(true);
+  });
+
+  it("joins multiple structured locations through the shared parser", async () => {
+    const listed = job("multi-location");
+    listed.locations = [
+      { city: "Oakland", state: "CA", country: "US" },
+      { city: "Sandy", state: "UT", country: "US" },
+    ];
+
+    const post = await scrapeOne(listed);
+
+    expect(post.location).toMatchObject({
+      city: "Oakland, CA; Sandy, UT",
+      country: "United States",
+    });
   });
 });
