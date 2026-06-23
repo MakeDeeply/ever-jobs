@@ -145,6 +145,37 @@ describe('AshbyService — Spec 719', () => {
         'Unlisted Ghost Role',
       );
     });
+
+    it('normalizes duplicate primary and secondary locations through the shared parser', async () => {
+      const raw = clone(BOARD_RAW) as any;
+      raw.jobs[0].location = 'Mountain View, CA';
+      raw.jobs[0].address = null;
+      raw.jobs[0].isRemote = false;
+      raw.jobs[0].secondaryLocations = [
+        { location: 'Mountain View, California, United States' },
+        { location: 'Seattle, WA' },
+        { location: 'Seattle, WA, United States' },
+        { location: 'Remote' },
+        { location: 'United States' },
+      ];
+      mockGet.mockResolvedValueOnce({ data: raw });
+
+      const service = new AshbyService();
+      const result = await service.scrape({
+        siteType: [Site.ASHBY],
+        companySlug: SLUG,
+      } as ScraperInputDto);
+
+      const job = result.jobs.find(
+        (j) => j.id === `ashby-${BOARD_RAW.jobs[0].id}`,
+      );
+      expect(job?.location).toMatchObject({
+        city: 'Mountain View, CA; Seattle, WA',
+        country: 'United States',
+      });
+      expect(job?.isRemote).toBe(true);
+      expect(job?.workFromHomeType).toBe('Remote');
+    });
   });
 
   describe('compensation mapping', () => {

@@ -6,7 +6,6 @@ import {
   ScraperInputDto,
   JobResponseDto,
   JobPostDto,
-  LocationDto,
   CompensationDto,
   Site,
   DescriptionFormat,
@@ -17,6 +16,7 @@ import {
   HttpClient,
   htmlToPlainText,
   extractEmails,
+  parseLocationList,
 } from '@ever-jobs/common';
 import {
   ASHBY_API_URL,
@@ -230,13 +230,7 @@ export class AshbyService implements IScraper {
       description = htmlToPlainText(job.descriptionHtml);
     }
 
-    // Location
-    const addr = job.address?.postalAddress;
-    const location = new LocationDto({
-      city: addr?.addressLocality ?? job.location ?? null,
-      state: addr?.addressRegion ?? null,
-      country: addr?.addressCountry ?? null,
-    });
+    const parsedLocations = parseLocationList(this.locationLabels(job));
 
     // Compensation - extract from the rich tier structure
     const compensation = this.extractCompensation(job);
@@ -246,13 +240,14 @@ export class AshbyService implements IScraper {
       title,
       companyName: companySlug,
       jobUrl: job.jobUrl ?? `https://jobs.ashbyhq.com/${companySlug}/${job.id}`,
-      location,
+      location: parsedLocations.location,
       description,
       compensation,
       datePosted: job.publishedDate
         ? new Date(job.publishedDate).toISOString().split('T')[0]
         : null,
-      isRemote: job.isRemote ?? false,
+      isRemote: Boolean(job.isRemote) || parsedLocations.remoteMentioned,
+      workFromHomeType: parsedLocations.workFromHomeType,
       emails: extractEmails(description),
       site: Site.ASHBY,
       // ATS-specific fields
@@ -263,6 +258,39 @@ export class AshbyService implements IScraper {
       employmentType: job.employmentType ?? null,
       applyUrl: job.applyUrl ?? null,
     });
+  }
+
+  private locationLabels(job: AshbyJob): string[] {
+    const labels: string[] = [];
+
+    const primaryAddress = this.postalAddressLabel(job.address);
+    if (primaryAddress) {
+      labels.push(primaryAddress);
+    } else if (job.location) {
+      labels.push(job.location);
+    }
+
+    for (const secondary of job.secondaryLocations ?? []) {
+      const secondaryAddress = this.postalAddressLabel(secondary?.address);
+      if (secondaryAddress) {
+        labels.push(secondaryAddress);
+      } else if (secondary?.location) {
+        labels.push(secondary.location);
+      }
+    }
+
+    return labels;
+  }
+
+  private postalAddressLabel(address: AshbyJob['address']): string | null {
+    const postal = address?.postalAddress;
+    if (!postal) return null;
+    const parts = [
+      postal.addressLocality,
+      postal.addressRegion,
+      postal.addressCountry,
+    ].filter((part): part is string => Boolean(part?.trim()));
+    return parts.length > 0 ? parts.join(', ') : null;
   }
 
   /**
@@ -346,14 +374,8 @@ export class AshbyService implements IScraper {
     });
   }
 
-  /**
-   * Normalize a wire interval to a CompensationInterval. The flat shape
-   * prefixes a count (e.g. "1 YEAR", "1 HOUR") — strip it before resolving.
-   */
   private resolveInterval(raw: string | null | undefined) {
     if (!raw) return null;
-    const normalized = raw.trim().replace(/^\d+\s*/, '').toLowerCase();
-    if (!normalized) return null;
-    return getCompensationInterval(normalized);
+    return getCompensationInterval(raw);
   }
 }

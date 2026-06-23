@@ -15,6 +15,21 @@
 
 ---
 
+## 2026-06-23 — Run #442 — Spec 749: shared interval and multi-location normalization
+
+**Scope:** Moved Ashby's unambiguous `"1 YEAR"` compensation interval behavior into the shared
+`getCompensationInterval()` helper without dropping arbitrary leading digits; multi-count forms
+such as `"2 weeks"` remain unmapped. Added a shared multi-location parser that deduplicates
+equivalent US city/state labels, suppresses broad country-only labels when concrete locations are
+present, keeps remote/workplace signals, and emits a semicolon-separated singular-DTO fallback for
+multiple concrete locations. Ashby now uses the shared location helper for primary and secondary
+locations and combines explicit `isRemote` with remote location labels.
+
+**Verification:** Focused model/common/Ashby Jest suites passed: 36 cases. Package-focused
+TypeScript checks passed for models, common, and Ashby. The private ATS field investigator now
+uses the repository's interval and location normalizers for canonical comparison and reported zero
+differences and zero errors across `antaresindustries.com` and `reliable.co`.
+
 ## 2026-06-22 — Run #441 — Spec 748: Lever complete public descriptions
 
 **Scope:** Fixed the Lever public mapper so descriptions include every source-authored component
