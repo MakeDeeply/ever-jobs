@@ -28,6 +28,15 @@ export interface WorkdayJobDetail {
     timeType?: string | null;
     workerSubType?: string | null;
     remoteType?: string | null;
+    country?: { descriptor?: string | null; id?: string | null } | null;
+    jobRequisitionLocation?: {
+      descriptor?: string | null;
+      country?: {
+        descriptor?: string | null;
+        id?: string | null;
+        alpha2Code?: string | null;
+      } | null;
+    } | null;
   } | null;
   hiringOrganization?: {
     name?: string | null;

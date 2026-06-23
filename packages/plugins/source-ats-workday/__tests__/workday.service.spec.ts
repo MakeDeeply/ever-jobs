@@ -141,7 +141,8 @@ describe('WorkdayService — Spec 720 / T05', () => {
       expect(job?.jobUrl).toBe(
         'https://tesla.wd5.myworkdayjobs.com/job/Austin-TX/Software-Engineer_R-101/12345',
       );
-      expect(job?.location?.city).toBe('Austin, TX');
+      expect(job?.location?.city).toBe('Austin');
+      expect(job?.location?.state).toBe('TX');
       expect(job?.department).toBe('Engineering');
 
       const remote = result.jobs.find((j) => j.id === 'wd-tesla-34567');
@@ -290,7 +291,8 @@ describe('WorkdayService — Spec 720 / T05', () => {
       expect(result.jobs).toHaveLength(2);
       expect(result.jobs[0].description).toBeNull();
       expect(result.jobs[0].companyName).toBe('xenergy');
-      expect(result.jobs[0].location?.city).toBe('2 Locations');
+      // The bare "N Locations" count is not a real place, so it is dropped.
+      expect(result.jobs[0].location).toBeNull();
       expect(result.jobs[1].companyName).toBe('X-Energy, LLC');
       expect(result.jobs[1].description).toContain('Build the future');
     });
@@ -310,7 +312,8 @@ describe('WorkdayService — Spec 720 / T05', () => {
 
       expect(mockGet).not.toHaveBeenCalled();
       expect(result.jobs).toHaveLength(1);
-      expect(result.jobs[0].location?.city).toBe('Rockville, MD');
+      expect(result.jobs[0].location?.city).toBe('Rockville');
+      expect(result.jobs[0].location?.state).toBe('MD');
       expect(result.jobs[0].companyName).toBe('xenergy');
     });
 
@@ -345,6 +348,119 @@ describe('WorkdayService — Spec 720 / T05', () => {
 
       const result = await scrapePromise;
       expect(result.jobs).toHaveLength(6);
+    });
+  });
+
+  /**
+   * Spec 755 — field mappings the Workday CXS payload carries but the plugin
+   * never surfaced: compensation (text), workFromHomeType, multi-location +
+   * country, and startDate-first datePosted.
+   */
+  describe('field mappings — Spec 755', () => {
+    const PAGE = {
+      total: 1,
+      jobPostings: [
+        {
+          title: 'Reactor Engineer',
+          externalPath: '/job/Rockville-MD/Reactor-Engineer_R900',
+          locationsText: '2 Locations',
+          postedOn: 'Posted 30+ Days Ago',
+        },
+      ],
+    };
+
+    function detail(overrides: Record<string, unknown> = {}) {
+      return {
+        hiringOrganization: { name: 'X-Energy, LLC', url: '' },
+        jobPostingInfo: {
+          title: 'Reactor Engineer',
+          jobDescription:
+            '<p>Join us. The base salary range for this role is $120,000 - $150,000 per year.</p>',
+          location: 'Rockville, MD',
+          additionalLocations: ['Oak Ridge, TN'],
+          postedOn: 'Posted 30+ Days Ago',
+          startDate: '2026-05-20',
+          jobReqId: 'R900',
+          timeType: 'Full time',
+          remoteType: 'Hybrid',
+          jobRequisitionLocation: { country: { alpha2Code: 'US' } },
+          ...overrides,
+        },
+      };
+    }
+
+    async function scrapeWith(detailPayload: object) {
+      mockPost.mockResolvedValueOnce({ data: clone(PAGE) });
+      mockGet.mockResolvedValueOnce({ data: detailPayload });
+      const result = await new WorkdayService().scrape({
+        siteType: [Site.WORKDAY],
+        companySlug: 'xenergy:5:X-energyUS',
+      } as ScraperInputDto);
+      return result.jobs[0];
+    }
+
+    it('extracts compensation from the description body text (no structured field)', async () => {
+      const job = await scrapeWith(detail());
+      expect(job.compensation).toBeDefined();
+      expect(job.compensation?.minAmount).toBe(120000);
+      expect(job.compensation?.maxAmount).toBe(150000);
+      expect(job.compensation?.currency).toBe('USD');
+    });
+
+    it('leaves compensation null when the description carries no salary', async () => {
+      const job = await scrapeWith(
+        detail({ jobDescription: '<p>Join our mission to build clean energy.</p>' }),
+      );
+      expect(job.compensation == null).toBe(true);
+    });
+
+    it('maps remoteType to workFromHomeType (Hybrid)', async () => {
+      const job = await scrapeWith(detail());
+      expect(job.workFromHomeType).toBe('Hybrid');
+    });
+
+    it('maps a remote remoteType to workFromHomeType Remote and isRemote', async () => {
+      const job = await scrapeWith(detail({ remoteType: 'Fully Remote' }));
+      expect(job.workFromHomeType).toBe('Remote');
+      expect(job.isRemote).toBe(true);
+    });
+
+    it('leaves workFromHomeType unset for on-site remoteType values', async () => {
+      const job = await scrapeWith(
+        detail({ remoteType: 'Field/Customer Site', location: 'Rockville, MD', additionalLocations: [] }),
+      );
+      expect(job.workFromHomeType == null).toBe(true);
+    });
+
+    it('splits multiple locations through the shared parser', async () => {
+      const job = await scrapeWith(detail());
+      expect(job.location?.city).toBe('Rockville, MD; Oak Ridge, TN');
+      expect(job.location?.city).not.toContain('2 Locations');
+    });
+
+    it('folds the ISO-2 country code into the location via regionNameFromCode', async () => {
+      const job = await scrapeWith(
+        detail({ location: 'Rockville, MD', additionalLocations: [] }),
+      );
+      expect(job.location?.country).toBe('United States');
+    });
+
+    it('leaves country unset when no alpha2Code is present', async () => {
+      const job = await scrapeWith(
+        detail({ location: 'Rockville, MD', additionalLocations: [], jobRequisitionLocation: null }),
+      );
+      expect(job.location?.country == null).toBe(true);
+    });
+
+    it('prefers the absolute startDate over the lossy relative postedOn label', async () => {
+      const job = await scrapeWith(detail());
+      // "Posted 30+ Days Ago" alone yields null; startDate recovers the date.
+      expect(job.datePosted).toBe('2026-05-20');
+    });
+
+    it('falls back to the relative label when startDate is missing', async () => {
+      const job = await scrapeWith(detail({ startDate: null, postedOn: 'Posted Today' }));
+      expect(job.datePosted).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     });
   });
 });
