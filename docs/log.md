@@ -15,6 +15,36 @@
 
 ---
 
+## 2026-06-23 — Run #450 — Spec 757: BreezyHR location fix + detail-page description, compensation, jobType
+
+**Scope:** Fixed one bug and three missing field mappings in `source-ats-breezyhr`,
+found from a fresh 3-board harvest (ondas-networks 1, vvater-llc 24, zeno-power 22
+— 47 jobs) gap-checked against `makedeeply`. (1) **Location bug:** the plugin
+pushed `listing.location.state` and `.country` onto a string array, but on the
+public `/json` list those are `{id,name}` objects — the join produced
+`"Austin, [object Object], [object Object]"` crammed into `LocationDto.city`
+(`state`/`country` never set). Now reads the structured pieces (object-or-string
+tolerant) and routes labels through the shared `parseLocationList`. (2)
+**description** was null on 100% of jobs; the list endpoint carries no body, so
+the plugin now overlays each job with the schema.org `JobPosting` `description`
+parsed from its public detail page (`/p/{friendly_id}`) under bounded concurrency
+(`BREEZYHR_DETAIL_CONCURRENCY = 5`, `Promise.allSettled`, fail-safe per
+Rippling/Workable), rendered via the previously accepted-but-ignored
+`descriptionFormat`. (3) **compensation** now parses the list's free-text
+`salary` (`$105k - $125k`, `$19.00 - $27.00 / hr`) via the shared `extractSalary`
+honoring the real interval (yearly/hourly). (4) **jobType/employmentType** now
+mapped from `type` (`getJobTypeFromString(type.id ?? type.name)`; `employmentType`
+= `type.name`). workFromHomeType / isRemote-broadening / multi-location are
+documented non-goals (no structured work-mode source; `is_remote` false and only
+single-location across the harvest). No change to `@ever-jobs/common` or
+`@ever-jobs/models`.
+
+**Verification:** `npx jest source-ats-breezyhr` green (9 service tests),
+`npm run build` and `npm run lint:docs` pass. Spec triad
+`757-breezyhr-location-detail-description`. No change to other ATS plugins (per owner).
+
+---
+
 ## 2026-06-23 — Run #449 — Spec 756: Workable v2 detail fetch — description, workFromHomeType, jobFunction, isRemote
 
 **Scope:** Fixed two field-mapping gaps in `source-ats-workable`, found from a
