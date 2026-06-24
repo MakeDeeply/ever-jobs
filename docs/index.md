@@ -58,7 +58,7 @@
 
 | File | Purpose |
 | ---- | ------- |
-| _none yet_ | Architectural decision records will land here. |
+| [`adr/0001-fork-spec-range-reservation.md`](./adr/0001-fork-spec-range-reservation.md) | Cross-fork spec-number range reservation (registry + band-scoped numbering); renumber MakeDeeply specs 742–759 → 5001–5017. _Proposed._ |
 
 ## 6. Runbooks (`docs/runbooks/`)
 

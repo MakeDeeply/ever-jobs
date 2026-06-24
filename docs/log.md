@@ -15,6 +15,32 @@
 
 ---
 
+## 2026-06-23 — Run #453 — ADR 0001: Fork spec-number range reservation (proposed)
+
+**Scope:** Added `docs/adr/0001-fork-spec-range-reservation.md` (Status:
+Proposed) and indexed it under `docs/index.md` §5. Design only — **no code, no
+renumber yet.** Captures intent for review by the upstream maintainer.
+
+**Problem:** `.specify/specs/` numbering uses global `max(all)+1`, which collides
+across forks. Upstream and MakeDeeply both minted specs from 742, so post-merge
+`docs/index.md` has duplicate numbers across 742–759 (our ATS/field-fix work vs
+upstream's `source-company-*` plugins). `max(all)+1` is not band-aware, so any
+bidirectional merge re-collides.
+
+**Decision (proposed):** Reserve a numeric band per fork via a shared,
+append-only registry (`.specify/ranges.json`), derive fork identity from the
+`origin` remote (no committed marker → no merge conflicts), and change numbering
+to band-scoped `max(n in band)+1` with lint enforcement (no orphan numbers, no
+overlapping ranges, no minting outside your lane). MakeDeeply reserves
+**5000–5999**. Companion change: renumber our 17 fork-only specs **742–759 →
+5001–5017** (dense, order-preserving) plus a `docs/spec-renumbering.md` mapping
+and `(formerly Spec 7xx)` header notes.
+
+**Status:** Awaiting maintainer acceptance of the registry row before
+implementing. Renumber-only step can land independently.
+
+---
+
 ## 2026-06-23 — Run #452 — Spec 759: Allen Control Systems repoint to Ashby via registry delegation
 
 **Scope:** Repointed the `source-company-allencontrolsystems` company plugin
