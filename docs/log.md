@@ -15,6 +15,54 @@
 
 ---
 
+## 2026-06-23 — Run #451 — Spec 758: BambooHR detail-fetch overlay + work-mode, compensation, jobType, type-shape fixes
+
+**Scope:** Added a detail-fetch overlay and several field mappings to the
+**public** path of `source-ats-bamboohr`, measured against a fresh 9-board
+harvest (atkinsonaeronautics 12, avidbots 13, geospectrum 24, satellogic 16,
+cleanenergycounsel 4, ppcsolar 4, carolinasolarservices 3, keyindustries 1,
+deepisolation 1 — 78 jobs; the 20 owner-supplied test URLs minus 11 that no
+longer serve a public board). The public `mapJob` read `job.description`,
+`job.compensation`, and `job.minimumExperience` straight off `/careers/list`, but
+the live list payload omits those keys entirely — they exist only on the per-job
+`/careers/{id}/detail` endpoint (`result.jobOpening`), which the plugin never
+fetched, so description/datePosted/compensation were null on 100%. The plugin now
+overlays each job (the `resultsWanted` slice) with its detail payload under
+bounded concurrency (`BAMBOOHR_DETAIL_CONCURRENCY = 5`, `Promise.allSettled`,
+index-aligned, fail-safe — a failed/empty detail nulls only that index and the
+job still maps from the list). From the detail it maps **description** (rendered
+per the previously accepted-but-ignored `descriptionFormat`), **datePosted** (ISO
+`YYYY-MM-DD`), and **compensation** (free text via the shared `extractSalary` +
+`getCompensationInterval`; `$120,000 - $140,000` yearly, `$19.00 - $27.00 / hr`
+hourly; 29% carry a parseable range). **workFromHomeType/isRemote** now derive
+from `locationType` (0=on-site 55, 1=remote 10, 2=hybrid 13 across the harvest;
+`isRemote` was previously hardcoded `false` because the list `isRemote` boolean is
+null in practice). **jobType/employmentType** map from `employmentStatusLabel` via
+`getJobTypeFromString`. Type-shape bugs fixed: `BambooHRJob.id` was typed `number`
+but the live value is a string (`"13"`); the dead `description`/`compensation`/
+`minimumExperience` list reads were dropped; `location` was typed with a `country`
+that is always null on the list (country lives in `atsLocation.country`), so the
+type was split into `BambooHRLocation` (`city`/`state`) + `BambooHRAtsLocation`
+(`country`). Location is mapped structurally (not via `parseLocationList`) because
+BambooHR returns full state names (`North Carolina`, not `NC`) and a separate
+`atsLocation.country` that the shared `City, ST` parser would collapse into
+`city`; remote-only jobs get `city='Remote'`. The authenticated
+`scrapeWithApi`/`mapApiJobOpening` path (which already maps these correctly but
+needs `BAMBOOHR_API_KEY`) is untouched, as are all other ATS plugins. New
+constants (`bamboohrListUrl`/`bamboohrDetailUrl`/`BAMBOOHR_DETAIL_CONCURRENCY`)
+and detail types added. No change to `@ever-jobs/common` or `@ever-jobs/models`.
+
+**Files:** `packages/plugins/source-ats-bamboohr/src/bamboohr.constants.ts`,
+`bamboohr.types.ts`, `bamboohr.service.ts`,
+`__tests__/bamboohr.service.spec.ts` (15 new tests),
+`.specify/specs/758-bamboohr-detail-fields-mappings/{spec,plan,tasks}.md`,
+`docs/index.md`, `docs/log.md`.
+
+**Verification:** `npx jest source-ats-bamboohr` green (18 total, 15 new + 3
+existing e2e), `npm run build` + `npm run lint:docs` pass.
+
+---
+
 ## 2026-06-23 — Run #450 — Spec 757: BreezyHR location fix + detail-page description, compensation, jobType
 
 **Scope:** Fixed one bug and three missing field mappings in `source-ats-breezyhr`,
