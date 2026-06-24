@@ -10,6 +10,34 @@
 
 ---
 
+## Q-069 — Should the Paylocity plugin keep chasing the JSON feed endpoint, or commit to board-page HTML?
+
+**Context:** Spec 5020. The plugin relied on
+`/recruiting/api/feed/jobs/{GUID}`, which returns HTTP 500 (by GUID) or 400 (by
+numeric ModuleId) for every tested company. The board page itself never calls
+that feed — jobs are server-rendered into `window.pageData` — so the feed is a
+separate syndication endpoint that appears disabled/partner-key-gated. The IDs
+are not the blocker; the endpoint is.
+
+**Options:**
+
+- **A. Commit to the board page + per-job detail page (HTML).** Proven for all
+  tested boards; one detail fetch per job (bounded concurrency).
+- **B. Keep using the feed, gated behind a Paylocity partner API key.** Requires
+  credentials we don't have and that the public board never uses.
+- **C. Board page only (no detail overlay).** Cheaper, but the board's per-job
+  `Description` is empty and Job Type / compensation live only on the detail
+  page — would lose description, jobType, and text-fallback compensation.
+
+**Default (proceeding):** **A.** The board + detail HTML is the only reliable,
+key-free public source and yields the full field set. If Paylocity later exposes
+a keyed feed, the structured-first `resolveCompensation` contract and the typed
+layer make re-adding it incremental.
+
+**Resolution:** _pending review._
+
+---
+
 ## Q-068 — How should one `LocationDto` represent a multi-location Workday job?
 
 **Context.** Workday's list endpoint may collapse geography to `"2 Locations"`; its detail

@@ -1,33 +1,49 @@
 /**
- * TypeScript interfaces for Paylocity recruiting feed API responses.
+ * TypeScript interfaces for the Paylocity recruiting board.
  *
- * The Paylocity feed endpoint returns a JSON array of job objects.
- * Endpoint: GET https://recruiting.paylocity.com/recruiting/api/feed/jobs/{companySlug}
+ * Spec 5020 — sourced from the server-rendered board page (`window.pageData`)
+ * and the per-job detail page, not the (dead) JSON feed endpoint.
  */
 
-export interface PaylocityJob {
-  /** Unique job identifier */
+/** Nested location object on each board job (`Jobs[].JobLocation`). */
+export interface PaylocityJobLocation {
+  City?: string | null;
+  State?: string | null;
+  Zip?: string | null;
+  Country?: string | null;
+  Name?: string | null;
+}
+
+/** A single job as embedded in the board page's `window.pageData.Jobs[]`. */
+export interface PaylocityListJob {
   JobId: string | number;
-  /** Job title / position name */
   JobTitle: string;
-  /** HTML description of the job */
-  Description: string | null;
-  /** Full location string (may combine city, state, country) */
-  Location: string | null;
-  /** City of the job */
-  City: string | null;
-  /** State or region */
-  State: string | null;
-  /** Country */
-  Country: string | null;
-  /** ISO date string when the job was posted */
-  PostedDate: string | null;
-  /** Direct URL to the job posting on Paylocity */
-  JobUrl: string | null;
-  /** Company name */
-  Company: string | null;
-  /** Department or team */
-  Department: string | null;
-  /** Employment type (Full-time, Part-time, Contract, etc.) */
-  JobType: string | null;
+  /** Empty string on the board list — the real body lives on the detail page. */
+  Description?: string | null;
+  LocationName?: string | null;
+  JobLocation?: PaylocityJobLocation | null;
+  HiringDepartment?: string | null;
+  /** ISO timestamp with offset, e.g. `2026-06-11T16:42:33-05:00`. */
+  PublishedDate?: string | null;
+  IsRemote?: boolean | null;
+  /** Indeed work-mode hint: 1 = remote, 2 = on-site (observed). */
+  IndeedRemoteType?: number | null;
+}
+
+/** The `window.pageData` object server-rendered into the board page. */
+export interface PaylocityPageData {
+  /** Company display name, e.g. `Fermi LLC`. */
+  ModuleTitle?: string | null;
+  Jobs?: PaylocityListJob[] | null;
+}
+
+/**
+ * Fields parsed from a job's detail page (`/recruiting/jobs/Details/...`).
+ * The board list cannot provide these.
+ */
+export interface PaylocityJobDetail {
+  /** Full posting body as HTML (Description + any Requirements/other sections). */
+  description: string | null;
+  /** Employment type label, e.g. `Full-time`; absent on some jobs. */
+  jobType: string | null;
 }

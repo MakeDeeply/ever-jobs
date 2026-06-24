@@ -15,6 +15,43 @@
 
 ---
 
+## 2026-06-23 — Run #456 — Spec 5020 — Paylocity board-page scrape (replace dead feed API)
+
+**Scope:** The Paylocity plugin depended on the JSON feed endpoint
+`/recruiting/api/feed/jobs/{GUID}`, which is disabled/partner-gated and returns
+5xx/4xx for every tested company (sendcutsend, fermi, shine, blacksea). The
+reliable public source is the server-rendered board page plus a per-job detail
+page. Reworked the plugin to that source and applied the same comprehensive
+field extraction as the other ATS plugins.
+
+**Plugin rework (`packages/plugins/source-ats-paylocity`):**
+- `paylocity.constants.ts` — replaced the feed base with `PAYLOCITY_BASE`,
+  `paylocityBoardUrl(guid)` (`/recruiting/jobs/All/{GUID}`) and
+  `paylocityDetailUrl(guid, jobId)` (`/recruiting/jobs/Details/{JobId}/{GUID}`);
+  added `PAYLOCITY_DETAIL_CONCURRENCY = 5`.
+- `paylocity.types.ts` — replaced the feed schema with `PaylocityPageData`
+  (`ModuleTitle`, `Jobs[]`), `PaylocityListJob`, `PaylocityJobLocation`, and the
+  parsed `PaylocityJobDetail` (`description`, `jobType`).
+- `paylocity.service.ts` — `scrape()` fetches the board, parses `window.pageData`
+  with a string-aware brace matcher, slices to `resultsWanted`, then overlays
+  each job's detail page under bounded `Promise.allSettled` for the full
+  description + Job Type. Maps title, company (`ModuleTitle`), structured
+  location (`JobLocation`, `Remote` fallback), department (`HiringDepartment`),
+  jobType (detail Job Type via `getJobTypeFromString`), isRemote/workFromHomeType
+  (`IsRemote`/`IndeedRemoteType` + hybrid text inference), datePosted
+  (`PublishedDate`), description, text-fallback compensation via the shared
+  `resolveCompensation`, and emails. Fail-safe: a failed detail still maps the
+  board-level fields.
+
+**Tests:** new `paylocity.service.spec.ts` driven by 4 real captured fixtures
+(sendcutsend + fermi boards, one detail each), mocked HTTP routed by URL — 9
+unit tests (mapping, detail overlay, remote, compensation text-fallback,
+fail-safe, resultsWanted, empty-slug/empty-board/throw). Repurposed
+`paylocity.e2e-spec.ts` into a `RUN_NETWORK_E2E`-gated network smoke (skipped by
+default). `npm run build` + `lint:docs` green.
+
+**Spec:** `.specify/specs/5020-paylocity-board-page-scrape/{spec,plan,tasks}.md`.
+
 ## 2026-06-23 — Run #455 — Spec 5019 — Multi-tier compensation aggregation
 
 **Scope:** Postings that list pay bands across several tiers (per geography,
