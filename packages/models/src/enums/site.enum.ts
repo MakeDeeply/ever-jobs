@@ -60,6 +60,8 @@ export enum Site {
   OPENAI = 'openai',
   // Phase 6: New ATS integrations
   BREEZYHR = 'breezyhr',
+  // Generic schema.org JobPosting (JSON-LD) harvester — aggregator bucket, not an ATS.
+  JSONLD = 'jsonld',
   COMEET = 'comeet',
   PINPOINT = 'pinpoint',
   // Phase 7: Additional job boards

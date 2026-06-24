@@ -421,6 +421,7 @@ import { IndeedModule } from './source-indeed';
 import { InfoJobsModule } from './source-infojobs';
 import { IosdevjobsModule } from './source-iosdevjobs';
 import { JobDataApiModule } from './source-jobdataapi';
+import { JsonLdModule } from './source-jsonld';
 import { JobicyModule } from './source-jobicy';
 import { JobindexModule } from './source-jobindex';
 import { JobsAcUkModule } from './source-jobsacuk';
@@ -940,6 +941,7 @@ export const ALL_SOURCE_MODULES = [
   AvatureModule,
   BambooHRModule,
   BreezyHRModule,
+  JsonLdModule,
   BullhornModule,
   ComeetModule,
   CrelateModule,

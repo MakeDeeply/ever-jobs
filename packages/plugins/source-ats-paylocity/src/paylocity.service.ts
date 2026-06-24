@@ -17,6 +17,7 @@ import {
   htmlToPlainText,
   markdownConverter,
   extractEmails,
+  parseJobPostingLd,
   resolveCompensation,
 } from '@ever-jobs/common';
 import {
@@ -182,11 +183,32 @@ export class PaylocityService implements IScraper {
   }
 
   /**
+   * Parse a job's detail page. The description is taken JSON-LD-first — the
+   * embedded schema.org `JobPosting` carries the full body in one clean field —
+   * and falls back to scraping the `job-listing-header` sections when no usable
+   * ld+json description is present. `Job Type` only ever appears in the HTML
+   * header sections (the ld+json omits `employmentType`), so it is always
+   * parsed from HTML.
+   */
+  private parseDetail(html: string): PaylocityJobDetail {
+    const htmlParsed = this.parseDetailHtml(html);
+
+    const ldDescription = parseJobPostingLd(html)
+      .map((p) => p.description)
+      .find((d): d is string => !!d && d.trim().length > 0);
+
+    return {
+      description: ldDescription ?? htmlParsed.description,
+      jobType: htmlParsed.jobType,
+    };
+  }
+
+  /**
    * Parse the detail page's `job-listing-header` sections. `Job Type` becomes
    * the employment type; every other section (Description, Requirements, …) is
    * concatenated into the description body.
    */
-  private parseDetail(html: string): PaylocityJobDetail {
+  private parseDetailHtml(html: string): PaylocityJobDetail {
     let jobType: string | null = null;
     const parts: string[] = [];
 

@@ -221,6 +221,7 @@ module.exports = {
     '^@ever-jobs/source-adzuna$': '<rootDir>/packages/plugins/source-adzuna/src/index.ts',
     '^@ever-jobs/source-reed$': '<rootDir>/packages/plugins/source-reed/src/index.ts',
     '^@ever-jobs/source-jooble$': '<rootDir>/packages/plugins/source-jooble/src/index.ts',
+    '^@ever-jobs/source-jsonld$': '<rootDir>/packages/plugins/source-jsonld/src/index.ts',
     '^@ever-jobs/source-careerjet$': '<rootDir>/packages/plugins/source-careerjet/src/index.ts',
     '^@ever-jobs/source-ats-bamboohr$': '<rootDir>/packages/plugins/source-ats-bamboohr/src/index.ts',
     '^@ever-jobs/source-ats-personio$': '<rootDir>/packages/plugins/source-ats-personio/src/index.ts',

@@ -15,6 +15,52 @@
 
 ---
 
+## 2026-06-24 — Run #458 — Spec 5022 — Shared schema.org JobPosting (JSON-LD) extraction
+
+**Scope:** schema.org `JobPosting` JSON-LD parsing was duplicated/private in
+breezyhr, available-but-ignored in paylocity, and missing as a generic source.
+Promotes the parsing into a shared `@ever-jobs/common` helper and adopts it in
+breezyhr + paylocity, plus a new generic aggregator-bucket plugin.
+
+**Common (`packages/common/src/utils/jsonld.ts`, new):**
+- `parseJobPostingLd(html)` — finds every `<script type="application/ld+json">`
+  block, parses defensively (malformed skipped), unwraps single / array /
+  `@graph` / `ItemList`(`ListItem.item`) shapes, accepts `@type` as a string or
+  array, and flattens into `JobPostingLd[]` (title←title|name, description,
+  datePosted, validThrough, employmentType (`, `-joined when array),
+  hiringOrganizationName/Url, url, applyUrl (←`potentialAction` ApplyAction),
+  remote (←`jobLocationType === 'TELECOMMUTE'`), locations[], baseSalary).
+- Companions `extractLdJsonBlocks(html)` and
+  `jobPostingLdToCompensation(salary)` (→ `CompensationDto`). Barrelled via
+  `packages/common/src/utils/index.ts`.
+
+**breezyhr (`source-ats-breezyhr`):** removed the private `descriptionFromHtml()`
+and `BreezyJobPostingLd` type; description now comes from the first posting with
+a non-empty `description` via the shared helper. Behaviour unchanged.
+
+**paylocity (`source-ats-paylocity`):** detail overlay is JSON-LD-first — prefers
+the ld+json `description`, still parses the detail HTML for Job Type (ld+json
+lacks it), falls back to the HTML description when no ld+json. Board-page spine
+(enumeration + location/remote/department from `window.pageData`) unchanged.
+
+**source-jsonld (new, aggregator bucket):** generic last-resort harvester — given
+a careers/job URL (`companyUrl`) it fetches the HTML and emits one `JobPostDto`
+per `JobPosting` block. Applies the ATS checklist: structured-first→text-fallback
+compensation (`resolveCompensation`), underscore/multi-value job-type mapping
+(`FULL_TIME` → `getJobTypeFromString`), structured location, remote, description
+HTML/markdown/plain, `extractEmails`, companyUrl/jobUrl/applyUrl. Registered in
+all four places (`Site.JSONLD`, `ALL_SOURCE_MODULES`, tsconfig paths, jest
+moduleNameMapper).
+
+**Tests:** `packages/common/__tests__/jsonld.spec.ts` (shapes, malformed,
+@type variance, name fallback, multi-location, baseSalary, applyUrl,
+compensation) + `packages/plugins/source-jsonld/__tests__/jsonld.service.spec.ts`
+(mapping, structured-salary preference, resultsWanted, remote, no-block /
+fetch-failure, url fallback). breezyhr + paylocity suites stay green.
+`npm run build` (tsc via nx) green.
+
+---
+
 ## 2026-06-24 — Run #457 — Spec 5021 — Manatal rework to careers-page.com JSON API
 
 **Scope:** The Manatal plugin fetched `api.manatal.com/open/v1/career-page/{slug}/jobs/`,
