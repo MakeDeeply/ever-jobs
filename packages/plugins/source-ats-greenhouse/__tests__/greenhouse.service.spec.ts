@@ -159,4 +159,38 @@ describe('GreenhouseService — Spec 5009', () => {
     expect(job.compensation).toBeNull();
     expect(job.employmentType).toBeNull();
   });
+
+  it('falls back to the decoded body salary when no currency_range metadata (Spec 5018)', async () => {
+    const job = await scrapeOne({
+      id: 7,
+      title: 'Engineer',
+      content:
+        '&lt;p&gt;Compensation: $120,000 - $160,000 per year plus equity.&lt;/p&gt;',
+      location: { name: 'Boston, MA' },
+    });
+
+    expect(job.compensation?.minAmount).toBe(120000);
+    expect(job.compensation?.maxAmount).toBe(160000);
+    expect(job.compensation?.currency).toBe('USD');
+  });
+
+  it('prefers currency_range metadata over a body salary (Spec 5018)', async () => {
+    const job = await scrapeOne({
+      id: 8,
+      title: 'Engineer',
+      content: '&lt;p&gt;Body says $10,000 - $20,000 per year.&lt;/p&gt;',
+      location: { name: 'Remote' },
+      metadata: [
+        {
+          id: 10,
+          name: 'Salary Range',
+          value_type: 'currency_range',
+          value: { unit: 'USD', min_value: '170000.0', max_value: '220000.0' },
+        },
+      ],
+    });
+
+    expect(job.compensation?.minAmount).toBe(170000);
+    expect(job.compensation?.maxAmount).toBe(220000);
+  });
 });

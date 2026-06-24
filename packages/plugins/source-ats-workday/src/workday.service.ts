@@ -10,17 +10,16 @@ import {
   CompensationDto,
   Site,
   DescriptionFormat,
-  getCompensationInterval,
 } from '@ever-jobs/models';
 import {
   createHttpClient,
   htmlToPlainText,
   markdownConverter,
   extractEmails,
-  extractSalary,
   parseLocationList,
   regionNameFromCode,
   randomSleep,
+  salaryToCompensation,
 } from '@ever-jobs/common';
 import {
   WORKDAY_HEADERS,
@@ -329,20 +328,6 @@ export class WorkdayService implements IScraper {
     html?: string | null,
   ): CompensationDto | null {
     const text = html?.trim() ? htmlToPlainText(html) : null;
-    if (!text) return null;
-
-    const parsed = extractSalary(text);
-    if (parsed.minAmount == null && parsed.maxAmount == null) return null;
-
-    const interval = parsed.interval
-      ? getCompensationInterval(parsed.interval)
-      : null;
-
-    return new CompensationDto({
-      interval: interval ?? undefined,
-      minAmount: parsed.minAmount ?? undefined,
-      maxAmount: parsed.maxAmount ?? undefined,
-      currency: parsed.currency ?? 'USD',
-    });
+    return salaryToCompensation(text);
   }
 }

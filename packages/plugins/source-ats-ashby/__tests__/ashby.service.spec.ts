@@ -250,6 +250,45 @@ describe('AshbyService — Spec 719', () => {
       expect(job).toBeDefined();
       expect(job?.compensation ?? null).toBeNull();
     });
+
+    it('falls back to the description salary when structured comp is absent (Spec 5018)', async () => {
+      const raw = clone(BOARD_RAW) as any;
+      raw.jobs[2].descriptionPlain =
+        'Compensation: $120,000 - $160,000 per year plus benefits.';
+      mockGet.mockResolvedValueOnce({ data: raw });
+
+      const service = new AshbyService();
+      const result = await service.scrape({
+        siteType: [Site.ASHBY],
+        companySlug: SLUG,
+      } as ScraperInputDto);
+
+      const job = result.jobs.find(
+        (j) => j.id === `ashby-${BOARD_RAW.jobs[2].id}`,
+      );
+      expect(job?.compensation?.minAmount).toBe(120000);
+      expect(job?.compensation?.maxAmount).toBe(160000);
+      expect(job?.compensation?.currency).toBe('USD');
+    });
+
+    it('prefers structured comp over a description salary (Spec 5018)', async () => {
+      const raw = clone(BOARD_RAW) as any;
+      raw.jobs[0].descriptionPlain =
+        'Body says $10,000 - $20,000 per year but structured wins.';
+      mockGet.mockResolvedValueOnce({ data: raw });
+
+      const service = new AshbyService();
+      const result = await service.scrape({
+        siteType: [Site.ASHBY],
+        companySlug: SLUG,
+      } as ScraperInputDto);
+
+      const job = result.jobs.find(
+        (j) => j.id === `ashby-${BOARD_RAW.jobs[0].id}`,
+      );
+      expect(job?.compensation?.minAmount).toBe(150000);
+      expect(job?.compensation?.maxAmount).toBe(190000);
+    });
   });
 
   /**

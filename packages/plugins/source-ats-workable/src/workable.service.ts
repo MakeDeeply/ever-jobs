@@ -15,6 +15,7 @@ import {
   createHttpClient,
   htmlToPlainText,
   markdownConverter,
+  resolveCompensation,
 } from '@ever-jobs/common';
 import {
   WORKABLE_API_URL,
@@ -283,6 +284,12 @@ export class WorkableService implements IScraper {
     const description = this.formatDescription(detail, format);
     const workFromHomeType = this.workFromHomeTypeFromWorkplace(detail?.workplace);
 
+    // Workable exposes no structured compensation, so parse the plain-text
+    // body for a stated salary range (Spec 5018).
+    const compensation = resolveCompensation({
+      text: this.formatDescription(detail, DescriptionFormat.PLAIN),
+    });
+
     return new JobPostDto({
       id: `workable-${job.shortcode}`,
       title,
@@ -290,6 +297,7 @@ export class WorkableService implements IScraper {
       jobUrl: job.url ?? job.shortlink ?? `https://apply.workable.com/${companySlug}/j/${job.shortcode}`,
       location,
       description,
+      ...(compensation ? { compensation } : {}),
       datePosted: datePosted
         ? new Date(datePosted).toISOString().split('T')[0]
         : null,

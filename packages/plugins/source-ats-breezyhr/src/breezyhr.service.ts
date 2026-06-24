@@ -11,14 +11,13 @@ import {
   CompensationDto,
   DescriptionFormat,
   getJobTypeFromString,
-  getCompensationInterval,
 } from '@ever-jobs/models';
 import {
   createHttpClient,
-  extractSalary,
   htmlToPlainText,
   markdownConverter,
   parseLocationList,
+  salaryToCompensation,
 } from '@ever-jobs/common';
 
 import {
@@ -279,19 +278,6 @@ export class BreezyHRService implements IScraper {
   private extractCompensation(
     salary: string | null | undefined,
   ): CompensationDto | null {
-    if (!salary || !salary.trim()) return null;
-    const parsed = extractSalary(salary);
-    if (parsed.minAmount == null && parsed.maxAmount == null) return null;
-
-    const interval = parsed.interval
-      ? getCompensationInterval(parsed.interval)
-      : null;
-
-    return new CompensationDto({
-      interval: interval ?? undefined,
-      minAmount: parsed.minAmount ?? undefined,
-      maxAmount: parsed.maxAmount ?? undefined,
-      currency: parsed.currency ?? 'USD',
-    });
+    return salaryToCompensation(salary);
   }
 }
