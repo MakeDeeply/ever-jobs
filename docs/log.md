@@ -15,6 +15,38 @@
 
 ---
 
+## 2026-06-23 — Run #454 — Spec 5018 — Shared structured-first compensation resolution
+
+**Scope:** Promoted the rippling-discovered compensation precedence (structured
+wire data first, then `extractSalary(description)` fallback) into three shared
+`@ever-jobs/common` helpers and applied them across all eight ATS plugins touched
+this cycle.
+
+**Helpers added (`packages/common/src/utils/helpers.ts`):**
+- `compensationFromSalary(result)` — maps an `ExtractSalaryResult` envelope to a
+  `CompensationDto` (null when no bounded amount; interval via `getCompensationInterval`).
+- `salaryToCompensation(text, options?)` — `extractSalary` + `compensationFromSalary`;
+  the text-fallback half.
+- `resolveCompensation({ structured, text, options })` — canonical precedence:
+  prefer structured, fall back to text only when structured is absent.
+
+**Plugins wired with the description fallback (previously structured-only / none):**
+ashby, greenhouse (public + Harvest), lever, workable.
+
+**Plugins refactored onto the helper (removing four near-identical inline mappings):**
+rippling, workday, breezyhr, bamboohr.
+
+**Currency policy:** structured sources keep their reported currency; text-parsed
+results default to USD via the `CompensationDto` constructor. Behavior-preserving —
+all prior fixtures stay green.
+
+**Tests:** 10 new common-package unit tests + collocated structured-wins /
+text-fallback / null cases for the four newly-wired plugins. `npm run build`,
+`npm run lint:docs`, and the affected jest suites all green (313 tests across
+common + 8 ATS plugins).
+
+---
+
 ## 2026-06-23 — Run #453 — Renumber MakeDeeply fork specs 742–759 → 5001–5017
 
 **Scope:** Moved all 17 MakeDeeply-authored specs out of the 742–759 range into

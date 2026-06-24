@@ -19,6 +19,7 @@ import {
   parseLocationList,
   regionNameFromCode,
   randomSleep,
+  resolveCompensation,
 } from '@ever-jobs/common';
 import { LEVER_API_URL, LEVER_HEADERS, LEVER_DELAY_MS } from './lever.constants';
 import { LeverJob } from './lever.types';
@@ -211,7 +212,10 @@ export class LeverService implements IScraper {
       jobUrl: job.hostedUrl ?? `https://jobs.lever.co/${companySlug}/${job.id}`,
       location,
       description,
-      compensation: this.extractCompensation(job),
+      compensation: resolveCompensation({
+        structured: this.extractCompensation(job),
+        text: description,
+      }),
       datePosted: job.createdAt
         ? new Date(job.createdAt).toISOString().split('T')[0]
         : null,

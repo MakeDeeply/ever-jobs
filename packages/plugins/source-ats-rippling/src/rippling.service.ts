@@ -16,10 +16,10 @@ import {
 import {
   createHttpClient,
   extractEmails,
-  extractSalary,
   htmlToPlainText,
   markdownConverter,
   parseLocationList,
+  salaryToCompensation,
 } from "@ever-jobs/common";
 import {
   RIPPLING_BASE_URL,
@@ -549,21 +549,6 @@ export class RipplingService implements IScraper {
       .join("\n\n");
     if (!html) return null;
 
-    const text = htmlToPlainText(html);
-    if (!text) return null;
-
-    const parsed = extractSalary(text);
-    if (parsed.minAmount == null && parsed.maxAmount == null) return null;
-
-    const interval = parsed.interval
-      ? getCompensationInterval(parsed.interval)
-      : null;
-
-    return new CompensationDto({
-      interval: interval ?? undefined,
-      minAmount: parsed.minAmount ?? undefined,
-      maxAmount: parsed.maxAmount ?? undefined,
-      currency: parsed.currency ?? "USD",
-    });
+    return salaryToCompensation(htmlToPlainText(html));
   }
 }

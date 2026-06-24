@@ -89,6 +89,40 @@ describe('LeverService field mappings (spec 752)', () => {
     expect(job.compensation).toBeNull();
   });
 
+  it('should fall back to the description salary when salaryRange is absent (Spec 5018)', async () => {
+    const job = await scrapeOne({
+      id: 'comp-text',
+      text: 'Engineer',
+      descriptionPlain:
+        'We offer a base salary of $120,000 - $160,000 per year plus equity.',
+    });
+    expect(job.compensation).toBeDefined();
+    expect(job.compensation?.minAmount).toBe(120000);
+    expect(job.compensation?.maxAmount).toBe(160000);
+    expect(job.compensation?.currency).toBe('USD');
+  });
+
+  it('should prefer structured salaryRange over a description salary (Spec 5018)', async () => {
+    const job = await scrapeOne({
+      id: 'comp-both',
+      text: 'Engineer',
+      salaryRange: { min: 90000, max: 100000, currency: 'EUR', interval: 'per-year-salary' },
+      descriptionPlain: 'Range listed in body: $120,000 - $160,000 per year.',
+    });
+    expect(job.compensation?.minAmount).toBe(90000);
+    expect(job.compensation?.maxAmount).toBe(100000);
+    expect(job.compensation?.currency).toBe('EUR');
+  });
+
+  it('should leave compensation null when neither structured nor text has a salary (Spec 5018)', async () => {
+    const job = await scrapeOne({
+      id: 'comp-none',
+      text: 'Engineer',
+      descriptionPlain: 'A great team working on hard problems. 5+ years required.',
+    });
+    expect(job.compensation).toBeNull();
+  });
+
   it('should map categories.department independently of team', async () => {
     const job = await scrapeOne({
       id: 'dept',

@@ -129,6 +129,30 @@ describe('WorkableService public path', () => {
     expect(post.atsType).toBe('workable');
   });
 
+  it('parses a salary range from the detail body (Spec 5018)', async () => {
+    const post = await scrapeOne({
+      detail: {
+        description:
+          '<p>The base pay range is $120,000 - $160,000 per year.</p>',
+      },
+    });
+    expect(post.compensation?.minAmount).toBe(120000);
+    expect(post.compensation?.maxAmount).toBe(160000);
+    expect(post.compensation?.currency).toBe('USD');
+  });
+
+  it('leaves compensation undefined when the body has no salary (Spec 5018)', async () => {
+    const post = await scrapeOne({
+      detail: { description: '<p>Join a great team. 5+ years required.</p>' },
+    });
+    expect(post.compensation).toBeUndefined();
+  });
+
+  it('leaves compensation undefined when the detail fetch yields nothing (Spec 5018)', async () => {
+    const post = await scrapeOne({ detail: null });
+    expect(post.compensation).toBeUndefined();
+  });
+
   it('returns empty results when no companySlug is provided', async () => {
     const res = await new WorkableService().scrape({
       siteType: [Site.WORKABLE],

@@ -17,6 +17,7 @@ import {
   decodeHtmlEntities,
   extractEmails,
   parseLocationList,
+  resolveCompensation,
 } from '@ever-jobs/common';
 import { GREENHOUSE_API_URL, GREENHOUSE_HARVEST_API_URL, GREENHOUSE_HEADERS } from './greenhouse.constants';
 import {
@@ -126,7 +127,15 @@ export class GreenhouseService implements IScraper {
     // Date posted
     const datePosted = job.first_published ?? job.updated_at ?? null;
 
-    const { compensation, employmentType } = this.extractMetadata(job.metadata);
+    const { compensation: structuredComp, employmentType } =
+      this.extractMetadata(job.metadata);
+    // Structured currency_range first, then fall back to the decoded body
+    // (Spec 5018). Parse a plain-text body so entity-encoded markup never
+    // reaches the salary matcher.
+    const compensation = resolveCompensation({
+      structured: structuredComp,
+      text: this.salaryTextFromContent(job.content),
+    });
 
     return new JobPostDto({
       id: `gh-${job.id}`,
@@ -178,6 +187,18 @@ export class GreenhouseService implements IScraper {
     const isEntityEncoded =
       !REAL_TAG_RE.test(content) && ENCODED_TAG_RE.test(content);
     return isEntityEncoded ? decodeHtmlEntities(content) : content;
+  }
+
+  /**
+   * Plain-text view of a `content`/`notes` body for salary parsing (Spec
+   * 5018). Always decodes the entity layer and strips tags regardless of the
+   * requested description format, so the salary matcher never sees markup.
+   */
+  private salaryTextFromContent(
+    content: string | null | undefined,
+  ): string | null {
+    const html = this.normalizeContentHtml(content);
+    return html ? htmlToPlainText(html) : null;
   }
 
   /**
@@ -369,6 +390,9 @@ export class GreenhouseService implements IScraper {
       jobUrl: `https://boards.greenhouse.io/${companySlug}/jobs/${job.id}`,
       location: parsedLocations.location,
       description,
+      compensation: resolveCompensation({
+        text: this.salaryTextFromContent(job.notes),
+      }),
       datePosted: datePosted
         ? new Date(datePosted).toISOString().split('T')[0]
         : null,

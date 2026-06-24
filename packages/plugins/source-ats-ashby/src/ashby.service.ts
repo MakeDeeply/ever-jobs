@@ -17,6 +17,7 @@ import {
   htmlToPlainText,
   extractEmails,
   parseLocationList,
+  resolveCompensation,
 } from '@ever-jobs/common';
 import {
   ASHBY_API_URL,
@@ -232,8 +233,16 @@ export class AshbyService implements IScraper {
 
     const parsedLocations = parseLocationList(this.locationLabels(job));
 
-    // Compensation - extract from the rich tier structure
-    const compensation = this.extractCompensation(job);
+    // Compensation - structured tiers first, then fall back to parsing the
+    // job description (Spec 5018). Always parse a plain-text body so HTML mode
+    // does not feed tags to the salary matcher.
+    const salaryText =
+      job.descriptionPlain ??
+      (job.descriptionHtml ? htmlToPlainText(job.descriptionHtml) : null);
+    const compensation = resolveCompensation({
+      structured: this.extractCompensation(job),
+      text: salaryText,
+    });
 
     // The public job-board API and the authenticated Posting API disagree on
     // these field names (publishedAt vs publishedDate, department vs

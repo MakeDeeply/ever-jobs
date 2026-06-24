@@ -1,7 +1,9 @@
 import {
+  CompensationDto,
   CompensationInterval,
   Country,
   JobType,
+  getCompensationInterval,
   getJobTypeFromString,
 } from '@ever-jobs/models';
 
@@ -853,6 +855,71 @@ export function extractSalary(
   }
 
   return result;
+}
+
+/**
+ * Map an {@link extractSalary} result envelope to a {@link CompensationDto}.
+ *
+ * Spec 5018 — single source of truth for the `ExtractSalaryResult →
+ * CompensationDto` shape that ATS plugins previously hand-rolled (workday,
+ * breezyhr, bamboohr, rippling). Returns `null` when the parse yielded no
+ * bounded amount, so a "no salary in text" result never produces an empty
+ * compensation object. The pay-period string is normalised through
+ * {@link getCompensationInterval}; `currency` is passed through verbatim
+ * (`CompensationDto` defaults a missing currency to `'USD'`), preserving the
+ * pre-refactor behaviour byte-for-byte.
+ */
+export function compensationFromSalary(
+  parsed: ExtractSalaryResult,
+): CompensationDto | null {
+  if (parsed.minAmount == null && parsed.maxAmount == null) return null;
+
+  const interval = parsed.interval
+    ? getCompensationInterval(parsed.interval)
+    : null;
+
+  return new CompensationDto({
+    interval: interval ?? undefined,
+    minAmount: parsed.minAmount ?? undefined,
+    maxAmount: parsed.maxAmount ?? undefined,
+    currency: parsed.currency ?? undefined,
+  });
+}
+
+/**
+ * Parse a free-text salary string straight into a {@link CompensationDto}.
+ *
+ * Spec 5018 — convenience wrapper combining {@link extractSalary} and
+ * {@link compensationFromSalary}. This is the "description fallback" half of
+ * the structured-first compensation pattern: callers run it on free-form body
+ * text when their structured source is absent. Returns `null` for empty input
+ * or any text without a recognisable salary range (no throws).
+ */
+export function salaryToCompensation(
+  text: string | null | undefined,
+  options?: ExtractSalaryOptions,
+): CompensationDto | null {
+  if (!text || !text.trim()) return null;
+  return compensationFromSalary(extractSalary(text, options));
+}
+
+/**
+ * Resolve compensation with the structured-first, text-fallback precedence.
+ *
+ * Spec 5018 — the canonical rule (discovered with Rippling): prefer a
+ * structured compensation object parsed from the ATS payload; only when that
+ * is absent, fall back to parsing the free-text description via
+ * {@link salaryToCompensation}. Centralising this here keeps every ATS plugin
+ * on the same precedence and mapping, so a future fix lands once.
+ */
+export function resolveCompensation(args: {
+  structured?: CompensationDto | null;
+  text?: string | null;
+  options?: ExtractSalaryOptions;
+}): CompensationDto | null {
+  return (
+    args.structured ?? salaryToCompensation(args.text ?? null, args.options)
+  );
 }
 
 /**
