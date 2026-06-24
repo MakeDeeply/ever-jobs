@@ -15,6 +15,39 @@
 
 ---
 
+## 2026-06-23 — Run #453 — Renumber MakeDeeply fork specs 742–759 → 5001–5017
+
+**Scope:** Moved all 17 MakeDeeply-authored specs out of the 742–759 range into
+a reserved **5000–5999** MakeDeeply namespace, eliminating the duplicate spec
+numbers introduced when the upstream merge (Run #436 / PR #11) added 45
+`source-company-*` plugins that independently minted 742–786. Upstream's specs
+are left untouched; only our fork's specs move.
+
+**Mapping (dense, order-preserving):** 742→5001, 743→5002, 744→5003, 745→5004,
+747→5005, 748→5006, 749→5007, 750→5008, 751→5009, 752→5010, 753→5011, 754→5012,
+755→5013, 756→5014, 757→5015, 758→5016, 759→5017. The full table and rationale
+live in the fetch1 design doc `docs_fetch1/ever-jobs-spec-renumber-SPEC.md`.
+
+**Changes:**
+
+- Renamed the 17 spec dirs under `.specify/specs/` (slug preserved, only the
+  numeric prefix changed); updated each `spec.md` / `plan.md` / `tasks.md` H1,
+  `Spec ID` row, and intra-fork `Related specs` references.
+- Added a `(formerly Spec 7xx)` note to each renamed spec's H1 for historical
+  traceability (commit history and merged PR titles still cite the old numbers).
+- Updated `docs/index.md`: the 17 leading number cells and all spec/plan/tasks
+  links now point at the new dirs.
+- Swept bare `Spec 7xx` references in our own files only — the ATS plugin test
+  descriptions (`source-ats-ashby`, `source-ats-greenhouse`, `source-ats-workday`)
+  and `docs/questions.md`. `site.enum.ts` and upstream spec dirs were not touched
+  (their 742–759 mentions refer to upstream company plugins).
+
+**Verification:** `npm run lint:docs` green; `npm run build` green; the three
+affected ATS plugin suites pass (77/77). Pure metadata renumber — no plugin
+behavior change.
+
+---
+
 ## 2026-06-23 — Run #452 — Spec 759: Allen Control Systems repoint to Ashby via registry delegation
 
 **Scope:** Repointed the `source-company-allencontrolsystems` company plugin

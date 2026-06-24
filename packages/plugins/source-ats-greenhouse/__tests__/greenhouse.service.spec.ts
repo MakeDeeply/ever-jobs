@@ -28,12 +28,12 @@ const SLUG = 'acme';
 const EXPECTED_URL = `${GREENHOUSE_API_URL}/${SLUG}/jobs?content=true`;
 
 /**
- * Spec 751 — entity-encoded content, location parsing, and metadata mapping.
+ * Spec 5009 — entity-encoded content, location parsing, and metadata mapping.
  *
  * Drives the public board path with a mocked HTTP client so each fix is
  * asserted against a single crafted job payload.
  */
-describe('GreenhouseService — Spec 751', () => {
+describe('GreenhouseService — Spec 5009', () => {
   let service: GreenhouseService;
 
   beforeAll(async () => {

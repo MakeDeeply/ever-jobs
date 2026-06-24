@@ -253,11 +253,11 @@ describe('AshbyService — Spec 719', () => {
   });
 
   /**
-   * Spec 750 — the public job-board API and the authenticated Posting API use
+   * Spec 5008 — the public job-board API and the authenticated Posting API use
    * different names for the same fields. The plugin must read both, preferring
    * the public name.
    */
-  describe('field-name fallbacks (Spec 750)', () => {
+  describe('field-name fallbacks (Spec 5008)', () => {
     it('maps the authenticated-API field names (departmentName/teamName/publishedDate)', async () => {
       mockGet.mockResolvedValueOnce({ data: clone(BOARD_RAW) });
       const service = new AshbyService();

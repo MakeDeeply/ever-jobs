@@ -15,7 +15,7 @@
 **Context.** Workday's list endpoint may collapse geography to `"2 Locations"`; its detail
 endpoint exposes a primary `location` and `additionalLocations[]`. The shared `JobPostDto` accepts
 only one `LocationDto`, and `LocationDto` has scalar `city`, `state`, and `country` fields rather
-than a location array. Spec 745 must preserve every concrete label without changing the public DTO.
+than a location array. Spec 5004 must preserve every concrete label without changing the public DTO.
 
 **Options.**
 
