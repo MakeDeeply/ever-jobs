@@ -16,6 +16,7 @@ import {
   createHttpClient,
   htmlToPlainText,
   markdownConverter,
+  parseJobPostingLd,
   parseLocationList,
   salaryToCompensation,
 } from '@ever-jobs/common';
@@ -25,7 +26,7 @@ import {
   breezyDetailUrl,
   breezyListUrl,
 } from './breezyhr.constants';
-import { BreezyJob, BreezyJobPostingLd, BreezyLocation } from './breezyhr.types';
+import { BreezyJob, BreezyLocation } from './breezyhr.types';
 
 @SourcePlugin({
   site: Site.BREEZYHR,
@@ -178,47 +179,17 @@ export class BreezyHRService implements IScraper {
         breezyDetailUrl(company, friendlyId),
         { responseType: 'text' },
       );
-      return typeof data === 'string'
-        ? this.descriptionFromHtml(data)
-        : null;
+      if (typeof data !== 'string') return null;
+      const posting = parseJobPostingLd(data).find(
+        (p) => p.description && p.description.trim().length > 0,
+      );
+      return posting?.description ?? null;
     } catch (err: any) {
       this.logger.warn(
         `BreezyHR: detail fetch failed for ${company}/${friendlyId}: ${err.message}`,
       );
       return null;
     }
-  }
-
-  /**
-   * Pull the `description` from the schema.org `JobPosting` ld+json block
-   * embedded in the detail page HTML. Multiple ld+json blocks may exist (e.g. a
-   * `WebSite` block); only the `JobPosting` one carries the body.
-   */
-  private descriptionFromHtml(html: string): string | null {
-    const blocks = html.match(
-      /<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi,
-    );
-    if (!blocks) return null;
-
-    for (const block of blocks) {
-      const json = block
-        .replace(/^<script[^>]*>/i, '')
-        .replace(/<\/script>$/i, '')
-        .trim();
-      try {
-        const parsed = JSON.parse(json) as BreezyJobPostingLd;
-        if (
-          parsed?.['@type'] === 'JobPosting' &&
-          typeof parsed.description === 'string' &&
-          parsed.description.trim().length > 0
-        ) {
-          return parsed.description;
-        }
-      } catch {
-        // Skip malformed ld+json blocks.
-      }
-    }
-    return null;
   }
 
   private formatDescription(

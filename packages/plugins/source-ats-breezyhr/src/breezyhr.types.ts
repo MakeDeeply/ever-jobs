@@ -42,12 +42,3 @@ export interface BreezyJob {
   url?: string | null;
   description?: string | null;
 }
-
-/**
- * The schema.org `JobPosting` object embedded as ld+json on the detail page.
- * Only `description` (rich HTML) is consumed; other keys duplicate the list.
- */
-export interface BreezyJobPostingLd {
-  '@type'?: string;
-  description?: string | null;
-}

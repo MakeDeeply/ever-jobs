@@ -10,6 +10,39 @@
 
 ---
 
+## Q-071 — source-jsonld: how should the generic JSON-LD harvester enumerate jobs from a single page?
+
+**Context:** Spec 5022. The generic `source-jsonld` plugin is a last-resort
+harvester for sites with no recognised ATS. It is given one careers/job URL
+(`companyUrl`) and reads the `JobPosting` ld+json blocks on **that page**. Some
+sites embed every posting's ld+json on the careers index (an `ItemList` of
+`JobPosting`s), others only embed a single `JobPosting` on each per-job detail
+page and list jobs via JS/links the harvester can't enumerate.
+
+**Options:**
+
+- **A. Single-page only (current).** Parse whatever `JobPosting` blocks exist on
+  the supplied URL — an `ItemList`/`@graph` index yields many jobs, a detail
+  page yields one. No crawling. Deterministic, cheap, no link-following
+  heuristics; but misses sites that paginate via links rather than embedding an
+  index.
+- **B. Follow on-page job links one level deep** and parse each target's
+  ld+json. Recovers link-driven boards, but adds N fetches per page, link-intent
+  heuristics, and concurrency/robots concerns — overlaps the fetch1
+  apply-link-discovery work.
+- **C. Require the caller to pass each job URL** (treat the plugin as a pure
+  per-URL extractor). Simplest contract, but pushes enumeration entirely
+  upstream.
+
+**Default (proceeding):** **A.** Keep the harvester a single-page extractor:
+it covers the embedded-`ItemList` and per-detail-page cases with zero crawl
+risk, and link-following enumeration belongs in the dedicated fetch1 discovery
+spec, not the ever-jobs source plugin.
+
+**Resolution:** _pending review._
+
+---
+
 ## Q-070 — Manatal: how should the omitted pay interval be derived from careers-page.com salary fields?
 
 **Context:** Spec 5021. The careers-page.com JSON API exposes `salary_min` /

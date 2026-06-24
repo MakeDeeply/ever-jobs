@@ -236,6 +236,7 @@
       "@ever-jobs/source-adzuna": ["packages/plugins/source-adzuna/src/index.ts"],
       "@ever-jobs/source-reed": ["packages/plugins/source-reed/src/index.ts"],
       "@ever-jobs/source-jooble": ["packages/plugins/source-jooble/src/index.ts"],
+      "@ever-jobs/source-jsonld": ["packages/plugins/source-jsonld/src/index.ts"],
       "@ever-jobs/source-careerjet": ["packages/plugins/source-careerjet/src/index.ts"],
       "@ever-jobs/source-ats-bamboohr": ["packages/plugins/source-ats-bamboohr/src/index.ts"],
       "@ever-jobs/source-ats-personio": ["packages/plugins/source-ats-personio/src/index.ts"],
