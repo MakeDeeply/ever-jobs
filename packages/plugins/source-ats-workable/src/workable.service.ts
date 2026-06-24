@@ -11,10 +11,20 @@ import {
   DescriptionFormat,
   getJobTypeFromString,
 } from '@ever-jobs/models';
-import { createHttpClient, extractEmails } from '@ever-jobs/common';
-import { WORKABLE_API_URL, WORKABLE_HEADERS } from './workable.constants';
+import {
+  createHttpClient,
+  htmlToPlainText,
+  markdownConverter,
+} from '@ever-jobs/common';
+import {
+  WORKABLE_API_URL,
+  WORKABLE_DETAIL_CONCURRENCY,
+  WORKABLE_HEADERS,
+  workableDetailUrl,
+} from './workable.constants';
 import {
   WorkableJob,
+  WorkableJobDetail,
   WorkableResponse,
   WorkableApiV3Job,
   WorkableApiV3Response,
@@ -79,20 +89,28 @@ export class WorkableService implements IScraper {
       this.logger.log(`Workable: found ${jobs.length} raw jobs for ${companySlug}`);
 
       const resultsWanted = input.resultsWanted ?? 100;
+      const limited = jobs.slice(0, resultsWanted);
+
+      // The widget list omits description and work-mode; overlay each job with
+      // its public v2 detail (rich body + workplace) before mapping.
+      const details = await this.fetchDetails(client, limited, companySlug);
+
       const jobPosts: JobPostDto[] = [];
-
-      for (const job of jobs) {
-        if (jobPosts.length >= resultsWanted) break;
-
+      limited.forEach((job, index) => {
         try {
-          const post = this.processJob(job, companySlug, input.descriptionFormat);
+          const post = this.processJob(
+            job,
+            companySlug,
+            input.descriptionFormat,
+            details[index],
+          );
           if (post) {
             jobPosts.push(post);
           }
         } catch (err: any) {
           this.logger.warn(`Error processing Workable job ${job.shortcode}: ${err.message}`);
         }
-      }
+      });
 
       return new JobResponseDto(jobPosts);
     } catch (err: any) {
@@ -231,7 +249,8 @@ export class WorkableService implements IScraper {
   private processJob(
     job: WorkableJob,
     companySlug: string,
-    _format?: DescriptionFormat,
+    format?: DescriptionFormat,
+    detail?: WorkableJobDetail | null,
   ): JobPostDto | null {
     const title = job.title;
     if (!title) return null;
@@ -244,8 +263,11 @@ export class WorkableService implements IScraper {
       country: primaryLoc?.country ?? job.country ?? null,
     });
 
-    // Remote detection
-    const isRemote = job.telecommuting ?? false;
+    // Remote detection: widget telecommuting OR the detail's work-mode signals.
+    const isRemote =
+      (job.telecommuting ?? false) ||
+      (detail?.remote ?? false) ||
+      detail?.workplace?.toLowerCase() === 'remote';
 
     // Job type
     const jobType = job.employment_type
@@ -258,18 +280,24 @@ export class WorkableService implements IScraper {
     // Date
     const datePosted = job.published_on ?? job.created_at ?? null;
 
+    const description = this.formatDescription(detail, format);
+    const workFromHomeType = this.workFromHomeTypeFromWorkplace(detail?.workplace);
+
     return new JobPostDto({
       id: `workable-${job.shortcode}`,
       title,
       companyName: companySlug,
       jobUrl: job.url ?? job.shortlink ?? `https://apply.workable.com/${companySlug}/j/${job.shortcode}`,
       location,
+      description,
       datePosted: datePosted
         ? new Date(datePosted).toISOString().split('T')[0]
         : null,
       isRemote,
       jobType,
+      jobFunction: job.function ?? null,
       site: Site.WORKABLE,
+      ...(workFromHomeType ? { workFromHomeType } : {}),
       // ATS-specific fields
       atsId: job.shortcode ?? null,
       atsType: 'workable',
@@ -277,5 +305,97 @@ export class WorkableService implements IScraper {
       employmentType: job.employment_type ?? null,
       applyUrl: job.application_url ?? null,
     });
+  }
+
+  /**
+   * Fetch the public v2 detail for each job under bounded concurrency.
+   * Returns details aligned by index; a failed/empty fetch yields null so the
+   * job still maps from the widget list.
+   */
+  private async fetchDetails(
+    client: ReturnType<typeof createHttpClient>,
+    jobs: WorkableJob[],
+    companySlug: string,
+  ): Promise<(WorkableJobDetail | null)[]> {
+    const details: (WorkableJobDetail | null)[] = new Array(jobs.length).fill(
+      null,
+    );
+
+    for (
+      let index = 0;
+      index < jobs.length;
+      index += WORKABLE_DETAIL_CONCURRENCY
+    ) {
+      const batch = jobs.slice(index, index + WORKABLE_DETAIL_CONCURRENCY);
+      const settled = await Promise.allSettled(
+        batch.map((job) => this.fetchDetail(client, job, companySlug)),
+      );
+      settled.forEach((result, batchIndex) => {
+        if (result.status === 'fulfilled') {
+          details[index + batchIndex] = result.value;
+        }
+      });
+    }
+
+    return details;
+  }
+
+  private async fetchDetail(
+    client: ReturnType<typeof createHttpClient>,
+    job: WorkableJob,
+    companySlug: string,
+  ): Promise<WorkableJobDetail | null> {
+    const shortcode = job.shortcode;
+    if (!shortcode) return null;
+
+    try {
+      const response = await client.get<WorkableJobDetail>(
+        workableDetailUrl(companySlug, shortcode),
+      );
+      return response.data ?? null;
+    } catch (err: any) {
+      this.logger.warn(
+        `Workable: detail fetch failed for ${companySlug}/${shortcode}: ${err.message}`,
+      );
+      return null;
+    }
+  }
+
+  /**
+   * Build the posting body by concatenating the detail's description,
+   * requirements, and benefits (Workable splits them), then render to the
+   * requested format. Markdown is the default.
+   */
+  private formatDescription(
+    detail: WorkableJobDetail | null | undefined,
+    format?: DescriptionFormat,
+  ): string | null {
+    if (!detail) return null;
+    const html = [detail.description, detail.requirements, detail.benefits]
+      .filter(
+        (part): part is string =>
+          typeof part === 'string' && part.trim().length > 0,
+      )
+      .map((part) => part.trim())
+      .join('\n');
+    if (!html) return null;
+
+    if (format === DescriptionFormat.HTML) return html;
+    if (format === DescriptionFormat.PLAIN) return htmlToPlainText(html);
+    return markdownConverter(html) ?? html;
+  }
+
+  /** Map the Workable `workplace` enum to a workFromHomeType label. on_site → none. */
+  private workFromHomeTypeFromWorkplace(
+    workplace?: string | null,
+  ): string | null {
+    switch (workplace?.toLowerCase()) {
+      case 'hybrid':
+        return 'Hybrid';
+      case 'remote':
+        return 'Remote';
+      default:
+        return null;
+    }
   }
 }
