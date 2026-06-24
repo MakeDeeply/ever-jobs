@@ -20,6 +20,7 @@ import {
   markdownConverter,
   parseLocationList,
   salaryToCompensation,
+  aggregateCompensation,
 } from "@ever-jobs/common";
 import {
   RIPPLING_BASE_URL,
@@ -499,22 +500,16 @@ export class RipplingService implements IScraper {
     );
     if (details.length === 0) return null;
 
-    const starts = details
-      .map((detail) => detail.rangeStart)
-      .filter((value): value is number => value != null);
-    const ends = details
-      .map((detail) => detail.rangeEnd)
-      .filter((value): value is number => value != null);
-
-    const first = details[0];
-    const interval = getCompensationInterval(first.frequency ?? "");
-
-    const compensation = new CompensationDto({
-      interval: interval ?? undefined,
-      minAmount: starts.length > 0 ? Math.min(...starts) : undefined,
-      maxAmount: ends.length > 0 ? Math.max(...ends) : undefined,
-      currency: first.currency ?? "USD",
-    });
+    // Collapse the bands into one overall min-max envelope (Spec 5019).
+    const compensation = aggregateCompensation(
+      details.map((detail) => ({
+        minAmount: detail.rangeStart,
+        maxAmount: detail.rangeEnd,
+        currency: detail.currency ?? "USD",
+        interval: getCompensationInterval(detail.frequency ?? ""),
+      })),
+    );
+    if (!compensation) return null;
 
     const distinctRanges = new Set(
       details.map((detail) => `${detail.rangeStart}-${detail.rangeEnd}`),

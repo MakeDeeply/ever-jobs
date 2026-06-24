@@ -18,6 +18,7 @@ import {
   extractEmails,
   parseLocationList,
   resolveCompensation,
+  aggregateCompensation,
 } from '@ever-jobs/common';
 import {
   ASHBY_API_URL,
@@ -348,18 +349,16 @@ export class AshbyService implements IScraper {
     const tiers = salaryComponent?.tiers ?? [];
     if (tiers.length === 0) return null;
 
-    // Use the first tier's floor/ceiling
-    const tier: AshbyCompensationTier = tiers[0];
-    if (tier.tierFloor == null && tier.tierCeiling == null) return null;
-
-    const interval = this.resolveInterval(tier.interval);
-
-    return new CompensationDto({
-      interval: interval ?? undefined,
-      minAmount: tier.tierFloor ?? undefined,
-      maxAmount: tier.tierCeiling ?? undefined,
-      currency: tier.currency ?? 'USD',
-    });
+    // Fold every tier (e.g. per-location/level bands) into the overall
+    // min-max envelope rather than reporting only the first (Spec 5019).
+    return aggregateCompensation(
+      tiers.map((tier: AshbyCompensationTier) => ({
+        minAmount: tier.tierFloor,
+        maxAmount: tier.tierCeiling,
+        currency: tier.currency ?? 'USD',
+        interval: this.resolveInterval(tier.interval),
+      })),
+    );
   }
 
   /** Flat shape: summaryComponents[] / compensationTiers[].components[]. */
@@ -380,14 +379,23 @@ export class AshbyService implements IScraper {
           c.compensationType?.toLowerCase() === 'base',
       ) ?? candidates[0];
 
-    const interval = this.resolveInterval(salaryComponent.interval);
+    // Fold every component sharing the chosen salary's type (e.g. per-location
+    // bands) into one overall min-max envelope; bonus/equity rows stay out
+    // since they carry a different compensationType (Spec 5019).
+    const salaryBands = candidates.filter(
+      (c) =>
+        (c.compensationType ?? null) ===
+        (salaryComponent.compensationType ?? null),
+    );
 
-    return new CompensationDto({
-      interval: interval ?? undefined,
-      minAmount: salaryComponent.minValue ?? undefined,
-      maxAmount: salaryComponent.maxValue ?? undefined,
-      currency: salaryComponent.currencyCode ?? 'USD',
-    });
+    return aggregateCompensation(
+      salaryBands.map((c) => ({
+        minAmount: c.minValue,
+        maxAmount: c.maxValue,
+        currency: c.currencyCode ?? 'USD',
+        interval: this.resolveInterval(c.interval),
+      })),
+    );
   }
 
   private resolveInterval(raw: string | null | undefined) {

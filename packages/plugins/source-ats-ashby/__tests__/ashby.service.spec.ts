@@ -271,6 +271,58 @@ describe('AshbyService — Spec 719', () => {
       expect(job?.compensation?.currency).toBe('USD');
     });
 
+    it('folds many tiers into the overall min-max envelope (Spec 5019)', async () => {
+      const raw = clone(BOARD_RAW) as any;
+      // SF / NYC / remote bands on the same base-salary component.
+      raw.jobs[0].compensation.compensationComponents[0].tiers = [
+        { title: 'SF', tierFloor: 180000, tierCeiling: 220000, currency: 'USD', tierType: 'salary', interval: 'YEAR' },
+        { title: 'NYC', tierFloor: 170000, tierCeiling: 210000, currency: 'USD', tierType: 'salary', interval: 'YEAR' },
+        { title: 'Remote', tierFloor: 150000, tierCeiling: 190000, currency: 'USD', tierType: 'salary', interval: 'YEAR' },
+      ];
+      mockGet.mockResolvedValueOnce({ data: raw });
+
+      const service = new AshbyService();
+      const result = await service.scrape({
+        siteType: [Site.ASHBY],
+        companySlug: SLUG,
+      } as ScraperInputDto);
+
+      const job = result.jobs.find(
+        (j) => j.id === `ashby-${BOARD_RAW.jobs[0].id}`,
+      );
+      expect(job?.compensation?.minAmount).toBe(150000);
+      expect(job?.compensation?.maxAmount).toBe(220000);
+      expect(job?.compensation?.currency).toBe('USD');
+      expect(job?.compensation?.interval).toBe(CompensationInterval.YEARLY);
+    });
+
+    it('folds many flat salary bands into the overall min-max envelope (Spec 5019)', async () => {
+      const raw = clone(BOARD_RAW) as any;
+      // Multiple per-location salary bands plus an equity row that must stay out.
+      raw.jobs[1].compensation.summaryComponents = [
+        { compensationType: 'Salary', interval: '1 YEAR', currencyCode: 'USD', minValue: 200000, maxValue: 260000 },
+        { compensationType: 'Salary', interval: '1 YEAR', currencyCode: 'USD', minValue: 180000, maxValue: 240000 },
+        { compensationType: 'Salary', interval: '1 YEAR', currencyCode: 'USD', minValue: 160000, maxValue: 300000 },
+        { compensationType: 'EquityPercentage', interval: 'NONE', currencyCode: null, minValue: null, maxValue: null },
+      ];
+      raw.jobs[1].compensation.compensationTiers = [];
+      mockGet.mockResolvedValueOnce({ data: raw });
+
+      const service = new AshbyService();
+      const result = await service.scrape({
+        siteType: [Site.ASHBY],
+        companySlug: SLUG,
+      } as ScraperInputDto);
+
+      const job = result.jobs.find(
+        (j) => j.id === `ashby-${BOARD_RAW.jobs[1].id}`,
+      );
+      expect(job?.compensation?.minAmount).toBe(160000);
+      expect(job?.compensation?.maxAmount).toBe(300000);
+      expect(job?.compensation?.currency).toBe('USD');
+      expect(job?.compensation?.interval).toBe(CompensationInterval.YEARLY);
+    });
+
     it('prefers structured comp over a description salary (Spec 5018)', async () => {
       const raw = clone(BOARD_RAW) as any;
       raw.jobs[0].descriptionPlain =

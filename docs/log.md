@@ -15,6 +15,37 @@
 
 ---
 
+## 2026-06-23 — Run #455 — Spec 5019 — Multi-tier compensation aggregation
+
+**Scope:** Postings that list pay bands across several tiers (per geography,
+level, or work mode) were collapsing to a single tier. Promoted the
+`payRangeDetails[]` collapse Rippling already hand-rolled into a shared helper so
+every plugin that exposes multiple bands reports the true overall envelope.
+
+**Helper added (`packages/common/src/utils/helpers.ts`):**
+- `CompensationRange` interface + `aggregateCompensation(ranges)` — folds many
+  bounded ranges into `min(floors)…max(ceilings)`. The first bounded range sets
+  the basis currency+interval; only ranges sharing that basis contribute, so a
+  stray EUR or hourly band is excluded (never converted). Returns `null` when no
+  range carries a bounded amount.
+
+**Plugins refactored onto the helper:**
+- ashby — tiered path now folds every tier of the chosen base/salary component
+  (was `tiers[0]`); flat path folds every component sharing the chosen salary's
+  `compensationType` (equity/bonus rows stay out). New overall-range behavior.
+- rippling — `extractCompensation` calls `aggregateCompensation` instead of inline
+  `Math.min`/`Math.max`; per-band `salarySource` logic unchanged. Behavior-preserving.
+
+**Tests:** +5 common unit tests (fold, single-band, currency+interval guard,
+one-sided bands, empty→null); +2 ashby fixtures (tiered SF/NYC/remote, flat
+multi-band + equity); +1 rippling fixture (3+ bands, mismatched currency
+excluded). All prior fixtures green; 321 tests across common + ATS suites (+8).
+
+**Docs:** `docs/index.md` row for 5019; this entry. Spec/plan/tasks under
+`.specify/specs/5019-multi-tier-compensation-aggregation/`.
+
+---
+
 ## 2026-06-23 — Run #454 — Spec 5018 — Shared structured-first compensation resolution
 
 **Scope:** Promoted the rippling-discovered compensation precedence (structured

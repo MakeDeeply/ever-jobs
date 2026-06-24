@@ -507,6 +507,53 @@ describe("RipplingService compensation and work mode", () => {
     );
   });
 
+  it("folds three+ bands and ignores a mismatched-currency band (Spec 5019)", async () => {
+    const listed = job("three-bands");
+    listed.payRangeDetails = [
+      {
+        location: "San Francisco, CA",
+        currency: "USD",
+        frequency: "YEAR",
+        rangeStart: 180000,
+        rangeEnd: 220000,
+        isRemote: false,
+      },
+      {
+        location: "New York, NY",
+        currency: "USD",
+        frequency: "YEAR",
+        rangeStart: 170000,
+        rangeEnd: 210000,
+        isRemote: false,
+      },
+      {
+        location: "Remote, US",
+        currency: "USD",
+        frequency: "YEAR",
+        rangeStart: 150000,
+        rangeEnd: 190000,
+        isRemote: true,
+      },
+      {
+        location: "London, UK",
+        currency: "GBP",
+        frequency: "YEAR",
+        rangeStart: 120000,
+        rangeEnd: 240000,
+        isRemote: false,
+      },
+    ];
+
+    const post = await scrapeOne(listed);
+
+    expect(post.compensation).toMatchObject({
+      interval: "yearly",
+      minAmount: 150000,
+      maxAmount: 220000,
+      currency: "USD",
+    });
+  });
+
   it("does not emit salarySource when multiple bands share an identical range", async () => {
     const listed = job("identical-bands");
     listed.payRangeDetails = [

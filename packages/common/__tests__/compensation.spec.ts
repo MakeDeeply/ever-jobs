@@ -1,4 +1,5 @@
 import {
+  aggregateCompensation,
   compensationFromSalary,
   resolveCompensation,
   salaryToCompensation,
@@ -114,5 +115,59 @@ describe('resolveCompensation (Spec 5018)', () => {
       resolveCompensation({ structured: null, text: 'No pay listed here.' }),
     ).toBeNull();
     expect(resolveCompensation({})).toBeNull();
+  });
+});
+
+describe('aggregateCompensation (Spec 5019)', () => {
+  it('folds many tiers into an overall min-max envelope', () => {
+    const comp = aggregateCompensation([
+      { minAmount: 180000, maxAmount: 220000, currency: 'USD', interval: CompensationInterval.YEARLY },
+      { minAmount: 170000, maxAmount: 210000, currency: 'USD', interval: CompensationInterval.YEARLY },
+      { minAmount: 150000, maxAmount: 190000, currency: 'USD', interval: CompensationInterval.YEARLY },
+    ]);
+    expect(comp?.minAmount).toBe(150000);
+    expect(comp?.maxAmount).toBe(220000);
+    expect(comp?.currency).toBe('USD');
+    expect(comp?.interval).toBe(CompensationInterval.YEARLY);
+  });
+
+  it('returns a plain single-tier range unchanged', () => {
+    const comp = aggregateCompensation([
+      { minAmount: 120000, maxAmount: 160000, currency: 'USD', interval: CompensationInterval.YEARLY },
+    ]);
+    expect(comp?.minAmount).toBe(120000);
+    expect(comp?.maxAmount).toBe(160000);
+  });
+
+  it('only folds bands sharing the first bounded band currency and interval', () => {
+    const comp = aggregateCompensation([
+      { minAmount: 180000, maxAmount: 220000, currency: 'USD', interval: CompensationInterval.YEARLY },
+      { minAmount: 50, maxAmount: 70, currency: 'USD', interval: CompensationInterval.HOURLY },
+      { minAmount: 160000, maxAmount: 240000, currency: 'EUR', interval: CompensationInterval.YEARLY },
+    ]);
+    expect(comp?.minAmount).toBe(180000);
+    expect(comp?.maxAmount).toBe(220000);
+    expect(comp?.currency).toBe('USD');
+    expect(comp?.interval).toBe(CompensationInterval.YEARLY);
+  });
+
+  it('keeps a one-sided band (floor only, ceiling only)', () => {
+    const comp = aggregateCompensation([
+      { minAmount: 100000, maxAmount: null, currency: 'USD', interval: CompensationInterval.YEARLY },
+      { minAmount: null, maxAmount: 200000, currency: 'USD', interval: CompensationInterval.YEARLY },
+    ]);
+    expect(comp?.minAmount).toBe(100000);
+    expect(comp?.maxAmount).toBe(200000);
+  });
+
+  it('ignores unbounded bands and returns null when none are bounded', () => {
+    expect(aggregateCompensation([])).toBeNull();
+    expect(
+      aggregateCompensation([
+        { minAmount: null, maxAmount: null, currency: 'USD' },
+        null,
+        undefined,
+      ]),
+    ).toBeNull();
   });
 });
