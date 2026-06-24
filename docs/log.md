@@ -15,6 +15,42 @@
 
 ---
 
+## 2026-06-24 — Run #457 — Spec 5021 — Manatal rework to careers-page.com JSON API
+
+**Scope:** The Manatal plugin fetched `api.manatal.com/open/v1/career-page/{slug}/jobs/`,
+which now returns the SPA HTML shell (not JSON) for real customers (e.g.
+castelion-corporation, 135 jobs) — so it returned 0 jobs everywhere. Manatal
+hosts its public career pages on the white-label domain `careers-page.com`,
+whose JSON API (`/api/v1.0/c/{slug}/jobs/`) is the working data layer the Vue
+front-end itself consumes. Repointed the plugin there and applied the full ATS
+checklist (`docs_fetch1/ats-plugin-feature-checklist-SPEC.md`).
+
+**Plugin rework (`packages/plugins/source-ats-manatal`):**
+- `manatal.constants.ts` — replaced the dead `api.manatal.com` endpoint with
+  `MANATAL_API_BASE` (`https://www.careers-page.com/api/v1.0`) + `MANATAL_SITE_BASE`
+  and builders `manatalListUrl(slug, page?)`, `manatalCompanyUrl(slug)`,
+  `manatalJobUrl(slug, hash)`; added `MANATAL_MAX_PAGES = 50`.
+- `manatal.types.ts` — rewrote to the careers-page.com shapes `ManatalResponse`
+  (`count`/`next`/`results[]`) and `ManatalJob` (`hash`, structured location,
+  `is_salary_visible`, decimal-string `salary_min`/`salary_max`, `currency_code`).
+- `manatal.service.ts` — `scrape()` follows the `next` pagination chain (no
+  detail fetch — the list is self-contained), mapping title, structured
+  location (city/state/country, `parseLocationText` fallback), description
+  (HTML/markdown/plain), structured-first→text-fallback compensation via the
+  shared `resolveCompensation` (interval inferred by magnitude when the API
+  omits it: 350 hourly / 30000 monthly thresholds), `salarySource`, emails, and
+  companyUrl/jobUrl. Never fabricates employment_type/jobFunction/datePosted
+  (absent from the payload).
+
+**Tests:** new `manatal.service.spec.ts` driven by 4 real captured fixtures
+(ghostwerks, calqulate, castelion p1+p2), mocked HTTP routed by URL — 13 unit
+tests (mapping, structured-wins, text-fallback, hourly/yearly interval
+inference, pagination + cap, remote inference, emails, format, empty-slug/throw).
+Repurposed `manatal.e2e-spec.ts` into a `RUN_NETWORK_E2E`-gated network smoke.
+`npm run build` + `lint:docs` green; common + manatal suites green.
+
+**Spec:** `.specify/specs/5021-manatal-careers-page-rework/{spec,plan,tasks}.md`.
+
 ## 2026-06-23 — Run #456 — Spec 5020 — Paylocity board-page scrape (replace dead feed API)
 
 **Scope:** The Paylocity plugin depended on the JSON feed endpoint

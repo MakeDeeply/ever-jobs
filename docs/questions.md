@@ -10,6 +10,33 @@
 
 ---
 
+## Q-070 — Manatal: how should the omitted pay interval be derived from careers-page.com salary fields?
+
+**Context:** Spec 5021. The careers-page.com JSON API exposes `salary_min` /
+`salary_max` (decimal strings, only when `is_salary_visible`) and a
+`currency_code`, but **no pay interval** (hourly/monthly/yearly). Real data
+mixes scales: castelion-corporation has both $40–$50 (hourly) and $140k–$180k
+(yearly) bands, both flagged visible.
+
+**Options:**
+
+- **A. Infer the interval from the amount magnitude** using the same thresholds
+  as the shared text parser (`< 350` hourly, `< 30000` monthly, else yearly).
+  Consistent with `extractSalary`; correct on all observed data.
+- **B. Always assume yearly.** Simplest, but mislabels hourly roles (the
+  castelion $40–$50 bands would read as $40–$50/yr).
+- **C. Omit the interval entirely when the API doesn't state it.** Avoids any
+  guess, but `CompensationDto` needs an interval and downstream consumers expect
+  one; loses normalization.
+
+**Default (proceeding):** **A.** Magnitude inference with the shared thresholds
+keeps Manatal consistent with every other plugin's text path and is correct on
+all captured fixtures; the structured min/max remain exact regardless.
+
+**Resolution:** _pending review._
+
+---
+
 ## Q-069 — Should the Paylocity plugin keep chasing the JSON feed endpoint, or commit to board-page HTML?
 
 **Context:** Spec 5020. The plugin relied on
