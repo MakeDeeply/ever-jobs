@@ -883,6 +883,51 @@ import { CerebrasSystemsModule } from './source-company-cerebrassystems';
 import { ParloaModule } from './source-company-parloa';
 import { QphoXModule } from './source-company-qphox';
 import { ZencoderModule } from './source-company-zencoder';
+import { ButterflyNetworkModule } from './source-company-butterflynetwork';
+import { FigureLendingModule } from './source-company-figure';
+import { GoGuardianModule } from './source-company-goguardian';
+import { HighRadiusModule } from './source-company-highradius';
+import { KhanAcademyModule } from './source-company-khanacademy';
+import { LocusRoboticsModule } from './source-company-locusrobotics';
+import { MotionalModule } from './source-company-motional';
+import { NautoModule } from './source-company-nauto';
+import { NetradyneModule } from './source-company-netradyne';
+import { NewselaModule } from './source-company-newsela';
+import { OfferUpModule } from './source-company-offerup';
+import { OphelosModule } from './source-company-ophelos';
+import { OportunModule } from './source-company-oportun';
+import { UdacityModule } from './source-company-udacity';
+import { AbsciModule } from './source-company-absci';
+import { AstranisModule } from './source-company-astranis';
+import { ASTSpaceMobileModule } from './source-company-astspacemobile';
+import { BlackSkyTechnologyModule } from './source-company-blacksky';
+import { ElationHealthModule } from './source-company-elationhealth';
+import { FlatironHealthModule } from './source-company-flatironhealth';
+import { FormBioModule } from './source-company-formbio';
+import { HawkEye360Module } from './source-company-hawkeye360';
+import { HubbleNetworkModule } from './source-company-hubblenetwork';
+import { KomodoHealthModule } from './source-company-komodohealth';
+import { OpheliaHealthModule } from './source-company-ophelia';
+import { PeakEnergyModule } from './source-company-peakenergy';
+import { QventusModule } from './source-company-qventus';
+import { SilaNanotechnologiesModule } from './source-company-silananotechnologies';
+import { SukiAIModule } from './source-company-suki';
+import { TwistBioscienceModule } from './source-company-twistbioscience';
+import { CHAOSIndustriesModule } from './source-company-chaosindustries';
+import { CorticaModule } from './source-company-cortica';
+import { FormicModule } from './source-company-formic';
+import { HelsingModule } from './source-company-helsing';
+import { CarbonRoboticsModule } from './source-company-carbonrobotics';
+import { CohereHealthModule } from './source-company-coherehealth';
+import { DynoTherapeuticsModule } from './source-company-dynotherapeutics';
+import { EikonTherapeuticsModule } from './source-company-eikontherapeutics';
+import { EtchedModule } from './source-company-etchedai';
+import { GarnerHealthModule } from './source-company-garnerhealth';
+import { PathRoboticsModule } from './source-company-pathrobotics';
+import { PivotBioModule } from './source-company-pivotbio';
+import { SambaNovaSystemsModule } from './source-company-sambanovasystems';
+import { SlingshotAerospaceModule } from './source-company-slingshotaerospace';
+import { SoundAgricultureModule } from './source-company-soundagriculture';
 export const ALL_SOURCE_MODULES = [
   FourDayWeekModule,
   AcademiccareersModule,
@@ -1759,4 +1804,49 @@ export const ALL_SOURCE_MODULES = [
   ParloaModule,
   QphoXModule,
   ZencoderModule,
+  ButterflyNetworkModule,
+  FigureLendingModule,
+  GoGuardianModule,
+  HighRadiusModule,
+  KhanAcademyModule,
+  LocusRoboticsModule,
+  MotionalModule,
+  NautoModule,
+  NetradyneModule,
+  NewselaModule,
+  OfferUpModule,
+  OphelosModule,
+  OportunModule,
+  UdacityModule,
+  AbsciModule,
+  AstranisModule,
+  ASTSpaceMobileModule,
+  BlackSkyTechnologyModule,
+  ElationHealthModule,
+  FlatironHealthModule,
+  FormBioModule,
+  HawkEye360Module,
+  HubbleNetworkModule,
+  KomodoHealthModule,
+  OpheliaHealthModule,
+  PeakEnergyModule,
+  QventusModule,
+  SilaNanotechnologiesModule,
+  SukiAIModule,
+  TwistBioscienceModule,
+  CHAOSIndustriesModule,
+  CorticaModule,
+  FormicModule,
+  HelsingModule,
+  CarbonRoboticsModule,
+  CohereHealthModule,
+  DynoTherapeuticsModule,
+  EikonTherapeuticsModule,
+  EtchedModule,
+  GarnerHealthModule,
+  PathRoboticsModule,
+  PivotBioModule,
+  SambaNovaSystemsModule,
+  SlingshotAerospaceModule,
+  SoundAgricultureModule,
 ];

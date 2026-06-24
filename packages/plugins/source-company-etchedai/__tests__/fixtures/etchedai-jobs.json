@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 4550342007,
+      "title": "ASIC Timing Engineer ",
+      "company_name": "Etched",
+      "absolute_url": "https://job-boards.greenhouse.io/etchedai/jobs/4550342007",
+      "updated_at": "2026-03-26T09:56:48-04:00",
+      "location": {
+        "name": "Cupertino, CA"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Etched.&lt;/strong&gt; Now hiring a ASIC Timing Engineer on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4630871007,
+      "title": "Core Operations",
+      "company_name": "Etched",
+      "absolute_url": "https://job-boards.greenhouse.io/etchedai/jobs/4630871007",
+      "updated_at": "2026-03-26T09:56:48-04:00",
+      "location": {
+        "name": "Cupertino, CA"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Etched.&lt;/strong&gt; Now hiring a Core Operations on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4560766007,
+      "title": "Design Infrastructure Engineer",
+      "company_name": "Etched",
+      "absolute_url": "https://job-boards.greenhouse.io/etchedai/jobs/4560766007",
+      "updated_at": "2026-03-26T09:56:48-04:00",
+      "location": {
+        "name": "Cupertino, CA"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Etched.&lt;/strong&gt; Now hiring a Design Infrastructure Engineer on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 4689940006,
+      "title": "Accounting & Audit Consultant ",
+      "company_name": "Formic",
+      "absolute_url": "https://job-boards.greenhouse.io/formic/jobs/4689940006",
+      "updated_at": "2026-06-16T15:06:39-04:00",
+      "location": {
+        "name": "Chicago || Bolingbrook, IL"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Formic.&lt;/strong&gt; Now hiring a Accounting & Audit Consultant on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4654480006,
+      "title": "Automation Sales Manager",
+      "company_name": "Formic",
+      "absolute_url": "https://job-boards.greenhouse.io/formic/jobs/4654480006",
+      "updated_at": "2026-06-16T09:30:37-04:00",
+      "location": {
+        "name": "Charlotte || Raleigh || Greensboro, NC"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Formic.&lt;/strong&gt; Now hiring a Automation Sales Manager on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4654502006,
+      "title": "Automation Sales Manager",
+      "company_name": "Formic",
+      "absolute_url": "https://job-boards.greenhouse.io/formic/jobs/4654502006",
+      "updated_at": "2026-06-16T09:30:37-04:00",
+      "location": {
+        "name": "Minneapolis, MN || St.Paul, MN"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Formic.&lt;/strong&gt; Now hiring a Automation Sales Manager on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

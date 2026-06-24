@@ -1,0 +1,132 @@
+import { SourcePlugin } from '@ever-jobs/plugin';
+
+import { Injectable, Logger } from '@nestjs/common';
+import {
+  IScraper, ScraperInputDto, JobResponseDto, JobPostDto, Site, LocationDto,
+} from '@ever-jobs/models';
+import { createHttpClient, decodeHtmlEntities, stripHtmlTags } from '@ever-jobs/common';
+
+/**
+ * Khan Academy — Nonprofit on a mission to provide a free, world-class education for anyone, anywhere.
+ *
+ * Khan Academy is a nonprofit educational organization that offers
+ * free, world-class learning resources to students, teachers, and
+ * lifelong learners worldwide. Its platform provides instructional
+ * videos, practice exercises, and a personalized learning dashboard
+ * spanning subjects such as math, science, economics, finance,
+ * history, and more, from preschool through early college. The
+ * organization also partners with schools and districts to support
+ * classroom instruction and personalized learning.
+ *
+ * Sector: EdTech / Nonprofit Education. HQ: Mountain View, California, USA.
+ *
+ * Highlights:
+ *   - Nonprofit offering free online education across math, science,
+ *     humanities, and more
+ *   - Used by roughly 100 million learners worldwide each year
+ *   - Content translated into dozens of languages
+ *   - Personalized learning dashboard with videos and practice
+ *     exercises
+ *   - Partners directly with schools and districts to support
+ *     classrooms
+ *
+ * Source profile (Spec 746):
+ *   - D-04 — Greenhouse canonical hosted-board host (variant 2):
+ *     `https://job-boards.greenhouse.io/khanacademy/jobs/<id>`.
+ *   - D-08 — entity-decode-then-tag-strip description pipeline.
+ *   - D-09 — wire `company_name` pass-through (`'Khan Academy'`).
+ *   - D-10 — defensive `.trim()` on wire titles (padding observed
+ *     on the run-398 batch probe).
+ *   - D-11 — defensive `.trim()` on wire department names.
+ *
+ * Probed 22 live role(s) on the run-398 batch sweep.
+ */
+const API_URL = 'https://api.greenhouse.io/v1/boards/khanacademy/jobs';
+
+@SourcePlugin({
+  site: Site.KHAN_ACADEMY,
+  name: 'Khan Academy',
+  category: 'company',
+})
+@Injectable()
+export class KhanAcademyService implements IScraper {
+  private readonly logger = new Logger(KhanAcademyService.name);
+
+  async scrape(input: ScraperInputDto): Promise<JobResponseDto> {
+    const jobs: JobPostDto[] = [];
+    const resultsWanted = input.resultsWanted ?? 50;
+
+    try {
+      const client = createHttpClient({
+        proxies: input.proxies,
+        timeout: input.requestTimeout ?? 30,
+      });
+
+      const url = `${API_URL}?content=true`;
+      this.logger.log(`Khan Academy: fetching ${url}`);
+
+      const { data } = await client.get<any>(url);
+      const listings = data?.jobs ?? [];
+
+      for (const listing of listings) {
+        if (jobs.length >= resultsWanted) break;
+
+        // D-10: defensive trim of wire title padding.
+        const title = (listing.title ?? '').trim();
+        if (!title) continue;
+
+        if (input.searchTerm) {
+          const term = input.searchTerm.toLowerCase();
+          const titleMatch = title.toLowerCase().includes(term);
+          const deptMatch = (listing.departments?.[0]?.name ?? '')
+            .toLowerCase()
+            .includes(term);
+          if (!titleMatch && !deptMatch) continue;
+        }
+
+        const jobId = listing.id ?? '';
+        const id = `khanacademy-${jobId}`;
+
+        const locationStr = listing.location?.name ?? null;
+        const location = locationStr
+          ? new LocationDto({ city: locationStr })
+          : null;
+
+        if (input.location && locationStr) {
+          if (!locationStr.toLowerCase().includes(input.location.toLowerCase())) continue;
+        }
+
+        // D-11: defensive trim of wire department padding.
+        const deptRaw = listing.departments?.[0]?.name ?? null;
+        const department = deptRaw ? deptRaw.trim() : null;
+
+        jobs.push(
+          new JobPostDto({
+            id,
+            site: Site.KHAN_ACADEMY,
+            title,
+            // D-09 pass-through: wire `company_name`.
+            companyName: listing.company_name ?? 'Khan Academy',
+            // D-04: wire `absolute_url` flows through (variant 2).
+            jobUrl:
+              listing.absolute_url ??
+              `https://job-boards.greenhouse.io/khanacademy/jobs/${listing.id}`,
+            location,
+            description: listing.content
+              ? stripHtmlTags(decodeHtmlEntities(listing.content))
+              : null,
+            datePosted: listing.updated_at ?? null,
+            isRemote: locationStr?.toLowerCase().includes('remote') ?? false,
+            department,
+          }),
+        );
+      }
+
+      this.logger.log(`Khan Academy: scraped ${jobs.length} jobs`);
+    } catch (err: any) {
+      this.logger.error(`Khan Academy scrape failed: ${err.message}`);
+    }
+
+    return { jobs };
+  }
+}

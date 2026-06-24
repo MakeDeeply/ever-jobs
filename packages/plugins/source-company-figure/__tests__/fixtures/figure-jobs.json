@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 8472564002,
+      "title": "Chief Credit Officer ",
+      "company_name": "Figure Lending",
+      "absolute_url": "https://job-boards.greenhouse.io/figure/jobs/8472564002",
+      "updated_at": "2026-06-02T11:43:51-04:00",
+      "location": {
+        "name": "Remote"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Figure Lending.&lt;/strong&gt; Now hiring a Chief Credit Officer on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 8563056002,
+      "title": "Collections Associate",
+      "company_name": "Figure Lending",
+      "absolute_url": "https://job-boards.greenhouse.io/figure/jobs/8563056002",
+      "updated_at": "2026-05-28T18:00:17-04:00",
+      "location": {
+        "name": "Charlotte, NC"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Figure Lending.&lt;/strong&gt; Now hiring a Collections Associate on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 8555118002,
+      "title": "Customer Success Associate",
+      "company_name": "Figure Lending",
+      "absolute_url": "https://job-boards.greenhouse.io/figure/jobs/8555118002",
+      "updated_at": "2026-05-27T13:16:19-04:00",
+      "location": {
+        "name": "Reno, NV"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Figure Lending.&lt;/strong&gt; Now hiring a Customer Success Associate on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

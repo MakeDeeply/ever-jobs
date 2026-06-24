@@ -1612,6 +1612,96 @@ export enum Site {
   ZENCODER = 'zencoder',
   // Phase 737: Spec 741 — Source ATS Plugin: Beisen (北森 / iTalent, zhiye.com)
   BEISEN = 'beisen',
+  // Phase 738: Spec 742 — Source Company Plugin: Butterfly Network
+  BUTTERFLY_NETWORK = 'butterflynetwork',
+  // Phase 739: Spec 743 — Source Company Plugin: Figure Lending
+  FIGURE_LENDING = 'figure',
+  // Phase 740: Spec 744 — Source Company Plugin: GoGuardian
+  GOGUARDIAN = 'goguardian',
+  // Phase 741: Spec 745 — Source Company Plugin: HighRadius
+  HIGHRADIUS = 'highradius',
+  // Phase 742: Spec 746 — Source Company Plugin: Khan Academy
+  KHAN_ACADEMY = 'khanacademy',
+  // Phase 743: Spec 747 — Source Company Plugin: Locus Robotics
+  LOCUS_ROBOTICS = 'locusrobotics',
+  // Phase 744: Spec 748 — Source Company Plugin: Motional
+  MOTIONAL = 'motional',
+  // Phase 745: Spec 749 — Source Company Plugin: Nauto
+  NAUTO = 'nauto',
+  // Phase 746: Spec 750 — Source Company Plugin: Netradyne
+  NETRADYNE = 'netradyne',
+  // Phase 747: Spec 751 — Source Company Plugin: Newsela
+  NEWSELA = 'newsela',
+  // Phase 748: Spec 752 — Source Company Plugin: OfferUp
+  OFFERUP = 'offerup',
+  // Phase 749: Spec 753 — Source Company Plugin: Ophelos
+  OPHELOS = 'ophelos',
+  // Phase 750: Spec 754 — Source Company Plugin: Oportun
+  OPORTUN = 'oportun',
+  // Phase 751: Spec 755 — Source Company Plugin: Udacity
+  UDACITY = 'udacity',
+  // Phase 752: Spec 756 — Source Company Plugin: Absci
+  ABSCI = 'absci',
+  // Phase 753: Spec 757 — Source Company Plugin: Astranis
+  ASTRANIS = 'astranis',
+  // Phase 754: Spec 758 — Source Company Plugin: AST SpaceMobile
+  AST_SPACEMOBILE = 'astspacemobile',
+  // Phase 755: Spec 759 — Source Company Plugin: BlackSky Technology
+  BLACKSKY_TECHNOLOGY = 'blacksky',
+  // Phase 756: Spec 760 — Source Company Plugin: Elation Health
+  ELATION_HEALTH = 'elationhealth',
+  // Phase 757: Spec 761 — Source Company Plugin: Flatiron Health
+  FLATIRON_HEALTH = 'flatironhealth',
+  // Phase 758: Spec 762 — Source Company Plugin: Form Bio
+  FORM_BIO = 'formbio',
+  // Phase 759: Spec 763 — Source Company Plugin: HawkEye 360
+  HAWKEYE_360 = 'hawkeye360',
+  // Phase 760: Spec 764 — Source Company Plugin: Hubble Network
+  HUBBLE_NETWORK = 'hubblenetwork',
+  // Phase 761: Spec 765 — Source Company Plugin: Komodo Health
+  KOMODO_HEALTH = 'komodohealth',
+  // Phase 762: Spec 766 — Source Company Plugin: Ophelia Health
+  OPHELIA_HEALTH = 'ophelia',
+  // Phase 763: Spec 767 — Source Company Plugin: Peak Energy
+  PEAK_ENERGY = 'peakenergy',
+  // Phase 764: Spec 768 — Source Company Plugin: Qventus
+  QVENTUS = 'qventus',
+  // Phase 765: Spec 769 — Source Company Plugin: Sila Nanotechnologies
+  SILA_NANOTECHNOLOGIES = 'silananotechnologies',
+  // Phase 766: Spec 770 — Source Company Plugin: Suki AI
+  SUKI_AI = 'suki',
+  // Phase 767: Spec 771 — Source Company Plugin: Twist Bioscience
+  TWIST_BIOSCIENCE = 'twistbioscience',
+  // Phase 769: Spec 773 — Source Company Plugin: CHAOS Industries
+  CHAOS_INDUSTRIES = 'chaosindustries',
+  // Phase 771: Spec 775 — Source Company Plugin: Cortica
+  CORTICA = 'cortica',
+  // Phase 775: Spec 779 — Source Company Plugin: Formic
+  FORMIC = 'formic',
+  // Phase 777: Spec 781 — Source Company Plugin: Helsing
+  HELSING = 'helsing',
+  // Phase 768: Spec 772 — Source Company Plugin: Carbon Robotics
+  CARBON_ROBOTICS = 'carbonrobotics',
+  // Phase 770: Spec 774 — Source Company Plugin: Cohere Health
+  COHERE_HEALTH = 'coherehealth',
+  // Phase 772: Spec 776 — Source Company Plugin: Dyno Therapeutics
+  DYNO_THERAPEUTICS = 'dynotherapeutics',
+  // Phase 773: Spec 777 — Source Company Plugin: Eikon Therapeutics
+  EIKON_THERAPEUTICS = 'eikontherapeutics',
+  // Phase 774: Spec 778 — Source Company Plugin: Etched
+  ETCHED = 'etchedai',
+  // Phase 776: Spec 780 — Source Company Plugin: Garner Health
+  GARNER_HEALTH = 'garnerhealth',
+  // Phase 778: Spec 782 — Source Company Plugin: Path Robotics
+  PATH_ROBOTICS = 'pathrobotics',
+  // Phase 779: Spec 783 — Source Company Plugin: Pivot Bio
+  PIVOT_BIO = 'pivotbio',
+  // Phase 780: Spec 784 — Source Company Plugin: SambaNova Systems
+  SAMBANOVA_SYSTEMS = 'sambanovasystems',
+  // Phase 781: Spec 785 — Source Company Plugin: Slingshot Aerospace
+  SLINGSHOT_AEROSPACE = 'slingshotaerospace',
+  // Phase 782: Spec 786 — Source Company Plugin: Sound Agriculture
+  SOUND_AGRICULTURE = 'soundagriculture',
 }
 
 /**

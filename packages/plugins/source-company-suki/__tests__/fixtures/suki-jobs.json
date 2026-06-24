@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 7627401003,
+      "title": "Commercial Counsel ",
+      "company_name": "Suki AI",
+      "absolute_url": "https://job-boards.greenhouse.io/suki/jobs/7627401003",
+      "updated_at": "2026-06-16T17:25:29-04:00",
+      "location": {
+        "name": "Redwood City, CA"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Suki AI.&lt;/strong&gt; Now hiring a Commercial Counsel on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 7655273003,
+      "title": "Machine Learning Engineer III (NLP)",
+      "company_name": "Suki AI",
+      "absolute_url": "https://job-boards.greenhouse.io/suki/jobs/7655273003",
+      "updated_at": "2026-04-09T10:17:15-04:00",
+      "location": {
+        "name": "Bengaluru, Karnataka, India"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Suki AI.&lt;/strong&gt; Now hiring a Machine Learning Engineer III (NLP) on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 7644217003,
+      "title": "Product Marketing Manager (Partners)",
+      "company_name": "Suki AI",
+      "absolute_url": "https://job-boards.greenhouse.io/suki/jobs/7644217003",
+      "updated_at": "2026-06-16T17:26:00-04:00",
+      "location": {
+        "name": "Redwood City, CA"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Suki AI.&lt;/strong&gt; Now hiring a Product Marketing Manager (Partners) on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 7732063003,
+      "title": "Scientist I, Immune Evasion ",
+      "company_name": "Dyno Therapeutics",
+      "absolute_url": "https://job-boards.greenhouse.io/dynotherapeutics/jobs/7732063003",
+      "updated_at": "2026-05-12T10:31:56-04:00",
+      "location": {
+        "name": "Watertown, Massachusetts, United States"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Dyno Therapeutics.&lt;/strong&gt; Now hiring a Scientist I, Immune Evasion on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 7732038003,
+      "title": "Software Engineer II, Computational Platform",
+      "company_name": "Dyno Therapeutics",
+      "absolute_url": "https://job-boards.greenhouse.io/dynotherapeutics/jobs/7732038003",
+      "updated_at": "2026-05-20T14:05:41-04:00",
+      "location": {
+        "name": "Remote; Watertown, Massachusetts, United States"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Dyno Therapeutics.&lt;/strong&gt; Now hiring a Software Engineer II, Computational Platform on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 7731984003,
+      "title": "Sr. Research Associate, Vector Production",
+      "company_name": "Dyno Therapeutics",
+      "absolute_url": "https://job-boards.greenhouse.io/dynotherapeutics/jobs/7731984003",
+      "updated_at": "2026-05-12T10:30:37-04:00",
+      "location": {
+        "name": "Watertown, Massachusetts, United States"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Dyno Therapeutics.&lt;/strong&gt; Now hiring a Sr. Research Associate, Vector Production on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

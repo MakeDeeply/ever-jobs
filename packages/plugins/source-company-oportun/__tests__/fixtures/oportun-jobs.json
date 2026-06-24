@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 4326069005,
+      "title": "Agente Telefonico en Español ",
+      "company_name": "Oportun",
+      "absolute_url": "https://job-boards.greenhouse.io/oportun/jobs/4326069005",
+      "updated_at": "2026-01-24T19:52:25-05:00",
+      "location": {
+        "name": "León, Guanajuato - MX"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Oportun.&lt;/strong&gt; Now hiring a Agente Telefonico en Español on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4133342005,
+      "title": "Bilingual Agent",
+      "company_name": "Oportun",
+      "absolute_url": "https://job-boards.greenhouse.io/oportun/jobs/4133342005",
+      "updated_at": "2026-01-24T19:52:25-05:00",
+      "location": {
+        "name": "León, Guanajuato - MX"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Oportun.&lt;/strong&gt; Now hiring a Bilingual Agent on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4329742005,
+      "title": "Bilingual Agent",
+      "company_name": "Oportun",
+      "absolute_url": "https://job-boards.greenhouse.io/oportun/jobs/4329742005",
+      "updated_at": "2026-01-24T19:52:25-05:00",
+      "location": {
+        "name": "Remote - MX"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Oportun.&lt;/strong&gt; Now hiring a Bilingual Agent on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

@@ -20,3 +20,6 @@ dist/
 
 # macOS
 .DS_Store
+
+# Scratch workspace for scheduled-run discovery/enrichment (never committed)
+tmp/

@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 5167087007,
+      "title": "Automation Manager ",
+      "company_name": "Peak Energy",
+      "absolute_url": "https://job-boards.greenhouse.io/peakenergy/jobs/5167087007",
+      "updated_at": "2026-06-17T12:23:35-04:00",
+      "location": {
+        "name": "Sacramento, CA"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Peak Energy.&lt;/strong&gt; Now hiring a Automation Manager on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 5169278007,
+      "title": "Cell Engineer",
+      "company_name": "Peak Energy",
+      "absolute_url": "https://job-boards.greenhouse.io/peakenergy/jobs/5169278007",
+      "updated_at": "2026-06-18T20:41:02-04:00",
+      "location": {
+        "name": "Broomfield, Colorado"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Peak Energy.&lt;/strong&gt; Now hiring a Cell Engineer on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4978524007,
+      "title": "Controller",
+      "company_name": "Peak Energy",
+      "absolute_url": "https://job-boards.greenhouse.io/peakenergy/jobs/4978524007",
+      "updated_at": "2026-06-15T17:31:44-04:00",
+      "location": {
+        "name": "Broomfield, Colorado"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Peak Energy.&lt;/strong&gt; Now hiring a Controller on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

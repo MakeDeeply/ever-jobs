@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 4865187101,
+      "title": "Accounts Payable Lead ",
+      "company_name": "Helsing",
+      "absolute_url": "https://job-boards.greenhouse.io/helsing/jobs/4865187101",
+      "updated_at": "2026-06-08T07:07:06-04:00",
+      "location": {
+        "name": "Munich"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Helsing.&lt;/strong&gt; Now hiring a Accounts Payable Lead on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4334849101,
+      "title": "AI Research Engineer - AI Safety",
+      "company_name": "Helsing",
+      "absolute_url": "https://job-boards.greenhouse.io/helsing/jobs/4334849101",
+      "updated_at": "2026-06-11T10:57:25-04:00",
+      "location": {
+        "name": "Berlin; London; Munich"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Helsing.&lt;/strong&gt; Now hiring a AI Research Engineer - AI Safety on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4334842101,
+      "title": "AI Research Engineer -  Computer Vision",
+      "company_name": "Helsing",
+      "absolute_url": "https://job-boards.greenhouse.io/helsing/jobs/4334842101",
+      "updated_at": "2026-05-21T09:48:15-04:00",
+      "location": {
+        "name": "Berlin; London; Munich"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Helsing.&lt;/strong&gt; Now hiring a AI Research Engineer -  Computer Vision on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 4823551101,
+      "title": "Senior Software Engineer ",
+      "company_name": "Ophelos",
+      "absolute_url": "https://job-boards.greenhouse.io/ophelos/jobs/4823551101",
+      "updated_at": "2026-06-17T05:33:00-04:00",
+      "location": {
+        "name": "London"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Ophelos.&lt;/strong&gt; Now hiring a Senior Software Engineer on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4381617101,
+      "title": "Talent Pool (Data)",
+      "company_name": "Ophelos",
+      "absolute_url": "https://job-boards.greenhouse.io/ophelos/jobs/4381617101",
+      "updated_at": "2025-03-31T11:18:04-04:00",
+      "location": {
+        "name": "London"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Ophelos.&lt;/strong&gt; Now hiring a Talent Pool (Data) on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4381616101,
+      "title": "Talent Pool (Engineering)",
+      "company_name": "Ophelos",
+      "absolute_url": "https://job-boards.greenhouse.io/ophelos/jobs/4381616101",
+      "updated_at": "2025-03-31T11:18:04-04:00",
+      "location": {
+        "name": "London"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Ophelos.&lt;/strong&gt; Now hiring a Talent Pool (Engineering) on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 5152803007,
+      "title": "Business Development Representative ",
+      "company_name": "Locus Robotics",
+      "absolute_url": "https://job-boards.greenhouse.io/locusrobotics/jobs/5152803007",
+      "updated_at": "2026-06-17T10:34:46-04:00",
+      "location": {
+        "name": "Netherlands"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Locus Robotics.&lt;/strong&gt; Now hiring a Business Development Representative on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 5121595007,
+      "title": "Customer Success Manager,  Warehouse Automation APAC",
+      "company_name": "Locus Robotics",
+      "absolute_url": "https://job-boards.greenhouse.io/locusrobotics/jobs/5121595007",
+      "updated_at": "2026-06-16T15:50:52-04:00",
+      "location": {
+        "name": "Australia"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Locus Robotics.&lt;/strong&gt; Now hiring a Customer Success Manager,  Warehouse Automation APAC on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 5108798007,
+      "title": "Deployment Engineer, North America",
+      "company_name": "Locus Robotics",
+      "absolute_url": "https://job-boards.greenhouse.io/locusrobotics/jobs/5108798007",
+      "updated_at": "2026-06-16T15:50:52-04:00",
+      "location": {
+        "name": "United States"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Locus Robotics.&lt;/strong&gt; Now hiring a Deployment Engineer, North America on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}
