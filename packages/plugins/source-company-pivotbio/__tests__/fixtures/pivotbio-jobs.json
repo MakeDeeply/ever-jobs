@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 8557472002,
+      "title": "Commercial Agronomist ",
+      "company_name": "Pivot Bio",
+      "absolute_url": "https://job-boards.greenhouse.io/pivotbio/jobs/8557472002",
+      "updated_at": "2026-05-26T15:07:07-04:00",
+      "location": {
+        "name": "Remote - Albany, GA"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Pivot Bio.&lt;/strong&gt; Now hiring a Commercial Agronomist on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 8550920002,
+      "title": "Commercial Agronomist - Coastal",
+      "company_name": "Pivot Bio",
+      "absolute_url": "https://job-boards.greenhouse.io/pivotbio/jobs/8550920002",
+      "updated_at": "2026-05-26T15:08:31-04:00",
+      "location": {
+        "name": "Remote - Huntsville, AL"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Pivot Bio.&lt;/strong&gt; Now hiring a Commercial Agronomist - Coastal on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 8550911002,
+      "title": "Commercial Agronomist- Coastal",
+      "company_name": "Pivot Bio",
+      "absolute_url": "https://job-boards.greenhouse.io/pivotbio/jobs/8550911002",
+      "updated_at": "2026-05-26T15:11:58-04:00",
+      "location": {
+        "name": "Remote - Sikeston, MO"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Pivot Bio.&lt;/strong&gt; Now hiring a Commercial Agronomist- Coastal on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

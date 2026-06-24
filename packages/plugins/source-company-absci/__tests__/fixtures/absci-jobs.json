@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 6219561003,
+      "title": "General Interest ",
+      "company_name": "Absci",
+      "absolute_url": "https://job-boards.greenhouse.io/absci/jobs/6219561003",
+      "updated_at": "2025-09-02T16:33:06-04:00",
+      "location": {
+        "name": "United States"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Absci.&lt;/strong&gt; Now hiring a General Interest on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 7768767003,
+      "title": "Head of People Operations",
+      "company_name": "Absci",
+      "absolute_url": "https://job-boards.greenhouse.io/absci/jobs/7768767003",
+      "updated_at": "2026-06-10T16:10:24-04:00",
+      "location": {
+        "name": "Remote, Hybrid, or Onsite"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Absci.&lt;/strong&gt; Now hiring a Head of People Operations on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 7770752003,
+      "title": "Human Resource Generalist",
+      "company_name": "Absci",
+      "absolute_url": "https://job-boards.greenhouse.io/absci/jobs/7770752003",
+      "updated_at": "2026-06-12T17:28:46-04:00",
+      "location": {
+        "name": "Vancouver, WA"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Absci.&lt;/strong&gt; Now hiring a Human Resource Generalist on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}
