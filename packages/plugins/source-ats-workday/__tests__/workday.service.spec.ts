@@ -181,7 +181,7 @@ describe('WorkdayService — Spec 720 / T05', () => {
     });
   });
 
-  describe('detail enrichment — Spec 745', () => {
+  describe('detail enrichment — Spec 5004', () => {
     const DETAIL_PAGE = {
       total: 1,
       jobPostings: [
@@ -352,11 +352,11 @@ describe('WorkdayService — Spec 720 / T05', () => {
   });
 
   /**
-   * Spec 755 — field mappings the Workday CXS payload carries but the plugin
+   * Spec 5013 — field mappings the Workday CXS payload carries but the plugin
    * never surfaced: compensation (text), workFromHomeType, multi-location +
    * country, and startDate-first datePosted.
    */
-  describe('field mappings — Spec 755', () => {
+  describe('field mappings — Spec 5013', () => {
     const PAGE = {
       total: 1,
       jobPostings: [
