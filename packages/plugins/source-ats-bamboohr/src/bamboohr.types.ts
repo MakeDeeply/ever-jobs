@@ -6,19 +6,63 @@ export interface BambooHRResponse {
   result: BambooHRJob[];
 }
 
+/** Structured location used by both the list and the detail payloads. */
+export interface BambooHRLocation {
+  city: string | null;
+  state: string | null;
+  postalCode?: string | null;
+  addressCountry?: string | null;
+}
+
+/** Country/region info carried alongside `location` (where country actually lives). */
+export interface BambooHRAtsLocation {
+  country: string | null;
+  countryId?: string | null;
+  state: string | null;
+  province?: string | null;
+  city: string | null;
+}
+
+/**
+ * A row from the public `/careers/list` feed. This is sparse: it carries no
+ * posting body, compensation, or datePosted (those live only on the per-job
+ * `/careers/{id}/detail` endpoint — see {@link BambooHRJobDetail}). `id` is a
+ * string in the live payload despite the authenticated API using a number.
+ * `locationType` encodes work mode: 0 = on-site, 1 = remote, 2 = hybrid.
+ */
 export interface BambooHRJob {
-  id: number;
+  id: string | number;
   jobOpeningName: string;
   departmentLabel: string | null;
-  location: {
-    city: string | null;
-    state: string | null;
-    country: string | null;
-  } | null;
+  location: BambooHRLocation | null;
+  atsLocation: BambooHRAtsLocation | null;
   employmentStatusLabel: string | null;
-  minimumExperience: string | null;
-  compensation: string | null;
+  locationType: string | number | null;
+  isRemote: boolean | null;
+}
+
+/** The `result.jobOpening` object from `/careers/{id}/detail`. */
+export interface BambooHRJobDetail {
+  id?: string | number;
+  jobOpeningName?: string | null;
+  departmentLabel?: string | null;
+  location: BambooHRLocation | null;
+  atsLocation: BambooHRAtsLocation | null;
+  employmentStatusLabel?: string | null;
+  locationType?: string | number | null;
+  isRemote?: boolean | null;
   description: string | null;
+  compensation: string | null;
+  minimumExperience?: string | null;
+  datePosted: string | null;
+  jobOpeningShareUrl?: string | null;
+}
+
+/** Envelope returned by `/careers/{id}/detail`. */
+export interface BambooHRDetailResponse {
+  result?: {
+    jobOpening?: BambooHRJobDetail | null;
+  } | null;
 }
 
 /**
