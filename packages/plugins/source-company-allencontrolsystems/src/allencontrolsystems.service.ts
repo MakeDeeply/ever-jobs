@@ -1,13 +1,13 @@
-import { SourcePlugin } from '@ever-jobs/plugin';
+import { SourcePlugin, PluginRegistry } from '@ever-jobs/plugin';
 
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, Optional } from '@nestjs/common';
 import {
-  IScraper, ScraperInputDto, JobResponseDto, JobPostDto, Site, LocationDto,
+  IScraper, ScraperInputDto, JobResponseDto, Site,
 } from '@ever-jobs/models';
-import { createHttpClient, decodeHtmlEntities, stripHtmlTags } from '@ever-jobs/common';
 
 /**
- * Allen Control Systems — Defense robotics company building AI-powered autonomous counter-drone weapon systems..
+ * Allen Control Systems — Defense robotics company building AI-powered autonomous
+ * counter-drone weapon systems.
  *
  * Allen Control Systems (ACS) is an Austin, Texas-based defense
  * robotics company that develops autonomous counter-drone weapon
@@ -21,114 +21,62 @@ import { createHttpClient, decodeHtmlEntities, stripHtmlTags } from '@ever-jobs/
  *
  * Sector: Defense Technology / Robotics. HQ: Austin, TX, USA.
  *
- * Highlights:
- *   - Flagship Bullfrog product line: autonomous robotic fire-control
- *     systems for countering small drones (C-sUAS)
- *   - Uses AI, computer vision, and electro-optical/infrared sensing
- *     to detect, track, and engage aerial threats
- *   - Headquartered and manufacturing in Austin, TX, with both on-site
- *     and remote roles
- *   - Hiring across Engineering, Manufacturing, Supply Chain, Quality,
- *     and Business Operations, including hardware/production and
- *     procurement positions
+ * Source: Ashby job board, company slug `allen-control-systems`
+ * (`https://jobs.ashbyhq.com/allen-control-systems`). The company's live
+ * postings are served by Ashby. Rather than re-implement Ashby parsing (and
+ * risk drift), this plugin resolves the registered Ashby source plugin from
+ * the `PluginRegistry` at runtime and delegates the fetch + field mapping to
+ * it, then re-stamps the company identity (site, companyName, id prefix) onto
+ * the results — so every Ashby field fix is inherited automatically. This
+ * honours the "no plugin imports a peer plugin directly; discover via the
+ * registry" rule.
  *
- * Source profile (Spec 233):
- *   - D-04 — Greenhouse canonical hosted-board host (variant 2):
- *     `https://job-boards.greenhouse.io/allencontrolsystems/jobs/<id>`.
- *   - D-08 — entity-decode-then-tag-strip description pipeline.
- *   - D-09 — wire `company_name` pass-through (`'Allen Control Systems'`).
- *   - D-10 — defensive `.trim()` on wire titles (padding observed
- *     on the run-398 batch probe).
- *   - D-11 — defensive `.trim()` on wire department names.
- *
- * Probed 68 live role(s) on the run-398 batch sweep.
+ * (Previously read the Greenhouse board `allencontrolsystems`, which is stale —
+ * the live, canonical board is Ashby. See find-company-plugin reconciliation.)
  */
-const API_URL = 'https://api.greenhouse.io/v1/boards/allencontrolsystems/jobs';
+const COMPANY_SLUG = 'allen-control-systems';
+const COMPANY_NAME = 'Allen Control Systems';
 
 @SourcePlugin({
   site: Site.ALLENCONTROLSYSTEMS,
-  name: 'Allen Control Systems',
+  name: COMPANY_NAME,
   category: 'company',
 })
 @Injectable()
 export class AllencontrolsystemsService implements IScraper {
   private readonly logger = new Logger(AllencontrolsystemsService.name);
 
+  constructor(
+    @Optional() private readonly registry?: PluginRegistry,
+  ) {}
+
   async scrape(input: ScraperInputDto): Promise<JobResponseDto> {
-    const jobs: JobPostDto[] = [];
-    const resultsWanted = input.resultsWanted ?? 50;
-
-    try {
-      const client = createHttpClient({
-        proxies: input.proxies,
-        timeout: input.requestTimeout ?? 30,
-      });
-
-      const url = `${API_URL}?content=true`;
-      this.logger.log(`Allen Control Systems: fetching ${url}`);
-
-      const { data } = await client.get<any>(url);
-      const listings = data?.jobs ?? [];
-
-      for (const listing of listings) {
-        if (jobs.length >= resultsWanted) break;
-
-        // D-10: defensive trim of wire title padding.
-        const title = (listing.title ?? '').trim();
-        if (!title) continue;
-
-        if (input.searchTerm) {
-          const term = input.searchTerm.toLowerCase();
-          const titleMatch = title.toLowerCase().includes(term);
-          const deptMatch = (listing.departments?.[0]?.name ?? '')
-            .toLowerCase()
-            .includes(term);
-          if (!titleMatch && !deptMatch) continue;
-        }
-
-        const jobId = listing.id ?? '';
-        const id = `allencontrolsystems-${jobId}`;
-
-        const locationStr = listing.location?.name ?? null;
-        const location = locationStr
-          ? new LocationDto({ city: locationStr })
-          : null;
-
-        if (input.location && locationStr) {
-          if (!locationStr.toLowerCase().includes(input.location.toLowerCase())) continue;
-        }
-
-        // D-11: defensive trim of wire department padding.
-        const deptRaw = listing.departments?.[0]?.name ?? null;
-        const department = deptRaw ? deptRaw.trim() : null;
-
-        jobs.push(
-          new JobPostDto({
-            id,
-            site: Site.ALLENCONTROLSYSTEMS,
-            title,
-            // D-09 pass-through: wire `company_name`.
-            companyName: listing.company_name ?? 'Allen Control Systems',
-            // D-04: wire `absolute_url` flows through (variant 2).
-            jobUrl:
-              listing.absolute_url ??
-              `https://job-boards.greenhouse.io/allencontrolsystems/jobs/${listing.id}`,
-            location,
-            description: listing.content
-              ? stripHtmlTags(decodeHtmlEntities(listing.content))
-              : null,
-            datePosted: listing.updated_at ?? null,
-            isRemote: locationStr?.toLowerCase().includes('remote') ?? false,
-            department,
-          }),
-        );
-      }
-
-      this.logger.log(`Allen Control Systems: scraped ${jobs.length} jobs`);
-    } catch (err: any) {
-      this.logger.error(`Allen Control Systems scrape failed: ${err.message}`);
+    const ashby = this.registry?.getScraper(Site.ASHBY);
+    if (!ashby) {
+      this.logger.error(
+        'Ashby source plugin is not registered; cannot scrape Allen Control Systems',
+      );
+      return new JobResponseDto([]);
     }
 
-    return { jobs };
+    this.logger.log(
+      `Allen Control Systems: delegating to Ashby (slug ${COMPANY_SLUG})`,
+    );
+
+    const result = await ashby.scrape({
+      ...input,
+      companySlug: COMPANY_SLUG,
+    } as ScraperInputDto);
+
+    for (const job of result.jobs) {
+      job.site = Site.ALLENCONTROLSYSTEMS;
+      job.companyName = COMPANY_NAME;
+      if (job.id) {
+        job.id = job.id.replace(/^ashby-/, 'allencontrolsystems-');
+      }
+    }
+
+    this.logger.log(`Allen Control Systems: scraped ${result.jobs.length} jobs`);
+    return result;
   }
 }

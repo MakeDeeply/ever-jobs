@@ -15,6 +15,46 @@
 
 ---
 
+## 2026-06-23 — Run #452 — Spec 759: Allen Control Systems repoint to Ashby via registry delegation
+
+**Scope:** Repointed the `source-company-allencontrolsystems` company plugin
+from its stale, hardcoded Greenhouse board
+(`api.greenhouse.io/v1/boards/allencontrolsystems/jobs` + ~80 lines of inlined
+Greenhouse field-mapping) to the company's **live, canonical Ashby board**
+(`allen-control-systems`, `jobs.ashbyhq.com/allen-control-systems`). Independent
+ATS discovery (`find-company-ats.py`) flagged the Ashby board with a different
+job count, and the company website was manually verified — Ashby is current, the
+Greenhouse board is out of date.
+
+**Approach (A2 — registry delegation, not a peer import).** Rather than
+re-implement Ashby parsing inline (which would re-create the same drift against
+`source-ats-ashby`), or `import { AshbyService }` directly (forbidden by AGENTS.md
+Rule #4 / CLAUDE.md "Reach across plugins"), the service now resolves the Ashby
+source plugin at runtime through the core `PluginRegistry`:
+
+- `constructor(@Optional() registry?: PluginRegistry)` → `registry?.getScraper(Site.ASHBY)`.
+- Delegates `ashby.scrape({ ...input, companySlug: 'allen-control-systems' })`,
+  so every Ashby field fix (e.g. spec 750) is inherited automatically and
+  `resultsWanted`/`searchTerm` pass through.
+- **Re-stamps the company identity** onto each returned job:
+  `site → Site.ALLENCONTROLSYSTEMS`, `companyName → 'Allen Control Systems'`,
+  `id`'s leading `ashby-` prefix → `allencontrolsystems-`. All other fields flow
+  through untouched.
+- **Fail-safe:** no registry / no Ashby registered → `Logger.error` + empty
+  `JobResponseDto` (direct `new AllencontrolsystemsService()` still works).
+
+**Tests:** rewrote the suite (10 cases) — DI scaffolding; happy path via a real
+`AshbyService` registered in a `PluginRegistry` with a mocked HTTP client and an
+Ashby-shaped fixture (replacing the old Greenhouse fixture), asserting the
+re-stamp and that `api.ashbyhq.com` is hit for `allen-control-systems` (not
+Greenhouse); input pass-through + id-prefix edge via a fake `IScraper`;
+no-registry / no-Ashby resilience; `resultsWanted` cap. `npx jest
+source-company-allencontrolsystems` green; clean `api:build` compiles.
+
+**Files:** spec triad `.specify/specs/759-allencontrolsystems-ashby-delegation/`;
+`source-company-allencontrolsystems` service + fixture + test rewritten. No
+change to `source-ats-ashby`, `@ever-jobs/common`, or `@ever-jobs/models`.
+
 ## 2026-06-23 — Run #451 — Spec 758: BambooHR detail-fetch overlay + work-mode, compensation, jobType, type-shape fixes
 
 **Scope:** Added a detail-fetch overlay and several field mappings to the
