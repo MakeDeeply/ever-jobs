@@ -7,19 +7,30 @@ import {
   JobResponseDto,
   JobPostDto,
   LocationDto,
+  CompensationDto,
   Site,
   DescriptionFormat,
+  getJobTypeFromString,
+  getCompensationInterval,
 } from '@ever-jobs/models';
 import {
   createHttpClient,
   htmlToPlainText,
   markdownConverter,
   extractEmails,
+  extractSalary,
 } from '@ever-jobs/common';
-import { BAMBOOHR_HEADERS } from './bamboohr.constants';
+import {
+  BAMBOOHR_DETAIL_CONCURRENCY,
+  BAMBOOHR_HEADERS,
+  bamboohrDetailUrl,
+  bamboohrListUrl,
+} from './bamboohr.constants';
 import {
   BambooHRResponse,
   BambooHRJob,
+  BambooHRJobDetail,
+  BambooHRDetailResponse,
   BambooHRApiResponse,
   BambooHRApiJobOpening,
 } from './bamboohr.types';
@@ -61,7 +72,7 @@ export class BambooHRService implements IScraper {
     });
     client.setHeaders(BAMBOOHR_HEADERS);
 
-    const url = `https://${encodeURIComponent(companySlug)}.bamboohr.com/careers/list`;
+    const url = bamboohrListUrl(companySlug);
 
     try {
       this.logger.log(`Fetching BambooHR jobs for company: ${companySlug}`);
@@ -72,20 +83,27 @@ export class BambooHRService implements IScraper {
       this.logger.log(`BambooHR: found ${jobs.length} raw jobs for ${companySlug}`);
 
       const resultsWanted = input.resultsWanted ?? 100;
+      // The public list feed omits description/compensation/datePosted; those
+      // live only on the per-job detail endpoint. Overlay the wanted slice.
+      const wanted = jobs.slice(0, resultsWanted);
+      const details = await this.fetchDetails(client, wanted, companySlug);
+
       const jobPosts: JobPostDto[] = [];
-
-      for (const job of jobs) {
-        if (jobPosts.length >= resultsWanted) break;
-
+      wanted.forEach((job, index) => {
         try {
-          const post = this.mapJob(job, companySlug, input.descriptionFormat);
+          const post = this.mapJob(
+            job,
+            details[index],
+            companySlug,
+            input.descriptionFormat,
+          );
           if (post) {
             jobPosts.push(post);
           }
         } catch (err: any) {
           this.logger.warn(`Error processing BambooHR job ${job.id}: ${err.message}`);
         }
-      }
+      });
 
       return new JobResponseDto(jobPosts);
     } catch (err: any) {
@@ -211,35 +229,84 @@ export class BambooHRService implements IScraper {
     });
   }
 
+  /**
+   * Overlay each listing with its per-job detail payload under bounded
+   * concurrency. Fail-safe: a failed or empty detail fetch yields `null` for
+   * that index (the batch is never nuked), so the job still maps from the list.
+   */
+  private async fetchDetails(
+    client: ReturnType<typeof createHttpClient>,
+    jobs: BambooHRJob[],
+    companySlug: string,
+  ): Promise<(BambooHRJobDetail | null)[]> {
+    const details: (BambooHRJobDetail | null)[] = new Array(jobs.length).fill(
+      null,
+    );
+    for (
+      let index = 0;
+      index < jobs.length;
+      index += BAMBOOHR_DETAIL_CONCURRENCY
+    ) {
+      const batch = jobs.slice(index, index + BAMBOOHR_DETAIL_CONCURRENCY);
+      const settled = await Promise.allSettled(
+        batch.map((job) => this.fetchDetail(client, companySlug, job.id)),
+      );
+      settled.forEach((result, batchIndex) => {
+        if (result.status === 'fulfilled') {
+          details[index + batchIndex] = result.value;
+        }
+      });
+    }
+    return details;
+  }
+
+  /** GET `/careers/{id}/detail` and pull out `result.jobOpening`. */
+  private async fetchDetail(
+    client: ReturnType<typeof createHttpClient>,
+    companySlug: string,
+    jobId: string | number,
+  ): Promise<BambooHRJobDetail | null> {
+    const response = await client.get<BambooHRDetailResponse>(
+      bamboohrDetailUrl(companySlug, jobId),
+    );
+    return response.data?.result?.jobOpening ?? null;
+  }
+
   private mapJob(
     job: BambooHRJob,
+    detail: BambooHRJobDetail | null,
     companySlug: string,
     format?: DescriptionFormat,
   ): JobPostDto | null {
-    const title = job.jobOpeningName;
+    const title = job.jobOpeningName ?? detail?.jobOpeningName ?? null;
     if (!title) return null;
 
-    // Description is HTML
-    let description: string | null = null;
-    if (job.description) {
-      if (format === DescriptionFormat.HTML) {
-        description = job.description;
-      } else if (format === DescriptionFormat.MARKDOWN) {
-        description = markdownConverter(job.description) ?? job.description;
-      } else {
-        description = htmlToPlainText(job.description);
-      }
-    }
+    const description = this.formatDescription(detail?.description, format);
 
-    // Location
-    const location = new LocationDto({
-      city: job.location?.city ?? null,
-      state: job.location?.state ?? null,
-      country: job.location?.country ?? null,
-    });
+    // Work mode comes from `locationType` (0 = on-site, 1 = remote, 2 = hybrid),
+    // present on both list and detail. The list `isRemote` boolean is null in
+    // practice, so derive remote from the work mode instead.
+    const locationType = detail?.locationType ?? job.locationType ?? null;
+    const workFromHomeType = this.workFromHomeTypeFromLocationType(locationType);
+    const isRemote =
+      String(locationType ?? '') === '1' ||
+      job.isRemote === true ||
+      detail?.isRemote === true;
 
-    // Job URL
-    const jobUrl = `https://${encodeURIComponent(companySlug)}.bamboohr.com/careers/${job.id}`;
+    const location = this.buildLocation(job, detail, isRemote);
+
+    const compensation = this.extractCompensation(detail?.compensation);
+
+    const employmentLabel =
+      job.employmentStatusLabel ?? detail?.employmentStatusLabel ?? null;
+    const employmentType = employmentLabel?.trim() || null;
+    const mappedJobType = employmentLabel
+      ? getJobTypeFromString(employmentLabel)
+      : null;
+
+    const jobUrl =
+      detail?.jobOpeningShareUrl ??
+      `https://${encodeURIComponent(companySlug)}.bamboohr.com/careers/${job.id}`;
 
     return new JobPostDto({
       id: `bamboohr-${job.id}`,
@@ -248,12 +315,89 @@ export class BambooHRService implements IScraper {
       jobUrl,
       location,
       description,
-      isRemote: false,
+      ...(compensation ? { compensation } : {}),
+      datePosted: detail?.datePosted ?? null,
+      isRemote,
+      ...(workFromHomeType ? { workFromHomeType } : {}),
+      ...(mappedJobType ? { jobType: [mappedJobType] } : {}),
+      ...(employmentType ? { employmentType } : {}),
       emails: extractEmails(description),
       site: Site.BAMBOOHR,
       atsId: String(job.id),
       atsType: 'bamboohr',
-      department: job.departmentLabel ?? null,
+      department: job.departmentLabel ?? detail?.departmentLabel ?? null,
+    });
+  }
+
+  /**
+   * Build the location from the structured list/detail fields. BambooHR returns
+   * full state names (e.g. "North Carolina") and keeps country in `atsLocation`,
+   * so the pieces are mapped directly rather than routed through the shared
+   * `City, ST`-oriented `parseLocationList`.
+   */
+  private buildLocation(
+    job: BambooHRJob,
+    detail: BambooHRJobDetail | null,
+    isRemote: boolean,
+  ): LocationDto {
+    const city = job.location?.city ?? detail?.location?.city ?? null;
+    const state = job.location?.state ?? detail?.location?.state ?? null;
+    const country =
+      detail?.atsLocation?.country ??
+      job.atsLocation?.country ??
+      detail?.location?.addressCountry ??
+      null;
+
+    return new LocationDto({
+      city: city ?? (isRemote ? 'Remote' : null),
+      state,
+      country,
+    });
+  }
+
+  /** Map BambooHR's `locationType` enum to a work-from-home label. */
+  private workFromHomeTypeFromLocationType(
+    locationType: string | number | null | undefined,
+  ): string | null {
+    switch (String(locationType ?? '')) {
+      case '1':
+        return 'Remote';
+      case '2':
+        return 'Hybrid';
+      default:
+        return null;
+    }
+  }
+
+  private formatDescription(
+    html: string | null | undefined,
+    format?: DescriptionFormat,
+  ): string | null {
+    if (!html || !html.trim()) return null;
+    if (format === DescriptionFormat.HTML) return html;
+    if (format === DescriptionFormat.MARKDOWN) {
+      return markdownConverter(html) ?? html;
+    }
+    return htmlToPlainText(html);
+  }
+
+  /** Parse BambooHR's free-text `compensation` into a CompensationDto. */
+  private extractCompensation(
+    salary: string | null | undefined,
+  ): CompensationDto | null {
+    if (!salary || !salary.trim()) return null;
+    const parsed = extractSalary(salary);
+    if (parsed.minAmount == null && parsed.maxAmount == null) return null;
+
+    const interval = parsed.interval
+      ? getCompensationInterval(parsed.interval)
+      : null;
+
+    return new CompensationDto({
+      interval: interval ?? undefined,
+      minAmount: parsed.minAmount ?? undefined,
+      maxAmount: parsed.maxAmount ?? undefined,
+      currency: parsed.currency ?? 'USD',
     });
   }
 }
