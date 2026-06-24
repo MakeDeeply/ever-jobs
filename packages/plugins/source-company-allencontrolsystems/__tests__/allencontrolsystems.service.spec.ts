@@ -2,7 +2,15 @@ import 'reflect-metadata';
 import * as fs from 'fs';
 import * as path from 'path';
 import { Test } from '@nestjs/testing';
-import { JobResponseDto, ScraperInputDto, Site } from '@ever-jobs/models';
+import {
+  IScraper,
+  JobPostDto,
+  JobResponseDto,
+  ScraperInputDto,
+  Site,
+} from '@ever-jobs/models';
+import { PluginRegistry } from '@ever-jobs/plugin';
+import { AshbyService } from '@ever-jobs/source-ats-ashby';
 
 const mockGet = jest.fn();
 jest.mock('@ever-jobs/common', () => {
@@ -11,12 +19,16 @@ jest.mock('@ever-jobs/common', () => {
     ...actual,
     createHttpClient: jest.fn(() => ({
       get: mockGet,
+      post: jest.fn(),
       setHeaders: jest.fn(),
     })),
   };
 });
 
-import { AllencontrolsystemsModule, AllencontrolsystemsService } from '../src';
+import {
+  AllencontrolsystemsModule,
+  AllencontrolsystemsService,
+} from '../src';
 
 const FIXTURE_DIR = path.join(__dirname, 'fixtures');
 const JOBS_PAGE_RAW = JSON.parse(
@@ -27,10 +39,17 @@ function clone<T>(v: T): T {
   return JSON.parse(JSON.stringify(v)) as T;
 }
 
-/**
- * Spec 233 / T04 — `AllencontrolsystemsService` unit tests (≥ 9 cases).
- */
-describe('AllencontrolsystemsService — Spec 233 / T04', () => {
+/** Registry wired with a real AshbyService registered under Site.ASHBY. */
+function registryWithAshby(): PluginRegistry {
+  const registry = new PluginRegistry();
+  registry.register(
+    { site: Site.ASHBY, name: 'Ashby', category: 'ats', isAts: true },
+    new AshbyService(),
+  );
+  return registry;
+}
+
+describe('AllencontrolsystemsService — Ashby delegation', () => {
   beforeEach(() => {
     mockGet.mockReset();
   });
@@ -50,155 +69,144 @@ describe('AllencontrolsystemsService — Spec 233 / T04', () => {
     });
   });
 
-  describe('happy path', () => {
-    it('maps all fixture listings to JobPostDto', async () => {
+  describe('happy path (delegates to the registered Ashby plugin)', () => {
+    it('maps all fixture listings to JobPostDto with the company identity', async () => {
       mockGet.mockResolvedValueOnce({ data: clone(JOBS_PAGE_RAW) });
 
-      const service = new AllencontrolsystemsService();
-      const result = await service.scrape({
+      const service = new AllencontrolsystemsService(registryWithAshby());
+      const result = (await service.scrape({
         siteType: [Site.ALLENCONTROLSYSTEMS],
         resultsWanted: 100,
-      } as ScraperInputDto);
-      const dto = result as JobResponseDto;
-      expect(dto.jobs).toHaveLength(3);
+      } as ScraperInputDto)) as JobResponseDto;
+
+      expect(result.jobs).toHaveLength(3);
 
       const first = JOBS_PAGE_RAW.jobs[0];
-      const job0 = dto.jobs.find((j) => j.id === 'allencontrolsystems-' + first.id);
+      const job0 = result.jobs.find(
+        (j) => j.id === 'allencontrolsystems-' + first.id,
+      );
       expect(job0).toBeDefined();
+      // company identity is re-stamped over Ashby's defaults
       expect(job0?.site).toBe(Site.ALLENCONTROLSYSTEMS);
-      // D-09 wire company_name pass-through.
       expect(job0?.companyName).toBe('Allen Control Systems');
-      // D-10 title-trim lock.
-      expect(job0?.title).toBe(String(first.title).trim());
-      expect(job0?.title).not.toMatch(/\s$/);
-      // D-04 variant-2 URL.
-      expect(job0?.jobUrl).toBe(
-        'https://job-boards.greenhouse.io/allencontrolsystems/jobs/' + first.id,
-      );
-      expect(job0?.jobUrl).toContain('job-boards.greenhouse.io/allencontrolsystems/jobs/');
-      // D-11 department-trim lock.
-      expect(job0?.department).toBe(String(first.departments[0].name).trim());
-      expect(job0?.location?.city).toBe(first.location.name);
-      expect(job0?.isRemote).toBe(
-        String(first.location.name).toLowerCase().includes('remote'),
-      );
-      // D-08 decode-then-strip regression guard.
-      expect(job0?.description).not.toContain('&lt;');
-      expect(job0?.description).not.toContain('&amp;');
-      expect(job0?.description).not.toContain('<p>');
-      expect(job0?.description).toContain('Allen Control Systems');
+      expect(job0?.id).toBe('allencontrolsystems-' + first.id);
+      expect(job0?.id?.startsWith('ashby-')).toBe(false);
+      // Ashby-mapped fields flow through untouched
+      expect(job0?.title).toBe(first.title);
+      expect(job0?.jobUrl).toBe(first.jobUrl);
+      expect(job0?.department).toBe(first.departmentName);
+      expect(job0?.description).toContain('counter-drone');
 
+      // it hit the Ashby board for the ACS slug, not Greenhouse
       const calledUrls = mockGet.mock.calls.map((c) => c[0] as string);
-      expect(calledUrls[0]).toBe(
-        'https://api.greenhouse.io/v1/boards/allencontrolsystems/jobs?content=true',
-      );
+      expect(calledUrls[0]).toContain('api.ashbyhq.com/posting-api/job-board');
+      expect(calledUrls[0]).toContain('allen-control-systems');
+      expect(calledUrls[0]).not.toContain('greenhouse');
     });
-  });
 
-  describe('company_name pass-through', () => {
-    it('emits the wire company_name for every job', async () => {
+    it('every job carries the ACS site, companyName, and id prefix', async () => {
       mockGet.mockResolvedValueOnce({ data: clone(JOBS_PAGE_RAW) });
-      const service = new AllencontrolsystemsService();
+      const service = new AllencontrolsystemsService(registryWithAshby());
       const result = await service.scrape({
         siteType: [Site.ALLENCONTROLSYSTEMS],
       } as ScraperInputDto);
       for (const job of result.jobs) {
+        expect(job.site).toBe(Site.ALLENCONTROLSYSTEMS);
         expect(job.companyName).toBe('Allen Control Systems');
+        expect(job.id?.startsWith('allencontrolsystems-')).toBe(true);
       }
+    });
+
+    it('preserves Ashby isRemote and location mapping', async () => {
+      mockGet.mockResolvedValueOnce({ data: clone(JOBS_PAGE_RAW) });
+      const service = new AllencontrolsystemsService(registryWithAshby());
+      const result = await service.scrape({
+        siteType: [Site.ALLENCONTROLSYSTEMS],
+      } as ScraperInputDto);
+      const remote = result.jobs.find((j) => j.title === 'Buyer');
+      expect(remote?.isRemote).toBe(true);
+      const onsite = result.jobs.find((j) => j.title === 'Advanced Drone Operator');
+      expect(onsite?.location?.city).toBe('Austin');
     });
   });
 
-  describe('D-10 title-trim lock', () => {
-    it('trims wire title padding — no emitted title has surrounding whitespace', async () => {
-      mockGet.mockResolvedValueOnce({ data: clone(JOBS_PAGE_RAW) });
+  describe('input pass-through', () => {
+    it('forwards the company slug and caller input to the Ashby scraper', async () => {
+      const captured: ScraperInputDto[] = [];
+      const fakeAshby: IScraper = {
+        scrape: async (input) => {
+          captured.push(input);
+          return new JobResponseDto([
+            new JobPostDto({ id: 'ashby-x1', title: 'Role', jobUrl: 'u' }),
+          ]);
+        },
+      };
+      const registry = new PluginRegistry();
+      registry.register(
+        { site: Site.ASHBY, name: 'Ashby', category: 'ats', isAts: true },
+        fakeAshby,
+      );
+
+      const service = new AllencontrolsystemsService(registry);
+      const result = await service.scrape({
+        siteType: [Site.ALLENCONTROLSYSTEMS],
+        resultsWanted: 7,
+      } as ScraperInputDto);
+
+      expect(captured).toHaveLength(1);
+      expect(captured[0].companySlug).toBe('allen-control-systems');
+      expect(captured[0].resultsWanted).toBe(7);
+      expect(result.jobs[0].id).toBe('allencontrolsystems-x1');
+      expect(result.jobs[0].site).toBe(Site.ALLENCONTROLSYSTEMS);
+    });
+
+    it('only rewrites a leading ashby- id prefix', async () => {
+      const fakeAshby: IScraper = {
+        scrape: async () =>
+          new JobResponseDto([
+            new JobPostDto({ id: 'ashby-ashby-7', title: 'T', jobUrl: 'u' }),
+          ]),
+      };
+      const registry = new PluginRegistry();
+      registry.register(
+        { site: Site.ASHBY, name: 'Ashby', category: 'ats', isAts: true },
+        fakeAshby,
+      );
+      const service = new AllencontrolsystemsService(registry);
+      const result = await service.scrape({
+        siteType: [Site.ALLENCONTROLSYSTEMS],
+      } as ScraperInputDto);
+      expect(result.jobs[0].id).toBe('allencontrolsystems-ashby-7');
+    });
+  });
+
+  describe('resilience', () => {
+    it('returns an empty response when no Ashby plugin is registered', async () => {
+      const service = new AllencontrolsystemsService(new PluginRegistry());
+      const result = await service.scrape({
+        siteType: [Site.ALLENCONTROLSYSTEMS],
+      } as ScraperInputDto);
+      expect(result.jobs).toHaveLength(0);
+    });
+
+    it('returns an empty response when no registry is injected', async () => {
       const service = new AllencontrolsystemsService();
       const result = await service.scrape({
         siteType: [Site.ALLENCONTROLSYSTEMS],
       } as ScraperInputDto);
-      // Fixture listing[0] carries trailing-pad on the wire title.
-      expect(JOBS_PAGE_RAW.jobs[0].title).toMatch(/\s$/);
-      for (const job of result.jobs) {
-        expect(job.title).not.toMatch(/\s$/);
-        expect(job.title).not.toMatch(/^\s/);
-      }
-    });
-  });
-
-  describe('D-11 department-trim lock', () => {
-    it('emits trimmed department or null', async () => {
-      mockGet.mockResolvedValueOnce({ data: clone(JOBS_PAGE_RAW) });
-      const service = new AllencontrolsystemsService();
-      const result = await service.scrape({
-        siteType: [Site.ALLENCONTROLSYSTEMS],
-      } as ScraperInputDto);
-      for (let i = 0; i < result.jobs.length; i++) {
-        const wire = JOBS_PAGE_RAW.jobs[i].departments;
-        const expected = wire && wire[0] ? String(wire[0].name).trim() : null;
-        expect(result.jobs[i].department).toBe(expected);
-        if (result.jobs[i].department) {
-          expect(result.jobs[i].department).not.toMatch(/\s$/);
-          expect(result.jobs[i].department).not.toMatch(/^\s/);
-        }
-      }
+      expect(result.jobs).toHaveLength(0);
     });
   });
 
   describe('resultsWanted cap', () => {
     it('honours resultsWanted=1 against a 3-item page', async () => {
       mockGet.mockResolvedValueOnce({ data: clone(JOBS_PAGE_RAW) });
-      const service = new AllencontrolsystemsService();
+      const service = new AllencontrolsystemsService(registryWithAshby());
       const result = await service.scrape({
         siteType: [Site.ALLENCONTROLSYSTEMS],
         resultsWanted: 1,
       } as ScraperInputDto);
       expect(result.jobs).toHaveLength(1);
-    });
-  });
-
-  describe('searchTerm filter', () => {
-    it('filters by case-insensitive substring of title', async () => {
-      mockGet.mockResolvedValueOnce({ data: clone(JOBS_PAGE_RAW) });
-      const service = new AllencontrolsystemsService();
-      const term = String(JOBS_PAGE_RAW.jobs[0].title).trim().toLowerCase();
-      const result = await service.scrape({
-        siteType: [Site.ALLENCONTROLSYSTEMS],
-        searchTerm: term,
-      } as ScraperInputDto);
-      expect(result.jobs.length).toBeGreaterThanOrEqual(1);
-      expect(result.jobs.map((j) => j.id)).toContain(
-        'allencontrolsystems-' + JOBS_PAGE_RAW.jobs[0].id,
-      );
-    });
-
-    it('returns empty for a non-matching term', async () => {
-      mockGet.mockResolvedValueOnce({ data: clone(JOBS_PAGE_RAW) });
-      const service = new AllencontrolsystemsService();
-      const result = await service.scrape({
-        siteType: [Site.ALLENCONTROLSYSTEMS],
-        searchTerm: 'zzz-no-such-term-zzz',
-      } as ScraperInputDto);
-      expect(result.jobs).toHaveLength(0);
-    });
-  });
-
-  describe('error handling', () => {
-    it('catches an HTTP 500 → empty JobResponseDto, never throws', async () => {
-      mockGet.mockRejectedValueOnce(new Error('Request failed with status 500'));
-      const service = new AllencontrolsystemsService();
-      const result = await service.scrape({
-        siteType: [Site.ALLENCONTROLSYSTEMS],
-      } as ScraperInputDto);
-      expect(result.jobs).toEqual([]);
-      expect(mockGet).toHaveBeenCalledTimes(1);
-    });
-
-    it('returns empty when the response payload has no jobs', async () => {
-      mockGet.mockResolvedValueOnce({ data: { jobs: [] } });
-      const service = new AllencontrolsystemsService();
-      const result = await service.scrape({
-        siteType: [Site.ALLENCONTROLSYSTEMS],
-      } as ScraperInputDto);
-      expect(result.jobs).toEqual([]);
     });
   });
 });

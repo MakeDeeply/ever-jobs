@@ -1,55 +1,71 @@
 {
+  "apiVersion": "1",
   "jobs": [
     {
-      "id": 4974411008,
-      "title": "Advanced Drone Operator ",
-      "company_name": "Allen Control Systems",
-      "absolute_url": "https://job-boards.greenhouse.io/allencontrolsystems/jobs/4974411008",
-      "updated_at": "2026-01-15T16:56:29-05:00",
-      "location": {
-        "name": "Austin, TX"
-      },
-      "departments": [
-        {
-          "id": 4974411009,
-          "name": "Business Operations "
+      "id": "acs00001-0001-4000-8000-000000000001",
+      "title": "Advanced Drone Operator",
+      "departmentName": "Engineering",
+      "teamName": "Autonomy",
+      "employmentType": "FullTime",
+      "location": "Austin, TX",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Austin",
+          "addressRegion": "Texas",
+          "addressCountry": "United States"
         }
-      ],
-      "content": "&lt;p&gt;&lt;strong&gt;About Allen Control Systems.&lt;/strong&gt; Now hiring a Advanced Drone Operator on the Business Operations team &amp; more.&lt;/p&gt;"
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-10",
+      "descriptionHtml": "<p>Operate and evaluate autonomous counter-drone systems in the field.</p>",
+      "descriptionPlain": "Operate and evaluate autonomous counter-drone systems in the field.",
+      "jobUrl": "https://jobs.ashbyhq.com/allen-control-systems/acs00001-0001-4000-8000-000000000001",
+      "applyUrl": "https://jobs.ashbyhq.com/allen-control-systems/acs00001-0001-4000-8000-000000000001/application"
     },
     {
-      "id": 5159002008,
-      "title": "Buyer 1",
-      "company_name": "Allen Control Systems",
-      "absolute_url": "https://job-boards.greenhouse.io/allencontrolsystems/jobs/5159002008",
-      "updated_at": "2026-03-19T12:32:07-04:00",
-      "location": {
-        "name": "Austin, TX"
-      },
-      "departments": [
-        {
-          "id": 5159002009,
-          "name": "Supply Chain"
+      "id": "acs00002-0002-4000-8000-000000000002",
+      "title": "Buyer",
+      "departmentName": "Supply Chain",
+      "teamName": "Procurement",
+      "employmentType": "FullTime",
+      "location": "Remote",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Remote",
+          "addressRegion": null,
+          "addressCountry": "United States"
         }
-      ],
-      "content": "&lt;p&gt;&lt;strong&gt;About Allen Control Systems.&lt;/strong&gt; Now hiring a Buyer 1 on the Supply Chain team &amp; more.&lt;/p&gt;"
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2026-06-12",
+      "descriptionHtml": "<p>Own procurement for hardware and production components.</p>",
+      "descriptionPlain": "Own procurement for hardware and production components.",
+      "jobUrl": "https://jobs.ashbyhq.com/allen-control-systems/acs00002-0002-4000-8000-000000000002",
+      "applyUrl": "https://jobs.ashbyhq.com/allen-control-systems/acs00002-0002-4000-8000-000000000002/application"
     },
     {
-      "id": 5159007008,
-      "title": "Buyer 2",
-      "company_name": "Allen Control Systems",
-      "absolute_url": "https://job-boards.greenhouse.io/allencontrolsystems/jobs/5159007008",
-      "updated_at": "2026-03-19T12:31:49-04:00",
-      "location": {
-        "name": "Austin, TX"
-      },
-      "departments": [
-        {
-          "id": 5159007009,
-          "name": "Supply Chain"
+      "id": "acs00003-0003-4000-8000-000000000003",
+      "title": "Manufacturing Technician",
+      "departmentName": "Manufacturing",
+      "teamName": "Production",
+      "employmentType": "FullTime",
+      "location": "Austin, TX",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Austin",
+          "addressRegion": "Texas",
+          "addressCountry": "United States"
         }
-      ],
-      "content": "&lt;p&gt;&lt;strong&gt;About Allen Control Systems.&lt;/strong&gt; Now hiring a Buyer 2 on the Supply Chain team &amp; more.&lt;/p&gt;"
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-15",
+      "descriptionHtml": "<p>Build and test Bullfrog robotic fire-control systems.</p>",
+      "descriptionPlain": "Build and test Bullfrog robotic fire-control systems.",
+      "jobUrl": "https://jobs.ashbyhq.com/allen-control-systems/acs00003-0003-4000-8000-000000000003",
+      "applyUrl": "https://jobs.ashbyhq.com/allen-control-systems/acs00003-0003-4000-8000-000000000003/application"
     }
   ]
 }
