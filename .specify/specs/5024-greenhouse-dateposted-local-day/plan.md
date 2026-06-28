@@ -1,4 +1,4 @@
-# Plan: 5024 — Greenhouse `datePosted` keeps the source local day
+# Plan: 5024 — `datePosted` keeps the source local day (repo-wide)
 
 | Field | Value |
 | --- | --- |
@@ -18,11 +18,21 @@
    `toDateOnly(datePosted)`.
 3. **Tests** — `packages/common/__tests__/date-converter.spec.ts` and a new case
    in `packages/plugins/source-ats-greenhouse/__tests__/greenhouse.service.spec.ts`.
+4. **Repo-wide codemod** — a one-off TS-compiler-API script rewrites every
+   `…toISOString().split('T')[0]` chain (inline and the bespoke-helper variant
+   reached through a `const d = new Date(EXPR)` binding) to `toDateOnly(EXPR)`
+   and adds the `@ever-jobs/common` import. Hand-finish the `Date`-typed helpers
+   (`source-bdjobs`, `source-naukri`, `source-ats-workday`), remove the two
+   duplicate private `toDateOnly` methods (`source-jsonld`,
+   `source-ats-workatastartup`), and add `?? undefined` where a plugin's local
+   `datePosted` is typed `string | undefined`.
 
 ## Packages touched
 
 - `@ever-jobs/common` (new helper + test)
 - `@ever-jobs/source-ats-greenhouse` (wire + test)
+- 228 source-plugin packages (codemod + hand-finish) — all date-only
+  normalization now delegates to `@ever-jobs/common`
 
 ## Risks
 
@@ -31,13 +41,18 @@
   postings whose UTC day differed from their local day.
 - **Bare-date / `Z` inputs**: unchanged (bare date passes through; `Z` keeps its
   UTC day, identical to old behaviour).
-- **Scope creep**: the same pattern lives in ~227 files; deliberately out of
-  scope here to keep the change reviewable. The helper makes the follow-up sweep
-  a one-line swap per file.
+- **Large mechanical diff**: 228 files. Mitigated by an AST codemod (no hand
+  edits to the bulk), a whole-graph typecheck, and the fact that `toDateOnly` is
+  output-identical to the old expression for `Z`/bare-date/epoch/`Date` inputs —
+  it only changes the offset-string case that was broken.
+- **Bespoke helpers**: the codemod passes the original *string* (not an
+  intermediate `Date`) to `toDateOnly`, so the offset-preserving fix actually
+  takes effect rather than being a no-op.
 
 ## Verification
 
-- `npx jest packages/common/__tests__/date-converter.spec.ts packages/plugins/source-ats-greenhouse`
-- `npx tsc --noEmit -p packages/common/tsconfig.json`
-- `npx tsc --noEmit -p packages/plugins/source-ats-greenhouse/tsconfig.json`
+- `npm run build` (nx whole-graph typecheck across all plugins) — **green**
+- `npx jest packages/common packages/plugins/source-ats-greenhouse …` (both
+  code families: inline, bespoke-helper, RSS, jsonld/workatastartup) — **green**
 - `npm run lint:docs`
+- (`npm run lint` is a no-op in this repo — no eslint config / lint targets.)

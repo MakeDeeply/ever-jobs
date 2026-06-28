@@ -19,6 +19,7 @@ import {
   parseLocationList,
   resolveCompensation,
   aggregateCompensation,
+  toDateOnly,
 } from '@ever-jobs/common';
 import {
   ASHBY_API_URL,
@@ -251,7 +252,7 @@ export class AshbyService implements IScraper {
     // the authenticated one so both paths populate.
     const publishedRaw = job.publishedAt ?? job.publishedDate;
     const datePosted = publishedRaw
-      ? new Date(publishedRaw).toISOString().split('T')[0]
+      ? toDateOnly(publishedRaw)
       : null;
 
     return new JobPostDto({

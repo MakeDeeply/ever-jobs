@@ -1,4 +1,4 @@
-# Spec: 5024 — Greenhouse `datePosted` keeps the source local day
+# Spec: 5024 — `datePosted` keeps the source local day (repo-wide)
 
 | Field | Value |
 | --- | --- |
@@ -31,8 +31,11 @@ posting's own day (the 20th) is lost for anything published after ~20:00 ET.
 
 This is a long-standing upstream behaviour (introduced 2026-02-08, commit
 `b0cd2db4`, "feat: add more sources"), not a fork regression. The same
-`new Date(x).toISOString().split('T')[0]` pattern appears in ~227 plugin files,
-so it is the house convention rather than a greenhouse-specific bug.
+`new Date(x).toISOString().split('T')[0]` pattern is the **house convention**,
+used in ~227 plugin files (both inline at the call site and inside bespoke
+per-plugin `parseDate`/`toDateOnly`/`toIsoDate` helpers). Greenhouse is just the
+case the regression happened to sample; every offset-bearing source has the same
+latent off-by-one. The fix therefore has to be repo-wide, not greenhouse-only.
 
 ## Scope
 
@@ -43,18 +46,35 @@ so it is the house convention rather than a greenhouse-specific bug.
    to the historical UTC truncation; `null`/empty/invalid → `null`.
 2. **Wire `source-ats-greenhouse`** — both the public-board (`processJob`,
    `first_published`) and Harvest-API (`opened_at`) paths use `toDateOnly`.
-3. **Tests** — a helper-level suite and a greenhouse service test proving an
-   evening offset timestamp keeps the source day.
+3. **Repo-wide adoption** — route **every** date-only normalization through the
+   single shared helper so the date math lives in one tested place instead of
+   ~227 near-duplicates. Applied with an AST codemod (TS compiler API):
+   - **Inline** `new Date(EXPR).toISOString().split('T')[0]` → `toDateOnly(EXPR)`.
+   - **Bespoke helpers** that did `const d = new Date(EXPR); … d.toISOString()
+     .split('T')[0]` → pass the original **string** to `toDateOnly` (so the
+     offset is preserved, not lost to an intermediate `Date`), keeping each
+     plugin's own payload prep (epoch-unit detection, text cleaning).
+   - Two plugins (`source-jsonld`, `source-ats-workatastartup`) had their own
+     private `toDateOnly(value)` method that duplicated the logic; these are
+     removed and their single call site routes through the shared helper
+     (consolidation, per the no-duplication directive).
+   - `source-bdjobs`, `source-naukri`, `source-ats-workday` (whose helpers were
+     `Date`-typed and so not caught by the chain match) are routed through
+     `toDateOnly` by hand for consistency.
+   - 253 call sites across 228 files; ~40 RSS-feed plugins whose local
+     `datePosted` is typed `string | undefined` get `?? undefined` to keep that
+     type (the helper returns `string | null`).
+4. **Tests** — a helper-level suite and a greenhouse service test proving an
+   evening offset timestamp keeps the source day; full-graph typecheck
+   (`nx build`) plus targeted unit suites for both code families.
 
 ## Non-goals
 
-- No sweep of the other ~226 files using the same UTC-truncation pattern. This
-  spec fixes the case the regression actually caught (greenhouse) and lands a
-  reusable helper; a follow-up can adopt `toDateOnly` across the remaining
-  plugins. (See `docs/questions.md` is **not** opened — this is a flagged
-  follow-up, not an ambiguity.)
 - No change to which source field is chosen (`first_published` → `updated_at`,
   `opened_at` → `created_at` → `updated_at` ordering is unchanged).
+- No change to genuinely `Date`-typed query-window math that is *meant* to be
+  UTC (it now still goes through `toDateOnly`, which UTC-truncates `Date`
+  inputs — behaviour-preserving).
 - No fetch1 changes.
 
 ## Contracts

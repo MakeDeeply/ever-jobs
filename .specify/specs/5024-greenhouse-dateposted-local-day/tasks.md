@@ -1,4 +1,4 @@
-# Tasks: 5024 — Greenhouse `datePosted` keeps the source local day
+# Tasks: 5024 — `datePosted` keeps the source local day (repo-wide)
 
 - [x] T1 — Add `toDateOnly` helper in `packages/common/src/converters/date-converter.ts`.
     - Acceptance: ISO string preserves leading `YYYY-MM-DD`; epoch/`Date` fall
@@ -20,3 +20,15 @@
 - [x] T7 — Typecheck both packages and run the two suites green.
 - [x] T8 — Update `docs/index.md` (spec row + footer) and `docs/log.md` (top
       entry); `npm run lint:docs` passes.
+- [x] T9 — Repo-wide codemod: route every `…toISOString().split('T')[0]` chain
+      (inline + bespoke-helper variants) through `toDateOnly`, adding the
+      `@ever-jobs/common` import.
+    - Acceptance: 0 `toISOString().split('T')[0]` left in plugin `src/` (tests
+      excluded); 228 files delegate to the shared helper.
+- [x] T10 — Hand-finish the `Date`-typed helpers (`source-bdjobs`,
+      `source-naukri`, `source-ats-workday`) and remove the duplicate private
+      `toDateOnly` methods in `source-jsonld` + `source-ats-workatastartup`.
+    - Acceptance: no per-plugin date-only helper duplicates the shared logic.
+- [x] T11 — Resolve `string | undefined` `datePosted` locals (~40 RSS plugins)
+      with `?? undefined`; whole-graph `npm run build` typecheck green; targeted
+      jest suites for both families green.

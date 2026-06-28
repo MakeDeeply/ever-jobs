@@ -29,10 +29,18 @@ timestamp (the day in its own offset), falls back to UTC truncation for
 epoch/`Date` inputs, and returns `null` for empty/invalid input. Wired into both
 greenhouse paths (public board `processJob` + Harvest `processHarvestJob`).
 Provenance: long-standing upstream behaviour (commit `b0cd2db4`, 2026-02-08),
-not a fork regression; the same UTC-truncation pattern appears in ~227 files, so
-a follow-up sweep can adopt `toDateOnly` repo-wide (deliberately out of scope to
-keep this change reviewable). New helper suite + greenhouse service test green;
-both packages typecheck clean.
+not a fork regression; the same UTC-truncation pattern is the house convention.
+**Adopted repo-wide:** an AST codemod (TS compiler API) routes every
+`…toISOString().split('T')[0]` chain — both inline and the bespoke
+`const d = new Date(EXPR); … d.toISOString().split('T')[0]` helper variant —
+through the shared `toDateOnly`, passing the original *string* so the offset is
+preserved (not lost to an intermediate `Date`). 253 call sites across 228 files;
+the two plugins with their own private `toDateOnly` method (`source-jsonld`,
+`source-ats-workatastartup`) drop it and call the shared helper; the three
+`Date`-typed helpers (`source-bdjobs`, `source-naukri`, `source-ats-workday`)
+are routed by hand; ~40 RSS plugins whose `datePosted` is `string | undefined`
+get `?? undefined`. New helper suite + greenhouse service test green; whole-graph
+`npm run build` typecheck green; targeted jest suites for both code families green.
 
 ---
 
