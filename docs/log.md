@@ -15,6 +15,27 @@
 
 ---
 
+## 2026-06-28 — Run #460 — Spec 5024 — Greenhouse `datePosted` keeps the source local day
+
+**Scope:** Fixes a `date_posted` off-by-one surfaced by the fetch1 Phase 1 ATS
+regression (alt-path probe vs `source-ats-greenhouse`, 135 companies): every
+evening-US posting (30/30) reported the next day. Greenhouse returns
+`first_published`/`opened_at` as an offset ISO timestamp
+(`2026-04-20T22:32:33-04:00`); the plugin used
+`new Date(x).toISOString().split('T')[0]`, which shifts to UTC before truncating
+→ `2026-04-21`. Adds `toDateOnly` in `@ever-jobs/common`
+(`converters/date-converter.ts`): preserves the leading `YYYY-MM-DD` of an ISO
+timestamp (the day in its own offset), falls back to UTC truncation for
+epoch/`Date` inputs, and returns `null` for empty/invalid input. Wired into both
+greenhouse paths (public board `processJob` + Harvest `processHarvestJob`).
+Provenance: long-standing upstream behaviour (commit `b0cd2db4`, 2026-02-08),
+not a fork regression; the same UTC-truncation pattern appears in ~227 files, so
+a follow-up sweep can adopt `toDateOnly` repo-wide (deliberately out of scope to
+keep this change reviewable). New helper suite + greenhouse service test green;
+both packages typecheck clean.
+
+---
+
 ## 2026-06-28 — Scheduled run #440 (**170 new Source Company Plugins** — Specs 804–974)
 
 **Scope:** Largest single-run corpus expansion to date — **170 new Greenhouse-backed
