@@ -15,6 +15,7 @@ import {
   htmlToPlainText,
   markdownConverter,
   extractEmails,
+  toDateOnly,
 } from '@ever-jobs/common';
 import { JOBVITE_API_URL, JOBVITE_OFFICIAL_API_URL, JOBVITE_HEADERS } from './jobvite.constants';
 import { JobviteResponse, JobviteJob } from './jobvite.types';
@@ -208,7 +209,7 @@ export class JobviteService implements IScraper {
       location,
       description,
       datePosted: job.date
-        ? new Date(job.date).toISOString().split('T')[0]
+        ? toDateOnly(job.date)
         : null,
       isRemote,
       emails: extractEmails(description),

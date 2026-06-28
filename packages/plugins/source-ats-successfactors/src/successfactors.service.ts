@@ -16,6 +16,7 @@ import {
   randomSleep,
   htmlToPlainText,
   extractEmails,
+  toDateOnly,
 } from '@ever-jobs/common';
 import {
   SF_HEADERS,
@@ -210,7 +211,7 @@ export class SuccessFactorsService implements IScraper {
     const datePosted = rawDate
       ? (() => {
           try {
-            return new Date(rawDate).toISOString().split('T')[0];
+            return toDateOnly(rawDate);
           } catch {
             return rawDate;
           }
@@ -307,7 +308,7 @@ export class SuccessFactorsService implements IScraper {
         const datePosted = dateStr
           ? (() => {
               try {
-                return new Date(dateStr).toISOString().split('T')[0];
+                return toDateOnly(dateStr);
               } catch {
                 return dateStr;
               }

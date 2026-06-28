@@ -16,6 +16,7 @@ import {
   htmlToPlainText,
   markdownConverter,
   resolveCompensation,
+  toDateOnly,
 } from '@ever-jobs/common';
 import {
   WORKABLE_API_URL,
@@ -233,7 +234,7 @@ export class WorkableService implements IScraper {
         `https://apply.workable.com/${companySlug}/j/${job.shortcode}`,
       location,
       datePosted: datePosted
-        ? new Date(datePosted).toISOString().split('T')[0]
+        ? toDateOnly(datePosted)
         : null,
       isRemote,
       jobType,
@@ -299,7 +300,7 @@ export class WorkableService implements IScraper {
       description,
       ...(compensation ? { compensation } : {}),
       datePosted: datePosted
-        ? new Date(datePosted).toISOString().split('T')[0]
+        ? toDateOnly(datePosted)
         : null,
       isRemote,
       jobType,

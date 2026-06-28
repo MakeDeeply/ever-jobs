@@ -17,6 +17,7 @@ import {
   markdownConverter,
   plainConverter,
   extractEmails,
+  toDateOnly,
 } from '@ever-jobs/common';
 import {
   JOB_SEARCH_QUERY,
@@ -325,7 +326,7 @@ export class UpworkService implements IScraper {
 
     // Parse date
     const datePosted = node.createdDateTime
-      ? new Date(node.createdDateTime).toISOString().split('T')[0]
+      ? toDateOnly(node.createdDateTime)
       : null;
 
     // Detect remote from title or description

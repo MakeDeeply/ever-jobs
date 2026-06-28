@@ -15,6 +15,7 @@ import {
   htmlToPlainText,
   markdownConverter,
   extractEmails,
+  toDateOnly,
 } from '@ever-jobs/common';
 import {
   ISOLVED_CAREER_HOST_SUFFIX,
@@ -578,7 +579,7 @@ export class IsolvedService implements IScraper {
       : cleaned;
     try {
       const parsed = new Date(isoish);
-      if (!isNaN(parsed.getTime())) return parsed.toISOString().split('T')[0];
+      if (!isNaN(parsed.getTime())) return toDateOnly(isoish);
     } catch {
       // ignore
     }

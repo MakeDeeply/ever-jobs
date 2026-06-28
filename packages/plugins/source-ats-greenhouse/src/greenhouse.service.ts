@@ -18,6 +18,7 @@ import {
   extractEmails,
   parseLocationList,
   resolveCompensation,
+  toDateOnly,
 } from '@ever-jobs/common';
 import { GREENHOUSE_API_URL, GREENHOUSE_HARVEST_API_URL, GREENHOUSE_HEADERS } from './greenhouse.constants';
 import {
@@ -145,9 +146,7 @@ export class GreenhouseService implements IScraper {
       location: parsedLocations.location,
       description,
       compensation,
-      datePosted: datePosted
-        ? new Date(datePosted).toISOString().split('T')[0]
-        : null,
+      datePosted: toDateOnly(datePosted),
       isRemote: parsedLocations.remoteMentioned,
       workFromHomeType: parsedLocations.workFromHomeType,
       employmentType,
@@ -393,9 +392,7 @@ export class GreenhouseService implements IScraper {
       compensation: resolveCompensation({
         text: this.salaryTextFromContent(job.notes),
       }),
-      datePosted: datePosted
-        ? new Date(datePosted).toISOString().split('T')[0]
-        : null,
+      datePosted: toDateOnly(datePosted),
       isRemote: parsedLocations.remoteMentioned,
       workFromHomeType: parsedLocations.workFromHomeType,
       emails: extractEmails(description),

@@ -15,6 +15,7 @@ import {
   htmlToPlainText,
   markdownConverter,
   extractEmails,
+  toDateOnly,
 } from '@ever-jobs/common';
 import { ADP_API_URL, ADP_HEADERS } from './adp.constants';
 import { AdpResponse, AdpJob } from './adp.types';
@@ -129,7 +130,7 @@ export class AdpService implements IScraper {
       location,
       description,
       datePosted: job.postedDate
-        ? new Date(job.postedDate).toISOString().split('T')[0]
+        ? toDateOnly(job.postedDate)
         : null,
       isRemote,
       emails: extractEmails(description),

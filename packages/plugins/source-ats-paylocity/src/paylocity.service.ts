@@ -19,6 +19,7 @@ import {
   extractEmails,
   parseJobPostingLd,
   resolveCompensation,
+  toDateOnly,
 } from '@ever-jobs/common';
 import {
   PAYLOCITY_DETAIL_CONCURRENCY,
@@ -297,7 +298,7 @@ export class PaylocityService implements IScraper {
       : null;
 
     const datePosted = job.PublishedDate
-      ? new Date(job.PublishedDate).toISOString().split('T')[0]
+      ? toDateOnly(job.PublishedDate)
       : null;
 
     return new JobPostDto({

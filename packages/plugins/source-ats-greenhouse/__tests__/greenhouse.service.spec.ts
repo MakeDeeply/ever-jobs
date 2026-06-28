@@ -193,4 +193,18 @@ describe('GreenhouseService — Spec 5009', () => {
     expect(job.compensation?.minAmount).toBe(170000);
     expect(job.compensation?.maxAmount).toBe(220000);
   });
+
+  it('keeps datePosted on the source local day for an evening offset timestamp (Spec 5024)', async () => {
+    // 2026-04-20T22:32:33-04:00 is 2026-04-21T02:32Z; UTC truncation would
+    // report 2026-04-21. The posting's own calendar day is 2026-04-20.
+    const job = await scrapeOne({
+      id: 9,
+      title: 'Engineer',
+      content: '&lt;p&gt;Role&lt;/p&gt;',
+      location: { name: 'Boston, MA' },
+      first_published: '2026-04-20T22:32:33-04:00',
+    });
+
+    expect(job.datePosted).toBe('2026-04-20');
+  });
 });
