@@ -10,6 +10,33 @@
 
 ---
 
+## Q-5025-a — greenhouse office-only remote: surface as a secondary location?
+
+**Context:** Spec 5025. Greenhouse sometimes carries the remote signal in a
+dedicated `offices[]` entry (`Remote - Washington, DC`) while the posting's
+`location.name` is a concrete city. The spec widens the **remote/WFH detection**
+to include `offices[].name`, but `JobPostDto.location` is **singular** — so the
+office-borne `Remote - X` location text is used only to set `isRemote`, not
+emitted as a location.
+
+**Options:**
+
+- **A. Drive only the remote flag (default).** Keep the singular primary
+  `location` (`location.name`-first) and use `offices[]` purely to set
+  `isRemote`/`workFromHomeType`. Minimal, matches the current DTO shape, fixes
+  the 8 regressions.
+- **B. Also surface the remote office as a location.** Would require a
+  multi-location DTO (or a "remote" sentinel location), a broader change beyond
+  this spec and affecting every plugin's location contract.
+- **C. Replace the primary location with the remote office when present.** Risks
+  losing the concrete city the role is tied to; worse than A for downstream use.
+
+**Default (proceeding):** **A.** Drive only the remote flag; leave the primary
+location and the DTO shape unchanged. A multi-location model is a separate,
+larger spec if ever wanted.
+
+---
+
 ## Q-072 — workatastartup: harvest the YC public mirror or the canonical WaaS board?
 
 **Context:** Spec 5023. YC Work at a Startup exposes the same board at two URL

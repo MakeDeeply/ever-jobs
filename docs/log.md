@@ -15,6 +15,26 @@
 
 ---
 
+## 2026-06-28 — Run #461 — Spec 5025 (draft) — ATS `isRemote` under-detection
+
+**Scope (spec only — no code yet):** The fetch1 Phase 1 ATS regression found 8
+jobs the source marks remote but the plugin emits `isRemote: false` (7 greenhouse
++ 1 workday). Root cause is the same class as Spec 5024 — the plugin feeds a
+narrower input to the detector than the source carries. Greenhouse expresses
+remote as a dedicated `offices[]` entry (`Remote - Washington, DC` /
+`Remote - BRA - Sao Paulo`) while `location.name` is a city; `processJob` reads
+remote only from `location.name` (greenhouse.service.ts:118–123) and consults
+`offices[]` solely when `location.name` is absent, so office-level remote is
+dropped (the probe reads `location.name` + every `offices[].name`).
+`parseLocationList` already detects `remote` correctly — the carrying labels just
+never reach it. Workday already ORs `remoteType` (workday.service.ts:230–235), so
+its single case is a field-population gap (`jobPostingInfo.remoteType` unresolved
+for that job), not a missing heuristic. Spec widens the greenhouse remote/WFH
+input to the union of posting-location labels + `offices[].name` (primary
+`location` selection unchanged) and verifies the workday `remoteType` mapping; no
+change to the shared parser regexes. Authored `.specify/specs/5025-ats-isremote-detection/`
+(spec/plan/tasks) + `docs/questions.md` Q-5025-a. Implementation pending review.
+
 ## 2026-06-28 — Run #460 — Spec 5024 — Greenhouse `datePosted` keeps the source local day
 
 **Scope:** Fixes a `date_posted` off-by-one surfaced by the fetch1 Phase 1 ATS
