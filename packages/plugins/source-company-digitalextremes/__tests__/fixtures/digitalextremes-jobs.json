@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 5166906007,
+      "title": "Digital Artist ",
+      "company_name": "Digital Extremes",
+      "absolute_url": "https://job-boards.greenhouse.io/digitalextremes/jobs/5166906007",
+      "updated_at": "2026-06-18T17:19:56-04:00",
+      "location": {
+        "name": "London, Ontario"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Digital Extremes.&lt;/strong&gt; Now hiring a Digital Artist on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 5169120007,
+      "title": "Jr. Product Designer, Web",
+      "company_name": "Digital Extremes",
+      "absolute_url": "https://job-boards.greenhouse.io/digitalextremes/jobs/5169120007",
+      "updated_at": "2026-06-19T14:03:36-04:00",
+      "location": {
+        "name": "London, Ontario"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Digital Extremes.&lt;/strong&gt; Now hiring a Jr. Product Designer, Web on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 5089564007,
+      "title": "Lead Data Engineer",
+      "company_name": "Digital Extremes",
+      "absolute_url": "https://job-boards.greenhouse.io/digitalextremes/jobs/5089564007",
+      "updated_at": "2026-06-18T09:46:35-04:00",
+      "location": {
+        "name": "London, Ontario"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Digital Extremes.&lt;/strong&gt; Now hiring a Lead Data Engineer on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 8391911002,
+      "title": "Backend Engineer ",
+      "company_name": "Picnic Delivery",
+      "absolute_url": "https://job-boards.greenhouse.io/try-picnic/jobs/8391911002",
+      "updated_at": "2026-06-15T17:55:20-04:00",
+      "location": {
+        "name": "Los Angeles, CA"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Picnic Delivery.&lt;/strong&gt; Now hiring a Backend Engineer on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 8563259002,
+      "title": "City Operations Associate",
+      "company_name": "Picnic Delivery",
+      "absolute_url": "https://job-boards.greenhouse.io/try-picnic/jobs/8563259002",
+      "updated_at": "2026-06-19T19:45:53-04:00",
+      "location": {
+        "name": "Bogotá, COL"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Picnic Delivery.&lt;/strong&gt; Now hiring a City Operations Associate on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 8562176002,
+      "title": "City Operations Associate",
+      "company_name": "Picnic Delivery",
+      "absolute_url": "https://job-boards.greenhouse.io/try-picnic/jobs/8562176002",
+      "updated_at": "2026-06-19T19:45:32-04:00",
+      "location": {
+        "name": "Los Angeles, CA"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Picnic Delivery.&lt;/strong&gt; Now hiring a City Operations Associate on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

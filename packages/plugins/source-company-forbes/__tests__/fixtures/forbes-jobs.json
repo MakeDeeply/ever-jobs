@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 6005314004,
+      "title": "Associate Video Producer ",
+      "company_name": "Forbes",
+      "absolute_url": "https://job-boards.greenhouse.io/forbes/jobs/6005314004",
+      "updated_at": "2026-05-28T11:39:25-04:00",
+      "location": {
+        "name": "Jersey City, NJ"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Forbes.&lt;/strong&gt; Now hiring a Associate Video Producer on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 5971710004,
+      "title": "Director, ForbesLive",
+      "company_name": "Forbes",
+      "absolute_url": "https://job-boards.greenhouse.io/forbes/jobs/5971710004",
+      "updated_at": "2026-05-21T16:15:07-04:00",
+      "location": {
+        "name": "United States"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Forbes.&lt;/strong&gt; Now hiring a Director, ForbesLive on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 5197136004,
+      "title": "Forbes Fellowship",
+      "company_name": "Forbes",
+      "absolute_url": "https://job-boards.greenhouse.io/forbes/jobs/5197136004",
+      "updated_at": "2026-05-21T16:15:07-04:00",
+      "location": {
+        "name": "Jersey City, NJ"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Forbes.&lt;/strong&gt; Now hiring a Forbes Fellowship on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 4663371005,
+      "title": "Account Executive, Commercial ",
+      "company_name": "dbt Labs",
+      "absolute_url": "https://job-boards.greenhouse.io/dbtlabsinc/jobs/4663371005",
+      "updated_at": "2026-06-19T05:52:23-04:00",
+      "location": {
+        "name": "Dublin, Ireland"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About dbt Labs.&lt;/strong&gt; Now hiring a Account Executive, Commercial on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4560390005,
+      "title": "Commercial Account Executive (Austin)",
+      "company_name": "dbt Labs",
+      "absolute_url": "https://job-boards.greenhouse.io/dbtlabsinc/jobs/4560390005",
+      "updated_at": "2026-05-28T10:19:38-04:00",
+      "location": {
+        "name": "Austin, Texas"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About dbt Labs.&lt;/strong&gt; Now hiring a Commercial Account Executive (Austin) on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4684726005,
+      "title": "Customer Account Executive",
+      "company_name": "dbt Labs",
+      "absolute_url": "https://job-boards.greenhouse.io/dbtlabsinc/jobs/4684726005",
+      "updated_at": "2026-05-20T12:14:35-04:00",
+      "location": {
+        "name": "Dublin, Ireland"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About dbt Labs.&lt;/strong&gt; Now hiring a Customer Account Executive on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

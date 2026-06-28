@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 8004252,
+      "title": "Customer Success Manager, Enterprise ",
+      "company_name": "Dealpath",
+      "absolute_url": "https://job-boards.greenhouse.io/dealpath/jobs/8004252",
+      "updated_at": "2026-06-16T12:10:31-04:00",
+      "location": {
+        "name": "New York City, New York"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Dealpath.&lt;/strong&gt; Now hiring a Customer Success Manager, Enterprise on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 8004253,
+      "title": "Customer Success Manager, Enterprise",
+      "company_name": "Dealpath",
+      "absolute_url": "https://job-boards.greenhouse.io/dealpath/jobs/8004253",
+      "updated_at": "2026-06-16T12:10:58-04:00",
+      "location": {
+        "name": "San Francisco, CA"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Dealpath.&lt;/strong&gt; Now hiring a Customer Success Manager, Enterprise on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 8021951,
+      "title": "Engineering Manager",
+      "company_name": "Dealpath",
+      "absolute_url": "https://job-boards.greenhouse.io/dealpath/jobs/8021951",
+      "updated_at": "2026-06-22T14:53:56-04:00",
+      "location": {
+        "name": "San Francisco, CA"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Dealpath.&lt;/strong&gt; Now hiring a Engineering Manager on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

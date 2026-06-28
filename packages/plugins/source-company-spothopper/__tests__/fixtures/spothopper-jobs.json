@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 4005023009,
+      "title": "Account Executive ",
+      "company_name": "SpotHopper",
+      "absolute_url": "https://job-boards.greenhouse.io/spothopper/jobs/4005023009",
+      "updated_at": "2026-05-18T15:01:43-04:00",
+      "location": {
+        "name": "Remote"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About SpotHopper.&lt;/strong&gt; Now hiring a Account Executive on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4013073009,
+      "title": "Account Executive",
+      "company_name": "SpotHopper",
+      "absolute_url": "https://job-boards.greenhouse.io/spothopper/jobs/4013073009",
+      "updated_at": "2026-06-02T22:41:12-04:00",
+      "location": {
+        "name": "Wichita, KS"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About SpotHopper.&lt;/strong&gt; Now hiring a Account Executive on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4006569009,
+      "title": "Account Executive",
+      "company_name": "SpotHopper",
+      "absolute_url": "https://job-boards.greenhouse.io/spothopper/jobs/4006569009",
+      "updated_at": "2026-06-02T22:23:05-04:00",
+      "location": {
+        "name": "New York City, NY"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About SpotHopper.&lt;/strong&gt; Now hiring a Account Executive on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

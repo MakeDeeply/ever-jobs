@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 5982565004,
+      "title": "Application Security Engineer ",
+      "company_name": "SmartRent",
+      "absolute_url": "https://job-boards.greenhouse.io/smartrent/jobs/5982565004",
+      "updated_at": "2026-06-03T20:11:46-04:00",
+      "location": {
+        "name": "Phoenix, Arizona"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About SmartRent.&lt;/strong&gt; Now hiring a Application Security Engineer on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 5859414004,
+      "title": "Channel Sales Director",
+      "company_name": "SmartRent",
+      "absolute_url": "https://job-boards.greenhouse.io/smartrent/jobs/5859414004",
+      "updated_at": "2026-06-03T20:11:46-04:00",
+      "location": {
+        "name": "Phoenix, Arizona"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About SmartRent.&lt;/strong&gt; Now hiring a Channel Sales Director on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 6016491004,
+      "title": "Client Project Manager I",
+      "company_name": "SmartRent",
+      "absolute_url": "https://job-boards.greenhouse.io/smartrent/jobs/6016491004",
+      "updated_at": "2026-06-18T19:30:13-04:00",
+      "location": {
+        "name": "Phoenix, Arizona"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About SmartRent.&lt;/strong&gt; Now hiring a Client Project Manager I on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

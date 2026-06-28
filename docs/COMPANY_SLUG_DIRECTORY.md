@@ -2,7 +2,7 @@
 
 > A curated list of verified company slugs organized by ATS platform. Use these with the `companySlug` parameter to search jobs at specific companies.
 
-**Last Updated:** 2026-06-04
+**Last Updated:** 2026-06-28
 
 ---
 
@@ -130,8 +130,194 @@ Greenhouse slugs are the subdomain used in `boards.greenhouse.io/{slug}`.
 | Caribou Financial | `caribou` | Fintech / Lending |
 | HealthJoy | `healthjoy` | Health-tech / Benefits |
 | Papa | `papa` | Health-tech / Care |
+| AIR COMPANY | `aircompany` | Climate Tech / Carbon Conversion & Synthetic Fuels |
+| Arbor Energy | `arborenergy` | Climate Tech / Carbon-Negative Power (BECCS) |
+| Aurora Innovation | `aurorainnovation` | Autonomous Vehicles / Self-Driving Trucking |
+| EarnIn | `earnin` | Fintech / Earned-Wage Access |
+| Faraday Future | `faradayfuture` | Automotive / Electric Vehicles |
+| FastSpring | `fastspring` | Fintech / Merchant-of-Record Commerce & Subscription Billing |
+| Gravity R&D | `gravity` | AdTech / Recommendation & Personalization Software |
+| Runwise | `runwise` | Climate Tech / Smart Building Energy Management |
+| SES AI | `sesai` | Battery Technology / EV Energy Storage (Li-Metal) |
+| Solaris | `solarisbank` | Fintech / Banking-as-a-Service (Embedded Finance) |
+| Stack AV | `stackav` | Autonomous Vehicles / Self-Driving Trucking |
+| tastytrade | `tastytrade` | Fintech / Online Brokerage (Options & Futures Trading) |
+| Torc Robotics | `torcrobotics` | Autonomous Vehicles / Self-Driving Trucking |
+| Ursa Major | `ursamajor` | Aerospace & Defense / Rocket Propulsion |
+| Via | `via` | TransitTech / Mobility Software (SaaS + Operations) |
+| Zuora | `zuora` | Enterprise SaaS / Subscription Billing & Quote-to-Cash |
 
 ---
+| Accela | `accela` | Govtech (government permitting/licensing SaaS) |
+| AEVEX Aerospace | `aevexaerospace` | Defense aerospace (UAS, ISR, full-spectrum) |
+| Akaysha Energy | `akayshaenergy` | Grid/storage / grid-scale battery storage |
+| Anduril Industries | `andurilindustries` | Defense technology (autonomous systems, C2, counter-UAS) |
+| Armis | `armissecurity` | Asset/IoT security |
+| At-Bay | `atbayjobs` | Cyber insurance / security |
+| Atomic Machines | `atomicmachines` | Robotics, industrial automation, warehouse/manufacturing automation |
+| Augury | `augury` | Industrial IoT / machine-health sensors |
+| Aura | `aura` | Consumer identity / fraud protection |
+| Avantus | `avantus` | Clean energy / utility-scale solar & storage |
+| Avride | `avride` | Robotics, industrial automation, warehouse/manufacturing automation |
+| Axonius | `axonius` | Cyber asset attack surface management |
+| Beam Therapeutics | `beamtherapeutics` | Gene editing |
+| Blockchain.com | `blockchain` | Fintech — crypto wallet / exchange |
+| Bot Auto | `botauto` | Autonomous trucking |
+| BuildOps | `buildops` | Construction tech (commercial contractor management software) |
+| C3 AI | `c3iot` | Enterprise applied AI applications |
+| Cabify | `cabify` | Ride-hailing / mobility platform |
+| Cargomatic | `cargomatic` | Drayage / digital freight marketplace |
+| Censys | `censys` | Security data / applied AI platform |
+| CharterUP | `charterup` | Group transportation / charter mobility platform |
+| Checkbook | `checkbook` | Fintech — digital payments / disbursements |
+| CodePath | `codepath` | Edtech / tech career upskilling |
+| Cognitiv | `cognitiv` | Adtech (AI/deep-learning ads) |
+| Collibra | `collibra` | Compliance / data governance |
+| Colossal Biosciences | `colossalbiosciences` | Genomics / synthetic biology |
+| Customer.io | `customerio` | Martech (marketing automation/messaging) |
+| Cypress Creek Renewables | `cypresscreekrenewables` | Clean energy / utility-scale solar & storage |
+| Daybreak Game Company | `daybreakgames` | Gaming studios / interactive entertainment |
+| dbt Labs | `dbtlabsinc` | Data transformation / analytics engineering platform |
+| Dealpath | `dealpath` | Proptech / commercial real estate (deal management & investment platform) |
+| Defense Unicorns | `defenseunicorns` | Defense software (mission infrastructure/DevSecOps) |
+| Digital Extremes | `digitalextremes` | Gaming studios / interactive entertainment |
+| Dorsia | `dorsia` | Restaurant tech |
+| Easyship | `easyship` | E-commerce enablement (shipping/fulfillment SaaS) |
+| Eleventh Hour Games | `eleventhhourgames` | Gaming studios / interactive entertainment |
+| EMARKETER | `emarketer` | Martech/media (marketing research) |
+| emnify | `emnify` | IoT connectivity / cellular hardware-SIM platform |
+| Energy Solutions | `energysolutions` | Clean energy / efficiency & decarbonization services |
+| Esusu | `esusu` | Fintech — rent reporting / credit building / consumer payments |
+| Exiger | `exiger` | Regtech (supply-chain risk / AML / compliance) |
+| ExtraHop | `extrahopnetworks` | Network detection & response |
+| Federato | `federato` | Insurtech and insurance technology |
+| Feedzai | `feedzai` | Regtech (fraud / AML) |
+| Fieldwire | `fieldwire` | Construction tech (jobsite field management & coordination software) |
+| Flashfood | `flashfood` | Foodtech / food waste |
+| Fleetio | `fleetio` | Fleet management software / logistics |
+| Forbes | `forbes` | Media (publishing) |
+| Forter | `forter` | Fraud prevention / risk |
+| Freeform | `freeformfuturecorp` | Aerospace & defense metal additive manufacturing |
+| Galvanize Climate Solutions | `galvanizeclimatesolutions` | Climate tech / climate investment firm |
+| Gatik AI | `gatikaiinc` | Robotics, industrial automation, warehouse/manufacturing automation |
+| Glean | `gleanwork` | Enterprise AI search & assistant (applied AI) |
+| GlossGenius | `glossgenius` | Fintech — embedded payments / SMB platform |
+| Goodway Group | `goodwaygroup` | Adtech/martech (digital media agency) |
+| Gotion | `gotion` | Grid/storage / EV & energy-storage lithium batteries |
+| GovTech Singapore (Government Technology Agency) | `govtech` | Govtech (government digital services) |
+| Ghost Story Games | `gsgcareers` | Gaming studios / interactive entertainment |
+| Hanwha Renewables | `hanwharenewables` | Clean energy / utility-scale solar & storage |
+| Herald | `heraldapi` | Insurtech and insurance technology |
+| Homeward | `homeward` | Real estate tech (cash-offer home buying) |
+| Hyliion | `hyliion` | Electrified powertrain / clean transport |
+| Hyperproof | `hyperproof` | Compliance / GRC (security compliance) |
+| ID.me | `idme` | Identity verification / fraud |
+| InCharge Energy | `inchargeenergy` | Clean energy / fleet EV charging infrastructure |
+| Innovid | `innovid` | Adtech (ad serving/CTV) |
+| Instawork | `instawork` | Workforce management - hourly / flexible staffing marketplace |
+| Intrinsic | `intrinsicrobotics` | Robotics, industrial automation, warehouse/manufacturing automation |
+| Integrated Specialty Coverages | `isccareers` | Insurtech and insurance technology |
+| ITS Logistics | `itslogisticsllc` | 3PL / freight / warehousing |
+| K2 Space | `k2spacecorporation` | Satellites (large GEO/MEO buses) |
+| Kasa | `kasa` | Proptech / real estate (tech-enabled hospitality & flexible accommodations) |
+| KH Aerospace | `khaerospace` | Aerospace & defense (UAS manufacturing/training) |
+| KnowBe4 | `knowbe4` | Compliance / security awareness training |
+| Legion Technologies | `legion` | Workforce management software (scheduling / labor) |
+| LogicGate | `logicgate` | Compliance / GRC (risk management) |
+| Mark43 | `mark43` | Govtech / public safety (police RMS/CAD) |
+| Matic Insurance | `matic` | Insurtech and insurance technology |
+| May Mobility | `maymobility` | Autonomous vehicles / mobility |
+| mediasmart | `mediasmart` | Adtech (omnichannel/CTV/DOOH DSP) |
+| Metropolis Technologies | `metropolis` | Proptech / real estate (AI computer-vision parking & mobility platform) |
+| MobilityWare | `mobilityware` | Mobile gaming / interactive entertainment |
+| Modernize Home Services | `modernize` | Proptech / home services (home improvement lead generation) |
+| MrBeast (Beast Industries) | `mrbeastyoutube` | Creator economy (media/YouTube) |
+| Nabis | `nabis` | Distribution / last-mile delivery |
+| NPR (National Public Radio) | `nationalpublicradioinc` | Media/streaming (public radio/podcasts) |
+| Neon Aerospace | `neonaerospace` | Aerospace (autonomous flight / propulsion) |
+| Neros Technologies | `nerostechnologies` | Robotics, industrial automation, warehouse/manufacturing automation |
+| New Leaf Energy | `newleafenergy` | Clean energy / solar & storage development |
+| Nex | `nex` | Gaming studios / interactive entertainment (motion gaming) |
+| Next Insurance | `nextinsurance66` | Insurtech and insurance technology |
+| Nimble Robotics | `nimblerobotics` | Robotics, industrial automation, warehouse/manufacturing automation |
+| NMI | `nmi` | Fintech — payments gateway / embedded payments |
+| Northspyre | `northspyre` | Proptech / real estate (development project & cost management software) |
+| Nothing | `nothing` | Consumer electronics (smartphones, earbuds) |
+| OneTrust | `onetrust` | Data privacy, security & governance |
+| OpenSpace | `openspace` | Construction tech (AI jobsite capture & reality mapping) |
+| OpenTable | `opentable` | Restaurant tech |
+| Veo | `operationscareers` | Shared micromobility (bikes/scooters) |
+| Orca Security | `orcasecurity` | Cloud security (CNAPP) |
+| Origis Energy | `origisenergy` | Clean energy / utility-scale solar & storage |
+| Osano | `osano` | Compliance / data privacy |
+| Pacvue | `pacvue` | E-commerce enablement / retail media SaaS |
+| Palmetto Clean Technology | `palmettocleantech` | Clean energy / residential solar platform |
+| Pathward | `pathward` | Fintech — banking-as-a-service / sponsor bank |
+| PayNearMe | `paynearmeinc` | Fintech — bill pay / payments platform |
+| Payoneer | `payoneer` | Fintech — cross-border payments |
+| Pixability | `pixability` | Adtech (YouTube/CTV video ads) |
+| Plus Power | `pluspower` | Grid/storage / standalone battery storage developer |
+| The Pokémon Company International | `pokemoncareers` | Gaming / interactive entertainment / esports |
+| Prime Medicine | `primemedicine` | Gene editing |
+| PubMatic | `pubmatic` | Adtech (SSP) |
+| Qualia | `qualia` | Real estate tech (digital closing / title & escrow platform) |
+| Razorpay | `razorpaysoftwareprivatelimited` | Fintech — payments gateway / banking-as-a-service |
+| Recorded Future | `recordedfuture` | Threat intelligence |
+| Renaissance Learning | `renaissancelearning-nam` | Edtech / pre-K-12 assessment & learning |
+| Riskified | `riskified` | Fraud prevention / e-commerce risk |
+| Rithum | `rithum` | E-commerce enablement / commerce network SaaS |
+| Rocket Lawyer | `rocketlawyer` | Legaltech (online legal services) |
+| Roku | `roku` | Media/streaming (CTV platform) |
+| Sana Biotechnology | `sanabiotech` | Cell & gene therapy |
+| Sayari | `sayari` | Regtech (corporate risk intelligence / AML) |
+| Scout AI | `scoutai` | Defense robotics / autonomous drones |
+| SecurityScorecard | `securityscorecard` | Compliance / cyber risk ratings |
+| SeekOut | `seekout` | Recruiting tech - talent sourcing & talent intelligence AI |
+| Seoul Robotics | `seoulrobotics` | Robotics, industrial automation, warehouse/manufacturing automation |
+| Shift Technology | `shifttechnology` | Insurtech and insurance technology |
+| ShipBob | `shipbobinc` | Fulfillment / 3PL |
+| ShipMonk | `shipmonk` | Fulfillment / 3PL |
+| Skillsoft | `skillsoft` | HR tech - corporate learning & talent development |
+| SmartRent | `smartrent` | Proptech (smart home & access automation for rental communities) |
+| Snorkel AI | `snorkelai` | Data-centric AI / data development platform |
+| Sol de Janeiro | `soldejaneiro` | DTC beauty brand |
+| PlayStation (Sony Interactive Entertainment) | `sonyinteractiveentertainmentglobal` | Gaming / interactive entertainment |
+| Speechify | `speechify` | Edtech / assistive learning (text-to-speech) |
+| Spin | `spin` | Shared micromobility (e-scooters) |
+| Splice | `splice` | Creator economy (music creation platform) |
+| SpotHopper | `spothopper` | Restaurant tech |
+| StackAdapt | `stackadapt` | Adtech (programmatic DSP) |
+| Starface World | `starfaceworld` | DTC beauty/skincare brand |
+| Stoke Space | `stokespacetechnologies` | Space launch (reusable rockets) |
+| Strand Therapeutics | `strandtherapeutics` | mRNA / synthetic biology |
+| Sumo Logic | `sumologic` | Security analytics (SIEM) |
+| Take-Two Interactive | `taketwo` | Gaming studios / interactive entertainment |
+| Tebra | `tebra` | Digital health (practice & telehealth software) |
+| TEGNA | `tegnainc` | Media/streaming (broadcast TV) |
+| Tenable | `tenableinc` | Vulnerability & exposure management |
+| Terran Orbital | `terranorbitalcorporation` | Satellites (small-sat manufacturing) |
+| Tessera Therapeutics | `tesseratherapeutics` | Gene editing / genomics |
+| Dutchie | `thedutchie` | Retail tech (POS + e-commerce platform) |
+| The New York Times | `thenewyorktimes` | Media (news publishing) |
+| The Trade Desk | `thetradedesk` | Adtech (DSP) |
+| Third Wave Automation | `thirdwaveautomation` | Robotics, industrial automation, warehouse/manufacturing automation |
+| Too Good To Go | `toogoodtogo` | Foodtech / food waste |
+| Toradex | `toradex` | Embedded computing / IoT modules (SoMs) |
+| Transmit Security | `transmitsecurity` | Identity / fraud & CIAM |
+| True Anomaly | `trueanomalyinc` | Space defense / space domain awareness |
+| Picnic Delivery | `try-picnic` | Foodtech / food delivery |
+| Uber Freight | `uberfreight` | Freight marketplace / brokerage |
+| Unqork | `unqork` | Insurtech and insurance technology |
+| Varda Space Industries | `vardaspace` | Space (in-orbit manufacturing, reentry capsules) |
+| Verra Mobility | `verramobility` | Smart transportation / mobility tech |
+| Viant Technology | `vianttechnology` | Adtech (omnichannel DSP) |
+| Viral Nation | `viralnation` | Creator economy (influencer marketing) |
+| Vox Media | `voxmedia` | Media/streaming (digital publisher) |
+| VTS | `vts` | Proptech / commercial real estate (leasing & asset management platform) |
+| Wildlife Studios | `wildlifestudios` | Mobile gaming / interactive entertainment |
+| Wiz | `wizinc` | Cloud security (CNAPP) |
+| Wurl | `wurljobs` | Media/streaming + adtech (CTV distribution) |
+| Zynga | `zyngacareers` | Mobile gaming / interactive entertainment |
 
 ## Workday
 

@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 7686227,
+      "title": "Database Engineer, Postgres ",
+      "company_name": "Collibra",
+      "absolute_url": "https://job-boards.greenhouse.io/collibra/jobs/7686227",
+      "updated_at": "2026-06-16T10:10:08-04:00",
+      "location": {
+        "name": "Raleigh, North Carolina, USA"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Collibra.&lt;/strong&gt; Now hiring a Database Engineer, Postgres on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 7998048,
+      "title": "Database Engineer, Postgres",
+      "company_name": "Collibra",
+      "absolute_url": "https://job-boards.greenhouse.io/collibra/jobs/7998048",
+      "updated_at": "2026-06-16T10:10:42-04:00",
+      "location": {
+        "name": "Remote, East Coast USA"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Collibra.&lt;/strong&gt; Now hiring a Database Engineer, Postgres on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 7728905,
+      "title": "Database Engineer, Postgres",
+      "company_name": "Collibra",
+      "absolute_url": "https://job-boards.greenhouse.io/collibra/jobs/7728905",
+      "updated_at": "2026-06-16T10:10:27-04:00",
+      "location": {
+        "name": "New York, New York, USA"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Collibra.&lt;/strong&gt; Now hiring a Database Engineer, Postgres on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

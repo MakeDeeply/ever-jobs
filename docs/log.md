@@ -15,6 +15,324 @@
 
 ---
 
+## 2026-06-28 — Scheduled run #440 (**170 new Source Company Plugins** — Specs 804–974)
+
+**Scope:** Largest single-run corpus expansion to date — **170 new Greenhouse-backed
+company-direct source plugins** (Specs 804–974; phases 799–969), discovered and gated through the
+deterministic, conflict-free company-source pipeline (`probe → discover → enrich → assemble →
+scaffold → wire`). Every plugin targets one real, brand-matched employer board that exposed **≥ 3
+live roles** at probe time (`MIN_JOBS = 3`). This run drew from **twenty sectors** — fintech /
+payments / neobanking, insurtech, digital health, biotech / gene-editing, climate / clean-energy /
+grid-storage, agtech / foodtech / restaurant-tech, robotics / industrial automation, aerospace /
+defense / space, e-commerce / retail, logistics / supply-chain / fulfillment, gaming studios,
+cybersecurity / identity / fraud, proptech / construction-tech, edtech, legaltech / regtech /
+govtech, HR-tech / recruiting / workforce, adtech / martech / creator-economy, mobility / EV /
+micromobility, applied / vertical AI, and hardware / semiconductors / IoT — the sectors where the
+public-board landscape still surfaces fresh employer boards.
+
+**Discovery method (this run):** Board discovery was run as a **parallel multi-agent workflow** —
+twenty sector-specialist agents each web-discovered candidate Greenhouse boards and **self-verified**
+each against the live public Greenhouse Job-Board API (board `name` brand-match + `≥ 3` live jobs)
+before returning it. The merged set (405 boards) was deduped against the existing 653-plugin corpus,
+re-probed **centrally** through `scripts/probe-company-source.ts` (the authoritative deterministic
+gate — 175/175 survived), then validated for **brand-match** and for `enumKey` / `className` /
+`moduleName` / slug-value **collisions** against the existing registry. Five candidates were rejected
+at validation: `2u` and `8451` (TS enum members cannot begin with a digit: `2U`, `84_51`),
+`gomotive` (`MOTIVE` already in `site.enum`), `workstream` (`WORKSTREAM` already in `site.enum`),
+and — caught at typecheck — `ziprecruiter` (`ZipRecruiterModule` collides with the existing
+search-board plugin `source-ziprecruiter`); **Spec 973 is intentionally left unused** as a result.
+Per-company enrichment prose (`oneLiner` / `description` / `highlights`) was generated
+**deterministically and locally** from the verified board metadata (display name, sector, HQ, live
+job count) — strictly factual, no fabricated claims, no external content.
+
+**Baseline at run start:** Local `develop` was even with `origin/develop` at `1ec54853` (run #439,
+16 plugins) with a **green** CI run; working tree clean. Next spec number per the band-aware
+allocator (`scripts/next-spec-number.ts`, band `ever-jobs/ever-jobs` = 1–4999) was **804**; last
+enum phase was 798. The four external reference repos under the parent `OTHERS/` directory (outside
+this repo) were `git pull`-ed for situational awareness — no upstream movement. No competitor intel
+is referenced in-repo; every board below is documented purely on its own public merits.
+
+**Validation:** Full-project `tsc --noEmit` is clean for all 170 plugins and the four wired files
+(the only residual `tsc` errors are pre-existing and unrelated — missing `cacheable` / `@keyv/redis`
+type decls in `apps/api/src/cache`, resolved by CI's `npm ci`). A 12-plugin sample of the generated
+mocked unit suites (spanning tricky name derivations — `C3 AI`, `dbt Labs`, `ID.me`, `K2 Space`,
+`The New York Times`, `PlayStation (Sony Interactive Entertainment)`, `The Pokémon Company
+International`, `Picnic Delivery`) was run locally: **132 tests green**.
+
+| Spec | Phase | Slug | Enum | Display name | Sector | HQ | Roles |
+| ---- | ----- | ---- | ---- | ------------ | ------ | -- | ----- |
+| 804 | 799 | `accela` | ACCELA | Accela | Govtech (government permitting/licensing SaaS) | San Ramon, California, USA | 16 |
+| 805 | 800 | `aevexaerospace` | AEVEX_AEROSPACE | AEVEX Aerospace | Defense aerospace (UAS, ISR, full-spectrum) | Solana Beach, California, USA | 86 |
+| 806 | 801 | `akayshaenergy` | AKAYSHA_ENERGY | Akaysha Energy | Grid/storage / grid-scale battery storage | Sydney, New South Wales, Australia | 5 |
+| 807 | 802 | `andurilindustries` | ANDURIL_INDUSTRIES | Anduril Industries | Defense technology (autonomous systems, C2, counter-UAS) | Costa Mesa, California, USA | 2128 |
+| 808 | 803 | `armissecurity` | ARMIS | Armis | Asset/IoT security | San Francisco, California, USA | 45 |
+| 809 | 804 | `atbayjobs` | AT_BAY | At-Bay | Cyber insurance / security | San Francisco, California, USA | 27 |
+| 810 | 805 | `atomicmachines` | ATOMIC_MACHINES | Atomic Machines | Robotics, industrial automation, warehouse/manufacturing automation | Berkeley, California, USA | 37 |
+| 811 | 806 | `augury` | AUGURY | Augury | Industrial IoT / machine-health sensors | New York, New York, USA | 21 |
+| 812 | 807 | `aura` | AURA | Aura | Consumer identity / fraud protection | Boston, Massachusetts, USA | 7 |
+| 813 | 808 | `avantus` | AVANTUS | Avantus | Clean energy / utility-scale solar & storage | San Diego, California, USA | 16 |
+| 814 | 809 | `avride` | AVRIDE | Avride | Robotics, industrial automation, warehouse/manufacturing automation | Austin, Texas, USA | 39 |
+| 815 | 810 | `axonius` | AXONIUS | Axonius | Cyber asset attack surface management | New York, New York, USA | 34 |
+| 816 | 811 | `beamtherapeutics` | BEAM_THERAPEUTICS | Beam Therapeutics | Gene editing | Cambridge, MA, USA | 27 |
+| 817 | 812 | `blockchain` | BLOCKCHAIN_COM | Blockchain.com | Fintech — crypto wallet / exchange | London, England, United Kingdom | 29 |
+| 818 | 813 | `botauto` | BOT_AUTO | Bot Auto | Autonomous trucking | Houston, Texas, USA | 21 |
+| 819 | 814 | `buildops` | BUILDOPS | BuildOps | Construction tech (commercial contractor management software) | Santa Monica, CA, USA | 37 |
+| 820 | 815 | `c3iot` | C3_AI | C3 AI | Enterprise applied AI applications | Redwood City, California, USA | 57 |
+| 821 | 816 | `cabify` | CABIFY | Cabify | Ride-hailing / mobility platform | Madrid, Spain | 56 |
+| 822 | 817 | `cargomatic` | CARGOMATIC | Cargomatic | Drayage / digital freight marketplace | Long Beach, California, USA | 20 |
+| 823 | 818 | `censys` | CENSYS | Censys | Security data / applied AI platform | Ann Arbor, Michigan, USA | 14 |
+| 824 | 819 | `charterup` | CHARTERUP | CharterUP | Group transportation / charter mobility platform | Austin, Texas, USA | 14 |
+| 825 | 820 | `checkbook` | CHECKBOOK | Checkbook | Fintech — digital payments / disbursements | San Mateo, California, USA | 3 |
+| 826 | 821 | `codepath` | CODEPATH | CodePath | Edtech / tech career upskilling | San Francisco, California, USA | 18 |
+| 827 | 822 | `cognitiv` | COGNITIV | Cognitiv | Adtech (AI/deep-learning ads) | Seattle, Washington, United States | 6 |
+| 828 | 823 | `collibra` | COLLIBRA | Collibra | Compliance / data governance | New York, New York, USA | 38 |
+| 829 | 824 | `colossalbiosciences` | COLOSSAL_BIOSCIENCES | Colossal Biosciences | Genomics / synthetic biology | Dallas, TX, USA | 7 |
+| 830 | 825 | `customerio` | CUSTOMER_IO | Customer.io | Martech (marketing automation/messaging) | Portland, Oregon, United States | 18 |
+| 831 | 826 | `cypresscreekrenewables` | CYPRESS_CREEK_RENEWABLES | Cypress Creek Renewables | Clean energy / utility-scale solar & storage | Santa Monica, California, USA | 28 |
+| 832 | 827 | `daybreakgames` | DAYBREAK_GAME_COMPANY | Daybreak Game Company | Gaming studios / interactive entertainment | San Diego, California, USA | 5 |
+| 833 | 828 | `dbtlabsinc` | DBT_LABS | dbt Labs | Data transformation / analytics engineering platform | Philadelphia, Pennsylvania, USA | 36 |
+| 834 | 829 | `dealpath` | DEALPATH | Dealpath | Proptech / commercial real estate (deal management & investment platform) | San Francisco, CA, USA | 14 |
+| 835 | 830 | `defenseunicorns` | DEFENSE_UNICORNS | Defense Unicorns | Defense software (mission infrastructure/DevSecOps) | Colorado Springs, Colorado, USA | 49 |
+| 836 | 831 | `digitalextremes` | DIGITAL_EXTREMES | Digital Extremes | Gaming studios / interactive entertainment | London, Ontario, Canada | 8 |
+| 837 | 832 | `dorsia` | DORSIA | Dorsia | Restaurant tech | New York, New York, USA | 11 |
+| 838 | 833 | `easyship` | EASYSHIP | Easyship | E-commerce enablement (shipping/fulfillment SaaS) | New York, New York, USA | 24 |
+| 839 | 834 | `eleventhhourgames` | ELEVENTH_HOUR_GAMES | Eleventh Hour Games | Gaming studios / interactive entertainment | Chicago, Illinois, USA | 10 |
+| 840 | 835 | `emarketer` | EMARKETER | EMARKETER | Martech/media (marketing research) | New York, New York, United States | 12 |
+| 841 | 836 | `emnify` | EMNIFY | emnify | IoT connectivity / cellular hardware-SIM platform | Berlin, Berlin, Germany | 9 |
+| 842 | 837 | `energysolutions` | ENERGY_SOLUTIONS | Energy Solutions | Clean energy / efficiency & decarbonization services | Oakland, California, USA | 33 |
+| 843 | 838 | `esusu` | ESUSU | Esusu | Fintech — rent reporting / credit building / consumer payments | New York, New York, USA | 9 |
+| 844 | 839 | `exiger` | EXIGER | Exiger | Regtech (supply-chain risk / AML / compliance) | New York, New York, USA | 48 |
+| 845 | 840 | `extrahopnetworks` | EXTRAHOP | ExtraHop | Network detection & response | Seattle, Washington, USA | 19 |
+| 846 | 841 | `federato` | FEDERATO | Federato | Insurtech and insurance technology | San Francisco, California, USA | 14 |
+| 847 | 842 | `feedzai` | FEEDZAI | Feedzai | Regtech (fraud / AML) | San Mateo, California, USA | 37 |
+| 848 | 843 | `fieldwire` | FIELDWIRE | Fieldwire | Construction tech (jobsite field management & coordination software) | San Francisco, CA, USA | 22 |
+| 849 | 844 | `flashfood` | FLASHFOOD | Flashfood | Foodtech / food waste | Toronto, Ontario, Canada | 5 |
+| 850 | 845 | `fleetio` | FLEETIO | Fleetio | Fleet management software / logistics | Birmingham, Alabama, USA | 10 |
+| 851 | 846 | `forbes` | FORBES | Forbes | Media (publishing) | Jersey City, New Jersey, United States | 11 |
+| 852 | 847 | `forter` | FORTER | Forter | Fraud prevention / risk | New York, New York, USA | 41 |
+| 853 | 848 | `freeformfuturecorp` | FREEFORM | Freeform | Aerospace & defense metal additive manufacturing | Hawthorne, California, USA | 55 |
+| 854 | 849 | `galvanizeclimatesolutions` | GALVANIZE_CLIMATE_SOLUTIONS | Galvanize Climate Solutions | Climate tech / climate investment firm | San Francisco, California, USA | 3 |
+| 855 | 850 | `gatikaiinc` | GATIK_AI | Gatik AI | Robotics, industrial automation, warehouse/manufacturing automation | Mountain View, California, USA | 61 |
+| 856 | 851 | `gleanwork` | GLEAN | Glean | Enterprise AI search & assistant (applied AI) | Palo Alto, California, USA | 155 |
+| 857 | 852 | `glossgenius` | GLOSSGENIUS | GlossGenius | Fintech — embedded payments / SMB platform | New York, New York, USA | 32 |
+| 858 | 853 | `goodwaygroup` | GOODWAY_GROUP | Goodway Group | Adtech/martech (digital media agency) | Westport, Connecticut, United States | 5 |
+| 859 | 854 | `gotion` | GOTION | Gotion | Grid/storage / EV & energy-storage lithium batteries | Fremont, California, USA | 148 |
+| 860 | 855 | `govtech` | GOVTECH_SINGAPORE_GOVERNMENT_TECHNOLOGY_AGENCY | GovTech Singapore (Government Technology Agency) | Govtech (government digital services) | Singapore, Singapore, Singapore | 265 |
+| 861 | 856 | `gsgcareers` | GHOST_STORY_GAMES | Ghost Story Games | Gaming studios / interactive entertainment | Westwood, Massachusetts, USA | 3 |
+| 862 | 857 | `hanwharenewables` | HANWHA_RENEWABLES | Hanwha Renewables | Clean energy / utility-scale solar & storage | Houston, Texas, USA | 4 |
+| 863 | 858 | `heraldapi` | HERALD | Herald | Insurtech and insurance technology | New York, New York, USA | 7 |
+| 864 | 859 | `homeward` | HOMEWARD | Homeward | Real estate tech (cash-offer home buying) | Austin, TX, USA | 4 |
+| 865 | 860 | `hyliion` | HYLIION | Hyliion | Electrified powertrain / clean transport | Cedar Park, Texas, USA | 11 |
+| 866 | 861 | `hyperproof` | HYPERPROOF | Hyperproof | Compliance / GRC (security compliance) | Seattle, Washington, USA | 7 |
+| 867 | 862 | `idme` | ID_ME | ID.me | Identity verification / fraud | McLean, Virginia, USA | 53 |
+| 868 | 863 | `inchargeenergy` | INCHARGE_ENERGY | InCharge Energy | Clean energy / fleet EV charging infrastructure | Santa Monica, California, USA | 20 |
+| 869 | 864 | `innovid` | INNOVID | Innovid | Adtech (ad serving/CTV) | New York, New York, United States | 15 |
+| 870 | 865 | `instawork` | INSTAWORK | Instawork | Workforce management - hourly / flexible staffing marketplace | San Francisco, California, USA | 64 |
+| 871 | 866 | `intrinsicrobotics` | INTRINSIC | Intrinsic | Robotics, industrial automation, warehouse/manufacturing automation | Mountain View, California, USA | 30 |
+| 872 | 867 | `isccareers` | INTEGRATED_SPECIALTY_COVERAGES | Integrated Specialty Coverages | Insurtech and insurance technology | Carlsbad, California, USA | 23 |
+| 873 | 868 | `itslogisticsllc` | ITS_LOGISTICS | ITS Logistics | 3PL / freight / warehousing | Sparks (Reno), Nevada, USA | 24 |
+| 874 | 869 | `k2spacecorporation` | K2_SPACE | K2 Space | Satellites (large GEO/MEO buses) | Los Angeles, California, USA | 147 |
+| 875 | 870 | `kasa` | KASA | Kasa | Proptech / real estate (tech-enabled hospitality & flexible accommodations) | San Francisco, CA, USA | 25 |
+| 876 | 871 | `khaerospace` | KH_AEROSPACE | KH Aerospace | Aerospace & defense (UAS manufacturing/training) | Hayward, California, USA | 4 |
+| 877 | 872 | `knowbe4` | KNOWBE4 | KnowBe4 | Compliance / security awareness training | Clearwater, Florida, USA | 98 |
+| 878 | 873 | `legion` | LEGION_TECHNOLOGIES | Legion Technologies | Workforce management software (scheduling / labor) | Palo Alto, California, USA | 16 |
+| 879 | 874 | `logicgate` | LOGICGATE | LogicGate | Compliance / GRC (risk management) | Chicago, Illinois, USA | 12 |
+| 880 | 875 | `mark43` | MARK43 | Mark43 | Govtech / public safety (police RMS/CAD) | New York, New York, USA | 38 |
+| 881 | 876 | `matic` | MATIC_INSURANCE | Matic Insurance | Insurtech and insurance technology | Columbus, Ohio, USA | 7 |
+| 882 | 877 | `maymobility` | MAY_MOBILITY | May Mobility | Autonomous vehicles / mobility | Ann Arbor, Michigan, USA | 44 |
+| 883 | 878 | `mediasmart` | MEDIASMART | mediasmart | Adtech (omnichannel/CTV/DOOH DSP) | Madrid, Spain | 8 |
+| 884 | 879 | `metropolis` | METROPOLIS_TECHNOLOGIES | Metropolis Technologies | Proptech / real estate (AI computer-vision parking & mobility platform) | Santa Monica, CA, USA | 129 |
+| 885 | 880 | `mobilityware` | MOBILITYWARE | MobilityWare | Mobile gaming / interactive entertainment | Irvine, California, USA | 4 |
+| 886 | 881 | `modernize` | MODERNIZE_HOME_SERVICES | Modernize Home Services | Proptech / home services (home improvement lead generation) | Austin, TX, USA | 7 |
+| 887 | 882 | `mrbeastyoutube` | MRBEAST_BEAST_INDUSTRIES | MrBeast (Beast Industries) | Creator economy (media/YouTube) | Greenville, North Carolina, United States | 80 |
+| 888 | 883 | `nabis` | NABIS | Nabis | Distribution / last-mile delivery | San Francisco, California, USA | 37 |
+| 889 | 884 | `nationalpublicradioinc` | NPR_NATIONAL_PUBLIC_RADIO | NPR (National Public Radio) | Media/streaming (public radio/podcasts) | Washington, District of Columbia, United States | 10 |
+| 890 | 885 | `neonaerospace` | NEON_AEROSPACE | Neon Aerospace | Aerospace (autonomous flight / propulsion) | San Francisco, California, USA | 16 |
+| 891 | 886 | `nerostechnologies` | NEROS_TECHNOLOGIES | Neros Technologies | Robotics, industrial automation, warehouse/manufacturing automation | El Segundo, California, USA | 63 |
+| 892 | 887 | `newleafenergy` | NEW_LEAF_ENERGY | New Leaf Energy | Clean energy / solar & storage development | Lowell, Massachusetts, USA | 42 |
+| 893 | 888 | `nex` | NEX | Nex | Gaming studios / interactive entertainment (motion gaming) | San Jose, California, USA | 44 |
+| 894 | 889 | `nextinsurance66` | NEXT_INSURANCE | Next Insurance | Insurtech and insurance technology | Palo Alto, California, USA | 31 |
+| 895 | 890 | `nimblerobotics` | NIMBLE_ROBOTICS | Nimble Robotics | Robotics, industrial automation, warehouse/manufacturing automation | San Francisco, California, USA | 19 |
+| 896 | 891 | `nmi` | NMI | NMI | Fintech — payments gateway / embedded payments | Schaumburg, Illinois, USA | 16 |
+| 897 | 892 | `northspyre` | NORTHSPYRE | Northspyre | Proptech / real estate (development project & cost management software) | New York, NY, USA | 8 |
+| 898 | 893 | `nothing` | NOTHING | Nothing | Consumer electronics (smartphones, earbuds) | London, England, United Kingdom | 17 |
+| 899 | 894 | `onetrust` | ONETRUST | OneTrust | Data privacy, security & governance | Atlanta, Georgia, USA | 91 |
+| 900 | 895 | `openspace` | OPENSPACE | OpenSpace | Construction tech (AI jobsite capture & reality mapping) | San Francisco, CA, USA | 10 |
+| 901 | 896 | `opentable` | OPENTABLE | OpenTable | Restaurant tech | San Francisco, California, USA | 41 |
+| 902 | 897 | `operationscareers` | VEO | Veo | Shared micromobility (bikes/scooters) | Santa Monica, California, USA | 49 |
+| 903 | 898 | `orcasecurity` | ORCA_SECURITY | Orca Security | Cloud security (CNAPP) | Portland, Oregon, USA | 4 |
+| 904 | 899 | `origisenergy` | ORIGIS_ENERGY | Origis Energy | Clean energy / utility-scale solar & storage | Miami, Florida, USA | 17 |
+| 905 | 900 | `osano` | OSANO | Osano | Compliance / data privacy | Austin, Texas, USA | 5 |
+| 906 | 901 | `pacvue` | PACVUE | Pacvue | E-commerce enablement / retail media SaaS | Seattle, Washington, USA | 13 |
+| 907 | 902 | `palmettocleantech` | PALMETTO_CLEAN_TECHNOLOGY | Palmetto Clean Technology | Clean energy / residential solar platform | Charleston, South Carolina, USA | 31 |
+| 908 | 903 | `pathward` | PATHWARD | Pathward | Fintech — banking-as-a-service / sponsor bank | Sioux Falls, South Dakota, USA | 34 |
+| 909 | 904 | `paynearmeinc` | PAYNEARME | PayNearMe | Fintech — bill pay / payments platform | Santa Clara, California, USA | 11 |
+| 910 | 905 | `payoneer` | PAYONEER | Payoneer | Fintech — cross-border payments | New York, New York, USA | 133 |
+| 911 | 906 | `pixability` | PIXABILITY | Pixability | Adtech (YouTube/CTV video ads) | Boston, Massachusetts, United States | 3 |
+| 912 | 907 | `pluspower` | PLUS_POWER | Plus Power | Grid/storage / standalone battery storage developer | Houston, Texas, USA | 8 |
+| 913 | 908 | `pokemoncareers` | THE_POK_MON_COMPANY_INTERNATIONAL | The Pokémon Company International | Gaming / interactive entertainment / esports | Bellevue, Washington, USA | 34 |
+| 914 | 909 | `primemedicine` | PRIME_MEDICINE | Prime Medicine | Gene editing | Cambridge, MA, USA | 7 |
+| 915 | 910 | `pubmatic` | PUBMATIC | PubMatic | Adtech (SSP) | Redwood City, California, United States | 66 |
+| 916 | 911 | `qualia` | QUALIA | Qualia | Real estate tech (digital closing / title & escrow platform) | San Francisco, CA, USA | 17 |
+| 917 | 912 | `razorpaysoftwareprivatelimited` | RAZORPAY | Razorpay | Fintech — payments gateway / banking-as-a-service | Bengaluru, Karnataka, India | 28 |
+| 918 | 913 | `recordedfuture` | RECORDED_FUTURE | Recorded Future | Threat intelligence | Boston, Massachusetts, USA | 43 |
+| 919 | 914 | `renaissancelearning-nam` | RENAISSANCE_LEARNING | Renaissance Learning | Edtech / pre-K-12 assessment & learning | Bloomington, Minnesota, USA | 14 |
+| 920 | 915 | `riskified` | RISKIFIED | Riskified | Fraud prevention / e-commerce risk | New York, New York, USA | 31 |
+| 921 | 916 | `rithum` | RITHUM | Rithum | E-commerce enablement / commerce network SaaS | Bethesda, Maryland, USA | 25 |
+| 922 | 917 | `rocketlawyer` | ROCKET_LAWYER | Rocket Lawyer | Legaltech (online legal services) | San Francisco, California, USA | 6 |
+| 923 | 918 | `roku` | ROKU | Roku | Media/streaming (CTV platform) | San Jose, California, United States | 230 |
+| 924 | 919 | `sanabiotech` | SANA_BIOTECHNOLOGY | Sana Biotechnology | Cell & gene therapy | Seattle, WA, USA | 13 |
+| 925 | 920 | `sayari` | SAYARI | Sayari | Regtech (corporate risk intelligence / AML) | Washington, DC, USA | 24 |
+| 926 | 921 | `scoutai` | SCOUT_AI | Scout AI | Defense robotics / autonomous drones | San Francisco, California, USA | 23 |
+| 927 | 922 | `securityscorecard` | SECURITYSCORECARD | SecurityScorecard | Compliance / cyber risk ratings | New York, New York, USA | 62 |
+| 928 | 923 | `seekout` | SEEKOUT | SeekOut | Recruiting tech - talent sourcing & talent intelligence AI | Bellevue, Washington, USA | 4 |
+| 929 | 924 | `seoulrobotics` | SEOUL_ROBOTICS | Seoul Robotics | Robotics, industrial automation, warehouse/manufacturing automation | Seoul, South Korea | 9 |
+| 930 | 925 | `shifttechnology` | SHIFT_TECHNOLOGY | Shift Technology | Insurtech and insurance technology | Paris, Ile-de-France, France | 27 |
+| 931 | 926 | `shipbobinc` | SHIPBOB | ShipBob | Fulfillment / 3PL | Chicago, Illinois, USA | 43 |
+| 932 | 927 | `shipmonk` | SHIPMONK | ShipMonk | Fulfillment / 3PL | Fort Lauderdale, Florida, USA | 54 |
+| 933 | 928 | `skillsoft` | SKILLSOFT | Skillsoft | HR tech - corporate learning & talent development | Nashua, New Hampshire, USA | 17 |
+| 934 | 929 | `smartrent` | SMARTRENT | SmartRent | Proptech (smart home & access automation for rental communities) | Scottsdale, AZ, USA | 14 |
+| 935 | 930 | `snorkelai` | SNORKEL_AI | Snorkel AI | Data-centric AI / data development platform | Redwood City, California, USA | 45 |
+| 936 | 931 | `soldejaneiro` | SOL_DE_JANEIRO | Sol de Janeiro | DTC beauty brand | New York, New York, USA | 32 |
+| 937 | 932 | `sonyinteractiveentertainmentglobal` | PLAYSTATION_SONY_INTERACTIVE_ENTERTAINMENT | PlayStation (Sony Interactive Entertainment) | Gaming / interactive entertainment | San Mateo, California, USA | 203 |
+| 938 | 933 | `speechify` | SPEECHIFY | Speechify | Edtech / assistive learning (text-to-speech) | Miami, Florida, USA | 1695 |
+| 939 | 934 | `spin` | SPIN | Spin | Shared micromobility (e-scooters) | San Francisco, California, USA | 28 |
+| 940 | 935 | `splice` | SPLICE | Splice | Creator economy (music creation platform) | New York, New York, United States | 7 |
+| 941 | 936 | `spothopper` | SPOTHOPPER | SpotHopper | Restaurant tech | Milwaukee, Wisconsin, USA | 30 |
+| 942 | 937 | `stackadapt` | STACKADAPT | StackAdapt | Adtech (programmatic DSP) | Toronto, Ontario, Canada | 92 |
+| 943 | 938 | `starfaceworld` | STARFACE_WORLD | Starface World | DTC beauty/skincare brand | New York, New York, USA | 3 |
+| 944 | 939 | `stokespacetechnologies` | STOKE_SPACE | Stoke Space | Space launch (reusable rockets) | Kent, Washington, USA | 53 |
+| 945 | 940 | `strandtherapeutics` | STRAND_THERAPEUTICS | Strand Therapeutics | mRNA / synthetic biology | Boston, MA, USA | 5 |
+| 946 | 941 | `sumologic` | SUMO_LOGIC | Sumo Logic | Security analytics (SIEM) | Redwood City, California, USA | 25 |
+| 947 | 942 | `taketwo` | TAKE_TWO_INTERACTIVE | Take-Two Interactive | Gaming studios / interactive entertainment | New York, New York, USA | 31 |
+| 948 | 943 | `tebra` | TEBRA | Tebra | Digital health (practice & telehealth software) | Newport Beach, California, USA | 19 |
+| 949 | 944 | `tegnainc` | TEGNA | TEGNA | Media/streaming (broadcast TV) | Tysons, Virginia, United States | 332 |
+| 950 | 945 | `tenableinc` | TENABLE | Tenable | Vulnerability & exposure management | Columbia, Maryland, USA | 55 |
+| 951 | 946 | `terranorbitalcorporation` | TERRAN_ORBITAL | Terran Orbital | Satellites (small-sat manufacturing) | Boca Raton, Florida, USA | 27 |
+| 952 | 947 | `tesseratherapeutics` | TESSERA_THERAPEUTICS | Tessera Therapeutics | Gene editing / genomics | Somerville, MA, USA | 7 |
+| 953 | 948 | `thedutchie` | DUTCHIE | Dutchie | Retail tech (POS + e-commerce platform) | Bend, Oregon, USA | 10 |
+| 954 | 949 | `thenewyorktimes` | THE_NEW_YORK_TIMES | The New York Times | Media (news publishing) | New York, New York, United States | 157 |
+| 955 | 950 | `thetradedesk` | THE_TRADE_DESK | The Trade Desk | Adtech (DSP) | Ventura, California, United States | 199 |
+| 956 | 951 | `thirdwaveautomation` | THIRD_WAVE_AUTOMATION | Third Wave Automation | Robotics, industrial automation, warehouse/manufacturing automation | Union City, California, USA | 6 |
+| 957 | 952 | `toogoodtogo` | TOO_GOOD_TO_GO | Too Good To Go | Foodtech / food waste | Copenhagen, Denmark | 84 |
+| 958 | 953 | `toradex` | TORADEX | Toradex | Embedded computing / IoT modules (SoMs) | Horw, Lucerne, Switzerland | 13 |
+| 959 | 954 | `transmitsecurity` | TRANSMIT_SECURITY | Transmit Security | Identity / fraud & CIAM | Boston, Massachusetts, USA | 21 |
+| 960 | 955 | `trueanomalyinc` | TRUE_ANOMALY | True Anomaly | Space defense / space domain awareness | Denver, Colorado, USA | 184 |
+| 961 | 956 | `try-picnic` | PICNIC_DELIVERY | Picnic Delivery | Foodtech / food delivery | Los Angeles, California, USA | 45 |
+| 962 | 957 | `uberfreight` | UBER_FREIGHT | Uber Freight | Freight marketplace / brokerage | San Francisco, California, USA | 84 |
+| 963 | 958 | `unqork` | UNQORK | Unqork | Insurtech and insurance technology | New York, New York, USA | 7 |
+| 964 | 959 | `vardaspace` | VARDA_SPACE_INDUSTRIES | Varda Space Industries | Space (in-orbit manufacturing, reentry capsules) | El Segundo, California, USA | 89 |
+| 965 | 960 | `verramobility` | VERRA_MOBILITY | Verra Mobility | Smart transportation / mobility tech | Mesa, Arizona, USA | 43 |
+| 966 | 961 | `vianttechnology` | VIANT_TECHNOLOGY | Viant Technology | Adtech (omnichannel DSP) | Irvine, California, United States | 36 |
+| 967 | 962 | `viralnation` | VIRAL_NATION | Viral Nation | Creator economy (influencer marketing) | Mississauga, Ontario, Canada | 58 |
+| 968 | 963 | `voxmedia` | VOX_MEDIA | Vox Media | Media/streaming (digital publisher) | Washington, District of Columbia, United States | 15 |
+| 969 | 964 | `vts` | VTS | VTS | Proptech / commercial real estate (leasing & asset management platform) | New York, NY, USA | 16 |
+| 970 | 965 | `wildlifestudios` | WILDLIFE_STUDIOS | Wildlife Studios | Mobile gaming / interactive entertainment | São Paulo, São Paulo, Brazil | 16 |
+| 971 | 966 | `wizinc` | WIZ | Wiz | Cloud security (CNAPP) | New York, New York, USA | 157 |
+| 972 | 967 | `wurljobs` | WURL | Wurl | Media/streaming + adtech (CTV distribution) | Palo Alto, California, United States | 4 |
+| 974 | 969 | `zyngacareers` | ZYNGA | Zynga | Mobile gaming / interactive entertainment | San Mateo, California, USA | 49 |
+
+---
+
+## 2026-06-27 — Scheduled run #439 (**sixteen new Source Company Plugins** — Specs 788–803)
+
+**Scope:** Expand the corpus with **16 new Greenhouse-backed company-direct source plugins**,
+discovered and gated entirely through the deterministic, conflict-free company-source pipeline
+(`probe → enrich → assemble → scaffold → wire`). One plugin per real, brand-matched employer board
+that exposed **≥ 3 live roles** at probe time (`MIN_JOBS = 3`). This run leaned into **climate /
+carbon-removal & synthetic fuels** (carbon-to-fuel, BECCS baseload power, smart-building energy),
+**autonomous trucking** (three independent self-driving-freight stacks), **fintech** (earned-wage
+access, banking-as-a-service, merchant-of-record commerce, subscription billing, online brokerage),
+**aerospace/defense propulsion**, **EV / battery**, **transit software** and **adtech** — sectors the
+probe history shows still surface fresh employer boards, in contrast to the mined-out generic
+AI/dev-infra slice (now mostly on Ashby/Lever).
+
+| Spec | Phase | Slug | Enum | Display name | Sector | HQ | Roles |
+| ---- | ----- | ---- | ---- | ------------ | ------ | -- | ----- |
+| 788 | 783 | `aircompany` | AIR_COMPANY | AIR COMPANY | Climate Tech / Carbon Conversion & Synthetic Fuels | Brooklyn, New York, United States | 4 |
+| 789 | 784 | `arborenergy` | ARBOR_ENERGY | Arbor Energy | Climate Tech / Carbon-Negative Power (BECCS) | El Segundo, California, USA | 19 |
+| 790 | 785 | `aurorainnovation` | AURORA_INNOVATION | Aurora Innovation | Autonomous Vehicles / Self-Driving Trucking | Pittsburgh, Pennsylvania, USA | 147 |
+| 791 | 786 | `earnin` | EARNIN | EarnIn | Fintech / Earned-Wage Access | Mountain View, California, United States | 44 |
+| 792 | 787 | `faradayfuture` | FARADAY_FUTURE | Faraday Future | Automotive / Electric Vehicles | El Segundo, California, United States | 62 |
+| 793 | 788 | `fastspring` | FASTSPRING | FastSpring | Fintech / Merchant-of-Record Commerce & Subscription Billing | Santa Barbara, California, United States | 5 |
+| 794 | 789 | `gravity` | GRAVITY_R_D | Gravity R&D | AdTech / Recommendation & Personalization Software | Budapest, Hungary | 4 |
+| 795 | 790 | `runwise` | RUNWISE | Runwise | Climate Tech / Smart Building Energy Management | New York, New York, USA | 7 |
+| 796 | 791 | `sesai` | SES_AI | SES AI | Battery Technology / EV Energy Storage (Li-Metal) | Woburn, Massachusetts, USA | 43 |
+| 797 | 792 | `solarisbank` | SOLARIS | Solaris | Fintech / Banking-as-a-Service (Embedded Finance) | Berlin, Germany | 16 |
+| 798 | 793 | `stackav` | STACK_AV | Stack AV | Autonomous Vehicles / Self-Driving Trucking | Pittsburgh, Pennsylvania, USA | 22 |
+| 799 | 794 | `tastytrade` | TASTYTRADE | tastytrade | Fintech / Online Brokerage (Options & Futures Trading) | Chicago, Illinois, USA | 7 |
+| 800 | 795 | `torcrobotics` | TORC_ROBOTICS | Torc Robotics | Autonomous Vehicles / Self-Driving Trucking | Blacksburg, Virginia, USA | 58 |
+| 801 | 796 | `ursamajor` | URSA_MAJOR | Ursa Major | Aerospace & Defense / Rocket Propulsion | Berthoud, Colorado, USA | 43 |
+| 802 | 797 | `via` | VIA | Via | TransitTech / Mobility Software (SaaS + Operations) | New York City, New York, USA | 165 |
+| 803 | 798 | `zuora` | ZUORA | Zuora | Enterprise SaaS / Subscription Billing & Quote-to-Cash | Redwood City, California, USA | 34 |
+
+**Baseline at run start:** Local `develop` was 7 commits behind `origin/develop`; fast-forwarded
+to `d2a95cc8` (NestJS 11 + Apollo Server 5 upgrade) before any work — the prior CI run was
+**green**. Next spec number per the band-aware allocator (`scripts/next-spec-number.ts`, band
+`ever-jobs/ever-jobs` = 1–4999) was **788**; last enum phase was 782. The four external reference
+repos under the parent `OTHERS/` directory (outside this repo) were `git pull`-ed for situational
+awareness; upstream movement (new foreign-board scrapers, tracker tooling) is non-actionable for our
+sourcing corpus and is recorded only in the parent-directory research watch file **outside this
+repo** — never named here. No competitor intel is referenced in-repo; every board below is
+documented purely on its own public merits.
+
+**Discovery (live, 2026-06-27, `verified=false` — unauthenticated public Greenhouse Job-Board
+API):** 247 candidate slugs across fintech, climate/energy, mobility/robotics, aerospace/defense and
+consumer/SaaS verticals (generated as no-space + hyphenated variants and pre-filtered against the 637
+existing company slugs) were probed against `https://boards-api.greenhouse.io/v1/boards/<slug>`
+(board name) + `…/<slug>/jobs` (listings) at concurrency 16. The gate (`MIN_JOBS = 3` live roles
+**and** a non-empty board `name`) admitted **17 survivors**; one (`ess` → board "cBEYONData + SMX")
+was dropped at review as a brand mismatch (the slug did not resolve to ESS energy), leaving **16**.
+
+**Enrichment:** a **16-way parallel verification workflow** (one web-research agent per board,
+`claude-opus-4-8[1m]`, 572k tokens, 60 tool calls, ~93 s wall-clock) produced factual brand metadata
+for each survivor. Each agent was forbidden from referencing competitors, required to cross-check the
+slug / board name / sample roles / sample locations against the web, and instructed to keep
+disambiguating context **out** of the canonical `displayName` (which single-sources
+`className` / `enumKey` / `serviceName`). All 16 returned `confident=true`. Disambiguation lived in
+the descriptions, not the names: board `Gravity` → `displayName = "Gravity R&D"` (Budapest adtech /
+recommendation vendor, distinct from any homonym); board `SES` (slug `sesai`) → `"SES AI"` (Li-Metal
+battery maker, distinct from the SES satellite operator); board `AIRCO` (slug `aircompany`) →
+`"AIR COMPANY"` (carbon-to-fuel). `displayName`-derived identifiers were collision-checked against
+the existing enum and service classes — all clear.
+
+**Per-plugin shape (uniform Greenhouse company-direct template):** each `*.service.ts` fetches
+`https://api.greenhouse.io/v1/boards/<slug>/jobs?content=true`, maps each Greenhouse job to a
+`JobPostDto` with `id` prefixed `<slug>-`, `site === Site.<ENUMKEY>`, canonical URL
+`https://job-boards.greenhouse.io/<slug>/jobs/<id>`, decoded HTML content, location and department
+parsing, and `category: 'company'`. Every failure mode (HTTP 4xx/5xx, transport/DNS error, malformed
+body, empty board) degrades to an empty result — `scrape()` never throws.
+
+**Changes:**
+
+- Added **16 plugin packages** under `packages/plugins/source-company-<slug>/` (10 files each =
+  **160 files**): `package.json`, `tsconfig.json`, `src/{index,<slug>.module,<slug>.service}.ts`,
+  `__tests__/<slug>.service.spec.ts`, and `__tests__/fixtures/<slug>-jobs.json`.
+- Added **16 spec packages** under `.specify/specs/<788..803>-source-company-<slug>/`
+  (`spec.md`, `plan.md`, `tasks.md`) via the scaffolder.
+- Wired all 16 into the four shared registration files (idempotent `wire-company-source.ts`):
+  `packages/models/src/enums/site.enum.ts` (Phases 783–798), `packages/plugins/index.ts`
+  (`ALL_SOURCE_MODULES`), `tsconfig.base.json` (path aliases), `jest.config.js`
+  (`moduleNameMapper`).
+- `docs/index.md` — +16 spec rows (one per plugin, linking spec/plan/tasks).
+- `docs/COMPANY_SLUG_DIRECTORY.md` — +16 Greenhouse company rows + date bump.
+
+**Verification:** all 16 new suites green — `npx jest source-company-{16 slugs}` →
+**16 suites / 176 tests passed**. `npx tsx scripts/docs-lint.ts` → **passed, no issues**. A
+project-wide `tsc --noEmit` surfaced only 3 pre-existing, environment-only errors in
+`apps/api/src/cache/*` (`cacheable` / `@keyv/redis` not installed in the sandbox — both are declared
+in `package.json` deps and resolve under a fresh CI install); zero errors touch the new plugins or
+the wired shared files.
+
+**Notes:**
+
+- The probe deliberately over-generates candidate variants (no-space + hyphenated) and pre-filters
+  against the existing slug set so the survivor list is duplicate-free before enrichment.
+- The makedeeply fork (band 5000–5999) continues to land specs 50xx in parallel; this run's
+  ever-jobs-band specs (788–803) are disjoint by construction, enforced by `docs-lint` band guards.
+
+---
+
 ## 2026-06-24 — Run #459 — Spec 5023 — `source-ats-workatastartup` plugin
 
 **Scope:** YC Work at a Startup (WaaS) was newly detected in fetch1 (both the
@@ -578,6 +896,30 @@ locations and combines explicit `isRemote` with remote location labels.
 TypeScript checks passed for models, common, and Ashby. The private ATS field investigator now
 uses the repository's interval and location normalizers for canonical comparison and reported zero
 differences and zero errors across `antaresindustries.com` and `reliable.co`.
+
+## 2026-06-23 — Spec 787 (**fork spec-number range reservation**)
+
+**Scope:** Add a code-enforced scheme so each fork reserves a disjoint band of spec numbers and
+fork numbering never collides under bidirectional merges (the failure mode behind the earlier
+742–759 duplicate-number clash).
+
+**Changes:**
+
+- New `.specify/ranges.json` — committed, append-only registry mapping each fork's `origin` repo to
+  an inclusive `[start, end]` band (`ever-jobs/ever-jobs` → 1–4999, `MakeDeeply/ever-jobs` →
+  5000–5999). One row per fork keyed by distinct repo, so appends never merge-conflict.
+- New `scripts/spec-ranges.ts` — shared, dependency-free helpers (load/parse registry, normalise a
+  git remote URL to `owner/repo`, band lookup, overlap detection, band-scoped next-number).
+- New `scripts/next-spec-number.ts` (+ `npm run spec:next`) — derives the local fork from
+  `git remote get-url origin` (override `SPEC_FORK_REPO`), prints `max(n in my band)+1`; errors on
+  unregistered fork / exhausted band.
+- Extended `scripts/docs-lint.ts` — two new CI-enforced checks: registered bands must be pairwise
+  non-overlapping, and every spec directory's number must fall inside some band. Checks are skipped
+  when `.specify/ranges.json` is absent (backwards compatible).
+- Tests: new `scripts/__tests__/spec-ranges.spec.ts`; extended `scripts/__tests__/docs-lint.spec.ts`.
+- Spec triad under `.specify/specs/787-fork-spec-range-reservation/`; indexed in `docs/index.md` §7.
+
+`npm run build`, `npm run lint:docs`, and `npm run test:scripts` all green.
 
 ## 2026-06-22 — Run #441 — Spec 748: Lever complete public descriptions
 

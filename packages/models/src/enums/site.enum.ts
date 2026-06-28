@@ -1706,6 +1706,378 @@ export enum Site {
   SLINGSHOT_AEROSPACE = 'slingshotaerospace',
   // Phase 782: Spec 786 — Source Company Plugin: Sound Agriculture
   SOUND_AGRICULTURE = 'soundagriculture',
+  // Phase 783: Spec 788 — Source Company Plugin: AIR COMPANY
+  AIR_COMPANY = 'aircompany',
+  // Phase 784: Spec 789 — Source Company Plugin: Arbor Energy
+  ARBOR_ENERGY = 'arborenergy',
+  // Phase 785: Spec 790 — Source Company Plugin: Aurora Innovation
+  AURORA_INNOVATION = 'aurorainnovation',
+  // Phase 786: Spec 791 — Source Company Plugin: EarnIn
+  EARNIN = 'earnin',
+  // Phase 787: Spec 792 — Source Company Plugin: Faraday Future
+  FARADAY_FUTURE = 'faradayfuture',
+  // Phase 788: Spec 793 — Source Company Plugin: FastSpring
+  FASTSPRING = 'fastspring',
+  // Phase 789: Spec 794 — Source Company Plugin: Gravity R&D
+  GRAVITY_R_D = 'gravity',
+  // Phase 790: Spec 795 — Source Company Plugin: Runwise
+  RUNWISE = 'runwise',
+  // Phase 791: Spec 796 — Source Company Plugin: SES AI
+  SES_AI = 'sesai',
+  // Phase 792: Spec 797 — Source Company Plugin: Solaris
+  SOLARIS = 'solarisbank',
+  // Phase 793: Spec 798 — Source Company Plugin: Stack AV
+  STACK_AV = 'stackav',
+  // Phase 794: Spec 799 — Source Company Plugin: tastytrade
+  TASTYTRADE = 'tastytrade',
+  // Phase 795: Spec 800 — Source Company Plugin: Torc Robotics
+  TORC_ROBOTICS = 'torcrobotics',
+  // Phase 796: Spec 801 — Source Company Plugin: Ursa Major
+  URSA_MAJOR = 'ursamajor',
+  // Phase 797: Spec 802 — Source Company Plugin: Via
+  VIA = 'via',
+  // Phase 798: Spec 803 — Source Company Plugin: Zuora
+  ZUORA = 'zuora',
+  // Phase 799: Spec 804 — Source Company Plugin: Accela
+  ACCELA = 'accela',
+  // Phase 800: Spec 805 — Source Company Plugin: AEVEX Aerospace
+  AEVEX_AEROSPACE = 'aevexaerospace',
+  // Phase 801: Spec 806 — Source Company Plugin: Akaysha Energy
+  AKAYSHA_ENERGY = 'akayshaenergy',
+  // Phase 802: Spec 807 — Source Company Plugin: Anduril Industries
+  ANDURIL_INDUSTRIES = 'andurilindustries',
+  // Phase 803: Spec 808 — Source Company Plugin: Armis
+  ARMIS = 'armissecurity',
+  // Phase 804: Spec 809 — Source Company Plugin: At-Bay
+  AT_BAY = 'atbayjobs',
+  // Phase 805: Spec 810 — Source Company Plugin: Atomic Machines
+  ATOMIC_MACHINES = 'atomicmachines',
+  // Phase 806: Spec 811 — Source Company Plugin: Augury
+  AUGURY = 'augury',
+  // Phase 807: Spec 812 — Source Company Plugin: Aura
+  AURA = 'aura',
+  // Phase 808: Spec 813 — Source Company Plugin: Avantus
+  AVANTUS = 'avantus',
+  // Phase 809: Spec 814 — Source Company Plugin: Avride
+  AVRIDE = 'avride',
+  // Phase 810: Spec 815 — Source Company Plugin: Axonius
+  AXONIUS = 'axonius',
+  // Phase 811: Spec 816 — Source Company Plugin: Beam Therapeutics
+  BEAM_THERAPEUTICS = 'beamtherapeutics',
+  // Phase 812: Spec 817 — Source Company Plugin: Blockchain.com
+  BLOCKCHAIN_COM = 'blockchain',
+  // Phase 813: Spec 818 — Source Company Plugin: Bot Auto
+  BOT_AUTO = 'botauto',
+  // Phase 814: Spec 819 — Source Company Plugin: BuildOps
+  BUILDOPS = 'buildops',
+  // Phase 815: Spec 820 — Source Company Plugin: C3 AI
+  C3_AI = 'c3iot',
+  // Phase 816: Spec 821 — Source Company Plugin: Cabify
+  CABIFY = 'cabify',
+  // Phase 817: Spec 822 — Source Company Plugin: Cargomatic
+  CARGOMATIC = 'cargomatic',
+  // Phase 818: Spec 823 — Source Company Plugin: Censys
+  CENSYS = 'censys',
+  // Phase 819: Spec 824 — Source Company Plugin: CharterUP
+  CHARTERUP = 'charterup',
+  // Phase 820: Spec 825 — Source Company Plugin: Checkbook
+  CHECKBOOK = 'checkbook',
+  // Phase 821: Spec 826 — Source Company Plugin: CodePath
+  CODEPATH = 'codepath',
+  // Phase 822: Spec 827 — Source Company Plugin: Cognitiv
+  COGNITIV = 'cognitiv',
+  // Phase 823: Spec 828 — Source Company Plugin: Collibra
+  COLLIBRA = 'collibra',
+  // Phase 824: Spec 829 — Source Company Plugin: Colossal Biosciences
+  COLOSSAL_BIOSCIENCES = 'colossalbiosciences',
+  // Phase 825: Spec 830 — Source Company Plugin: Customer.io
+  CUSTOMER_IO = 'customerio',
+  // Phase 826: Spec 831 — Source Company Plugin: Cypress Creek Renewables
+  CYPRESS_CREEK_RENEWABLES = 'cypresscreekrenewables',
+  // Phase 827: Spec 832 — Source Company Plugin: Daybreak Game Company
+  DAYBREAK_GAME_COMPANY = 'daybreakgames',
+  // Phase 828: Spec 833 — Source Company Plugin: dbt Labs
+  DBT_LABS = 'dbtlabsinc',
+  // Phase 829: Spec 834 — Source Company Plugin: Dealpath
+  DEALPATH = 'dealpath',
+  // Phase 830: Spec 835 — Source Company Plugin: Defense Unicorns
+  DEFENSE_UNICORNS = 'defenseunicorns',
+  // Phase 831: Spec 836 — Source Company Plugin: Digital Extremes
+  DIGITAL_EXTREMES = 'digitalextremes',
+  // Phase 832: Spec 837 — Source Company Plugin: Dorsia
+  DORSIA = 'dorsia',
+  // Phase 833: Spec 838 — Source Company Plugin: Easyship
+  EASYSHIP = 'easyship',
+  // Phase 834: Spec 839 — Source Company Plugin: Eleventh Hour Games
+  ELEVENTH_HOUR_GAMES = 'eleventhhourgames',
+  // Phase 835: Spec 840 — Source Company Plugin: EMARKETER
+  EMARKETER = 'emarketer',
+  // Phase 836: Spec 841 — Source Company Plugin: emnify
+  EMNIFY = 'emnify',
+  // Phase 837: Spec 842 — Source Company Plugin: Energy Solutions
+  ENERGY_SOLUTIONS = 'energysolutions',
+  // Phase 838: Spec 843 — Source Company Plugin: Esusu
+  ESUSU = 'esusu',
+  // Phase 839: Spec 844 — Source Company Plugin: Exiger
+  EXIGER = 'exiger',
+  // Phase 840: Spec 845 — Source Company Plugin: ExtraHop
+  EXTRAHOP = 'extrahopnetworks',
+  // Phase 841: Spec 846 — Source Company Plugin: Federato
+  FEDERATO = 'federato',
+  // Phase 842: Spec 847 — Source Company Plugin: Feedzai
+  FEEDZAI = 'feedzai',
+  // Phase 843: Spec 848 — Source Company Plugin: Fieldwire
+  FIELDWIRE = 'fieldwire',
+  // Phase 844: Spec 849 — Source Company Plugin: Flashfood
+  FLASHFOOD = 'flashfood',
+  // Phase 845: Spec 850 — Source Company Plugin: Fleetio
+  FLEETIO = 'fleetio',
+  // Phase 846: Spec 851 — Source Company Plugin: Forbes
+  FORBES = 'forbes',
+  // Phase 847: Spec 852 — Source Company Plugin: Forter
+  FORTER = 'forter',
+  // Phase 848: Spec 853 — Source Company Plugin: Freeform
+  FREEFORM = 'freeformfuturecorp',
+  // Phase 849: Spec 854 — Source Company Plugin: Galvanize Climate Solutions
+  GALVANIZE_CLIMATE_SOLUTIONS = 'galvanizeclimatesolutions',
+  // Phase 850: Spec 855 — Source Company Plugin: Gatik AI
+  GATIK_AI = 'gatikaiinc',
+  // Phase 851: Spec 856 — Source Company Plugin: Glean
+  GLEAN = 'gleanwork',
+  // Phase 852: Spec 857 — Source Company Plugin: GlossGenius
+  GLOSSGENIUS = 'glossgenius',
+  // Phase 853: Spec 858 — Source Company Plugin: Goodway Group
+  GOODWAY_GROUP = 'goodwaygroup',
+  // Phase 854: Spec 859 — Source Company Plugin: Gotion
+  GOTION = 'gotion',
+  // Phase 855: Spec 860 — Source Company Plugin: GovTech Singapore (Government Technology Agency)
+  GOVTECH_SINGAPORE_GOVERNMENT_TECHNOLOGY_AGENCY = 'govtech',
+  // Phase 856: Spec 861 — Source Company Plugin: Ghost Story Games
+  GHOST_STORY_GAMES = 'gsgcareers',
+  // Phase 857: Spec 862 — Source Company Plugin: Hanwha Renewables
+  HANWHA_RENEWABLES = 'hanwharenewables',
+  // Phase 858: Spec 863 — Source Company Plugin: Herald
+  HERALD = 'heraldapi',
+  // Phase 859: Spec 864 — Source Company Plugin: Homeward
+  HOMEWARD = 'homeward',
+  // Phase 860: Spec 865 — Source Company Plugin: Hyliion
+  HYLIION = 'hyliion',
+  // Phase 861: Spec 866 — Source Company Plugin: Hyperproof
+  HYPERPROOF = 'hyperproof',
+  // Phase 862: Spec 867 — Source Company Plugin: ID.me
+  ID_ME = 'idme',
+  // Phase 863: Spec 868 — Source Company Plugin: InCharge Energy
+  INCHARGE_ENERGY = 'inchargeenergy',
+  // Phase 864: Spec 869 — Source Company Plugin: Innovid
+  INNOVID = 'innovid',
+  // Phase 865: Spec 870 — Source Company Plugin: Instawork
+  INSTAWORK = 'instawork',
+  // Phase 866: Spec 871 — Source Company Plugin: Intrinsic
+  INTRINSIC = 'intrinsicrobotics',
+  // Phase 867: Spec 872 — Source Company Plugin: Integrated Specialty Coverages
+  INTEGRATED_SPECIALTY_COVERAGES = 'isccareers',
+  // Phase 868: Spec 873 — Source Company Plugin: ITS Logistics
+  ITS_LOGISTICS = 'itslogisticsllc',
+  // Phase 869: Spec 874 — Source Company Plugin: K2 Space
+  K2_SPACE = 'k2spacecorporation',
+  // Phase 870: Spec 875 — Source Company Plugin: Kasa
+  KASA = 'kasa',
+  // Phase 871: Spec 876 — Source Company Plugin: KH Aerospace
+  KH_AEROSPACE = 'khaerospace',
+  // Phase 872: Spec 877 — Source Company Plugin: KnowBe4
+  KNOWBE4 = 'knowbe4',
+  // Phase 873: Spec 878 — Source Company Plugin: Legion Technologies
+  LEGION_TECHNOLOGIES = 'legion',
+  // Phase 874: Spec 879 — Source Company Plugin: LogicGate
+  LOGICGATE = 'logicgate',
+  // Phase 875: Spec 880 — Source Company Plugin: Mark43
+  MARK43 = 'mark43',
+  // Phase 876: Spec 881 — Source Company Plugin: Matic Insurance
+  MATIC_INSURANCE = 'matic',
+  // Phase 877: Spec 882 — Source Company Plugin: May Mobility
+  MAY_MOBILITY = 'maymobility',
+  // Phase 878: Spec 883 — Source Company Plugin: mediasmart
+  MEDIASMART = 'mediasmart',
+  // Phase 879: Spec 884 — Source Company Plugin: Metropolis Technologies
+  METROPOLIS_TECHNOLOGIES = 'metropolis',
+  // Phase 880: Spec 885 — Source Company Plugin: MobilityWare
+  MOBILITYWARE = 'mobilityware',
+  // Phase 881: Spec 886 — Source Company Plugin: Modernize Home Services
+  MODERNIZE_HOME_SERVICES = 'modernize',
+  // Phase 882: Spec 887 — Source Company Plugin: MrBeast (Beast Industries)
+  MRBEAST_BEAST_INDUSTRIES = 'mrbeastyoutube',
+  // Phase 883: Spec 888 — Source Company Plugin: Nabis
+  NABIS = 'nabis',
+  // Phase 884: Spec 889 — Source Company Plugin: NPR (National Public Radio)
+  NPR_NATIONAL_PUBLIC_RADIO = 'nationalpublicradioinc',
+  // Phase 885: Spec 890 — Source Company Plugin: Neon Aerospace
+  NEON_AEROSPACE = 'neonaerospace',
+  // Phase 886: Spec 891 — Source Company Plugin: Neros Technologies
+  NEROS_TECHNOLOGIES = 'nerostechnologies',
+  // Phase 887: Spec 892 — Source Company Plugin: New Leaf Energy
+  NEW_LEAF_ENERGY = 'newleafenergy',
+  // Phase 888: Spec 893 — Source Company Plugin: Nex
+  NEX = 'nex',
+  // Phase 889: Spec 894 — Source Company Plugin: Next Insurance
+  NEXT_INSURANCE = 'nextinsurance66',
+  // Phase 890: Spec 895 — Source Company Plugin: Nimble Robotics
+  NIMBLE_ROBOTICS = 'nimblerobotics',
+  // Phase 891: Spec 896 — Source Company Plugin: NMI
+  NMI = 'nmi',
+  // Phase 892: Spec 897 — Source Company Plugin: Northspyre
+  NORTHSPYRE = 'northspyre',
+  // Phase 893: Spec 898 — Source Company Plugin: Nothing
+  NOTHING = 'nothing',
+  // Phase 894: Spec 899 — Source Company Plugin: OneTrust
+  ONETRUST = 'onetrust',
+  // Phase 895: Spec 900 — Source Company Plugin: OpenSpace
+  OPENSPACE = 'openspace',
+  // Phase 896: Spec 901 — Source Company Plugin: OpenTable
+  OPENTABLE = 'opentable',
+  // Phase 897: Spec 902 — Source Company Plugin: Veo
+  VEO = 'operationscareers',
+  // Phase 898: Spec 903 — Source Company Plugin: Orca Security
+  ORCA_SECURITY = 'orcasecurity',
+  // Phase 899: Spec 904 — Source Company Plugin: Origis Energy
+  ORIGIS_ENERGY = 'origisenergy',
+  // Phase 900: Spec 905 — Source Company Plugin: Osano
+  OSANO = 'osano',
+  // Phase 901: Spec 906 — Source Company Plugin: Pacvue
+  PACVUE = 'pacvue',
+  // Phase 902: Spec 907 — Source Company Plugin: Palmetto Clean Technology
+  PALMETTO_CLEAN_TECHNOLOGY = 'palmettocleantech',
+  // Phase 903: Spec 908 — Source Company Plugin: Pathward
+  PATHWARD = 'pathward',
+  // Phase 904: Spec 909 — Source Company Plugin: PayNearMe
+  PAYNEARME = 'paynearmeinc',
+  // Phase 905: Spec 910 — Source Company Plugin: Payoneer
+  PAYONEER = 'payoneer',
+  // Phase 906: Spec 911 — Source Company Plugin: Pixability
+  PIXABILITY = 'pixability',
+  // Phase 907: Spec 912 — Source Company Plugin: Plus Power
+  PLUS_POWER = 'pluspower',
+  // Phase 908: Spec 913 — Source Company Plugin: The Pokémon Company International
+  THE_POK_MON_COMPANY_INTERNATIONAL = 'pokemoncareers',
+  // Phase 909: Spec 914 — Source Company Plugin: Prime Medicine
+  PRIME_MEDICINE = 'primemedicine',
+  // Phase 910: Spec 915 — Source Company Plugin: PubMatic
+  PUBMATIC = 'pubmatic',
+  // Phase 911: Spec 916 — Source Company Plugin: Qualia
+  QUALIA = 'qualia',
+  // Phase 912: Spec 917 — Source Company Plugin: Razorpay
+  RAZORPAY = 'razorpaysoftwareprivatelimited',
+  // Phase 913: Spec 918 — Source Company Plugin: Recorded Future
+  RECORDED_FUTURE = 'recordedfuture',
+  // Phase 914: Spec 919 — Source Company Plugin: Renaissance Learning
+  RENAISSANCE_LEARNING = 'renaissancelearning-nam',
+  // Phase 915: Spec 920 — Source Company Plugin: Riskified
+  RISKIFIED = 'riskified',
+  // Phase 916: Spec 921 — Source Company Plugin: Rithum
+  RITHUM = 'rithum',
+  // Phase 917: Spec 922 — Source Company Plugin: Rocket Lawyer
+  ROCKET_LAWYER = 'rocketlawyer',
+  // Phase 918: Spec 923 — Source Company Plugin: Roku
+  ROKU = 'roku',
+  // Phase 919: Spec 924 — Source Company Plugin: Sana Biotechnology
+  SANA_BIOTECHNOLOGY = 'sanabiotech',
+  // Phase 920: Spec 925 — Source Company Plugin: Sayari
+  SAYARI = 'sayari',
+  // Phase 921: Spec 926 — Source Company Plugin: Scout AI
+  SCOUT_AI = 'scoutai',
+  // Phase 922: Spec 927 — Source Company Plugin: SecurityScorecard
+  SECURITYSCORECARD = 'securityscorecard',
+  // Phase 923: Spec 928 — Source Company Plugin: SeekOut
+  SEEKOUT = 'seekout',
+  // Phase 924: Spec 929 — Source Company Plugin: Seoul Robotics
+  SEOUL_ROBOTICS = 'seoulrobotics',
+  // Phase 925: Spec 930 — Source Company Plugin: Shift Technology
+  SHIFT_TECHNOLOGY = 'shifttechnology',
+  // Phase 926: Spec 931 — Source Company Plugin: ShipBob
+  SHIPBOB = 'shipbobinc',
+  // Phase 927: Spec 932 — Source Company Plugin: ShipMonk
+  SHIPMONK = 'shipmonk',
+  // Phase 928: Spec 933 — Source Company Plugin: Skillsoft
+  SKILLSOFT = 'skillsoft',
+  // Phase 929: Spec 934 — Source Company Plugin: SmartRent
+  SMARTRENT = 'smartrent',
+  // Phase 930: Spec 935 — Source Company Plugin: Snorkel AI
+  SNORKEL_AI = 'snorkelai',
+  // Phase 931: Spec 936 — Source Company Plugin: Sol de Janeiro
+  SOL_DE_JANEIRO = 'soldejaneiro',
+  // Phase 932: Spec 937 — Source Company Plugin: PlayStation (Sony Interactive Entertainment)
+  PLAYSTATION_SONY_INTERACTIVE_ENTERTAINMENT = 'sonyinteractiveentertainmentglobal',
+  // Phase 933: Spec 938 — Source Company Plugin: Speechify
+  SPEECHIFY = 'speechify',
+  // Phase 934: Spec 939 — Source Company Plugin: Spin
+  SPIN = 'spin',
+  // Phase 935: Spec 940 — Source Company Plugin: Splice
+  SPLICE = 'splice',
+  // Phase 936: Spec 941 — Source Company Plugin: SpotHopper
+  SPOTHOPPER = 'spothopper',
+  // Phase 937: Spec 942 — Source Company Plugin: StackAdapt
+  STACKADAPT = 'stackadapt',
+  // Phase 938: Spec 943 — Source Company Plugin: Starface World
+  STARFACE_WORLD = 'starfaceworld',
+  // Phase 939: Spec 944 — Source Company Plugin: Stoke Space
+  STOKE_SPACE = 'stokespacetechnologies',
+  // Phase 940: Spec 945 — Source Company Plugin: Strand Therapeutics
+  STRAND_THERAPEUTICS = 'strandtherapeutics',
+  // Phase 941: Spec 946 — Source Company Plugin: Sumo Logic
+  SUMO_LOGIC = 'sumologic',
+  // Phase 942: Spec 947 — Source Company Plugin: Take-Two Interactive
+  TAKE_TWO_INTERACTIVE = 'taketwo',
+  // Phase 943: Spec 948 — Source Company Plugin: Tebra
+  TEBRA = 'tebra',
+  // Phase 944: Spec 949 — Source Company Plugin: TEGNA
+  TEGNA = 'tegnainc',
+  // Phase 945: Spec 950 — Source Company Plugin: Tenable
+  TENABLE = 'tenableinc',
+  // Phase 946: Spec 951 — Source Company Plugin: Terran Orbital
+  TERRAN_ORBITAL = 'terranorbitalcorporation',
+  // Phase 947: Spec 952 — Source Company Plugin: Tessera Therapeutics
+  TESSERA_THERAPEUTICS = 'tesseratherapeutics',
+  // Phase 948: Spec 953 — Source Company Plugin: Dutchie
+  DUTCHIE = 'thedutchie',
+  // Phase 949: Spec 954 — Source Company Plugin: The New York Times
+  THE_NEW_YORK_TIMES = 'thenewyorktimes',
+  // Phase 950: Spec 955 — Source Company Plugin: The Trade Desk
+  THE_TRADE_DESK = 'thetradedesk',
+  // Phase 951: Spec 956 — Source Company Plugin: Third Wave Automation
+  THIRD_WAVE_AUTOMATION = 'thirdwaveautomation',
+  // Phase 952: Spec 957 — Source Company Plugin: Too Good To Go
+  TOO_GOOD_TO_GO = 'toogoodtogo',
+  // Phase 953: Spec 958 — Source Company Plugin: Toradex
+  TORADEX = 'toradex',
+  // Phase 954: Spec 959 — Source Company Plugin: Transmit Security
+  TRANSMIT_SECURITY = 'transmitsecurity',
+  // Phase 955: Spec 960 — Source Company Plugin: True Anomaly
+  TRUE_ANOMALY = 'trueanomalyinc',
+  // Phase 956: Spec 961 — Source Company Plugin: Picnic Delivery
+  PICNIC_DELIVERY = 'try-picnic',
+  // Phase 957: Spec 962 — Source Company Plugin: Uber Freight
+  UBER_FREIGHT = 'uberfreight',
+  // Phase 958: Spec 963 — Source Company Plugin: Unqork
+  UNQORK = 'unqork',
+  // Phase 959: Spec 964 — Source Company Plugin: Varda Space Industries
+  VARDA_SPACE_INDUSTRIES = 'vardaspace',
+  // Phase 960: Spec 965 — Source Company Plugin: Verra Mobility
+  VERRA_MOBILITY = 'verramobility',
+  // Phase 961: Spec 966 — Source Company Plugin: Viant Technology
+  VIANT_TECHNOLOGY = 'vianttechnology',
+  // Phase 962: Spec 967 — Source Company Plugin: Viral Nation
+  VIRAL_NATION = 'viralnation',
+  // Phase 963: Spec 968 — Source Company Plugin: Vox Media
+  VOX_MEDIA = 'voxmedia',
+  // Phase 964: Spec 969 — Source Company Plugin: VTS
+  VTS = 'vts',
+  // Phase 965: Spec 970 — Source Company Plugin: Wildlife Studios
+  WILDLIFE_STUDIOS = 'wildlifestudios',
+  // Phase 966: Spec 971 — Source Company Plugin: Wiz
+  WIZ = 'wizinc',
+  // Phase 967: Spec 972 — Source Company Plugin: Wurl
+  WURL = 'wurljobs',
+  // Phase 969: Spec 974 — Source Company Plugin: Zynga
+  ZYNGA = 'zyngacareers',
 }
 
 /**

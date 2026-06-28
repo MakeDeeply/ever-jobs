@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 5980224004,
+      "title": "Account Manager ",
+      "company_name": "Esusu",
+      "absolute_url": "https://job-boards.greenhouse.io/esusu/jobs/5980224004",
+      "updated_at": "2026-05-11T12:36:17-04:00",
+      "location": {
+        "name": "US - Remote"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Esusu.&lt;/strong&gt; Now hiring a Account Manager on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 6066292004,
+      "title": "Customer Service Specialist (PH)",
+      "company_name": "Esusu",
+      "absolute_url": "https://job-boards.greenhouse.io/esusu/jobs/6066292004",
+      "updated_at": "2026-06-17T05:59:08-04:00",
+      "location": {
+        "name": "PH - Remote"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Esusu.&lt;/strong&gt; Now hiring a Customer Service Specialist (PH) on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 6005855004,
+      "title": "Customer Success Manager (CA)",
+      "company_name": "Esusu",
+      "absolute_url": "https://job-boards.greenhouse.io/esusu/jobs/6005855004",
+      "updated_at": "2026-05-29T07:40:48-04:00",
+      "location": {
+        "name": "Canada - Remote"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Esusu.&lt;/strong&gt; Now hiring a Customer Success Manager (CA) on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 7915379,
+      "title": "Account Manager, EMEA ",
+      "company_name": "Customer.io",
+      "absolute_url": "https://job-boards.greenhouse.io/customerio/jobs/7915379",
+      "updated_at": "2026-06-18T10:31:18-04:00",
+      "location": {
+        "name": "EMEA Remote"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Customer.io.&lt;/strong&gt; Now hiring a Account Manager, EMEA on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 7952110,
+      "title": "Director, Engineering",
+      "company_name": "Customer.io",
+      "absolute_url": "https://job-boards.greenhouse.io/customerio/jobs/7952110",
+      "updated_at": "2026-05-21T20:24:53-04:00",
+      "location": {
+        "name": "Americas Remote"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Customer.io.&lt;/strong&gt; Now hiring a Director, Engineering on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 7904660,
+      "title": "Director, Sales",
+      "company_name": "Customer.io",
+      "absolute_url": "https://job-boards.greenhouse.io/customerio/jobs/7904660",
+      "updated_at": "2026-06-16T15:25:14-04:00",
+      "location": {
+        "name": "EMEA Remote"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Customer.io.&lt;/strong&gt; Now hiring a Director, Sales on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

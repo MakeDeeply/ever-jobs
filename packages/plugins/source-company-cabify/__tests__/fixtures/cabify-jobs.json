@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 8581941002,
+      "title": "Agente de soporte operacional ",
+      "company_name": "Cabify",
+      "absolute_url": "https://job-boards.greenhouse.io/cabify/jobs/8581941002",
+      "updated_at": "2026-06-25T12:44:00-04:00",
+      "location": {
+        "name": "Lima"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Cabify.&lt;/strong&gt; Now hiring a Agente de soporte operacional on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 8599957002,
+      "title": "Analista de Automatización e Inteligencia Artificial",
+      "company_name": "Cabify",
+      "absolute_url": "https://job-boards.greenhouse.io/cabify/jobs/8599957002",
+      "updated_at": "2026-06-25T12:44:00-04:00",
+      "location": {
+        "name": "Bogotá"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Cabify.&lt;/strong&gt; Now hiring a Analista de Automatización e Inteligencia Artificial on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 8584921002,
+      "title": "Analista de Calidad y Sistemas Integrados de Gestión",
+      "company_name": "Cabify",
+      "absolute_url": "https://job-boards.greenhouse.io/cabify/jobs/8584921002",
+      "updated_at": "2026-06-25T12:44:00-04:00",
+      "location": {
+        "name": "Bogotá"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Cabify.&lt;/strong&gt; Now hiring a Analista de Calidad y Sistemas Integrados de Gestión on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

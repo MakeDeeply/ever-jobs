@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 4827307,
+      "title": "Apply Here ",
+      "company_name": "MobilityWare",
+      "absolute_url": "https://job-boards.greenhouse.io/mobilityware/jobs/4827307",
+      "updated_at": "2024-11-05T17:51:38-05:00",
+      "location": {
+        "name": "Irvine, CA (Open to Remote)"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About MobilityWare.&lt;/strong&gt; Now hiring a Apply Here on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 7172248,
+      "title": "Game Designer",
+      "company_name": "MobilityWare",
+      "absolute_url": "https://job-boards.greenhouse.io/mobilityware/jobs/7172248",
+      "updated_at": "2026-03-11T17:53:46-04:00",
+      "location": {
+        "name": "Lehi, Utah"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About MobilityWare.&lt;/strong&gt; Now hiring a Game Designer on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 7844196,
+      "title": "Lead Growth Product Marketing Manager",
+      "company_name": "MobilityWare",
+      "absolute_url": "https://job-boards.greenhouse.io/mobilityware/jobs/7844196",
+      "updated_at": "2026-06-10T13:46:28-04:00",
+      "location": {
+        "name": "Irvine, Ca"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About MobilityWare.&lt;/strong&gt; Now hiring a Lead Growth Product Marketing Manager on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

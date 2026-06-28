@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 8558569002,
+      "title": "Account Executive, Japan ",
+      "company_name": "Censys",
+      "absolute_url": "https://job-boards.greenhouse.io/censys/jobs/8558569002",
+      "updated_at": "2026-06-17T22:15:46-04:00",
+      "location": {
+        "name": "Japan"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Censys.&lt;/strong&gt; Now hiring a Account Executive, Japan on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 8543901002,
+      "title": "Channel Account Manager (East)",
+      "company_name": "Censys",
+      "absolute_url": "https://job-boards.greenhouse.io/censys/jobs/8543901002",
+      "updated_at": "2026-06-19T13:52:33-04:00",
+      "location": {
+        "name": "Eastern Time Zone"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Censys.&lt;/strong&gt; Now hiring a Channel Account Manager (East) on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 8543992002,
+      "title": "Channel Account Manager (EMEA)",
+      "company_name": "Censys",
+      "absolute_url": "https://job-boards.greenhouse.io/censys/jobs/8543992002",
+      "updated_at": "2026-06-25T23:17:35-04:00",
+      "location": {
+        "name": "United Kingdom"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Censys.&lt;/strong&gt; Now hiring a Channel Account Manager (EMEA) on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

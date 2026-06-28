@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 5207803008,
+      "title": "AI Engineer ",
+      "company_name": "Cargomatic",
+      "absolute_url": "https://job-boards.greenhouse.io/cargomatic/jobs/5207803008",
+      "updated_at": "2026-06-24T16:05:29-04:00",
+      "location": {
+        "name": "San Francisco, California"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Cargomatic.&lt;/strong&gt; Now hiring a AI Engineer on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 5129940008,
+      "title": "Data Engineer",
+      "company_name": "Cargomatic",
+      "absolute_url": "https://job-boards.greenhouse.io/cargomatic/jobs/5129940008",
+      "updated_at": "2026-06-17T11:49:06-04:00",
+      "location": {
+        "name": "San Francisco, CA"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Cargomatic.&lt;/strong&gt; Now hiring a Data Engineer on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 5189654008,
+      "title": "Director of Indirect Procurement",
+      "company_name": "Cargomatic",
+      "absolute_url": "https://job-boards.greenhouse.io/cargomatic/jobs/5189654008",
+      "updated_at": "2026-06-17T11:49:06-04:00",
+      "location": {
+        "name": "Norfolk, VA"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Cargomatic.&lt;/strong&gt; Now hiring a Director of Indirect Procurement on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

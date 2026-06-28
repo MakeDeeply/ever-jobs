@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 4249171009,
+      "title": "Accountant ",
+      "company_name": "Avride",
+      "absolute_url": "https://job-boards.greenhouse.io/avride/jobs/4249171009",
+      "updated_at": "2026-06-25T17:29:13-04:00",
+      "location": {
+        "name": "Austin, TX"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Avride.&lt;/strong&gt; Now hiring a Accountant on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4291655009,
+      "title": "Account Manager",
+      "company_name": "Avride",
+      "absolute_url": "https://job-boards.greenhouse.io/avride/jobs/4291655009",
+      "updated_at": "2026-06-25T17:31:16-04:00",
+      "location": {
+        "name": "Remote – United States"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Avride.&lt;/strong&gt; Now hiring a Account Manager on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4225101009,
+      "title": "Contract Talent Partner / Recruiter",
+      "company_name": "Avride",
+      "absolute_url": "https://job-boards.greenhouse.io/avride/jobs/4225101009",
+      "updated_at": "2026-06-25T17:34:29-04:00",
+      "location": {
+        "name": "Austin, TX"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Avride.&lt;/strong&gt; Now hiring a Contract Talent Partner / Recruiter on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

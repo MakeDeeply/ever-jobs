@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 5718411004,
+      "title": "GTM Talent Community ",
+      "company_name": "ExtraHop",
+      "absolute_url": "https://job-boards.greenhouse.io/extrahopnetworks/jobs/5718411004",
+      "updated_at": "2026-04-03T18:34:00-04:00",
+      "location": {
+        "name": "Remote"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About ExtraHop.&lt;/strong&gt; Now hiring a GTM Talent Community on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 6016209004,
+      "title": "Manager, Engineering | ML Infrastructure & Tooling",
+      "company_name": "ExtraHop",
+      "absolute_url": "https://job-boards.greenhouse.io/extrahopnetworks/jobs/6016209004",
+      "updated_at": "2026-06-13T03:15:00-04:00",
+      "location": {
+        "name": "Hybrid | Seattle, WA"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About ExtraHop.&lt;/strong&gt; Now hiring a Manager, Engineering | ML Infrastructure & Tooling on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 6026708004,
+      "title": "Principal IT Systems Engineer",
+      "company_name": "ExtraHop",
+      "absolute_url": "https://job-boards.greenhouse.io/extrahopnetworks/jobs/6026708004",
+      "updated_at": "2026-06-23T14:06:25-04:00",
+      "location": {
+        "name": "Remote"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About ExtraHop.&lt;/strong&gt; Now hiring a Principal IT Systems Engineer on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

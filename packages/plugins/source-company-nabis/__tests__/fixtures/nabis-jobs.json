@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 5987174004,
+      "title": "Accounting Operations Manager ",
+      "company_name": "Nabis",
+      "absolute_url": "https://job-boards.greenhouse.io/nabis/jobs/5987174004",
+      "updated_at": "2026-05-28T13:33:49-04:00",
+      "location": {
+        "name": "Remote"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Nabis.&lt;/strong&gt; Now hiring a Accounting Operations Manager on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 5970047004,
+      "title": "Bronx Delivery Driver",
+      "company_name": "Nabis",
+      "absolute_url": "https://job-boards.greenhouse.io/nabis/jobs/5970047004",
+      "updated_at": "2026-06-02T11:54:30-04:00",
+      "location": {
+        "name": "Bronx, New York"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Nabis.&lt;/strong&gt; Now hiring a Bronx Delivery Driver on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 5789995004,
+      "title": "Cash Application Associate",
+      "company_name": "Nabis",
+      "absolute_url": "https://job-boards.greenhouse.io/nabis/jobs/5789995004",
+      "updated_at": "2026-06-18T18:02:55-04:00",
+      "location": {
+        "name": "Mexico City, Mexico City, Mexico"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Nabis.&lt;/strong&gt; Now hiring a Cash Application Associate on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 8013281,
+      "title": "AI Builder ",
+      "company_name": "EarnIn",
+      "absolute_url": "https://job-boards.greenhouse.io/earnin/jobs/8013281",
+      "updated_at": "2026-06-18T12:14:45-04:00",
+      "location": {
+        "name": "Mountain View, US"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About EarnIn.&lt;/strong&gt; Now hiring a AI Builder on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 7959016,
+      "title": "Application Programmer",
+      "company_name": "EarnIn",
+      "absolute_url": "https://job-boards.greenhouse.io/earnin/jobs/7959016",
+      "updated_at": "2026-06-16T13:54:08-04:00",
+      "location": {
+        "name": "Remote, US"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About EarnIn.&lt;/strong&gt; Now hiring a Application Programmer on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 8013283,
+      "title": "Compensation Analyst II",
+      "company_name": "EarnIn",
+      "absolute_url": "https://job-boards.greenhouse.io/earnin/jobs/8013283",
+      "updated_at": "2026-06-26T19:02:28-04:00",
+      "location": {
+        "name": "Remote, US"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About EarnIn.&lt;/strong&gt; Now hiring a Compensation Analyst II on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

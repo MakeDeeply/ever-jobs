@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 8480951002,
+      "title": "Application Support Analyst ",
+      "company_name": "Innovid",
+      "absolute_url": "https://job-boards.greenhouse.io/innovid/jobs/8480951002",
+      "updated_at": "2026-06-09T12:32:48-04:00",
+      "location": {
+        "name": "Buenos Aires"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Innovid.&lt;/strong&gt; Now hiring a Application Support Analyst on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 8597530002,
+      "title": "Cloud Infrastructure Engineer",
+      "company_name": "Innovid",
+      "absolute_url": "https://job-boards.greenhouse.io/innovid/jobs/8597530002",
+      "updated_at": "2026-06-17T15:51:43-04:00",
+      "location": {
+        "name": "Buenos Aires"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Innovid.&lt;/strong&gt; Now hiring a Cloud Infrastructure Engineer on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 8597150002,
+      "title": "Creative Project Manager",
+      "company_name": "Innovid",
+      "absolute_url": "https://job-boards.greenhouse.io/innovid/jobs/8597150002",
+      "updated_at": "2026-06-17T13:58:29-04:00",
+      "location": {
+        "name": "Buenos Aires"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Innovid.&lt;/strong&gt; Now hiring a Creative Project Manager on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

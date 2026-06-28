@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 8539588002,
+      "title": "Applied AI Engineer ",
+      "company_name": "Riskified",
+      "absolute_url": "https://job-boards.greenhouse.io/riskified/jobs/8539588002",
+      "updated_at": "2026-06-23T05:30:24-04:00",
+      "location": {
+        "name": "Tel Aviv"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Riskified.&lt;/strong&gt; Now hiring a Applied AI Engineer on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 8572881002,
+      "title": "Backend Engineer",
+      "company_name": "Riskified",
+      "absolute_url": "https://job-boards.greenhouse.io/riskified/jobs/8572881002",
+      "updated_at": "2026-06-23T05:28:04-04:00",
+      "location": {
+        "name": "Lisbon"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Riskified.&lt;/strong&gt; Now hiring a Backend Engineer on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 8541108002,
+      "title": "Corporate Counsel",
+      "company_name": "Riskified",
+      "absolute_url": "https://job-boards.greenhouse.io/riskified/jobs/8541108002",
+      "updated_at": "2026-06-24T18:02:59-04:00",
+      "location": {
+        "name": "New York"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Riskified.&lt;/strong&gt; Now hiring a Corporate Counsel on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

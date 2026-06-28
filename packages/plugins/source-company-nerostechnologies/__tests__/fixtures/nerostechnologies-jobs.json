@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 5146046007,
+      "title": "Accountant ",
+      "company_name": "Neros Technologies",
+      "absolute_url": "https://job-boards.greenhouse.io/nerostechnologies/jobs/5146046007",
+      "updated_at": "2026-06-05T16:20:19-04:00",
+      "location": {
+        "name": "Ukraine Office"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Neros Technologies.&lt;/strong&gt; Now hiring a Accountant on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 5143546007,
+      "title": "Advanced Manufacturing Engineer",
+      "company_name": "Neros Technologies",
+      "absolute_url": "https://job-boards.greenhouse.io/nerostechnologies/jobs/5143546007",
+      "updated_at": "2026-06-05T16:20:19-04:00",
+      "location": {
+        "name": "Tennessee, United States"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Neros Technologies.&lt;/strong&gt; Now hiring a Advanced Manufacturing Engineer on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 5163568007,
+      "title": "Assembly Technician",
+      "company_name": "Neros Technologies",
+      "absolute_url": "https://job-boards.greenhouse.io/nerostechnologies/jobs/5163568007",
+      "updated_at": "2026-06-12T13:32:44-04:00",
+      "location": {
+        "name": "Torrance, California, United States"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Neros Technologies.&lt;/strong&gt; Now hiring a Assembly Technician on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

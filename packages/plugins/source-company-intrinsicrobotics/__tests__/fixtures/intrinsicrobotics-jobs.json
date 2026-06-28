@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 5989822004,
+      "title": "Administrative Business Partner ",
+      "company_name": "Intrinsic",
+      "absolute_url": "https://job-boards.greenhouse.io/intrinsicrobotics/jobs/5989822004",
+      "updated_at": "2026-06-08T14:24:40-04:00",
+      "location": {
+        "name": "Mountain View, California"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Intrinsic.&lt;/strong&gt; Now hiring a Administrative Business Partner on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 5843008004,
+      "title": "Automation and Controls Engineer",
+      "company_name": "Intrinsic",
+      "absolute_url": "https://job-boards.greenhouse.io/intrinsicrobotics/jobs/5843008004",
+      "updated_at": "2026-06-08T14:24:40-04:00",
+      "location": {
+        "name": "Mountain View, California"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Intrinsic.&lt;/strong&gt; Now hiring a Automation and Controls Engineer on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 5973679004,
+      "title": "Backend Software Engineer (Robotics Systems)",
+      "company_name": "Intrinsic",
+      "absolute_url": "https://job-boards.greenhouse.io/intrinsicrobotics/jobs/5973679004",
+      "updated_at": "2026-06-17T11:45:33-04:00",
+      "location": {
+        "name": "Mountain View, California"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Intrinsic.&lt;/strong&gt; Now hiring a Backend Software Engineer (Robotics Systems) on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 7691309003,
+      "title": "Account Executive ",
+      "company_name": "Metropolis Technologies",
+      "absolute_url": "https://job-boards.greenhouse.io/metropolis/jobs/7691309003",
+      "updated_at": "2026-06-26T16:25:51-04:00",
+      "location": {
+        "name": "Baltimore, Maryland, United States"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Metropolis Technologies.&lt;/strong&gt; Now hiring a Account Executive on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 7758978003,
+      "title": "Accounting Manager",
+      "company_name": "Metropolis Technologies",
+      "absolute_url": "https://job-boards.greenhouse.io/metropolis/jobs/7758978003",
+      "updated_at": "2026-06-26T17:00:57-04:00",
+      "location": {
+        "name": "New York, New York, United States"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Metropolis Technologies.&lt;/strong&gt; Now hiring a Accounting Manager on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 7758979003,
+      "title": "Accounting Manager",
+      "company_name": "Metropolis Technologies",
+      "absolute_url": "https://job-boards.greenhouse.io/metropolis/jobs/7758979003",
+      "updated_at": "2026-06-26T17:01:06-04:00",
+      "location": {
+        "name": "Chicago, Illinois, United States"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Metropolis Technologies.&lt;/strong&gt; Now hiring a Accounting Manager on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

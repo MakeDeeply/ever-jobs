@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 5841302004,
+      "title": "Senior Account Executive - APAC ",
+      "company_name": "FastSpring",
+      "absolute_url": "https://job-boards.greenhouse.io/fastspring/jobs/5841302004",
+      "updated_at": "2026-06-23T14:02:29-04:00",
+      "location": {
+        "name": "Singapore"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About FastSpring.&lt;/strong&gt; Now hiring a Senior Account Executive - APAC on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 6032233004,
+      "title": "Senior Payment Operations Specialist",
+      "company_name": "FastSpring",
+      "absolute_url": "https://job-boards.greenhouse.io/fastspring/jobs/6032233004",
+      "updated_at": "2026-06-23T14:02:29-04:00",
+      "location": {
+        "name": "United States"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About FastSpring.&lt;/strong&gt; Now hiring a Senior Payment Operations Specialist on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 6015300004,
+      "title": "Senior Software Engineer - Payments",
+      "company_name": "FastSpring",
+      "absolute_url": "https://job-boards.greenhouse.io/fastspring/jobs/6015300004",
+      "updated_at": "2026-06-23T14:02:29-04:00",
+      "location": {
+        "name": "Remote"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About FastSpring.&lt;/strong&gt; Now hiring a Senior Software Engineer - Payments on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

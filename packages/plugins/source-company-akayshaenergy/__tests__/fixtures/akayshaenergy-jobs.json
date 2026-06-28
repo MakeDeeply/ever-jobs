@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 4942157007,
+      "title": "Legal Manager ",
+      "company_name": "Akaysha Energy",
+      "absolute_url": "https://job-boards.greenhouse.io/akayshaenergy/jobs/4942157007",
+      "updated_at": "2026-04-16T01:00:28-04:00",
+      "location": {
+        "name": "Sydney, New South Wales, Australia"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Akaysha Energy.&lt;/strong&gt; Now hiring a Legal Manager on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 5071343007,
+      "title": "Senior Energy Markets Compliance Specialist",
+      "company_name": "Akaysha Energy",
+      "absolute_url": "https://job-boards.greenhouse.io/akayshaenergy/jobs/5071343007",
+      "updated_at": "2026-04-16T01:00:29-04:00",
+      "location": {
+        "name": "Cremorne, Victoria, Australia; Sydney, New South Wales, Australia"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Akaysha Energy.&lt;/strong&gt; Now hiring a Senior Energy Markets Compliance Specialist on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 5167961007,
+      "title": "Senior Manager, Cybersecurity",
+      "company_name": "Akaysha Energy",
+      "absolute_url": "https://job-boards.greenhouse.io/akayshaenergy/jobs/5167961007",
+      "updated_at": "2026-06-26T03:35:30-04:00",
+      "location": {
+        "name": "Cremorne, Victoria, Australia"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Akaysha Energy.&lt;/strong&gt; Now hiring a Senior Manager, Cybersecurity on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

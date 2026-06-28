@@ -1,0 +1,135 @@
+import { SourcePlugin } from '@ever-jobs/plugin';
+
+import { Injectable, Logger } from '@nestjs/common';
+import {
+  IScraper, ScraperInputDto, JobResponseDto, JobPostDto, Site, LocationDto,
+} from '@ever-jobs/models';
+import { createHttpClient, decodeHtmlEntities, stripHtmlTags } from '@ever-jobs/common';
+
+/**
+ * Aurora Innovation — Aurora Innovation develops the Aurora Driver, a self-driving system for autonomous trucking and ride-hailing..
+ *
+ * Aurora Innovation, Inc. (NASDAQ: AUR), doing business as Aurora, is
+ * a self-driving vehicle technology company headquartered in
+ * Pittsburgh, Pennsylvania, with significant engineering operations in
+ * the San Francisco Bay Area and Seattle. It builds the Aurora Driver,
+ * a hardware-and-software platform integrated into commercial trucks
+ * and passenger vehicles for autonomous operation. The company was
+ * co-founded in 2017 by Chris Urmson (former head of Google/Waymo's
+ * self-driving program), Sterling Anderson (former Tesla Autopilot
+ * lead), and Drew Bagnell (former Uber autonomy lead). It launched
+ * commercial driverless freight operations on Texas highways in 2025.
+ *
+ * Sector: Autonomous Vehicles / Self-Driving Trucking. HQ: Pittsburgh, Pennsylvania, USA.
+ *
+ * Highlights:
+ *   - Builds the Aurora Driver for autonomous trucking (Aurora
+ *     Horizon) and ride-hailing (Aurora Connect)
+ *   - Headquartered in Pittsburgh, PA, with major sites in the San
+ *     Francisco Bay Area and Seattle
+ *   - Co-founded in 2017 by Chris Urmson, Sterling Anderson, and Drew
+ *     Bagnell
+ *   - Publicly traded on Nasdaq under the ticker AUR
+ *   - Launched commercial driverless freight runs on Texas highways in
+ *     2025
+ *
+ * Source profile (Spec 790):
+ *   - D-04 — Greenhouse canonical hosted-board host (variant 2):
+ *     `https://job-boards.greenhouse.io/aurorainnovation/jobs/<id>`.
+ *   - D-08 — entity-decode-then-tag-strip description pipeline.
+ *   - D-09 — wire `company_name` pass-through (`'Aurora Innovation'`).
+ *   - D-10 — defensive `.trim()` on wire titles (padding observed
+ *     on the run-398 batch probe).
+ *   - D-11 — defensive `.trim()` on wire department names.
+ *
+ * Probed 147 live role(s) on the run-398 batch sweep.
+ */
+const API_URL = 'https://api.greenhouse.io/v1/boards/aurorainnovation/jobs';
+
+@SourcePlugin({
+  site: Site.AURORA_INNOVATION,
+  name: 'Aurora Innovation',
+  category: 'company',
+})
+@Injectable()
+export class AuroraInnovationService implements IScraper {
+  private readonly logger = new Logger(AuroraInnovationService.name);
+
+  async scrape(input: ScraperInputDto): Promise<JobResponseDto> {
+    const jobs: JobPostDto[] = [];
+    const resultsWanted = input.resultsWanted ?? 50;
+
+    try {
+      const client = createHttpClient({
+        proxies: input.proxies,
+        timeout: input.requestTimeout ?? 30,
+      });
+
+      const url = `${API_URL}?content=true`;
+      this.logger.log(`Aurora Innovation: fetching ${url}`);
+
+      const { data } = await client.get<any>(url);
+      const listings = data?.jobs ?? [];
+
+      for (const listing of listings) {
+        if (jobs.length >= resultsWanted) break;
+
+        // D-10: defensive trim of wire title padding.
+        const title = (listing.title ?? '').trim();
+        if (!title) continue;
+
+        if (input.searchTerm) {
+          const term = input.searchTerm.toLowerCase();
+          const titleMatch = title.toLowerCase().includes(term);
+          const deptMatch = (listing.departments?.[0]?.name ?? '')
+            .toLowerCase()
+            .includes(term);
+          if (!titleMatch && !deptMatch) continue;
+        }
+
+        const jobId = listing.id ?? '';
+        const id = `aurorainnovation-${jobId}`;
+
+        const locationStr = listing.location?.name ?? null;
+        const location = locationStr
+          ? new LocationDto({ city: locationStr })
+          : null;
+
+        if (input.location && locationStr) {
+          if (!locationStr.toLowerCase().includes(input.location.toLowerCase())) continue;
+        }
+
+        // D-11: defensive trim of wire department padding.
+        const deptRaw = listing.departments?.[0]?.name ?? null;
+        const department = deptRaw ? deptRaw.trim() : null;
+
+        jobs.push(
+          new JobPostDto({
+            id,
+            site: Site.AURORA_INNOVATION,
+            title,
+            // D-09 pass-through: wire `company_name`.
+            companyName: listing.company_name ?? 'Aurora Innovation',
+            // D-04: wire `absolute_url` flows through (variant 2).
+            jobUrl:
+              listing.absolute_url ??
+              `https://job-boards.greenhouse.io/aurorainnovation/jobs/${listing.id}`,
+            location,
+            description: listing.content
+              ? stripHtmlTags(decodeHtmlEntities(listing.content))
+              : null,
+            datePosted: listing.updated_at ?? null,
+            isRemote: locationStr?.toLowerCase().includes('remote') ?? false,
+            department,
+          }),
+        );
+      }
+
+      this.logger.log(`Aurora Innovation: scraped ${jobs.length} jobs`);
+    } catch (err: any) {
+      this.logger.error(`Aurora Innovation scrape failed: ${err.message}`);
+    }
+
+    return { jobs };
+  }
+}

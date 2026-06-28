@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 8476278002,
+      "title": "Business Analyst ",
+      "company_name": "Wildlife Studios",
+      "absolute_url": "https://job-boards.greenhouse.io/wildlifestudios/jobs/8476278002",
+      "updated_at": "2026-06-12T17:10:51-04:00",
+      "location": {
+        "name": "São Paulo"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Wildlife Studios.&lt;/strong&gt; Now hiring a Business Analyst on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 8521662002,
+      "title": "Business Analytics Intern",
+      "company_name": "Wildlife Studios",
+      "absolute_url": "https://job-boards.greenhouse.io/wildlifestudios/jobs/8521662002",
+      "updated_at": "2026-06-12T17:10:51-04:00",
+      "location": {
+        "name": "São Paulo"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Wildlife Studios.&lt;/strong&gt; Now hiring a Business Analytics Intern on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 8317598002,
+      "title": "Business Operations Associate | BizOps",
+      "company_name": "Wildlife Studios",
+      "absolute_url": "https://job-boards.greenhouse.io/wildlifestudios/jobs/8317598002",
+      "updated_at": "2026-06-12T17:10:51-04:00",
+      "location": {
+        "name": "São Paulo"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Wildlife Studios.&lt;/strong&gt; Now hiring a Business Operations Associate | BizOps on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 5213533008,
+      "title": "Aerospace Engineering Manager ",
+      "company_name": "AEVEX Aerospace",
+      "absolute_url": "https://job-boards.greenhouse.io/aevexaerospace/jobs/5213533008",
+      "updated_at": "2026-05-08T08:37:50-04:00",
+      "location": {
+        "name": "Tampa, Florida, United States"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About AEVEX Aerospace.&lt;/strong&gt; Now hiring a Aerospace Engineering Manager on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4308091008,
+      "title": "Air Vehicle Operator 2",
+      "company_name": "AEVEX Aerospace",
+      "absolute_url": "https://job-boards.greenhouse.io/aevexaerospace/jobs/4308091008",
+      "updated_at": "2026-06-10T12:17:55-04:00",
+      "location": {
+        "name": "Sierra Vista, Arizona, United States"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About AEVEX Aerospace.&lt;/strong&gt; Now hiring a Air Vehicle Operator 2 on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4136273008,
+      "title": "Air Vehicle Operator 2 - Deployed",
+      "company_name": "AEVEX Aerospace",
+      "absolute_url": "https://job-boards.greenhouse.io/aevexaerospace/jobs/4136273008",
+      "updated_at": "2026-06-08T12:22:10-04:00",
+      "location": {
+        "name": "United States"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About AEVEX Aerospace.&lt;/strong&gt; Now hiring a Air Vehicle Operator 2 - Deployed on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

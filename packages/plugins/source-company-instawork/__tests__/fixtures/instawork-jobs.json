@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 4686678006,
+      "title": "Account Executive ",
+      "company_name": "Instawork",
+      "absolute_url": "https://job-boards.greenhouse.io/instawork/jobs/4686678006",
+      "updated_at": "2026-06-15T12:01:51-04:00",
+      "location": {
+        "name": "Chicago, Illinois, United States"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Instawork.&lt;/strong&gt; Now hiring a Account Executive on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4684940006,
+      "title": "City Business Lead – Field Sales & Operations",
+      "company_name": "Instawork",
+      "absolute_url": "https://job-boards.greenhouse.io/instawork/jobs/4684940006",
+      "updated_at": "2026-06-15T12:01:51-04:00",
+      "location": {
+        "name": "Bengaluru, Karnataka, India"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Instawork.&lt;/strong&gt; Now hiring a City Business Lead – Field Sales & Operations on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4682538006,
+      "title": "Claims Manager",
+      "company_name": "Instawork",
+      "absolute_url": "https://job-boards.greenhouse.io/instawork/jobs/4682538006",
+      "updated_at": "2026-06-15T12:01:51-04:00",
+      "location": {
+        "name": "San Francisco, California, United States"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Instawork.&lt;/strong&gt; Now hiring a Claims Manager on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

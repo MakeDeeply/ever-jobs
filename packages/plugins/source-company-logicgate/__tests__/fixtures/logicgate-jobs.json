@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 4682119005,
+      "title": "Account Executive (Northeast) ",
+      "company_name": "LogicGate",
+      "absolute_url": "https://job-boards.greenhouse.io/logicgate/jobs/4682119005",
+      "updated_at": "2026-05-26T18:09:27-04:00",
+      "location": {
+        "name": "Remote"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About LogicGate.&lt;/strong&gt; Now hiring a Account Executive (Northeast) on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4703645005,
+      "title": "Enterprise Systems Engineer",
+      "company_name": "LogicGate",
+      "absolute_url": "https://job-boards.greenhouse.io/logicgate/jobs/4703645005",
+      "updated_at": "2026-06-05T15:50:02-04:00",
+      "location": {
+        "name": "Chicago"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About LogicGate.&lt;/strong&gt; Now hiring a Enterprise Systems Engineer on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4691334005,
+      "title": "Field Marketing Manager",
+      "company_name": "LogicGate",
+      "absolute_url": "https://job-boards.greenhouse.io/logicgate/jobs/4691334005",
+      "updated_at": "2026-04-30T16:32:50-04:00",
+      "location": {
+        "name": "Remote - United States"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About LogicGate.&lt;/strong&gt; Now hiring a Field Marketing Manager on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

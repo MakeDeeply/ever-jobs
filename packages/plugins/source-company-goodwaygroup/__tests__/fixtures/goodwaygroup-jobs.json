@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 5991809004,
+      "title": "Director of IT ",
+      "company_name": "Goodway Group",
+      "absolute_url": "https://job-boards.greenhouse.io/goodwaygroup/jobs/5991809004",
+      "updated_at": "2026-06-17T11:56:30-04:00",
+      "location": {
+        "name": "Remote"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Goodway Group.&lt;/strong&gt; Now hiring a Director of IT on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 5991794004,
+      "title": "Global Data Engineer",
+      "company_name": "Goodway Group",
+      "absolute_url": "https://job-boards.greenhouse.io/goodwaygroup/jobs/5991794004",
+      "updated_at": "2026-06-17T11:56:30-04:00",
+      "location": {
+        "name": "Remote"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Goodway Group.&lt;/strong&gt; Now hiring a Global Data Engineer on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 6098949004,
+      "title": "Global Staff Accountant",
+      "company_name": "Goodway Group",
+      "absolute_url": "https://job-boards.greenhouse.io/goodwaygroup/jobs/6098949004",
+      "updated_at": "2026-06-22T15:07:10-04:00",
+      "location": {
+        "name": "Remote"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Goodway Group.&lt;/strong&gt; Now hiring a Global Staff Accountant on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

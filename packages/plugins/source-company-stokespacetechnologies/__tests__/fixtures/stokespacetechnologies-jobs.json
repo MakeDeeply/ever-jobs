@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 6014923004,
+      "title": "Additive Technician ",
+      "company_name": "Stoke Space",
+      "absolute_url": "https://job-boards.greenhouse.io/stokespacetechnologies/jobs/6014923004",
+      "updated_at": "2026-06-05T00:10:37-04:00",
+      "location": {
+        "name": "Kent, Washington"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Stoke Space.&lt;/strong&gt; Now hiring a Additive Technician on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 6014488004,
+      "title": "Assembly Technician - Engines (Andromeda)",
+      "company_name": "Stoke Space",
+      "absolute_url": "https://job-boards.greenhouse.io/stokespacetechnologies/jobs/6014488004",
+      "updated_at": "2026-06-05T11:02:47-04:00",
+      "location": {
+        "name": "Kent, Washington"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Stoke Space.&lt;/strong&gt; Now hiring a Assembly Technician - Engines (Andromeda) on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 5117929004,
+      "title": "Avionics Electrical Development Test Engineer",
+      "company_name": "Stoke Space",
+      "absolute_url": "https://job-boards.greenhouse.io/stokespacetechnologies/jobs/5117929004",
+      "updated_at": "2026-03-27T12:38:36-04:00",
+      "location": {
+        "name": "Kent, Washington"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Stoke Space.&lt;/strong&gt; Now hiring a Avionics Electrical Development Test Engineer on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

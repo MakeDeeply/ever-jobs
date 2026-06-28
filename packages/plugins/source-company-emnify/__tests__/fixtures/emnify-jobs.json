@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 4836382101,
+      "title": "Engineering Manager - Packet Processing ",
+      "company_name": "emnify",
+      "absolute_url": "https://job-boards.greenhouse.io/emnify/jobs/4836382101",
+      "updated_at": "2026-06-09T03:23:46-04:00",
+      "location": {
+        "name": "Berlin"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About emnify.&lt;/strong&gt; Now hiring a Engineering Manager - Packet Processing on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4890386101,
+      "title": "Office Manager (Part-Time, 20–25h)",
+      "company_name": "emnify",
+      "absolute_url": "https://job-boards.greenhouse.io/emnify/jobs/4890386101",
+      "updated_at": "2026-06-09T09:43:17-04:00",
+      "location": {
+        "name": "Berlin, Germany"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About emnify.&lt;/strong&gt; Now hiring a Office Manager (Part-Time, 20–25h) on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4829750101,
+      "title": "Product Marketing Manager",
+      "company_name": "emnify",
+      "absolute_url": "https://job-boards.greenhouse.io/emnify/jobs/4829750101",
+      "updated_at": "2026-06-09T03:23:46-04:00",
+      "location": {
+        "name": "Germany"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About emnify.&lt;/strong&gt; Now hiring a Product Marketing Manager on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

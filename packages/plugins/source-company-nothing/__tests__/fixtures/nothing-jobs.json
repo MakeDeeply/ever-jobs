@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 4837612101,
+      "title": "Assistant Brand Manager ",
+      "company_name": "Nothing",
+      "absolute_url": "https://job-boards.greenhouse.io/nothing/jobs/4837612101",
+      "updated_at": "2026-06-09T10:33:23-04:00",
+      "location": {
+        "name": "Gurgaon, India"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Nothing.&lt;/strong&gt; Now hiring a Assistant Brand Manager on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4795364101,
+      "title": "Director of Business Development",
+      "company_name": "Nothing",
+      "absolute_url": "https://job-boards.greenhouse.io/nothing/jobs/4795364101",
+      "updated_at": "2026-04-08T12:05:11-04:00",
+      "location": {
+        "name": "San Francisco, California, United States"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Nothing.&lt;/strong&gt; Now hiring a Director of Business Development on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4894747101,
+      "title": "Director of Customer Service",
+      "company_name": "Nothing",
+      "absolute_url": "https://job-boards.greenhouse.io/nothing/jobs/4894747101",
+      "updated_at": "2026-06-22T02:34:06-04:00",
+      "location": {
+        "name": "United States"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Nothing.&lt;/strong&gt; Now hiring a Director of Customer Service on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

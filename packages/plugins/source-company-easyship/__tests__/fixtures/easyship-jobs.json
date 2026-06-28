@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 4686490006,
+      "title": "Account Executive ",
+      "company_name": "Easyship",
+      "absolute_url": "https://job-boards.greenhouse.io/easyship/jobs/4686490006",
+      "updated_at": "2026-06-04T06:30:07-04:00",
+      "location": {
+        "name": "Remote Europe"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Easyship.&lt;/strong&gt; Now hiring a Account Executive on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4689732006,
+      "title": "Backend Engineer(L3 Tech Support)",
+      "company_name": "Easyship",
+      "absolute_url": "https://job-boards.greenhouse.io/easyship/jobs/4689732006",
+      "updated_at": "2026-06-17T07:39:45-04:00",
+      "location": {
+        "name": "Bangalore"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Easyship.&lt;/strong&gt; Now hiring a Backend Engineer(L3 Tech Support) on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4688260006,
+      "title": "Business Development Executive",
+      "company_name": "Easyship",
+      "absolute_url": "https://job-boards.greenhouse.io/easyship/jobs/4688260006",
+      "updated_at": "2026-06-16T04:11:05-04:00",
+      "location": {
+        "name": "Bangalore, India"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Easyship.&lt;/strong&gt; Now hiring a Business Development Executive on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 4248922009,
+      "title": "Administrative Assistant ",
+      "company_name": "Neon Aerospace",
+      "absolute_url": "https://job-boards.greenhouse.io/neonaerospace/jobs/4248922009",
+      "updated_at": "2026-06-01T16:56:07-04:00",
+      "location": {
+        "name": "Manchester, Connecticut, United States"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Neon Aerospace.&lt;/strong&gt; Now hiring a Administrative Assistant on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4247012009,
+      "title": "Associate Engineer - Propellers",
+      "company_name": "Neon Aerospace",
+      "absolute_url": "https://job-boards.greenhouse.io/neonaerospace/jobs/4247012009",
+      "updated_at": "2026-06-01T16:54:53-04:00",
+      "location": {
+        "name": "Manchester, Connecticut, United States"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Neon Aerospace.&lt;/strong&gt; Now hiring a Associate Engineer - Propellers on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4278853009,
+      "title": "Commercial Contract Manager",
+      "company_name": "Neon Aerospace",
+      "absolute_url": "https://job-boards.greenhouse.io/neonaerospace/jobs/4278853009",
+      "updated_at": "2026-06-26T10:36:00-04:00",
+      "location": {
+        "name": "Irvine, CA"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Neon Aerospace.&lt;/strong&gt; Now hiring a Commercial Contract Manager on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

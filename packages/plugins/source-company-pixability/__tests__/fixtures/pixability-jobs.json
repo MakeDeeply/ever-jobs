@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 7538347,
+      "title": "Product Manager ",
+      "company_name": "Pixability",
+      "absolute_url": "https://job-boards.greenhouse.io/pixability/jobs/7538347",
+      "updated_at": "2026-05-19T15:07:37-04:00",
+      "location": {
+        "name": "Boston, MA"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Pixability.&lt;/strong&gt; Now hiring a Product Manager on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 7251893,
+      "title": "Sales Director",
+      "company_name": "Pixability",
+      "absolute_url": "https://job-boards.greenhouse.io/pixability/jobs/7251893",
+      "updated_at": "2025-09-15T14:07:01-04:00",
+      "location": {
+        "name": "New York, NY"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Pixability.&lt;/strong&gt; Now hiring a Sales Director on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 7921611,
+      "title": "Senior Software Engineer",
+      "company_name": "Pixability",
+      "absolute_url": "https://job-boards.greenhouse.io/pixability/jobs/7921611",
+      "updated_at": "2026-05-19T15:58:05-04:00",
+      "location": {
+        "name": "Boston Massachusetts"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Pixability.&lt;/strong&gt; Now hiring a Senior Software Engineer on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

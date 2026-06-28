@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 5197588008,
+      "title": "3D Game Artist ",
+      "company_name": "Nex",
+      "absolute_url": "https://job-boards.greenhouse.io/nex/jobs/5197588008",
+      "updated_at": "2026-06-18T14:27:48-04:00",
+      "location": {
+        "name": "Hong Kong"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Nex.&lt;/strong&gt; Now hiring a 3D Game Artist on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 5255931008,
+      "title": "3D Game Environment Artist",
+      "company_name": "Nex",
+      "absolute_url": "https://job-boards.greenhouse.io/nex/jobs/5255931008",
+      "updated_at": "2026-06-18T14:27:48-04:00",
+      "location": {
+        "name": "Hong Kong or Remote"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Nex.&lt;/strong&gt; Now hiring a 3D Game Environment Artist on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 5223267008,
+      "title": "Art Director",
+      "company_name": "Nex",
+      "absolute_url": "https://job-boards.greenhouse.io/nex/jobs/5223267008",
+      "updated_at": "2026-06-18T14:27:48-04:00",
+      "location": {
+        "name": "Hong Kong"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Nex.&lt;/strong&gt; Now hiring a Art Director on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

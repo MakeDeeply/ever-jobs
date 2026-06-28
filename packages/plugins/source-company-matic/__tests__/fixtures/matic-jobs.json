@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 5691174004,
+      "title": "Customer Service Representative ",
+      "company_name": "Matic Insurance",
+      "absolute_url": "https://job-boards.greenhouse.io/matic/jobs/5691174004",
+      "updated_at": "2026-06-25T09:55:50-04:00",
+      "location": {
+        "name": "Columbus, Ohio, United States"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Matic Insurance.&lt;/strong&gt; Now hiring a Customer Service Representative on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4156715004,
+      "title": "Inside Sales Representative",
+      "company_name": "Matic Insurance",
+      "absolute_url": "https://job-boards.greenhouse.io/matic/jobs/4156715004",
+      "updated_at": "2026-06-17T11:13:21-04:00",
+      "location": {
+        "name": "Columbus, Ohio, United States"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Matic Insurance.&lt;/strong&gt; Now hiring a Inside Sales Representative on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 5997263004,
+      "title": "Lead Product Manager",
+      "company_name": "Matic Insurance",
+      "absolute_url": "https://job-boards.greenhouse.io/matic/jobs/5997263004",
+      "updated_at": "2026-06-17T11:13:21-04:00",
+      "location": {
+        "name": "Columbus, Ohio, United States"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Matic Insurance.&lt;/strong&gt; Now hiring a Lead Product Manager on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

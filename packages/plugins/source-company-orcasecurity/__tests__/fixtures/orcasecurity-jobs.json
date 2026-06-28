@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 5989182004,
+      "title": "Customer Success Manager - LATAM ",
+      "company_name": "Orca Security",
+      "absolute_url": "https://job-boards.greenhouse.io/orcasecurity/jobs/5989182004",
+      "updated_at": "2026-06-03T05:42:47-04:00",
+      "location": {
+        "name": "Brazil"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Orca Security.&lt;/strong&gt; Now hiring a Customer Success Manager - LATAM on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 5780979004,
+      "title": "Head of Research",
+      "company_name": "Orca Security",
+      "absolute_url": "https://job-boards.greenhouse.io/orcasecurity/jobs/5780979004",
+      "updated_at": "2026-04-16T10:48:43-04:00",
+      "location": {
+        "name": "Tel Aviv-Yafo, Tel Aviv District, Israel"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Orca Security.&lt;/strong&gt; Now hiring a Head of Research on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 5263129004,
+      "title": "Senior Software Engineer",
+      "company_name": "Orca Security",
+      "absolute_url": "https://job-boards.greenhouse.io/orcasecurity/jobs/5263129004",
+      "updated_at": "2026-06-11T08:45:07-04:00",
+      "location": {
+        "name": "Tel Aviv-Yafo, Tel Aviv District, Israel"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Orca Security.&lt;/strong&gt; Now hiring a Senior Software Engineer on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

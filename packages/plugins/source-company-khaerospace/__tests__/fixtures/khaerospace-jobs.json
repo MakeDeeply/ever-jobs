@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 4703305005,
+      "title": "Manufacturing Engineer ",
+      "company_name": "KH Aerospace",
+      "absolute_url": "https://job-boards.greenhouse.io/khaerospace/jobs/4703305005",
+      "updated_at": "2026-06-16T15:34:02-04:00",
+      "location": {
+        "name": "Hayward, California, United States"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About KH Aerospace.&lt;/strong&gt; Now hiring a Manufacturing Engineer on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4703338005,
+      "title": "Manufacturing Technician",
+      "company_name": "KH Aerospace",
+      "absolute_url": "https://job-boards.greenhouse.io/khaerospace/jobs/4703338005",
+      "updated_at": "2026-06-16T15:30:00-04:00",
+      "location": {
+        "name": "Hayward, California, United States"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About KH Aerospace.&lt;/strong&gt; Now hiring a Manufacturing Technician on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4707998005,
+      "title": "Senior UAS Training & Standardization Specialist",
+      "company_name": "KH Aerospace",
+      "absolute_url": "https://job-boards.greenhouse.io/khaerospace/jobs/4707998005",
+      "updated_at": "2026-06-22T10:59:41-04:00",
+      "location": {
+        "name": "Pendleton, OR"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About KH Aerospace.&lt;/strong&gt; Now hiring a Senior UAS Training & Standardization Specialist on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

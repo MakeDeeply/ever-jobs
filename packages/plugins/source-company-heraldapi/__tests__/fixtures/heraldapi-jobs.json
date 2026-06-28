@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 4002638008,
+      "title": "Create Your Own Role ",
+      "company_name": "Herald",
+      "absolute_url": "https://job-boards.greenhouse.io/heraldapi/jobs/4002638008",
+      "updated_at": "2025-04-30T16:39:36-04:00",
+      "location": {
+        "name": "New York, NY"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Herald.&lt;/strong&gt; Now hiring a Create Your Own Role on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4550600008,
+      "title": "Deployment Strategist",
+      "company_name": "Herald",
+      "absolute_url": "https://job-boards.greenhouse.io/heraldapi/jobs/4550600008",
+      "updated_at": "2026-06-25T11:42:13-04:00",
+      "location": {
+        "name": "New York, NY"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Herald.&lt;/strong&gt; Now hiring a Deployment Strategist on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4962979008,
+      "title": "Frontend Engineer - AI Products",
+      "company_name": "Herald",
+      "absolute_url": "https://job-boards.greenhouse.io/heraldapi/jobs/4962979008",
+      "updated_at": "2025-10-27T11:20:31-04:00",
+      "location": {
+        "name": "New York City"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Herald.&lt;/strong&gt; Now hiring a Frontend Engineer - AI Products on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 4687529005,
+      "title": "Manager of Marketing Operations ",
+      "company_name": "Hyperproof",
+      "absolute_url": "https://job-boards.greenhouse.io/hyperproof/jobs/4687529005",
+      "updated_at": "2026-05-18T11:23:41-04:00",
+      "location": {
+        "name": "Remote"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Hyperproof.&lt;/strong&gt; Now hiring a Manager of Marketing Operations on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4704845005,
+      "title": "Partner Marketing Manager",
+      "company_name": "Hyperproof",
+      "absolute_url": "https://job-boards.greenhouse.io/hyperproof/jobs/4704845005",
+      "updated_at": "2026-06-12T16:37:21-04:00",
+      "location": {
+        "name": "Remote"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Hyperproof.&lt;/strong&gt; Now hiring a Partner Marketing Manager on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 4677410005,
+      "title": "Senior Development Security Operations Engineer",
+      "company_name": "Hyperproof",
+      "absolute_url": "https://job-boards.greenhouse.io/hyperproof/jobs/4677410005",
+      "updated_at": "2026-06-22T16:39:49-04:00",
+      "location": {
+        "name": "Bellevue, WA"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Hyperproof.&lt;/strong&gt; Now hiring a Senior Development Security Operations Engineer on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}

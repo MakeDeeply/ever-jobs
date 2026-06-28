@@ -1,0 +1,40 @@
+{
+  "jobs": [
+    {
+      "id": 5226706008,
+      "title": "Principal Product Manager ",
+      "company_name": "Osano",
+      "absolute_url": "https://job-boards.greenhouse.io/osano/jobs/5226706008",
+      "updated_at": "2026-05-20T13:05:34-04:00",
+      "location": {
+        "name": "Austin, Texas"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Osano.&lt;/strong&gt; Now hiring a Principal Product Manager on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 5284009008,
+      "title": "Sales Manager",
+      "company_name": "Osano",
+      "absolute_url": "https://job-boards.greenhouse.io/osano/jobs/5284009008",
+      "updated_at": "2026-06-26T11:44:59-04:00",
+      "location": {
+        "name": "Austin, TX"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Osano.&lt;/strong&gt; Now hiring a Sales Manager on the core team &amp; more.&lt;/p&gt;"
+    },
+    {
+      "id": 5231452008,
+      "title": "Senior AI Engineer",
+      "company_name": "Osano",
+      "absolute_url": "https://job-boards.greenhouse.io/osano/jobs/5231452008",
+      "updated_at": "2026-06-02T19:48:48-04:00",
+      "location": {
+        "name": "Austin, TX"
+      },
+      "departments": [],
+      "content": "&lt;p&gt;&lt;strong&gt;About Osano.&lt;/strong&gt; Now hiring a Senior AI Engineer on the core team &amp; more.&lt;/p&gt;"
+    }
+  ]
+}
