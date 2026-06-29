@@ -15,6 +15,20 @@
 
 ---
 
+## 2026-06-28 — Run #461 — Spec 5025 — Workday `isRemote` detects `Remote_*` locations
+
+**Change:** Workday postings whose location is a slug like `Remote_USA` were not
+flagged as remote — location labels are matched with `parseLocationList`'s
+`/\bremote\b/i` check, and the underscore is a word character so the boundary
+after `Remote` never matched. In `source-ats-workday` (`workday.service.ts`),
+normalize `_`→space (then collapse whitespace) on each location label before
+`parseLocationList`. No-op for labels without underscores.
+
+**Verification:** `source-ats-workday` suites green (46, incl. a new `Remote_USA`
+test); `tsc --noEmit` on the package clean.
+
+---
+
 ## 2026-06-28 — Run #460 — Spec 5024 — Greenhouse `datePosted` keeps the source local day
 
 **Scope:** Fixes a `date_posted` off-by-one surfaced by the fetch1 Phase 1 ATS
