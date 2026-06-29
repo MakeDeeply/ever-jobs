@@ -15,6 +15,40 @@
 
 ---
 
+## 2026-06-28 — Run #461 — Spec 5025 — Workday `isRemote` detects slugified `Remote_*` locations
+
+**Scope:** Fixes a workday `is_remote` under-detection surfaced by the fetch1
+Phase 1 ATS regression. Ground-truthing the 8 flagged `is_remote` diffs against
+the rendered posting pages showed 7 greenhouse cases were **probe**
+over-detection (remote token lives only in internal `offices[]`, never on the
+applicant-facing page) — the greenhouse plugin is correct and unchanged, matching
+the prior resolved decision not to fold `offices[]` into `isRemote`. The one
+genuine plugin gap was workday: zekelman `Technical Sales Representative`
+(`JR002273`), whose location is literally `Remote_USA`. The workday service runs
+location labels through the shared `parseLocationList`, whose remote check is
+`/\bremote\b/i`; the underscore in `Remote_USA` is a word character, so the
+boundary after `Remote` never matched and `isRemote` stayed `false`.
+
+**Change:** in `source-ats-workday` (`workday.service.ts`), normalize `_`→space
+(then collapse whitespace) on each location label before `parseLocationList`.
+Behaviour-preserving for labels without underscores; only ever adds a word
+boundary. Added a workday service test (`locationsText: "Remote_USA"`, detail
+unavailable → `isRemote: true`, location free of underscores).
+
+**Out of scope (deferred):** description-text remote (navier MBA Internship,
+vannevar Eng Mgr — signal only in the job-description body) → separate
+investigation. fetch1 probe over-detection is fixed in the fetch1 repo.
+
+**Verification:** `source-ats-workday` suites green (46, incl. the new test);
+`tsc --noEmit` on the package clean.
+
+**Files:** `.specify/specs/5025-ats-isremote-detection/{spec,plan,tasks}.md`,
+`packages/plugins/source-ats-workday/src/workday.service.ts`,
+`packages/plugins/source-ats-workday/__tests__/workday.service.spec.ts`,
+`docs/index.md`, `docs/log.md`.
+
+---
+
 ## 2026-06-28 — Run #460 — Spec 5024 — Greenhouse `datePosted` keeps the source local day
 
 **Scope:** Fixes a `date_posted` off-by-one surfaced by the fetch1 Phase 1 ATS
