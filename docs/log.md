@@ -15,6 +15,27 @@
 
 ---
 
+## 2026-06-28 — Run #468 — Spec 5031 — Workable company display name
+
+**Change:** Fixes a `source-ats-workable` correctness bug found against live
+public Workable boards. The plugin's public path shipped the **slug** as
+`companyName`: `processJob` set `companyName: companySlug` (e.g.
+`shift-robotics`), and `WorkableResponse` never modelled the widget response's
+top-level `name` display field (`Shift Robotics`). Now reads `data.name` (trimmed)
+with the slug as a fallback, threading the resolved display name into `processJob`.
+Same class as Spec 5030 (BreezyHR). The bug is silent where the display name is a
+single token equal to the slug (`Elastium`→`elastium`) and surfaces wherever they
+differ. Slug-derived fields (`jobUrl`, `atsId`) are unchanged. The authenticated
+API v3 path (`processApiJob`) is intentionally untouched — its response carries no
+account/company name, so the slug remains the only available value (the
+ADP/bamboohr situation); all checked STATUS companies use the public path (no
+`WORKABLE_API_TOKEN`).
+
+**Verification:** `source-ats-workable` suites green (15, incl. new display-name
+and slug-fallback cases); `tsc --noEmit` on `apps/api/tsconfig.json` clean.
+
+---
+
 ## 2026-06-28 — Run #467 — Spec 5030 — BreezyHR company display name + structured-first compensation
 
 **Change:** Fixes two `source-ats-breezyhr` bugs (Spec 5015) found against live
