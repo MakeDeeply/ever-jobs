@@ -25,8 +25,7 @@ board **slug** as the careers-page id, but that endpoint expects the careers-pag
 empty — it never resolved the slug to a client id. Verified read-only via the
 fetch1 harness against 6 companies (3 STATUS + 3 extra board URLs): 29 real open
 roles across 5 resolvable tenants (gradientrobotics 5, mersenne 4, createme 10,
-mersennelabs 4, somewear-labs 6; theoceancompany/Ulysses no longer embeds Dover)
-— the plugin yielded 0 for all.
+mersennelabs 4, somewear-labs 6) — the plugin yielded 0 for all.
 
 The rewrite maps the real, public, unauthenticated REST flow:
 

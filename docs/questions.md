@@ -16,9 +16,8 @@
 UUID, or (in some board URLs) a company **display name** (`/apply/{Name}`). A
 UUID and a slug resolve deterministically, but a display name only resolves if it
 happens to match one of the heuristic slug variants we try (raw / lowercased /
-alnum-stripped / hyphenated). Some identifiers resolve via none of them — e.g.
-Ulysses Inc. (theoceancompany), whose careers page no longer embeds Dover at all.
-The adapter currently returns an empty result (no throw) when nothing resolves.
+alnum-stripped / hyphenated). Some identifiers resolve via none of them. The
+adapter currently returns an empty result (no throw) when nothing resolves.
 
 **Options:**
 

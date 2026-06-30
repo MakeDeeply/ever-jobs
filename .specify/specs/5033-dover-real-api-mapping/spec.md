@@ -27,9 +27,8 @@ id, so no tenant ever yields a role.
 
 Verified read-only via the fetch1 harness against 6 companies (3 STATUS + 3
 extra board URLs): 29 real open roles across 5 resolvable tenants
-(gradientrobotics 5, mersenne 4, createme 10, mersennelabs 4, somewear-labs 6;
-theoceancompany/Ulysses no longer embeds Dover) — the plugin returns **0** for
-all.
+(gradientrobotics 5, mersenne 4, createme 10, mersennelabs 4, somewear-labs 6)
+— the plugin returns **0** for all.
 
 ## Scope
 
@@ -86,9 +85,8 @@ reuses `getCompensationInterval` (`@ever-jobs/models`).
 - No plugin imports another plugin.
 - No live-network dependency in unit tests (the live e2e suite stays separate and
   zero-tolerant).
-- Name-form board identifiers that are not slug-resolvable by the public API
-  (e.g. Ulysses Inc./theoceancompany, which no longer embeds Dover) are out of
-  scope — they degrade to empty, as before.
+- Name-form board identifiers that are not slug-resolvable by the public API are
+  out of scope — they degrade to empty, as before.
 
 ## Contracts
 
