@@ -53,7 +53,7 @@ suffix.
 - **A. Harvest the YC mirror (current).** Public, unauthenticated, fully
   structured (Inertia list spine + ld+json detail). `companyUrl` still points at
   the canonical `workatastartup.com` board for correctness. No auth, no
-  Playwright; matches how fetch1 detection already classifies these domains.
+  Playwright; matches how upstream detection already classifies these domains.
 - **B. Harvest the canonical `workatastartup.com` board.** Authoritative host,
   but the job list/apply data is auth-gated, so it needs a logged-in session
   (Playwright + credentials) — heavy, brittle, and out of scope for a public
@@ -87,7 +87,7 @@ page and list jobs via JS/links the harvester can't enumerate.
   index.
 - **B. Follow on-page job links one level deep** and parse each target's
   ld+json. Recovers link-driven boards, but adds N fetches per page, link-intent
-  heuristics, and concurrency/robots concerns — overlaps the fetch1
+  heuristics, and concurrency/robots concerns — overlaps the upstream
   apply-link-discovery work.
 - **C. Require the caller to pass each job URL** (treat the plugin as a pure
   per-URL extractor). Simplest contract, but pushes enumeration entirely
@@ -95,7 +95,7 @@ page and list jobs via JS/links the harvester can't enumerate.
 
 **Default (proceeding):** **A.** Keep the harvester a single-page extractor:
 it covers the embedded-`ItemList` and per-detail-page cases with zero crawl
-risk, and link-following enumeration belongs in the dedicated fetch1 discovery
+risk, and link-following enumeration belongs in the dedicated upstream discovery
 spec, not the ever-jobs source plugin.
 
 **Resolution:** _pending review._
