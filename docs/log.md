@@ -15,6 +15,16 @@
 
 ---
 
+## 2026-06-28 — Docs hygiene — cleanup old docs
+
+**Change:** Housekeeping cleanup of wording in older docs/specs
+(`docs/index.md`, `docs/log.md`, `docs/questions.md`, specs 5020–5024). No code
+or behaviour changes.
+
+**Verification:** `npm run lint:docs` clean.
+
+---
+
 ## 2026-06-28 — Run #462 — Spec 5026 — Ashby `isRemote` reads structured `workplaceType`
 
 **Change:** Ashby exposes both a boolean `isRemote` and a structured
@@ -51,8 +61,8 @@ test); `tsc --noEmit` on the package clean.
 
 ## 2026-06-28 — Run #460 — Spec 5024 — Greenhouse `datePosted` keeps the source local day
 
-**Scope:** Fixes a `date_posted` off-by-one surfaced by the fetch1 Phase 1 ATS
-regression (alt-path probe vs `source-ats-greenhouse`, 135 companies): every
+**Scope:** Fixes a `date_posted` off-by-one surfaced by an ATS audit
+(alt-path probe vs `source-ats-greenhouse`, 135 companies): every
 evening-US posting (30/30) reported the next day. Greenhouse returns
 `first_published`/`opened_at` as an offset ISO timestamp
 (`2026-04-20T22:32:33-04:00`); the plugin used
@@ -398,7 +408,7 @@ the wired shared files.
 
 ## 2026-06-24 — Run #459 — Spec 5023 — `source-ats-workatastartup` plugin
 
-**Scope:** YC Work at a Startup (WaaS) was newly detected in fetch1 (both the
+**Scope:** YC Work at a Startup (WaaS) was newly detected (both the
 canonical `workatastartup.com/companies/{slug}` and the public YC mirror
 `ycombinator.com/companies/{slug}/jobs`) but had no ever-jobs harvester. Adds a
 new `source-ats-workatastartup` plugin that harvests the YC public mirror.
@@ -495,7 +505,7 @@ castelion-corporation, 135 jobs) — so it returned 0 jobs everywhere. Manatal
 hosts its public career pages on the white-label domain `careers-page.com`,
 whose JSON API (`/api/v1.0/c/{slug}/jobs/`) is the working data layer the Vue
 front-end itself consumes. Repointed the plugin there and applied the full ATS
-checklist (`docs_fetch1/ats-plugin-feature-checklist-SPEC.md`).
+checklist.
 
 **Plugin rework (`packages/plugins/source-ats-manatal`):**
 - `manatal.constants.ts` — replaced the dead `api.manatal.com` endpoint with
@@ -634,7 +644,7 @@ are left untouched; only our fork's specs move.
 **Mapping (dense, order-preserving):** 742→5001, 743→5002, 744→5003, 745→5004,
 747→5005, 748→5006, 749→5007, 750→5008, 751→5009, 752→5010, 753→5011, 754→5012,
 755→5013, 756→5014, 757→5015, 758→5016, 759→5017. The full table and rationale
-live in the fetch1 design doc `docs_fetch1/ever-jobs-spec-renumber-SPEC.md`.
+live in the upstream spec-renumber design doc.
 
 **Changes:**
 

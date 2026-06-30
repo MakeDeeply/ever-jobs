@@ -12,7 +12,7 @@
 
 ## Problem
 
-The fetch1 Phase 1 ATS regression (alt-path probe vs `source-ats-greenhouse`
+An ATS audit (alt-path probe vs `source-ats-greenhouse`
 plugin, run 2026-06-28 over 135 companies) found a consistent `date_posted`
 discrepancy on every Greenhouse posting made in the evening US time: 30/30 such
 jobs reported a date **one day later** than the source.
@@ -75,7 +75,7 @@ latent off-by-one. The fix therefore has to be repo-wide, not greenhouse-only.
 - No change to genuinely `Date`-typed query-window math that is *meant* to be
   UTC (it now still goes through `toDateOnly`, which UTC-truncates `Date`
   inputs — behaviour-preserving).
-- No fetch1 changes.
+- No changes outside ever-jobs.
 
 ## Contracts
 
