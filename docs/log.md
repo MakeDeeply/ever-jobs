@@ -15,7 +15,34 @@
 
 ---
 
-## 2026-06-30 — Run #465 — Spec 5028 — ADP plugin mapped to the real WorkforceNow staffing API
+## 2026-06-28 — Run #466 — Spec 5029 — Paylocity full-body description, structured compensation, clean company name
+
+**Change:** Fixes three `source-ats-paylocity` detail-parse bugs found against
+live postings. (1) **Description dropped visible sections** — `parseDetail` took
+the description JSON-LD-first (`ldDescription ?? htmlParsed.description`), but the
+ld+json `JobPosting.description` carries only the section titled "Description";
+every other visible section ("Salary Description", "Requirements", …) was
+silently discarded even though `parseDetailHtml` already concatenates them all.
+Now the full-body HTML sections are the source and ld+json is a fallback only.
+(2) **Compensation ignored structured pay** — it text-parsed the (truncated)
+description and never read the detail ld+json `baseSalary`, so pay that lived only
+in the dropped "Salary Description" section (e.g. `$27.00 - $35.00/hour`) came out
+empty. Now structured-first via `jobPostingLdToCompensation(baseSalary)` →
+`resolveCompensation` with the (now full-body) description text as fallback;
+`salarySource` is `'structured'` when `baseSalary` is present, else
+`'description'` (matching `source-jsonld` / `workatastartup` / `manatal`).
+(3) **`companyName` carried the module id** — `ModuleTitle` is
+`"SendCutSend Inc [175255]"`; now a trailing ` [\d+]` is stripped. The fix only
+*adds* previously-dropped description content and a more reliable pay source — no
+posting loses data relative to before.
+
+**Verification:** `source-ats-paylocity` suite green (11, incl. new structured-first,
+full-body-description, and text-fallback cases + tightened module-id-strip
+assertion); `tsc --noEmit` on the package and `apps/api/tsconfig.json` clean.
+
+---
+
+## 2026-06-28 — Run #465 — Spec 5028 — ADP plugin mapped to the real WorkforceNow staffing API
 
 **Change:** `source-ats-adp` returned zero jobs for all 5 companies known to use
 ADP that were checked (4 of which have open requisitions) — a clean empty array
