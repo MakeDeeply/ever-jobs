@@ -25,10 +25,9 @@ workFromHomeType: parsedLocations.workFromHomeType,
 So Hybrid postings (`isRemote=true`, `workplaceType='Hybrid'`) are mislabelled
 `isRemote: true`, and `workFromHomeType` is sourced only from location *text*,
 so a Hybrid role located "Austin, TX" emits `isRemote: true` with **no**
-`workFromHomeType` — the one field that says "Hybrid" is discarded. The
-fetch1 remote-text investigation surfaced this (§5.1): ~70 Ashby Hybrid roles
-across the harvest were counted as remote. The plugin's types also never modelled
-`workplaceType`, so it was blind to the field.
+`workFromHomeType` — the one field that says "Hybrid" is discarded. Hybrid
+postings are therefore mislabelled remote across the harvested Ashby corpus. The
+plugin's types also never modelled `workplaceType`, so it was blind to the field.
 
 ## Scope
 

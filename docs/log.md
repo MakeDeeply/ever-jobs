@@ -21,9 +21,8 @@
 `workplaceType` (`OnSite`/`Hybrid`/`Remote`), but `source-ats-ashby` read only
 the boolean — and Ashby sets `isRemote=true` for Hybrid roles too. So Hybrid
 postings (`isRemote=true`, `workplaceType='Hybrid'`) were mislabelled
-`isRemote: true` (~70 across the fetch1 remote-text harvest), and
-`workFromHomeType` was sourced only from location text, discarding the structured
-signal. Adds `workplaceType?: string | null` to `AshbyJob` and, in
+`isRemote: true` across the harvested Ashby corpus, and `workFromHomeType` was
+sourced only from location text, discarding the structured signal. Adds `workplaceType?: string | null` to `AshbyJob` and, in
 `ashby.service.ts`, derives `isRemote` from `workplaceType` (true only for
 `Remote`), falling back to the boolean when `workplaceType` is absent and OR'd
 with location-text `remoteMentioned`; maps `workplaceType`→`workFromHomeType`
