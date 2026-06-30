@@ -10,6 +10,35 @@
 
 ---
 
+## Q-077 — paycom: should a tenant with no readable `sessionJWT` / company name degrade silently, or surface an error?
+
+**Context:** Spec 5032. Paycom's board is a client-rendered React app that boots
+a public bearer into `configsFromHost.sessionJWT`; the adapter scrapes that token
+to call the JSON API. If a tenant's board changes shape (no `sessionJWT`), or the
+clientkey is unknown (board 404), the adapter currently returns an empty result
+(no throw) — matching every sibling ATS adapter and keeping a batch run alive.
+Likewise, when `/api/ats/company-name` fails, `companyName` is left null rather
+than reverting to the clientkey (the old, wrong behaviour).
+
+**Options:**
+
+- **A. Silent graceful empty (current).** Empty/partial result on missing token,
+  unknown clientkey, or malformed payload; `companyName` null when its endpoint
+  fails. Consistent with adp/breezy/workable; a single bad tenant never breaks a
+  batch. Drift becomes a silent zero (surfaced by the live e2e suite + the fetch1
+  harness probe).
+- **B. Throw on token/clientkey failure.** Fail loudly so monitoring catches
+  drift immediately. Breaks the batch-resilience contract every other adapter
+  holds; one bad tenant aborts the run.
+- **C. Fall back to the clientkey for `companyName`.** Always emit a name. But the
+  clientkey is a 32-char hex token, not a display name — this is exactly the bug
+  the rewrite removed.
+
+**Default (proceeding): A** — graceful empty + null company name on failure,
+consistent with the other ATS adapters and the no-throw batch contract.
+
+---
+
 ## Q-076 — breezy: trust the structured `baseSalary` even when the employer's declared unit looks wrong?
 
 **Context:** Spec 5030. BreezyHR serves pay in two places: a free-text list

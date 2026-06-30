@@ -15,6 +15,56 @@
 
 ---
 
+## 2026-06-28 — Run #469 — Spec 5032 — Paycom real API mapping (full rewrite)
+
+**Change:** Full rewrite of `source-ats-paycom`, which returned **zero jobs for
+every tenant** (verified on 5 live tenants — Boxabl, Spudnik, Guardian Bikes,
+Aperture, Prefix — with 8/1/5/13/15 = 42 open roles; the plugin yielded 0 for
+all). It was broken at four compounding points (ADP-class, cf. Spec 5028):
+
+1. **Token never extracted.** The clientkey-addressed board is a client-rendered
+   React app that boots a public, read-only bearer into
+   `configsFromHost.sessionJWT`; the old regex only matched `"token"` /
+   `"accessToken"` / a `Bearer` literal, so `extractToken` returned null.
+2. **Search payload incomplete.** The search endpoint returns an empty set
+   unless the full `filtersForQuery` object is POSTed alongside `skip`/`take`;
+   the old code sent a bare `{skip,take}`.
+3. **Search envelope mismatch.** The real key is `jobPostingPreviews`
+   (+ `jobPostingPreviewsCount`); the old `parsePreviews` read
+   `results`/`data`/`items`/`jobPostings`.
+4. **Detail envelope mismatch.** `GET /api/ats/job-postings/{id}` wraps the
+   posting in `{ jobPosting: {…} }`; the old code read `response.data` directly.
+
+Behind those, the mapping was wrong: `datePosted` lives **only** inside each
+detail's `googleJobJson` schema.org string (preview `postedOn` / detail
+`startDate` are empty); the tenant display name is behind a dedicated
+`GET /api/ats/company-name` (the old code derived it from the clientkey); and the
+`fromJsonLd` fallback targeted the legacy `ViewJobDetails` page (now a no-JS
+shell). The rewrite maps the real surface: board → `sessionJWT` → company-name +
+search (`jobPostingPreviews`) + detail (`{ jobPosting }`); description =
+`description` + `qualifications`; location parsed (ZIP stripped) via the shared
+`parseLocationText`; `isRemote`/`workFromHomeType` from the `remoteType` code;
+`datePosted`/url/`baseSalary` from the `googleJobJson` node; compensation
+structured-first (Spec 5018). Clientkey resolved from `companySlug` (bare key) or
+a board `companyUrl` (`/portal/{KEY}/` path or `?clientkey=` query). Graceful
+empty/partial on missing token, unknown clientkey (HTTP 4xx), or malformed
+payload.
+
+A reusable `jobPostingLdFromNode(value)` was added to `@ever-jobs/common`
+(`utils/jsonld.ts`): maps an already-parsed (or JSON-string) schema.org
+`JobPosting` to a `JobPostingLd`, reusing the Spec 5022 container-unwrapping +
+field mapping without a `<script>` round-trip (which would truncate on a literal
+`</script>` in the body).
+
+**Verification:** `source-ats-paycom` suites green — 10 mocked unit (real
+envelope, full `filtersForQuery`, company-name, `googleJobJson` `datePosted`,
+structured comp, remote, clientkey-from-url, no-token/unknown-tenant/no-slug
+empties, detail-failure fallback, dedupe + `resultsWanted`) + 5 live e2e; common
+`jsonld` green (20, incl. `jobPostingLdFromNode`). `tsc --noEmit` on
+`apps/api/tsconfig.json` clean; `lint:docs` clean. See Q-077.
+
+---
+
 ## 2026-06-28 — Run #468 — Spec 5031 — Workable company display name
 
 **Change:** Fixes a `source-ats-workable` correctness bug found against live
