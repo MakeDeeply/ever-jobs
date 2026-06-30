@@ -15,6 +15,32 @@
 
 ---
 
+## 2026-06-28 — Run #467 — Spec 5030 — BreezyHR company display name + structured-first compensation
+
+**Change:** Fixes two `source-ats-breezyhr` bugs (Spec 5015) found against live
+`{slug}.breezy.hr` boards across several companies. (1) **`companyName` shipped
+the slug.** `processJob` set `companyName: company` (the `input.companySlug`,
+e.g. `ondas-networks`, `vvater-llc`, `reaxiomatic-inc`, `zeno-power`), and
+`BreezyJob` never modelled the list record's `company.name` display name
+(`Ondas Inc.`, `VVater`, `Reaxiomatic`, `Zeno Power`); now reads `company.name`
+with the slug as a fallback. (2) **Compensation ignored the structured
+`baseSalary`.** It parsed pay only from the free-text list `salary`, so a
+unit-less range (`"$30 - $45"`) could be mis-guessed (hourly) where the detail
+ld+json `baseSalary` declared `unitText: YEAR`. The per-job detail overlay now
+also returns the structured `baseSalary` (new `BreezyDetail` type), and
+compensation is structured-first via `jobPostingLdToCompensation(baseSalary)` →
+`resolveCompensation` with the free-text `salary` as fallback; `salarySource` is
+`'structured'` when `baseSalary` is present, else `'description'` (matching
+`source-jsonld` / `workatastartup` / `manatal` / `paylocity`). The fix never
+*removes* compensation relative to today — it adds the structured source ahead of
+the existing text fallback.
+
+**Verification:** `source-ats-breezyhr` suite green (13, incl. new company-name,
+slug-fallback, structured-first, and text-fallback cases); `tsc --noEmit` on
+`apps/api/tsconfig.json` clean.
+
+---
+
 ## 2026-06-28 — Run #466 — Spec 5029 — Paylocity full-body description, structured compensation, clean company name
 
 **Change:** Fixes three `source-ats-paylocity` detail-parse bugs found against
