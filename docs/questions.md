@@ -10,6 +10,39 @@
 
 ---
 
+## Q-076 — breezy: trust the structured `baseSalary` even when the employer's declared unit looks wrong?
+
+**Context:** Spec 5030. BreezyHR serves pay in two places: a free-text list
+`salary` and a structured detail ld+json `baseSalary` (`min`/`max`/`unitText`).
+Across the probed companies they agree on almost every paid posting, but one
+zeno-power role declares `"$30 - $45"` (free text, unit-less) with
+`baseSalary.unitText = "YEAR"` — i.e. `$30–$45/year`, which is almost certainly
+mis-entered (likely hourly). The free-text heuristic guesses hourly; the
+structured source says yearly.
+
+**Options:**
+
+- **A. Structured-first (current).** Prefer `baseSalary` over the free-text
+  heuristic (Spec 5018 precedence); record the winning source in `salarySource`.
+  Trusts the employer's structured declaration even when it looks wrong; one
+  dubious posting surfaces `$30–$45/year`.
+- **B. Text-first.** Keep parsing the free-text `salary` first and use
+  `baseSalary` only when the text yields nothing. Preserves today's output and
+  the "more sensible" hourly guess for the edge case, but discards the
+  authoritative structured interval everywhere else.
+- **C. Reconcile heuristically.** When text and structured disagree on interval,
+  pick the "more plausible" one (e.g. small amounts ⇒ hourly). Fragile,
+  special-cased, and hides genuine employer data.
+
+**Default (proceeding):** **A.** Structured-first matches the cross-plugin
+convention (Spec 5018 / paylocity / manatal / workatastartup) and is auditable
+via `salarySource`; the single dubious posting is an employer data-entry issue,
+not a parser bug.
+
+**Resolution:** _pending review._
+
+---
+
 ## Q-075 — adp: what should `companyName` be when the payload has no readable name?
 
 **Context:** Spec 5028. The ADP Workforce Now public staffing API keys a board by
