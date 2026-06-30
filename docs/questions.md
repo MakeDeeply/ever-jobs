@@ -10,6 +10,31 @@
 
 ---
 
+## Q-075 — adp: what should `companyName` be when the payload has no readable name?
+
+**Context:** Spec 5028. The ADP Workforce Now public staffing API keys a board by
+an opaque `cid` GUID and carries no human-readable company name on the
+requisition. Other ATS plugins (e.g. bamboohr) fall back to `companySlug`, but
+for ADP the slug *is* the GUID, so that would surface a GUID as the company name.
+
+**Options:**
+
+- **A. Leave `companyName: null` (current).** Avoids a GUID-as-name; lets
+  aggregation/enrichment fill the real name from the company record. Downside:
+  the raw plugin output has no company name.
+- **B. Use the `cid` GUID as `companyName`.** Always populated, but the value is
+  meaningless to a human and pollutes any name-based dedup/display.
+- **C. Derive a name from a location label's embedded org string** (some
+  `requisitionLocations[].nameCode.shortName` values embed an org name). Fragile
+  and tenant-specific; not reliably present.
+
+**Default (proceeding):** **A.** Leave `companyName: null` and let the caller
+supply the real name; revisit if a reliable name field is found in the payload.
+
+**Resolution:** _pending review._
+
+---
+
 ## Q-074 — greenhouse: which `metadata` field name(s) count as the "Work Location" remote signal?
 
 **Context:** Spec 5027. Greenhouse `metadata` entries are operator-named and not
