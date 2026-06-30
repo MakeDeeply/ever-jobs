@@ -10,6 +10,36 @@
 
 ---
 
+## Q-078 — dover: how should a board identifier that no public endpoint resolves be handled?
+
+**Context:** Spec 5033. Dover addresses a tenant by a board slug, a careers-page
+UUID, or (in some board URLs) a company **display name** (`/apply/{Name}`). A
+UUID and a slug resolve deterministically, but a display name only resolves if it
+happens to match one of the heuristic slug variants we try (raw / lowercased /
+alnum-stripped / hyphenated). Some identifiers resolve via none of them — e.g.
+Ulysses Inc. (theoceancompany), whose careers page no longer embeds Dover at all.
+The adapter currently returns an empty result (no throw) when nothing resolves.
+
+**Options:**
+
+- **A. Heuristic slug variants + graceful empty (current).** Try the variant set;
+  if none resolves, return empty. Resolves every observed tenant addressed by
+  slug/UUID and most name forms; a single unresolvable tenant never breaks a
+  batch. Drift / a novel name→slug rule becomes a silent zero (surfaced by the
+  live e2e suite + the fetch1 harness probe).
+- **B. Browser-render the board to scrape the embedded client id.** Would resolve
+  any name form by reading the SPA's bootstrapped state. Far heavier (headless
+  browser per tenant), violates the lightweight-HTTP contract the other adapters
+  hold, and still fails for tenants that left Dover.
+- **C. Require callers to store a slug/UUID, never a display name.** Pushes
+  resolution upstream; cleanest contract but needs a data backfill and doesn't
+  help boards that publish only a name form.
+
+**Default (proceeding): A** — heuristic variants + graceful empty, consistent
+with the other ATS adapters and the no-throw batch contract.
+
+---
+
 ## Q-077 — paycom: should a tenant with no readable `sessionJWT` / company name degrade silently, or surface an error?
 
 **Context:** Spec 5032. Paycom's board is a client-rendered React app that boots
