@@ -17,15 +17,15 @@
 
 ## 2026-06-28 — Run #470 — Spec 5033 — Dover real API mapping (full rewrite)
 
-**Change:** Full rewrite of `source-ats-dover`, which returned **zero jobs for
-every tenant** (ADP/Paycom-class, cf. Specs 5028 / 5032). Its **entire API
-surface was wrong**: it called `GET /api/v1/careers-page/{slug}` treating the
-board **slug** as the careers-page id, but that endpoint expects the careers-page
-**client id** (a UUID), so it 404'd for every tenant and degraded silently to
-empty — it never resolved the slug to a client id. Verified read-only via the
-fetch1 harness against 6 companies (3 STATUS + 3 extra board URLs): 29 real open
-roles across 5 resolvable tenants (gradientrobotics 5, mersenne 4, createme 10,
-mersennelabs 4, somewear-labs 6) — the plugin yielded 0 for all.
+**Change:** Full rewrite of `source-ats-dover`, which never resolves a board slug
+to a careers-page client id. It called `GET /api/v1/careers-page/{slug}` treating
+the board **slug** as the careers-page id, but that endpoint expects the
+careers-page **client id** (a UUID), so it 404'd for any slug and fell back to
+scanning the SPA board HTML for JSON-LD (empty on the client-rendered shell) —
+yielding nothing. Verified read-only via the fetch1 harness against 5 distinct
+companies (gradientrobotics, Mersenne Labs, createme, somewear-labs resolve, 25
+open roles; theoceancompany no longer resolves) — the plugin yielded 0 for all.
+Only slug/name-addressed boards were tested.
 
 The rewrite maps the real, public, unauthenticated REST flow:
 

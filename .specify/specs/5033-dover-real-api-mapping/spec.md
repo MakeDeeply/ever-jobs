@@ -12,23 +12,23 @@
 
 ## Problem
 
-The Dover plugin (created in the 10-adapter batch, Specs 355–364) returns
-**zero jobs for every tenant** — it is completely non-functional (ADP/Paycom
-class, cf. Specs 5028 / 5032). Its **entire API surface is wrong**: it calls
+The Dover plugin (created in the 10-adapter batch, Specs 355–364) never resolves
+a board slug to a careers-page client id. It calls
 
 ```
 GET /api/v1/careers-page/{slug}
 ```
 
-treating the board **slug** as the careers-page id. That endpoint expects the
-careers-page **client id** (a UUID), so it 404s for every tenant; the plugin
-swallows the 4xx and degrades to empty. It never resolves the slug to a client
-id, so no tenant ever yields a role.
+treating the board **slug** as the careers-page id, but that endpoint expects the
+careers-page **client id** (a UUID), so it 404s for any slug; the plugin swallows
+the 4xx and falls back to scanning the board HTML for schema.org JSON-LD, which is
+empty on the client-rendered SPA shell — so the result is empty.
 
-Verified read-only via the fetch1 harness against 6 companies (3 STATUS + 3
-extra board URLs): 29 real open roles across 5 resolvable tenants
-(gradientrobotics 5, mersenne 4, createme 10, mersennelabs 4, somewear-labs 6)
-— the plugin returns **0** for all.
+Verified read-only via the fetch1 harness against 5 distinct companies
+(gradientrobotics, Mersenne Labs, createme, somewear-labs resolve, **25 open
+roles**; theoceancompany no longer resolves) — the plugin returns **0** for all.
+Only slug/name-addressed boards were tested; a careers-page UUID or a pre-rendered
+board is not covered by this evidence.
 
 ## Scope
 
