@@ -15,6 +15,48 @@
 
 ---
 
+## 2026-06-28 — Run #472 — Spec 5035 — Gem detail overlay
+
+**Change:** `source-ats-gem` ran only the `JobBoardList` GraphQL op, which carries
+no body, posted date, or pay — those live on the per-posting
+`ExternalJobPostingQuery` detail — so `description`, `datePosted`, and
+`compensation` were always absent. It also dropped `employmentType` (the enum is
+present in the list `job` node) and built a 404 job URL (`/{slug}/jobs/{extId}`;
+the canonical form is `/{slug}/{extId}`).
+
+Verified read-only against 6 live Gem boards (firestorm, andrenam, albacore,
+astroforge-io, 43north, voltairlabs-com) carrying 100 open roles: counts and
+matching were correct, but every sampled job differed on description, posted
+date, employment type, and URL.
+
+The fix overlays each kept posting (after the `resultsWanted` cap) with its
+`ExternalJobPostingQuery` detail under bounded concurrency:
+
+- **description** — `descriptionHtml` (full body), formatted per
+  `descriptionFormat`.
+- **datePosted** — `firstPublishedTsSec` (Unix seconds) → `Date`; `startDateTs`
+  fallback.
+- **compensation** — `compensationHtml` is free text; parsed via the shared
+  salary extractor (`resolveCompensation`, Spec 5018). Gem exposes no structured
+  bounds.
+- **employmentType** — humanised from the list `job.employmentType` enum
+  (`FULL_TIME` → `Full-time`); mapped to `jobType`.
+- **jobUrl** — `https://jobs.gem.com/{slug}/{extId}`.
+
+`companyName` (`jobBoardExternal.teamDisplayName`), locations, `isRemote`, and
+`department` are unchanged. A failed detail fetch degrades to the list-only
+fields for that job.
+
+**Tests:** Gem suite green (10 mocked unit); API typecheck + docs lint clean.
+
+**Files:** `packages/plugins/source-ats-gem/src/{gem.service.ts,gem.constants.ts,
+gem.types.ts}`,
+`packages/plugins/source-ats-gem/__tests__/gem.service.spec.ts`,
+`.specify/specs/5035-gem-detail-overlay/{spec,plan,tasks}.md`,
+`docs/index.md`, `docs/log.md`.
+
+---
+
 ## 2026-06-28 — Run #471 — Spec 5034 — JazzHR board rework
 
 **Change:** Reworked the `source-ats-jazzhr` public-board path, which returned
