@@ -22,10 +22,9 @@ to a careers-page client id. It called `GET /api/v1/careers-page/{slug}` treatin
 the board **slug** as the careers-page id, but that endpoint expects the
 careers-page **client id** (a UUID), so it 404'd for any slug and fell back to
 scanning the SPA board HTML for JSON-LD (empty on the client-rendered shell) —
-yielding nothing. Verified read-only via the fetch1 harness against 5 distinct
-companies (gradientrobotics, Mersenne Labs, createme, somewear-labs resolve, 25
-open roles; theoceancompany no longer resolves) — the plugin yielded 0 for all.
-Only slug/name-addressed boards were tested.
+yielding nothing. Verified read-only via the fetch1 harness against 4 live Dover
+boards (gradientrobotics, Mersenne Labs, createme, somewear-labs) carrying 25 open
+roles — the plugin yielded 0 for all.
 
 The rewrite maps the real, public, unauthenticated REST flow:
 

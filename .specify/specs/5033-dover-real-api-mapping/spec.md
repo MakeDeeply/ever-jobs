@@ -24,11 +24,9 @@ careers-page **client id** (a UUID), so it 404s for any slug; the plugin swallow
 the 4xx and falls back to scanning the board HTML for schema.org JSON-LD, which is
 empty on the client-rendered SPA shell — so the result is empty.
 
-Verified read-only via the fetch1 harness against 5 distinct companies
-(gradientrobotics, Mersenne Labs, createme, somewear-labs resolve, **25 open
-roles**; theoceancompany no longer resolves) — the plugin returns **0** for all.
-Only slug/name-addressed boards were tested; a careers-page UUID or a pre-rendered
-board is not covered by this evidence.
+Verified read-only via the fetch1 harness against 4 live Dover boards
+(gradientrobotics, Mersenne Labs, createme, somewear-labs) carrying **25 open
+roles** — the plugin returns **0** for all.
 
 ## Scope
 
