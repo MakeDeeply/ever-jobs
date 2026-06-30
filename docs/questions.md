@@ -10,6 +10,33 @@
 
 ---
 
+## Q-073 — ashby: should `workplaceType='OnSite'` emit an explicit `workFromHomeType`?
+
+**Context:** Spec 5026. Ashby's structured `workplaceType` carries `OnSite` /
+`Hybrid` / `Remote`. The fix maps `Hybrid`→`Hybrid`, `Remote`→`Remote`. `OnSite`
+could either resolve to no `workFromHomeType` (the field is omitted) or to an
+explicit `'On-site'` label. There is no `workFromHomeType` controlled vocabulary
+yet, and `null`/absence currently conflates "asserted on-site" with "no signal"
+across every ATS.
+
+**Options:**
+
+- **A. `OnSite` → none (current).** Mirror the existing lever/workday/workable
+  convention (on-site resolves to null/none). Consistent, non-breaking, no new
+  vocabulary; but the on-site assertion is not preserved.
+- **B. `OnSite` → `'On-site'` (and add an `'Unknown'` state for silence).**
+  Makes the field a true 4-state workplace axis, but it is a behaviour change for
+  every ATS and needs its own spec (controlled vocabulary in `@ever-jobs/models`,
+  `isRemote`↔`workFromHomeType` invariant, consumer/test updates).
+
+**Default (proceeding):** **A.** Keep `OnSite`→none for parity with the other
+ATS plugins; the 4-state `workFromHomeType` (`On-site`/`Unknown`) is tracked
+separately as a future cross-ATS spec.
+
+**Resolution:** _pending review._
+
+---
+
 ## Q-072 — workatastartup: harvest the YC public mirror or the canonical WaaS board?
 
 **Context:** Spec 5023. YC Work at a Startup exposes the same board at two URL
