@@ -15,6 +15,58 @@
 
 ---
 
+## 2026-06-28 — Run #470 — Spec 5033 — Dover real API mapping (full rewrite)
+
+**Change:** Full rewrite of `source-ats-dover`, which never resolves a board slug
+to a careers-page client id. It called `GET /api/v1/careers-page/{slug}` treating
+the board **slug** as the careers-page id, but that endpoint expects the
+careers-page **client id** (a UUID), so it 404'd for any slug and fell back to
+scanning the SPA board HTML for JSON-LD (empty on the client-rendered shell) —
+yielding nothing. Verified read-only via the fetch1 harness against 4 live Dover
+boards (gradientrobotics, Mersenne Labs, createme, somewear-labs) carrying 25 open
+roles — the plugin yielded 0 for all.
+
+The rewrite maps the real, public, unauthenticated REST flow:
+
+1. **Resolve** the addressing token → careers-page client id: a careers-page
+   UUID via `GET /api/v1/careers-page/{id}`, else slug variants via
+   `GET /api/v1/careers-page-slug/{slug}` → `{ id, name, slug }`. Dover slugs
+   derive from the company name inconsistently ("Mersenne Labs" → `mersennelabs`,
+   "Somewear Labs" → `somewear-labs`), so we try raw / lowercased / alnum-stripped
+   / hyphenated variants.
+2. **List** `GET /api/v1/careers-page/{clientId}/jobs` → `{ count, next,
+   results }`; follow `next`, exclude Dover's seeded `is_sample` demo roles.
+3. **Overlay** each role's detail `GET /api/v1/inbound/application-portal-job/{id}`
+   for `client_name`, `user_provided_description`, structured `compensation`,
+   `created`, `locations`, `workplace_type`.
+
+Field mapping: `companyName` from the detail's `client_name` (the real display
+name, careers-page `name` fallback) — **not** the slug (the old code title-cased
+the slug); `description` = `user_provided_description` (full HTML body),
+format-converted; compensation structured-first (Spec 5018) from the
+`compensation` block (`lower_bound`/`upper_bound`/`currency_code`, interval from
+`salary_range_type` via the shared `getCompensationInterval`), body-text
+fallback, `salarySource` recorded; `datePosted` from `created`; `isRemote` from
+`workplace_type === 'REMOTE'` / a `REMOTE` location / remote title text;
+`employmentType` normalised from `compensation.employment_type`; location from
+the first `locations[].location_option`. Token resolved from `companySlug`
+(slug / UUID / company name) or a board `companyUrl` (`/jobs/{slug}`,
+`/apply/{Name}`, `/{company}/careers/{uuid}`). Graceful empty/partial on unknown
+tenant (HTTP 4xx), removed role, or malformed payload.
+
+No new `@ever-jobs/common` helper was needed — structured-first precedence reuses
+`resolveCompensation` (Spec 5018) and the interval mapping reuses
+`getCompensationInterval` (`@ever-jobs/models`).
+
+**Verification:** `source-ats-dover` jest suite green — 9 mocked unit (resolve →
+list → overlay with structured comp + `client_name` company; UUID resolves
+without a slug call; hyphenated slug-variant fallback; `REMOTE` workplace; sample
+exclusion; detail-404 listing fallback; unresolvable-tenant/no-input empties;
+`/jobs/{slug}` URL parsing). `tsc --noEmit` on `apps/api/tsconfig.json` clean;
+`lint:docs` clean. See Q-078.
+
+---
+
 ## 2026-06-28 — Run #469 — Spec 5032 — Paycom real API mapping (full rewrite)
 
 **Change:** Full rewrite of `source-ats-paycom`, which returned **zero jobs for
