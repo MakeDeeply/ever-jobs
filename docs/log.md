@@ -15,6 +15,27 @@
 
 ---
 
+## 2026-06-28 — Run #462 — Spec 5026 — Ashby `isRemote` reads structured `workplaceType`
+
+**Change:** Ashby exposes both a boolean `isRemote` and a structured
+`workplaceType` (`OnSite`/`Hybrid`/`Remote`), but `source-ats-ashby` read only
+the boolean — and Ashby sets `isRemote=true` for Hybrid roles too. So Hybrid
+postings (`isRemote=true`, `workplaceType='Hybrid'`) were mislabelled
+`isRemote: true` (~70 across the fetch1 remote-text harvest), and
+`workFromHomeType` was sourced only from location text, discarding the structured
+signal. Adds `workplaceType?: string | null` to `AshbyJob` and, in
+`ashby.service.ts`, derives `isRemote` from `workplaceType` (true only for
+`Remote`), falling back to the boolean when `workplaceType` is absent and OR'd
+with location-text `remoteMentioned`; maps `workplaceType`→`workFromHomeType`
+(merged with the location-text value) mirroring the lever plugin. `OnSite`
+continues to resolve to no `workFromHomeType` (consistent with lever/workday/
+workable).
+
+**Verification:** `source-ats-ashby` suites green (28, incl. new Hybrid / Remote
+/ no-`workplaceType` cases); `tsc --noEmit` on the package clean.
+
+---
+
 ## 2026-06-28 — Run #461 — Spec 5025 — Workday `isRemote` detects `Remote_*` locations
 
 **Change:** Workday postings whose location is a slug like `Remote_USA` were not
