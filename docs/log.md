@@ -25,8 +25,8 @@ with no de-dupe. On large boards the duplicates consume the `resultsWanted` cap
 and drop real roles. It also set `companyName` to the slug and never opened the
 detail page, so description, employment type, and department were absent.
 
-Verified read-only via the fetch1 harness against 6 live JazzHR boards (opulo,
-herthametals, biosero, gocanvas, liquidpiston, deka) carrying 71 open roles.
+Verified read-only against 6 live JazzHR boards (opulo, herthametals, biosero,
+gocanvas, liquidpiston, deka) carrying 71 open roles.
 
 The rework parses the desktop `<table id="jobs_table">` via Cheerio and de-dupes
 by board code (so the mobile copy is ignored). Other mappings:

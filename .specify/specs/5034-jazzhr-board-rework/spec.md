@@ -20,8 +20,8 @@ on large boards the duplicates consume the `resultsWanted` cap and silently drop
 real roles. It also sets `companyName` to the slug, and never opens the detail
 page, so `description`, `employmentType`, and `department` are absent.
 
-Verified read-only via the fetch1 harness against 6 live JazzHR boards (opulo,
-herthametals, biosero, gocanvas, liquidpiston, deka) carrying **71 open roles**:
+Verified read-only against 6 live JazzHR boards (opulo, herthametals, biosero,
+gocanvas, liquidpiston, deka) carrying **71 open roles**:
 the plugin returned ~2× that count, with `companyName` = slug and no body,
 employment type, or department.
 
