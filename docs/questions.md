@@ -10,6 +10,36 @@
 
 ---
 
+## Q-074 — greenhouse: which `metadata` field name(s) count as the "Work Location" remote signal?
+
+**Context:** Spec 5027. Greenhouse `metadata` entries are operator-named and not
+standardized, so the remote "Work Location" signal can appear under different
+labels (`Work Location`, `Location Type`, `Workplace Type`, `Remote?`, …). The
+fix matches the single literal `name` "Work Location" (case-insensitive). A
+broader matcher risks false positives (a free-text "Work Location: our HQ in
+Austin" field would parse as a city, not a remote signal); too narrow a matcher
+misses boards that use a synonym.
+
+**Options:**
+
+- **A. Match only `Work Location` (current).** Predictable, no false positives,
+  matches the field the task named. Misses synonymous custom field names.
+- **B. Match a small synonym set** (`Work Location`, `Location Type`,
+  `Workplace Type`). Catches more boards, but each synonym must be confirmed to
+  be an enum-style remote field rather than free text, or it adds noise.
+- **C. Scan every single-select `metadata` value for a remote/hybrid token.**
+  Maximal recall, but highest false-positive risk (any enum value containing
+  "remote" flips detection).
+
+**Default (proceeding):** **A.** Match the literal "Work Location" field; widen
+to a vetted synonym set later if the harvested corpus shows boards using other
+names. `offices[]` already provides a second, structured remote signal
+independent of this field.
+
+**Resolution:** _pending review._
+
+---
+
 ## Q-073 — ashby: should `workplaceType='OnSite'` emit an explicit `workFromHomeType`?
 
 **Context:** Spec 5026. Ashby's structured `workplaceType` carries `OnSite` /

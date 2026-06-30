@@ -15,7 +15,28 @@
 
 ---
 
-## 2026-06-28 — Docs hygiene — cleanup old docs
+## 2026-06-28 — Run #464 — Spec 5027 — Greenhouse `isRemote` reads `offices[]` + "Work Location" metadata
+
+**Change:** Greenhouse exposes no structured remote *flag*, so `source-ats-greenhouse`
+inferred `isRemote` only from the role `location` text — discarding its two
+machine-readable remote signals: the company `offices[]` (e.g. an office named
+"Remote") and the company-defined `metadata` "Work Location" entry. A remote
+posting whose `location.name` is a concrete city was therefore mislabelled
+`isRemote: false`. In `greenhouse.service.ts`, folds both into the `isRemote` OR
+and maps a merged `workFromHomeType`, via new `officeLabels`, `workLocationLabels`,
+and `mergeWorkFromHomeType` helpers. Applies to the public board `processJob`
+(offices + metadata) and the Harvest `processHarvestJob` (offices only — the
+Harvest list endpoint carries no company metadata). Detection only *adds* to the
+existing OR, so no posting becomes less remote than before; the role `location`
+remains the sole display source.
+
+**Verification:** `source-ats-greenhouse` suites green (18, incl. new
+office-Remote / metadata Remote / metadata Hybrid / non-remote cases);
+`tsc --noEmit` on the package and `apps/api/tsconfig.build.json` clean.
+
+---
+
+## 2026-06-28 — Run #463 — Docs hygiene — cleanup old docs
 
 **Change:** Housekeeping cleanup of wording in older docs/specs
 (`docs/index.md`, `docs/log.md`, `docs/questions.md`, specs 5020–5024). No code
