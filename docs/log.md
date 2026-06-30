@@ -15,6 +15,46 @@
 
 ---
 
+## 2026-06-28 — Run #471 — Spec 5034 — JazzHR board rework
+
+**Change:** Reworked the `source-ats-jazzhr` public-board path, which returned
+about twice the real job count. All five of its CSS selectors miss the live
+`applytojob.com` board theme, so it fell back to matching every `/apply/` anchor
+— and the board renders each job twice (a desktop table row and a mobile block),
+with no de-dupe. On large boards the duplicates consume the `resultsWanted` cap
+and drop real roles. It also set `companyName` to the slug and never opened the
+detail page, so description, employment type, and department were absent.
+
+Verified read-only via the fetch1 harness against 6 live JazzHR boards (opulo,
+herthametals, biosero, gocanvas, liquidpiston, deka) carrying 71 open roles.
+
+The rework parses the desktop `<table id="jobs_table">` via Cheerio and de-dupes
+by board code (so the mobile copy is ignored). Other mappings:
+
+- **companyName** — the board's schema.org `Organization` ld+json `name` (else
+  the detail page's `h2.job_company`, else the slug).
+- **description / employmentType** — overlaid from each role's
+  `/apply/jobs/details/{code}` page (`div.job_description` body, `h3.job_meta`
+  trailing segment), fetched under bounded concurrency.
+- **department** — inline `span.resumator_department` or the most recent
+  `tr.resumator_department_heading` section row.
+- **isRemote** — location or title mentions "remote".
+
+JazzHR's public board/detail HTML exposes no posted date or structured pay, so
+`datePosted`/`compensation` stay unset on the board path. The authenticated
+Resumator API path is retained.
+
+**Tests:** JazzHR suite green (9 mocked unit + 3 e2e); API typecheck + docs lint
+clean.
+
+**Files:** `packages/plugins/source-ats-jazzhr/src/{jazzhr.service.ts,
+jazzhr.constants.ts,jazzhr.types.ts}`,
+`packages/plugins/source-ats-jazzhr/__tests__/jazzhr.service.spec.ts`,
+`.specify/specs/5034-jazzhr-board-rework/{spec,plan,tasks}.md`,
+`docs/index.md`, `docs/log.md`.
+
+---
+
 ## 2026-06-28 — Run #470 — Spec 5033 — Dover real API mapping (full rewrite)
 
 **Change:** Full rewrite of `source-ats-dover`, which never resolves a board slug
