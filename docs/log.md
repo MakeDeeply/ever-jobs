@@ -42,6 +42,37 @@ assertion); `tsc --noEmit` on the package and `apps/api/tsconfig.json` clean.
 
 ---
 
+## 2026-06-28 — Run #465 — Spec 5028 — ADP plugin mapped to the real WorkforceNow staffing API
+
+**Change:** `source-ats-adp` returned zero jobs for all 5 companies known to use
+ADP that were checked (4 of which have open requisitions) — a clean empty array
+with no error, so it looked healthy while producing nothing. Two root causes: (1) it read hand-guessed field names (`jobTitle`,
+`jobRequisitionId`, `jobDescription`, `locations[].city`, `postedDate`,
+`compensation.minPay`) the public ADP Workforce Now staffing API never emits, so
+the `if (!title) return null` guard dropped every requisition; (2) it pinned a
+single host. Rewrites `adp.types.ts`/`adp.constants.ts`/`adp.service.ts` to the
+real shape — `requisitionTitle`, `itemID`, `requisitionLocations[].nameCode`
+(+ structured `address`), `postDate`, `workLevelCode.shortName`, and
+`payGradeRange.minimumRate/maximumRate`, with the body `requisitionDescription`
+overlaid from the per-requisition detail endpoint
+(`.../job-requisitions/{itemID}?cid=`) under bounded concurrency
+(`ADP_DETAIL_CONCURRENCY = 5`, `Promise.allSettled`, fail-safe). Resolves the
+host by trying `workforcenow.adp.com` then `workforcenow.cloud.adp.com` (a
+company lives on exactly one; the other 404s — an empty `jobRequisitions` array
+still counts as resolved). Maps location/`isRemote`/`workFromHomeType` via the
+shared `parseLocationList` (ADP has no structured remote flag, so the location
+labels are its only evidence), compensation via `resolveCompensation` with the
+pay period read from the "SalaryRange" custom field, `employmentType`/`jobType`
+from `workLevelCode.shortName`, and `datePosted` via `toDateOnly`. `companyName`
+is left `null` (the payload carries no human-readable name; the `cid` is a GUID).
+
+**Verification:** `source-ats-adp` suite green (5 — mapping+detail overlay, host
+fallback, no-open-reqs, detail-failure list-only fallback, no-host);
+`tsc --noEmit` on the package and `apps/api/tsconfig.build.json` clean;
+`npm run lint:docs` clean.
+
+---
+
 ## 2026-06-28 — Run #464 — Spec 5027 — Greenhouse `isRemote` reads `offices[]` + "Work Location" metadata
 
 **Change:** Greenhouse exposes no structured remote *flag*, so `source-ats-greenhouse`
