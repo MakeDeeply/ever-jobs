@@ -17,9 +17,9 @@
 
 ## 2026-06-30 — Run #465 — Spec 5028 — ADP plugin mapped to the real WorkforceNow staffing API
 
-**Change:** `source-ats-adp` returned zero jobs for every live ADP company — a
-clean empty array with no error, so it looked healthy while producing nothing.
-Two root causes: (1) it read hand-guessed field names (`jobTitle`,
+**Change:** `source-ats-adp` returned zero jobs for all 5 companies known to use
+ADP that were checked (4 of which have open requisitions) — a clean empty array
+with no error, so it looked healthy while producing nothing. Two root causes: (1) it read hand-guessed field names (`jobTitle`,
 `jobRequisitionId`, `jobDescription`, `locations[].city`, `postedDate`,
 `compensation.minPay`) the public ADP Workforce Now staffing API never emits, so
 the `if (!title) return null` guard dropped every requisition; (2) it pinned a

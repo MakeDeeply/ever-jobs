@@ -12,9 +12,10 @@
 
 ## Problem
 
-`source-ats-adp` returned **zero jobs for every live ADP company** — a clean
-empty array, no error — so it looked healthy while silently producing nothing.
-Two independent root causes:
+`source-ats-adp` returned **zero jobs for all 5 companies known to use ADP that
+were checked** (4 of which have open requisitions it should have surfaced) — a
+clean empty array, no error — so it looked healthy while silently producing
+nothing. Two independent root causes:
 
 1. **Wrong field names.** The plugin read a hand-guessed shape (`jobTitle`,
    `jobRequisitionId`, `jobDescription`, `locations[].city/stateProvince`,
