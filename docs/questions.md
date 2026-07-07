@@ -10,6 +10,249 @@
 
 ---
 
+## Q-081 — isolved: list-API-only vs. hybrid list-API + detail description?
+
+**Context:** Spec 5039. The board's `/core/jobs/{domainId}` JSON API returns all
+open roles with structured fields (department, compensation, workplaceType) in a
+single request, but omits the full description body — that only lives on each
+job's `/jobs/{id}.html` detail page (JSON-LD `JobPosting`).
+
+**Options:**
+
+- **A. Hybrid.** List API for all structured fields + one detail fetch per kept
+  role for the description body. Same N+1 request cost as the prior sitemap path,
+  strictly richer data (adds department, compensation, structured isRemote).
+- **B. List-API-only.** Two requests total (board HTML + list API), much faster,
+  but `description` drops to null/snippet.
+
+**Resolution (2026-07-07): A** — chosen by the owner. Keeping the full
+description body is non-negotiable; the structured fields are added on top with
+no extra request cost beyond what the sitemap path already paid.
+
+---
+
+## Q-080 — icims: listing snippet vs. per-job detail enrichment?
+
+**Context:** Spec 5038. iCIMS board cards carry a truncated marketing snippet,
+the location, department (Category), title, and id — but not the full body,
+posted date, or structured pay. Those live on each job's detail page, one extra
+request per role (250+ requests for a large board).
+
+**Options:**
+
+- **A. Listing-only (current).** Use the card snippet as `description`; leave
+  `datePosted`/`compensation` null. One request per page (~13 for a 242-job
+  board). Fast, polite, no detail fan-out.
+- **B. Detail overlay under bounded concurrency** (like jazzhr/gem/appone).
+  Full body + posted date + parsed pay, at the cost of one request per kept job.
+- **C. Overlay only the `resultsWanted` slice.** Bounds the fan-out to the cap
+  actually requested; still N extra requests for the returned set.
+
+**Default (proceeding): A** — the rewrite's goal was to make the plugin return
+jobs at all; snippet-level fields are clean and complete for the board. Detail
+enrichment (B/C) tracked as a follow-up if downstream needs full body/date/pay.
+
+---
+
+## Q-079 — oracle: what host segment should a bare-subdomain colon-slug assume?
+
+**Context:** Spec 5037. Some upstream callers emit `{subdomain}:{siteNumber}`
+(e.g. `acme-saasfaprod1:CX_1`), dropping the middle host segment. To rebuild
+the finder host (`{subdomain}.fa.{SEGMENT}.oraclecloud.com`) the plugin must
+assume a `SEGMENT`. Modern SaaS pods use `ocs`; older tenants use a region code
+(`us2`, `us6`, `us8`, `em2`, …) that is not recoverable from the subdomain alone.
+
+**Options:**
+
+- **A. Assume `ocs` for bare-subdomain slugs; support a full-host colon slug
+  (`{host}:{siteNumber}`) for everything else (current).** A bare-subdomain slug
+  on an `ocs` pod resolves immediately; region-code tenants must be addressed by
+  the full-host form (which the plugin accepts and prefers). Verified against 4
+  live tenants (ocs/us8/us6, CX_1/CX_2/CX): 243/19/96/158.
+- **B. Have the caller emit the full host** (`{host}:{siteNumber}`)
+  so the plugin never guesses. Most robust; needs an upstream change. Recommended
+  follow-up.
+- **C. Probe multiple segments (`ocs`, `us2`, …) per bare subdomain until one
+  returns jobs.** Self-healing but multiplies requests and latency per tenant.
+
+**Default (proceeding): A** — assume `ocs` for the bare form, prefer full-host
+colon slug for region-code tenants; B tracked as the upstream follow-up.
+
+---
+
+## Q-078 — dover: how should a board identifier that no public endpoint resolves be handled?
+
+**Context:** Spec 5033. Dover addresses a tenant by a board slug, a careers-page
+UUID, or (in some board URLs) a company **display name** (`/apply/{Name}`). A
+UUID and a slug resolve deterministically, but a display name only resolves if it
+happens to match one of the heuristic slug variants we try (raw / lowercased /
+alnum-stripped / hyphenated). Some identifiers resolve via none of them. The
+adapter currently returns an empty result (no throw) when nothing resolves.
+
+**Options:**
+
+- **A. Heuristic slug variants + graceful empty (current).** Try the variant set;
+  if none resolves, return empty. Resolves every observed tenant addressed by
+  slug/UUID and most name forms; a single unresolvable tenant never breaks a
+  batch. Drift / a novel name→slug rule becomes a silent zero (surfaced by the
+  live e2e suite + the fetch1 harness probe).
+- **B. Browser-render the board to scrape the embedded client id.** Would resolve
+  any name form by reading the SPA's bootstrapped state. Far heavier (headless
+  browser per tenant), violates the lightweight-HTTP contract the other adapters
+  hold, and still fails for tenants that left Dover.
+- **C. Require callers to store a slug/UUID, never a display name.** Pushes
+  resolution upstream; cleanest contract but needs a data backfill and doesn't
+  help boards that publish only a name form.
+
+**Default (proceeding): A** — heuristic variants + graceful empty, consistent
+with the other ATS adapters and the no-throw batch contract.
+
+---
+
+## Q-077 — paycom: should a tenant with no readable `sessionJWT` / company name degrade silently, or surface an error?
+
+**Context:** Spec 5032. Paycom's board is a client-rendered React app that boots
+a public bearer into `configsFromHost.sessionJWT`; the adapter scrapes that token
+to call the JSON API. If a tenant's board changes shape (no `sessionJWT`), or the
+clientkey is unknown (board 404), the adapter currently returns an empty result
+(no throw) — matching every sibling ATS adapter and keeping a batch run alive.
+Likewise, when `/api/ats/company-name` fails, `companyName` is left null rather
+than reverting to the clientkey (the old, wrong behaviour).
+
+**Options:**
+
+- **A. Silent graceful empty (current).** Empty/partial result on missing token,
+  unknown clientkey, or malformed payload; `companyName` null when its endpoint
+  fails. Consistent with adp/breezy/workable; a single bad tenant never breaks a
+  batch. Drift becomes a silent zero (surfaced by the live e2e suite + the fetch1
+  harness probe).
+- **B. Throw on token/clientkey failure.** Fail loudly so monitoring catches
+  drift immediately. Breaks the batch-resilience contract every other adapter
+  holds; one bad tenant aborts the run.
+- **C. Fall back to the clientkey for `companyName`.** Always emit a name. But the
+  clientkey is a 32-char hex token, not a display name — this is exactly the bug
+  the rewrite removed.
+
+**Default (proceeding): A** — graceful empty + null company name on failure,
+consistent with the other ATS adapters and the no-throw batch contract.
+
+---
+
+## Q-076 — breezy: trust the structured `baseSalary` even when the employer's declared unit looks wrong?
+
+**Context:** Spec 5030. BreezyHR serves pay in two places: a free-text list
+`salary` and a structured detail ld+json `baseSalary` (`min`/`max`/`unitText`).
+Across the probed companies they agree on almost every paid posting, but one
+zeno-power role declares `"$30 - $45"` (free text, unit-less) with
+`baseSalary.unitText = "YEAR"` — i.e. `$30–$45/year`, which is almost certainly
+mis-entered (likely hourly). The free-text heuristic guesses hourly; the
+structured source says yearly.
+
+**Options:**
+
+- **A. Structured-first (current).** Prefer `baseSalary` over the free-text
+  heuristic (Spec 5018 precedence); record the winning source in `salarySource`.
+  Trusts the employer's structured declaration even when it looks wrong; one
+  dubious posting surfaces `$30–$45/year`.
+- **B. Text-first.** Keep parsing the free-text `salary` first and use
+  `baseSalary` only when the text yields nothing. Preserves today's output and
+  the "more sensible" hourly guess for the edge case, but discards the
+  authoritative structured interval everywhere else.
+- **C. Reconcile heuristically.** When text and structured disagree on interval,
+  pick the "more plausible" one (e.g. small amounts ⇒ hourly). Fragile,
+  special-cased, and hides genuine employer data.
+
+**Default (proceeding):** **A.** Structured-first matches the cross-plugin
+convention (Spec 5018 / paylocity / manatal / workatastartup) and is auditable
+via `salarySource`; the single dubious posting is an employer data-entry issue,
+not a parser bug.
+
+**Resolution:** _pending review._
+
+---
+
+## Q-075 — adp: what should `companyName` be when the payload has no readable name?
+
+**Context:** Spec 5028. The ADP Workforce Now public staffing API keys a board by
+an opaque `cid` GUID and carries no human-readable company name on the
+requisition. Other ATS plugins (e.g. bamboohr) fall back to `companySlug`, but
+for ADP the slug *is* the GUID, so that would surface a GUID as the company name.
+
+**Options:**
+
+- **A. Leave `companyName: null` (current).** Avoids a GUID-as-name; lets
+  aggregation/enrichment fill the real name from the company record. Downside:
+  the raw plugin output has no company name.
+- **B. Use the `cid` GUID as `companyName`.** Always populated, but the value is
+  meaningless to a human and pollutes any name-based dedup/display.
+- **C. Derive a name from a location label's embedded org string** (some
+  `requisitionLocations[].nameCode.shortName` values embed an org name). Fragile
+  and tenant-specific; not reliably present.
+
+**Default (proceeding):** **A.** Leave `companyName: null` and let the caller
+supply the real name; revisit if a reliable name field is found in the payload.
+
+**Resolution:** _pending review._
+
+---
+
+## Q-074 — greenhouse: which `metadata` field name(s) count as the "Work Location" remote signal?
+
+**Context:** Spec 5027. Greenhouse `metadata` entries are operator-named and not
+standardized, so the remote "Work Location" signal can appear under different
+labels (`Work Location`, `Location Type`, `Workplace Type`, `Remote?`, …). The
+fix matches the single literal `name` "Work Location" (case-insensitive). A
+broader matcher risks false positives (a free-text "Work Location: our HQ in
+Austin" field would parse as a city, not a remote signal); too narrow a matcher
+misses boards that use a synonym.
+
+**Options:**
+
+- **A. Match only `Work Location` (current).** Predictable, no false positives,
+  matches the field the task named. Misses synonymous custom field names.
+- **B. Match a small synonym set** (`Work Location`, `Location Type`,
+  `Workplace Type`). Catches more boards, but each synonym must be confirmed to
+  be an enum-style remote field rather than free text, or it adds noise.
+- **C. Scan every single-select `metadata` value for a remote/hybrid token.**
+  Maximal recall, but highest false-positive risk (any enum value containing
+  "remote" flips detection).
+
+**Default (proceeding):** **A.** Match the literal "Work Location" field; widen
+to a vetted synonym set later if the harvested corpus shows boards using other
+names. `offices[]` already provides a second, structured remote signal
+independent of this field.
+
+**Resolution:** _pending review._
+
+---
+
+## Q-073 — ashby: should `workplaceType='OnSite'` emit an explicit `workFromHomeType`?
+
+**Context:** Spec 5026. Ashby's structured `workplaceType` carries `OnSite` /
+`Hybrid` / `Remote`. The fix maps `Hybrid`→`Hybrid`, `Remote`→`Remote`. `OnSite`
+could either resolve to no `workFromHomeType` (the field is omitted) or to an
+explicit `'On-site'` label. There is no `workFromHomeType` controlled vocabulary
+yet, and `null`/absence currently conflates "asserted on-site" with "no signal"
+across every ATS.
+
+**Options:**
+
+- **A. `OnSite` → none (current).** Mirror the existing lever/workday/workable
+  convention (on-site resolves to null/none). Consistent, non-breaking, no new
+  vocabulary; but the on-site assertion is not preserved.
+- **B. `OnSite` → `'On-site'` (and add an `'Unknown'` state for silence).**
+  Makes the field a true 4-state workplace axis, but it is a behaviour change for
+  every ATS and needs its own spec (controlled vocabulary in `@ever-jobs/models`,
+  `isRemote`↔`workFromHomeType` invariant, consumer/test updates).
+
+**Default (proceeding):** **A.** Keep `OnSite`→none for parity with the other
+ATS plugins; the 4-state `workFromHomeType` (`On-site`/`Unknown`) is tracked
+separately as a future cross-ATS spec.
+
+**Resolution:** _pending review._
+
+---
+
 ## Q-072 — workatastartup: harvest the YC public mirror or the canonical WaaS board?
 
 **Context:** Spec 5023. YC Work at a Startup exposes the same board at two URL
@@ -26,7 +269,7 @@ suffix.
 - **A. Harvest the YC mirror (current).** Public, unauthenticated, fully
   structured (Inertia list spine + ld+json detail). `companyUrl` still points at
   the canonical `workatastartup.com` board for correctness. No auth, no
-  Playwright; matches how fetch1 detection already classifies these domains.
+  Playwright; matches how upstream detection already classifies these domains.
 - **B. Harvest the canonical `workatastartup.com` board.** Authoritative host,
   but the job list/apply data is auth-gated, so it needs a logged-in session
   (Playwright + credentials) — heavy, brittle, and out of scope for a public
@@ -60,7 +303,7 @@ page and list jobs via JS/links the harvester can't enumerate.
   index.
 - **B. Follow on-page job links one level deep** and parse each target's
   ld+json. Recovers link-driven boards, but adds N fetches per page, link-intent
-  heuristics, and concurrency/robots concerns — overlaps the fetch1
+  heuristics, and concurrency/robots concerns — overlaps the upstream
   apply-link-discovery work.
 - **C. Require the caller to pass each job URL** (treat the plugin as a pure
   per-URL extractor). Simplest contract, but pushes enumeration entirely
@@ -68,7 +311,7 @@ page and list jobs via JS/links the harvester can't enumerate.
 
 **Default (proceeding):** **A.** Keep the harvester a single-page extractor:
 it covers the embedded-`ItemList` and per-detail-page cases with zero crawl
-risk, and link-following enumeration belongs in the dedicated fetch1 discovery
+risk, and link-following enumeration belongs in the dedicated upstream discovery
 spec, not the ever-jobs source plugin.
 
 **Resolution:** _pending review._

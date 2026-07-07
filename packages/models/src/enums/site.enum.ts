@@ -2078,6 +2078,8 @@ export enum Site {
   WURL = 'wurljobs',
   // Phase 969: Spec 974 — Source Company Plugin: Zynga
   ZYNGA = 'zyngacareers',
+  // Phase 970: Spec 5036 — AppOne (Paychex-owned) ATS plugin
+  APPONE = 'appone',
 }
 
 /**

@@ -15,6 +15,514 @@
 
 ---
 
+## 2026-07-07 — Run #476 — Spec 5039 — isolved-core-jobs-api
+
+**Change:** Rewrite `source-ats-isolved` field enumeration onto the board's own
+JSON API. The plugin already returned correct counts (sitemap → per-job JSON-LD)
+but left `department` null, never set `compensation`, and derived `isRemote` from
+a title/location text heuristic that misses physically-located remote roles.
+
+- New path: GET `/jobs/` → read `domainId`/`domainTitle` from the SPA
+  `componentData`; GET `/core/jobs/{domainId}?getParams={"isInternal":0}` for all
+  open roles with structured fields; fan out to `/jobs/{id}.html` JSON-LD for the
+  description body (hybrid — same N+1 as before, richer data).
+- Field mapping: `department` from `classification`/`orgTitle`; `compensation`
+  from `minSalary`/`maxSalary` + `payTypeFrame` interval (USD); `isRemote` from
+  structured `workplaceType` (`/remote|work.from.home/i`) with the text heuristic
+  as fallback; `iso3`→2-letter country; `datePosted`/`description` from detail
+  JSON-LD.
+- Tenant resolved from `companySlug` (bare subdomain or URL) or an
+  `isolvedhire.com` `companyUrl`; unknown tenant / missing domainId / API
+  failure → `[]` (never throws). Dropped the XML-sitemap code path.
+
+**Verification:** 5 live tenants (electra, seegrid, integertech, northerngear,
+cardmonroeautomation) carrying 73 open roles; 0 field diffs across all sampled
+jobs; 15 mocked unit tests green; package typecheck + docs lint clean.
+
+**Spec:** `.specify/specs/5039-isolved-core-jobs-api/` (spec, plan, tasks).
+
+---
+
+## 2026-07-07 — Run #475 — Spec 5038 — icims-board-rework
+
+**Change:** Rewrite `source-ats-icims` (was returning 0 jobs) onto the
+server-rendered board.
+
+- The old plugin GET-ed `…/jobs/search?pr={offset}&mode=job` expecting JSON and
+  stepped `pr` by the page size as if it were a record offset; iCIMS boards are
+  **HTML** and `pr` is a **0-based page index**, so the JSON parse found nothing
+  and the loop broke immediately.
+- The zero-result Playwright fallback ran unverified selectors (a
+  `// TODO: validate selectors` was in place) and extracted nothing either.
+- New path: HTTP + Cheerio against the embeddable board form
+  `?ss=1&in_iframe=1&pr={page}`; parse `.iCIMS_JobCardItem` cards (title,
+  canonical URL + numeric id, `{country}-{state}-{city}` location, Category
+  department, listing snippet, `isRemote`); company from the
+  `Job Listings at {Company}` `<title>`; walk `pr` from 0 using the
+  "Page X of N" pager and de-dupe by id.
+- Tenant resolved from `companySlug` (bare subdomain or URL) or a `*.icims.com`
+  `companyUrl`; unknown tenant / no input → `[]` (never throws).
+- Dropped the Playwright + JSON-gateway code.
+
+**Verification:** read-only against 2 live boards (242 and 37 open roles);
+9 mocked unit tests green; package typecheck clean.
+
+**Spec:** `.specify/specs/5038-icims-board-rework/` (spec, plan, tasks).
+**Open question:** Q-080 (listing snippet vs. per-job detail enrichment).
+
+---
+
+## 2026-07-07 — Spec 5037 — oracle-slug-pagination
+
+**Change:** Fix three bugs in `source-ats-oracle` (Spec 013):
+- `companySlug` in the colon-delimited form `{host}:{siteNumber}` was rejected
+  because `composeUrlFromSlug` only understood `{sub}-{region}` — added
+  `parseSlug` accepting full-host colon, bare-subdomain colon (assumes `.fa.ocs.`),
+  and legacy dash forms.
+- `siteNumber` (e.g. `CX_1`) was never derived from the slug or URL —
+  `resolveTenant` now returns a parsed `siteNumber` from `:CX_…` or `/sites/CX_…`;
+  precedence: `input.siteNumber` > slug > URL path > `CX_45001` default.
+- Pagination stopped on the first page shorter than 100 items, but Oracle returns
+  short pages mid-run (offset 100→99 on a 244-job board) — now terminates on
+  `TotalJobsCount` / empty page.
+
+Verified against 4 live tenants spanning ocs/us8/us6 regions and CX_1/CX_2/CX
+sites: 243 + 19 + 96 + 158 jobs. Oracle suite green (17 tests, 7 new).
+
+**Files:**
+- `packages/plugins/source-ats-oracle/src/oracle.constants.ts` — `ORACLE_DEFAULT_HOST_SEGMENT`
+- `packages/plugins/source-ats-oracle/src/oracle.service.ts` — `parseSlug`, `siteNumberFromUrl`, `resolveTenant` rewrite, pagination fix
+- `packages/plugins/source-ats-oracle/src/index.ts` — re-export
+- `packages/plugins/source-ats-oracle/__tests__/oracle.service.spec.ts` — 7 new tests
+- `.specify/specs/5037-oracle-slug-pagination/` — spec, plan, tasks
+
+---
+
+## 2026-06-28 — Run #473 — Spec 5036 — source-ats-appone
+
+**Change:** New `source-ats-appone` plugin (`Site.APPONE = 'appone'`). AppOne
+(`jobs.appone.com`, "Powered by Paychex Flex") had no plugin and no enum value.
+It is the same vendor family as `source-ats-paychex` but a distinct surface — an
+Angular SPA with no sitemap and no JSON-LD, so it cannot fold into the paychex
+plugin (which scrapes `applybypaychex.com` via `sitemap.xml` + prerendered
+JSON-LD). AppOne exposes two unauthenticated JSON endpoints:
+
+- list: `GET jobs.appone.com/api/portal/v1/companyjobposts/{tenant}` — carries
+  title, location, jobType, workplaceType, datePosted, jobPostUrl, plus the
+  tenant `companyName`.
+- detail: `GET apply.appone.com/api/apply/v2/jobposting/{jobPostId}` — adds the
+  full plain-text `description`.
+
+The plugin resolves the tenant from `companySlug` or a `jobs.appone.com`
+`companyUrl`, fetches the list, caps to `resultsWanted`, and overlays each kept
+posting with its detail under bounded concurrency:
+
+- **companyName** — the list `companyName` (else the tenant slug).
+- **location** — split into `{ city, state }` (e.g. "Aurora, OR").
+- **datePosted** — the ISO list `datePosted` → `Date`.
+- **isRemote** — `workplaceType === 'REMOTE'`; `HYBRID` → `workFromHomeType`.
+- **employmentType/jobType** — from `jobType` (e.g. "Full Time").
+- **description** — the detail's plain-text body.
+- **compensation** — AppOne exposes no structured pay; parsed from the body via
+  the shared salary extractor (`resolveCompensation`, Spec 5018).
+
+A failed detail fetch degrades to the list-only fields; a failed list fetch
+yields an empty response. Verified read-only against 1 live tenant
+(vansaircraftcareers) carrying 5 open roles.
+
+**Tests:** AppOne suite green (10 mocked unit); API typecheck + docs lint clean.
+
+**Files:** `packages/plugins/source-ats-appone/**` (new package),
+`packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`,
+`tsconfig.base.json`, `jest.config.js`,
+`.specify/specs/5036-source-ats-appone/{spec,plan,tasks}.md`,
+`docs/index.md`, `docs/log.md`.
+
+---
+
+## 2026-06-28 — Run #472 — Spec 5035 — Gem detail overlay
+
+**Change:** `source-ats-gem` ran only the `JobBoardList` GraphQL op, which carries
+no body, posted date, or pay — those live on the per-posting
+`ExternalJobPostingQuery` detail — so `description`, `datePosted`, and
+`compensation` were always absent. It also dropped `employmentType` (the enum is
+present in the list `job` node) and built a 404 job URL (`/{slug}/jobs/{extId}`;
+the canonical form is `/{slug}/{extId}`).
+
+Verified read-only against 6 live Gem boards (firestorm, andrenam, albacore,
+astroforge-io, 43north, voltairlabs-com) carrying 100 open roles: counts and
+matching were correct, but every sampled job differed on description, posted
+date, employment type, and URL.
+
+The fix overlays each kept posting (after the `resultsWanted` cap) with its
+`ExternalJobPostingQuery` detail under bounded concurrency:
+
+- **description** — `descriptionHtml` (full body), formatted per
+  `descriptionFormat`.
+- **datePosted** — `firstPublishedTsSec` (Unix seconds) → `Date`; `startDateTs`
+  fallback.
+- **compensation** — `compensationHtml` is free text; parsed via the shared
+  salary extractor (`resolveCompensation`, Spec 5018). Gem exposes no structured
+  bounds.
+- **employmentType** — humanised from the list `job.employmentType` enum
+  (`FULL_TIME` → `Full-time`); mapped to `jobType`.
+- **jobUrl** — `https://jobs.gem.com/{slug}/{extId}`.
+
+`companyName` (`jobBoardExternal.teamDisplayName`), locations, `isRemote`, and
+`department` are unchanged. A failed detail fetch degrades to the list-only
+fields for that job.
+
+**Tests:** Gem suite green (10 mocked unit); API typecheck + docs lint clean.
+
+**Files:** `packages/plugins/source-ats-gem/src/{gem.service.ts,gem.constants.ts,
+gem.types.ts}`,
+`packages/plugins/source-ats-gem/__tests__/gem.service.spec.ts`,
+`.specify/specs/5035-gem-detail-overlay/{spec,plan,tasks}.md`,
+`docs/index.md`, `docs/log.md`.
+
+---
+
+## 2026-06-28 — Run #471 — Spec 5034 — JazzHR board rework
+
+**Change:** Reworked the `source-ats-jazzhr` public-board path, which returned
+about twice the real job count. All five of its CSS selectors miss the live
+`applytojob.com` board theme, so it fell back to matching every `/apply/` anchor
+— and the board renders each job twice (a desktop table row and a mobile block),
+with no de-dupe. On large boards the duplicates consume the `resultsWanted` cap
+and drop real roles. It also set `companyName` to the slug and never opened the
+detail page, so description, employment type, and department were absent.
+
+Verified read-only against 6 live JazzHR boards (opulo, herthametals, biosero,
+gocanvas, liquidpiston, deka) carrying 71 open roles.
+
+The rework parses the desktop `<table id="jobs_table">` via Cheerio and de-dupes
+by board code (so the mobile copy is ignored). Other mappings:
+
+- **companyName** — the board's schema.org `Organization` ld+json `name` (else
+  the detail page's `h2.job_company`, else the slug).
+- **description / employmentType** — overlaid from each role's
+  `/apply/jobs/details/{code}` page (`div.job_description` body, `h3.job_meta`
+  trailing segment), fetched under bounded concurrency.
+- **department** — inline `span.resumator_department` or the most recent
+  `tr.resumator_department_heading` section row.
+- **isRemote** — location or title mentions "remote".
+
+JazzHR's public board/detail HTML exposes no posted date or structured pay, so
+`datePosted`/`compensation` stay unset on the board path. The authenticated
+Resumator API path is retained.
+
+**Tests:** JazzHR suite green (9 mocked unit + 3 e2e); API typecheck + docs lint
+clean.
+
+**Files:** `packages/plugins/source-ats-jazzhr/src/{jazzhr.service.ts,
+jazzhr.constants.ts,jazzhr.types.ts}`,
+`packages/plugins/source-ats-jazzhr/__tests__/jazzhr.service.spec.ts`,
+`.specify/specs/5034-jazzhr-board-rework/{spec,plan,tasks}.md`,
+`docs/index.md`, `docs/log.md`.
+
+---
+
+## 2026-06-28 — Run #470 — Spec 5033 — Dover real API mapping (full rewrite)
+
+**Change:** Full rewrite of `source-ats-dover`, which never resolves a board slug
+to a careers-page client id. It called `GET /api/v1/careers-page/{slug}` treating
+the board **slug** as the careers-page id, but that endpoint expects the
+careers-page **client id** (a UUID), so it 404'd for any slug and fell back to
+scanning the SPA board HTML for JSON-LD (empty on the client-rendered shell) —
+yielding nothing. Verified read-only via the fetch1 harness against 4 live Dover
+boards (gradientrobotics, Mersenne Labs, createme, somewear-labs) carrying 25 open
+roles — the plugin yielded 0 for all.
+
+The rewrite maps the real, public, unauthenticated REST flow:
+
+1. **Resolve** the addressing token → careers-page client id: a careers-page
+   UUID via `GET /api/v1/careers-page/{id}`, else slug variants via
+   `GET /api/v1/careers-page-slug/{slug}` → `{ id, name, slug }`. Dover slugs
+   derive from the company name inconsistently ("Mersenne Labs" → `mersennelabs`,
+   "Somewear Labs" → `somewear-labs`), so we try raw / lowercased / alnum-stripped
+   / hyphenated variants.
+2. **List** `GET /api/v1/careers-page/{clientId}/jobs` → `{ count, next,
+   results }`; follow `next`, exclude Dover's seeded `is_sample` demo roles.
+3. **Overlay** each role's detail `GET /api/v1/inbound/application-portal-job/{id}`
+   for `client_name`, `user_provided_description`, structured `compensation`,
+   `created`, `locations`, `workplace_type`.
+
+Field mapping: `companyName` from the detail's `client_name` (the real display
+name, careers-page `name` fallback) — **not** the slug (the old code title-cased
+the slug); `description` = `user_provided_description` (full HTML body),
+format-converted; compensation structured-first (Spec 5018) from the
+`compensation` block (`lower_bound`/`upper_bound`/`currency_code`, interval from
+`salary_range_type` via the shared `getCompensationInterval`), body-text
+fallback, `salarySource` recorded; `datePosted` from `created`; `isRemote` from
+`workplace_type === 'REMOTE'` / a `REMOTE` location / remote title text;
+`employmentType` normalised from `compensation.employment_type`; location from
+the first `locations[].location_option`. Token resolved from `companySlug`
+(slug / UUID / company name) or a board `companyUrl` (`/jobs/{slug}`,
+`/apply/{Name}`, `/{company}/careers/{uuid}`). Graceful empty/partial on unknown
+tenant (HTTP 4xx), removed role, or malformed payload.
+
+No new `@ever-jobs/common` helper was needed — structured-first precedence reuses
+`resolveCompensation` (Spec 5018) and the interval mapping reuses
+`getCompensationInterval` (`@ever-jobs/models`).
+
+**Verification:** `source-ats-dover` jest suite green — 9 mocked unit (resolve →
+list → overlay with structured comp + `client_name` company; UUID resolves
+without a slug call; hyphenated slug-variant fallback; `REMOTE` workplace; sample
+exclusion; detail-404 listing fallback; unresolvable-tenant/no-input empties;
+`/jobs/{slug}` URL parsing). `tsc --noEmit` on `apps/api/tsconfig.json` clean;
+`lint:docs` clean. See Q-078.
+
+---
+
+## 2026-06-28 — Run #469 — Spec 5032 — Paycom real API mapping (full rewrite)
+
+**Change:** Full rewrite of `source-ats-paycom`, which returned **zero jobs for
+every tenant** (verified on 5 live tenants — Boxabl, Spudnik, Guardian Bikes,
+Aperture, Prefix — with 8/1/5/13/15 = 42 open roles; the plugin yielded 0 for
+all). It was broken at four compounding points (ADP-class, cf. Spec 5028):
+
+1. **Token never extracted.** The clientkey-addressed board is a client-rendered
+   React app that boots a public, read-only bearer into
+   `configsFromHost.sessionJWT`; the old regex only matched `"token"` /
+   `"accessToken"` / a `Bearer` literal, so `extractToken` returned null.
+2. **Search payload incomplete.** The search endpoint returns an empty set
+   unless the full `filtersForQuery` object is POSTed alongside `skip`/`take`;
+   the old code sent a bare `{skip,take}`.
+3. **Search envelope mismatch.** The real key is `jobPostingPreviews`
+   (+ `jobPostingPreviewsCount`); the old `parsePreviews` read
+   `results`/`data`/`items`/`jobPostings`.
+4. **Detail envelope mismatch.** `GET /api/ats/job-postings/{id}` wraps the
+   posting in `{ jobPosting: {…} }`; the old code read `response.data` directly.
+
+Behind those, the mapping was wrong: `datePosted` lives **only** inside each
+detail's `googleJobJson` schema.org string (preview `postedOn` / detail
+`startDate` are empty); the tenant display name is behind a dedicated
+`GET /api/ats/company-name` (the old code derived it from the clientkey); and the
+`fromJsonLd` fallback targeted the legacy `ViewJobDetails` page (now a no-JS
+shell). The rewrite maps the real surface: board → `sessionJWT` → company-name +
+search (`jobPostingPreviews`) + detail (`{ jobPosting }`); description =
+`description` + `qualifications`; location parsed (ZIP stripped) via the shared
+`parseLocationText`; `isRemote`/`workFromHomeType` from the `remoteType` code;
+`datePosted`/url/`baseSalary` from the `googleJobJson` node; compensation
+structured-first (Spec 5018). Clientkey resolved from `companySlug` (bare key) or
+a board `companyUrl` (`/portal/{KEY}/` path or `?clientkey=` query). Graceful
+empty/partial on missing token, unknown clientkey (HTTP 4xx), or malformed
+payload.
+
+A reusable `jobPostingLdFromNode(value)` was added to `@ever-jobs/common`
+(`utils/jsonld.ts`): maps an already-parsed (or JSON-string) schema.org
+`JobPosting` to a `JobPostingLd`, reusing the Spec 5022 container-unwrapping +
+field mapping without a `<script>` round-trip (which would truncate on a literal
+`</script>` in the body).
+
+**Verification:** `source-ats-paycom` suites green — 10 mocked unit (real
+envelope, full `filtersForQuery`, company-name, `googleJobJson` `datePosted`,
+structured comp, remote, clientkey-from-url, no-token/unknown-tenant/no-slug
+empties, detail-failure fallback, dedupe + `resultsWanted`) + 5 live e2e; common
+`jsonld` green (20, incl. `jobPostingLdFromNode`). `tsc --noEmit` on
+`apps/api/tsconfig.json` clean; `lint:docs` clean. See Q-077.
+
+---
+
+## 2026-06-28 — Run #468 — Spec 5031 — Workable company display name
+
+**Change:** Fixes a `source-ats-workable` correctness bug found against live
+public Workable boards. The plugin's public path shipped the **slug** as
+`companyName`: `processJob` set `companyName: companySlug` (e.g.
+`shift-robotics`), and `WorkableResponse` never modelled the widget response's
+top-level `name` display field (`Shift Robotics`). Now reads `data.name` (trimmed)
+with the slug as a fallback, threading the resolved display name into `processJob`.
+Same class as Spec 5030 (BreezyHR). The bug is silent where the display name is a
+single token equal to the slug (`Elastium`→`elastium`) and surfaces wherever they
+differ. Slug-derived fields (`jobUrl`, `atsId`) are unchanged. The authenticated
+API v3 path (`processApiJob`) is intentionally untouched — its response carries no
+account/company name, so the slug remains the only available value (the
+ADP/bamboohr situation); all checked STATUS companies use the public path (no
+`WORKABLE_API_TOKEN`).
+
+**Verification:** `source-ats-workable` suites green (15, incl. new display-name
+and slug-fallback cases); `tsc --noEmit` on `apps/api/tsconfig.json` clean.
+
+---
+
+## 2026-06-28 — Run #467 — Spec 5030 — BreezyHR company display name + structured-first compensation
+
+**Change:** Fixes two `source-ats-breezyhr` bugs (Spec 5015) found against live
+`{slug}.breezy.hr` boards across several companies. (1) **`companyName` shipped
+the slug.** `processJob` set `companyName: company` (the `input.companySlug`,
+e.g. `ondas-networks`, `vvater-llc`, `reaxiomatic-inc`, `zeno-power`), and
+`BreezyJob` never modelled the list record's `company.name` display name
+(`Ondas Inc.`, `VVater`, `Reaxiomatic`, `Zeno Power`); now reads `company.name`
+with the slug as a fallback. (2) **Compensation ignored the structured
+`baseSalary`.** It parsed pay only from the free-text list `salary`, so a
+unit-less range (`"$30 - $45"`) could be mis-guessed (hourly) where the detail
+ld+json `baseSalary` declared `unitText: YEAR`. The per-job detail overlay now
+also returns the structured `baseSalary` (new `BreezyDetail` type), and
+compensation is structured-first via `jobPostingLdToCompensation(baseSalary)` →
+`resolveCompensation` with the free-text `salary` as fallback; `salarySource` is
+`'structured'` when `baseSalary` is present, else `'description'` (matching
+`source-jsonld` / `workatastartup` / `manatal` / `paylocity`). The fix never
+*removes* compensation relative to today — it adds the structured source ahead of
+the existing text fallback.
+
+**Verification:** `source-ats-breezyhr` suite green (13, incl. new company-name,
+slug-fallback, structured-first, and text-fallback cases); `tsc --noEmit` on
+`apps/api/tsconfig.json` clean.
+
+---
+
+## 2026-06-28 — Run #466 — Spec 5029 — Paylocity full-body description, structured compensation, clean company name
+
+**Change:** Fixes three `source-ats-paylocity` detail-parse bugs found against
+live postings. (1) **Description dropped visible sections** — `parseDetail` took
+the description JSON-LD-first (`ldDescription ?? htmlParsed.description`), but the
+ld+json `JobPosting.description` carries only the section titled "Description";
+every other visible section ("Salary Description", "Requirements", …) was
+silently discarded even though `parseDetailHtml` already concatenates them all.
+Now the full-body HTML sections are the source and ld+json is a fallback only.
+(2) **Compensation ignored structured pay** — it text-parsed the (truncated)
+description and never read the detail ld+json `baseSalary`, so pay that lived only
+in the dropped "Salary Description" section (e.g. `$27.00 - $35.00/hour`) came out
+empty. Now structured-first via `jobPostingLdToCompensation(baseSalary)` →
+`resolveCompensation` with the (now full-body) description text as fallback;
+`salarySource` is `'structured'` when `baseSalary` is present, else
+`'description'` (matching `source-jsonld` / `workatastartup` / `manatal`).
+(3) **`companyName` carried the module id** — `ModuleTitle` is
+`"SendCutSend Inc [175255]"`; now a trailing ` [\d+]` is stripped. The fix only
+*adds* previously-dropped description content and a more reliable pay source — no
+posting loses data relative to before.
+
+**Verification:** `source-ats-paylocity` suite green (11, incl. new structured-first,
+full-body-description, and text-fallback cases + tightened module-id-strip
+assertion); `tsc --noEmit` on the package and `apps/api/tsconfig.json` clean.
+
+---
+
+## 2026-06-28 — Run #465 — Spec 5028 — ADP plugin mapped to the real WorkforceNow staffing API
+
+**Change:** `source-ats-adp` returned zero jobs for all 5 companies known to use
+ADP that were checked (4 of which have open requisitions) — a clean empty array
+with no error, so it looked healthy while producing nothing. Two root causes: (1) it read hand-guessed field names (`jobTitle`,
+`jobRequisitionId`, `jobDescription`, `locations[].city`, `postedDate`,
+`compensation.minPay`) the public ADP Workforce Now staffing API never emits, so
+the `if (!title) return null` guard dropped every requisition; (2) it pinned a
+single host. Rewrites `adp.types.ts`/`adp.constants.ts`/`adp.service.ts` to the
+real shape — `requisitionTitle`, `itemID`, `requisitionLocations[].nameCode`
+(+ structured `address`), `postDate`, `workLevelCode.shortName`, and
+`payGradeRange.minimumRate/maximumRate`, with the body `requisitionDescription`
+overlaid from the per-requisition detail endpoint
+(`.../job-requisitions/{itemID}?cid=`) under bounded concurrency
+(`ADP_DETAIL_CONCURRENCY = 5`, `Promise.allSettled`, fail-safe). Resolves the
+host by trying `workforcenow.adp.com` then `workforcenow.cloud.adp.com` (a
+company lives on exactly one; the other 404s — an empty `jobRequisitions` array
+still counts as resolved). Maps location/`isRemote`/`workFromHomeType` via the
+shared `parseLocationList` (ADP has no structured remote flag, so the location
+labels are its only evidence), compensation via `resolveCompensation` with the
+pay period read from the "SalaryRange" custom field, `employmentType`/`jobType`
+from `workLevelCode.shortName`, and `datePosted` via `toDateOnly`. `companyName`
+is left `null` (the payload carries no human-readable name; the `cid` is a GUID).
+
+**Verification:** `source-ats-adp` suite green (5 — mapping+detail overlay, host
+fallback, no-open-reqs, detail-failure list-only fallback, no-host);
+`tsc --noEmit` on the package and `apps/api/tsconfig.build.json` clean;
+`npm run lint:docs` clean.
+
+---
+
+## 2026-06-28 — Run #464 — Spec 5027 — Greenhouse `isRemote` reads `offices[]` + "Work Location" metadata
+
+**Change:** Greenhouse exposes no structured remote *flag*, so `source-ats-greenhouse`
+inferred `isRemote` only from the role `location` text — discarding its two
+machine-readable remote signals: the company `offices[]` (e.g. an office named
+"Remote") and the company-defined `metadata` "Work Location" entry. A remote
+posting whose `location.name` is a concrete city was therefore mislabelled
+`isRemote: false`. In `greenhouse.service.ts`, folds both into the `isRemote` OR
+and maps a merged `workFromHomeType`, via new `officeLabels`, `workLocationLabels`,
+and `mergeWorkFromHomeType` helpers. Applies to the public board `processJob`
+(offices + metadata) and the Harvest `processHarvestJob` (offices only — the
+Harvest list endpoint carries no company metadata). Detection only *adds* to the
+existing OR, so no posting becomes less remote than before; the role `location`
+remains the sole display source.
+
+**Verification:** `source-ats-greenhouse` suites green (18, incl. new
+office-Remote / metadata Remote / metadata Hybrid / non-remote cases);
+`tsc --noEmit` on the package and `apps/api/tsconfig.build.json` clean.
+
+---
+
+## 2026-06-28 — Run #463 — Docs hygiene — cleanup old docs
+
+**Change:** Housekeeping cleanup of wording in older docs/specs
+(`docs/index.md`, `docs/log.md`, `docs/questions.md`, specs 5020–5024). No code
+or behaviour changes.
+
+**Verification:** `npm run lint:docs` clean.
+
+---
+
+## 2026-06-28 — Run #462 — Spec 5026 — Ashby `isRemote` reads structured `workplaceType`
+
+**Change:** Ashby exposes both a boolean `isRemote` and a structured
+`workplaceType` (`OnSite`/`Hybrid`/`Remote`), but `source-ats-ashby` read only
+the boolean — and Ashby sets `isRemote=true` for Hybrid roles too. So Hybrid
+postings (`isRemote=true`, `workplaceType='Hybrid'`) were mislabelled
+`isRemote: true` across the harvested Ashby corpus, and `workFromHomeType` was
+sourced only from location text, discarding the structured signal. Adds `workplaceType?: string | null` to `AshbyJob` and, in
+`ashby.service.ts`, derives `isRemote` from `workplaceType` (true only for
+`Remote`), falling back to the boolean when `workplaceType` is absent and OR'd
+with location-text `remoteMentioned`; maps `workplaceType`→`workFromHomeType`
+(merged with the location-text value) mirroring the lever plugin. `OnSite`
+continues to resolve to no `workFromHomeType` (consistent with lever/workday/
+workable).
+
+**Verification:** `source-ats-ashby` suites green (28, incl. new Hybrid / Remote
+/ no-`workplaceType` cases); `tsc --noEmit` on the package clean.
+
+---
+
+## 2026-06-28 — Run #461 — Spec 5025 — Workday `isRemote` detects `Remote_*` locations
+
+**Change:** Workday postings whose location is a slug like `Remote_USA` were not
+flagged as remote — location labels are matched with `parseLocationList`'s
+`/\bremote\b/i` check, and the underscore is a word character so the boundary
+after `Remote` never matched. In `source-ats-workday` (`workday.service.ts`),
+normalize `_`→space (then collapse whitespace) on each location label before
+`parseLocationList`. No-op for labels without underscores.
+
+**Verification:** `source-ats-workday` suites green (46, incl. a new `Remote_USA`
+test); `tsc --noEmit` on the package clean.
+
+---
+
+## 2026-06-28 — Run #460 — Spec 5024 — Greenhouse `datePosted` keeps the source local day
+
+**Scope:** Fixes a `date_posted` off-by-one surfaced by an ATS audit
+(alt-path probe vs `source-ats-greenhouse`, 135 companies): every
+evening-US posting (30/30) reported the next day. Greenhouse returns
+`first_published`/`opened_at` as an offset ISO timestamp
+(`2026-04-20T22:32:33-04:00`); the plugin used
+`new Date(x).toISOString().split('T')[0]`, which shifts to UTC before truncating
+→ `2026-04-21`. Adds `toDateOnly` in `@ever-jobs/common`
+(`converters/date-converter.ts`): preserves the leading `YYYY-MM-DD` of an ISO
+timestamp (the day in its own offset), falls back to UTC truncation for
+epoch/`Date` inputs, and returns `null` for empty/invalid input. Wired into both
+greenhouse paths (public board `processJob` + Harvest `processHarvestJob`).
+Provenance: long-standing upstream behaviour (commit `b0cd2db4`, 2026-02-08),
+not a fork regression; the same UTC-truncation pattern is the house convention.
+**Adopted repo-wide:** an AST codemod (TS compiler API) routes every
+`…toISOString().split('T')[0]` chain — both inline and the bespoke
+`const d = new Date(EXPR); … d.toISOString().split('T')[0]` helper variant —
+through the shared `toDateOnly`, passing the original *string* so the offset is
+preserved (not lost to an intermediate `Date`). 253 call sites across 228 files;
+the two plugins with their own private `toDateOnly` method (`source-jsonld`,
+`source-ats-workatastartup`) drop it and call the shared helper; the three
+`Date`-typed helpers (`source-bdjobs`, `source-naukri`, `source-ats-workday`)
+are routed by hand; ~40 RSS plugins whose `datePosted` is `string | undefined`
+get `?? undefined`. New helper suite + greenhouse service test green; whole-graph
+`npm run build` typecheck green; targeted jest suites for both code families green.
+
+---
+
 ## 2026-06-28 — Scheduled run #440 (**170 new Source Company Plugins** — Specs 804–974)
 
 **Scope:** Largest single-run corpus expansion to date — **170 new Greenhouse-backed
@@ -335,7 +843,7 @@ the wired shared files.
 
 ## 2026-06-24 — Run #459 — Spec 5023 — `source-ats-workatastartup` plugin
 
-**Scope:** YC Work at a Startup (WaaS) was newly detected in fetch1 (both the
+**Scope:** YC Work at a Startup (WaaS) was newly detected (both the
 canonical `workatastartup.com/companies/{slug}` and the public YC mirror
 `ycombinator.com/companies/{slug}/jobs`) but had no ever-jobs harvester. Adds a
 new `source-ats-workatastartup` plugin that harvests the YC public mirror.
@@ -432,7 +940,7 @@ castelion-corporation, 135 jobs) — so it returned 0 jobs everywhere. Manatal
 hosts its public career pages on the white-label domain `careers-page.com`,
 whose JSON API (`/api/v1.0/c/{slug}/jobs/`) is the working data layer the Vue
 front-end itself consumes. Repointed the plugin there and applied the full ATS
-checklist (`docs_fetch1/ats-plugin-feature-checklist-SPEC.md`).
+checklist.
 
 **Plugin rework (`packages/plugins/source-ats-manatal`):**
 - `manatal.constants.ts` — replaced the dead `api.manatal.com` endpoint with
@@ -571,7 +1079,7 @@ are left untouched; only our fork's specs move.
 **Mapping (dense, order-preserving):** 742→5001, 743→5002, 744→5003, 745→5004,
 747→5005, 748→5006, 749→5007, 750→5008, 751→5009, 752→5010, 753→5011, 754→5012,
 755→5013, 756→5014, 757→5015, 758→5016, 759→5017. The full table and rationale
-live in the fetch1 design doc `docs_fetch1/ever-jobs-spec-renumber-SPEC.md`.
+live in the upstream spec-renumber design doc.
 
 **Changes:**
 

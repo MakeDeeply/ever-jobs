@@ -14,6 +14,7 @@ import { AndroidjobsModule } from './source-androidjobs';
 import { ArbeitnowModule } from './source-arbeitnow';
 import { ArbeitsagenturModule } from './source-arbeitsagentur';
 import { AdpModule } from './source-ats-adp';
+import { ApponeModule } from './source-ats-appone';
 import { AshbyModule } from './source-ats-ashby';
 import { AvatureModule } from './source-ats-avature';
 import { BambooHRModule } from './source-ats-bamboohr';
@@ -1124,6 +1125,7 @@ export const ALL_SOURCE_MODULES = [
   ArbeitnowModule,
   ArbeitsagenturModule,
   AdpModule,
+  ApponeModule,
   AshbyModule,
   AvatureModule,
   BambooHRModule,

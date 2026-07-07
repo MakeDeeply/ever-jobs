@@ -438,6 +438,7 @@
       "@ever-jobs/source-ats-successfactors": ["packages/plugins/source-ats-successfactors/src/index.ts"],
       "@ever-jobs/source-ats-jobvite": ["packages/plugins/source-ats-jobvite/src/index.ts"],
       "@ever-jobs/source-ats-adp": ["packages/plugins/source-ats-adp/src/index.ts"],
+      "@ever-jobs/source-ats-appone": ["packages/plugins/source-ats-appone/src/index.ts"],
       "@ever-jobs/source-ats-ukg": ["packages/plugins/source-ats-ukg/src/index.ts"],
       "@ever-jobs/source-company-google": ["packages/plugins/source-company-google/src/index.ts"],
       "@ever-jobs/source-company-meta": ["packages/plugins/source-company-meta/src/index.ts"],
