@@ -14,6 +14,17 @@ There was no adapter for **PrismHR** careers boards (the applicant-tracking
 product powered by HiringThing). PrismHR tenants publish public boards at
 `https://{slug}.prismhr-hire.com/`, and none were being ingested.
 
+An existing `source-ats-hiringthing` adapter targets the same underlying
+platform but is not usable for scraping third-party tenants: it calls the
+authenticated owner-side REST API (`api.hiringthing.com`, Basic Auth with an
+account's private API key), so it returns only that one account's jobs and
+yields nothing without a key we cannot obtain for arbitrary companies. This
+adapter instead scrapes the anonymous public board — no credentials, addressable
+by slug/URL for any tenant — and additionally populates fields the owner-API
+path leaves empty here (structured location, isRemote, real min/max
+compensation). The two are complementary, not duplicates; the hiringthing
+adapter is left untouched.
+
 The board is a React SPA, but the server renders enough HTML for a scraper to
 avoid a headless browser entirely. Two views carry everything needed:
 

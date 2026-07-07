@@ -60,6 +60,18 @@ import {
  * The adapter reads the board list for job enumeration + coarse fields, then
  * fans out to detail pages for description/date/salary enrichment via the
  * shared JSON-LD extractor and the React props.
+ *
+ * Why this exists alongside `source-ats-hiringthing`: both target the same
+ * underlying HiringThing platform, but at opposite ends. The `hiringthing`
+ * adapter calls the authenticated owner-side REST API
+ * (`api.hiringthing.com`, Basic Auth with an account's private API key) — it
+ * returns only that one account's jobs and needs a key we do not have for
+ * arbitrary companies, so it yields nothing when scraping third-party boards.
+ * This adapter instead scrapes the anonymous public careers board
+ * (`{slug}.prismhr-hire.com`), which needs no credentials and is addressable
+ * by slug/URL for any tenant — the only viable path for general scraping. It
+ * also populates fields the owner-API path leaves empty here (structured
+ * location, isRemote, and real min/max compensation).
  */
 @SourcePlugin({
   site: Site.PRISMHR,
