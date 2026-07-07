@@ -15,6 +15,37 @@
 
 ---
 
+## 2026-07-07 — Run #477 — Spec 5040 — jobvite-board-jsonld
+
+**Change:** Rewrite `source-ats-jobvite`, which returned 0 jobs for every tenant
+tested. It called a private feed endpoint (`/api/v2/job-feed/{slug}`) that no
+longer exists — every request 3xx-redirects to a support page. Rewritten onto the
+server-rendered board + detail JSON-LD.
+
+- New path: GET `/{slug}/jobs` → parse each `<h3 class="h2">` department heading
+  + following `table.jv-job-list` rows (title, `/job/{jobId}` URL, location cell);
+  fan out to `/{slug}/job/{jobId}` and consume the shared `parseJobPostingLd`
+  extractor (Spec 5022) for description, date, employment type, structured
+  location, remote flag, and compensation.
+- Field mapping: `department` from the `<h3>` grouping; `location` from JSON-LD
+  `jobLocation[].address` (list cell fallback); `isRemote` from
+  `jobLocationType === 'TELECOMMUTE'` with a text heuristic fallback;
+  `compensation` via `jobPostingLdToCompensation`; `companyName` from
+  `hiringOrganization` (board `<title>` fallback).
+- Tenant resolved from `companySlug` (board slug or URL) or a `jobs.jobvite.com`
+  `companyUrl`; a board that redirects away (tenant migrated off Jobvite) → `[]`;
+  a missing detail page still emits the role from list fields. Dropped the dead
+  private-feed + authenticated + headless-browser paths.
+
+**Verification:** 4 live public boards carrying 81 open roles (37/16/9/19); 0
+field diffs across all sampled roles; a 5th board in the sample had migrated off
+Jobvite and correctly returned `[]`. jobvite suite green (14 mocked unit + e2e);
+package typecheck + docs lint clean.
+
+**Spec:** `.specify/specs/5040-jobvite-board-jsonld/` (spec, plan, tasks).
+
+---
+
 ## 2026-07-07 — Run #476 — Spec 5039 — isolved-core-jobs-api
 
 **Change:** Rewrite `source-ats-isolved` field enumeration onto the board's own

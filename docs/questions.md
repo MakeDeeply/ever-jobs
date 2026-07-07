@@ -10,6 +10,33 @@
 
 ---
 
+## Q-082 — jobvite: server-rendered board vs. reverse-engineering the SPA API?
+
+**Context:** Spec 5040. The old `source-ats-jobvite` called a private feed
+endpoint (`/api/v2/job-feed/{slug}`) that is dead (every request 3xx-redirects to
+a support page → 0 jobs). Modern boards are Angular SPAs at
+`jobs.jobvite.com/{slug}/`. Two viable rebuild paths:
+
+**Options:**
+
+- **A. Server-rendered board + detail JSON-LD (chosen).** Jobvite serves plain
+  HTML for `/{slug}/jobs` (job rows grouped under `<h3>` department headings) and
+  each `/{slug}/job/{jobId}` detail page (a schema.org `JobPosting` JSON-LD
+  block). No browser, no private API — just HTTP + Cheerio + the shared
+  `parseJobPostingLd` extractor (Spec 5022).
+- **B. Reverse-engineer the SPA's internal search endpoints.** The board's
+  Angular app calls `/{slug}/search` / `/search/facets` routes. Undocumented,
+  return shells/facets rather than a clean job feed, and brittle to SPA changes.
+- **C. Headless browser.** Render the SPA and scrape the DOM. Heaviest, slowest,
+  and unnecessary given A.
+
+**Resolution (2026-07-07): A (default — proceeding).** The server-rendered views
+carry every field the DTO needs (department from the `<h3>` grouping; description,
+date, employment type, structured location, remote flag, compensation from the
+detail JSON-LD) with no browser and no dependency on undocumented SPA internals.
+
+---
+
 ## Q-081 — isolved: list-API-only vs. hybrid list-API + detail description?
 
 **Context:** Spec 5039. The board's `/core/jobs/{domainId}` JSON API returns all
