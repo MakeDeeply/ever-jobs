@@ -15,6 +15,34 @@
 
 ---
 
+## 2026-07-07 — Run #476 — Spec 5039 — isolved-core-jobs-api
+
+**Change:** Rewrite `source-ats-isolved` field enumeration onto the board's own
+JSON API. The plugin already returned correct counts (sitemap → per-job JSON-LD)
+but left `department` null, never set `compensation`, and derived `isRemote` from
+a title/location text heuristic that misses physically-located remote roles.
+
+- New path: GET `/jobs/` → read `domainId`/`domainTitle` from the SPA
+  `componentData`; GET `/core/jobs/{domainId}?getParams={"isInternal":0}` for all
+  open roles with structured fields; fan out to `/jobs/{id}.html` JSON-LD for the
+  description body (hybrid — same N+1 as before, richer data).
+- Field mapping: `department` from `classification`/`orgTitle`; `compensation`
+  from `minSalary`/`maxSalary` + `payTypeFrame` interval (USD); `isRemote` from
+  structured `workplaceType` (`/remote|work.from.home/i`) with the text heuristic
+  as fallback; `iso3`→2-letter country; `datePosted`/`description` from detail
+  JSON-LD.
+- Tenant resolved from `companySlug` (bare subdomain or URL) or an
+  `isolvedhire.com` `companyUrl`; unknown tenant / missing domainId / API
+  failure → `[]` (never throws). Dropped the XML-sitemap code path.
+
+**Verification:** 5 live tenants (electra, seegrid, integertech, northerngear,
+cardmonroeautomation) carrying 73 open roles; 0 field diffs across all sampled
+jobs; 15 mocked unit tests green; package typecheck + docs lint clean.
+
+**Spec:** `.specify/specs/5039-isolved-core-jobs-api/` (spec, plan, tasks).
+
+---
+
 ## 2026-07-07 — Run #475 — Spec 5038 — icims-board-rework
 
 **Change:** Rewrite `source-ats-icims` (was returning 0 jobs) onto the

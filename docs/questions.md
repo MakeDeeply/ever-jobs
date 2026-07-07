@@ -10,6 +10,27 @@
 
 ---
 
+## Q-081 — isolved: list-API-only vs. hybrid list-API + detail description?
+
+**Context:** Spec 5039. The board's `/core/jobs/{domainId}` JSON API returns all
+open roles with structured fields (department, compensation, workplaceType) in a
+single request, but omits the full description body — that only lives on each
+job's `/jobs/{id}.html` detail page (JSON-LD `JobPosting`).
+
+**Options:**
+
+- **A. Hybrid.** List API for all structured fields + one detail fetch per kept
+  role for the description body. Same N+1 request cost as the prior sitemap path,
+  strictly richer data (adds department, compensation, structured isRemote).
+- **B. List-API-only.** Two requests total (board HTML + list API), much faster,
+  but `description` drops to null/snippet.
+
+**Resolution (2026-07-07): A** — chosen by the owner. Keeping the full
+description body is non-negotiable; the structured fields are added on top with
+no extra request cost beyond what the sitemap path already paid.
+
+---
+
 ## Q-080 — icims: listing snippet vs. per-job detail enrichment?
 
 **Context:** Spec 5038. iCIMS board cards carry a truncated marketing snippet,
