@@ -1119,6 +1119,7 @@ import { WizModule } from './source-company-wizinc';
 import { WurlModule } from './source-company-wurljobs';
 import { ZyngaModule } from './source-company-zyngacareers';
 import { TerraformIndustriesModule } from './source-company-terraformindustries';
+import { Submit4jobsModule } from './source-ats-submit4jobs';
 export const ALL_SOURCE_MODULES = [
   FourDayWeekModule,
   AcademiccareersModule,
@@ -2231,4 +2232,5 @@ export const ALL_SOURCE_MODULES = [
   WurlModule,
   ZyngaModule,
   TerraformIndustriesModule,
+  Submit4jobsModule,
 ];

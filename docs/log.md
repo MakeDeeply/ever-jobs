@@ -15,6 +15,47 @@
 
 ---
 
+## 2026-07-07 — Run #480 — Spec 5043 — source-ats-submit4jobs
+
+**Change:** New `source-ats-submit4jobs` plugin for Submit4Jobs / Pereless
+careers boards (`{slug}.submit4jobs.com`). The board is a ColdFusion-hosted
+Angular SPA whose job list is served by a JSON API; no headless browser is
+needed.
+
+- Flow:
+    - discover — GET the board home page, read the embed `<script src>`
+      (`//{apiHost}/templates/{template}/embed/iframe.cfm?cid={cid}`) for the
+      API host, template, and company id. Tenants live on different Pereless
+      hosts/templates (`apps.submit4jobs.com`/`magneto`,
+      `devapps.pereless.com`/`magnetolive`), so these are read per tenant.
+    - prime — GET the embed iframe to obtain the ColdFusion session cookies
+      (`CFID`, `CFTOKEN`, `CFCLIENT_CAREERHOSTING`); the API returns an error
+      page unless they are replayed.
+    - enumerate — POST `.../api/?action=getJobs` (header `cid`, primed cookies,
+      the template's default empty-filter body) → a JSON array of jobs.
+    - describe — the `magnetolive` template omits the description from the list,
+      so body-less rows are enriched by re-issuing `getJobs` with `filters.jid`
+      set (bounded `Promise.allSettled` fan-out).
+- Field mapping: `title` from `job_title`; `department` from `dname`; `location`
+  from `city`/`state`/`fullCountryName` via the shared `parseLocationList`
+  (Spec 5001); `isRemote` from the parsed location + title text; `employmentType`
+  from `jobtype`; `datePosted` from `postingdate` (`"Month, DD YYYY HH:MM:SS"` →
+  `YYYY-MM-DD`); `compensation` from `salary`/`salaryrange` (min/max) +
+  `salarytype` (`H`→hourly, `Y`→yearly) + `jobcurrency`; `description` from
+  `jobdescription` + `reqsexp`; `emails` from the body; `jobUrl` =
+  `#/jobDescription/{jid}/{title-slug}`.
+- Failure handling: no slug/url → `[]` (no HTTP); a missing board page / absent
+  embed script / error-HTML `getJobs` response → `[]`. Registered in all four
+  places (enum, `packages/plugins/index.ts`, `tsconfig.base.json`,
+  `jest.config.js`).
+
+**Verification:** 19 mocked-HTTP unit tests green; package typecheck + docs lint
+clean.
+
+**Spec:** `.specify/specs/5043-source-ats-submit4jobs/` (spec, plan, tasks).
+
+---
+
 ## 2026-07-07 — Run #479 — Spec 5042 — source-company-terraformindustries
 
 **Change:** New `source-company-terraformindustries` company plugin for

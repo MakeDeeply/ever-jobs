@@ -10,6 +10,39 @@
 
 ---
 
+## Q-085 — submit4jobs: how to reach the CF-gated getJobs JSON API without a browser?
+
+**Context:** Spec 5043 (new `source-ats-submit4jobs`). Submit4Jobs / Pereless
+boards (`{slug}.submit4jobs.com`) are ColdFusion-hosted Angular SPAs; the job
+list is not server-rendered but served by `POST .../api/?action=getJobs`. A
+direct POST returns an error page — the API requires a valid ColdFusion session
+(cookies `CFID`, `CFTOKEN`, `CFCLIENT_CAREERHOSTING`). Tenants also live on
+different hosts/templates (`apps.submit4jobs.com`/`magneto`,
+`devapps.pereless.com`/`magnetolive`) with different default filter shapes, and
+the `magnetolive` template omits the description from the list.
+
+**Options:**
+
+- **A. Discover + prime + JSON API (chosen).** GET the board home page to read
+  the embed `<script src>` for the host/template/cid, GET the embed iframe to
+  obtain the CF session cookies, then replay those three cookies on the
+  `getJobs` POST with the template-appropriate empty filters. Body-less rows
+  (magnetolive) are enriched by re-issuing `getJobs` with `filters.jid`. Pure
+  HTTP, no browser; degrades to `[]` when discovery/priming/parse fails.
+- **B. Headless browser.** Drive the SPA in Playwright and scrape the rendered
+  DOM / capture the XHR. Works, but heavy and slow; unnecessary once the cookie
+  gate is understood.
+- **C. Hard-code host/template/cid per tenant.** Skips discovery, but breaks the
+  moment a tenant is on a different Pereless host/template; not general.
+
+**Resolution (2026-07-07): A (default — proceeding).** Priming the CF session
+via the embed iframe and replaying the three cookies makes the JSON API
+reachable over plain HTTP; host/template/cid are read from the board page so any
+Pereless host/template resolves automatically. Verified with 19 mocked-HTTP unit
+tests.
+
+---
+
 ## Q-084 — terraformindustries: enrich roles from Google Docs, or list-only?
 
 **Context:** Spec 5042 (new `source-company-terraformindustries`). Terraform
