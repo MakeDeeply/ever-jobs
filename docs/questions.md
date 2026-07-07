@@ -10,6 +10,37 @@
 
 ---
 
+## Q-083 — prismhr: board react-props enumeration vs. per-detail-only scrape?
+
+**Context:** Spec 5041 (new `source-ats-prismhr`). PrismHR / HiringThing boards
+(`{slug}.prismhr-hire.com`) are React SPAs, but the server embeds two
+`data-react-props` JSON payloads: `JobFiltersContainer` on the board list page
+(every role's id/title, plus state→city→[ids] locations, category→[ids], and a
+remote-ids list) and `ApplyButtonGroup` on each `/job/{id}` detail page (remote,
+salary, pay frequency, category), alongside a schema.org `JobPosting` JSON-LD
+block on the detail page. Two rebuild paths:
+
+**Options:**
+
+- **A. Board react-props for enumeration + per-role detail enrichment (chosen).**
+  Read the board `JobFiltersContainer` props to list every role and its coarse
+  location/category/remote, then fan out (bounded concurrency) to each detail
+  page for the description body, date, structured location, salary, and remote —
+  via the shared `parseJobPostingLd` extractor (Spec 5022) + the `ApplyButtonGroup`
+  props. Richest data; N+1 requests.
+- **B. Detail-pages-only.** Skip the board props and crawl `/job/{id}` pages
+  directly. But the board props are the only place that enumerates the role ids,
+  so there is no id source without the list — not viable on its own.
+- **C. Headless browser.** Render the SPA and scrape the DOM. Heaviest, slowest,
+  and unnecessary — both react-props blocks are server-rendered.
+
+**Resolution (2026-07-07): A (default — proceeding).** The board props enumerate
+every role and carry coarse fields; the detail pages carry the description body
+and structured salary/remote. The hybrid mirrors Specs 5038–5040 and needs no
+browser. Verified against 5 live boards (29 roles: 15/1/6/6/1), 0 field diffs.
+
+---
+
 ## Q-082 — jobvite: server-rendered board vs. reverse-engineering the SPA API?
 
 **Context:** Spec 5040. The old `source-ats-jobvite` called a private feed

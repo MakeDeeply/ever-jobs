@@ -2080,6 +2080,8 @@ export enum Site {
   ZYNGA = 'zyngacareers',
   // Phase 970: Spec 5036 — AppOne (Paychex-owned) ATS plugin
   APPONE = 'appone',
+  // Phase 971: Spec 5041 — PrismHR (HiringThing) ATS plugin
+  PRISMHR = 'prismhr',
 }
 
 /**
