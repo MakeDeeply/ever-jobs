@@ -2082,6 +2082,8 @@ export enum Site {
   APPONE = 'appone',
   // Phase 971: Spec 5041 — PrismHR (HiringThing) ATS plugin
   PRISMHR = 'prismhr',
+  // Phase 972: Spec 5042 — Terraform Industries company careers plugin
+  TERRAFORMINDUSTRIES = 'terraformindustries',
 }
 
 /**

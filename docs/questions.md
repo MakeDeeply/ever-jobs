@@ -10,6 +10,36 @@
 
 ---
 
+## Q-084 — terraformindustries: enrich roles from Google Docs, or list-only?
+
+**Context:** Spec 5042 (new `source-company-terraformindustries`). Terraform
+Industries runs no third-party ATS; the home page carries a hand-built "Careers"
+list of `<a>` links, each pointing at a Google Doc job description. The home page
+gives only the role title + doc link; the Google Doc's plain-text export
+(`/document/d/{id}/export?format=txt`, no auth, no browser) carries a fixed
+header (company / title / `terraformindustries.com` / location) plus the
+description body.
+
+**Options:**
+
+- **A. List + Google Doc enrichment (chosen).** Enumerate roles from the home
+  page, then fetch each distinct doc export once (bounded concurrency, deduped by
+  docId) to populate structured `location`, `isRemote`, `description`, and
+  `emails`. N+1 requests, but the docs are the only source of location and
+  description, so listing-only would drop those important fields.
+- **B. Listing-only.** One request; return title + jobUrl with null location and
+  description. Fast, but discards the location and full description the source
+  readily provides.
+- **C. Headless browser.** Unnecessary — both the home page and the doc exports
+  are plain HTTP.
+
+**Resolution (2026-07-07): A (default — proceeding).** The Google Doc export is
+the only source of location and description, so enrichment is required to avoid
+dropping important data; a doc-export failure degrades that role gracefully
+(title + jobUrl still emitted). Verified with 10 mocked-HTTP unit tests.
+
+---
+
 ## Q-083 — prismhr: board react-props enumeration vs. per-detail-only scrape?
 
 **Context:** Spec 5041 (new `source-ats-prismhr`). PrismHR / HiringThing boards

@@ -1118,6 +1118,7 @@ import { WildlifeStudiosModule } from './source-company-wildlifestudios';
 import { WizModule } from './source-company-wizinc';
 import { WurlModule } from './source-company-wurljobs';
 import { ZyngaModule } from './source-company-zyngacareers';
+import { TerraformIndustriesModule } from './source-company-terraformindustries';
 export const ALL_SOURCE_MODULES = [
   FourDayWeekModule,
   AcademiccareersModule,
@@ -2229,4 +2230,5 @@ export const ALL_SOURCE_MODULES = [
   WizModule,
   WurlModule,
   ZyngaModule,
+  TerraformIndustriesModule,
 ];
