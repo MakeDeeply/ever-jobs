@@ -395,7 +395,10 @@ export class PrismhrService implements IScraper {
   private buildCompensation(detail: PrismhrDetailData | null): CompensationDto | null {
     if (!detail) return null;
     if (detail.minSalary == null && detail.maxSalary == null) return null;
-    const interval = detail.payFrequency ? getCompensationInterval(detail.payFrequency) : undefined;
+    const rawFreq = detail.payFrequency ?? null;
+    const interval = rawFreq
+      ? getCompensationInterval(rawFreq) ?? getCompensationInterval(rawFreq.replace(/ly$/i, ''))
+      : undefined;
     return new CompensationDto({
       minAmount: detail.minSalary ?? undefined,
       maxAmount: detail.maxSalary ?? undefined,

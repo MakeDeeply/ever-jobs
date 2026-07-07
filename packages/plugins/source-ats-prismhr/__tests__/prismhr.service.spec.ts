@@ -283,6 +283,17 @@ describe('PrismhrService', () => {
     );
   });
 
+  it('normalises an "annually" pay_frequency to the yearly interval', async () => {
+    serve(board({ titles: [{ id: 5, title: 'Role' }] }), {
+      5: { minSalary: 180000, maxSalary: 225000, currency: 'USD', payFrequency: 'annually' },
+    });
+
+    const jobs = (await new PrismhrService().scrape(input())).jobs;
+    expect(jobs[0].compensation).toEqual(
+      expect.objectContaining({ minAmount: 180000, maxAmount: 225000, interval: 'yearly' }),
+    );
+  });
+
   it('leaves compensation null when salary objects are empty', async () => {
     serve(board({ titles: [{ id: 2, title: 'Role' }] }), { 2: {} });
     const jobs = (await new PrismhrService().scrape(input())).jobs;
