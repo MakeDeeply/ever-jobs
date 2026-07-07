@@ -12,7 +12,8 @@
 
 ## Problem
 
-`source-ats-icims` returned **0 jobs** for real tenants. Two dead paths:
+`source-ats-icims` returned **0 jobs** for both tenants tested
+(jobyaviation, stellarsolutions). Two dead paths:
 
 1. **JSON "gateway" that isn't JSON.** The plugin GET-ed
    `…/jobs/search?pr={offset}&schemaId=&mode=job&iis=Internet` expecting a JSON
