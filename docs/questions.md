@@ -12,8 +12,8 @@
 
 ## Q-079 — oracle: what host segment should a bare-subdomain colon-slug assume?
 
-**Context:** Spec 5037. fetch1's oracle `extract_id` emits `{subdomain}:{siteNumber}`
-(e.g. `fa-esbv-saasfaprod1:CX_1`), dropping the middle host segment. To rebuild
+**Context:** Spec 5037. Some upstream callers emit `{subdomain}:{siteNumber}`
+(e.g. `acme-saasfaprod1:CX_1`), dropping the middle host segment. To rebuild
 the finder host (`{subdomain}.fa.{SEGMENT}.oraclecloud.com`) the plugin must
 assume a `SEGMENT`. Modern SaaS pods use `ocs`; older tenants use a region code
 (`us2`, `us6`, `us8`, `em2`, …) that is not recoverable from the subdomain alone.
@@ -21,19 +21,18 @@ assume a `SEGMENT`. Modern SaaS pods use `ocs`; older tenants use a region code
 **Options:**
 
 - **A. Assume `ocs` for bare-subdomain slugs; support a full-host colon slug
-  (`{host}:{siteNumber}`) for everything else (current).** Scott's existing
-  `fa-esbv-saasfaprod1:CX_1` resolves immediately (firstsolar is on `ocs`);
-  region-code tenants must be addressed by the full-host form (which the plugin
-  accepts and prefers). Verified: firstsolar 243. The 3 extra-ats-test-urls
-  tenants (us8/us6) are addressed full-host and return 19/96/158.
-- **B. Change fetch1 `extract_id` to emit the full host** (`{host}:{siteNumber}`)
-  so the plugin never guesses. Most robust; needs a fetch1-side change + a STATUS
-  relabel. Recommended follow-up.
+  (`{host}:{siteNumber}`) for everything else (current).** A bare-subdomain slug
+  on an `ocs` pod resolves immediately; region-code tenants must be addressed by
+  the full-host form (which the plugin accepts and prefers). Verified against 4
+  live tenants (ocs/us8/us6, CX_1/CX_2/CX): 243/19/96/158.
+- **B. Have the caller emit the full host** (`{host}:{siteNumber}`)
+  so the plugin never guesses. Most robust; needs an upstream change. Recommended
+  follow-up.
 - **C. Probe multiple segments (`ocs`, `us2`, …) per bare subdomain until one
   returns jobs.** Self-healing but multiplies requests and latency per tenant.
 
 **Default (proceeding): A** — assume `ocs` for the bare form, prefer full-host
-colon slug for region-code tenants; B tracked as the fetch1-side follow-up.
+colon slug for region-code tenants; B tracked as the upstream follow-up.
 
 ---
 

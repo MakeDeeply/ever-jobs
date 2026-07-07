@@ -17,7 +17,7 @@
 - [x] T09: Unit tests — colon-slug forms (full-host, bare-sub, us8 region, override)
 - [x] T10: Unit test — siteNumber extraction from companyUrl path
 - [x] T11: Unit tests — pagination short-mid-page (100+99+45=244) + resultsWanted cap
-- [x] T12: Live validation against 4 tenants (firstsolar=243, ewvl=19, ewij=96, hdnn=158)
+- [x] T12: Live validation against 4 tenants (ocs/CX_1=243, us8/CX_1=19, us8/CX_2=96, us6/CX=158)
 - [x] T13: Spec Kit docs (spec.md, plan.md, tasks.md)
-- [ ] T14: docs/index.md, docs/log.md updates
-- [ ] T15: PR with full description
+- [x] T14: docs/index.md, docs/log.md updates
+- [x] T15: PR with full description

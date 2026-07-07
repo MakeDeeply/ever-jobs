@@ -15,8 +15,8 @@
 The Oracle plugin (Spec 013) has three bugs that surface when a real tenant
 board is addressed by `companySlug`:
 
-1. **Slug format mismatch (0 jobs).** fetch1 passes `{subdomain}:{siteNumber}`
-   (e.g. `fa-esbv-saasfaprod1:CX_1`). `composeUrlFromSlug` assumes
+1. **Slug format mismatch (0 jobs).** Callers pass `{subdomain}:{siteNumber}`
+   (e.g. `acme-saasfaprod1:CX_1`). `composeUrlFromSlug` assumes
    `{subdomain}-{region}` and splits on the last dash, producing an invalid URL
    (the colon makes the `URL` constructor treat the right half as a port) ->
    `ERR_ORACLE_BAD_TENANT` -> 0 jobs.
@@ -43,7 +43,7 @@ board is addressed by `companySlug`:
 
 - Adding new fields (description, compensation, employment type) — deferred to Spec 016.
 - Changing the `ScraperInputDto` schema (the existing `siteNumber` field suffices).
-- fetch1-side `extract_id` update (separate commit; fetch1 repo).
+- Upstream slug-emission changes in the calling system (out of scope for this plugin).
 
 ## Contracts
 
@@ -74,8 +74,8 @@ board is addressed by `companySlug`:
 - Unit tests for every slug form (full-host:site, bare-sub:site, full-host us8,
   siteNumber override, URL-path extraction).
 - Unit test proving short mid-pages don't stop pagination (100+99+45 -> 244).
-- Live validation against 4 tenants:
-  - firstsolar (`fa-esbv-saasfaprod1.fa.ocs` / CX_1) -> 243 (API yields 244-1 due to offset quirk)
-  - ewvl (`fa.us8` / CX_1) -> 19
-  - ewij (`fa.us8` / CX_2) -> 96
-  - hdnn (`fa.us6` / CX) -> 158
+- Live validation against 4 tenants (pod / region / site -> jobs):
+  - `fa.ocs` / CX_1 -> 243 (API reports 244; offset pagination yields 243)
+  - `fa.us8` / CX_1 -> 19
+  - `fa.us8` / CX_2 -> 96
+  - `fa.us6` / CX -> 158
