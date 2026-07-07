@@ -15,6 +15,48 @@
 
 ---
 
+## 2026-06-28 — Run #473 — Spec 5036 — source-ats-appone
+
+**Change:** New `source-ats-appone` plugin (`Site.APPONE = 'appone'`). AppOne
+(`jobs.appone.com`, "Powered by Paychex Flex") had no plugin and no enum value.
+It is the same vendor family as `source-ats-paychex` but a distinct surface — an
+Angular SPA with no sitemap and no JSON-LD, so it cannot fold into the paychex
+plugin (which scrapes `applybypaychex.com` via `sitemap.xml` + prerendered
+JSON-LD). AppOne exposes two unauthenticated JSON endpoints:
+
+- list: `GET jobs.appone.com/api/portal/v1/companyjobposts/{tenant}` — carries
+  title, location, jobType, workplaceType, datePosted, jobPostUrl, plus the
+  tenant `companyName`.
+- detail: `GET apply.appone.com/api/apply/v2/jobposting/{jobPostId}` — adds the
+  full plain-text `description`.
+
+The plugin resolves the tenant from `companySlug` or a `jobs.appone.com`
+`companyUrl`, fetches the list, caps to `resultsWanted`, and overlays each kept
+posting with its detail under bounded concurrency:
+
+- **companyName** — the list `companyName` (else the tenant slug).
+- **location** — split into `{ city, state }` (e.g. "Aurora, OR").
+- **datePosted** — the ISO list `datePosted` → `Date`.
+- **isRemote** — `workplaceType === 'REMOTE'`; `HYBRID` → `workFromHomeType`.
+- **employmentType/jobType** — from `jobType` (e.g. "Full Time").
+- **description** — the detail's plain-text body.
+- **compensation** — AppOne exposes no structured pay; parsed from the body via
+  the shared salary extractor (`resolveCompensation`, Spec 5018).
+
+A failed detail fetch degrades to the list-only fields; a failed list fetch
+yields an empty response. Verified read-only against 1 live tenant
+(vansaircraftcareers) carrying 5 open roles.
+
+**Tests:** AppOne suite green (10 mocked unit); API typecheck + docs lint clean.
+
+**Files:** `packages/plugins/source-ats-appone/**` (new package),
+`packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`,
+`tsconfig.base.json`, `jest.config.js`,
+`.specify/specs/5036-source-ats-appone/{spec,plan,tasks}.md`,
+`docs/index.md`, `docs/log.md`.
+
+---
+
 ## 2026-06-28 — Run #472 — Spec 5035 — Gem detail overlay
 
 **Change:** `source-ats-gem` ran only the `JobBoardList` GraphQL op, which carries
