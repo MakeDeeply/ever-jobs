@@ -15,6 +15,35 @@
 
 ---
 
+## 2026-07-07 — Run #475 — Spec 5038 — icims-board-rework
+
+**Change:** Rewrite `source-ats-icims` (was returning 0 jobs) onto the
+server-rendered board.
+
+- The old plugin GET-ed `…/jobs/search?pr={offset}&mode=job` expecting JSON and
+  stepped `pr` by the page size as if it were a record offset; iCIMS boards are
+  **HTML** and `pr` is a **0-based page index**, so the JSON parse found nothing
+  and the loop broke immediately.
+- The zero-result Playwright fallback ran unverified selectors (a
+  `// TODO: validate selectors` was in place) and extracted nothing either.
+- New path: HTTP + Cheerio against the embeddable board form
+  `?ss=1&in_iframe=1&pr={page}`; parse `.iCIMS_JobCardItem` cards (title,
+  canonical URL + numeric id, `{country}-{state}-{city}` location, Category
+  department, listing snippet, `isRemote`); company from the
+  `Job Listings at {Company}` `<title>`; walk `pr` from 0 using the
+  "Page X of N" pager and de-dupe by id.
+- Tenant resolved from `companySlug` (bare subdomain or URL) or a `*.icims.com`
+  `companyUrl`; unknown tenant / no input → `[]` (never throws).
+- Dropped the Playwright + JSON-gateway code.
+
+**Verification:** read-only against 2 live boards (242 and 37 open roles);
+9 mocked unit tests green; package typecheck clean.
+
+**Spec:** `.specify/specs/5038-icims-board-rework/` (spec, plan, tasks).
+**Open question:** Q-080 (listing snippet vs. per-job detail enrichment).
+
+---
+
 ## 2026-07-07 — Spec 5037 — oracle-slug-pagination
 
 **Change:** Fix three bugs in `source-ats-oracle` (Spec 013):
