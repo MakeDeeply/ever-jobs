@@ -2084,6 +2084,8 @@ export enum Site {
   PRISMHR = 'prismhr',
   // Phase 972: Spec 5042 — Terraform Industries company careers plugin
   TERRAFORMINDUSTRIES = 'terraformindustries',
+  // Phase 973: Spec 5043 — Submit4Jobs (Pereless) ATS plugin
+  SUBMIT4JOBS = 'submit4jobs',
 }
 
 /**

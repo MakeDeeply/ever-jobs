@@ -441,6 +441,7 @@
       "@ever-jobs/source-ats-appone": ["packages/plugins/source-ats-appone/src/index.ts"],
       "@ever-jobs/source-ats-prismhr": ["packages/plugins/source-ats-prismhr/src/index.ts"],
       "@ever-jobs/source-company-terraformindustries": ["packages/plugins/source-company-terraformindustries/src/index.ts"],
+      "@ever-jobs/source-ats-submit4jobs": ["packages/plugins/source-ats-submit4jobs/src/index.ts"],
       "@ever-jobs/source-ats-ukg": ["packages/plugins/source-ats-ukg/src/index.ts"],
       "@ever-jobs/source-company-google": ["packages/plugins/source-company-google/src/index.ts"],
       "@ever-jobs/source-company-meta": ["packages/plugins/source-company-meta/src/index.ts"],
