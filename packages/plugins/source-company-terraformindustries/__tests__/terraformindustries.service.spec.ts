@@ -43,6 +43,8 @@ const DOC1_TXT = [
   '',
   'Responsibilities',
   '* Formulate and execute technical analysis.',
+  '',
+  'Pay range: $120,000.00 - $180,000.00 per year, to be determined on a case-by-case basis.',
 ].join('\n');
 
 const DOC2_TXT = [
@@ -52,6 +54,8 @@ const DOC2_TXT = [
   'Remote',
   '',
   'Are you compelled to bring life to mechanical systems?',
+  '',
+  'Pay range: $120,000.00 - $150,000.00 per year.',
 ].join('\n');
 
 function serve(overrides: Record<string, unknown> = {}): void {
@@ -109,6 +113,28 @@ describe('TerraformIndustriesService', () => {
     });
     expect(chief?.description).toContain('Responsibilities');
     expect(chief?.description).not.toContain('terraformindustries.com');
+    expect(chief?.compensation).toMatchObject({
+      currency: 'USD',
+      interval: 'yearly',
+      minAmount: 120000,
+      maxAmount: 180000,
+    });
+  });
+
+  it('leaves compensation unset when the doc has no pay range', async () => {
+    serve({
+      DOC1: [
+        'Terraform Industries, Inc.',
+        'Technical Chief of Staff',
+        'terraformindustries.com',
+        'Los Angeles, California',
+        '',
+        'No salary stated here.',
+      ].join('\n'),
+    });
+    const jobs = (await new TerraformIndustriesService().scrape(input())).jobs;
+    const chief = jobs.find((job) => job.title === 'Technical Chief of Staff');
+    expect(chief).not.toHaveProperty('compensation');
   });
 
   it('ignores doc links before the Careers heading and non-doc links', async () => {
@@ -151,6 +177,7 @@ describe('TerraformIndustriesService', () => {
     expect(chief?.location).toBeNull();
     expect(chief?.description).toBeNull();
     expect(chief?.isRemote).toBeNull();
+    expect(chief).not.toHaveProperty('compensation');
   });
 
   it('returns an empty list when there is no recognizable Careers list', async () => {

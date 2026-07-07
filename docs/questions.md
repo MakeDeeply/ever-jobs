@@ -24,9 +24,10 @@ description body.
 
 - **A. List + Google Doc enrichment (chosen).** Enumerate roles from the home
   page, then fetch each distinct doc export once (bounded concurrency, deduped by
-  docId) to populate structured `location`, `isRemote`, `description`, and
-  `emails`. N+1 requests, but the docs are the only source of location and
-  description, so listing-only would drop those important fields.
+  docId) to populate structured `location`, `isRemote`, `description`,
+  `compensation` (from the `Pay range:` line), and `emails`. N+1 requests, but the
+  docs are the only source of location, description, and salary, so listing-only
+  would drop those important fields.
 - **B. Listing-only.** One request; return title + jobUrl with null location and
   description. Fast, but discards the location and full description the source
   readily provides.

@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import * as cheerio from 'cheerio';
 import { SourcePlugin } from '@ever-jobs/plugin';
 import {
+  CompensationDto,
   IScraper,
   JobPostDto,
   JobResponseDto,
@@ -15,6 +16,7 @@ import {
   decodeHtmlEntities,
   extractEmails,
   parseLocationList,
+  salaryToCompensation,
 } from '@ever-jobs/common';
 import {
   TERRAFORMINDUSTRIES_CAREERS_HEADING,
@@ -38,9 +40,13 @@ interface TerraformRole {
 interface TerraformDocDetail {
   location: string | null;
   description: string | null;
+  payText: string | null;
 }
 
 const DOC_ID_PATTERN = /\/document\/d\/([A-Za-z0-9_-]+)/;
+
+/** The line the job docs use to state the salary band. */
+const PAY_RANGE_PATTERN = /pay range:[^\n]*/i;
 
 @SourcePlugin({
   site: Site.TERRAFORMINDUSTRIES,
@@ -156,7 +162,7 @@ export class TerraformIndustriesService implements IScraper {
           batch[batchIndex],
           result.status === 'fulfilled'
             ? result.value
-            : { location: null, description: null },
+            : { location: null, description: null, payText: null },
         );
       });
     }
@@ -182,7 +188,7 @@ export class TerraformIndustriesService implements IScraper {
       this.logger.warn(
         `Terraform Industries doc ${docId} fetch failed (${this.errorLabel(error)})`,
       );
-      return { location: null, description: null };
+      return { location: null, description: null, payText: null };
     }
   }
 
@@ -194,7 +200,7 @@ export class TerraformIndustriesService implements IScraper {
    */
   private parseDoc(text: string): TerraformDocDetail {
     if (!text || !text.toLowerCase().includes(TERRAFORMINDUSTRIES_DOC_DOMAIN_MARKER)) {
-      return { location: null, description: null };
+      return { location: null, description: null, payText: null };
     }
 
     const lines = text.split(/\r?\n/);
@@ -202,7 +208,7 @@ export class TerraformIndustriesService implements IScraper {
       (line) =>
         line.trim().toLowerCase() === TERRAFORMINDUSTRIES_DOC_DOMAIN_MARKER,
     );
-    if (domainIndex < 0) return { location: null, description: null };
+    if (domainIndex < 0) return { location: null, description: null, payText: null };
 
     let location: string | null = null;
     let bodyStart = lines.length;
@@ -215,7 +221,8 @@ export class TerraformIndustriesService implements IScraper {
     }
 
     const description = this.normalizeBody(lines.slice(bodyStart).join('\n'));
-    return { location, description };
+    const payText = PAY_RANGE_PATTERN.exec(text)?.[0].trim() ?? null;
+    return { location, description, payText };
   }
 
   /** Collapse runs of blank lines and trim; keep single line breaks intact. */
@@ -238,6 +245,9 @@ export class TerraformIndustriesService implements IScraper {
       ? parsedLocation.location
       : null;
     const description = detail?.description ?? null;
+    const compensation: CompensationDto | null = detail?.payText
+      ? salaryToCompensation(detail.payText)
+      : null;
 
     return new JobPostDto({
       id: `terraformindustries-${this.slug(role.title)}`,
@@ -252,6 +262,7 @@ export class TerraformIndustriesService implements IScraper {
       ...(parsedLocation.workFromHomeType
         ? { workFromHomeType: parsedLocation.workFromHomeType }
         : {}),
+      ...(compensation ? { compensation } : {}),
       datePosted: null,
       emails: extractEmails(description),
     });

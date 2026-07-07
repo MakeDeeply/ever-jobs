@@ -40,11 +40,15 @@ HTTP.
     the description body.
   - Use the `terraformindustries.com` domain line as the anchor: the next
     non-empty line is the location; the remainder is the description body.
+  - Extract the `Pay range: $MIN - $MAX per year` line and parse it into a
+    `CompensationDto` via the shared `salaryToCompensation` helper (Spec 5018).
+    Matching the explicit `Pay range:` line (not the whole body) avoids the stray
+    `$1/kg` / `$100/kW` / `$100/ton` figures that appear in some descriptions.
 - Emit `JobPostDto` per role: `id` (`terraformindustries-{title-slug}`), `title`,
   `companyName` (`Terraform Industries`), `companyUrl`, `jobUrl` (canonical doc
   URL), structured `location`, `isRemote`, `workFromHomeType` (when detected),
-  `description`, `emails` (from the description). `datePosted` is `null` (the
-  source carries no post date).
+  `description`, `compensation` (when a pay range is present), `emails` (from the
+  description). `datePosted` is `null` (the source carries no post date).
 - Honor `ScraperInputDto`: `searchTerm` (title/description), `location`,
   `isRemote`, `jobType`, `offset`, `resultsWanted`.
 - Register in the four required places (enum, `packages/plugins/index.ts`,
@@ -53,9 +57,10 @@ HTTP.
 ## Non-goals
 
 - No generic Google Docs scraper — this is Terraform-Industries-specific.
-- No compensation / employment-type parsing: the job docs are free-form prose and
-  do not carry structured salary or a consistent employment-type field, so those
-  fields are left unset rather than guessed.
+- No employment-type parsing: the job docs are free-form prose and do not carry a
+  consistent employment-type field, so `employmentType` is left unset rather than
+  guessed. (Compensation IS parsed — the docs carry an explicit `Pay range:`
+  line.)
 - No `datePosted`: the source exposes no posting date.
 - No headless browser: the home page and the doc exports are both fetched over
   plain HTTP.
@@ -84,6 +89,7 @@ Mocked-HTTP unit tests (`__tests__/terraformindustries.service.spec.ts`):
 - Ignore doc links that appear before the `Careers` heading and non-doc links.
 - Fetch a shared job doc only once and reuse it across roles (request count).
 - Derive `isRemote` from a `Remote` doc location.
+- Parse the `Pay range:` line into `compensation`; leave it unset when absent.
 - Degrade gracefully when a doc fetch fails (role returned, null enrichment).
 - Empty list when the home page has no recognizable Careers list.
 - `searchTerm` title filter.

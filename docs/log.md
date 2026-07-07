@@ -33,16 +33,20 @@ per role, each pointing at a Google Doc job description.
   line — next non-empty line = location, remainder = description body.
 - Field mapping: `location` via the shared `parseLocationList` (Spec 5001,
   handles `City, FullStateName`); `isRemote` / `workFromHomeType` from the parsed
-  location; `emails` from the description; `jobUrl` = canonical doc URL; `id` =
+  location; `compensation` from the doc's `Pay range: $MIN - $MAX per year` line
+  via the shared `salaryToCompensation` helper (Spec 5018) — matching the explicit
+  `Pay range:` line, not the whole body, avoids stray `$1/kg` / `$100/kW` figures;
+  `emails` from the description; `jobUrl` = canonical doc URL; `id` =
   `terraformindustries-{title-slug}`; `datePosted` = `null` (no source date).
-  `compensation` / `employmentType` left unset (docs are free-form prose).
+  `employmentType` left unset (docs are free-form prose).
 - Failure handling: a home-page failure → `[]`; an individual doc-export failure
   degrades that role to null location/description (title + jobUrl still emitted).
   Registered in all four places (enum, `packages/plugins/index.ts`,
   `tsconfig.base.json`, `jest.config.js`).
 
-**Verification:** 10 mocked-HTTP unit tests green; package full-graph typecheck +
-docs lint clean.
+**Verification:** 11 mocked-HTTP unit tests green; package full-graph typecheck +
+docs lint clean. Live: 39 roles enumerated, all enriched with location +
+description + compensation; 30 unique docs (dedup-by-docId caching).
 
 **Spec:** `.specify/specs/5042-source-company-terraformindustries/` (spec, plan,
 tasks).
