@@ -15,6 +15,39 @@
 
 ---
 
+## 2026-07-07 — Run #478 — Spec 5041 — source-ats-prismhr
+
+**Change:** New `source-ats-prismhr` plugin for PrismHR / HiringThing careers
+boards (`{slug}.prismhr-hire.com`). The board is a React SPA, but the server
+renders enough HTML to avoid a headless browser (a hybrid, like Specs 5038–5040).
+
+- New path: GET `/` → read the `data-react-props` JSON on the
+  `HiringThing.Components.JobFiltersContainer` element (enumerates `titles[]` =
+  `{id,title}`, `locations` = state→city→[ids], `categories` = category→[ids],
+  `remotePositions[]`); fan out to GET `/job/{id}` and consume both the shared
+  `parseJobPostingLd` extractor (Spec 5022) and the
+  `HiringThing.Components.ApplyButtonGroup` react-props (`jobObj.table`).
+- Field mapping: `department` from react-props `category` (board `categories` map
+  fallback); `location` from JSON-LD `jobLocation` / react-props `location_info`
+  (board `locations` map fallback); `isRemote` from react-props `remote` OR board
+  `remotePositions` (title/location text fallback); `compensation` from
+  react-props `min_salary`/`max_salary` + `pay_frequency`; `datePosted` from
+  JSON-LD / react-props `posted_at`; `companyName` from `hiringOrganization` /
+  react-props `company_name` (board `<title>` fallback).
+- Tenant resolved from `companySlug` (subdomain or URL) or a `*.prismhr-hire.com`
+  `companyUrl`; an unreachable board (tenant migrated off PrismHR) → `[]`; a
+  missing detail page still emits the role from board fields. Registered in all
+  four places (enum, `packages/plugins/index.ts`, `tsconfig.base.json`,
+  `jest.config.js`).
+
+**Verification:** 5 live public boards carrying 29 open roles (15/1/6/6/1); 0
+field diffs across all sampled roles; 20 mocked unit tests green; package
+typecheck + docs lint clean.
+
+**Spec:** `.specify/specs/5041-source-ats-prismhr/` (spec, plan, tasks).
+
+---
+
 ## 2026-07-07 — Run #477 — Spec 5040 — jobvite-board-jsonld
 
 **Change:** Rewrite `source-ats-jobvite`, which returned 0 jobs for every tenant
