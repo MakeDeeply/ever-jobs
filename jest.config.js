@@ -423,6 +423,7 @@ module.exports = {
     '^@ever-jobs/source-ats-successfactors$': '<rootDir>/packages/plugins/source-ats-successfactors/src/index.ts',
     '^@ever-jobs/source-ats-jobvite$': '<rootDir>/packages/plugins/source-ats-jobvite/src/index.ts',
     '^@ever-jobs/source-ats-adp$': '<rootDir>/packages/plugins/source-ats-adp/src/index.ts',
+    '^@ever-jobs/source-ats-appone$': '<rootDir>/packages/plugins/source-ats-appone/src/index.ts',
     '^@ever-jobs/source-ats-ukg$': '<rootDir>/packages/plugins/source-ats-ukg/src/index.ts',
     '^@ever-jobs/source-company-google$': '<rootDir>/packages/plugins/source-company-google/src/index.ts',
     '^@ever-jobs/source-company-meta$': '<rootDir>/packages/plugins/source-company-meta/src/index.ts',
