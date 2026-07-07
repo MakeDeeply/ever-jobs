@@ -10,6 +10,32 @@
 
 ---
 
+## Q-079 — oracle: what host segment should a bare-subdomain colon-slug assume?
+
+**Context:** Spec 5037. Some upstream callers emit `{subdomain}:{siteNumber}`
+(e.g. `acme-saasfaprod1:CX_1`), dropping the middle host segment. To rebuild
+the finder host (`{subdomain}.fa.{SEGMENT}.oraclecloud.com`) the plugin must
+assume a `SEGMENT`. Modern SaaS pods use `ocs`; older tenants use a region code
+(`us2`, `us6`, `us8`, `em2`, …) that is not recoverable from the subdomain alone.
+
+**Options:**
+
+- **A. Assume `ocs` for bare-subdomain slugs; support a full-host colon slug
+  (`{host}:{siteNumber}`) for everything else (current).** A bare-subdomain slug
+  on an `ocs` pod resolves immediately; region-code tenants must be addressed by
+  the full-host form (which the plugin accepts and prefers). Verified against 4
+  live tenants (ocs/us8/us6, CX_1/CX_2/CX): 243/19/96/158.
+- **B. Have the caller emit the full host** (`{host}:{siteNumber}`)
+  so the plugin never guesses. Most robust; needs an upstream change. Recommended
+  follow-up.
+- **C. Probe multiple segments (`ocs`, `us2`, …) per bare subdomain until one
+  returns jobs.** Self-healing but multiplies requests and latency per tenant.
+
+**Default (proceeding): A** — assume `ocs` for the bare form, prefer full-host
+colon slug for region-code tenants; B tracked as the upstream follow-up.
+
+---
+
 ## Q-078 — dover: how should a board identifier that no public endpoint resolves be handled?
 
 **Context:** Spec 5033. Dover addresses a tenant by a board slug, a careers-page

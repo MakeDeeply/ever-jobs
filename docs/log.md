@@ -15,6 +15,32 @@
 
 ---
 
+## 2026-07-07 — Spec 5037 — oracle-slug-pagination
+
+**Change:** Fix three bugs in `source-ats-oracle` (Spec 013):
+- `companySlug` in the colon-delimited form `{host}:{siteNumber}` was rejected
+  because `composeUrlFromSlug` only understood `{sub}-{region}` — added
+  `parseSlug` accepting full-host colon, bare-subdomain colon (assumes `.fa.ocs.`),
+  and legacy dash forms.
+- `siteNumber` (e.g. `CX_1`) was never derived from the slug or URL —
+  `resolveTenant` now returns a parsed `siteNumber` from `:CX_…` or `/sites/CX_…`;
+  precedence: `input.siteNumber` > slug > URL path > `CX_45001` default.
+- Pagination stopped on the first page shorter than 100 items, but Oracle returns
+  short pages mid-run (offset 100→99 on a 244-job board) — now terminates on
+  `TotalJobsCount` / empty page.
+
+Verified against 4 live tenants spanning ocs/us8/us6 regions and CX_1/CX_2/CX
+sites: 243 + 19 + 96 + 158 jobs. Oracle suite green (17 tests, 7 new).
+
+**Files:**
+- `packages/plugins/source-ats-oracle/src/oracle.constants.ts` — `ORACLE_DEFAULT_HOST_SEGMENT`
+- `packages/plugins/source-ats-oracle/src/oracle.service.ts` — `parseSlug`, `siteNumberFromUrl`, `resolveTenant` rewrite, pagination fix
+- `packages/plugins/source-ats-oracle/src/index.ts` — re-export
+- `packages/plugins/source-ats-oracle/__tests__/oracle.service.spec.ts` — 7 new tests
+- `.specify/specs/5037-oracle-slug-pagination/` — spec, plan, tasks
+
+---
+
 ## 2026-06-28 — Run #473 — Spec 5036 — source-ats-appone
 
 **Change:** New `source-ats-appone` plugin (`Site.APPONE = 'appone'`). AppOne
