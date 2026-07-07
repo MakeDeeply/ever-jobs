@@ -10,6 +10,29 @@
 
 ---
 
+## Q-080 — icims: listing snippet vs. per-job detail enrichment?
+
+**Context:** Spec 5038. iCIMS board cards carry a truncated marketing snippet,
+the location, department (Category), title, and id — but not the full body,
+posted date, or structured pay. Those live on each job's detail page, one extra
+request per role (250+ requests for a large board).
+
+**Options:**
+
+- **A. Listing-only (current).** Use the card snippet as `description`; leave
+  `datePosted`/`compensation` null. One request per page (~13 for a 242-job
+  board). Fast, polite, no detail fan-out.
+- **B. Detail overlay under bounded concurrency** (like jazzhr/gem/appone).
+  Full body + posted date + parsed pay, at the cost of one request per kept job.
+- **C. Overlay only the `resultsWanted` slice.** Bounds the fan-out to the cap
+  actually requested; still N extra requests for the returned set.
+
+**Default (proceeding): A** — the rewrite's goal was to make the plugin return
+jobs at all; snippet-level fields are clean and complete for the board. Detail
+enrichment (B/C) tracked as a follow-up if downstream needs full body/date/pay.
+
+---
+
 ## Q-079 — oracle: what host segment should a bare-subdomain colon-slug assume?
 
 **Context:** Spec 5037. Some upstream callers emit `{subdomain}:{siteNumber}`
