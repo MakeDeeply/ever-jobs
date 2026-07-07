@@ -15,6 +15,44 @@
 
 ---
 
+## 2026-07-07 — Run #479 — Spec 5042 — source-company-terraformindustries
+
+**Change:** New `source-company-terraformindustries` company plugin for
+`terraformindustries.com`, which runs no third-party ATS. Open roles live in a
+hand-built "Careers" section on the home page as a flat list of `<a>` links, one
+per role, each pointing at a Google Doc job description.
+
+- Enumeration: GET `https://terraformindustries.com/` → scope to the markup after
+  the `Careers` heading → collect every `<a href*="docs.google.com/document/">`
+  (Cheerio); each anchor yields the role title (link text) + Google Doc id;
+  de-duped by title.
+- Enrichment: fetch each distinct Google Doc once (bounded concurrency, deduped
+  by docId — a reused generic description is fetched a single time) via its
+  plain-text export (`/document/d/{id}/export?format=txt`). The export header is
+  company / title / `terraformindustries.com` / location; anchor on the domain
+  line — next non-empty line = location, remainder = description body.
+- Field mapping: `location` via the shared `parseLocationList` (Spec 5001,
+  handles `City, FullStateName`); `isRemote` / `workFromHomeType` from the parsed
+  location; `compensation` from the doc's `Pay range: $MIN - $MAX per year` line
+  via the shared `salaryToCompensation` helper (Spec 5018) — matching the explicit
+  `Pay range:` line, not the whole body, avoids stray `$1/kg` / `$100/kW` figures;
+  `emails` from the description; `jobUrl` = canonical doc URL; `id` =
+  `terraformindustries-{title-slug}`; `datePosted` = `null` (no source date).
+  `employmentType` left unset (docs are free-form prose).
+- Failure handling: a home-page failure → `[]`; an individual doc-export failure
+  degrades that role to null location/description (title + jobUrl still emitted).
+  Registered in all four places (enum, `packages/plugins/index.ts`,
+  `tsconfig.base.json`, `jest.config.js`).
+
+**Verification:** 11 mocked-HTTP unit tests green; package full-graph typecheck +
+docs lint clean. Live: 39 roles enumerated, all enriched with location +
+description + compensation; 30 unique docs (dedup-by-docId caching).
+
+**Spec:** `.specify/specs/5042-source-company-terraformindustries/` (spec, plan,
+tasks).
+
+---
+
 ## 2026-07-07 — Run #478 — Spec 5041 — source-ats-prismhr
 
 **Change:** New `source-ats-prismhr` plugin for PrismHR / HiringThing careers

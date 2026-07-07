@@ -425,6 +425,7 @@ module.exports = {
     '^@ever-jobs/source-ats-adp$': '<rootDir>/packages/plugins/source-ats-adp/src/index.ts',
     '^@ever-jobs/source-ats-appone$': '<rootDir>/packages/plugins/source-ats-appone/src/index.ts',
     '^@ever-jobs/source-ats-prismhr$': '<rootDir>/packages/plugins/source-ats-prismhr/src/index.ts',
+    '^@ever-jobs/source-company-terraformindustries$': '<rootDir>/packages/plugins/source-company-terraformindustries/src/index.ts',
     '^@ever-jobs/source-ats-ukg$': '<rootDir>/packages/plugins/source-ats-ukg/src/index.ts',
     '^@ever-jobs/source-company-google$': '<rootDir>/packages/plugins/source-company-google/src/index.ts',
     '^@ever-jobs/source-company-meta$': '<rootDir>/packages/plugins/source-company-meta/src/index.ts',
