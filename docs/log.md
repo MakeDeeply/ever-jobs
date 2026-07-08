@@ -15,6 +15,39 @@
 
 ---
 
+## 2026-07-08 — Run #487 — Spec 5051 — source-company-velontra
+
+**Change:** New single-company `source-company-velontra` plugin for Velontra
+(`velontra.com`).
+
+- **WordPress (Beaver Builder), no ATS.** Every open role lives inline on
+  `/careers/` inside collapsible accordion items whose panels hold the full
+  Description / Responsibilities / Qualifications prose; applying goes through a
+  **single shared application form** at `/apply/` (a WPForms form with a role
+  dropdown).
+- **Server-rendered plain HTML** (HTTP 200, no Cloudflare, no JS challenge), so
+  the listing is fetched with a plain HTTP GET + Cheerio — no headless browser,
+  no PDF, no per-role page.
+- **Company plugin, not a shared plugin** (like Specs 5042/5045/5046/5047/5048/5049/5050):
+  the accordion markup + shared form are this site's own design, so there is no
+  shared contract to parameterize by an id.
+- **`parseListing`** (Cheerio) reads each `.fl-accordion-item` — title from
+  `.fl-accordion-button-label`, body from `.fl-accordion-content` — and de-dupes
+  by title slug; `description` drops the redundant leading "Job Title: …"
+  heading and renders the panel to markdown via the shared `markdownConverter`.
+- **Field mapping:** `id` = `velontra-<title-slug>`; `companyName` = `Velontra`;
+  `jobUrl` = the careers page (all roles live on the one page); `description` =
+  the panel markdown; `applyUrl` = `/apply/` (the shared form); `location` =
+  `null` (the roles state none — the site's footer HQ `Cincinnati, OH` is
+  site-wide, not a per-role location, so it is not asserted onto roles);
+  `emails` = `[]`; `datePosted` = `null`; compensation omitted (no pay stated).
+- Registered in all four places (Site enum, `ALL_SOURCE_MODULES`, tsconfig
+  paths, jest moduleNameMapper). No new dependency.
+- **Tests:** fixture-based unit tests over captured careers HTML (5 tests).
+  `api` build + `lint:docs` clean.
+
+---
+
 ## 2026-07-08 — Run #486 — Spec 5050 — source-company-canekast
 
 **Change:** New single-company `source-company-canekast` plugin for CaneKast

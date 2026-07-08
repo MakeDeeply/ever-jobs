@@ -2100,6 +2100,8 @@ export enum Site {
   SPIKEAEROSPACE = 'spikeaerospace',
   // Phase 980: Spec 5050 — CaneKast (canekast.com) company careers plugin (WordPress/Elementor listing + per-role PDF JDs)
   CANEKAST = 'canekast',
+  // Phase 981: Spec 5051 — Velontra (velontra.com) company careers plugin (WordPress/Beaver Builder inline accordion roles)
+  VELONTRA = 'velontra',
 }
 
 /**

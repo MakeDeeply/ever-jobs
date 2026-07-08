@@ -1127,6 +1127,7 @@ import { DesktopmetalModule } from './source-company-desktopmetal';
 import { AvalanchefusionModule } from './source-company-avalanchefusion';
 import { SpikeaerospaceModule } from './source-company-spikeaerospace';
 import { CanekastModule } from './source-company-canekast';
+import { VelontraModule } from './source-company-velontra';
 export const ALL_SOURCE_MODULES = [
   FourDayWeekModule,
   AcademiccareersModule,
@@ -2247,4 +2248,5 @@ export const ALL_SOURCE_MODULES = [
   AvalanchefusionModule,
   SpikeaerospaceModule,
   CanekastModule,
+  VelontraModule,
 ];

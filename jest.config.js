@@ -434,6 +434,7 @@ module.exports = {
     '^@ever-jobs/source-company-avalanchefusion$': '<rootDir>/packages/plugins/source-company-avalanchefusion/src/index.ts',
     '^@ever-jobs/source-company-spikeaerospace$': '<rootDir>/packages/plugins/source-company-spikeaerospace/src/index.ts',
     '^@ever-jobs/source-company-canekast$': '<rootDir>/packages/plugins/source-company-canekast/src/index.ts',
+    '^@ever-jobs/source-company-velontra$': '<rootDir>/packages/plugins/source-company-velontra/src/index.ts',
     '^@ever-jobs/source-ats-ukg$': '<rootDir>/packages/plugins/source-ats-ukg/src/index.ts',
     '^@ever-jobs/source-company-google$': '<rootDir>/packages/plugins/source-company-google/src/index.ts',
     '^@ever-jobs/source-company-meta$': '<rootDir>/packages/plugins/source-company-meta/src/index.ts',
