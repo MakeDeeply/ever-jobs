@@ -427,6 +427,7 @@ module.exports = {
     '^@ever-jobs/source-ats-prismhr$': '<rootDir>/packages/plugins/source-ats-prismhr/src/index.ts',
     '^@ever-jobs/source-company-terraformindustries$': '<rootDir>/packages/plugins/source-company-terraformindustries/src/index.ts',
     '^@ever-jobs/source-ats-submit4jobs$': '<rootDir>/packages/plugins/source-ats-submit4jobs/src/index.ts',
+    '^@ever-jobs/source-notion$': '<rootDir>/packages/plugins/source-notion/src/index.ts',
     '^@ever-jobs/source-ats-ukg$': '<rootDir>/packages/plugins/source-ats-ukg/src/index.ts',
     '^@ever-jobs/source-company-google$': '<rootDir>/packages/plugins/source-company-google/src/index.ts',
     '^@ever-jobs/source-company-meta$': '<rootDir>/packages/plugins/source-company-meta/src/index.ts',
