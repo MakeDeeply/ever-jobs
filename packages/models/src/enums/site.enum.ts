@@ -2090,6 +2090,8 @@ export enum Site {
   NOTION = 'notion',
   // Phase 975: Spec 5045 — Cover (buildcover.com) company careers plugin (Sanity CMS)
   BUILDCOVER = 'buildcover',
+  // Phase 976: Spec 5046 — NANO Nuclear Energy (nanonuclearenergy.com) company careers plugin (WordPress/Divi)
+  NANONUCLEARENERGY = 'nanonuclearenergy',
 }
 
 /**
