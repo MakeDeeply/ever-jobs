@@ -2104,6 +2104,8 @@ export enum Site {
   VELONTRA = 'velontra',
   // Phase 982: Spec 5052 — Solideon (solideon.com) company careers plugin (WordPress/Elementor listing + per-role detail pages)
   SOLIDEON = 'solideon',
+  // Phase 983: Spec 5053 — Galadyne (galadyne.io) company careers plugin (Next.js listing HTML + client-chunk job descriptions)
+  GALADYNE = 'galadyne',
 }
 
 /**
