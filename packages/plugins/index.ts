@@ -1124,6 +1124,7 @@ import { NotionModule } from './source-notion';
 import { BuildcoverModule } from './source-company-buildcover';
 import { NanonuclearenergyModule } from './source-company-nanonuclearenergy';
 import { DesktopmetalModule } from './source-company-desktopmetal';
+import { AvalanchefusionModule } from './source-company-avalanchefusion';
 export const ALL_SOURCE_MODULES = [
   FourDayWeekModule,
   AcademiccareersModule,
@@ -2241,4 +2242,5 @@ export const ALL_SOURCE_MODULES = [
   BuildcoverModule,
   NanonuclearenergyModule,
   DesktopmetalModule,
+  AvalanchefusionModule,
 ];

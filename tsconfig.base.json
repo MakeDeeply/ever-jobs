@@ -446,6 +446,7 @@
       "@ever-jobs/source-company-buildcover": ["packages/plugins/source-company-buildcover/src/index.ts"],
       "@ever-jobs/source-company-nanonuclearenergy": ["packages/plugins/source-company-nanonuclearenergy/src/index.ts"],
       "@ever-jobs/source-company-desktopmetal": ["packages/plugins/source-company-desktopmetal/src/index.ts"],
+      "@ever-jobs/source-company-avalanchefusion": ["packages/plugins/source-company-avalanchefusion/src/index.ts"],
       "@ever-jobs/source-ats-ukg": ["packages/plugins/source-ats-ukg/src/index.ts"],
       "@ever-jobs/source-company-google": ["packages/plugins/source-company-google/src/index.ts"],
       "@ever-jobs/source-company-meta": ["packages/plugins/source-company-meta/src/index.ts"],
