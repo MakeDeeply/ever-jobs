@@ -2098,6 +2098,8 @@ export enum Site {
   AVALANCHEFUSION = 'avalanchefusion',
   // Phase 979: Spec 5049 — Spike Aerospace (spikeaerospace.com) company careers plugin (WordPress REST category posts)
   SPIKEAEROSPACE = 'spikeaerospace',
+  // Phase 980: Spec 5050 — CaneKast (canekast.com) company careers plugin (WordPress/Elementor listing + per-role PDF JDs)
+  CANEKAST = 'canekast',
 }
 
 /**
