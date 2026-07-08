@@ -1121,6 +1121,7 @@ import { ZyngaModule } from './source-company-zyngacareers';
 import { TerraformIndustriesModule } from './source-company-terraformindustries';
 import { Submit4jobsModule } from './source-ats-submit4jobs';
 import { NotionModule } from './source-notion';
+import { BuildcoverModule } from './source-company-buildcover';
 export const ALL_SOURCE_MODULES = [
   FourDayWeekModule,
   AcademiccareersModule,
@@ -2235,4 +2236,5 @@ export const ALL_SOURCE_MODULES = [
   TerraformIndustriesModule,
   Submit4jobsModule,
   NotionModule,
+  BuildcoverModule,
 ];

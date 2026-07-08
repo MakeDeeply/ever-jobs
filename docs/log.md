@@ -15,6 +15,43 @@
 
 ---
 
+## 2026-07-08 — Run #481 — Spec 5045 — source-company-buildcover
+
+**Change:** New single-company `source-company-buildcover` plugin for Cover
+(`buildcover.com`), a prefab-home builder whose careers page is a custom Nuxt
+front-end backed by a **Sanity CMS** with no ATS (apply is a single email).
+
+- Reads Sanity's unauthenticated public GROQ query API
+  (`https://n40cnr7v.apicdn.sanity.io/v2021-10-21/data/query/production`) — no
+  headless browser, no HTML scraping. One query returns every `_type=="career"`
+  document plus the global `careersPage.contactEmail`.
+- **Company plugin, not an ATS-style shared plugin like Notion.** Sanity's
+  transport is uniform but its schema is bespoke per project, so there is no
+  shared contract to parameterize by an id. The reusable GROQ-client +
+  Portable-Text helpers stay separable for a future `@ever-jobs/common` lift if
+  a second Sanity-backed company ever appears (YAGNI until then).
+- Body sections arrive as Portable-Text block arrays, rendered to a markdown-ish
+  description under Cover's own on-page labels (Overview → Role → Experience →
+  any `extraSections` under their titles → Compensation): heading styles→`#`…
+  `####`, `blockquote`→`>`, bullet/number list items→`- `/`1. `.
+- Field mapping: `title`; `companyName` = `Cover`; `jobUrl` = `/careers/<slug>/`;
+  `location` via the shared `parseLocationList` (Spec 5001) with the non-standard
+  `on-site` token stripped; `isRemote` from the location; `employmentType` = raw
+  `type`, `jobType` via `getJobTypeFromString`; `compensation` best-effort via
+  `salaryToCompensation` over the compensation prose (unicode dashes normalised
+  and per-unit `/hr` tokens stripped so the shared parser sees the range —
+  magnitude drives the interval); `datePosted` from `_createdAt`; `emails`→
+  `mailto:` from the global apply email (body-email fallback).
+- Registered in all four places (Site enum, `ALL_SOURCE_MODULES`, tsconfig paths,
+  jest moduleNameMapper).
+- Verified live on buildcover.com: 6 roles, clean `… Los Angeles` locations,
+  full descriptions, `join@buildcover.com` apply, `datePosted` set, structured
+  compensation on the roles that publish it (Foreman `$35–$40/hr`, Marketing
+  `$115k–$120k/yr`). buildcover suite green (8 mocked unit); package typecheck +
+  `api` build clean.
+
+---
+
 ## 2026-07-08 — Spec 5044 — source-notion
 
 **Change:** New shared `source-notion` plugin for companies that host their

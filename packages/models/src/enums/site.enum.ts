@@ -2088,6 +2088,8 @@ export enum Site {
   SUBMIT4JOBS = 'submit4jobs',
   // Phase 974: Spec 5044 — Notion public-page careers plugin (shared, page-id keyed)
   NOTION = 'notion',
+  // Phase 975: Spec 5045 — Cover (buildcover.com) company careers plugin (Sanity CMS)
+  BUILDCOVER = 'buildcover',
 }
 
 /**
