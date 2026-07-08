@@ -1,5 +1,5 @@
-import { extractSalary, convertToAnnual, parseSalaryCurrency, parseSalaryNumber } from '@ever-jobs/common';
-import { Country } from '@ever-jobs/models';
+import { extractSalary, convertToAnnual, parseSalaryCurrency, parseSalaryNumber, salaryToCompensation } from '@ever-jobs/common';
+import { CompensationInterval, Country } from '@ever-jobs/models';
 // Spec 012 / T02 — `pickLocale` is module-private (Notes-for-the-next-run
 // decision 1). The `__INTERNAL_TEST_ONLY__` shim is exported solely so
 // this test file can pin the documented acceptance cases without
@@ -77,6 +77,62 @@ describe('extractSalary', () => {
     const result = extractSalary('$120,000—$180,000');
     expect(result.minAmount).toBe(120000);
     expect(result.maxAmount).toBe(180000);
+  });
+
+  // Spec 5045 — explicit interval hint overrides magnitude inference.
+  it('takes the interval from the hint instead of magnitude (low yearly)', () => {
+    // Without a hint this range is lost entirely: 28000 sits in the monthly
+    // band but 32000 crosses monthlyThreshold(30000), so the crossing guard
+    // nulls the max and the parser returns nothing.
+    const inferred = extractSalary('$28,000 - $32,000');
+    expect(inferred.interval).toBeNull();
+    expect(inferred.minAmount).toBeNull();
+
+    const hinted = extractSalary('$28,000 - $32,000', {
+      interval: CompensationInterval.YEARLY,
+    });
+    expect(hinted.interval).toBe('yearly');
+    expect(hinted.minAmount).toBe(28000);
+    expect(hinted.maxAmount).toBe(32000);
+  });
+
+  it('supports a weekly hint that magnitude cannot represent', () => {
+    const result = extractSalary('$1,200 - $1,500', {
+      interval: CompensationInterval.WEEKLY,
+    });
+    expect(result.interval).toBe('weekly');
+    expect(result.minAmount).toBe(1200);
+    expect(result.maxAmount).toBe(1500);
+  });
+
+  it('honours an hourly hint whose magnitude sits in the monthly band', () => {
+    // 60 - 90 is below the hourly threshold so magnitude already says hourly;
+    // pin that the hint path returns the same amounts + interval.
+    const result = extractSalary('$60 - $90', {
+      interval: CompensationInterval.HOURLY,
+    });
+    expect(result.interval).toBe('hourly');
+    expect(result.minAmount).toBe(60);
+    expect(result.maxAmount).toBe(90);
+  });
+
+  it('still bounds-checks the annualized amount under a hint', () => {
+    // 1200 - 1500 as an HOURLY hint annualizes to 2.5M+, above upperLimit.
+    const result = extractSalary('$1,200 - $1,500', {
+      interval: CompensationInterval.HOURLY,
+    });
+    expect(result.minAmount).toBeNull();
+  });
+});
+
+describe('salaryToCompensation — interval hint (Spec 5045)', () => {
+  it('threads the interval hint into the CompensationDto', () => {
+    const comp = salaryToCompensation('$35 - $40', {
+      interval: CompensationInterval.HOURLY,
+    });
+    expect(comp?.interval).toBe(CompensationInterval.HOURLY);
+    expect(comp?.minAmount).toBe(35);
+    expect(comp?.maxAmount).toBe(40);
   });
 });
 
