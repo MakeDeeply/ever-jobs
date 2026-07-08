@@ -10,6 +10,24 @@
 
 ---
 
+## Q-086 — spikeaerospace: canonical company location for the per-role default?
+
+**Context:** Spec 5049 (new `source-company-spikeaerospace`). Role posts carry
+no structured location, and the site publishes no address, phone, or email, so a
+company-metro default is used for every role.
+
+**Options:**
+
+- **A. `Atlanta, GA` (chosen).** The location on the task's own data row.
+- **B. `Boston, MA`.** The company's historical HQ, seen in some older prose.
+- **C. Omit location.** Leave it null rather than pick a metro.
+
+**Resolution (2026-07-08): A (default — proceeding).** Used `Atlanta, GA` per the
+task data row; the site itself gives no location to parse. Trivial to switch the
+`SPIKEAEROSPACE_DEFAULT_LOCATION` constant if the owner prefers B or C.
+
+---
+
 ## Q-085 — submit4jobs: how to reach the CF-gated getJobs JSON API without a browser?
 
 **Context:** Spec 5043 (new `source-ats-submit4jobs`). Submit4Jobs / Pereless

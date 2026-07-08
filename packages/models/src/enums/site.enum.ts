@@ -2096,6 +2096,8 @@ export enum Site {
   DESKTOPMETAL = 'desktopmetal',
   // Phase 978: Spec 5048 — Avalanche Energy (avalanchefusion.com) company careers plugin (Webflow listing + detail pages, LinkedIn apply)
   AVALANCHEFUSION = 'avalanchefusion',
+  // Phase 979: Spec 5049 — Spike Aerospace (spikeaerospace.com) company careers plugin (WordPress REST category posts)
+  SPIKEAEROSPACE = 'spikeaerospace',
 }
 
 /**
