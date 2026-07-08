@@ -15,6 +15,48 @@
 
 ---
 
+## 2026-07-08 — Run #489 — Spec 5053 — source-company-galadyne
+
+**Change:** New single-company `source-company-galadyne` plugin for Galadyne
+(`galadyne.io`).
+
+- **Next.js / Vercel, no ATS.** The `/careers` page server-renders the opening
+  cards (title + a stated location), but the **full job descriptions are not in
+  the server HTML** — they are rendered client-side into an on-page overlay from
+  a hashed Next.js chunk (`.../app/careers/page-<hash>.js`). Applying is an
+  on-page form that POSTs to Galadyne's own `/api/careers` (no external board,
+  no `mailto:`, no per-role URL).
+- **Two-step plain HTTP read, no headless browser:** (1) GET `/careers` →
+  `parseCards` (Cheerio) enumerates each `<h2>` title + location `<span>`, and
+  the current chunk URL is read straight from the page so the content hash
+  **self-heals** across deploys; (2) GET the chunk → `parseContent` extracts the
+  authoritative role→description map.
+- **Chunk parse anchors on stable content, not build churn.** The data is a
+  plain object literal keyed by role title, each entry carrying `intro` /
+  `responsibilities` / `qualifications` / `closing`; the parse anchors on the
+  `"<title>":{intro:"` boundary and reads each field by its **unmangled**
+  property name — not on any minified variable name, hashed CSS class, or the
+  chunk filename. That object is the authoritative source of the JD (the overlay
+  DOM is a derived view of it), so it is read directly rather than via a browser.
+- **Graceful degradation:** the listing is the source of *which* roles are open;
+  the chunk supplies the *description*. If the chunk can't be fetched/parsed the
+  roles still emit from the listing with a null description.
+- **Company plugin, not a shared plugin** (like Specs 5042/5045/5046/5047/5048/5049/5050/5051/5052).
+- **Field mapping:** `description` composes markdown (intro, **Responsibilities**
+  bullets, **Qualifications** bullets, closing); `id` = `galadyne-<slug>`;
+  `companyName` = `Galadyne`; `jobUrl` = `applyUrl` = `companyUrl` = the
+  `/careers` page; `location` = each card's stated value (all `Austin, TX` at
+  time of writing); `isRemote` = `false`; `datePosted` = `null` (none stated);
+  `compensation` omitted (none stated); `emails` = `[]`.
+- **No editorial filtering:** every posting is ingested, including "General
+  Internship Application" (it carries a real JD and behaves like a role).
+- Registered in all four places (Site enum, `ALL_SOURCE_MODULES`, tsconfig
+  paths, jest moduleNameMapper). No new dependency.
+- **Tests:** fixture-based unit tests over captured careers HTML + client chunk
+  (6 tests). `api` build + `lint:docs` clean.
+
+---
+
 ## 2026-07-08 — Run #488 — Spec 5052 — source-company-solideon
 
 **Change:** New single-company `source-company-solideon` plugin for Solideon
