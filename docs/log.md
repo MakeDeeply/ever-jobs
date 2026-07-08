@@ -15,6 +15,45 @@
 
 ---
 
+## 2026-07-08 — Run #485 — Spec 5049 — source-company-spikeaerospace
+
+**Change:** New single-company `source-company-spikeaerospace` plugin for Spike
+Aerospace (`spikeaerospace.com`), whose careers site is **WordPress (Elementor)**
+with no ATS: each open role is a **post in the "Current Openings" category**, and
+applying is an on-page form (no external board, no `mailto:`, no per-role apply
+URL).
+
+- **Plain-HTTP WordPress REST, no headless browser.** Resolve the category id by
+  slug (`/wp-json/wp/v2/categories?slug=current-openings`, falling back to the
+  known id), then read that category's posts
+  (`/wp-json/wp/v2/posts?categories=<id>&per_page=100`).
+- **Category is the authoritative enumerator.** The visible `/current-openings/`
+  page is an Elementor Loop Grid that under-counts (renders only the first few,
+  rest via "Load More" AJAX); role pages are both over- and under-inclusive
+  (some roles have duplicate page copies, one exists only as a post).
+- **Company plugin, not a shared plugin** (like Specs 5042/5045/5046/5047/5048):
+  WordPress is uniform only in REST transport, not schema, so there is no shared
+  contract to parameterize by an id.
+- **Field mapping:** `id` = `spikeaerospace-<slug>`; `companyName` = `Spike
+  Aerospace`; `jobUrl` = the post `link`; `title` = `title.rendered`
+  (HTML-entity-decoded, leading `Seeking ` verb dropped); `description` =
+  `content.rendered` → markdown via the shared `markdownConverter` with the
+  `wpcf7` "Contact form not found" placeholder + dangling "Submit Your Resume:"
+  label stripped; `datePosted` = publish `date` via `toDateOnly` (Spec 5024;
+  publish `date`, not `modified`); `location` = `null` (the site lists no
+  location for any role — no address/phone/email anywhere); `emails` = `[]`;
+  compensation omitted (no pay on site).
+- Registered in all four places (Site enum, `ALL_SOURCE_MODULES`, tsconfig
+  paths, jest moduleNameMapper). No new dependency.
+- **Tests:** fixture-based unit tests over the captured category posts (8 tests:
+  all nine roles with no email, post-only roles included, `datePosted` from the
+  publish date, title decode + `Seeking` removal, description markdown with form
+  artifacts stripped, `location` left null, input filters, empty-category
+  path); live pipeline verified against the real nine roles. `api` build +
+  `lint:docs` clean.
+
+---
+
 ## 2026-07-08 — Run #484 — Spec 5048 — source-company-avalanchefusion
 
 **Change:** New single-company `source-company-avalanchefusion` plugin for
