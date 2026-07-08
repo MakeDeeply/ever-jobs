@@ -2094,6 +2094,8 @@ export enum Site {
   NANONUCLEARENERGY = 'nanonuclearenergy',
   // Phase 977: Spec 5047 — Desktop Metal (desktopmetal.com) company careers plugin (Cloudflare-gated HTML listing + per-role PDF JDs)
   DESKTOPMETAL = 'desktopmetal',
+  // Phase 978: Spec 5048 — Avalanche Energy (avalanchefusion.com) company careers plugin (Webflow listing + detail pages, LinkedIn apply)
+  AVALANCHEFUSION = 'avalanchefusion',
 }
 
 /**

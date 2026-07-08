@@ -15,6 +15,57 @@
 
 ---
 
+## 2026-07-08 — Run #484 — Spec 5048 — source-company-avalanchefusion
+
+**Change:** New single-company `source-company-avalanchefusion` plugin for
+Avalanche Energy (`avalanchefusion.com`), whose careers site is built on
+**Webflow** with no ATS: a board at `/careers/open-positions` links to one
+server-rendered CMS detail page per role at `/careers/open-position/{slug}`.
+Applying goes to a **LinkedIn** job posting, not an ATS host, on-site form, or
+email.
+
+- **Plain-HTTP scrape, no headless browser.** Both the board and detail pages
+  are server-rendered (HTTP 200, no Cloudflare, no JS challenge), fetched over
+  the shared HTTP client.
+- **Company plugin, not a shared plugin** (like Specs 5042/5045/5046/5047):
+  Webflow is uniform only in transport (server-rendered collection pages), not
+  schema — the `Salary Range` block + layout are this site's own design, so
+  there is no shared contract to parameterize by an id.
+- `parseListing` (Cheerio) collects every `open-position` anchor and dedupes by
+  slug; `parseDetail` reads the title (`h2.blue.center-text`), the `.w-richtext`
+  body (rendered to markdown via the shared `markdownConverter`), the
+  `.salary-range` block, and the `Apply` anchor's LinkedIn href.
+- Field mapping: `id` = `avalanchefusion-<slug>`; `companyName` =
+  `Avalanche Energy`; `jobUrl` = the role page; `location` = company-metro
+  default `Seattle, WA` via shared `parseLocationList` (Spec 5001);
+  `description` = the rich-text markdown; `datePosted` = `null`; `emails` = `[]`;
+  `applyUrl` = the LinkedIn posting.
+- **Structured pay with an authoritative interval.** Every role's `Salary Range`
+  carries an explicit per-unit token (all currently `/yr`), read and passed as
+  the `interval` to the shared salary parser (`ExtractSalaryOptions.interval`,
+  Spec 5018/5045) so magnitude never guesses the period; the token is stripped
+  from the numeric input first so the range regex can span it
+  (`$135K/yr - $175K/yr` → `$135K - $175K` parsed yearly), with `K`/`M` suffixes
+  and unicode dashes handled.
+- **Location** is not structured on the site and the body prose is too noisy to
+  parse reliably (concatenated tokens, multiple cities), so a clean company-metro
+  default is used rather than an occasionally-mangled per-role guess.
+  `employmentType`/`jobType` omitted (not structured; prose inference misfires,
+  e.g. "subcontract" → "Contract").
+- `Promise.allSettled` detail fan-out with graceful per-role degradation (a
+  failed detail page keeps the board-only fields).
+- Registered in all four places (Site enum, `ALL_SOURCE_MODULES`, tsconfig paths,
+  jest moduleNameMapper). No new dependency.
+
+**Tests:** Fixture-based unit tests over the captured board HTML + three real
+detail pages (7 tests: all nine roles with a LinkedIn apply URL and no email,
+structured yearly compensation, rich-text→markdown description, company-location
+default, graceful detail-fetch degradation, input filters, empty-board path).
+Live pipeline verified against the real nine roles (correct titles, yearly comp,
+LinkedIn apply URLs). `api` build + plugin tests green.
+
+---
+
 ## 2026-07-08 — Run #483 — Spec 5047 — source-company-desktopmetal
 
 **Change:** New single-company `source-company-desktopmetal` plugin for Desktop
