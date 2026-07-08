@@ -42,8 +42,7 @@ This is a **single-company** plugin (like the prior company careers plugins): th
 | `companyName` | `Spike Aerospace` (constant; the brand, not the domain) |
 | `companyUrl` | `https://www.spikeaerospace.com/careers/` |
 | `jobUrl` | the post `link` (its own page URL) |
-| `location` | company-metro default `Atlanta, GA` via shared `parseLocationList` |
-| `isRemote` | remote mention on the default location (`false`) |
+| `location` | `null` (the site lists no location for any role) |
 | `description` | `content.rendered` rendered to markdown, with the form artifacts removed |
 | `datePosted` | post `date` (publish) via shared `toDateOnly` |
 | `emails` | `[]` (apply is an on-page form, not an email) |
@@ -63,7 +62,7 @@ Post titles carry the site's listing phrasing (e.g. `Seeking Aircraft Configurat
 
 ### Location
 
-Roles carry **no structured location** and the site publishes no address, phone, or email, so every role defaults to the company metro `Atlanta, GA`.
+Roles carry **no structured location** and the site publishes no address, phone, or email, so `location` is left `null` rather than assert a value the site does not state.
 
 ## Non-goals
 
@@ -74,10 +73,10 @@ Roles carry **no structured location** and the site publishes no address, phone,
 
 ## Testing
 
-- **Unit (fixture-based, no network):** the REST fetch is isolated behind one protected seam so tests substitute captured ground truth (the real category posts). Tests cover: all nine roles mapped with no email; roles that exist only as posts (not linked from the listing) are included; `datePosted` from the publish date as a calendar day; title decoding + `Seeking` removal; description carried as markdown with the form artifacts stripped; the company-location default; input filters; and the empty-category path.
+- **Unit (fixture-based, no network):** the REST fetch is isolated behind one protected seam so tests substitute captured ground truth (the real category posts). Tests cover: all nine roles mapped with no email; roles that exist only as posts (not linked from the listing) are included; `datePosted` from the publish date as a calendar day; title decoding + `Seeking` removal; description carried as markdown with the form artifacts stripped; `location` left `null`; input filters; and the empty-category path.
 - **Live path:** the REST endpoints are open, so the full resolve-category → fetch-posts → map pipeline is exercised against the real nine roles.
 
 ## Acceptance
 
-- The nine current roles are produced with title, jobUrl, description, and a truthful `datePosted`.
+- The nine current roles are produced with title, jobUrl, description, and a truthful `datePosted`; `location` is `null` (the site states none).
 - Registered in the four standard places (Site enum, `ALL_SOURCE_MODULES`, tsconfig paths, jest moduleNameMapper); `api` build + plugin tests green.

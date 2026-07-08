@@ -40,15 +40,15 @@ URL).
   `content.rendered` → markdown via the shared `markdownConverter` with the
   `wpcf7` "Contact form not found" placeholder + dangling "Submit Your Resume:"
   label stripped; `datePosted` = publish `date` via `toDateOnly` (Spec 5024;
-  publish `date`, not `modified`); `location` = company-metro default
-  `Atlanta, GA` via `parseLocationList` (no structured per-role location, no
-  address on the site); `emails` = `[]`; compensation omitted (no pay on site).
+  publish `date`, not `modified`); `location` = `null` (the site lists no
+  location for any role — no address/phone/email anywhere); `emails` = `[]`;
+  compensation omitted (no pay on site).
 - Registered in all four places (Site enum, `ALL_SOURCE_MODULES`, tsconfig
   paths, jest moduleNameMapper). No new dependency.
 - **Tests:** fixture-based unit tests over the captured category posts (8 tests:
   all nine roles with no email, post-only roles included, `datePosted` from the
   publish date, title decode + `Seeking` removal, description markdown with form
-  artifacts stripped, company-location default, input filters, empty-category
+  artifacts stripped, `location` left null, input filters, empty-category
   path); live pipeline verified against the real nine roles. `api` build +
   `lint:docs` clean.
 

@@ -15,7 +15,7 @@
 ### Phase 2 — Parse + map
 - `parseRoles(posts)` — per post: decode `title.rendered` and drop a leading `Seeking ` verb; body from `content.rendered`; `jobUrl` from `link`; `datePosted` from `date` via `toDateOnly`.
 - `description(rendered)` — Cheerio: remove `wpcf7` nodes and the dangling "Submit Your Resume:" / empty paragraphs, then render to markdown via the shared `markdownConverter`.
-- `toJobPost(role)` — build `JobPostDto`; location via `parseLocationList` on the company-metro default; `emails` = []; compensation omitted.
+- `toJobPost(role)` — build `JobPostDto`; `location` = `null` (the site lists none); `emails` = []; compensation omitted.
 
 ### Phase 3 — Registration, tests, docs
 - Register in the four standard places.
@@ -28,7 +28,7 @@
 - `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js` (registration)
 
 ## Reused building blocks
-- `@ever-jobs/common`: `createHttpClient`, `parseLocationList`, `markdownConverter`, `toDateOnly` (Spec 5024).
+- `@ever-jobs/common`: `createHttpClient`, `markdownConverter`, `toDateOnly` (Spec 5024).
 - `@ever-jobs/models`: `JobPostDto`, `Site`.
 - `cheerio` for HTML parsing. No new dependency; no headless browser.
 

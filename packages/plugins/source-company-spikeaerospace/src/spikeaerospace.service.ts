@@ -6,20 +6,17 @@ import {
   JobPostDto,
   JobResponseDto,
   JobType,
-  LocationDto,
   ScraperInputDto,
   Site,
 } from '@ever-jobs/models';
 import {
   createHttpClient,
   markdownConverter,
-  parseLocationList,
   toDateOnly,
 } from '@ever-jobs/common';
 import {
   SPIKEAEROSPACE_CAREERS_URL,
   SPIKEAEROSPACE_COMPANY_NAME,
-  SPIKEAEROSPACE_DEFAULT_LOCATION,
   SPIKEAEROSPACE_DEFAULT_RESULTS,
   SPIKEAEROSPACE_DEFAULT_TIMEOUT_SECONDS,
   SPIKEAEROSPACE_OPENINGS_CATEGORY_ID,
@@ -146,9 +143,6 @@ export class SpikeaerospaceService implements IScraper {
   }
 
   private toJobPost(role: SpikeRole): JobPostDto {
-    const parsed = parseLocationList([SPIKEAEROSPACE_DEFAULT_LOCATION]);
-    const location: LocationDto | null = parsed.location;
-
     return new JobPostDto({
       id: `spikeaerospace-${role.slug}`,
       site: Site.SPIKEAEROSPACE,
@@ -156,12 +150,8 @@ export class SpikeaerospaceService implements IScraper {
       companyName: SPIKEAEROSPACE_COMPANY_NAME,
       companyUrl: SPIKEAEROSPACE_CAREERS_URL,
       jobUrl: role.jobUrl,
-      location,
+      location: null,
       description: role.description,
-      isRemote: parsed.remoteMentioned,
-      ...(parsed.workFromHomeType
-        ? { workFromHomeType: parsed.workFromHomeType }
-        : {}),
       datePosted: role.datePosted,
       emails: [],
     });

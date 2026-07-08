@@ -94,13 +94,12 @@ describe('SpikeaerospaceService', () => {
     expect(hr?.description ?? '').not.toMatch(/^submit your resume:?$/im);
   });
 
-  it('defaults the location to the company metro (no structured per-role location)', async () => {
+  it('leaves the location unset when the site lists none', async () => {
     const svc = makeService();
     const { jobs } = await svc.scrape(new ScraperInputDto());
 
     for (const job of jobs) {
-      expect(job.location?.displayLocation()).toBe('Atlanta, GA');
-      expect(job.isRemote).toBe(false);
+      expect(job.location).toBeNull();
     }
   });
 

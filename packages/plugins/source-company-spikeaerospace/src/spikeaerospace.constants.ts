@@ -34,12 +34,6 @@ export const SPIKEAEROSPACE_OPENINGS_CATEGORY_SLUG = 'current-openings';
  */
 export const SPIKEAEROSPACE_OPENINGS_CATEGORY_ID = 19;
 
-/**
- * Default job location. Roles carry no structured location and the site
- * publishes no address; the company's metro is used as the default.
- */
-export const SPIKEAEROSPACE_DEFAULT_LOCATION = 'Atlanta, GA';
-
 /** Default number of roles returned when the caller does not specify. */
 export const SPIKEAEROSPACE_DEFAULT_RESULTS = 50;
 
