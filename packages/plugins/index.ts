@@ -1128,6 +1128,7 @@ import { AvalanchefusionModule } from './source-company-avalanchefusion';
 import { SpikeaerospaceModule } from './source-company-spikeaerospace';
 import { CanekastModule } from './source-company-canekast';
 import { VelontraModule } from './source-company-velontra';
+import { SolideonModule } from './source-company-solideon';
 export const ALL_SOURCE_MODULES = [
   FourDayWeekModule,
   AcademiccareersModule,
@@ -2249,4 +2250,5 @@ export const ALL_SOURCE_MODULES = [
   SpikeaerospaceModule,
   CanekastModule,
   VelontraModule,
+  SolideonModule,
 ];

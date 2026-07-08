@@ -450,6 +450,7 @@
       "@ever-jobs/source-company-spikeaerospace": ["packages/plugins/source-company-spikeaerospace/src/index.ts"],
       "@ever-jobs/source-company-canekast": ["packages/plugins/source-company-canekast/src/index.ts"],
       "@ever-jobs/source-company-velontra": ["packages/plugins/source-company-velontra/src/index.ts"],
+      "@ever-jobs/source-company-solideon": ["packages/plugins/source-company-solideon/src/index.ts"],
       "@ever-jobs/source-ats-ukg": ["packages/plugins/source-ats-ukg/src/index.ts"],
       "@ever-jobs/source-company-google": ["packages/plugins/source-company-google/src/index.ts"],
       "@ever-jobs/source-company-meta": ["packages/plugins/source-company-meta/src/index.ts"],

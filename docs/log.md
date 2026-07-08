@@ -15,6 +15,47 @@
 
 ---
 
+## 2026-07-08 — Run #488 — Spec 5052 — source-company-solideon
+
+**Change:** New single-company `source-company-solideon` plugin for Solideon
+(`solideon.com`).
+
+- **WordPress (Elementor), no ATS.** The `/careers/` landing lists the openings,
+  each linking to its own **server-rendered detail page** at the site root
+  (`/solideon-<slug>/`) that carries the full JD plus a per-role **Salary
+  Recommendation**, **Location**, and a WordPress publish date. Applying is an
+  on-page **Paperform** embed per detail page.
+- **Server-rendered plain HTML** (HTTP 200; Cloudflare-fronted but no JS
+  challenge), so both the listing and detail pages are fetched with a plain HTTP
+  GET + Cheerio — no headless browser.
+- **Company plugin, not a shared plugin** (like Specs 5042/5045/5046/5047/5048/5049/5050/5051):
+  the listing shape + detail layout are this site's own design.
+- **Enumeration:** `parseListingLinks` collects `/solideon-<slug>/` anchors
+  (the titled link and the "Apply" link point to the same page), keeps the
+  titled text, and de-dupes by slug; the "General Career Interest" contact form
+  is not a role link, so it is excluded. Roles are fetched with a
+  `Promise.allSettled` fan-out.
+- **Per detail page:** `description` renders `<main>` to markdown, cuts the
+  "TO APPLY FILL OUT THE FORM BELOW" apply section (the Paperform) and strips
+  the leading "2025 <role>" title + Elementor divider chrome; `location` parses
+  the "Location:" line (parenthetical dropped) via `parseLocationList`;
+  `compensation` parses the "Salary Recommendation" range via
+  `salaryToCompensation` as a yearly annual-salary range; `datePosted` reads the
+  JSON-LD `datePublished` via `toDateOnly`.
+- **Field mapping:** `id` = `solideon-<slug>`; `companyName` = `Solideon`;
+  `jobUrl` = `applyUrl` = the detail page; `isRemote` = `false` (stated
+  On-Site); `emails` = `[]`.
+- **Never invents data:** `compensation` is populated only for the roles that
+  state a salary (2 of 4) and omitted otherwise; `location` is each role's own
+  stated city (the Manufacturing Engineer resolves to Hampton Roads, VA, not
+  Berkeley).
+- Registered in all four places (Site enum, `ALL_SOURCE_MODULES`, tsconfig
+  paths, jest moduleNameMapper). No new dependency.
+- **Tests:** fixture-based unit tests over captured careers + detail HTML
+  (7 tests). `api` build + `lint:docs` clean.
+
+---
+
 ## 2026-07-08 — Run #487 — Spec 5051 — source-company-velontra
 
 **Change:** New single-company `source-company-velontra` plugin for Velontra

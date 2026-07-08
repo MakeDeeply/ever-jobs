@@ -2102,6 +2102,8 @@ export enum Site {
   CANEKAST = 'canekast',
   // Phase 981: Spec 5051 — Velontra (velontra.com) company careers plugin (WordPress/Beaver Builder inline accordion roles)
   VELONTRA = 'velontra',
+  // Phase 982: Spec 5052 — Solideon (solideon.com) company careers plugin (WordPress/Elementor listing + per-role detail pages)
+  SOLIDEON = 'solideon',
 }
 
 /**
