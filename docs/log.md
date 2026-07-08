@@ -15,6 +15,42 @@
 
 ---
 
+## 2026-07-08 — Run #486 — Spec 5050 — source-company-canekast
+
+**Change:** New single-company `source-company-canekast` plugin for CaneKast
+(`canekast.com`).
+
+- **WordPress (Elementor), no ATS.** Each open role is a heading on `/careers/`
+  linking to a **per-role PDF job description** under `/wp-content/uploads/`;
+  applying goes through a **single shared on-page form** (no per-role apply URL,
+  no `mailto:`).
+- **Server-rendered plain HTML** (HTTP 200, no Cloudflare, no JS challenge), so
+  the listing is fetched with a plain HTTP GET + Cheerio — no headless browser.
+  The role substance (description + mailing-address location) lives only in the
+  PDF, extracted with **unpdf** (bundled pdfjs, no native deps).
+- **Company plugin, not a shared plugin** (like Specs 5042/5045/5046/5047/5048/5049):
+  the Elementor page + PDF layout are bespoke, so there is no shared contract to
+  parameterize by an id.
+- **`parseListing`** (Cheerio) collects `/wp-content/uploads/*.pdf` anchors,
+  de-dupes by URL (the page carries a duplicate file-name anchor per role), and
+  takes the title from the anchor text with a trailing `.pdf` dropped (a
+  non-`/uploads` brochure PDF is ignored).
+- **Field mapping:** `id` = `canekast-<pdf-stem>`; `companyName` = `CaneKast`;
+  `jobUrl` = the role PDF URL; `location` from the PDF letterhead address via
+  shared `parseLocationList` (Spec 5001; e.g. `Chaska, MN`); `description` = the
+  PDF text with the letterhead stripped; `applyUrl` = the careers page (shared
+  form); `emails` = `[]`; `datePosted` = `null` (no reliable per-role date — the
+  PDFs are static assets and the page carries only a page-level modified stamp);
+  `isRemote` = `false`; compensation omitted (no pay stated — never guessed).
+- **`Promise.allSettled`** PDF fan-out with graceful per-role degradation (a
+  failed PDF keeps the listing fields; description + location null).
+- Registered in all four places (Site enum, `ALL_SOURCE_MODULES`, tsconfig
+  paths, jest moduleNameMapper). No new dependency.
+- **Tests:** fixture-based unit tests over captured listing HTML + real
+  extracted PDF text (7 tests). `api` build + `lint:docs` clean.
+
+---
+
 ## 2026-07-08 — Run #485 — Spec 5049 — source-company-spikeaerospace
 
 **Change:** New single-company `source-company-spikeaerospace` plugin for Spike
