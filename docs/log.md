@@ -15,6 +15,52 @@
 
 ---
 
+## 2026-07-08 — Run #482 — Spec 5046 — source-company-nanonuclearenergy
+
+**Change:** New single-company `source-company-nanonuclearenergy` plugin for NANO
+Nuclear Energy (`nanonuclearenergy.com`, NASDAQ: NNE), whose careers page is a
+**WordPress + Divi** site with no ATS — roles are hand-authored Divi "blurb"
+modules and applying is an on-page WordPress (WPForms) form.
+
+- Reads the WordPress REST API (`…/wp-json/wp/v2/pages?slug=careers`) and takes
+  the page's `content.rendered` Divi markup — no headless browser, no ATS. The
+  role blurbs are parsed with Cheerio.
+- **Company plugin, not an ATS-style shared plugin.** WordPress's REST transport
+  is uniform but the per-site content model is bespoke (Divi blurbs here; WP Job
+  Manager, custom post types, or other builders elsewhere), so there is no shared
+  WordPress job schema to parameterize by an id. A shared `source-wpjobmanager`
+  plugin would be justified only if a cohort of WP-Job-Manager sites (uniform
+  `/wp-json/wp/v2/job-listings` schema) appears — YAGNI until then.
+- Divi parse: walk `.et_pb_blurb, .et_pb_text` in document order — a blurb with an
+  `h4` opens a role (title + optional subtitle), the following text module is its
+  body, and label-prefixed blurbs (`Full Time` / `Location - …` / `Salary: …`)
+  fill its meta. Anchored on stable Divi class names + label prefixes, not
+  positional indexes, so adding/removing a role does not shift the parse.
+- Field mapping: `title` from the `h4`; `companyName` = `NANO Nuclear Energy`;
+  `companyUrl`/`jobUrl` = the careers page (no per-role URL exists);
+  `location` via the shared `parseLocationList` (Spec 5001); `isRemote` from the
+  location; `employmentType` = raw `Full Time`, `jobType` via
+  `getJobTypeFromString`; `description` = subtitle (bolded) + body via the shared
+  `markdownConverter`; `datePosted` = `null` (page carries none); `emails` from
+  the body (usually none — apply is an on-site form). Ids fold in the subtitle so
+  the two repeated `Nuclear Engineer` titles stay distinct.
+- **Salary: yearly interval is authoritative, and Word-paste artifacts are
+  repaired.** Every role states an annual base, so the interval is passed as an
+  explicit `CompensationInterval.YEARLY` hint (`ExtractSalaryOptions.interval`,
+  Spec 5018) rather than guessed from magnitude. The pay prose is Word-pasted, so
+  before parsing it is repaired: space after `$` (`$ 130,000`), spaces inside a
+  group (`$1 48 ,000`), and a missing `$` on one end (`99,000 - $131,000`) are
+  closed, then `"$min - $max"` is rebuilt from the first two numeric groups.
+- Registered in all four places (Site enum, `ALL_SOURCE_MODULES`, tsconfig paths,
+  jest moduleNameMapper).
+- Verified live on nanonuclearenergy.com: 14 roles, clean `Oak Brook, IL`
+  locations, full descriptions, `Full Time`/`fulltime`, and a yearly compensation
+  range on every role — including the ones whose pay text carries Word-paste
+  artifacts (`$122k–$148k`, `$99k–$131k`, `$130k–$161k`). nanonuclearenergy suite
+  green (10 mocked unit); `api` build + `lint:docs` clean.
+
+---
+
 ## 2026-07-08 — Run #481 — Spec 5045 — source-company-buildcover
 
 **Change:** New single-company `source-company-buildcover` plugin for Cover
