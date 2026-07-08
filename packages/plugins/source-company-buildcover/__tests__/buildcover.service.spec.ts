@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { ScraperInputDto, Site } from '@ever-jobs/models';
+import { CompensationInterval, ScraperInputDto, Site } from '@ever-jobs/models';
 
 const mockGet = jest.fn();
 jest.mock('@ever-jobs/common', () => {
@@ -122,13 +122,31 @@ describe('BuildcoverService', () => {
     expect(foreman.description).toContain('## Compensation');
   });
 
-  it('parses a compensation range from the compensation blocks', async () => {
+  it('parses a compensation range and takes the interval from the /hr token', async () => {
     respondWith({ contactEmail: 'join@buildcover.com', careers: [FOREMAN] });
     const foreman = (await new BuildcoverService().scrape(inputFrom())).jobs[0];
 
     expect(foreman.compensation).not.toBeNull();
     expect(foreman.compensation?.minAmount).toBe(35);
     expect(foreman.compensation?.maxAmount).toBe(40);
+    expect(foreman.compensation?.interval).toBe(CompensationInterval.HOURLY);
+  });
+
+  it('honours a /yr token whose magnitude would otherwise read as monthly', async () => {
+    const analyst = {
+      ...MARKETING,
+      title: 'Operations Analyst',
+      slug: { current: 'operations-analyst' },
+      compensation: [para('$28,000 – $32,000 /yr')],
+    };
+    respondWith({ contactEmail: 'join@buildcover.com', careers: [analyst] });
+    const job = (await new BuildcoverService().scrape(inputFrom())).jobs[0];
+
+    // Without the token hint the shared parser would infer MONTHLY (28000 <
+    // 30000); the /yr token keeps it YEARLY.
+    expect(job.compensation?.minAmount).toBe(28000);
+    expect(job.compensation?.maxAmount).toBe(32000);
+    expect(job.compensation?.interval).toBe(CompensationInterval.YEARLY);
   });
 
   it('omits compensation when there is no salary text', async () => {

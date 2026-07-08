@@ -466,6 +466,16 @@ export interface ExtractSalaryOptions {
   hourlyThreshold?: number;
   monthlyThreshold?: number;
   enforceAnnualSalary?: boolean;
+  /**
+   * Spec 5045 — explicit pay period for the parsed range. When set, the
+   * interval is taken from this hint instead of being guessed from the
+   * amount's magnitude, and the range is annualized with the period's factor
+   * for the bounds check. Callers that know the unit (e.g. a `"$35/hr"` token
+   * parsed from the source) pass it so an authoritative signal is never lost
+   * to the magnitude heuristic (`$28,000/yr` → yearly, not monthly;
+   * `$1,200/wk` → weekly, which magnitude cannot represent at all).
+   */
+  interval?: CompensationInterval;
   /** Spec 012 / T03 — country hint for currency / locale resolution. */
   country?: Country;
   /**
@@ -700,6 +710,19 @@ function buildSalaryRegexBare(numSrc: string): RegExp {
 }
 
 /**
+ * Spec 5045 — annualization factor per pay period, used only for the
+ * bounds check when an explicit {@link ExtractSalaryOptions.interval} hint is
+ * supplied (hourly = 40h × 52w; daily = 5d × 52w; weekly = 52w; monthly = 12m).
+ */
+const ANNUALIZATION_FACTORS: Record<CompensationInterval, number> = {
+  [CompensationInterval.HOURLY]: 2080,
+  [CompensationInterval.DAILY]: 260,
+  [CompensationInterval.WEEKLY]: 52,
+  [CompensationInterval.MONTHLY]: 12,
+  [CompensationInterval.YEARLY]: 1,
+};
+
+/**
  * Extract salary information from a free-form description string.
  *
  * Spec 012 / T03 — multi-currency, locale-aware dispatcher. Resolves
@@ -715,7 +738,9 @@ function buildSalaryRegexBare(numSrc: string): RegExp {
  * Returns the same `{ interval, minAmount, maxAmount, currency }`
  * envelope; `currency` is now an ISO 4217 string rather than a
  * hard-coded `'USD'`. Returns the all-`null` envelope on any
- * failure (no throws — preserves prior contract).
+ * failure (no throws — preserves prior contract). Spec 5045 — when
+ * {@link ExtractSalaryOptions.interval} is set, the interval is taken from
+ * that hint rather than inferred from the amount's magnitude.
  */
 export function extractSalary(
   salaryStr: string | null,
@@ -823,7 +848,16 @@ export function extractSalary(
   let annualMinSalary: number;
   let annualMaxSalary: number | null = null;
 
-  if (minSalary < hourlyThreshold) {
+  if (options?.interval) {
+    // Spec 5045 — trust the caller's explicit pay period over the magnitude
+    // heuristic; annualize both ends with the period's factor for the bounds
+    // check (never `null`, so a genuine range is not dropped by the crossing
+    // guard the magnitude branches use).
+    interval = options.interval;
+    const factor = ANNUALIZATION_FACTORS[options.interval];
+    annualMinSalary = minSalary * factor;
+    annualMaxSalary = maxSalary * factor;
+  } else if (minSalary < hourlyThreshold) {
     interval = CompensationInterval.HOURLY;
     annualMinSalary = minSalary * 2080;
     annualMaxSalary = maxSalary < hourlyThreshold ? maxSalary * 2080 : null;

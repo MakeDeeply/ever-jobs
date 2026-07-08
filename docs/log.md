@@ -38,16 +38,27 @@ front-end backed by a **Sanity CMS** with no ATS (apply is a single email).
   `location` via the shared `parseLocationList` (Spec 5001) with the non-standard
   `on-site` token stripped; `isRemote` from the location; `employmentType` = raw
   `type`, `jobType` via `getJobTypeFromString`; `compensation` best-effort via
-  `salaryToCompensation` over the compensation prose (unicode dashes normalised
-  and per-unit `/hr` tokens stripped so the shared parser sees the range —
-  magnitude drives the interval); `datePosted` from `_createdAt`; `emails`→
-  `mailto:` from the global apply email (body-email fallback).
+  `salaryToCompensation` over the compensation prose; `datePosted` from
+  `_createdAt`; `emails`→ `mailto:` from the global apply email (body-email
+  fallback).
+- **Compensation interval is authoritative, not guessed.** The per-unit token
+  (`/hr`, `/yr`, …) is read from the prose and passed to the shared parser as an
+  explicit interval via the new `ExtractSalaryOptions.interval` (Spec 5018).
+  Unicode dashes are still normalised and the token stripped from the *numeric*
+  input (the number regex cannot span a `/hr` between the amount and the
+  separator), but the token's meaning survives as the interval instead of being
+  discarded to a magnitude guess. Fixes the magnitude-heuristic failure class:
+  `$28,000/yr` → yearly (magnitude alone → dropped, since the max crosses the
+  monthly threshold), `$1,200/wk` → weekly (magnitude cannot represent weekly),
+  `$400/hr` → hourly (magnitude → monthly). Raw comp prose stays in the
+  description.
 - Registered in all four places (Site enum, `ALL_SOURCE_MODULES`, tsconfig paths,
   jest moduleNameMapper).
 - Verified live on buildcover.com: 6 roles, clean `… Los Angeles` locations,
   full descriptions, `join@buildcover.com` apply, `datePosted` set, structured
   compensation on the roles that publish it (Foreman `$35–$40/hr`, Marketing
-  `$115k–$120k/yr`). buildcover suite green (8 mocked unit); package typecheck +
+  `$115k–$120k/yr`). buildcover suite green (9 mocked unit) + shared `common`
+  suite green (187, incl. new interval-hint cases); package typecheck +
   `api` build clean.
 
 ---

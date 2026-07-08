@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { SourcePlugin } from '@ever-jobs/plugin';
 import {
   CompensationDto,
+  CompensationInterval,
   getJobTypeFromString,
   IScraper,
   JobPostDto,
@@ -35,6 +36,23 @@ import {
   SanityExtraSection,
   SanityQueryResponse,
 } from './buildcover.types';
+
+/**
+ * Per-unit pay tokens Cover uses in its compensation prose, mapped to the
+ * canonical interval. Ordered most-specific first; the first match wins.
+ */
+const BUILDCOVER_PAY_INTERVALS: ReadonlyArray<
+  readonly [RegExp, CompensationInterval]
+> = [
+  [/(?:\/\s*(?:hr|hrs|hour)|per\s+hour|hourly)\b/i, CompensationInterval.HOURLY],
+  [/(?:\/\s*day|per\s+day|daily)\b/i, CompensationInterval.DAILY],
+  [/(?:\/\s*(?:wk|week)|per\s+week|weekly)\b/i, CompensationInterval.WEEKLY],
+  [/(?:\/\s*(?:mo|month)|per\s+month|monthly)\b/i, CompensationInterval.MONTHLY],
+  [
+    /(?:\/\s*(?:yr|year)|per\s+(?:year|annum)|yearly|annually)\b/i,
+    CompensationInterval.YEARLY,
+  ],
+];
 
 @SourcePlugin({
   site: Site.BUILDCOVER,
@@ -84,9 +102,11 @@ export class BuildcoverService implements IScraper {
     const slug = this.slug(career);
     const title = this.normalize(career.title);
     const description = this.buildDescription(career);
-    const compensationText = this.salaryText(this.blocksToText(career.compensation));
+    const compensationProse = this.blocksToText(career.compensation);
+    const interval = this.payInterval(compensationProse);
+    const compensationText = this.salaryText(compensationProse);
     const compensation: CompensationDto | null = compensationText
-      ? salaryToCompensation(compensationText)
+      ? salaryToCompensation(compensationText, interval ? { interval } : undefined)
       : null;
 
     const locationText = this.normalize(career.location);
@@ -259,10 +279,24 @@ export class BuildcoverService implements IScraper {
   }
 
   /**
-   * Normalise prose pay text for the shared salary parser: unicode dashes → `-`,
-   * and drop the per-unit token that sits between the amount and the separator
-   * (`$35/hr - $40/hr`), which the parser cannot see through. The magnitude then
-   * drives the interval (35 → hourly), so the values survive intact.
+   * The authoritative pay period from a per-unit token in the prose
+   * (`$35/hr`, `$115k/yr`, `per hour`). Passed to the shared parser as an
+   * explicit interval so the amount's magnitude never has to guess it.
+   * `undefined` when no unit token is present (parser falls back to magnitude).
+   */
+  private payInterval(text: string): CompensationInterval | undefined {
+    for (const [pattern, interval] of BUILDCOVER_PAY_INTERVALS) {
+      if (pattern.test(text)) return interval;
+    }
+    return undefined;
+  }
+
+  /**
+   * Normalise prose pay text so the shared salary parser can read the numeric
+   * range: unicode dashes → `-`, and drop the per-unit token that sits between
+   * the amount and the separator (`$35/hr - $40/hr`), which the number regex
+   * cannot see through. The token's meaning is not lost — {@link payInterval}
+   * has already captured it as the explicit interval before it is stripped.
    */
   private salaryText(text: string): string {
     return text

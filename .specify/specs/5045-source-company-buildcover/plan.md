@@ -54,6 +54,15 @@ are baked in; `companySlug` is ignored.
   absent are skipped; a role fetch that returns nothing → empty with a warning.
 - **Compensation variance** — comp is prose; `salaryToCompensation` best-effort
   extracts a range when present, else `compensation` is omitted (no fabrication).
+  The per-unit token (`/hr`, `/yr`, …) is read from the prose and passed to the
+  shared parser as an **explicit interval** (new `ExtractSalaryOptions.interval`,
+  Spec 5018), so the pay period comes from the authoritative token rather than
+  being guessed from the amount's magnitude. Unicode dashes are normalised and
+  the token stripped from the numeric input (the number regex cannot span a
+  `/hr` sitting between the amount and the separator), but the token's meaning
+  survives as the interval. This fixes the magnitude-heuristic failure class
+  (`$28,000/yr` → yearly not monthly; `$1,200/wk` → weekly, unrepresentable by
+  magnitude). The raw compensation prose stays verbatim in the description.
 - **API/CDN availability** — a failed query returns empty (no throw), matching the
   batch-resilience contract of the other adapters.
 - **Not over-generalising** — kept single-company; the Sanity transport + Portable

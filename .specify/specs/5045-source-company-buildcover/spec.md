@@ -75,7 +75,7 @@ walker) can be lifted into `@ever-jobs/common` then — YAGNI until then.
 | `employmentType` | raw `career.type` (e.g. `Full-Time`, `Temp to hire`) |
 | `jobType` | `getJobTypeFromString(type)` when it maps, else omitted |
 | `description` | Portable Text of `overview` → `role` → `experience` → `extraSections` (each under the site's own section label: `Overview` / `Role` / `Experience` / the section `title`) → `Compensation` |
-| `compensation` | best-effort salary parse of the `compensation` text (has real ranges, e.g. `$35.00/hr – $40.00/hr`) |
+| `compensation` | best-effort salary parse of the `compensation` text (has real ranges, e.g. `$35.00/hr – $40.00/hr`); the per-unit token (`/hr`, `/yr`, …) is passed to the shared parser as an explicit interval (`ExtractSalaryOptions.interval`) so the pay period is authoritative, not guessed from magnitude |
 | `datePosted` | `career._createdAt` → local day (`toDateOnly`) |
 | `emails` / `applyUrl` | `careersPage.contactEmail` (else emails in the body); `applyUrl = mailto:<first>` |
 
