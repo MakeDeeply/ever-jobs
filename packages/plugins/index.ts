@@ -1123,6 +1123,7 @@ import { Submit4jobsModule } from './source-ats-submit4jobs';
 import { NotionModule } from './source-notion';
 import { BuildcoverModule } from './source-company-buildcover';
 import { NanonuclearenergyModule } from './source-company-nanonuclearenergy';
+import { DesktopmetalModule } from './source-company-desktopmetal';
 export const ALL_SOURCE_MODULES = [
   FourDayWeekModule,
   AcademiccareersModule,
@@ -2239,4 +2240,5 @@ export const ALL_SOURCE_MODULES = [
   NotionModule,
   BuildcoverModule,
   NanonuclearenergyModule,
+  DesktopmetalModule,
 ];

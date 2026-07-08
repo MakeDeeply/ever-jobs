@@ -2092,6 +2092,8 @@ export enum Site {
   BUILDCOVER = 'buildcover',
   // Phase 976: Spec 5046 — NANO Nuclear Energy (nanonuclearenergy.com) company careers plugin (WordPress/Divi)
   NANONUCLEARENERGY = 'nanonuclearenergy',
+  // Phase 977: Spec 5047 — Desktop Metal (desktopmetal.com) company careers plugin (Cloudflare-gated HTML listing + per-role PDF JDs)
+  DESKTOPMETAL = 'desktopmetal',
 }
 
 /**

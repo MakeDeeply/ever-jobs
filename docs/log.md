@@ -15,6 +15,61 @@
 
 ---
 
+## 2026-07-08 — Run #483 — Spec 5047 — source-company-desktopmetal
+
+**Change:** New single-company `source-company-desktopmetal` plugin for Desktop
+Metal (`desktopmetal.com`), whose careers page has no ATS: it lists open roles
+under department headings, each linking to a **per-role PDF job description**
+under `/uploads/`, and applications go to a single global email. The role's
+substance (description + pay) lives only in the PDF, not the listing HTML.
+
+- **Two-stage fetch, matching where each obstacle sits.** The listing page is
+  client-rendered and behind a **Cloudflare managed challenge** (a plain HTTP GET
+  of `/careers` returns 403 from both datacenter and residential IPs — a JS
+  challenge, not IP-reputation), so it is fetched with a **stealth headless
+  browser** (`BrowserPool.getPage({ stealth: true, proxy })`). The PDFs are
+  **open** (HTTP 200) and fetched over the shared HTTP client
+  (`responseType:'arraybuffer'`).
+- **PDF text via unpdf** (bundled pdfjs, no native deps), reconstructing
+  line/paragraph breaks from pdfjs `hasEOL` flags rather than a space-joined
+  blob.
+- **Company plugin, not a shared plugin** (like Specs 5042/5045/5046): the
+  listing markup + PDF layout are bespoke, so there is no shared contract to
+  parameterize by an id.
+- `parseListing` (Cheerio) selects `/uploads/*.pdf` anchors whose text is
+  `Title - Location`, splits on the last ` - `, takes the department from the
+  nearest preceding `<h3>`, and reads the global `mailto:` apply email; a footer
+  brochure PDF without `Title - Location` text is ignored.
+- Field mapping: `id` = `desktopmetal-<pdf-stem>`; `companyName` =
+  `Desktop Metal`; `jobUrl` = the role PDF URL; `department` from the heading;
+  `location` via shared `parseLocationList` (Spec 5001); `description` from the
+  PDF text; `employmentType`/`jobType` from PDF prose; `datePosted` = `null`;
+  global apply email → `mailto:`.
+- **Per-role pay interval.** The interval varies per role (some annual, some
+  hourly), so each role's interval is read from its own PDF label
+  ("Salary Range"/"Hourly Range", per-unit-token fallback) and passed as the
+  authoritative `interval` to the shared salary parser
+  (`ExtractSalaryOptions.interval`, Spec 5018/5045) — magnitude never guesses the
+  period. The numeric range is normalized first (unicode dashes → `-`, stray
+  non-thousands commas removed, e.g. `$110,000, – $150,000,` →
+  `$110,000 - $150,000`).
+- `Promise.allSettled` PDF fan-out with graceful per-role degradation (a failed
+  PDF keeps the listing-only fields).
+- Registered in all four places (Site enum, `ALL_SOURCE_MODULES`, tsconfig paths,
+  jest moduleNameMapper). Added the `unpdf` dependency.
+
+**Tests:** Fixture-based unit tests use captured rendered HTML + real extracted
+PDF text (8 tests: three openings with department/location/global email,
+non-role PDF ignored, PDF body → description, per-role yearly+hourly interval,
+employmentType/jobType, graceful PDF-failure, input filters, empty listing).
+`api` build + `lint:docs` clean.
+
+**Files:** `.specify/specs/5047-source-company-desktopmetal/{spec,plan,tasks}.md`;
+`packages/plugins/source-company-desktopmetal/**`; `packages/models/src/enums/site.enum.ts`;
+`packages/plugins/index.ts`; `tsconfig.base.json`; `jest.config.js`; `docs/index.md`.
+
+---
+
 ## 2026-07-08 — Run #482 — Spec 5046 — source-company-nanonuclearenergy
 
 **Change:** New single-company `source-company-nanonuclearenergy` plugin for NANO
