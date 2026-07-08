@@ -2086,6 +2086,8 @@ export enum Site {
   TERRAFORMINDUSTRIES = 'terraformindustries',
   // Phase 973: Spec 5043 — Submit4Jobs (Pereless) ATS plugin
   SUBMIT4JOBS = 'submit4jobs',
+  // Phase 974: Spec 5044 — Notion public-page careers plugin (shared, page-id keyed)
+  NOTION = 'notion',
 }
 
 /**

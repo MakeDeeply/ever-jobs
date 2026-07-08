@@ -15,6 +15,48 @@
 
 ---
 
+## 2026-07-08 — Spec 5044 — source-notion
+
+**Change:** New shared `source-notion` plugin for companies that host their
+careers page directly on a public Notion site (`*.notion.site`) with no ATS —
+roles are Notion sub-pages and apply is by email.
+
+- Wired like an ATS, not a company plugin: one `Site.NOTION` plugin keyed by the
+  Notion page id (`id_at_job_host`); no per-company branching. A full
+  `companyUrl` is also accepted and the 32-hex page id extracted from it.
+- Reads the unauthenticated `POST https://www.notion.so/api/v3/loadPageChunk`
+  JSON API — works with the page id alone (no subdomain, no headless browser).
+- Child-page mode:
+    - enumerate — the root page's `content` children of `type:"page"` are the
+      roles (titles inlined in the root chunk; no extra fetch).
+    - detail — each role sub-page fetched under bounded `Promise.allSettled`
+      fan-out (concurrency 5); blocks walked in order into a description
+      (headers→`##`/`###`, list items→`- `), dropping the leading header that
+      duplicates the title and capturing the labelled `Location:` line.
+- Field mapping:
+    - `title` — page title.
+    - `companyName` — root title (`Careers at X`→`X`), slug fallback.
+    - `location` — the `Location:` line via shared `parseLocationList` (Spec
+      5001), with the non-standard `on-site` token stripped so it does not leak
+      into the parsed city (remote/hybrid handled by the parser).
+    - `isRemote` — from that line; `null` when there is no location line.
+    - `description` — concatenated blocks.
+    - `compensation` — best-effort from the body via `salaryToCompensation`
+      (usually absent — Notion has no structured salary field).
+    - `datePosted` — role `created_time` via `toDateOnly`.
+    - `emails` / `applyUrl` — emails in the body → `mailto:`.
+    - `jobUrl` — `{subdomain}.notion.site/{id}` (or `www.notion.so`).
+- Collection/database-view boards are an explicit un-built mode: "no child-page
+  roles" → warn + `[]` rather than mis-parse (added when a real tenant appears).
+- Registered in all four places (Site enum, `ALL_SOURCE_MODULES`, tsconfig
+  paths, jest mapper).
+- Verified live on Stone Power (`361cc3fe052a81098df8d9d81147636d`): 6 roles,
+  all `Los Angeles, CA` (no On-Site leak), full descriptions,
+  `careers@stonepower.us` apply, dates set. notion suite green (7 mocked unit);
+  package typecheck + `api` build clean.
+
+---
+
 ## 2026-07-07 — Run #480 — Spec 5043 — source-ats-submit4jobs
 
 **Change:** New `source-ats-submit4jobs` plugin for Submit4Jobs / Pereless
