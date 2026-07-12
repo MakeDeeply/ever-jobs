@@ -138,7 +138,7 @@ describe('NotionService', () => {
 
     const head = result.jobs.find((j) => j.title === 'Head of Turbomachinery')!;
     expect(head).toBeDefined();
-    expect(head.site).toBe(Site.NOTION);
+    expect(head.site).toBe(Site.NOTION_PAGES);
     expect(head.companyName).toBe('Stone Power');
     expect(head.id).toBe(`notion-${dashless(ROLE1_ID)}`);
     // jobUrl keeps the notion.site subdomain from companyUrl

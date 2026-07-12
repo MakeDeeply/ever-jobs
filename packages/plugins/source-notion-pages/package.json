@@ -1,5 +1,5 @@
 {
-  "name": "@ever-jobs/source-notion",
+  "name": "@ever-jobs/source-notion-pages",
   "version": "0.1.0",
   "main": "src/index.ts",
   "types": "src/index.ts",

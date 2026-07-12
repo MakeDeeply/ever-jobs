@@ -1125,7 +1125,7 @@ module.exports = {
     '^@ever-jobs/source-ats-prismhr$': '<rootDir>/packages/plugins/source-ats-prismhr/src/index.ts',
     '^@ever-jobs/source-company-terraformindustries$': '<rootDir>/packages/plugins/source-company-terraformindustries/src/index.ts',
     '^@ever-jobs/source-ats-submit4jobs$': '<rootDir>/packages/plugins/source-ats-submit4jobs/src/index.ts',
-    '^@ever-jobs/source-notion$': '<rootDir>/packages/plugins/source-notion/src/index.ts',
+    '^@ever-jobs/source-notion-pages$': '<rootDir>/packages/plugins/source-notion-pages/src/index.ts',
     '^@ever-jobs/source-company-buildcover$': '<rootDir>/packages/plugins/source-company-buildcover/src/index.ts',
     '^@ever-jobs/source-company-nanonuclearenergy$': '<rootDir>/packages/plugins/source-company-nanonuclearenergy/src/index.ts',
     '^@ever-jobs/source-company-desktopmetal$': '<rootDir>/packages/plugins/source-company-desktopmetal/src/index.ts',

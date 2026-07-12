@@ -5,4 +5,4 @@ import { NotionService } from './notion.service';
   providers: [NotionService],
   exports: [NotionService],
 })
-export class NotionModule {}
+export class NotionPagesModule {}

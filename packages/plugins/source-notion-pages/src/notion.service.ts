@@ -44,7 +44,7 @@ type BlockMap = Record<string, NotionBlockRecord>;
 type HttpClient = ReturnType<typeof createHttpClient>;
 
 @SourcePlugin({
-  site: Site.NOTION,
+  site: Site.NOTION_PAGES,
   name: 'Notion',
   category: 'company',
 })
@@ -254,7 +254,7 @@ export class NotionService implements IScraper {
 
     return new JobPostDto({
       id: `notion-${this.dashless(role.id)}`,
-      site: Site.NOTION,
+      site: Site.NOTION_PAGES,
       title: role.title,
       companyName,
       jobUrl: this.jobUrl(role.id, subdomain),

@@ -1,2 +1,2 @@
-export { NotionModule } from './notion.module';
+export { NotionPagesModule } from './notion.module';
 export { NotionService } from './notion.service';

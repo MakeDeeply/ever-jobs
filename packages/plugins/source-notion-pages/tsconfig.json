@@ -1,7 +1,7 @@
 {
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../../../dist/packages/source-notion",
+    "outDir": "../../../dist/packages/source-notion-pages",
     "declaration": true
   },
   "include": ["src/**/*"]
