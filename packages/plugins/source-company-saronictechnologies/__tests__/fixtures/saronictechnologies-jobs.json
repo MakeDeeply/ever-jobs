@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "0246e75c-e283-464e-b3e3-0c79f2118fb7",
+      "title": "Front End Software Engineer",
+      "departmentName": "Software",
+      "teamName": "Software",
+      "employmentType": "FullTime",
+      "location": "Austin, TX",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Austin",
+          "addressRegion": "TX",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-03-10",
+      "descriptionHtml": "<p>Front End Software Engineer at Saronic Technologies.</p>",
+      "descriptionPlain": "Front End Software Engineer at Saronic Technologies.",
+      "jobUrl": "https://jobs.ashbyhq.com/saronic/0246e75c-e283-464e-b3e3-0c79f2118fb7",
+      "applyUrl": "https://jobs.ashbyhq.com/saronic/0246e75c-e283-464e-b3e3-0c79f2118fb7/application"
+    },
+    {
+      "id": "02ae20bc-9e28-4dce-8e90-768f52338315",
+      "title": "Senior/Staff Electrical R&D Test Engineer",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "Austin, TX",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Austin",
+          "addressRegion": "TX",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-04",
+      "descriptionHtml": "<p>Senior/Staff Electrical R&D Test Engineer at Saronic Technologies.</p>",
+      "descriptionPlain": "Senior/Staff Electrical R&D Test Engineer at Saronic Technologies.",
+      "jobUrl": "https://jobs.ashbyhq.com/saronic/02ae20bc-9e28-4dce-8e90-768f52338315",
+      "applyUrl": "https://jobs.ashbyhq.com/saronic/02ae20bc-9e28-4dce-8e90-768f52338315/application"
+    },
+    {
+      "id": "02c67035-1b2e-4672-872d-c7bff82d285e",
+      "title": "Strategic Partnerships Manager",
+      "departmentName": "Corporate Development",
+      "teamName": "Corporate Development",
+      "employmentType": "FullTime",
+      "location": "Washington, DC",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Washington",
+          "addressRegion": "DC",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-02-11",
+      "descriptionHtml": "<p>Strategic Partnerships Manager at Saronic Technologies.</p>",
+      "descriptionPlain": "Strategic Partnerships Manager at Saronic Technologies.",
+      "jobUrl": "https://jobs.ashbyhq.com/saronic/02c67035-1b2e-4672-872d-c7bff82d285e",
+      "applyUrl": "https://jobs.ashbyhq.com/saronic/02c67035-1b2e-4672-872d-c7bff82d285e/application"
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "3743990013928471",
+      "name": "21000766 - EJECUTIVO DE VENTAS ESQUIPULAS",
+      "uuid": "grupomariposa-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "GrupoMariposa1",
+        "name": "Grupo Mariposa"
+      },
+      "releasedDate": "2026-07-03T22:27:55.606Z",
+      "location": {
+        "city": "ESQUIPULAS",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "ESQUIPULAS, , Guatemala"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Commercial"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/GrupoMariposa1/3743990013928471",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>21000766 - EJECUTIVO DE VENTAS ESQUIPULAS at Grupo Mariposa.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "3743990013928227",
+      "name": "EJECUTIVO DE VENTAS I",
+      "uuid": "grupomariposa-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "GrupoMariposa1",
+        "name": "Grupo Mariposa"
+      },
+      "releasedDate": "2026-07-03T21:31:18.927Z",
+      "location": {
+        "city": "Lima",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Lima, , Peru"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Commercial"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/GrupoMariposa1/3743990013928227",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>EJECUTIVO DE VENTAS I at Grupo Mariposa.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "3743990013927436",
+      "name": "21003830 - DESARROLLADOR A PLUS",
+      "uuid": "grupomariposa-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "GrupoMariposa1",
+        "name": "Grupo Mariposa"
+      },
+      "releasedDate": "2026-07-03T20:17:03.220Z",
+      "location": {
+        "city": "Guatemala",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Guatemala, Guatemala, Guatemala"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Commercial"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/GrupoMariposa1/3743990013927436",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>21003830 - DESARROLLADOR A PLUS at Grupo Mariposa.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

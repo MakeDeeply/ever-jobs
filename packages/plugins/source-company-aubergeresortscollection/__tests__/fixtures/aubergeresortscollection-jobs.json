@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135774219",
+      "name": "AM Server",
+      "uuid": "aubergeresortscollection-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "AubergeCollection",
+        "name": "Auberge Resorts Collection"
+      },
+      "releasedDate": "2026-07-03T18:15:16.376Z",
+      "location": {
+        "city": "Santa Fe",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Santa Fe, NM, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Food & Beverage"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AubergeCollection/744000135774219",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>AM Server at Auberge Resorts Collection.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135771390",
+      "name": "Agente de Seguridad",
+      "uuid": "aubergeresortscollection-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "AubergeCollection",
+        "name": "Auberge Resorts Collection"
+      },
+      "releasedDate": "2026-07-03T17:52:05.462Z",
+      "location": {
+        "city": "Cabo San Lucas",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Cabo San Lucas, B.C.S., Mexico"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Operations"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AubergeCollection/744000135771390",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Agente de Seguridad at Auberge Resorts Collection.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135772289",
+      "name": "Gerente de Proyectos IT",
+      "uuid": "aubergeresortscollection-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "AubergeCollection",
+        "name": "Auberge Resorts Collection"
+      },
+      "releasedDate": "2026-07-03T17:51:22.691Z",
+      "location": {
+        "city": "Cabo San Lucas",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Cabo San Lucas, B.C.S., Mexico"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Administrative"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AubergeCollection/744000135772289",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Gerente de Proyectos IT at Auberge Resorts Collection.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

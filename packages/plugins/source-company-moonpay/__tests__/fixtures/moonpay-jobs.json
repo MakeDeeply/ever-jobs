@@ -1,0 +1,62 @@
+[
+  {
+    "id": "cf5f8963-d2f2-4a1d-9f82-acbcdbd19a92",
+    "text": "Chief Auditor",
+    "categories": {
+      "location": "New York",
+      "allLocations": [
+        "New York"
+      ],
+      "department": "Compliance",
+      "team": "Compliance",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1778733474596,
+    "descriptionPlain": "Chief Auditor at MoonPay.",
+    "description": "<p>Chief Auditor at MoonPay.</p>",
+    "hostedUrl": "https://jobs.lever.co/moonpay/cf5f8963-d2f2-4a1d-9f82-acbcdbd19a92",
+    "applyUrl": "https://jobs.lever.co/moonpay/cf5f8963-d2f2-4a1d-9f82-acbcdbd19a92/apply"
+  },
+  {
+    "id": "58ec94e7-2af5-4d3e-95d4-d7931f03be86",
+    "text": "Chief Risk Officer (CRO)",
+    "categories": {
+      "location": "United States - Remote",
+      "allLocations": [
+        "United States - Remote"
+      ],
+      "department": "Executive Office",
+      "team": "Executive Office",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1773943824733,
+    "descriptionPlain": "Chief Risk Officer (CRO) at MoonPay.",
+    "description": "<p>Chief Risk Officer (CRO) at MoonPay.</p>",
+    "hostedUrl": "https://jobs.lever.co/moonpay/58ec94e7-2af5-4d3e-95d4-d7931f03be86",
+    "applyUrl": "https://jobs.lever.co/moonpay/58ec94e7-2af5-4d3e-95d4-d7931f03be86/apply"
+  },
+  {
+    "id": "ddeab868-7452-43b6-8f18-6e0718370ba4",
+    "text": "Communications Manager",
+    "categories": {
+      "location": "United States (East Coast Time Zone) - Remote",
+      "allLocations": [
+        "United States (East Coast Time Zone) - Remote"
+      ],
+      "department": "Marketing",
+      "team": "Marketing",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1778194021361,
+    "descriptionPlain": "Communications Manager at MoonPay.",
+    "description": "<p>Communications Manager at MoonPay.</p>",
+    "hostedUrl": "https://jobs.lever.co/moonpay/ddeab868-7452-43b6-8f18-6e0718370ba4",
+    "applyUrl": "https://jobs.lever.co/moonpay/ddeab868-7452-43b6-8f18-6e0718370ba4/apply"
+  }
+]

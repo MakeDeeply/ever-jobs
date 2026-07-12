@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "d5573afa-636c-4219-832f-386f498243bf",
+      "title": "Customer Solution Architect (AMER)",
+      "departmentName": "Growth",
+      "teamName": "Growth",
+      "employmentType": "FullTime",
+      "location": "Remote",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Remote",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2024-11-14",
+      "descriptionHtml": "<p>Customer Solution Architect (AMER) at Supabase.</p>",
+      "descriptionPlain": "Customer Solution Architect (AMER) at Supabase.",
+      "jobUrl": "https://jobs.ashbyhq.com/supabase/d5573afa-636c-4219-832f-386f498243bf",
+      "applyUrl": "https://jobs.ashbyhq.com/supabase/d5573afa-636c-4219-832f-386f498243bf/application"
+    },
+    {
+      "id": "e4e3ccb7-7b7d-42a2-be0f-26cbb5ae4abd",
+      "title": "Support Engineer (AMER)",
+      "departmentName": "Growth",
+      "teamName": "Growth",
+      "employmentType": "FullTime",
+      "location": "Remote",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Remote",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2025-01-15",
+      "descriptionHtml": "<p>Support Engineer (AMER) at Supabase.</p>",
+      "descriptionPlain": "Support Engineer (AMER) at Supabase.",
+      "jobUrl": "https://jobs.ashbyhq.com/supabase/e4e3ccb7-7b7d-42a2-be0f-26cbb5ae4abd",
+      "applyUrl": "https://jobs.ashbyhq.com/supabase/e4e3ccb7-7b7d-42a2-be0f-26cbb5ae4abd/application"
+    },
+    {
+      "id": "142135ae-a15f-4ec7-90bb-cb4e7968bc09",
+      "title": "Support Engineer (APAC)",
+      "departmentName": "Growth",
+      "teamName": "Growth",
+      "employmentType": "FullTime",
+      "location": "Remote",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Remote",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2025-03-20",
+      "descriptionHtml": "<p>Support Engineer (APAC) at Supabase.</p>",
+      "descriptionPlain": "Support Engineer (APAC) at Supabase.",
+      "jobUrl": "https://jobs.ashbyhq.com/supabase/142135ae-a15f-4ec7-90bb-cb4e7968bc09",
+      "applyUrl": "https://jobs.ashbyhq.com/supabase/142135ae-a15f-4ec7-90bb-cb4e7968bc09/application"
+    }
+  ]
+}

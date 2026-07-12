@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "005e34ba-c648-41af-a59e-2dc58e80a8e1",
+      "title": "Enterprise Business Development Representative",
+      "departmentName": "Marketing",
+      "teamName": "Marketing",
+      "employmentType": "FullTime",
+      "location": "San Francisco",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-29",
+      "descriptionHtml": "<p>Enterprise Business Development Representative at Airbyte.</p>",
+      "descriptionPlain": "Enterprise Business Development Representative at Airbyte.",
+      "jobUrl": "https://jobs.ashbyhq.com/airbyte/005e34ba-c648-41af-a59e-2dc58e80a8e1",
+      "applyUrl": "https://jobs.ashbyhq.com/airbyte/005e34ba-c648-41af-a59e-2dc58e80a8e1/application"
+    },
+    {
+      "id": "49ceb108-173c-4f68-ae71-cdfa21fdbc4d",
+      "title": "Senior Software Engineer, Integrations (API Sources & Automation) - Hiring Sprint",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "San Francisco",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-29",
+      "descriptionHtml": "<p>Senior Software Engineer, Integrations (API Sources & Automation) - Hiring Sprint at Airbyte.</p>",
+      "descriptionPlain": "Senior Software Engineer, Integrations (API Sources & Automation) - Hiring Sprint at Airbyte.",
+      "jobUrl": "https://jobs.ashbyhq.com/airbyte/49ceb108-173c-4f68-ae71-cdfa21fdbc4d",
+      "applyUrl": "https://jobs.ashbyhq.com/airbyte/49ceb108-173c-4f68-ae71-cdfa21fdbc4d/application"
+    },
+    {
+      "id": "5930fed9-c4f6-43c3-87be-3402c2c46489",
+      "title": "Senior Site Reliability Engineer - Hiring Sprint",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "San Francisco",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-29",
+      "descriptionHtml": "<p>Senior Site Reliability Engineer - Hiring Sprint at Airbyte.</p>",
+      "descriptionPlain": "Senior Site Reliability Engineer - Hiring Sprint at Airbyte.",
+      "jobUrl": "https://jobs.ashbyhq.com/airbyte/5930fed9-c4f6-43c3-87be-3402c2c46489",
+      "applyUrl": "https://jobs.ashbyhq.com/airbyte/5930fed9-c4f6-43c3-87be-3402c2c46489/application"
+    }
+  ]
+}

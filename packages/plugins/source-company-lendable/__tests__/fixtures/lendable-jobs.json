@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "043d9c49-43e6-4a27-ad55-12344a941974",
+      "title": "Senior Frontend Engineer (React Native)",
+      "departmentName": "Engineering & Product",
+      "teamName": "Engineering & Product",
+      "employmentType": "FullTime",
+      "location": "Mexico City, Mexico",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Mexico City",
+          "addressRegion": "Mexico",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-08",
+      "descriptionHtml": "<p>Senior Frontend Engineer (React Native) at Lendable.</p>",
+      "descriptionPlain": "Senior Frontend Engineer (React Native) at Lendable.",
+      "jobUrl": "https://jobs.ashbyhq.com/lendable/043d9c49-43e6-4a27-ad55-12344a941974",
+      "applyUrl": "https://jobs.ashbyhq.com/lendable/043d9c49-43e6-4a27-ad55-12344a941974/application"
+    },
+    {
+      "id": "04f9875f-c126-44b7-805e-4443b58dc567",
+      "title": "Head of Complaints",
+      "departmentName": "Operations",
+      "teamName": "Operations",
+      "employmentType": "FullTime",
+      "location": "London",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "London",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-29",
+      "descriptionHtml": "<p>Head of Complaints at Lendable.</p>",
+      "descriptionPlain": "Head of Complaints at Lendable.",
+      "jobUrl": "https://jobs.ashbyhq.com/lendable/04f9875f-c126-44b7-805e-4443b58dc567",
+      "applyUrl": "https://jobs.ashbyhq.com/lendable/04f9875f-c126-44b7-805e-4443b58dc567/application"
+    },
+    {
+      "id": "0537f442-745d-417d-971e-eed1f041a46e",
+      "title": "Financial Crime Team Leader",
+      "departmentName": "Operations",
+      "teamName": "Operations",
+      "employmentType": "FullTime",
+      "location": "Chatham",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Chatham",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-24",
+      "descriptionHtml": "<p>Financial Crime Team Leader at Lendable.</p>",
+      "descriptionPlain": "Financial Crime Team Leader at Lendable.",
+      "jobUrl": "https://jobs.ashbyhq.com/lendable/0537f442-745d-417d-971e-eed1f041a46e",
+      "applyUrl": "https://jobs.ashbyhq.com/lendable/0537f442-745d-417d-971e-eed1f041a46e/application"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "f8c16177-96ac-49e7-9d06-22cf8af86904",
+    "text": "Automation Engineer",
+    "categories": {
+      "location": "1121 West Warner Rd; Tempe, AZ 85284",
+      "allLocations": [
+        "1121 West Warner Rd; Tempe, AZ 85284"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1782406545828,
+    "descriptionPlain": "Automation Engineer at Solestial.",
+    "description": "<p>Automation Engineer at Solestial.</p>",
+    "hostedUrl": "https://jobs.lever.co/solestial/f8c16177-96ac-49e7-9d06-22cf8af86904",
+    "applyUrl": "https://jobs.lever.co/solestial/f8c16177-96ac-49e7-9d06-22cf8af86904/apply"
+  },
+  {
+    "id": "2e984373-7d3b-4115-b468-88f1145ad47c",
+    "text": "Business Development Manager, Commercial",
+    "categories": {
+      "location": "1121 West Warner Rd; Tempe, AZ 85284",
+      "allLocations": [
+        "1121 West Warner Rd; Tempe, AZ 85284"
+      ],
+      "department": "Sales & Marketing",
+      "team": "Sales & Marketing",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1778092375668,
+    "descriptionPlain": "Business Development Manager, Commercial at Solestial.",
+    "description": "<p>Business Development Manager, Commercial at Solestial.</p>",
+    "hostedUrl": "https://jobs.lever.co/solestial/2e984373-7d3b-4115-b468-88f1145ad47c",
+    "applyUrl": "https://jobs.lever.co/solestial/2e984373-7d3b-4115-b468-88f1145ad47c/apply"
+  },
+  {
+    "id": "73ffeac0-affc-4ead-a60c-a73336e277bf",
+    "text": "Director of Accounting",
+    "categories": {
+      "location": "1121 West Warner Rd; Tempe, AZ 85284",
+      "allLocations": [
+        "1121 West Warner Rd; Tempe, AZ 85284"
+      ],
+      "department": "Finance & Admin",
+      "team": "Finance & Admin",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1780343254188,
+    "descriptionPlain": "Director of Accounting at Solestial.",
+    "description": "<p>Director of Accounting at Solestial.</p>",
+    "hostedUrl": "https://jobs.lever.co/solestial/73ffeac0-affc-4ead-a60c-a73336e277bf",
+    "applyUrl": "https://jobs.lever.co/solestial/73ffeac0-affc-4ead-a60c-a73336e277bf/apply"
+  }
+]

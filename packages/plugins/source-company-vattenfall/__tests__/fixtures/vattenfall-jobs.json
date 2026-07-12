@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135745899",
+      "name": "Business Development & Sales Manager:in Wärmepumpen B2B",
+      "uuid": "vattenfall-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Vattenfall",
+        "name": "Vattenfall"
+      },
+      "releasedDate": "2026-07-03T14:13:19.802Z",
+      "location": {
+        "city": "Berlin",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Berlin, BE, Germany"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Customers & Solutions"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Vattenfall/744000135745899",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Business Development & Sales Manager:in Wärmepumpen B2B at Vattenfall.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135745499",
+      "name": "Tender Manager:in B2B Energie",
+      "uuid": "vattenfall-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Vattenfall",
+        "name": "Vattenfall"
+      },
+      "releasedDate": "2026-07-03T14:11:23.805Z",
+      "location": {
+        "city": "Berlin",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Berlin, BE, Germany"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Customers & Solutions"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Vattenfall/744000135745499",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Tender Manager:in B2B Energie at Vattenfall.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135740036",
+      "name": "Elkrafttekniker Stationsunderhåll",
+      "uuid": "vattenfall-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Vattenfall",
+        "name": "Vattenfall"
+      },
+      "releasedDate": "2026-07-03T13:49:30.930Z",
+      "location": {
+        "city": "Vänersborg",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Vänersborg, Västra Götaland County, Sweden"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Services Nordic"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Vattenfall/744000135740036",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Elkrafttekniker Stationsunderhåll at Vattenfall.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

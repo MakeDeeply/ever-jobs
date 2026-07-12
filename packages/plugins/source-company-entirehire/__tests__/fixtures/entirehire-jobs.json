@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "96497137",
+      "name": "Project Manager from Software Consulting - Mobile and Transportation industry and aset",
+      "uuid": "entirehire-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "entirehire",
+        "name": "Entire Hire"
+      },
+      "releasedDate": "2016-09-01T22:37:32.000Z",
+      "location": {
+        "city": "Toronto",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Toronto, ON, Canada"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/entirehire/96497137",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Project Manager from Software Consulting - Mobile and Transportation industry and aset at Entire Hire.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "81235578",
+      "name": "Dwntwn Toronto - Strong Software Business Analysts, any technology platform",
+      "uuid": "entirehire-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "entirehire",
+        "name": "Entire Hire"
+      },
+      "releasedDate": "2015-02-18T21:46:52.000Z",
+      "location": {
+        "city": "Toronto",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Toronto, , Canada"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "IT Recruitment -- All Information Technology Job Orders"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/entirehire/81235578",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Dwntwn Toronto - Strong Software Business Analysts, any technology platform at Entire Hire.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "79921169",
+      "name": "Tax Manager",
+      "uuid": "entirehire-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "entirehire",
+        "name": "Entire Hire"
+      },
+      "releasedDate": "2014-11-06T00:43:08.000Z",
+      "location": {
+        "city": "North York",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "North York , , Canada"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Financial Recruitment Department -- Finance Jobs"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/entirehire/79921169",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Tax Manager at Entire Hire.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

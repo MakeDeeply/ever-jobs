@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135762399",
+      "name": "Ingénieure / Ingénieur en géotechnique – génie civil",
+      "uuid": "artelia-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Artelia",
+        "name": "Artelia"
+      },
+      "releasedDate": "2026-07-03T15:48:31.685Z",
+      "location": {
+        "city": "Marquette-lez-Lille",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Marquette-lez-Lille, Hauts-de-France, France"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "1 - Bâtiment"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Artelia/744000135762399",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Ingénieure / Ingénieur en géotechnique – génie civil at Artelia.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135756290",
+      "name": "ALTERNANCE - Graphiste",
+      "uuid": "artelia-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Artelia",
+        "name": "Artelia"
+      },
+      "releasedDate": "2026-07-03T15:10:24.359Z",
+      "location": {
+        "city": "Grenoble",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Grenoble, Auvergne-Rhône-Alpes, France"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "2 - Fonctions supports"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Artelia/744000135756290",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>ALTERNANCE - Graphiste at Artelia.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135752838",
+      "name": "Projeteur / Projeteuse Instrumentation",
+      "uuid": "artelia-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Artelia",
+        "name": "Artelia"
+      },
+      "releasedDate": "2026-07-03T14:44:19.069Z",
+      "location": {
+        "city": "Wavre",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Wavre, Wallonia, Belgium"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "6 - Industrie"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Artelia/744000135752838",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Projeteur / Projeteuse Instrumentation at Artelia.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

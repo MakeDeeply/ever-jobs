@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "05030431-e289-4428-a55f-337fe69b559c",
+      "title": "Device Software Engineer, Gateway/Embedded Linux",
+      "departmentName": "Device Software",
+      "teamName": "Device Software",
+      "employmentType": "FullTime",
+      "location": "San Francisco",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-12-17",
+      "descriptionHtml": "<p>Device Software Engineer, Gateway/Embedded Linux at SPAN.</p>",
+      "descriptionPlain": "Device Software Engineer, Gateway/Embedded Linux at SPAN.",
+      "jobUrl": "https://jobs.ashbyhq.com/span/05030431-e289-4428-a55f-337fe69b559c",
+      "applyUrl": "https://jobs.ashbyhq.com/span/05030431-e289-4428-a55f-337fe69b559c/application"
+    },
+    {
+      "id": "067aa28a-da63-412e-ac06-085923a6ab09",
+      "title": "Staff Software Engineer: Embedded Device Software",
+      "departmentName": "Device Software",
+      "teamName": "Device Software",
+      "employmentType": "FullTime",
+      "location": "San Francisco",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-03-30",
+      "descriptionHtml": "<p>Staff Software Engineer: Embedded Device Software at SPAN.</p>",
+      "descriptionPlain": "Staff Software Engineer: Embedded Device Software at SPAN.",
+      "jobUrl": "https://jobs.ashbyhq.com/span/067aa28a-da63-412e-ac06-085923a6ab09",
+      "applyUrl": "https://jobs.ashbyhq.com/span/067aa28a-da63-412e-ac06-085923a6ab09/application"
+    },
+    {
+      "id": "128daf2f-9d0e-47b1-a82d-45699edcdebf",
+      "title": "Staff Backend Software Engineer",
+      "departmentName": "Software Engineering",
+      "teamName": "Software Engineering",
+      "employmentType": "FullTime",
+      "location": "San Francisco",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-01-02",
+      "descriptionHtml": "<p>Staff Backend Software Engineer at SPAN.</p>",
+      "descriptionPlain": "Staff Backend Software Engineer at SPAN.",
+      "jobUrl": "https://jobs.ashbyhq.com/span/128daf2f-9d0e-47b1-a82d-45699edcdebf",
+      "applyUrl": "https://jobs.ashbyhq.com/span/128daf2f-9d0e-47b1-a82d-45699edcdebf/application"
+    }
+  ]
+}

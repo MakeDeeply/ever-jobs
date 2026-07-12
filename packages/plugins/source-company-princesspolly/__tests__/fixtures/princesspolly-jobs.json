@@ -1,0 +1,62 @@
+[
+  {
+    "id": "c5dc4d2d-54ad-4264-9ff2-3a60cc28f564",
+    "text": "3IC (Bondi Junction)",
+    "categories": {
+      "location": "Bondi Junction, NSW",
+      "allLocations": [
+        "Bondi Junction, NSW"
+      ],
+      "department": "Princess Polly AU",
+      "team": "Princess Polly AU",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1777333510831,
+    "descriptionPlain": "3IC (Bondi Junction) at Princess Polly.",
+    "description": "<p>3IC (Bondi Junction) at Princess Polly.</p>",
+    "hostedUrl": "https://jobs.lever.co/princesspolly/c5dc4d2d-54ad-4264-9ff2-3a60cc28f564",
+    "applyUrl": "https://jobs.lever.co/princesspolly/c5dc4d2d-54ad-4264-9ff2-3a60cc28f564/apply"
+  },
+  {
+    "id": "00eaf90a-b61a-4a03-a880-926d52b83d23",
+    "text": "Assistant Store Manager",
+    "categories": {
+      "location": "King of Prussia, PA",
+      "allLocations": [
+        "King of Prussia, PA"
+      ],
+      "department": "Princess Polly US",
+      "team": "Princess Polly US",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1749164760777,
+    "descriptionPlain": "Assistant Store Manager at Princess Polly.",
+    "description": "<p>Assistant Store Manager at Princess Polly.</p>",
+    "hostedUrl": "https://jobs.lever.co/princesspolly/00eaf90a-b61a-4a03-a880-926d52b83d23",
+    "applyUrl": "https://jobs.lever.co/princesspolly/00eaf90a-b61a-4a03-a880-926d52b83d23/apply"
+  },
+  {
+    "id": "865d6839-7699-4182-8bc4-601a5f659f77",
+    "text": "Assistant Store Manager",
+    "categories": {
+      "location": "Boston, MA",
+      "allLocations": [
+        "Boston, MA"
+      ],
+      "department": "Princess Polly US",
+      "team": "Princess Polly US",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1724430512007,
+    "descriptionPlain": "Assistant Store Manager at Princess Polly.",
+    "description": "<p>Assistant Store Manager at Princess Polly.</p>",
+    "hostedUrl": "https://jobs.lever.co/princesspolly/865d6839-7699-4182-8bc4-601a5f659f77",
+    "applyUrl": "https://jobs.lever.co/princesspolly/865d6839-7699-4182-8bc4-601a5f659f77/apply"
+  }
+]

@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "007861d0-dd39-42a4-9541-dd6c6abe9e79",
+      "title": "Senior Product Recruiter",
+      "departmentName": "People",
+      "teamName": "People",
+      "employmentType": "FullTime",
+      "location": "NYC",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "NYC",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-12",
+      "descriptionHtml": "<p>Senior Product Recruiter at Suno.</p>",
+      "descriptionPlain": "Senior Product Recruiter at Suno.",
+      "jobUrl": "https://jobs.ashbyhq.com/suno/007861d0-dd39-42a4-9541-dd6c6abe9e79",
+      "applyUrl": "https://jobs.ashbyhq.com/suno/007861d0-dd39-42a4-9541-dd6c6abe9e79/application"
+    },
+    {
+      "id": "02849007-cdb6-4a3d-94e2-e847e22fbd11",
+      "title": "General Manager, Songkick (Live Music Experiences)",
+      "departmentName": "Music",
+      "teamName": "Music",
+      "employmentType": "FullTime",
+      "location": "Los Angeles",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Los Angeles",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-04-27",
+      "descriptionHtml": "<p>General Manager, Songkick (Live Music Experiences) at Suno.</p>",
+      "descriptionPlain": "General Manager, Songkick (Live Music Experiences) at Suno.",
+      "jobUrl": "https://jobs.ashbyhq.com/suno/02849007-cdb6-4a3d-94e2-e847e22fbd11",
+      "applyUrl": "https://jobs.ashbyhq.com/suno/02849007-cdb6-4a3d-94e2-e847e22fbd11/application"
+    },
+    {
+      "id": "03a79cb2-d19a-4b98-90a1-bb2fc2c0b63f",
+      "title": "Director of Accounting",
+      "departmentName": "Finance",
+      "teamName": "Finance",
+      "employmentType": "FullTime",
+      "location": "San Francisco",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-29",
+      "descriptionHtml": "<p>Director of Accounting at Suno.</p>",
+      "descriptionPlain": "Director of Accounting at Suno.",
+      "jobUrl": "https://jobs.ashbyhq.com/suno/03a79cb2-d19a-4b98-90a1-bb2fc2c0b63f",
+      "applyUrl": "https://jobs.ashbyhq.com/suno/03a79cb2-d19a-4b98-90a1-bb2fc2c0b63f/application"
+    }
+  ]
+}

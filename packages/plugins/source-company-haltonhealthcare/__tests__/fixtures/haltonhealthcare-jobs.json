@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "3743990013925516",
+      "name": "Child and Youth Worker",
+      "uuid": "haltonhealthcare-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "HaltonHealthcare1",
+        "name": "Halton Healthcare"
+      },
+      "releasedDate": "2026-07-03T16:16:53.011Z",
+      "location": {
+        "city": "Oakville",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Oakville, ON, Canada"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "OT Mental Health Child & Adolescent"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/HaltonHealthcare1/3743990013925516",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Child and Youth Worker at Halton Healthcare.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "3743990013925321",
+      "name": "Case Manager - Adult Outpatients Mental Health",
+      "uuid": "haltonhealthcare-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "HaltonHealthcare1",
+        "name": "Halton Healthcare"
+      },
+      "releasedDate": "2026-07-03T16:12:53.241Z",
+      "location": {
+        "city": "Milton",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Milton, ON, Canada"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "OT Mental Health Case Management"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/HaltonHealthcare1/3743990013925321",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Case Manager - Adult Outpatients Mental Health at Halton Healthcare.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "3743990013925022",
+      "name": "Coordinator Spiritual Care",
+      "uuid": "haltonhealthcare-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "HaltonHealthcare1",
+        "name": "Halton Healthcare"
+      },
+      "releasedDate": "2026-07-03T15:22:45.317Z",
+      "location": {
+        "city": "Oakville",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Oakville, Ontario, Canada"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "OT Spiritual Care"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/HaltonHealthcare1/3743990013925022",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Coordinator Spiritual Care at Halton Healthcare.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

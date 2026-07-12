@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999659864659",
+      "name": "PeopleSoft Financials Technical",
+      "uuid": "aretetechnologies-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "AreteTechnologiesInc",
+        "name": "Arete Technologies"
+      },
+      "releasedDate": "2017-09-14T23:06:36.000Z",
+      "location": {
+        "city": "Atlanta",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Atlanta, GA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AreteTechnologiesInc/743999659864659",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>PeopleSoft Financials Technical at Arete Technologies.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999659864494",
+      "name": "PeopleSoft Financials Technical",
+      "uuid": "aretetechnologies-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "AreteTechnologiesInc",
+        "name": "Arete Technologies"
+      },
+      "releasedDate": "2017-09-14T23:05:52.000Z",
+      "location": {
+        "city": "Atlanta",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Atlanta, GA, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AreteTechnologiesInc/743999659864494",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>PeopleSoft Financials Technical at Arete Technologies.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999659851352",
+      "name": "sitecore Architect",
+      "uuid": "aretetechnologies-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "AreteTechnologiesInc",
+        "name": "Arete Technologies"
+      },
+      "releasedDate": "2017-09-14T20:54:08.000Z",
+      "location": {
+        "city": "Irvine",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Irvine, CA, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AreteTechnologiesInc/743999659851352",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>sitecore Architect at Arete Technologies.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

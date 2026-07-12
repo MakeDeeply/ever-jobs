@@ -1,0 +1,73 @@
+import { SourcePlugin, PluginRegistry } from '@ever-jobs/plugin';
+
+import { Injectable, Logger, Optional } from '@nestjs/common';
+import {
+  IScraper, ScraperInputDto, JobResponseDto, Site,
+} from '@ever-jobs/models';
+
+/**
+ * Inter IKEA Group — The IKEA franchisor responsible for range development, supply and the IKEA brand.
+ *
+ * Inter IKEA Group holds the IKEA franchise system and is responsible for
+ * developing and supplying the IKEA range and managing the IKEA brand
+ * worldwide. It works with production, supply-chain and range functions and
+ * operates from bases including the Netherlands and Sweden.
+ *
+ * Sector: Home furnishing (franchisor, range & supply). HQ: Delft, Netherlands / Leiden.
+ *
+ * Source: SmartRecruiters job board, company identifier `InterIKEAGroup`
+ * (`https://jobs.smartrecruiters.com/InterIKEAGroup`). The company's live
+ * postings are served by SmartRecruiters. Rather than re-implement
+ * SmartRecruiters parsing (and risk drift), this plugin resolves the
+ * registered SmartRecruiters source plugin from the `PluginRegistry` at
+ * runtime and delegates the fetch + field mapping to it, then re-stamps the
+ * company identity (site, companyName, id prefix) onto the results — so every
+ * SmartRecruiters field fix is inherited automatically. This honours the "no
+ * plugin imports a peer plugin directly; discover via the registry" rule.
+ */
+const COMPANY_SLUG = 'InterIKEAGroup';
+const COMPANY_NAME = 'Inter IKEA Group';
+
+@SourcePlugin({
+  site: Site.INTER_IKEA_GROUP,
+  name: COMPANY_NAME,
+  category: 'company',
+})
+@Injectable()
+export class InterIKEAGroupService implements IScraper {
+  private readonly logger = new Logger(InterIKEAGroupService.name);
+
+  constructor(
+    @Optional() private readonly registry?: PluginRegistry,
+  ) {}
+
+  async scrape(input: ScraperInputDto): Promise<JobResponseDto> {
+    const smartrecruiters = this.registry?.getScraper(Site.SMARTRECRUITERS);
+    if (!smartrecruiters) {
+      this.logger.error(
+        'SmartRecruiters source plugin is not registered; cannot scrape Inter IKEA Group',
+      );
+      return new JobResponseDto([]);
+    }
+
+    this.logger.log(
+      `Inter IKEA Group: delegating to SmartRecruiters (slug ${COMPANY_SLUG})`,
+    );
+
+    const result = await smartrecruiters.scrape({
+      ...input,
+      companySlug: COMPANY_SLUG,
+    } as ScraperInputDto);
+
+    for (const job of result.jobs) {
+      job.site = Site.INTER_IKEA_GROUP;
+      job.companyName = COMPANY_NAME;
+      if (job.id) {
+        job.id = job.id.replace(/^sr-/, 'interikeagroup-');
+      }
+    }
+
+    this.logger.log(`Inter IKEA Group: scraped ${result.jobs.length} jobs`);
+    return result;
+  }
+}

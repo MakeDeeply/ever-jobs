@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999659804907",
+      "name": "Oracle conultant with  iStore experience",
+      "uuid": "avanceconsultingservices-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "AvanceConsultingServices2",
+        "name": "Avance Consulting Services"
+      },
+      "releasedDate": "2017-09-14T13:49:43.000Z",
+      "location": {
+        "city": "Malvern",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Malvern, PA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AvanceConsultingServices2/743999659804907",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Oracle conultant with  iStore experience at Avance Consulting Services.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999659715745",
+      "name": "Embedded C with Autosar",
+      "uuid": "avanceconsultingservices-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "AvanceConsultingServices2",
+        "name": "Avance Consulting Services"
+      },
+      "releasedDate": "2017-09-13T14:58:47.000Z",
+      "location": {
+        "city": "Greater New York City",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Greater New York City, NJ, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Manufacturing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AvanceConsultingServices2/743999659715745",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Embedded C with Autosar at Avance Consulting Services.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999659617436",
+      "name": "HMI Developer",
+      "uuid": "avanceconsultingservices-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "AvanceConsultingServices2",
+        "name": "Avance Consulting Services"
+      },
+      "releasedDate": "2017-09-12T13:44:36.000Z",
+      "location": {
+        "city": "Southfield",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Southfield, MI, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AvanceConsultingServices2/743999659617436",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>HMI Developer at Avance Consulting Services.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

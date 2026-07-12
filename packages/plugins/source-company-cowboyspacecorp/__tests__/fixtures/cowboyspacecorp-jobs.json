@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "007d329f-9a6c-49f0-a3a5-623dbff16f20",
+      "title": "Software Engineer, Reliability (Avionics / Compute Systems)",
+      "departmentName": "Software Engineering",
+      "teamName": "Software Engineering",
+      "employmentType": "FullTime",
+      "location": "Seattle, WA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Seattle",
+          "addressRegion": "WA",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-10",
+      "descriptionHtml": "<p>Software Engineer, Reliability (Avionics / Compute Systems) at Cowboy Space Corp..</p>",
+      "descriptionPlain": "Software Engineer, Reliability (Avionics / Compute Systems) at Cowboy Space Corp..",
+      "jobUrl": "https://jobs.ashbyhq.com/cowboyspace/007d329f-9a6c-49f0-a3a5-623dbff16f20",
+      "applyUrl": "https://jobs.ashbyhq.com/cowboyspace/007d329f-9a6c-49f0-a3a5-623dbff16f20/application"
+    },
+    {
+      "id": "01338ba6-cda5-4a48-a54e-094516812e88",
+      "title": "Export Control Director",
+      "departmentName": "Operations & Legal",
+      "teamName": "Operations & Legal",
+      "employmentType": "FullTime",
+      "location": "San Carlos, CA or Seattle, WA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Carlos",
+          "addressRegion": "CA or Seattle",
+          "addressCountry": "WA"
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-17",
+      "descriptionHtml": "<p>Export Control Director at Cowboy Space Corp..</p>",
+      "descriptionPlain": "Export Control Director at Cowboy Space Corp..",
+      "jobUrl": "https://jobs.ashbyhq.com/cowboyspace/01338ba6-cda5-4a48-a54e-094516812e88",
+      "applyUrl": "https://jobs.ashbyhq.com/cowboyspace/01338ba6-cda5-4a48-a54e-094516812e88/application"
+    },
+    {
+      "id": "03efa560-4839-418f-9960-4f04bbc67db4",
+      "title": "Structures & Mechanisms Lead",
+      "departmentName": "Launch & Propulsion Engineering",
+      "teamName": "Launch & Propulsion Engineering",
+      "employmentType": "FullTime",
+      "location": "Seattle, WA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Seattle",
+          "addressRegion": "WA",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-11",
+      "descriptionHtml": "<p>Structures & Mechanisms Lead at Cowboy Space Corp..</p>",
+      "descriptionPlain": "Structures & Mechanisms Lead at Cowboy Space Corp..",
+      "jobUrl": "https://jobs.ashbyhq.com/cowboyspace/03efa560-4839-418f-9960-4f04bbc67db4",
+      "applyUrl": "https://jobs.ashbyhq.com/cowboyspace/03efa560-4839-418f-9960-4f04bbc67db4/application"
+    }
+  ]
+}

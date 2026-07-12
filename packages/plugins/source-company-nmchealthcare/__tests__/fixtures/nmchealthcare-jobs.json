@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000134182164",
+      "name": "Specialist - General Surgery (Breast Surgeon)",
+      "uuid": "nmchealthcare-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "NMCHealthcare",
+        "name": "NMC Healthcare"
+      },
+      "releasedDate": "2026-06-25T07:12:27.291Z",
+      "location": {
+        "city": "Sharjah",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Sharjah, Sharjah, United Arab Emirates"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Human Resources"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/NMCHealthcare/744000134182164",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Specialist - General Surgery (Breast Surgeon) at NMC Healthcare.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000131432259",
+      "name": "Specialist - Obstetrics & Gynaecology",
+      "uuid": "nmchealthcare-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "NMCHealthcare",
+        "name": "NMC Healthcare"
+      },
+      "releasedDate": "2026-06-10T11:41:46.025Z",
+      "location": {
+        "city": "Sharjah",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Sharjah, Sharjah, United Arab Emirates"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Human Resources"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/NMCHealthcare/744000131432259",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Specialist - Obstetrics & Gynaecology at NMC Healthcare.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000124567809",
+      "name": "Specialist Gastroenterologist",
+      "uuid": "nmchealthcare-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "NMCHealthcare",
+        "name": "NMC Healthcare"
+      },
+      "releasedDate": "2026-05-05T06:59:34.062Z",
+      "location": {
+        "city": "Sharjah",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Sharjah, Sharjah, United Arab Emirates"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Health Care Provider"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/NMCHealthcare/744000124567809",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Specialist Gastroenterologist at NMC Healthcare.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

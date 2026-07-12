@@ -1,0 +1,62 @@
+[
+  {
+    "id": "c67bd8c1-6b46-4da3-b136-bb5a6101f54a",
+    "text": "Data Scientist",
+    "categories": {
+      "location": "Mexico",
+      "allLocations": [
+        "Mexico"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1781643697356,
+    "descriptionPlain": "Data Scientist at Traackr.",
+    "description": "<p>Data Scientist at Traackr.</p>",
+    "hostedUrl": "https://jobs.lever.co/traackr/c67bd8c1-6b46-4da3-b136-bb5a6101f54a",
+    "applyUrl": "https://jobs.lever.co/traackr/c67bd8c1-6b46-4da3-b136-bb5a6101f54a/apply"
+  },
+  {
+    "id": "8f94d87a-0978-458d-adb6-c9af92857a92",
+    "text": "Revenue Accountant",
+    "categories": {
+      "location": "Boston, MA",
+      "allLocations": [
+        "Boston, MA"
+      ],
+      "department": "Financial Operations",
+      "team": "Financial Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1767811538946,
+    "descriptionPlain": "Revenue Accountant at Traackr.",
+    "description": "<p>Revenue Accountant at Traackr.</p>",
+    "hostedUrl": "https://jobs.lever.co/traackr/8f94d87a-0978-458d-adb6-c9af92857a92",
+    "applyUrl": "https://jobs.lever.co/traackr/8f94d87a-0978-458d-adb6-c9af92857a92/apply"
+  },
+  {
+    "id": "ac5f51e5-d800-444b-8345-08cf9e914cd2",
+    "text": "Revenue Accountant",
+    "categories": {
+      "location": "Mexico",
+      "allLocations": [
+        "Mexico"
+      ],
+      "department": "Financial Operations",
+      "team": "Financial Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1776271715922,
+    "descriptionPlain": "Revenue Accountant at Traackr.",
+    "description": "<p>Revenue Accountant at Traackr.</p>",
+    "hostedUrl": "https://jobs.lever.co/traackr/ac5f51e5-d800-444b-8345-08cf9e914cd2",
+    "applyUrl": "https://jobs.lever.co/traackr/ac5f51e5-d800-444b-8345-08cf9e914cd2/apply"
+  }
+]

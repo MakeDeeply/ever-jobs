@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "43904ba3-3792-4cc4-b097-6e98ca9a1b4b",
+      "title": "Platform Engineer (SRE) - AI Control Plane",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "San Francisco",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-29",
+      "descriptionHtml": "<p>Platform Engineer (SRE) - AI Control Plane at Speakeasy.</p>",
+      "descriptionPlain": "Platform Engineer (SRE) - AI Control Plane at Speakeasy.",
+      "jobUrl": "https://jobs.ashbyhq.com/speakeasy/43904ba3-3792-4cc4-b097-6e98ca9a1b4b",
+      "applyUrl": "https://jobs.ashbyhq.com/speakeasy/43904ba3-3792-4cc4-b097-6e98ca9a1b4b/application"
+    },
+    {
+      "id": "7994e807-4a8f-4f2b-b16e-f1147a396a7b",
+      "title": "Product Engineer (Security) - AI Control Plane",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "San Francisco",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-28",
+      "descriptionHtml": "<p>Product Engineer (Security) - AI Control Plane at Speakeasy.</p>",
+      "descriptionPlain": "Product Engineer (Security) - AI Control Plane at Speakeasy.",
+      "jobUrl": "https://jobs.ashbyhq.com/speakeasy/7994e807-4a8f-4f2b-b16e-f1147a396a7b",
+      "applyUrl": "https://jobs.ashbyhq.com/speakeasy/7994e807-4a8f-4f2b-b16e-f1147a396a7b/application"
+    },
+    {
+      "id": "85aed4ce-93a0-4a9e-b4e5-bac5108db415",
+      "title": "Sales Development Rep",
+      "departmentName": "Go-to-market",
+      "teamName": "Go-to-market",
+      "employmentType": "FullTime",
+      "location": "San Francisco",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-22",
+      "descriptionHtml": "<p>Sales Development Rep at Speakeasy.</p>",
+      "descriptionPlain": "Sales Development Rep at Speakeasy.",
+      "jobUrl": "https://jobs.ashbyhq.com/speakeasy/85aed4ce-93a0-4a9e-b4e5-bac5108db415",
+      "applyUrl": "https://jobs.ashbyhq.com/speakeasy/85aed4ce-93a0-4a9e-b4e5-bac5108db415/application"
+    }
+  ]
+}

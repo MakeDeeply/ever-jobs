@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999801129577",
+      "name": "Warehouse Controller",
+      "uuid": "abinbev-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "ABInBev1",
+        "name": "AB InBev"
+      },
+      "releasedDate": "2022-01-27T09:57:43.000Z",
+      "location": {
+        "city": "Sagamu",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Sagamu, OG, Nigeria"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "LOGISTICS"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ABInBev1/743999801129577",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Warehouse Controller at AB InBev.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999798957828",
+      "name": "Boiler Operator",
+      "uuid": "abinbev-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "ABInBev1",
+        "name": "AB InBev"
+      },
+      "releasedDate": "2022-01-18T08:45:23.000Z",
+      "location": {
+        "city": "Matsapha",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Matsapha, Manzini, Swaziland"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ABInBev1/743999798957828",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Boiler Operator at AB InBev.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999794167838",
+      "name": "Tax & Compliance Manager",
+      "uuid": "abinbev-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "ABInBev1",
+        "name": "AB InBev"
+      },
+      "releasedDate": "2021-12-22T12:31:31.000Z",
+      "location": {
+        "city": "Maseru",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Maseru, Maseru, Lesotho"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Finance"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ABInBev1/743999794167838",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Tax & Compliance Manager at AB InBev.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

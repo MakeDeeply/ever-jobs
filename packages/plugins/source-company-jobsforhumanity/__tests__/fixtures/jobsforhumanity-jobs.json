@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135784229",
+      "name": "Marketing Manager (Riyadh)",
+      "uuid": "jobsforhumanity-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "jobsforhumanity",
+        "name": "Jobs for Humanity"
+      },
+      "releasedDate": "2026-07-03T21:39:28.209Z",
+      "location": {
+        "city": "Riyadh",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Riyadh, , Saudi Arabia"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Marketing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/jobsforhumanity/744000135784229",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Marketing Manager (Riyadh) at Jobs for Humanity.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135769399",
+      "name": "Training and Compliance Specialist (Swansea)",
+      "uuid": "jobsforhumanity-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "jobsforhumanity",
+        "name": "Jobs for Humanity"
+      },
+      "releasedDate": "2026-07-03T17:10:29.754Z",
+      "location": {
+        "city": "Swansea",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Swansea, , United Kingdom"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Administrative"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/jobsforhumanity/744000135769399",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Training and Compliance Specialist (Swansea) at Jobs for Humanity.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135769229",
+      "name": "Salesforce Migration Lead (Residential Real Estate)",
+      "uuid": "jobsforhumanity-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "jobsforhumanity",
+        "name": "Jobs for Humanity"
+      },
+      "releasedDate": "2026-07-03T17:08:08.570Z",
+      "location": {
+        "city": "California",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "California, , United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Management"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/jobsforhumanity/744000135769229",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Salesforce Migration Lead (Residential Real Estate) at Jobs for Humanity.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

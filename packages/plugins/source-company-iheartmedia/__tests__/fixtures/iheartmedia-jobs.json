@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "84612667",
+      "name": "Digital Sales Executive-Atlanta",
+      "uuid": "iheartmedia-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "IHeartMedia",
+        "name": "iHeartMedia"
+      },
+      "releasedDate": "2015-08-11T19:11:29.000Z",
+      "location": {
+        "city": "Atlanta",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Atlanta, GA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/IHeartMedia/84612667",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Digital Sales Executive-Atlanta at iHeartMedia.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "83955126",
+      "name": "BGV Sales Rep",
+      "uuid": "iheartmedia-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "IHeartMedia",
+        "name": "iHeartMedia"
+      },
+      "releasedDate": "2015-07-07T19:47:03.000Z",
+      "location": {
+        "city": "Houston",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Houston, TX, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/IHeartMedia/83955126",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>BGV Sales Rep at iHeartMedia.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "83842790",
+      "name": "Community Service Rep",
+      "uuid": "iheartmedia-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "IHeartMedia",
+        "name": "iHeartMedia"
+      },
+      "releasedDate": "2015-07-01T13:56:07.000Z",
+      "location": {
+        "city": "Chicago",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Chicago, IL, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Customer Service"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/IHeartMedia/83842790",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Community Service Rep at iHeartMedia.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

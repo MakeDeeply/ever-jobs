@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "3743990013928346",
+      "name": "Sales Training Specialist",
+      "uuid": "abbvie-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "AbbVie",
+        "name": "AbbVie"
+      },
+      "releasedDate": "2026-07-03T21:52:17.596Z",
+      "location": {
+        "city": "Mexico City",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Mexico City, CDMX, Mexico"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AbbVie/3743990013928346",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Sales Training Specialist at AbbVie.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "3743990013928286",
+      "name": "QA Operations Manager",
+      "uuid": "abbvie-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "AbbVie",
+        "name": "AbbVie"
+      },
+      "releasedDate": "2026-07-03T21:33:43.771Z",
+      "location": {
+        "city": "Sligo",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Sligo, SO, Ireland"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Quality Assurance"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AbbVie/3743990013928286",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>QA Operations Manager at AbbVie.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "3743990013925646",
+      "name": "Specialist, Medical Insurance II",
+      "uuid": "abbvie-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "AbbVie",
+        "name": "AbbVie"
+      },
+      "releasedDate": "2026-07-03T16:36:06.000Z",
+      "location": {
+        "city": "Heredia",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Heredia, Heredia Province, Costa Rica"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Supply Chain"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AbbVie/3743990013925646",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Specialist, Medical Insurance II at AbbVie.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

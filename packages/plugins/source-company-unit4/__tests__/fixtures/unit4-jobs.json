@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135473592",
+      "name": "FP&A Manager – Revenue",
+      "uuid": "unit4-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "unit44",
+        "name": "Unit4"
+      },
+      "releasedDate": "2026-07-02T11:06:57.345Z",
+      "location": {
+        "city": "Lisbon",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Lisbon, Lisbon, Portugal"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Finance"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/unit44/744000135473592",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>FP&A Manager – Revenue at Unit4.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135242269",
+      "name": "Programista/Programistka .NET",
+      "uuid": "unit4-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "unit44",
+        "name": "Unit4"
+      },
+      "releasedDate": "2026-07-01T11:39:01.891Z",
+      "location": {
+        "city": "Wrocław",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Wrocław, Lower Silesian Voivodeship, Poland"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/unit44/744000135242269",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Programista/Programistka .NET at Unit4.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135242119",
+      "name": "Head of Product Management",
+      "uuid": "unit4-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "unit44",
+        "name": "Unit4"
+      },
+      "releasedDate": "2026-07-01T11:38:11.566Z",
+      "location": {
+        "city": "Wrocław",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Wrocław, Lower Silesian Voivodeship, Poland"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/unit44/744000135242119",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Head of Product Management at Unit4.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

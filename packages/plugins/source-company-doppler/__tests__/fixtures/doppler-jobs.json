@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "1d4d38d5-4501-4c76-91bc-538521020099",
+      "title": "Account Executive  (West Coast)",
+      "departmentName": "Sales",
+      "teamName": "Sales",
+      "employmentType": "FullTime",
+      "location": "Remote - USA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Remote - USA",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2026-06-24",
+      "descriptionHtml": "<p>Account Executive  (West Coast) at Doppler.</p>",
+      "descriptionPlain": "Account Executive  (West Coast) at Doppler.",
+      "jobUrl": "https://jobs.ashbyhq.com/doppler/1d4d38d5-4501-4c76-91bc-538521020099",
+      "applyUrl": "https://jobs.ashbyhq.com/doppler/1d4d38d5-4501-4c76-91bc-538521020099/application"
+    },
+    {
+      "id": "5e3c555f-8d99-4389-9b3b-9331db61466b",
+      "title": "General Application",
+      "departmentName": "General",
+      "teamName": "General",
+      "employmentType": "FullTime",
+      "location": "Remote - USA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Remote - USA",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2023-09-29",
+      "descriptionHtml": "<p>General Application at Doppler.</p>",
+      "descriptionPlain": "General Application at Doppler.",
+      "jobUrl": "https://jobs.ashbyhq.com/doppler/5e3c555f-8d99-4389-9b3b-9331db61466b",
+      "applyUrl": "https://jobs.ashbyhq.com/doppler/5e3c555f-8d99-4389-9b3b-9331db61466b/application"
+    },
+    {
+      "id": "7dcb6231-86c0-4f84-b9fb-0f2ffd1d3117",
+      "title": "Senior GRC Analyst",
+      "departmentName": "Operations",
+      "teamName": "Operations",
+      "employmentType": "FullTime",
+      "location": "Remote - USA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Remote - USA",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2026-05-22",
+      "descriptionHtml": "<p>Senior GRC Analyst at Doppler.</p>",
+      "descriptionPlain": "Senior GRC Analyst at Doppler.",
+      "jobUrl": "https://jobs.ashbyhq.com/doppler/7dcb6231-86c0-4f84-b9fb-0f2ffd1d3117",
+      "applyUrl": "https://jobs.ashbyhq.com/doppler/7dcb6231-86c0-4f84-b9fb-0f2ffd1d3117/application"
+    }
+  ]
+}

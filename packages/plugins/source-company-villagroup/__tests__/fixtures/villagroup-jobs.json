@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000134941319",
+      "name": "Language Host/Hostess",
+      "uuid": "villagroup-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "VillaGroup",
+        "name": "Villa Group"
+      },
+      "releasedDate": "2026-06-30T07:07:33.390Z",
+      "location": {
+        "city": "Villa Park",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Villa Park, , Maldives"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Front Office"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/VillaGroup/744000134941319",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Language Host/Hostess at Villa Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000134941029",
+      "name": "Island Host / Hostess",
+      "uuid": "villagroup-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "VillaGroup",
+        "name": "Villa Group"
+      },
+      "releasedDate": "2026-06-30T07:06:41.445Z",
+      "location": {
+        "city": "Villa Park",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Villa Park, , Maldives"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Front Office"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/VillaGroup/744000134941029",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Island Host / Hostess at Villa Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000134940356",
+      "name": "Guest Service Agent",
+      "uuid": "villagroup-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "VillaGroup",
+        "name": "Villa Group"
+      },
+      "releasedDate": "2026-06-30T07:05:03.761Z",
+      "location": {
+        "city": "Villa Park",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Villa Park, , Maldives"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Front Office"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/VillaGroup/744000134940356",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Guest Service Agent at Villa Group.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

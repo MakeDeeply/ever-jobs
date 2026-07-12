@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "086b5c53-4927-47da-b38f-5d6c73f72568",
+      "title": "Data Partnerships Lead",
+      "departmentName": "Engineering, Product & Design",
+      "teamName": "Engineering, Product & Design",
+      "employmentType": "FullTime",
+      "location": "New York, NY",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "New York",
+          "addressRegion": "NY",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-04-13",
+      "descriptionHtml": "<p>Data Partnerships Lead at Method Financial.</p>",
+      "descriptionPlain": "Data Partnerships Lead at Method Financial.",
+      "jobUrl": "https://jobs.ashbyhq.com/method/086b5c53-4927-47da-b38f-5d6c73f72568",
+      "applyUrl": "https://jobs.ashbyhq.com/method/086b5c53-4927-47da-b38f-5d6c73f72568/application"
+    },
+    {
+      "id": "22f6e56e-e983-4eaf-b00a-4598ba99e590",
+      "title": "Senior Software Engineer",
+      "departmentName": "Engineering, Product & Design",
+      "teamName": "Engineering, Product & Design",
+      "employmentType": "FullTime",
+      "location": "New York, NY",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "New York",
+          "addressRegion": "NY",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-29",
+      "descriptionHtml": "<p>Senior Software Engineer at Method Financial.</p>",
+      "descriptionPlain": "Senior Software Engineer at Method Financial.",
+      "jobUrl": "https://jobs.ashbyhq.com/method/22f6e56e-e983-4eaf-b00a-4598ba99e590",
+      "applyUrl": "https://jobs.ashbyhq.com/method/22f6e56e-e983-4eaf-b00a-4598ba99e590/application"
+    },
+    {
+      "id": "33e8b312-a0a6-479d-81cf-24fd048f8303",
+      "title": "Software Engineer",
+      "departmentName": "Engineering, Product & Design",
+      "teamName": "Engineering, Product & Design",
+      "employmentType": "FullTime",
+      "location": "New York, NY",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "New York",
+          "addressRegion": "NY",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-04-06",
+      "descriptionHtml": "<p>Software Engineer at Method Financial.</p>",
+      "descriptionPlain": "Software Engineer at Method Financial.",
+      "jobUrl": "https://jobs.ashbyhq.com/method/33e8b312-a0a6-479d-81cf-24fd048f8303",
+      "applyUrl": "https://jobs.ashbyhq.com/method/33e8b312-a0a6-479d-81cf-24fd048f8303/application"
+    }
+  ]
+}

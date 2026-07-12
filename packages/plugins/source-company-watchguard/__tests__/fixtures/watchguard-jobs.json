@@ -1,0 +1,62 @@
+[
+  {
+    "id": "d2be2da1-8b24-4405-a699-507e5f3eddd4",
+    "text": "Business Operations Intern",
+    "categories": {
+      "location": "Madrid, Spain",
+      "allLocations": [
+        "Madrid, Spain"
+      ],
+      "department": "G&A",
+      "team": "G&A",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1782730599002,
+    "descriptionPlain": "Business Operations Intern at WatchGuard Technologies.",
+    "description": "<p>Business Operations Intern at WatchGuard Technologies.</p>",
+    "hostedUrl": "https://jobs.lever.co/watchguard/d2be2da1-8b24-4405-a699-507e5f3eddd4",
+    "applyUrl": "https://jobs.lever.co/watchguard/d2be2da1-8b24-4405-a699-507e5f3eddd4/apply"
+  },
+  {
+    "id": "70ebc6a0-ba40-4f83-b2a1-67b586d494bb",
+    "text": "Chief MSP Officer",
+    "categories": {
+      "location": "Seattle, Washington",
+      "allLocations": [
+        "Seattle, Washington"
+      ],
+      "department": "Marketing",
+      "team": "Marketing",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1773429175914,
+    "descriptionPlain": "Chief MSP Officer at WatchGuard Technologies.",
+    "description": "<p>Chief MSP Officer at WatchGuard Technologies.</p>",
+    "hostedUrl": "https://jobs.lever.co/watchguard/70ebc6a0-ba40-4f83-b2a1-67b586d494bb",
+    "applyUrl": "https://jobs.lever.co/watchguard/70ebc6a0-ba40-4f83-b2a1-67b586d494bb/apply"
+  },
+  {
+    "id": "31981db1-54fb-4764-9f8c-16b886d176ae",
+    "text": "Country Manager - Japan",
+    "categories": {
+      "location": "Tokyo, Japan",
+      "allLocations": [
+        "Tokyo, Japan"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1781075791619,
+    "descriptionPlain": "Country Manager - Japan at WatchGuard Technologies.",
+    "description": "<p>Country Manager - Japan at WatchGuard Technologies.</p>",
+    "hostedUrl": "https://jobs.lever.co/watchguard/31981db1-54fb-4764-9f8c-16b886d176ae",
+    "applyUrl": "https://jobs.lever.co/watchguard/31981db1-54fb-4764-9f8c-16b886d176ae/apply"
+  }
+]

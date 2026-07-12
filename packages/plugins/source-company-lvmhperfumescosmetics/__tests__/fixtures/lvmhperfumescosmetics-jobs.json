@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135406864",
+      "name": "Manager, Regulatory Affairs - China",
+      "uuid": "lvmhperfumescosmetics-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "lvmhperfumescosmetics",
+        "name": "LVMH Perfumes & Cosmetics"
+      },
+      "releasedDate": "2026-07-02T03:32:50.610Z",
+      "location": {
+        "city": "Jersey City",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Jersey City, NJ, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Legal"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/lvmhperfumescosmetics/744000135406864",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Manager, Regulatory Affairs - China at LVMH Perfumes & Cosmetics.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135406329",
+      "name": "Analyst, Global Forecasting",
+      "uuid": "lvmhperfumescosmetics-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "lvmhperfumescosmetics",
+        "name": "LVMH Perfumes & Cosmetics"
+      },
+      "releasedDate": "2026-07-02T03:20:35.835Z",
+      "location": {
+        "city": "Jersey City",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Jersey City, NJ, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Operations"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/lvmhperfumescosmetics/744000135406329",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Analyst, Global Forecasting at LVMH Perfumes & Cosmetics.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135405059",
+      "name": "Associate Manager, Purchasing",
+      "uuid": "lvmhperfumescosmetics-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "lvmhperfumescosmetics",
+        "name": "LVMH Perfumes & Cosmetics"
+      },
+      "releasedDate": "2026-07-02T02:49:57.867Z",
+      "location": {
+        "city": "Jersey City",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Jersey City, NJ, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Operations"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/lvmhperfumescosmetics/744000135405059",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Associate Manager, Purchasing at LVMH Perfumes & Cosmetics.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

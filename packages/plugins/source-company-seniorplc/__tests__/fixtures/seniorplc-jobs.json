@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "3743990013928726",
+      "name": "Fabricator PM",
+      "uuid": "seniorplc-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "SeniorPlc1",
+        "name": "Senior plc"
+      },
+      "releasedDate": "2026-07-03T22:36:45.805Z",
+      "location": {
+        "city": "Oceanside",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Oceanside, California, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Manufacturing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SeniorPlc1/3743990013928726",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Fabricator PM at Senior plc.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "3743990013920046",
+      "name": "Assembly Supervisor",
+      "uuid": "seniorplc-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "SeniorPlc1",
+        "name": "Senior plc"
+      },
+      "releasedDate": "2026-07-03T01:55:58.805Z",
+      "location": {
+        "city": "Burbank",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Burbank, California, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Manufacturing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SeniorPlc1/3743990013920046",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Assembly Supervisor at Senior plc.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "3743990013920006",
+      "name": "Assembly Supervisor",
+      "uuid": "seniorplc-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "SeniorPlc1",
+        "name": "Senior plc"
+      },
+      "releasedDate": "2026-07-03T01:54:08.908Z",
+      "location": {
+        "city": "Burbank",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Burbank, California, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Manufacturing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SeniorPlc1/3743990013920006",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Assembly Supervisor at Senior plc.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

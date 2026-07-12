@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "28ca0462-ada3-4c31-b4b9-cefae37d9d52",
+      "title": "Developer Relations Advocate",
+      "departmentName": "Marketing Team",
+      "teamName": "Marketing Team",
+      "employmentType": "FullTime",
+      "location": "Palo Alto",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Palo Alto",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-04",
+      "descriptionHtml": "<p>Developer Relations Advocate at Fiddler AI.</p>",
+      "descriptionPlain": "Developer Relations Advocate at Fiddler AI.",
+      "jobUrl": "https://jobs.ashbyhq.com/fiddler-ai/28ca0462-ada3-4c31-b4b9-cefae37d9d52",
+      "applyUrl": "https://jobs.ashbyhq.com/fiddler-ai/28ca0462-ada3-4c31-b4b9-cefae37d9d52/application"
+    },
+    {
+      "id": "52901a48-bb03-485a-a31a-c3f078508a33",
+      "title": "Senior Manager ABM & Campaigns",
+      "departmentName": "Marketing Team",
+      "teamName": "Marketing Team",
+      "employmentType": "FullTime",
+      "location": "Palo Alto",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Palo Alto",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-03",
+      "descriptionHtml": "<p>Senior Manager ABM & Campaigns at Fiddler AI.</p>",
+      "descriptionPlain": "Senior Manager ABM & Campaigns at Fiddler AI.",
+      "jobUrl": "https://jobs.ashbyhq.com/fiddler-ai/52901a48-bb03-485a-a31a-c3f078508a33",
+      "applyUrl": "https://jobs.ashbyhq.com/fiddler-ai/52901a48-bb03-485a-a31a-c3f078508a33/application"
+    },
+    {
+      "id": "640c12b9-6a07-4be1-a542-d76e4240e2ff",
+      "title": "Solutions Architect, Customer Success - US (Remote)",
+      "departmentName": "Customer Success",
+      "teamName": "Customer Success",
+      "employmentType": "FullTime",
+      "location": "US - Remote",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "US - Remote",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2026-06-09",
+      "descriptionHtml": "<p>Solutions Architect, Customer Success - US (Remote) at Fiddler AI.</p>",
+      "descriptionPlain": "Solutions Architect, Customer Success - US (Remote) at Fiddler AI.",
+      "jobUrl": "https://jobs.ashbyhq.com/fiddler-ai/640c12b9-6a07-4be1-a542-d76e4240e2ff",
+      "applyUrl": "https://jobs.ashbyhq.com/fiddler-ai/640c12b9-6a07-4be1-a542-d76e4240e2ff/application"
+    }
+  ]
+}

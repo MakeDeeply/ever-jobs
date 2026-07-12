@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135775369",
+      "name": "Akustiker Örnsköldsvik",
+      "uuid": "afry-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "AFRY",
+        "name": "AFRY"
+      },
+      "releasedDate": "2026-07-03T18:36:31.549Z",
+      "location": {
+        "city": "Örnsköldsvik",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Örnsköldsvik, Västernorrland County, Sweden"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Acoustics, Vibration and Sound Design"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AFRY/744000135775369",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Akustiker Örnsköldsvik at AFRY.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135747979",
+      "name": "Teknisk projektledare till kärnkraftsbranschen",
+      "uuid": "afry-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "AFRY",
+        "name": "AFRY"
+      },
+      "releasedDate": "2026-07-03T14:22:46.392Z",
+      "location": {
+        "city": "Gothenburg",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Gothenburg, Västra Götaland County, Sweden"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Energy (Power generation, T&D and Renewables)"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AFRY/744000135747979",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Teknisk projektledare till kärnkraftsbranschen at AFRY.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135747829",
+      "name": "Teknisk projektledare till kärnkraftsbranschen",
+      "uuid": "afry-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "AFRY",
+        "name": "AFRY"
+      },
+      "releasedDate": "2026-07-03T14:22:23.297Z",
+      "location": {
+        "city": "Halmstad",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Halmstad, Halland County, Sweden"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Energy (Power generation, T&D and Renewables)"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AFRY/744000135747829",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Teknisk projektledare till kärnkraftsbranschen at AFRY.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "6000000001205481",
+      "name": "Accountant/Senior Accountant  - Business Advisory",
+      "uuid": "deloittenewzealand-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "DeloitteNZ",
+        "name": "Deloitte New Zealand"
+      },
+      "releasedDate": "2026-07-03T00:59:16.040Z",
+      "location": {
+        "city": "Christchurch",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Christchurch, Canterbury Region, New Zealand"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Tax & Business Advisory | Business Advisory (Accounting)"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/DeloitteNZ/6000000001205481",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Accountant/Senior Accountant  - Business Advisory at Deloitte New Zealand.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "6000000001204915",
+      "name": "SAP P2P (Plan to Produce) Consultant",
+      "uuid": "deloittenewzealand-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "DeloitteNZ",
+        "name": "Deloitte New Zealand"
+      },
+      "releasedDate": "2026-07-02T20:46:48.617Z",
+      "location": {
+        "city": "New Zealand",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "New Zealand, , New Zealand"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Consulting | Technology | SAP"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/DeloitteNZ/6000000001204915",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>SAP P2P (Plan to Produce) Consultant at Deloitte New Zealand.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "6000000001204910",
+      "name": "Personal Assistant | Auckland",
+      "uuid": "deloittenewzealand-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "DeloitteNZ",
+        "name": "Deloitte New Zealand"
+      },
+      "releasedDate": "2026-07-02T20:29:45.410Z",
+      "location": {
+        "city": "Auckland",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Auckland, Auckland, New Zealand"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Enabling Areas | Office Administration"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/DeloitteNZ/6000000001204910",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Personal Assistant | Auckland at Deloitte New Zealand.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

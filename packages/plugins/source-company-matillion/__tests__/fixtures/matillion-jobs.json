@@ -1,0 +1,62 @@
+[
+  {
+    "id": "b8b02629-9422-44c1-9a57-9d62d39eae8a",
+    "text": "Community Manager",
+    "categories": {
+      "location": "Manchester",
+      "allLocations": [
+        "Manchester"
+      ],
+      "department": "Field",
+      "team": "Field",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1782213649853,
+    "descriptionPlain": "Community Manager at Matillion.",
+    "description": "<p>Community Manager at Matillion.</p>",
+    "hostedUrl": "https://jobs.lever.co/matillion/b8b02629-9422-44c1-9a57-9d62d39eae8a",
+    "applyUrl": "https://jobs.lever.co/matillion/b8b02629-9422-44c1-9a57-9d62d39eae8a/apply"
+  },
+  {
+    "id": "c3171182-5c15-43da-bf47-00ee03cd8f53",
+    "text": "Enterprise Account Executive - Atlanta",
+    "categories": {
+      "location": "East Coast USA",
+      "allLocations": [
+        "East Coast USA"
+      ],
+      "department": "Field",
+      "team": "Field",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1774968742684,
+    "descriptionPlain": "Enterprise Account Executive - Atlanta at Matillion.",
+    "description": "<p>Enterprise Account Executive - Atlanta at Matillion.</p>",
+    "hostedUrl": "https://jobs.lever.co/matillion/c3171182-5c15-43da-bf47-00ee03cd8f53",
+    "applyUrl": "https://jobs.lever.co/matillion/c3171182-5c15-43da-bf47-00ee03cd8f53/apply"
+  },
+  {
+    "id": "9e298c14-736c-4b0d-aee7-653655f3f5ee",
+    "text": "Enterprise Account Executive - Austin",
+    "categories": {
+      "location": "Central USA",
+      "allLocations": [
+        "Central USA"
+      ],
+      "department": "Field",
+      "team": "Field",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1774969123181,
+    "descriptionPlain": "Enterprise Account Executive - Austin at Matillion.",
+    "description": "<p>Enterprise Account Executive - Austin at Matillion.</p>",
+    "hostedUrl": "https://jobs.lever.co/matillion/9e298c14-736c-4b0d-aee7-653655f3f5ee",
+    "applyUrl": "https://jobs.lever.co/matillion/9e298c14-736c-4b0d-aee7-653655f3f5ee/apply"
+  }
+]

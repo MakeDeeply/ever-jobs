@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "132307b5-9f4f-41cb-8d0c-bfa8343fcb33",
+      "title": "Security Officer",
+      "departmentName": "Corporate",
+      "teamName": "Corporate",
+      "employmentType": "FullTime",
+      "location": "North Kingstown, RI",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "North Kingstown",
+          "addressRegion": "RI",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-16",
+      "descriptionHtml": "<p>Security Officer at Havoc AI.</p>",
+      "descriptionPlain": "Security Officer at Havoc AI.",
+      "jobUrl": "https://jobs.ashbyhq.com/havocai/132307b5-9f4f-41cb-8d0c-bfa8343fcb33",
+      "applyUrl": "https://jobs.ashbyhq.com/havocai/132307b5-9f4f-41cb-8d0c-bfa8343fcb33/application"
+    },
+    {
+      "id": "23bcb262-6aad-49cc-aa81-4dd8de385b3b",
+      "title": "Robotics Engineer - Ground Autonomy",
+      "departmentName": "Autonomy",
+      "teamName": "Autonomy",
+      "employmentType": "FullTime",
+      "location": "Palo Alto",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Palo Alto",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-02-27",
+      "descriptionHtml": "<p>Robotics Engineer - Ground Autonomy at Havoc AI.</p>",
+      "descriptionPlain": "Robotics Engineer - Ground Autonomy at Havoc AI.",
+      "jobUrl": "https://jobs.ashbyhq.com/havocai/23bcb262-6aad-49cc-aa81-4dd8de385b3b",
+      "applyUrl": "https://jobs.ashbyhq.com/havocai/23bcb262-6aad-49cc-aa81-4dd8de385b3b/application"
+    },
+    {
+      "id": "459e6fdd-124b-4f06-8ace-3e44714d69f9",
+      "title": "IT Administrator",
+      "departmentName": "Corporate",
+      "teamName": "Corporate",
+      "employmentType": "FullTime",
+      "location": "San Diego",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Diego",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-16",
+      "descriptionHtml": "<p>IT Administrator at Havoc AI.</p>",
+      "descriptionPlain": "IT Administrator at Havoc AI.",
+      "jobUrl": "https://jobs.ashbyhq.com/havocai/459e6fdd-124b-4f06-8ace-3e44714d69f9",
+      "applyUrl": "https://jobs.ashbyhq.com/havocai/459e6fdd-124b-4f06-8ace-3e44714d69f9/application"
+    }
+  ]
+}

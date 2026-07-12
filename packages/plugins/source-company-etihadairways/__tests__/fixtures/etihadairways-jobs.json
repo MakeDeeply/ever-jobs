@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135701874",
+      "name": "Licensed Aircraft Engineer",
+      "uuid": "etihadairways-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "EtihadAirways5",
+        "name": "Etihad Airways"
+      },
+      "releasedDate": "2026-07-03T11:08:41.928Z",
+      "location": {
+        "city": "Abu Dhabi",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Abu Dhabi, Abu Dhabi, United Arab Emirates"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/EtihadAirways5/744000135701874",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Licensed Aircraft Engineer at Etihad Airways.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135638559",
+      "name": "Sales Representative - Mumbai",
+      "uuid": "etihadairways-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "EtihadAirways5",
+        "name": "Etihad Airways"
+      },
+      "releasedDate": "2026-07-03T04:00:11.246Z",
+      "location": {
+        "city": "Mumbai",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Mumbai, , India"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/EtihadAirways5/744000135638559",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Sales Representative - Mumbai at Etihad Airways.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135492674",
+      "name": "LMI Engineer",
+      "uuid": "etihadairways-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "EtihadAirways5",
+        "name": "Etihad Airways"
+      },
+      "releasedDate": "2026-07-02T12:39:18.823Z",
+      "location": {
+        "city": "Abu Dhabi",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Abu Dhabi, , United Arab Emirates"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/EtihadAirways5/744000135492674",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>LMI Engineer at Etihad Airways.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "091a6ad6-75dd-4dd4-9439-7e1e9d13970b",
+      "title": "Technical Program Manager, Model Alignment and Deployment",
+      "departmentName": "Safety",
+      "teamName": "Safety",
+      "employmentType": "FullTime",
+      "location": "Redwood City, CA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Redwood City",
+          "addressRegion": "CA",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-01",
+      "descriptionHtml": "<p>Technical Program Manager, Model Alignment and Deployment at Character.AI.</p>",
+      "descriptionPlain": "Technical Program Manager, Model Alignment and Deployment at Character.AI.",
+      "jobUrl": "https://jobs.ashbyhq.com/character/091a6ad6-75dd-4dd4-9439-7e1e9d13970b",
+      "applyUrl": "https://jobs.ashbyhq.com/character/091a6ad6-75dd-4dd4-9439-7e1e9d13970b/application"
+    },
+    {
+      "id": "13006848-6a69-4467-9274-5d54e80b965d",
+      "title": "Machine Learning Infrastructure Engineer",
+      "departmentName": "Technical Staff - ML",
+      "teamName": "Technical Staff - ML",
+      "employmentType": "FullTime",
+      "location": "Redwood City, CA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Redwood City",
+          "addressRegion": "CA",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-04-24",
+      "descriptionHtml": "<p>Machine Learning Infrastructure Engineer at Character.AI.</p>",
+      "descriptionPlain": "Machine Learning Infrastructure Engineer at Character.AI.",
+      "jobUrl": "https://jobs.ashbyhq.com/character/13006848-6a69-4467-9274-5d54e80b965d",
+      "applyUrl": "https://jobs.ashbyhq.com/character/13006848-6a69-4467-9274-5d54e80b965d/application"
+    },
+    {
+      "id": "140e81c9-c989-4e95-9768-f4f6e7f6759c",
+      "title": "Software Engineer, Core Product",
+      "departmentName": "Technical Staff - Engineering",
+      "teamName": "Technical Staff - Engineering",
+      "employmentType": "FullTime",
+      "location": "Redwood City, CA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Redwood City",
+          "addressRegion": "CA",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-10-03",
+      "descriptionHtml": "<p>Software Engineer, Core Product at Character.AI.</p>",
+      "descriptionPlain": "Software Engineer, Core Product at Character.AI.",
+      "jobUrl": "https://jobs.ashbyhq.com/character/140e81c9-c989-4e95-9768-f4f6e7f6759c",
+      "applyUrl": "https://jobs.ashbyhq.com/character/140e81c9-c989-4e95-9768-f4f6e7f6759c/application"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "01974c79-1fd0-459c-84e6-b891cc7b1266",
+      "title": "Partnership Marketing Manager, Creators & Culture",
+      "departmentName": "Marketing/Growth",
+      "teamName": "Marketing/Growth",
+      "employmentType": "FullTime",
+      "location": "New York",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "New York",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-05",
+      "descriptionHtml": "<p>Partnership Marketing Manager, Creators & Culture at Polymarket.</p>",
+      "descriptionPlain": "Partnership Marketing Manager, Creators & Culture at Polymarket.",
+      "jobUrl": "https://jobs.ashbyhq.com/polymarket/01974c79-1fd0-459c-84e6-b891cc7b1266",
+      "applyUrl": "https://jobs.ashbyhq.com/polymarket/01974c79-1fd0-459c-84e6-b891cc7b1266/application"
+    },
+    {
+      "id": "05c897c8-dc57-4332-a730-cf6f4b911b8f",
+      "title": "Design Engineer",
+      "departmentName": "Design",
+      "teamName": "Design",
+      "employmentType": "FullTime",
+      "location": "New York",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "New York",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-03-18",
+      "descriptionHtml": "<p>Design Engineer at Polymarket.</p>",
+      "descriptionPlain": "Design Engineer at Polymarket.",
+      "jobUrl": "https://jobs.ashbyhq.com/polymarket/05c897c8-dc57-4332-a730-cf6f4b911b8f",
+      "applyUrl": "https://jobs.ashbyhq.com/polymarket/05c897c8-dc57-4332-a730-cf6f4b911b8f/application"
+    },
+    {
+      "id": "0933ed01-c7fd-4694-9ad4-4a8b688f7bcd",
+      "title": "AML Compliance Officer",
+      "departmentName": "Legal",
+      "teamName": "Legal",
+      "employmentType": "FullTime",
+      "location": "New York",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "New York",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-03-25",
+      "descriptionHtml": "<p>AML Compliance Officer at Polymarket.</p>",
+      "descriptionPlain": "AML Compliance Officer at Polymarket.",
+      "jobUrl": "https://jobs.ashbyhq.com/polymarket/0933ed01-c7fd-4694-9ad4-4a8b688f7bcd",
+      "applyUrl": "https://jobs.ashbyhq.com/polymarket/0933ed01-c7fd-4694-9ad4-4a8b688f7bcd/application"
+    }
+  ]
+}

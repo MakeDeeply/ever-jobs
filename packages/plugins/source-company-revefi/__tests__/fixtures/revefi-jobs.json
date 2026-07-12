@@ -1,0 +1,62 @@
+[
+  {
+    "id": "6eddfb74-7ad4-4fcb-bcfa-6ebb435dc9ab",
+    "text": "Backend Engineer - Seattle",
+    "categories": {
+      "location": "Seattle, WA",
+      "allLocations": [
+        "Seattle, WA"
+      ],
+      "department": "Product Development",
+      "team": "Product Development",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1768202899040,
+    "descriptionPlain": "Backend Engineer - Seattle at Revefi.",
+    "description": "<p>Backend Engineer - Seattle at Revefi.</p>",
+    "hostedUrl": "https://jobs.lever.co/revefi/6eddfb74-7ad4-4fcb-bcfa-6ebb435dc9ab",
+    "applyUrl": "https://jobs.lever.co/revefi/6eddfb74-7ad4-4fcb-bcfa-6ebb435dc9ab/apply"
+  },
+  {
+    "id": "22239d2c-eb57-4a5e-a1d3-16d0f6bf196a",
+    "text": "Backend Engineer (BLR)",
+    "categories": {
+      "location": "Bangalore",
+      "allLocations": [
+        "Bangalore"
+      ],
+      "department": "Product Development",
+      "team": "Product Development",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1733117542531,
+    "descriptionPlain": "Backend Engineer (BLR) at Revefi.",
+    "description": "<p>Backend Engineer (BLR) at Revefi.</p>",
+    "hostedUrl": "https://jobs.lever.co/revefi/22239d2c-eb57-4a5e-a1d3-16d0f6bf196a",
+    "applyUrl": "https://jobs.lever.co/revefi/22239d2c-eb57-4a5e-a1d3-16d0f6bf196a/apply"
+  },
+  {
+    "id": "62e70f20-92f1-4146-b190-b9c7876cf586",
+    "text": "Enterprise Account Executive - US",
+    "categories": {
+      "location": "Remote",
+      "allLocations": [
+        "Remote"
+      ],
+      "department": "GTM",
+      "team": "GTM",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1752206406368,
+    "descriptionPlain": "Enterprise Account Executive - US at Revefi.",
+    "description": "<p>Enterprise Account Executive - US at Revefi.</p>",
+    "hostedUrl": "https://jobs.lever.co/revefi/62e70f20-92f1-4146-b190-b9c7876cf586",
+    "applyUrl": "https://jobs.lever.co/revefi/62e70f20-92f1-4146-b190-b9c7876cf586/apply"
+  }
+]

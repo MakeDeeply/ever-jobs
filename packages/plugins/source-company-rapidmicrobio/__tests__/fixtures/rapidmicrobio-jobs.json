@@ -1,0 +1,62 @@
+[
+  {
+    "id": "e8625a8b-c1a0-46aa-8f20-1c50b3e23aea",
+    "text": "Accounting Senior Manager",
+    "categories": {
+      "location": "Lexington, MA",
+      "allLocations": [
+        "Lexington, MA"
+      ],
+      "department": "General & Administrative",
+      "team": "General & Administrative",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1781540043990,
+    "descriptionPlain": "Accounting Senior Manager at Rapid Micro Biosystems.",
+    "description": "<p>Accounting Senior Manager at Rapid Micro Biosystems.</p>",
+    "hostedUrl": "https://jobs.lever.co/rapidmicrobio/e8625a8b-c1a0-46aa-8f20-1c50b3e23aea",
+    "applyUrl": "https://jobs.lever.co/rapidmicrobio/e8625a8b-c1a0-46aa-8f20-1c50b3e23aea/apply"
+  },
+  {
+    "id": "004952cb-c24c-4597-bc01-c7303d4e462e",
+    "text": "Accounts Receivable Specialist",
+    "categories": {
+      "location": "Lexington, MA",
+      "allLocations": [
+        "Lexington, MA"
+      ],
+      "department": "General & Administrative",
+      "team": "General & Administrative",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1781555343285,
+    "descriptionPlain": "Accounts Receivable Specialist at Rapid Micro Biosystems.",
+    "description": "<p>Accounts Receivable Specialist at Rapid Micro Biosystems.</p>",
+    "hostedUrl": "https://jobs.lever.co/rapidmicrobio/004952cb-c24c-4597-bc01-c7303d4e462e",
+    "applyUrl": "https://jobs.lever.co/rapidmicrobio/004952cb-c24c-4597-bc01-c7303d4e462e/apply"
+  },
+  {
+    "id": "2fddd127-cb20-4d04-a07d-b1616b4339b0",
+    "text": "Digital Marketing Specialist",
+    "categories": {
+      "location": "Lexington, MA",
+      "allLocations": [
+        "Lexington, MA"
+      ],
+      "department": "Sales and Marketing",
+      "team": "Sales and Marketing",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1776890901128,
+    "descriptionPlain": "Digital Marketing Specialist at Rapid Micro Biosystems.",
+    "description": "<p>Digital Marketing Specialist at Rapid Micro Biosystems.</p>",
+    "hostedUrl": "https://jobs.lever.co/rapidmicrobio/2fddd127-cb20-4d04-a07d-b1616b4339b0",
+    "applyUrl": "https://jobs.lever.co/rapidmicrobio/2fddd127-cb20-4d04-a07d-b1616b4339b0/apply"
+  }
+]

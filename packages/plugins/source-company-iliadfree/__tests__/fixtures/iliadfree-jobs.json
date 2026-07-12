@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135765789",
+      "name": "Senior / Staff Engineer Python - Paris - H/F",
+      "uuid": "iliadfree-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Iliad-Free",
+        "name": "Iliad / Free"
+      },
+      "releasedDate": "2026-07-03T16:24:34.923Z",
+      "location": {
+        "city": "Paris",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Paris, IDF, France"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Tech & Digital"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Iliad-Free/744000135765789",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior / Staff Engineer Python - Paris - H/F at Iliad / Free.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135734284",
+      "name": "Conseiller Free - Caen - H/F",
+      "uuid": "iliadfree-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Iliad-Free",
+        "name": "Iliad / Free"
+      },
+      "releasedDate": "2026-07-03T13:27:01.471Z",
+      "location": {
+        "city": "Caen",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Caen, Normandy, France"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Assistance Abonné"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Iliad-Free/744000135734284",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Conseiller Free - Caen - H/F at Iliad / Free.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135734599",
+      "name": "Manager boutique - Tours - h/f",
+      "uuid": "iliadfree-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Iliad-Free",
+        "name": "Iliad / Free"
+      },
+      "releasedDate": "2026-07-03T13:24:16.514Z",
+      "location": {
+        "city": "Angers",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Angers, Pays de la Loire, France"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Boutique"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Iliad-Free/744000135734599",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Manager boutique - Tours - h/f at Iliad / Free.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

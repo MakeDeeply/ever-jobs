@@ -1,0 +1,62 @@
+[
+  {
+    "id": "69dbe536-1392-4a32-bae5-388ae2d8b57b",
+    "text": "Program Manager - Education Sales",
+    "categories": {
+      "location": "Remote",
+      "allLocations": [
+        "Remote"
+      ],
+      "department": "Service Team",
+      "team": "Service Team",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1755129356146,
+    "descriptionPlain": "Program Manager - Education Sales at StudyPoint.",
+    "description": "<p>Program Manager - Education Sales at StudyPoint.</p>",
+    "hostedUrl": "https://jobs.lever.co/studypoint/69dbe536-1392-4a32-bae5-388ae2d8b57b",
+    "applyUrl": "https://jobs.lever.co/studypoint/69dbe536-1392-4a32-bae5-388ae2d8b57b/apply"
+  },
+  {
+    "id": "63ef1ebb-9f7b-410e-ab10-bdc0d70c2f42",
+    "text": "Tutor - SAT/ACT - Part-Time, In-Person",
+    "categories": {
+      "location": "Washington, DC",
+      "allLocations": [
+        "Washington, DC"
+      ],
+      "department": "StudyPoint In-Home Tutoring Positions",
+      "team": "StudyPoint In-Home Tutoring Positions",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1780335207921,
+    "descriptionPlain": "Tutor - SAT/ACT - Part-Time, In-Person at StudyPoint.",
+    "description": "<p>Tutor - SAT/ACT - Part-Time, In-Person at StudyPoint.</p>",
+    "hostedUrl": "https://jobs.lever.co/studypoint/63ef1ebb-9f7b-410e-ab10-bdc0d70c2f42",
+    "applyUrl": "https://jobs.lever.co/studypoint/63ef1ebb-9f7b-410e-ab10-bdc0d70c2f42/apply"
+  },
+  {
+    "id": "67d556bc-45eb-461c-b7c3-8be5d586c51c",
+    "text": "Tutor - SAT/ACT - Part-Time, In-Person",
+    "categories": {
+      "location": "Greater Philadelphia",
+      "allLocations": [
+        "Greater Philadelphia"
+      ],
+      "department": "StudyPoint In-Home Tutoring Positions",
+      "team": "StudyPoint In-Home Tutoring Positions",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1780335303701,
+    "descriptionPlain": "Tutor - SAT/ACT - Part-Time, In-Person at StudyPoint.",
+    "description": "<p>Tutor - SAT/ACT - Part-Time, In-Person at StudyPoint.</p>",
+    "hostedUrl": "https://jobs.lever.co/studypoint/67d556bc-45eb-461c-b7c3-8be5d586c51c",
+    "applyUrl": "https://jobs.lever.co/studypoint/67d556bc-45eb-461c-b7c3-8be5d586c51c/apply"
+  }
+]

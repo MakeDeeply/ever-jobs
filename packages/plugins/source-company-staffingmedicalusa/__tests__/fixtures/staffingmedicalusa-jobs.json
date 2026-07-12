@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999691289822",
+      "name": "RN Magnet Program Coordinator",
+      "uuid": "staffingmedicalusa-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "StaffingMedicalUSA",
+        "name": "Staffing Medical USA"
+      },
+      "releasedDate": "2019-07-05T18:26:45.000Z",
+      "location": {
+        "city": "York",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "York, PA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Administrative"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/StaffingMedicalUSA/743999691289822",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>RN Magnet Program Coordinator at Staffing Medical USA.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999691289638",
+      "name": "RN Nursing Recruiter",
+      "uuid": "staffingmedicalusa-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "StaffingMedicalUSA",
+        "name": "Staffing Medical USA"
+      },
+      "releasedDate": "2019-07-05T18:25:14.000Z",
+      "location": {
+        "city": "Batesville",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Batesville, AR, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Administrative"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/StaffingMedicalUSA/743999691289638",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>RN Nursing Recruiter at Staffing Medical USA.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999691280575",
+      "name": "RN Nurse Recruiter",
+      "uuid": "staffingmedicalusa-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "StaffingMedicalUSA",
+        "name": "Staffing Medical USA"
+      },
+      "releasedDate": "2019-07-05T16:00:54.000Z",
+      "location": {
+        "city": "Canton",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Canton, OH, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Health Care Provider"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/StaffingMedicalUSA/743999691280575",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>RN Nurse Recruiter at Staffing Medical USA.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

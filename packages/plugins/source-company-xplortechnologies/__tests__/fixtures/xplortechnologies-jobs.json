@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135680100",
+      "name": "Onboarding Specialist (Software) - Fixed term contract",
+      "uuid": "xplortechnologies-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Xplor",
+        "name": "Xplor Technologies"
+      },
+      "releasedDate": "2026-07-03T09:16:13.283Z",
+      "location": {
+        "city": "Melbourne",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Melbourne, VIC, Australia"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Onboarding"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Xplor/744000135680100",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Onboarding Specialist (Software) - Fixed term contract at Xplor Technologies.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135645859",
+      "name": "Product Manager - Data & Analytics",
+      "uuid": "xplortechnologies-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Xplor",
+        "name": "Xplor Technologies"
+      },
+      "releasedDate": "2026-07-03T05:57:58.852Z",
+      "location": {
+        "city": "Pune",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Pune, MH, India"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Product Management Paymen"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Xplor/744000135645859",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Product Manager - Data & Analytics at Xplor Technologies.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135645809",
+      "name": "Product Manager - Direct Debit & Alternate Payments",
+      "uuid": "xplortechnologies-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Xplor",
+        "name": "Xplor Technologies"
+      },
+      "releasedDate": "2026-07-03T05:57:20.632Z",
+      "location": {
+        "city": "Pune",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Pune, MH, India"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Product Management Paymen"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Xplor/744000135645809",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Product Manager - Direct Debit & Alternate Payments at Xplor Technologies.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "855b0f77-24a8-4bee-84ad-509b0c505a4f",
+    "text": "Add Your Resume to Our Database!",
+    "categories": {
+      "location": "Denver, CO",
+      "allLocations": [
+        "Denver, CO"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1627401367447,
+    "descriptionPlain": "Add Your Resume to Our Database! at Red Canyon Engineering & Software.",
+    "description": "<p>Add Your Resume to Our Database! at Red Canyon Engineering & Software.</p>",
+    "hostedUrl": "https://jobs.lever.co/redcanyonsoftware/855b0f77-24a8-4bee-84ad-509b0c505a4f",
+    "applyUrl": "https://jobs.lever.co/redcanyonsoftware/855b0f77-24a8-4bee-84ad-509b0c505a4f/apply"
+  },
+  {
+    "id": "1d4c62e9-d92d-44e1-be3f-cc8b738f07ec",
+    "text": "Flight Software Engineer",
+    "categories": {
+      "location": "United States",
+      "allLocations": [
+        "United States"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1764003190666,
+    "descriptionPlain": "Flight Software Engineer at Red Canyon Engineering & Software.",
+    "description": "<p>Flight Software Engineer at Red Canyon Engineering & Software.</p>",
+    "hostedUrl": "https://jobs.lever.co/redcanyonsoftware/1d4c62e9-d92d-44e1-be3f-cc8b738f07ec",
+    "applyUrl": "https://jobs.lever.co/redcanyonsoftware/1d4c62e9-d92d-44e1-be3f-cc8b738f07ec/apply"
+  },
+  {
+    "id": "b0d5e62a-7ef5-437b-bac2-5a29e4ce8a72",
+    "text": "Navigation Engineer III",
+    "categories": {
+      "location": "Westminster, CO",
+      "allLocations": [
+        "Westminster, CO"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1782154187506,
+    "descriptionPlain": "Navigation Engineer III at Red Canyon Engineering & Software.",
+    "description": "<p>Navigation Engineer III at Red Canyon Engineering & Software.</p>",
+    "hostedUrl": "https://jobs.lever.co/redcanyonsoftware/b0d5e62a-7ef5-437b-bac2-5a29e4ce8a72",
+    "applyUrl": "https://jobs.lever.co/redcanyonsoftware/b0d5e62a-7ef5-437b-bac2-5a29e4ce8a72/apply"
+  }
+]

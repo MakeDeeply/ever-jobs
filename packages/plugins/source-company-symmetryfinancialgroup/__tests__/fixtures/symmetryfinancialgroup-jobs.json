@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999666124428",
+      "name": "Life Insurance Producer",
+      "uuid": "symmetryfinancialgroup-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "SymmetryFinancialGroup7",
+        "name": "Symmetry Financial Group"
+      },
+      "releasedDate": "2018-02-15T16:50:08.000Z",
+      "location": {
+        "city": "Tampa",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Tampa, FL, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SymmetryFinancialGroup7/743999666124428",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Life Insurance Producer at Symmetry Financial Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999666124100",
+      "name": "Life Insurance Producer",
+      "uuid": "symmetryfinancialgroup-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "SymmetryFinancialGroup7",
+        "name": "Symmetry Financial Group"
+      },
+      "releasedDate": "2018-02-15T16:46:19.000Z",
+      "location": {
+        "city": "Sacramento",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Sacramento, CA, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SymmetryFinancialGroup7/743999666124100",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Life Insurance Producer at Symmetry Financial Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999666123641",
+      "name": "Life Insurance Agent",
+      "uuid": "symmetryfinancialgroup-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "SymmetryFinancialGroup7",
+        "name": "Symmetry Financial Group"
+      },
+      "releasedDate": "2018-02-15T16:44:38.000Z",
+      "location": {
+        "city": "Portland",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Portland, OR, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SymmetryFinancialGroup7/743999666123641",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Life Insurance Agent at Symmetry Financial Group.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

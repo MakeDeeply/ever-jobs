@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000047825453",
+      "name": "Ayudante de Vendedor de Ruta",
+      "uuid": "grupomariposaregional-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "GrupoMariposa",
+        "name": "Grupo Mariposa (Regional)"
+      },
+      "releasedDate": "2025-03-14T17:19:28.774Z",
+      "location": {
+        "city": "Tegucigalpa",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Tegucigalpa, Francisco Morazan, Honduras"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Logística"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/GrupoMariposa/744000047825453",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Ayudante de Vendedor de Ruta at Grupo Mariposa (Regional).</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000040333466",
+      "name": "Especialista Financiero",
+      "uuid": "grupomariposaregional-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "GrupoMariposa",
+        "name": "Grupo Mariposa (Regional)"
+      },
+      "releasedDate": "2025-02-03T15:57:46.145Z",
+      "location": {
+        "city": "Puebla",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Puebla, , Mexico"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Auditoria"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/GrupoMariposa/744000040333466",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Especialista Financiero at Grupo Mariposa (Regional).</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000039734975",
+      "name": "Coordinador Contable",
+      "uuid": "grupomariposaregional-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "GrupoMariposa",
+        "name": "Grupo Mariposa (Regional)"
+      },
+      "releasedDate": "2025-01-30T22:04:55.855Z",
+      "location": {
+        "city": "Guatemala",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Guatemala, , Guatemala"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Logística"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/GrupoMariposa/744000039734975",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Coordinador Contable at Grupo Mariposa (Regional).</p>"
+          }
+        }
+      }
+    }
+  ]
+}

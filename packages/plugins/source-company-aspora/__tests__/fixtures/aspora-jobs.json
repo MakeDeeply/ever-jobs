@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "2315ceee-2b8a-4c94-8866-39a4ec49d5f0",
+      "title": "Senior DevOps Engineer",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "Bangalore",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Bangalore",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-04",
+      "descriptionHtml": "<p>Senior DevOps Engineer at Aspora.</p>",
+      "descriptionPlain": "Senior DevOps Engineer at Aspora.",
+      "jobUrl": "https://jobs.ashbyhq.com/aspora/2315ceee-2b8a-4c94-8866-39a4ec49d5f0",
+      "applyUrl": "https://jobs.ashbyhq.com/aspora/2315ceee-2b8a-4c94-8866-39a4ec49d5f0/application"
+    },
+    {
+      "id": "f3582612-7ed0-4b23-828d-63f5261e876e",
+      "title": "Senior iOS Engineer",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "Bangalore",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Bangalore",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-07-28",
+      "descriptionHtml": "<p>Senior iOS Engineer at Aspora.</p>",
+      "descriptionPlain": "Senior iOS Engineer at Aspora.",
+      "jobUrl": "https://jobs.ashbyhq.com/aspora/f3582612-7ed0-4b23-828d-63f5261e876e",
+      "applyUrl": "https://jobs.ashbyhq.com/aspora/f3582612-7ed0-4b23-828d-63f5261e876e/application"
+    },
+    {
+      "id": "ef73fed3-1476-4b83-9a09-4419a07e641a",
+      "title": "Founding GTM Specialist (Business Banking)",
+      "departmentName": "Growth",
+      "teamName": "Growth",
+      "employmentType": "FullTime",
+      "location": "Dubai",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Dubai",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-04-27",
+      "descriptionHtml": "<p>Founding GTM Specialist (Business Banking) at Aspora.</p>",
+      "descriptionPlain": "Founding GTM Specialist (Business Banking) at Aspora.",
+      "jobUrl": "https://jobs.ashbyhq.com/aspora/ef73fed3-1476-4b83-9a09-4419a07e641a",
+      "applyUrl": "https://jobs.ashbyhq.com/aspora/ef73fed3-1476-4b83-9a09-4419a07e641a/application"
+    }
+  ]
+}

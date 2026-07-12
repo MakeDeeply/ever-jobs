@@ -1,0 +1,62 @@
+[
+  {
+    "id": "28e42529-c4e2-4f49-9074-86fac0dceb52",
+    "text": "Clinical Data Scientist",
+    "categories": {
+      "location": "Redwood City, CA",
+      "allLocations": [
+        "Redwood City, CA"
+      ],
+      "department": "Data Science",
+      "team": "Data Science",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1773344675038,
+    "descriptionPlain": "Clinical Data Scientist at N-Power Medicine.",
+    "description": "<p>Clinical Data Scientist at N-Power Medicine.</p>",
+    "hostedUrl": "https://jobs.lever.co/npowermedicine/28e42529-c4e2-4f49-9074-86fac0dceb52",
+    "applyUrl": "https://jobs.lever.co/npowermedicine/28e42529-c4e2-4f49-9074-86fac0dceb52/apply"
+  },
+  {
+    "id": "3068f710-1161-484e-bb6c-d953d027f20f",
+    "text": "Clinical Research Coordinator/DHS II - Los Gatos, CA 2.10.26",
+    "categories": {
+      "location": "Los Gatos, CA",
+      "allLocations": [
+        "Los Gatos, CA"
+      ],
+      "department": "Digital Health",
+      "team": "Digital Health",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1770774661025,
+    "descriptionPlain": "Clinical Research Coordinator/DHS II - Los Gatos, CA 2.10.26 at N-Power Medicine.",
+    "description": "<p>Clinical Research Coordinator/DHS II - Los Gatos, CA 2.10.26 at N-Power Medicine.</p>",
+    "hostedUrl": "https://jobs.lever.co/npowermedicine/3068f710-1161-484e-bb6c-d953d027f20f",
+    "applyUrl": "https://jobs.lever.co/npowermedicine/3068f710-1161-484e-bb6c-d953d027f20f/apply"
+  },
+  {
+    "id": "dbb486ff-11c7-44ef-a65f-f3a09de2891b",
+    "text": "Director of Business Development",
+    "categories": {
+      "location": "Remote",
+      "allLocations": [
+        "Remote"
+      ],
+      "department": "Commercial",
+      "team": "Commercial",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1764606765952,
+    "descriptionPlain": "Director of Business Development at N-Power Medicine.",
+    "description": "<p>Director of Business Development at N-Power Medicine.</p>",
+    "hostedUrl": "https://jobs.lever.co/npowermedicine/dbb486ff-11c7-44ef-a65f-f3a09de2891b",
+    "applyUrl": "https://jobs.lever.co/npowermedicine/dbb486ff-11c7-44ef-a65f-f3a09de2891b/apply"
+  }
+]

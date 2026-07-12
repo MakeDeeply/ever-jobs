@@ -1,0 +1,62 @@
+[
+  {
+    "id": "d519265d-30c2-4194-92b0-d7194c4ca0a6",
+    "text": "Associate Director, in vitro Pharmacology",
+    "categories": {
+      "location": "Cambridge, MA",
+      "allLocations": [
+        "Cambridge, MA"
+      ],
+      "department": "Platform Biology",
+      "team": "Platform Biology",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1778705242675,
+    "descriptionPlain": "Associate Director, in vitro Pharmacology at Deep Genomics.",
+    "description": "<p>Associate Director, in vitro Pharmacology at Deep Genomics.</p>",
+    "hostedUrl": "https://jobs.lever.co/deepgenomics/d519265d-30c2-4194-92b0-d7194c4ca0a6",
+    "applyUrl": "https://jobs.lever.co/deepgenomics/d519265d-30c2-4194-92b0-d7194c4ca0a6/apply"
+  },
+  {
+    "id": "5b99b89c-6475-4a42-a6ab-6a483276eee9",
+    "text": "Senior MLOps Engineer",
+    "categories": {
+      "location": "Toronto, Ontario",
+      "allLocations": [
+        "Toronto, Ontario"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1775756737756,
+    "descriptionPlain": "Senior MLOps Engineer at Deep Genomics.",
+    "description": "<p>Senior MLOps Engineer at Deep Genomics.</p>",
+    "hostedUrl": "https://jobs.lever.co/deepgenomics/5b99b89c-6475-4a42-a6ab-6a483276eee9",
+    "applyUrl": "https://jobs.lever.co/deepgenomics/5b99b89c-6475-4a42-a6ab-6a483276eee9/apply"
+  },
+  {
+    "id": "6dd5d55e-67ea-4a09-aedc-b86bb3bc1446",
+    "text": "Senior Research Engineer, Machine Learning",
+    "categories": {
+      "location": "Toronto, Ontario",
+      "allLocations": [
+        "Toronto, Ontario"
+      ],
+      "department": "Machine Learning",
+      "team": "Machine Learning",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1779217149170,
+    "descriptionPlain": "Senior Research Engineer, Machine Learning at Deep Genomics.",
+    "description": "<p>Senior Research Engineer, Machine Learning at Deep Genomics.</p>",
+    "hostedUrl": "https://jobs.lever.co/deepgenomics/6dd5d55e-67ea-4a09-aedc-b86bb3bc1446",
+    "applyUrl": "https://jobs.lever.co/deepgenomics/6dd5d55e-67ea-4a09-aedc-b86bb3bc1446/apply"
+  }
+]

@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "6000000001207551",
+      "name": "Senior AI Engineer",
+      "uuid": "airnewzealand-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "airnewzealand",
+        "name": "Air New Zealand"
+      },
+      "releasedDate": "2026-07-04T01:06:26.094Z",
+      "location": {
+        "city": "Auckland",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Auckland, Auckland, New Zealand"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/airnewzealand/6000000001207551",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior AI Engineer at Air New Zealand.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "6000000001202030",
+      "name": "Expression of Interest - Jet Fleet Pilot",
+      "uuid": "airnewzealand-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "airnewzealand",
+        "name": "Air New Zealand"
+      },
+      "releasedDate": "2026-07-02T00:00:26.880Z",
+      "location": {
+        "city": "Auckland",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Auckland, Auckland, New Zealand"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/airnewzealand/6000000001202030",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Expression of Interest - Jet Fleet Pilot at Air New Zealand.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "6000000001199597",
+      "name": "Finance Specialist",
+      "uuid": "airnewzealand-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "airnewzealand",
+        "name": "Air New Zealand"
+      },
+      "releasedDate": "2026-07-01T04:20:49.553Z",
+      "location": {
+        "city": "Auckland",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Auckland, Auckland, New Zealand"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Accounting/Auditing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/airnewzealand/6000000001199597",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Finance Specialist at Air New Zealand.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

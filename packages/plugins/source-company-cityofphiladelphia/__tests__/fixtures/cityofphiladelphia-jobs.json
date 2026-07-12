@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135551739",
+      "name": "Project Management Information Specialist",
+      "uuid": "cityofphiladelphia-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "CityofPhiladelphia",
+        "name": "City of Philadelphia"
+      },
+      "releasedDate": "2026-07-02T16:43:48.383Z",
+      "location": {
+        "city": "Philadelphia",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Philadelphia, PA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Capital Program Office - Project Management Information Specialist"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CityofPhiladelphia/744000135551739",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Project Management Information Specialist at City of Philadelphia.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135349789",
+      "name": "Technology Partnerships & Innovation Manager",
+      "uuid": "cityofphiladelphia-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "CityofPhiladelphia",
+        "name": "City of Philadelphia"
+      },
+      "releasedDate": "2026-07-01T21:08:55.785Z",
+      "location": {
+        "city": "Philadelphia",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Philadelphia, PA, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Office of Innovation & Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CityofPhiladelphia/744000135349789",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Technology Partnerships & Innovation Manager at City of Philadelphia.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135348820",
+      "name": "Technical Relationship Manager",
+      "uuid": "cityofphiladelphia-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "CityofPhiladelphia",
+        "name": "City of Philadelphia"
+      },
+      "releasedDate": "2026-07-01T21:07:41.601Z",
+      "location": {
+        "city": "Philadelphia",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Philadelphia, PA, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Office of Innovation & Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CityofPhiladelphia/744000135348820",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Technical Relationship Manager at City of Philadelphia.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

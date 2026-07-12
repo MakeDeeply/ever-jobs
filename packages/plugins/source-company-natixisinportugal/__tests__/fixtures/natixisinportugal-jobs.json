@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135699455",
+      "name": "Financial Crime Officer (French Speaker) | SG",
+      "uuid": "natixisinportugal-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "natixisinportugal",
+        "name": "Natixis in Portugal"
+      },
+      "releasedDate": "2026-07-03T10:45:39.872Z",
+      "location": {
+        "city": "Porto",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Porto, Porto, Portugal"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/natixisinportugal/744000135699455",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Financial Crime Officer (French Speaker) | SG at Natixis in Portugal.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135686237",
+      "name": "Senior Angular Developer (French Speaker) | BPCE-SI",
+      "uuid": "natixisinportugal-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "natixisinportugal",
+        "name": "Natixis in Portugal"
+      },
+      "releasedDate": "2026-07-03T09:44:20.858Z",
+      "location": {
+        "city": "Portugal",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Portugal, , Portugal"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/natixisinportugal/744000135686237",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Angular Developer (French Speaker) | BPCE-SI at Natixis in Portugal.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135671271",
+      "name": "Data Team Leader (French Speaker) | BPCE-SI",
+      "uuid": "natixisinportugal-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "natixisinportugal",
+        "name": "Natixis in Portugal"
+      },
+      "releasedDate": "2026-07-03T08:31:10.846Z",
+      "location": {
+        "city": "Lisbon",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Lisbon, Lisbon, Portugal"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/natixisinportugal/744000135671271",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Data Team Leader (French Speaker) | BPCE-SI at Natixis in Portugal.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

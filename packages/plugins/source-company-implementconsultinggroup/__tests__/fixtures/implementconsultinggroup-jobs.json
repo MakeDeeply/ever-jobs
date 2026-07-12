@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135480569",
+      "name": "BI Lead - Data & Analytics Enablement",
+      "uuid": "implementconsultinggroup-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "ImplementConsultingGroup",
+        "name": "Implement Consulting Group"
+      },
+      "releasedDate": "2026-07-02T11:41:49.752Z",
+      "location": {
+        "city": "Hellerup",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Hellerup, , Denmark"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Business Support - full time"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ImplementConsultingGroup/744000135480569",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>BI Lead - Data & Analytics Enablement at Implement Consulting Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135430009",
+      "name": "Cybersecurity Engineer",
+      "uuid": "implementconsultinggroup-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "ImplementConsultingGroup",
+        "name": "Implement Consulting Group"
+      },
+      "releasedDate": "2026-07-02T07:21:26.393Z",
+      "location": {
+        "city": "Hellerup",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Hellerup, , Denmark"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Analyst"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ImplementConsultingGroup/744000135430009",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Cybersecurity Engineer at Implement Consulting Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135422339",
+      "name": "Senior Management Consultant (m/w/d) im Bereich Strategie",
+      "uuid": "implementconsultinggroup-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "ImplementConsultingGroup",
+        "name": "Implement Consulting Group"
+      },
+      "releasedDate": "2026-07-02T07:04:38.551Z",
+      "location": {
+        "city": "München",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "München, BY, Germany"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Management consulting"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ImplementConsultingGroup/744000135422339",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Management Consultant (m/w/d) im Bereich Strategie at Implement Consulting Group.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

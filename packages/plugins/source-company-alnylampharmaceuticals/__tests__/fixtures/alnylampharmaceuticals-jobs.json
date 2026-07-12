@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000110395880",
+      "name": "Chief dog walker",
+      "uuid": "alnylampharmaceuticals-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Alnylam",
+        "name": "Alnylam Pharmaceuticals"
+      },
+      "releasedDate": "2026-02-20T14:37:38.392Z",
+      "location": {
+        "city": "Windsor",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Windsor, England, United Kingdom"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Customer Service"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Alnylam/744000110395880",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Chief dog walker at Alnylam Pharmaceuticals.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000110383178",
+      "name": "Mattie Test Job",
+      "uuid": "alnylampharmaceuticals-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Alnylam",
+        "name": "Alnylam Pharmaceuticals"
+      },
+      "releasedDate": "2026-02-20T13:35:25.311Z",
+      "location": {
+        "city": "Cambridge",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Cambridge, MA, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Administration"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Alnylam/744000110383178",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Mattie Test Job at Alnylam Pharmaceuticals.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000109723418",
+      "name": "Scientist",
+      "uuid": "alnylampharmaceuticals-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Alnylam",
+        "name": "Alnylam Pharmaceuticals"
+      },
+      "releasedDate": "2026-02-17T14:06:24.659Z",
+      "location": {
+        "city": "Cambridge",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Cambridge, MA, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Finance"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Alnylam/744000109723418",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Scientist at Alnylam Pharmaceuticals.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

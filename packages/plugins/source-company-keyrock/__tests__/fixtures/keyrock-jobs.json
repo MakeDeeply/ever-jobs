@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "0c84d9b1-61f5-4ccb-a8ab-b7bc4a920047",
+      "title": "Director, Corporate Sales US - Digital Assets",
+      "departmentName": "Sales",
+      "teamName": "Sales",
+      "employmentType": "FullTime",
+      "location": "New York",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "New York",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-11-06",
+      "descriptionHtml": "<p>Director, Corporate Sales US - Digital Assets at Keyrock.</p>",
+      "descriptionPlain": "Director, Corporate Sales US - Digital Assets at Keyrock.",
+      "jobUrl": "https://jobs.ashbyhq.com/keyrock/0c84d9b1-61f5-4ccb-a8ab-b7bc4a920047",
+      "applyUrl": "https://jobs.ashbyhq.com/keyrock/0c84d9b1-61f5-4ccb-a8ab-b7bc4a920047/application"
+    },
+    {
+      "id": "41abd17c-201b-4492-97e6-c79e34a6dc1c",
+      "title": "Executive Director- Corporate Sales",
+      "departmentName": "Sales",
+      "teamName": "Sales",
+      "employmentType": "FullTime",
+      "location": "London",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "London",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-03-11",
+      "descriptionHtml": "<p>Executive Director- Corporate Sales at Keyrock.</p>",
+      "descriptionPlain": "Executive Director- Corporate Sales at Keyrock.",
+      "jobUrl": "https://jobs.ashbyhq.com/keyrock/41abd17c-201b-4492-97e6-c79e34a6dc1c",
+      "applyUrl": "https://jobs.ashbyhq.com/keyrock/41abd17c-201b-4492-97e6-c79e34a6dc1c/application"
+    },
+    {
+      "id": "638f8c1e-381f-481f-9bc7-5b34fc694aae",
+      "title": "Engineering Lead- Options",
+      "departmentName": "Engineering & Technology",
+      "teamName": "Engineering & Technology",
+      "employmentType": "FullTime",
+      "location": "New York",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "New York",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-04-22",
+      "descriptionHtml": "<p>Engineering Lead- Options at Keyrock.</p>",
+      "descriptionPlain": "Engineering Lead- Options at Keyrock.",
+      "jobUrl": "https://jobs.ashbyhq.com/keyrock/638f8c1e-381f-481f-9bc7-5b34fc694aae",
+      "applyUrl": "https://jobs.ashbyhq.com/keyrock/638f8c1e-381f-481f-9bc7-5b34fc694aae/application"
+    }
+  ]
+}

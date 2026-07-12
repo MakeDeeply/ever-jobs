@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "01e24f35-a936-4dd1-a700-31e872c50da8",
+      "title": "Senior Software Engineer (Node), JavaScript SDK",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "Toronto, Ontario, Canada",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Toronto",
+          "addressRegion": "Ontario",
+          "addressCountry": "Canada"
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-04-24",
+      "descriptionHtml": "<p>Senior Software Engineer (Node), JavaScript SDK at Sentry.</p>",
+      "descriptionPlain": "Senior Software Engineer (Node), JavaScript SDK at Sentry.",
+      "jobUrl": "https://jobs.ashbyhq.com/sentry/01e24f35-a936-4dd1-a700-31e872c50da8",
+      "applyUrl": "https://jobs.ashbyhq.com/sentry/01e24f35-a936-4dd1-a700-31e872c50da8/application"
+    },
+    {
+      "id": "0580bfa2-ee00-41c9-94b8-df3d3b4e7fcc",
+      "title": "Senior Technical Support Engineer",
+      "departmentName": "Support",
+      "teamName": "Support",
+      "employmentType": "FullTime",
+      "location": "San Francisco, California",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": "California",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-01-30",
+      "descriptionHtml": "<p>Senior Technical Support Engineer at Sentry.</p>",
+      "descriptionPlain": "Senior Technical Support Engineer at Sentry.",
+      "jobUrl": "https://jobs.ashbyhq.com/sentry/0580bfa2-ee00-41c9-94b8-df3d3b4e7fcc",
+      "applyUrl": "https://jobs.ashbyhq.com/sentry/0580bfa2-ee00-41c9-94b8-df3d3b4e7fcc/application"
+    },
+    {
+      "id": "1b63fc5e-ee6e-42b4-924c-a48836722cba",
+      "title": "Startups Marketing Lead",
+      "departmentName": "Marketing",
+      "teamName": "Marketing",
+      "employmentType": "FullTime",
+      "location": "San Francisco, California",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": "California",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-27",
+      "descriptionHtml": "<p>Startups Marketing Lead at Sentry.</p>",
+      "descriptionPlain": "Startups Marketing Lead at Sentry.",
+      "jobUrl": "https://jobs.ashbyhq.com/sentry/1b63fc5e-ee6e-42b4-924c-a48836722cba",
+      "applyUrl": "https://jobs.ashbyhq.com/sentry/1b63fc5e-ee6e-42b4-924c-a48836722cba/application"
+    }
+  ]
+}

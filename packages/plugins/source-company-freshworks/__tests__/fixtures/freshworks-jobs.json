@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135680950",
+      "name": "Specialist - Customer Success (CX-NA)",
+      "uuid": "freshworks-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Freshworks",
+        "name": "Freshworks"
+      },
+      "releasedDate": "2026-07-03T09:30:57.408Z",
+      "location": {
+        "city": "Chennai",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Chennai, , India"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Freshworks/744000135680950",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Specialist - Customer Success (CX-NA) at Freshworks.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135654009",
+      "name": "Staff Engineer - Systems",
+      "uuid": "freshworks-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Freshworks",
+        "name": "Freshworks"
+      },
+      "releasedDate": "2026-07-03T07:03:41.683Z",
+      "location": {
+        "city": "Chennai",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Chennai, , India"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Freshworks/744000135654009",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Staff Engineer - Systems at Freshworks.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135653025",
+      "name": "Lead Software Engineer - Full Stack",
+      "uuid": "freshworks-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Freshworks",
+        "name": "Freshworks"
+      },
+      "releasedDate": "2026-07-03T06:57:30.859Z",
+      "location": {
+        "city": "Hyderabad",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Hyderabad, , India"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Freshworks/744000135653025",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Lead Software Engineer - Full Stack at Freshworks.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

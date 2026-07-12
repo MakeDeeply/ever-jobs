@@ -1,0 +1,62 @@
+[
+  {
+    "id": "8c7e960a-1cb8-4ef4-89ac-0320fdad1759",
+    "text": "3D Reconstruction Scientist",
+    "categories": {
+      "location": "Redwood City, CA",
+      "allLocations": [
+        "Redwood City, CA"
+      ],
+      "department": "Engineering - Software",
+      "team": "Engineering - Software",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1765471490688,
+    "descriptionPlain": "3D Reconstruction Scientist at Array Labs.",
+    "description": "<p>3D Reconstruction Scientist at Array Labs.</p>",
+    "hostedUrl": "https://jobs.lever.co/arraylabs.io/8c7e960a-1cb8-4ef4-89ac-0320fdad1759",
+    "applyUrl": "https://jobs.lever.co/arraylabs.io/8c7e960a-1cb8-4ef4-89ac-0320fdad1759/apply"
+  },
+  {
+    "id": "41469fca-16e4-498d-b711-2815d6ec97a3",
+    "text": "Antenna Design Engineer",
+    "categories": {
+      "location": "Redwood City, CA",
+      "allLocations": [
+        "Redwood City, CA"
+      ],
+      "department": "Engineering - Hardware",
+      "team": "Engineering - Hardware",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1765471604821,
+    "descriptionPlain": "Antenna Design Engineer at Array Labs.",
+    "description": "<p>Antenna Design Engineer at Array Labs.</p>",
+    "hostedUrl": "https://jobs.lever.co/arraylabs.io/41469fca-16e4-498d-b711-2815d6ec97a3",
+    "applyUrl": "https://jobs.lever.co/arraylabs.io/41469fca-16e4-498d-b711-2815d6ec97a3/apply"
+  },
+  {
+    "id": "2884f267-918e-4acf-9e68-724546d50a63",
+    "text": "Board Design Engineer",
+    "categories": {
+      "location": "Redwood City, CA",
+      "allLocations": [
+        "Redwood City, CA"
+      ],
+      "department": "Engineering - Hardware",
+      "team": "Engineering - Hardware",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1782857446246,
+    "descriptionPlain": "Board Design Engineer at Array Labs.",
+    "description": "<p>Board Design Engineer at Array Labs.</p>",
+    "hostedUrl": "https://jobs.lever.co/arraylabs.io/2884f267-918e-4acf-9e68-724546d50a63",
+    "applyUrl": "https://jobs.lever.co/arraylabs.io/2884f267-918e-4acf-9e68-724546d50a63/apply"
+  }
+]

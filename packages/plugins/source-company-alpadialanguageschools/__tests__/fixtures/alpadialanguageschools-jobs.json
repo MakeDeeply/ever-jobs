@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135702186",
+      "name": "Language Travel Consultant & Customer Care - Dutch Speaker",
+      "uuid": "alpadialanguageschools-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "AlpadiaLanguageSchoolsSA",
+        "name": "Alpadia Language Schools"
+      },
+      "releasedDate": "2026-07-03T11:08:06.254Z",
+      "location": {
+        "city": "Barcelona",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Barcelona, CT, Spain"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AlpadiaLanguageSchoolsSA/744000135702186",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Language Travel Consultant & Customer Care - Dutch Speaker at Alpadia Language Schools.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135655919",
+      "name": "DaF Lehrkräfte und Aktivitätenleiter für Deutsch im Sommer-Sprach-Camp - Mehrere Standorte verfügbar!",
+      "uuid": "alpadialanguageschools-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "AlpadiaLanguageSchoolsSA",
+        "name": "Alpadia Language Schools"
+      },
+      "releasedDate": "2026-07-03T07:13:21.951Z",
+      "location": {
+        "city": "Berlin",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Berlin, , Germany"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Language Camps"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AlpadiaLanguageSchoolsSA/744000135655919",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>DaF Lehrkräfte und Aktivitätenleiter für Deutsch im Sommer-Sprach-Camp - Mehrere Standorte verfügbar! at Alpadia Language Schools.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135562289",
+      "name": "Job d'été : Animateurs/-trices & Surveillant.e de Baignade (SB/BNSSA) en colonie linguistique - Biarritz - FR",
+      "uuid": "alpadialanguageschools-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "AlpadiaLanguageSchoolsSA",
+        "name": "Alpadia Language Schools"
+      },
+      "releasedDate": "2026-07-02T18:00:41.778Z",
+      "location": {
+        "city": "Saint-Pée-sur-Nivelle",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Saint-Pée-sur-Nivelle, Nouvelle-Aquitaine, France"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Language Camps"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AlpadiaLanguageSchoolsSA/744000135562289",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Job d'été : Animateurs/-trices & Surveillant.e de Baignade (SB/BNSSA) en colonie linguistique - Biarritz - FR at Alpadia Language Schools.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

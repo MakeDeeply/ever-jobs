@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "86a0163c-adb0-408c-b363-5cecd711e051",
+      "title": "Smart Contract Engineer",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "Europe",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Europe",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-07-22",
+      "descriptionHtml": "<p>Smart Contract Engineer at Stargate Foundation.</p>",
+      "descriptionPlain": "Smart Contract Engineer at Stargate Foundation.",
+      "jobUrl": "https://jobs.ashbyhq.com/stargate-foundation/86a0163c-adb0-408c-b363-5cecd711e051",
+      "applyUrl": "https://jobs.ashbyhq.com/stargate-foundation/86a0163c-adb0-408c-b363-5cecd711e051/application"
+    },
+    {
+      "id": "88ab7c8e-f486-4004-bd33-de8237ab3d3c",
+      "title": "Head of Partnerships",
+      "departmentName": "Operations",
+      "teamName": "Operations",
+      "employmentType": "FullTime",
+      "location": "London, UK",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "London",
+          "addressRegion": "UK",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-02-28",
+      "descriptionHtml": "<p>Head of Partnerships at Stargate Foundation.</p>",
+      "descriptionPlain": "Head of Partnerships at Stargate Foundation.",
+      "jobUrl": "https://jobs.ashbyhq.com/stargate-foundation/88ab7c8e-f486-4004-bd33-de8237ab3d3c",
+      "applyUrl": "https://jobs.ashbyhq.com/stargate-foundation/88ab7c8e-f486-4004-bd33-de8237ab3d3c/application"
+    },
+    {
+      "id": "b28b571a-4491-4fb6-8e6c-89f91df854c2",
+      "title": "Full Stack Engineer",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "Poland",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Poland",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-07-22",
+      "descriptionHtml": "<p>Full Stack Engineer at Stargate Foundation.</p>",
+      "descriptionPlain": "Full Stack Engineer at Stargate Foundation.",
+      "jobUrl": "https://jobs.ashbyhq.com/stargate-foundation/b28b571a-4491-4fb6-8e6c-89f91df854c2",
+      "applyUrl": "https://jobs.ashbyhq.com/stargate-foundation/b28b571a-4491-4fb6-8e6c-89f91df854c2/application"
+    }
+  ]
+}

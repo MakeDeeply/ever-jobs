@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "0b0c3c5b-80d0-4360-bb14-1342ffe0b130",
+      "title": "HMO Benefits Liaison",
+      "departmentName": "Medical Operations",
+      "teamName": "Medical Operations",
+      "employmentType": "FullTime",
+      "location": "HQ",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "HQ",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-10-21",
+      "descriptionHtml": "<p>HMO Benefits Liaison at Hive Health.</p>",
+      "descriptionPlain": "HMO Benefits Liaison at Hive Health.",
+      "jobUrl": "https://jobs.ashbyhq.com/hivehealth/0b0c3c5b-80d0-4360-bb14-1342ffe0b130",
+      "applyUrl": "https://jobs.ashbyhq.com/hivehealth/0b0c3c5b-80d0-4360-bb14-1342ffe0b130/application"
+    },
+    {
+      "id": "0f45afe1-e8c7-4b44-b8b1-6c75d79025fc",
+      "title": "Partnerships Associate",
+      "departmentName": "Growth",
+      "teamName": "Growth",
+      "employmentType": "FullTime",
+      "location": "Pasig Office - Hybrid",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Pasig Office - Hybrid",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-16",
+      "descriptionHtml": "<p>Partnerships Associate at Hive Health.</p>",
+      "descriptionPlain": "Partnerships Associate at Hive Health.",
+      "jobUrl": "https://jobs.ashbyhq.com/hivehealth/0f45afe1-e8c7-4b44-b8b1-6c75d79025fc",
+      "applyUrl": "https://jobs.ashbyhq.com/hivehealth/0f45afe1-e8c7-4b44-b8b1-6c75d79025fc/application"
+    },
+    {
+      "id": "32104c5a-69d5-41ac-847e-088f73c07d09",
+      "title": "HMO Officer",
+      "departmentName": "Medical Operations",
+      "teamName": "Medical Operations",
+      "employmentType": "FullTime",
+      "location": "HQ",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "HQ",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-10-20",
+      "descriptionHtml": "<p>HMO Officer at Hive Health.</p>",
+      "descriptionPlain": "HMO Officer at Hive Health.",
+      "jobUrl": "https://jobs.ashbyhq.com/hivehealth/32104c5a-69d5-41ac-847e-088f73c07d09",
+      "applyUrl": "https://jobs.ashbyhq.com/hivehealth/32104c5a-69d5-41ac-847e-088f73c07d09/application"
+    }
+  ]
+}

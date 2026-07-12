@@ -1,0 +1,62 @@
+[
+  {
+    "id": "2d614fcc-0a46-4a1e-a926-334e9a69ace4",
+    "text": "Enterprise Solutions Associate",
+    "categories": {
+      "location": "Nationwide",
+      "allLocations": [
+        "Nationwide"
+      ],
+      "department": "Operations",
+      "team": "Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1764601930064,
+    "descriptionPlain": "Enterprise Solutions Associate at Relay Robotics.",
+    "description": "<p>Enterprise Solutions Associate at Relay Robotics.</p>",
+    "hostedUrl": "https://jobs.lever.co/relayrobotics.com/2d614fcc-0a46-4a1e-a926-334e9a69ace4",
+    "applyUrl": "https://jobs.lever.co/relayrobotics.com/2d614fcc-0a46-4a1e-a926-334e9a69ace4/apply"
+  },
+  {
+    "id": "6bfc4d01-9983-4bea-86f1-9196d01ed9bb",
+    "text": "Field Technician (Amsterdam, Netherlands)",
+    "categories": {
+      "location": "Amsterdam",
+      "allLocations": [
+        "Amsterdam"
+      ],
+      "department": "Operations",
+      "team": "Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1772576358846,
+    "descriptionPlain": "Field Technician (Amsterdam, Netherlands) at Relay Robotics.",
+    "description": "<p>Field Technician (Amsterdam, Netherlands) at Relay Robotics.</p>",
+    "hostedUrl": "https://jobs.lever.co/relayrobotics.com/6bfc4d01-9983-4bea-86f1-9196d01ed9bb",
+    "applyUrl": "https://jobs.lever.co/relayrobotics.com/6bfc4d01-9983-4bea-86f1-9196d01ed9bb/apply"
+  },
+  {
+    "id": "a32a9487-e22f-4e1a-b4ec-cb3841b580a6",
+    "text": "Sales Executive",
+    "categories": {
+      "location": "Nationwide",
+      "allLocations": [
+        "Nationwide"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1764602127694,
+    "descriptionPlain": "Sales Executive at Relay Robotics.",
+    "description": "<p>Sales Executive at Relay Robotics.</p>",
+    "hostedUrl": "https://jobs.lever.co/relayrobotics.com/a32a9487-e22f-4e1a-b4ec-cb3841b580a6",
+    "applyUrl": "https://jobs.lever.co/relayrobotics.com/a32a9487-e22f-4e1a-b4ec-cb3841b580a6/apply"
+  }
+]

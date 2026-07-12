@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135778169",
+      "name": "Préposé(e) au soutien des opérations culinaires",
+      "uuid": "sodexocanada-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "SodexoCanadaLtd",
+        "name": "Sodexo Canada"
+      },
+      "releasedDate": "2026-07-03T19:29:19.423Z",
+      "location": {
+        "city": "Montreal",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Montreal, QC, Canada"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Customer Service"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SodexoCanadaLtd/744000135778169",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Préposé(e) au soutien des opérations culinaires at Sodexo Canada.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135775039",
+      "name": "Housekeeper Busy Healthcare Unit (87262001)",
+      "uuid": "sodexocanada-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "SodexoCanadaLtd",
+        "name": "Sodexo Canada"
+      },
+      "releasedDate": "2026-07-03T18:28:35.860Z",
+      "location": {
+        "city": "Cochrane",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Cochrane, AB, Canada"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Production"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SodexoCanadaLtd/744000135775039",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Housekeeper Busy Healthcare Unit (87262001) at Sodexo Canada.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135774709",
+      "name": "Multi-Unit Retail Food Service Manager, Healthcare (87198004)",
+      "uuid": "sodexocanada-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "SodexoCanadaLtd",
+        "name": "Sodexo Canada"
+      },
+      "releasedDate": "2026-07-03T18:21:01.574Z",
+      "location": {
+        "city": "Richmond Hill",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Richmond Hill, ON, Canada"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Management"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SodexoCanadaLtd/744000135774709",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Multi-Unit Retail Food Service Manager, Healthcare (87198004) at Sodexo Canada.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

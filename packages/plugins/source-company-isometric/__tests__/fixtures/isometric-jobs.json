@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "1256384d-c2f2-417a-ac93-c66143970686",
+      "title": "Finance Director",
+      "departmentName": "Operations",
+      "teamName": "Operations",
+      "employmentType": "FullTime",
+      "location": "London",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "London",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-13",
+      "descriptionHtml": "<p>Finance Director at Isometric.</p>",
+      "descriptionPlain": "Finance Director at Isometric.",
+      "jobUrl": "https://jobs.ashbyhq.com/isometric/1256384d-c2f2-417a-ac93-c66143970686",
+      "applyUrl": "https://jobs.ashbyhq.com/isometric/1256384d-c2f2-417a-ac93-c66143970686/application"
+    },
+    {
+      "id": "2a3f7e11-0b77-4d65-bf66-2ae8283470a8",
+      "title": "Data Centre Consultant",
+      "departmentName": "Technology",
+      "teamName": "Technology",
+      "employmentType": "FullTime",
+      "location": "Remote",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Remote",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2026-06-18",
+      "descriptionHtml": "<p>Data Centre Consultant at Isometric.</p>",
+      "descriptionPlain": "Data Centre Consultant at Isometric.",
+      "jobUrl": "https://jobs.ashbyhq.com/isometric/2a3f7e11-0b77-4d65-bf66-2ae8283470a8",
+      "applyUrl": "https://jobs.ashbyhq.com/isometric/2a3f7e11-0b77-4d65-bf66-2ae8283470a8/application"
+    },
+    {
+      "id": "3940b109-c560-45a9-9011-a0e034b2c57d",
+      "title": "Partnerships Manager",
+      "departmentName": "Growth",
+      "teamName": "Growth",
+      "employmentType": "FullTime",
+      "location": "London",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "London",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-24",
+      "descriptionHtml": "<p>Partnerships Manager at Isometric.</p>",
+      "descriptionPlain": "Partnerships Manager at Isometric.",
+      "jobUrl": "https://jobs.ashbyhq.com/isometric/3940b109-c560-45a9-9011-a0e034b2c57d",
+      "applyUrl": "https://jobs.ashbyhq.com/isometric/3940b109-c560-45a9-9011-a0e034b2c57d/application"
+    }
+  ]
+}

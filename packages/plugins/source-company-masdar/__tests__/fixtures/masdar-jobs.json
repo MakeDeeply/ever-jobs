@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000134798529",
+      "name": "Senior Manager – Investment, PLM & Document Intelligence Platforms",
+      "uuid": "masdar-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Masdar",
+        "name": "Masdar"
+      },
+      "releasedDate": "2026-06-29T13:42:08.210Z",
+      "location": {
+        "city": "Abu Dhabi",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Abu Dhabi, Abu Dhabi, United Arab Emirates"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Strategy/Planning"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Masdar/744000134798529",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Manager – Investment, PLM & Document Intelligence Platforms at Masdar.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000134797722",
+      "name": "Senior Manager - Global IT Operations Manager",
+      "uuid": "masdar-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Masdar",
+        "name": "Masdar"
+      },
+      "releasedDate": "2026-06-29T13:41:48.572Z",
+      "location": {
+        "city": "Abu Dhabi",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Abu Dhabi, Abu Dhabi, United Arab Emirates"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Strategy/Planning"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Masdar/744000134797722",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Manager - Global IT Operations Manager at Masdar.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000134794419",
+      "name": "Associate Data / Decision Scientist (UAEN)",
+      "uuid": "masdar-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Masdar",
+        "name": "Masdar"
+      },
+      "releasedDate": "2026-06-29T13:27:12.794Z",
+      "location": {
+        "city": "Abu Dhabi",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Abu Dhabi, Abu Dhabi, United Arab Emirates"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Strategy/Planning"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Masdar/744000134794419",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Associate Data / Decision Scientist (UAEN) at Masdar.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

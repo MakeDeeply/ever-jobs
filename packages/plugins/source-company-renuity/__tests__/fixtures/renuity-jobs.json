@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "000d13fb-bd06-44de-9bac-22b989777972",
+      "title": "Entry -Level Retail Sales Representative",
+      "departmentName": "Field",
+      "teamName": "Field",
+      "employmentType": "FullTime",
+      "location": "Provo, UT",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Provo",
+          "addressRegion": "UT",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-30",
+      "descriptionHtml": "<p>Entry -Level Retail Sales Representative at Renuity.</p>",
+      "descriptionPlain": "Entry -Level Retail Sales Representative at Renuity.",
+      "jobUrl": "https://jobs.ashbyhq.com/renuity/000d13fb-bd06-44de-9bac-22b989777972",
+      "applyUrl": "https://jobs.ashbyhq.com/renuity/000d13fb-bd06-44de-9bac-22b989777972/application"
+    },
+    {
+      "id": "00a890ed-801d-4729-9a80-fa6add21bf8d",
+      "title": "Field Marketer",
+      "departmentName": "Field",
+      "teamName": "Field",
+      "employmentType": "FullTime",
+      "location": "Rochester, NY",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Rochester",
+          "addressRegion": "NY",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-29",
+      "descriptionHtml": "<p>Field Marketer at Renuity.</p>",
+      "descriptionPlain": "Field Marketer at Renuity.",
+      "jobUrl": "https://jobs.ashbyhq.com/renuity/00a890ed-801d-4729-9a80-fa6add21bf8d",
+      "applyUrl": "https://jobs.ashbyhq.com/renuity/00a890ed-801d-4729-9a80-fa6add21bf8d/application"
+    },
+    {
+      "id": "00b58504-9052-4f83-a7a9-8f193a3e12fd",
+      "title": "Remodeling Service Manager",
+      "departmentName": "Field",
+      "teamName": "Field",
+      "employmentType": "FullTime",
+      "location": "Cincinnati, OH",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Cincinnati",
+          "addressRegion": "OH",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-17",
+      "descriptionHtml": "<p>Remodeling Service Manager at Renuity.</p>",
+      "descriptionPlain": "Remodeling Service Manager at Renuity.",
+      "jobUrl": "https://jobs.ashbyhq.com/renuity/00b58504-9052-4f83-a7a9-8f193a3e12fd",
+      "applyUrl": "https://jobs.ashbyhq.com/renuity/00b58504-9052-4f83-a7a9-8f193a3e12fd/application"
+    }
+  ]
+}

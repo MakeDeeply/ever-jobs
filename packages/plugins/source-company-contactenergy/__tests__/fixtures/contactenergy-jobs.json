@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135634090",
+      "name": "Retail Planning & Performance Manager",
+      "uuid": "contactenergy-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "ContactEnergy",
+        "name": "Contact Energy"
+      },
+      "releasedDate": "2026-07-03T01:50:40.260Z",
+      "location": {
+        "city": "Auckland",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Auckland, Auckland, New Zealand"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Retail"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ContactEnergy/744000135634090",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Retail Planning & Performance Manager at Contact Energy.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135363739",
+      "name": "Turnaround Coordinator - Electrical",
+      "uuid": "contactenergy-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "ContactEnergy",
+        "name": "Contact Energy"
+      },
+      "releasedDate": "2026-07-01T23:37:37.765Z",
+      "location": {
+        "city": "Taupo",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Taupo, Waikato, New Zealand"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Generation & Trading"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ContactEnergy/744000135363739",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Turnaround Coordinator - Electrical at Contact Energy.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135354249",
+      "name": "Senior Mechanical Engineer - Hydro",
+      "uuid": "contactenergy-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "ContactEnergy",
+        "name": "Contact Energy"
+      },
+      "releasedDate": "2026-07-01T21:58:46.928Z",
+      "location": {
+        "city": "Clyde",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Clyde, Central Otago, New Zealand"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Generation & Trading"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ContactEnergy/744000135354249",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Mechanical Engineer - Hydro at Contact Energy.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

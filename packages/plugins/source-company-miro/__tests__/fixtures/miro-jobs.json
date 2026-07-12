@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "030b1911-6146-4780-ad1d-f0b45d3ca791",
+      "title": "Strategic Account Executive - Asia",
+      "departmentName": "Sales",
+      "teamName": "Sales",
+      "employmentType": "FullTime",
+      "location": "Singapore",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Singapore",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-10",
+      "descriptionHtml": "<p>Strategic Account Executive - Asia at Miro.</p>",
+      "descriptionPlain": "Strategic Account Executive - Asia at Miro.",
+      "jobUrl": "https://jobs.ashbyhq.com/miro/030b1911-6146-4780-ad1d-f0b45d3ca791",
+      "applyUrl": "https://jobs.ashbyhq.com/miro/030b1911-6146-4780-ad1d-f0b45d3ca791/application"
+    },
+    {
+      "id": "03127996-2f49-40ef-8a3e-2f306a3a25de",
+      "title": "Senior Manager – Application Security",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "Amsterdam",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Amsterdam",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-07-14",
+      "descriptionHtml": "<p>Senior Manager – Application Security at Miro.</p>",
+      "descriptionPlain": "Senior Manager – Application Security at Miro.",
+      "jobUrl": "https://jobs.ashbyhq.com/miro/03127996-2f49-40ef-8a3e-2f306a3a25de",
+      "applyUrl": "https://jobs.ashbyhq.com/miro/03127996-2f49-40ef-8a3e-2f306a3a25de/application"
+    },
+    {
+      "id": "04795998-7f24-465c-b413-8b4cb0c0d864",
+      "title": "Director Product Design - Structured Modes",
+      "departmentName": "Product",
+      "teamName": "Product",
+      "employmentType": "FullTime",
+      "location": "Copenhagen",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Copenhagen",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-25",
+      "descriptionHtml": "<p>Director Product Design - Structured Modes at Miro.</p>",
+      "descriptionPlain": "Director Product Design - Structured Modes at Miro.",
+      "jobUrl": "https://jobs.ashbyhq.com/miro/04795998-7f24-465c-b413-8b4cb0c0d864",
+      "applyUrl": "https://jobs.ashbyhq.com/miro/04795998-7f24-465c-b413-8b4cb0c0d864/application"
+    }
+  ]
+}

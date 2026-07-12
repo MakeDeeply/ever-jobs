@@ -1,0 +1,62 @@
+[
+  {
+    "id": "f5188695-e1da-43c4-8967-4c3b5933468a",
+    "text": "Assistant Store Manager - Markville Mall",
+    "categories": {
+      "location": "Markham, ON",
+      "allLocations": [
+        "Markham, ON"
+      ],
+      "department": "Retail Stores",
+      "team": "Retail Stores",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1783009792078,
+    "descriptionPlain": "Assistant Store Manager - Markville Mall at Knix.",
+    "description": "<p>Assistant Store Manager - Markville Mall at Knix.</p>",
+    "hostedUrl": "https://jobs.lever.co/knix/f5188695-e1da-43c4-8967-4c3b5933468a",
+    "applyUrl": "https://jobs.lever.co/knix/f5188695-e1da-43c4-8967-4c3b5933468a/apply"
+  },
+  {
+    "id": "f580db18-ec94-417b-9e08-bf35a709bacb",
+    "text": "Assistant Store Manager - Robson",
+    "categories": {
+      "location": "Vancouver, BC",
+      "allLocations": [
+        "Vancouver, BC"
+      ],
+      "department": "Retail Stores",
+      "team": "Retail Stores",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1782222476183,
+    "descriptionPlain": "Assistant Store Manager - Robson at Knix.",
+    "description": "<p>Assistant Store Manager - Robson at Knix.</p>",
+    "hostedUrl": "https://jobs.lever.co/knix/f580db18-ec94-417b-9e08-bf35a709bacb",
+    "applyUrl": "https://jobs.lever.co/knix/f580db18-ec94-417b-9e08-bf35a709bacb/apply"
+  },
+  {
+    "id": "6ea9be51-b019-4488-9ce6-6aca8636d19d",
+    "text": "Assistant Store Manager - Scarborough Town Centre",
+    "categories": {
+      "location": "Scarborough, ON",
+      "allLocations": [
+        "Scarborough, ON"
+      ],
+      "department": "Retail Stores",
+      "team": "Retail Stores",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1780941368888,
+    "descriptionPlain": "Assistant Store Manager - Scarborough Town Centre at Knix.",
+    "description": "<p>Assistant Store Manager - Scarborough Town Centre at Knix.</p>",
+    "hostedUrl": "https://jobs.lever.co/knix/6ea9be51-b019-4488-9ce6-6aca8636d19d",
+    "applyUrl": "https://jobs.lever.co/knix/6ea9be51-b019-4488-9ce6-6aca8636d19d/apply"
+  }
+]

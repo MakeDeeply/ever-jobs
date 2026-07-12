@@ -1,0 +1,62 @@
+[
+  {
+    "id": "5342e333-61b9-406d-bfea-61a687a94d1f",
+    "text": "AI Research Internship - LLM",
+    "categories": {
+      "location": "Sunnyvale, CA",
+      "allLocations": [
+        "Sunnyvale, CA"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1753396817708,
+    "descriptionPlain": "AI Research Internship - LLM at Institute of Foundation Models.",
+    "description": "<p>AI Research Internship - LLM at Institute of Foundation Models.</p>",
+    "hostedUrl": "https://jobs.lever.co/ifm-us/5342e333-61b9-406d-bfea-61a687a94d1f",
+    "applyUrl": "https://jobs.lever.co/ifm-us/5342e333-61b9-406d-bfea-61a687a94d1f/apply"
+  },
+  {
+    "id": "3eec355c-6dde-4a3e-8cdf-b2a8930d5678",
+    "text": "AI Research Internship - WM",
+    "categories": {
+      "location": "Sunnyvale, CA",
+      "allLocations": [
+        "Sunnyvale, CA"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1781288673741,
+    "descriptionPlain": "AI Research Internship - WM at Institute of Foundation Models.",
+    "description": "<p>AI Research Internship - WM at Institute of Foundation Models.</p>",
+    "hostedUrl": "https://jobs.lever.co/ifm-us/3eec355c-6dde-4a3e-8cdf-b2a8930d5678",
+    "applyUrl": "https://jobs.lever.co/ifm-us/3eec355c-6dde-4a3e-8cdf-b2a8930d5678/apply"
+  },
+  {
+    "id": "30a58353-c2b6-4881-b2ec-6b7a914b26f6",
+    "text": "Community Development Manager",
+    "categories": {
+      "location": "Abu Dhabi",
+      "allLocations": [
+        "Abu Dhabi"
+      ],
+      "department": "Product",
+      "team": "Product",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1762341044981,
+    "descriptionPlain": "Community Development Manager at Institute of Foundation Models.",
+    "description": "<p>Community Development Manager at Institute of Foundation Models.</p>",
+    "hostedUrl": "https://jobs.lever.co/ifm-us/30a58353-c2b6-4881-b2ec-6b7a914b26f6",
+    "applyUrl": "https://jobs.lever.co/ifm-us/30a58353-c2b6-4881-b2ec-6b7a914b26f6/apply"
+  }
+]

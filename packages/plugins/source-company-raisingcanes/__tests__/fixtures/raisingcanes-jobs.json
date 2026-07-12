@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135773849",
+      "name": "Restaurant Manager",
+      "uuid": "raisingcanes-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "RaisingCanes",
+        "name": "Raising Cane's"
+      },
+      "releasedDate": "2026-07-03T18:11:34.830Z",
+      "location": {
+        "city": "Jamaica",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Jamaica, NY, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Operations"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/RaisingCanes/744000135773849",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Restaurant Manager at Raising Cane's.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135770809",
+      "name": "NRO Hourly Restaurant Manager - Travel Required",
+      "uuid": "raisingcanes-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "RaisingCanes",
+        "name": "Raising Cane's"
+      },
+      "releasedDate": "2026-07-03T17:30:14.676Z",
+      "location": {
+        "city": "Manassas",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Manassas, VA, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Operations"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/RaisingCanes/744000135770809",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>NRO Hourly Restaurant Manager - Travel Required at Raising Cane's.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135769660",
+      "name": "NRO Hourly Restaurant Manager - Travel Required",
+      "uuid": "raisingcanes-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "RaisingCanes",
+        "name": "Raising Cane's"
+      },
+      "releasedDate": "2026-07-03T17:24:31.477Z",
+      "location": {
+        "city": "Fairfield",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Fairfield, NJ, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Operations"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/RaisingCanes/744000135769660",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>NRO Hourly Restaurant Manager - Travel Required at Raising Cane's.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

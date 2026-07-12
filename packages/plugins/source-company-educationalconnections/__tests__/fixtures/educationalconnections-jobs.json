@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "112422574",
+      "name": "Part-time Tutor",
+      "uuid": "educationalconnections-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "EducationalConnections",
+        "name": "Educational Connections"
+      },
+      "releasedDate": "2017-04-04T14:45:23.000Z",
+      "location": {
+        "city": "Fairfax",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Fairfax, VA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Education"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/EducationalConnections/112422574",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Part-time Tutor at Educational Connections.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "86315085",
+      "name": "Program Coordinator",
+      "uuid": "educationalconnections-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "EducationalConnections",
+        "name": "Educational Connections"
+      },
+      "releasedDate": "2015-10-27T18:45:32.000Z",
+      "location": {
+        "city": "Fairfax",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Fairfax, VA, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/EducationalConnections/86315085",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Program Coordinator at Educational Connections.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "82388648",
+      "name": "Part-Time Tutor",
+      "uuid": "educationalconnections-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "EducationalConnections",
+        "name": "Educational Connections"
+      },
+      "releasedDate": "2015-04-20T20:31:21.000Z",
+      "location": {
+        "city": "Fairfax",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Fairfax, VA, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Education"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/EducationalConnections/82388648",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Part-Time Tutor at Educational Connections.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

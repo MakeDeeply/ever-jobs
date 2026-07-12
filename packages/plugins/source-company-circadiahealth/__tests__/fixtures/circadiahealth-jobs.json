@@ -1,0 +1,62 @@
+[
+  {
+    "id": "2192a120-1371-486d-8e6d-a43b64860525",
+    "text": "Customer Success Manager",
+    "categories": {
+      "location": "New York Metropolitan",
+      "allLocations": [
+        "New York Metropolitan"
+      ],
+      "department": "Customer Success",
+      "team": "Customer Success",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1770078550553,
+    "descriptionPlain": "Customer Success Manager at Circadia Health.",
+    "description": "<p>Customer Success Manager at Circadia Health.</p>",
+    "hostedUrl": "https://jobs.lever.co/circadiahealth/2192a120-1371-486d-8e6d-a43b64860525",
+    "applyUrl": "https://jobs.lever.co/circadiahealth/2192a120-1371-486d-8e6d-a43b64860525/apply"
+  },
+  {
+    "id": "4d8aa011-b6d3-4750-9167-14cad7468d7c",
+    "text": "Customer Success Manager",
+    "categories": {
+      "location": "Los Angeles, CA",
+      "allLocations": [
+        "Los Angeles, CA"
+      ],
+      "department": "Customer Success",
+      "team": "Customer Success",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1765246110873,
+    "descriptionPlain": "Customer Success Manager at Circadia Health.",
+    "description": "<p>Customer Success Manager at Circadia Health.</p>",
+    "hostedUrl": "https://jobs.lever.co/circadiahealth/4d8aa011-b6d3-4750-9167-14cad7468d7c",
+    "applyUrl": "https://jobs.lever.co/circadiahealth/4d8aa011-b6d3-4750-9167-14cad7468d7c/apply"
+  },
+  {
+    "id": "2804eb85-ed80-4d45-9467-af2b6363ffbb",
+    "text": "Data Engineer",
+    "categories": {
+      "location": "Vauxhall, London",
+      "allLocations": [
+        "Vauxhall, London"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1771879366507,
+    "descriptionPlain": "Data Engineer at Circadia Health.",
+    "description": "<p>Data Engineer at Circadia Health.</p>",
+    "hostedUrl": "https://jobs.lever.co/circadiahealth/2804eb85-ed80-4d45-9467-af2b6363ffbb",
+    "applyUrl": "https://jobs.lever.co/circadiahealth/2804eb85-ed80-4d45-9467-af2b6363ffbb/apply"
+  }
+]

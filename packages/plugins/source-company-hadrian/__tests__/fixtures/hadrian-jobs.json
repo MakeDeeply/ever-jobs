@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "00294c6e-173e-482e-b684-5cf68b6d9497",
+      "title": "(AZ) CAM Programmer - Execution",
+      "departmentName": "Manufacturing",
+      "teamName": "Manufacturing",
+      "employmentType": "FullTime",
+      "location": "Mesa, AZ",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Mesa",
+          "addressRegion": "AZ",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-15",
+      "descriptionHtml": "<p>(AZ) CAM Programmer - Execution at Hadrian.</p>",
+      "descriptionPlain": "(AZ) CAM Programmer - Execution at Hadrian.",
+      "jobUrl": "https://jobs.ashbyhq.com/hadrian-automation/00294c6e-173e-482e-b684-5cf68b6d9497",
+      "applyUrl": "https://jobs.ashbyhq.com/hadrian-automation/00294c6e-173e-482e-b684-5cf68b6d9497/application"
+    },
+    {
+      "id": "01e44efa-d12a-43c5-85f7-e4b823ff9ce1",
+      "title": "Manufacturing Engineer, Forging",
+      "departmentName": "Manufacturing",
+      "teamName": "Manufacturing",
+      "employmentType": "FullTime",
+      "location": "Los Angeles, CA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Los Angeles",
+          "addressRegion": "CA",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-10-01",
+      "descriptionHtml": "<p>Manufacturing Engineer, Forging at Hadrian.</p>",
+      "descriptionPlain": "Manufacturing Engineer, Forging at Hadrian.",
+      "jobUrl": "https://jobs.ashbyhq.com/hadrian-automation/01e44efa-d12a-43c5-85f7-e4b823ff9ce1",
+      "applyUrl": "https://jobs.ashbyhq.com/hadrian-automation/01e44efa-d12a-43c5-85f7-e4b823ff9ce1/application"
+    },
+    {
+      "id": "04372ff7-45e0-4380-9294-50f4e49c9fb4",
+      "title": "Mechanical Engineer, Factory Automation",
+      "departmentName": "Engineering, Product, Design",
+      "teamName": "Engineering, Product, Design",
+      "employmentType": "FullTime",
+      "location": "Los Angeles, CA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Los Angeles",
+          "addressRegion": "CA",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-12-02",
+      "descriptionHtml": "<p>Mechanical Engineer, Factory Automation at Hadrian.</p>",
+      "descriptionPlain": "Mechanical Engineer, Factory Automation at Hadrian.",
+      "jobUrl": "https://jobs.ashbyhq.com/hadrian-automation/04372ff7-45e0-4380-9294-50f4e49c9fb4",
+      "applyUrl": "https://jobs.ashbyhq.com/hadrian-automation/04372ff7-45e0-4380-9294-50f4e49c9fb4/application"
+    }
+  ]
+}

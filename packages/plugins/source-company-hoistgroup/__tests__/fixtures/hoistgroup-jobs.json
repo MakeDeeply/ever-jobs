@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999814048773",
+      "name": "Ingénieur DevOps H/F",
+      "uuid": "hoistgroup-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "HoistGroup",
+        "name": "Hoist Group"
+      },
+      "releasedDate": "2022-03-23T14:20:59.000Z",
+      "location": {
+        "city": "Pau",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Pau, Nouvelle-Aquitaine, France"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Global Service Development"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/HoistGroup/743999814048773",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Ingénieur DevOps H/F at Hoist Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999793850418",
+      "name": "Trainer and Installer – HotSoft",
+      "uuid": "hoistgroup-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "HoistGroup",
+        "name": "Hoist Group"
+      },
+      "releasedDate": "2021-12-20T17:59:12.000Z",
+      "location": {
+        "city": "Kilkenny",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Kilkenny, County Kilkenny, Ireland"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Sales & Operations"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/HoistGroup/743999793850418",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Trainer and Installer – HotSoft at Hoist Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999787345622",
+      "name": "Content Marketing Specialist",
+      "uuid": "hoistgroup-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "HoistGroup",
+        "name": "Hoist Group"
+      },
+      "releasedDate": "2021-11-16T14:30:09.000Z",
+      "location": {
+        "city": "London",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "London, England, United Kingdom"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Marketing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/HoistGroup/743999787345622",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Content Marketing Specialist at Hoist Group.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

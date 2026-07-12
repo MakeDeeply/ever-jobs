@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "40399368-5370-415a-8c43-3cf772bc7719",
+      "title": "Relationship Manager (New Business Development), Enterprise Business",
+      "departmentName": "Enterprise Business",
+      "teamName": "Enterprise Business",
+      "employmentType": "FullTime",
+      "location": "HK - Hong Kong SAR",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "HK - Hong Kong SAR",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-05-22",
+      "descriptionHtml": "<p>Relationship Manager (New Business Development), Enterprise Business at Airwallex.</p>",
+      "descriptionPlain": "Relationship Manager (New Business Development), Enterprise Business at Airwallex.",
+      "jobUrl": "https://jobs.ashbyhq.com/airwallex/40399368-5370-415a-8c43-3cf772bc7719",
+      "applyUrl": "https://jobs.ashbyhq.com/airwallex/40399368-5370-415a-8c43-3cf772bc7719/application"
+    },
+    {
+      "id": "46586b3a-ab75-4f41-b51a-5cf34a7d598b",
+      "title": "Head of Commercial Growth, Canada",
+      "departmentName": "SME & Growth Business",
+      "teamName": "SME & Growth Business",
+      "employmentType": "FullTime",
+      "location": "CA - Toronto",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "CA - Toronto",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-01-06",
+      "descriptionHtml": "<p>Head of Commercial Growth, Canada at Airwallex.</p>",
+      "descriptionPlain": "Head of Commercial Growth, Canada at Airwallex.",
+      "jobUrl": "https://jobs.ashbyhq.com/airwallex/46586b3a-ab75-4f41-b51a-5cf34a7d598b",
+      "applyUrl": "https://jobs.ashbyhq.com/airwallex/46586b3a-ab75-4f41-b51a-5cf34a7d598b/application"
+    },
+    {
+      "id": "330db6f4-079a-452a-a552-0c499d5c1473",
+      "title": "Senior Associate, Partner Marketing, CN",
+      "departmentName": "Marketing",
+      "teamName": "Marketing",
+      "employmentType": "FullTime",
+      "location": "CN - Shanghai",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "CN - Shanghai",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-26",
+      "descriptionHtml": "<p>Senior Associate, Partner Marketing, CN at Airwallex.</p>",
+      "descriptionPlain": "Senior Associate, Partner Marketing, CN at Airwallex.",
+      "jobUrl": "https://jobs.ashbyhq.com/airwallex/330db6f4-079a-452a-a552-0c499d5c1473",
+      "applyUrl": "https://jobs.ashbyhq.com/airwallex/330db6f4-079a-452a-a552-0c499d5c1473/application"
+    }
+  ]
+}

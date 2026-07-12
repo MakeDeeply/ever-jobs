@@ -1,0 +1,62 @@
+[
+  {
+    "id": "5dae1c71-86d7-4b28-aa2f-b6ab68bca148",
+    "text": "2D Animator",
+    "categories": {
+      "location": "Istanbul",
+      "allLocations": [
+        "Istanbul"
+      ],
+      "department": "Art",
+      "team": "Art",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1666349132260,
+    "descriptionPlain": "2D Animator at Spyke Games.",
+    "description": "<p>2D Animator at Spyke Games.</p>",
+    "hostedUrl": "https://jobs.lever.co/spyke-games/5dae1c71-86d7-4b28-aa2f-b6ab68bca148",
+    "applyUrl": "https://jobs.lever.co/spyke-games/5dae1c71-86d7-4b28-aa2f-b6ab68bca148/apply"
+  },
+  {
+    "id": "4c361f74-5939-42d0-8589-9373c4a68e07",
+    "text": "3D Marketing Artist",
+    "categories": {
+      "location": "Istanbul",
+      "allLocations": [
+        "Istanbul"
+      ],
+      "department": "Marketing",
+      "team": "Marketing",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1707898793400,
+    "descriptionPlain": "3D Marketing Artist at Spyke Games.",
+    "description": "<p>3D Marketing Artist at Spyke Games.</p>",
+    "hostedUrl": "https://jobs.lever.co/spyke-games/4c361f74-5939-42d0-8589-9373c4a68e07",
+    "applyUrl": "https://jobs.lever.co/spyke-games/4c361f74-5939-42d0-8589-9373c4a68e07/apply"
+  },
+  {
+    "id": "77ea64f9-0d67-4fc5-884b-0d6d5064abaa",
+    "text": "Backend Game Developer",
+    "categories": {
+      "location": "Istanbul",
+      "allLocations": [
+        "Istanbul"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1666345094392,
+    "descriptionPlain": "Backend Game Developer at Spyke Games.",
+    "description": "<p>Backend Game Developer at Spyke Games.</p>",
+    "hostedUrl": "https://jobs.lever.co/spyke-games/77ea64f9-0d67-4fc5-884b-0d6d5064abaa",
+    "applyUrl": "https://jobs.lever.co/spyke-games/77ea64f9-0d67-4fc5-884b-0d6d5064abaa/apply"
+  }
+]

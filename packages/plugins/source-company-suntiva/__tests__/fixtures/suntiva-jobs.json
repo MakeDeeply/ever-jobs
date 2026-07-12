@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "84105773",
+      "name": "Senior Human Capital Management Consultant",
+      "uuid": "suntiva-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "SuntivaLLC",
+        "name": "Suntiva"
+      },
+      "releasedDate": "2015-07-15T16:12:07.000Z",
+      "location": {
+        "city": "Silver Spring",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Silver Spring, MD, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Health"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SuntivaLLC/84105773",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Human Capital Management Consultant at Suntiva.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "82889768",
+      "name": "Contracts Administrator",
+      "uuid": "suntiva-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "SuntivaLLC",
+        "name": "Suntiva"
+      },
+      "releasedDate": "2015-05-13T16:05:58.000Z",
+      "location": {
+        "city": "Falls Church",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Falls Church, VA, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Accounting/Auditing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SuntivaLLC/82889768",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Contracts Administrator at Suntiva.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "82467921",
+      "name": "Program Manager, Naval Shipyard Legacy Systems",
+      "uuid": "suntiva-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "SuntivaLLC",
+        "name": "Suntiva"
+      },
+      "releasedDate": "2015-04-23T17:18:06.000Z",
+      "location": {
+        "city": "Norfolk",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Norfolk, VA, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "DOD"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SuntivaLLC/82467921",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Program Manager, Naval Shipyard Legacy Systems at Suntiva.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "02762c18-304f-4759-a34e-a26976567dcc",
+      "title": "Social Media Manager",
+      "departmentName": "Growth",
+      "teamName": "Growth",
+      "employmentType": "FullTime",
+      "location": "London",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "London",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-07-01",
+      "descriptionHtml": "<p>Social Media Manager at ElevenLabs.</p>",
+      "descriptionPlain": "Social Media Manager at ElevenLabs.",
+      "jobUrl": "https://jobs.ashbyhq.com/elevenlabs/02762c18-304f-4759-a34e-a26976567dcc",
+      "applyUrl": "https://jobs.ashbyhq.com/elevenlabs/02762c18-304f-4759-a34e-a26976567dcc/application"
+    },
+    {
+      "id": "02c054a0-ef9d-4f38-b44b-ad943955aab6",
+      "title": "Creator Community Growth",
+      "departmentName": "Growth",
+      "teamName": "Growth",
+      "employmentType": "FullTime",
+      "location": "United States",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "United States",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-21",
+      "descriptionHtml": "<p>Creator Community Growth at ElevenLabs.</p>",
+      "descriptionPlain": "Creator Community Growth at ElevenLabs.",
+      "jobUrl": "https://jobs.ashbyhq.com/elevenlabs/02c054a0-ef9d-4f38-b44b-ad943955aab6",
+      "applyUrl": "https://jobs.ashbyhq.com/elevenlabs/02c054a0-ef9d-4f38-b44b-ad943955aab6/application"
+    },
+    {
+      "id": "030ff848-f30b-496a-95c4-5e23ab2e5842",
+      "title": "Deployment Strategist Lead - Netherlands",
+      "departmentName": "Engineering & Product",
+      "teamName": "Engineering & Product",
+      "employmentType": "FullTime",
+      "location": "Netherlands",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Netherlands",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-16",
+      "descriptionHtml": "<p>Deployment Strategist Lead - Netherlands at ElevenLabs.</p>",
+      "descriptionPlain": "Deployment Strategist Lead - Netherlands at ElevenLabs.",
+      "jobUrl": "https://jobs.ashbyhq.com/elevenlabs/030ff848-f30b-496a-95c4-5e23ab2e5842",
+      "applyUrl": "https://jobs.ashbyhq.com/elevenlabs/030ff848-f30b-496a-95c4-5e23ab2e5842/application"
+    }
+  ]
+}

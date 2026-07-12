@@ -27,6 +27,7 @@
 | shipped    | `source-ats-joincom`       | `ats`      | **Join.com** ATS (`join.com/companies/<slug>/jobs`).| Public REST API. Shipped as `source-ats-joincom`. |
 | shipped    | `source-ats-oracle`        | `ats`      | **Oracle HCM Cloud** Recruiting (`*.fa.<region>.oraclecloud.com`). | Distinct from `source-ats-taleo` (legacy Oracle). Shipped as `source-ats-oracle`. |
 | shipped    | `source-ats-mercor`        | `niche`    | **Mercor** talent marketplace (`mercor.com`).       | Shipped as `source-ats-mercor`. |
+| shipped    | (Lever company-source pipeline) | `company` | **Lever** company-direct pipeline (`jobs.lever.co/<slug>`, public Postings API). | Spec 1194 (run #442). Third backend sibling of the Greenhouse + Ashby company-source pipelines: `probe-lever` + `scaffold-lever` reusing the backend-agnostic `wire-company-source`. First batch: 180 plugins, Specs 1195–1374. |
 | proposed   | `source-company-tesla`     | `company`  | **Tesla** careers site (reverse-engineered API).    | Single company-direct plugin. |
 | shipped    | `source-ats-ceipal`        | `ats`      | **Ceipal** US staffing ATS.                         | Spec 319, run #404. Anonymous career-portal API `api.ceipal.com/{apiKey}/job-postings/`. Heuristic confidence (key rotation). |
 | shipped    | `source-ats-softgarden`    | `ats`      | **Softgarden** German ATS.                          | Spec 320, run #404. Public schema.org `{tenantOrigin}/jobs.feed.json`. |

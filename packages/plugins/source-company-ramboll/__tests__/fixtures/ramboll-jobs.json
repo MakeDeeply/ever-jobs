@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135749182",
+      "name": "German Speaking Principal Project Manager / Associate Project Manager, TRANSPORT PROJECT MANAGEMENT TEAM",
+      "uuid": "ramboll-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Ramboll3",
+        "name": "Ramboll"
+      },
+      "releasedDate": "2026-07-03T14:38:32.979Z",
+      "location": {
+        "city": "Swords",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Swords, Co. Dublin, , Ireland"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Project Management"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Ramboll3/744000135749182",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>German Speaking Principal Project Manager / Associate Project Manager, TRANSPORT PROJECT MANAGEMENT TEAM at Ramboll.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135749484",
+      "name": "German Speaking Principal Project Manager / Associate Project Manager, TRANSPORT PROJECT MANAGEMENT TEAM",
+      "uuid": "ramboll-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Ramboll3",
+        "name": "Ramboll"
+      },
+      "releasedDate": "2026-07-03T14:37:52.736Z",
+      "location": {
+        "city": "Southernhay Way Exeter",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Southernhay Way Exeter, , United Kingdom"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Project Management"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Ramboll3/744000135749484",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>German Speaking Principal Project Manager / Associate Project Manager, TRANSPORT PROJECT MANAGEMENT TEAM at Ramboll.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135751479",
+      "name": "German Speaking Principal Project Manager / Associate Project Manager, TRANSPORT PROJECT MANAGEMENT TEAM",
+      "uuid": "ramboll-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Ramboll3",
+        "name": "Ramboll"
+      },
+      "releasedDate": "2026-07-03T14:37:21.393Z",
+      "location": {
+        "city": "Edinburgh",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Edinburgh, , United Kingdom"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Project Management"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Ramboll3/744000135751479",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>German Speaking Principal Project Manager / Associate Project Manager, TRANSPORT PROJECT MANAGEMENT TEAM at Ramboll.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

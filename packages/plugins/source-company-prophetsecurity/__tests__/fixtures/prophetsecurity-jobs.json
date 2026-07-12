@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "021da6e5-4e31-4f51-ad1a-d8127b4260d8",
+      "title": "Senior Software Engineer, Backend",
+      "departmentName": "R&D",
+      "teamName": "R&D",
+      "employmentType": "FullTime",
+      "location": "Remote",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Remote",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2026-01-30",
+      "descriptionHtml": "<p>Senior Software Engineer, Backend at Prophet Security.</p>",
+      "descriptionPlain": "Senior Software Engineer, Backend at Prophet Security.",
+      "jobUrl": "https://jobs.ashbyhq.com/prophet-security/021da6e5-4e31-4f51-ad1a-d8127b4260d8",
+      "applyUrl": "https://jobs.ashbyhq.com/prophet-security/021da6e5-4e31-4f51-ad1a-d8127b4260d8/application"
+    },
+    {
+      "id": "0288eecb-bd69-4c1b-bfbd-7b859543294d",
+      "title": "Senior Engineering Manager, Core Product",
+      "departmentName": "R&D",
+      "teamName": "R&D",
+      "employmentType": "FullTime",
+      "location": "Menlo Park (Hybrid)",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Menlo Park (Hybrid)",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-02-10",
+      "descriptionHtml": "<p>Senior Engineering Manager, Core Product at Prophet Security.</p>",
+      "descriptionPlain": "Senior Engineering Manager, Core Product at Prophet Security.",
+      "jobUrl": "https://jobs.ashbyhq.com/prophet-security/0288eecb-bd69-4c1b-bfbd-7b859543294d",
+      "applyUrl": "https://jobs.ashbyhq.com/prophet-security/0288eecb-bd69-4c1b-bfbd-7b859543294d/application"
+    },
+    {
+      "id": "4babd525-1a38-4109-ade0-c6cbd21774d9",
+      "title": "Senior Engineering Manager, Platform",
+      "departmentName": "R&D",
+      "teamName": "R&D",
+      "employmentType": "FullTime",
+      "location": "Menlo Park (Hybrid)",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Menlo Park (Hybrid)",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-02-10",
+      "descriptionHtml": "<p>Senior Engineering Manager, Platform at Prophet Security.</p>",
+      "descriptionPlain": "Senior Engineering Manager, Platform at Prophet Security.",
+      "jobUrl": "https://jobs.ashbyhq.com/prophet-security/4babd525-1a38-4109-ade0-c6cbd21774d9",
+      "applyUrl": "https://jobs.ashbyhq.com/prophet-security/4babd525-1a38-4109-ade0-c6cbd21774d9/application"
+    }
+  ]
+}

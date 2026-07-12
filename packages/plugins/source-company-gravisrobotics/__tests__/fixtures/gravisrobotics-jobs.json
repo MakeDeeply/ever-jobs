@@ -1,0 +1,62 @@
+[
+  {
+    "id": "722f43b5-93a2-4a51-8d89-bd217eaea950",
+    "text": "Field Robotics Engineer",
+    "categories": {
+      "location": "Zurich",
+      "allLocations": [
+        "Zurich"
+      ],
+      "department": "Field Engineering",
+      "team": "Field Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1701164201528,
+    "descriptionPlain": "Field Robotics Engineer at Gravis Robotics.",
+    "description": "<p>Field Robotics Engineer at Gravis Robotics.</p>",
+    "hostedUrl": "https://jobs.lever.co/gravisrobotics/722f43b5-93a2-4a51-8d89-bd217eaea950",
+    "applyUrl": "https://jobs.lever.co/gravisrobotics/722f43b5-93a2-4a51-8d89-bd217eaea950/apply"
+  },
+  {
+    "id": "4e97e97b-ac14-4b10-9b1c-015f0f85aec0",
+    "text": "Global Mapping & SLAM Engineer",
+    "categories": {
+      "location": "Zurich",
+      "allLocations": [
+        "Zurich"
+      ],
+      "department": "Perception",
+      "team": "Perception",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1783002034524,
+    "descriptionPlain": "Global Mapping & SLAM Engineer at Gravis Robotics.",
+    "description": "<p>Global Mapping & SLAM Engineer at Gravis Robotics.</p>",
+    "hostedUrl": "https://jobs.lever.co/gravisrobotics/4e97e97b-ac14-4b10-9b1c-015f0f85aec0",
+    "applyUrl": "https://jobs.lever.co/gravisrobotics/4e97e97b-ac14-4b10-9b1c-015f0f85aec0/apply"
+  },
+  {
+    "id": "fe9d2c3e-84d6-4b0f-ad31-70176d175c5c",
+    "text": "Robotics Engineer – Autonomous excavation",
+    "categories": {
+      "location": "Zurich",
+      "allLocations": [
+        "Zurich"
+      ],
+      "department": "Autonomy",
+      "team": "Autonomy",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1782315927283,
+    "descriptionPlain": "Robotics Engineer – Autonomous excavation at Gravis Robotics.",
+    "description": "<p>Robotics Engineer – Autonomous excavation at Gravis Robotics.</p>",
+    "hostedUrl": "https://jobs.lever.co/gravisrobotics/fe9d2c3e-84d6-4b0f-ad31-70176d175c5c",
+    "applyUrl": "https://jobs.lever.co/gravisrobotics/fe9d2c3e-84d6-4b0f-ad31-70176d175c5c/apply"
+  }
+]

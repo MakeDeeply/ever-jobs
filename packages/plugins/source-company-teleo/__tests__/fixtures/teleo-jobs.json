@@ -1,0 +1,62 @@
+[
+  {
+    "id": "17daf52d-f8ee-44b7-9f10-33fe980a512e",
+    "text": "Electrical Integration Engineer",
+    "categories": {
+      "location": "Palo Alto, CA",
+      "allLocations": [
+        "Palo Alto, CA"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1778207406917,
+    "descriptionPlain": "Electrical Integration Engineer at Teleo.",
+    "description": "<p>Electrical Integration Engineer at Teleo.</p>",
+    "hostedUrl": "https://jobs.lever.co/teleo/17daf52d-f8ee-44b7-9f10-33fe980a512e",
+    "applyUrl": "https://jobs.lever.co/teleo/17daf52d-f8ee-44b7-9f10-33fe980a512e/apply"
+  },
+  {
+    "id": "6dfaac40-a782-444f-98d3-d65ec94d205f",
+    "text": "Field Deployment Technician",
+    "categories": {
+      "location": "Florida",
+      "allLocations": [
+        "Florida"
+      ],
+      "department": "Operations",
+      "team": "Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1771366004711,
+    "descriptionPlain": "Field Deployment Technician at Teleo.",
+    "description": "<p>Field Deployment Technician at Teleo.</p>",
+    "hostedUrl": "https://jobs.lever.co/teleo/6dfaac40-a782-444f-98d3-d65ec94d205f",
+    "applyUrl": "https://jobs.lever.co/teleo/6dfaac40-a782-444f-98d3-d65ec94d205f/apply"
+  },
+  {
+    "id": "bb9aa30f-affd-41fb-98e9-12ab35734235",
+    "text": "Head of Supply Chain",
+    "categories": {
+      "location": "Palo Alto, CA",
+      "allLocations": [
+        "Palo Alto, CA"
+      ],
+      "department": "Operations",
+      "team": "Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1777573627465,
+    "descriptionPlain": "Head of Supply Chain at Teleo.",
+    "description": "<p>Head of Supply Chain at Teleo.</p>",
+    "hostedUrl": "https://jobs.lever.co/teleo/bb9aa30f-affd-41fb-98e9-12ab35734235",
+    "applyUrl": "https://jobs.lever.co/teleo/bb9aa30f-affd-41fb-98e9-12ab35734235/apply"
+  }
+]

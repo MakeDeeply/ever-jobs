@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135783459",
+      "name": "Health Innovation, Account Manager",
+      "uuid": "eversana-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "EVERSANA1",
+        "name": "EVERSANA"
+      },
+      "releasedDate": "2026-07-03T21:26:15.605Z",
+      "location": {
+        "city": "Milan",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Milan, Lombardy, Italy"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Marketing Agency"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/EVERSANA1/744000135783459",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Health Innovation, Account Manager at EVERSANA.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135783065",
+      "name": "Health Innovation, Junior Strategist",
+      "uuid": "eversana-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "EVERSANA1",
+        "name": "EVERSANA"
+      },
+      "releasedDate": "2026-07-03T21:17:54.193Z",
+      "location": {
+        "city": "Milan",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Milan, Lombardy, Italy"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Marketing Agency"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/EVERSANA1/744000135783065",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Health Innovation, Junior Strategist at EVERSANA.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135765059",
+      "name": "Medical Information Specialist - US Hours",
+      "uuid": "eversana-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "EVERSANA1",
+        "name": "EVERSANA"
+      },
+      "releasedDate": "2026-07-03T16:15:41.762Z",
+      "location": {
+        "city": "London",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "London, England, United Kingdom"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Clinical & Medical"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/EVERSANA1/744000135765059",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Medical Information Specialist - US Hours at EVERSANA.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

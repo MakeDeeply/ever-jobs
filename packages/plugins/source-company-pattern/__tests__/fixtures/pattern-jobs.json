@@ -1,0 +1,62 @@
+[
+  {
+    "id": "b669bb74-2c33-44cf-bc76-0fa9cc9c1187",
+    "text": "Accounts Receivable Manager",
+    "categories": {
+      "location": "Lehi, UT, US",
+      "allLocations": [
+        "Lehi, UT, US"
+      ],
+      "department": "Pattern Corporate",
+      "team": "Pattern Corporate",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1774380783969,
+    "descriptionPlain": "Accounts Receivable Manager at Pattern.",
+    "description": "<p>Accounts Receivable Manager at Pattern.</p>",
+    "hostedUrl": "https://jobs.lever.co/pattern/b669bb74-2c33-44cf-bc76-0fa9cc9c1187",
+    "applyUrl": "https://jobs.lever.co/pattern/b669bb74-2c33-44cf-bc76-0fa9cc9c1187/apply"
+  },
+  {
+    "id": "6cb2cc44-b0d6-429b-b742-fde03bdf27b6",
+    "text": "Advertising Specialist",
+    "categories": {
+      "location": "Pune, India",
+      "allLocations": [
+        "Pune, India"
+      ],
+      "department": "Pattern Corporate",
+      "team": "Pattern Corporate",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1775742852772,
+    "descriptionPlain": "Advertising Specialist at Pattern.",
+    "description": "<p>Advertising Specialist at Pattern.</p>",
+    "hostedUrl": "https://jobs.lever.co/pattern/6cb2cc44-b0d6-429b-b742-fde03bdf27b6",
+    "applyUrl": "https://jobs.lever.co/pattern/6cb2cc44-b0d6-429b-b742-fde03bdf27b6/apply"
+  },
+  {
+    "id": "a1a7f6f7-592b-49e4-9a32-79c526388961",
+    "text": "Area Manager - (Mon-Thurs Night Shift)",
+    "categories": {
+      "location": "North Las Vegas, NV, US",
+      "allLocations": [
+        "North Las Vegas, NV, US"
+      ],
+      "department": "Pattern Fulfillment",
+      "team": "Pattern Fulfillment",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1767391084863,
+    "descriptionPlain": "Area Manager - (Mon-Thurs Night Shift) at Pattern.",
+    "description": "<p>Area Manager - (Mon-Thurs Night Shift) at Pattern.</p>",
+    "hostedUrl": "https://jobs.lever.co/pattern/a1a7f6f7-592b-49e4-9a32-79c526388961",
+    "applyUrl": "https://jobs.lever.co/pattern/a1a7f6f7-592b-49e4-9a32-79c526388961/apply"
+  }
+]

@@ -1,0 +1,72 @@
+import { SourcePlugin, PluginRegistry } from '@ever-jobs/plugin';
+
+import { Injectable, Logger, Optional } from '@nestjs/common';
+import {
+  IScraper, ScraperInputDto, JobResponseDto, Site,
+} from '@ever-jobs/models';
+
+/**
+ * Character.AI — Consumer platform for creating and chatting with AI characters.
+ *
+ * Character.AI operates a consumer application that lets users create and
+ * converse with AI-driven characters powered by large language models. The
+ * product is available on web and mobile.
+ *
+ * Sector: Applied AI / consumer. HQ: Menlo Park, California, USA.
+ *
+ * Source: Ashby job board, company slug `character`
+ * (`https://jobs.ashbyhq.com/character`). The company's live
+ * postings are served by Ashby. Rather than re-implement Ashby parsing (and
+ * risk drift), this plugin resolves the registered Ashby source plugin from
+ * the `PluginRegistry` at runtime and delegates the fetch + field mapping to
+ * it, then re-stamps the company identity (site, companyName, id prefix) onto
+ * the results — so every Ashby field fix is inherited automatically. This
+ * honours the "no plugin imports a peer plugin directly; discover via the
+ * registry" rule.
+ */
+const COMPANY_SLUG = 'character';
+const COMPANY_NAME = 'Character.AI';
+
+@SourcePlugin({
+  site: Site.CHARACTER_AI,
+  name: COMPANY_NAME,
+  category: 'company',
+})
+@Injectable()
+export class CharacterAIService implements IScraper {
+  private readonly logger = new Logger(CharacterAIService.name);
+
+  constructor(
+    @Optional() private readonly registry?: PluginRegistry,
+  ) {}
+
+  async scrape(input: ScraperInputDto): Promise<JobResponseDto> {
+    const ashby = this.registry?.getScraper(Site.ASHBY);
+    if (!ashby) {
+      this.logger.error(
+        'Ashby source plugin is not registered; cannot scrape Character.AI',
+      );
+      return new JobResponseDto([]);
+    }
+
+    this.logger.log(
+      `Character.AI: delegating to Ashby (slug ${COMPANY_SLUG})`,
+    );
+
+    const result = await ashby.scrape({
+      ...input,
+      companySlug: COMPANY_SLUG,
+    } as ScraperInputDto);
+
+    for (const job of result.jobs) {
+      job.site = Site.CHARACTER_AI;
+      job.companyName = COMPANY_NAME;
+      if (job.id) {
+        job.id = job.id.replace(/^ashby-/, 'characterai-');
+      }
+    }
+
+    this.logger.log(`Character.AI: scraped ${result.jobs.length} jobs`);
+    return result;
+  }
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "f80ddbe4-1d46-4c20-9acd-6fbc1c34524c",
+    "text": "Cloud Infra Engineer",
+    "categories": {
+      "location": "Singapore, Singapore",
+      "allLocations": [
+        "Singapore, Singapore"
+      ],
+      "department": "Cloud Infrastructure and Services",
+      "team": "Cloud Infrastructure and Services",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1762768257728,
+    "descriptionPlain": "Cloud Infra Engineer at Centre for Strategic Infocomm Technologies (CSIT).",
+    "description": "<p>Cloud Infra Engineer at Centre for Strategic Infocomm Technologies (CSIT).</p>",
+    "hostedUrl": "https://jobs.lever.co/csit/f80ddbe4-1d46-4c20-9acd-6fbc1c34524c",
+    "applyUrl": "https://jobs.lever.co/csit/f80ddbe4-1d46-4c20-9acd-6fbc1c34524c/apply"
+  },
+  {
+    "id": "2f1f9bf8-1ba5-4eab-abbe-780554f68b23",
+    "text": "Cloud Platform Engineer",
+    "categories": {
+      "location": "Singapore, Singapore",
+      "allLocations": [
+        "Singapore, Singapore"
+      ],
+      "department": "Cloud Infrastructure and Services",
+      "team": "Cloud Infrastructure and Services",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1742277798852,
+    "descriptionPlain": "Cloud Platform Engineer at Centre for Strategic Infocomm Technologies (CSIT).",
+    "description": "<p>Cloud Platform Engineer at Centre for Strategic Infocomm Technologies (CSIT).</p>",
+    "hostedUrl": "https://jobs.lever.co/csit/2f1f9bf8-1ba5-4eab-abbe-780554f68b23",
+    "applyUrl": "https://jobs.lever.co/csit/2f1f9bf8-1ba5-4eab-abbe-780554f68b23/apply"
+  },
+  {
+    "id": "6cb0a4e3-548c-495b-aca9-b44dc2628f58",
+    "text": "Collaboration Platform Engineer",
+    "categories": {
+      "location": "Singapore, Singapore",
+      "allLocations": [
+        "Singapore, Singapore"
+      ],
+      "department": "Cloud Infrastructure and Services",
+      "team": "Cloud Infrastructure and Services",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1754380475736,
+    "descriptionPlain": "Collaboration Platform Engineer at Centre for Strategic Infocomm Technologies (CSIT).",
+    "description": "<p>Collaboration Platform Engineer at Centre for Strategic Infocomm Technologies (CSIT).</p>",
+    "hostedUrl": "https://jobs.lever.co/csit/6cb0a4e3-548c-495b-aca9-b44dc2628f58",
+    "applyUrl": "https://jobs.lever.co/csit/6cb0a4e3-548c-495b-aca9-b44dc2628f58/apply"
+  }
+]

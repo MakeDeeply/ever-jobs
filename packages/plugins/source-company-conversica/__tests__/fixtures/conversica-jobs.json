@@ -1,0 +1,62 @@
+[
+  {
+    "id": "d12d947d-aad2-4a9b-b333-ae3419b380e1",
+    "text": "Content Marketing Manager",
+    "categories": {
+      "location": "United States, Remote",
+      "allLocations": [
+        "United States, Remote"
+      ],
+      "department": "Marketing",
+      "team": "Marketing",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1781584868688,
+    "descriptionPlain": "Content Marketing Manager at Conversica.",
+    "description": "<p>Content Marketing Manager at Conversica.</p>",
+    "hostedUrl": "https://jobs.lever.co/conversica/d12d947d-aad2-4a9b-b333-ae3419b380e1",
+    "applyUrl": "https://jobs.lever.co/conversica/d12d947d-aad2-4a9b-b333-ae3419b380e1/apply"
+  },
+  {
+    "id": "a78e551f-60c4-4178-a971-782dc1085702",
+    "text": "Senior Backend Platform Engineer",
+    "categories": {
+      "location": "United States, Remote (West)",
+      "allLocations": [
+        "United States, Remote (West)"
+      ],
+      "department": "Engineering and Product Development",
+      "team": "Engineering and Product Development",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1780523270713,
+    "descriptionPlain": "Senior Backend Platform Engineer at Conversica.",
+    "description": "<p>Senior Backend Platform Engineer at Conversica.</p>",
+    "hostedUrl": "https://jobs.lever.co/conversica/a78e551f-60c4-4178-a971-782dc1085702",
+    "applyUrl": "https://jobs.lever.co/conversica/a78e551f-60c4-4178-a971-782dc1085702/apply"
+  },
+  {
+    "id": "651e42d3-925f-4347-ad2d-b0184e148a26",
+    "text": "Senior Revenue Operations Analyst",
+    "categories": {
+      "location": "United States, Remote",
+      "allLocations": [
+        "United States, Remote"
+      ],
+      "department": "Finance / Revenue Operations",
+      "team": "Finance / Revenue Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1781582769449,
+    "descriptionPlain": "Senior Revenue Operations Analyst at Conversica.",
+    "description": "<p>Senior Revenue Operations Analyst at Conversica.</p>",
+    "hostedUrl": "https://jobs.lever.co/conversica/651e42d3-925f-4347-ad2d-b0184e148a26",
+    "applyUrl": "https://jobs.lever.co/conversica/651e42d3-925f-4347-ad2d-b0184e148a26/apply"
+  }
+]

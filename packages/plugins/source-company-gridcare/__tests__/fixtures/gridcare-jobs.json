@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "925e111a-18d6-4d6f-b17b-b4435199f6ba",
+      "title": "Power System Engineer - Interconnection Studies",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "Redwood City",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Redwood City",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-05-23",
+      "descriptionHtml": "<p>Power System Engineer - Interconnection Studies at GridCARE.</p>",
+      "descriptionPlain": "Power System Engineer - Interconnection Studies at GridCARE.",
+      "jobUrl": "https://jobs.ashbyhq.com/gridcare/925e111a-18d6-4d6f-b17b-b4435199f6ba",
+      "applyUrl": "https://jobs.ashbyhq.com/gridcare/925e111a-18d6-4d6f-b17b-b4435199f6ba/application"
+    },
+    {
+      "id": "3560f842-d5f5-4a74-ba1c-0f75feadee74",
+      "title": "Director of Utility Partnerships",
+      "departmentName": "Sales and Customer Success",
+      "teamName": "Sales and Customer Success",
+      "employmentType": "FullTime",
+      "location": "Remote, Midwest or East Coast",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Remote",
+          "addressRegion": "Midwest or East Coast",
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2026-01-23",
+      "descriptionHtml": "<p>Director of Utility Partnerships at GridCARE.</p>",
+      "descriptionPlain": "Director of Utility Partnerships at GridCARE.",
+      "jobUrl": "https://jobs.ashbyhq.com/gridcare/3560f842-d5f5-4a74-ba1c-0f75feadee74",
+      "applyUrl": "https://jobs.ashbyhq.com/gridcare/3560f842-d5f5-4a74-ba1c-0f75feadee74/application"
+    },
+    {
+      "id": "18676d35-6941-41fe-a579-27d9bd6c39d3",
+      "title": "Enterprise Account Executive",
+      "departmentName": "Sales and Customer Success",
+      "teamName": "Sales and Customer Success",
+      "employmentType": "FullTime",
+      "location": "Redwood City",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Redwood City",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-10-29",
+      "descriptionHtml": "<p>Enterprise Account Executive at GridCARE.</p>",
+      "descriptionPlain": "Enterprise Account Executive at GridCARE.",
+      "jobUrl": "https://jobs.ashbyhq.com/gridcare/18676d35-6941-41fe-a579-27d9bd6c39d3",
+      "applyUrl": "https://jobs.ashbyhq.com/gridcare/18676d35-6941-41fe-a579-27d9bd6c39d3/application"
+    }
+  ]
+}

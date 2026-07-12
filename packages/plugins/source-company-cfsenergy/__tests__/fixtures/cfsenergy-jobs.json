@@ -1,0 +1,62 @@
+[
+  {
+    "id": "aac04afd-7c9e-4f27-8f45-869dde5129a5",
+    "text": "Building Manager",
+    "categories": {
+      "location": "Milpitas, CA",
+      "allLocations": [
+        "Milpitas, CA"
+      ],
+      "department": "Superconductor",
+      "team": "Superconductor",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1782406644791,
+    "descriptionPlain": "Building Manager at Commonwealth Fusion Systems.",
+    "description": "<p>Building Manager at Commonwealth Fusion Systems.</p>",
+    "hostedUrl": "https://jobs.lever.co/cfsenergy/aac04afd-7c9e-4f27-8f45-869dde5129a5",
+    "applyUrl": "https://jobs.lever.co/cfsenergy/aac04afd-7c9e-4f27-8f45-869dde5129a5/apply"
+  },
+  {
+    "id": "b985aa4a-b300-453b-9bff-4d5d2ca77388",
+    "text": "Buyer",
+    "categories": {
+      "location": "Devens, MA",
+      "allLocations": [
+        "Devens, MA"
+      ],
+      "department": "Corporate Operations",
+      "team": "Corporate Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1780340633659,
+    "descriptionPlain": "Buyer at Commonwealth Fusion Systems.",
+    "description": "<p>Buyer at Commonwealth Fusion Systems.</p>",
+    "hostedUrl": "https://jobs.lever.co/cfsenergy/b985aa4a-b300-453b-9bff-4d5d2ca77388",
+    "applyUrl": "https://jobs.lever.co/cfsenergy/b985aa4a-b300-453b-9bff-4d5d2ca77388/apply"
+  },
+  {
+    "id": "eb47535c-9fa7-4ee8-8720-5bfa65e27fb3",
+    "text": "Component Cleaning & Prep Lead",
+    "categories": {
+      "location": "Devens, MA",
+      "allLocations": [
+        "Devens, MA"
+      ],
+      "department": "Corporate Operations",
+      "team": "Corporate Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1780569806298,
+    "descriptionPlain": "Component Cleaning & Prep Lead at Commonwealth Fusion Systems.",
+    "description": "<p>Component Cleaning & Prep Lead at Commonwealth Fusion Systems.</p>",
+    "hostedUrl": "https://jobs.lever.co/cfsenergy/eb47535c-9fa7-4ee8-8720-5bfa65e27fb3",
+    "applyUrl": "https://jobs.lever.co/cfsenergy/eb47535c-9fa7-4ee8-8720-5bfa65e27fb3/apply"
+  }
+]

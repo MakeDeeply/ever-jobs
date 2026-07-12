@@ -1,0 +1,73 @@
+import { SourcePlugin, PluginRegistry } from '@ever-jobs/plugin';
+
+import { Injectable, Logger, Optional } from '@nestjs/common';
+import {
+  IScraper, ScraperInputDto, JobResponseDto, Site,
+} from '@ever-jobs/models';
+
+/**
+ * William Osler Health System — Community hospital system serving the western Greater Toronto Area in Ontario.
+ *
+ * William Osler Health System is a Canadian community hospital corporation
+ * operating hospitals and a health services centre serving Brampton,
+ * Etobicoke, and the surrounding western Greater Toronto Area. It provides
+ * acute care, emergency, and specialty services.
+ *
+ * Sector: Healthcare / Hospital System. HQ: Brampton, Ontario, Canada.
+ *
+ * Source: SmartRecruiters job board, company identifier `williamoslerhealthsystem1`
+ * (`https://jobs.smartrecruiters.com/williamoslerhealthsystem1`). The company's live
+ * postings are served by SmartRecruiters. Rather than re-implement
+ * SmartRecruiters parsing (and risk drift), this plugin resolves the
+ * registered SmartRecruiters source plugin from the `PluginRegistry` at
+ * runtime and delegates the fetch + field mapping to it, then re-stamps the
+ * company identity (site, companyName, id prefix) onto the results — so every
+ * SmartRecruiters field fix is inherited automatically. This honours the "no
+ * plugin imports a peer plugin directly; discover via the registry" rule.
+ */
+const COMPANY_SLUG = 'williamoslerhealthsystem1';
+const COMPANY_NAME = 'William Osler Health System';
+
+@SourcePlugin({
+  site: Site.WILLIAM_OSLER_HEALTH_SYSTEM,
+  name: COMPANY_NAME,
+  category: 'company',
+})
+@Injectable()
+export class WilliamOslerHealthSystemService implements IScraper {
+  private readonly logger = new Logger(WilliamOslerHealthSystemService.name);
+
+  constructor(
+    @Optional() private readonly registry?: PluginRegistry,
+  ) {}
+
+  async scrape(input: ScraperInputDto): Promise<JobResponseDto> {
+    const smartrecruiters = this.registry?.getScraper(Site.SMARTRECRUITERS);
+    if (!smartrecruiters) {
+      this.logger.error(
+        'SmartRecruiters source plugin is not registered; cannot scrape William Osler Health System',
+      );
+      return new JobResponseDto([]);
+    }
+
+    this.logger.log(
+      `William Osler Health System: delegating to SmartRecruiters (slug ${COMPANY_SLUG})`,
+    );
+
+    const result = await smartrecruiters.scrape({
+      ...input,
+      companySlug: COMPANY_SLUG,
+    } as ScraperInputDto);
+
+    for (const job of result.jobs) {
+      job.site = Site.WILLIAM_OSLER_HEALTH_SYSTEM;
+      job.companyName = COMPANY_NAME;
+      if (job.id) {
+        job.id = job.id.replace(/^sr-/, 'williamoslerhealthsystem-');
+      }
+    }
+
+    this.logger.log(`William Osler Health System: scraped ${result.jobs.length} jobs`);
+    return result;
+  }
+}

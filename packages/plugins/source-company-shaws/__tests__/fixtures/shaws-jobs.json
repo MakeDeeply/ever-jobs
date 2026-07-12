@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "85700548",
+      "name": "hh",
+      "uuid": "shaws-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Shaws",
+        "name": "Shaw's"
+      },
+      "releasedDate": "2015-10-01T19:53:55.000Z",
+      "location": {
+        "city": "West Des Moines",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "West Des Moines, IA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Management"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Shaws/85700548",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>hh at Shaw's.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "80511098",
+      "name": "Produce Manager- Shaw's Supermarkets - Portland, ME",
+      "uuid": "shaws-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Shaws",
+        "name": "Shaw's"
+      },
+      "releasedDate": "2014-12-15T17:09:34.000Z",
+      "location": {
+        "city": "Portland",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Portland, ME, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Management"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Shaws/80511098",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Produce Manager- Shaw's Supermarkets - Portland, ME at Shaw's.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "80510982",
+      "name": "Cake Decorator- Star Market- - Cambridge, MA (MIT location)",
+      "uuid": "shaws-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Shaws",
+        "name": "Shaw's"
+      },
+      "releasedDate": "2014-12-15T17:01:47.000Z",
+      "location": {
+        "city": "Cambridge",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Cambridge, MA, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Customer Service"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Shaws/80510982",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Cake Decorator- Star Market- - Cambridge, MA (MIT location) at Shaw's.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "3743990013928986",
+      "name": "Shipping and Receiving Associate 2nd Shift",
+      "uuid": "cornerstonebuildingbrands-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "cornerstonebuildingbrandscareers",
+        "name": "Cornerstone Building Brands"
+      },
+      "releasedDate": "2026-07-04T01:01:28.888Z",
+      "location": {
+        "city": "Temple",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Temple, TX, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Manufacturing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/cornerstonebuildingbrandscareers/3743990013928986",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Shipping and Receiving Associate 2nd Shift at Cornerstone Building Brands.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "3743990013928885",
+      "name": "Production  Associate Glass 3rd Shift",
+      "uuid": "cornerstonebuildingbrands-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "cornerstonebuildingbrandscareers",
+        "name": "Cornerstone Building Brands"
+      },
+      "releasedDate": "2026-07-04T00:04:31.270Z",
+      "location": {
+        "city": "Marion",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Marion, OH, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Manufacturing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/cornerstonebuildingbrandscareers/3743990013928885",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Production  Associate Glass 3rd Shift at Cornerstone Building Brands.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "3743990013928845",
+      "name": "Production  Associate Glass 2nd Shift",
+      "uuid": "cornerstonebuildingbrands-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "cornerstonebuildingbrandscareers",
+        "name": "Cornerstone Building Brands"
+      },
+      "releasedDate": "2026-07-04T00:03:47.580Z",
+      "location": {
+        "city": "Marion",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Marion, OH, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Manufacturing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/cornerstonebuildingbrandscareers/3743990013928845",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Production  Associate Glass 2nd Shift at Cornerstone Building Brands.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

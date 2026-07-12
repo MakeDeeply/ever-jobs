@@ -1,0 +1,62 @@
+[
+  {
+    "id": "7894fd8a-ffc9-4c89-87f0-f8a7b695cf01",
+    "text": "Account Executive – AI for Citizens",
+    "categories": {
+      "location": "Paris",
+      "allLocations": [
+        "Paris"
+      ],
+      "department": "Business",
+      "team": "Business",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1753687796431,
+    "descriptionPlain": "Account Executive – AI for Citizens at Mistral AI.",
+    "description": "<p>Account Executive – AI for Citizens at Mistral AI.</p>",
+    "hostedUrl": "https://jobs.lever.co/mistral/7894fd8a-ffc9-4c89-87f0-f8a7b695cf01",
+    "applyUrl": "https://jobs.lever.co/mistral/7894fd8a-ffc9-4c89-87f0-f8a7b695cf01/apply"
+  },
+  {
+    "id": "ed08b81f-9c52-4f86-addd-c4c06f3b114a",
+    "text": "Account Executive, Enterprise - New York",
+    "categories": {
+      "location": "New York",
+      "allLocations": [
+        "New York"
+      ],
+      "department": "Business",
+      "team": "Business",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1766091135357,
+    "descriptionPlain": "Account Executive, Enterprise - New York at Mistral AI.",
+    "description": "<p>Account Executive, Enterprise - New York at Mistral AI.</p>",
+    "hostedUrl": "https://jobs.lever.co/mistral/ed08b81f-9c52-4f86-addd-c4c06f3b114a",
+    "applyUrl": "https://jobs.lever.co/mistral/ed08b81f-9c52-4f86-addd-c4c06f3b114a/apply"
+  },
+  {
+    "id": "25757afe-9b9d-4be7-87e1-e744eaa01105",
+    "text": "Account Executive, Enterprise - SF Bay Area",
+    "categories": {
+      "location": "Palo Alto",
+      "allLocations": [
+        "Palo Alto"
+      ],
+      "department": "Business",
+      "team": "Business",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1761081601557,
+    "descriptionPlain": "Account Executive, Enterprise - SF Bay Area at Mistral AI.",
+    "description": "<p>Account Executive, Enterprise - SF Bay Area at Mistral AI.</p>",
+    "hostedUrl": "https://jobs.lever.co/mistral/25757afe-9b9d-4be7-87e1-e744eaa01105",
+    "applyUrl": "https://jobs.lever.co/mistral/25757afe-9b9d-4be7-87e1-e744eaa01105/apply"
+  }
+]

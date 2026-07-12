@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135760219",
+      "name": "Engineering Purchasing Specialist",
+      "uuid": "evolution-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Evolution",
+        "name": "Evolution"
+      },
+      "releasedDate": "2026-07-03T15:31:54.228Z",
+      "location": {
+        "city": "Birkirkara",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Birkirkara, Eastern Region, Malta"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Evolution/744000135760219",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Engineering Purchasing Specialist at Evolution.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135754684",
+      "name": "Project Coordinator",
+      "uuid": "evolution-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Evolution",
+        "name": "Evolution"
+      },
+      "releasedDate": "2026-07-03T15:04:14.637Z",
+      "location": {
+        "city": "Vilnius",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Vilnius, Vilnius County, Lithuania"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Property Management"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Evolution/744000135754684",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Project Coordinator at Evolution.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135717080",
+      "name": "Talent Acquisition Specialist",
+      "uuid": "evolution-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Evolution",
+        "name": "Evolution"
+      },
+      "releasedDate": "2026-07-03T12:14:48.896Z",
+      "location": {
+        "city": "Kaunas",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Kaunas, Kaunas County, Lithuania"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Human Resources"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Evolution/744000135717080",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Talent Acquisition Specialist at Evolution.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

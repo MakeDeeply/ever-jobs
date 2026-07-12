@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "b1b99030-d393-4329-80fe-5bc2e4c93b03",
+      "title": "Staff Product Security Engineer",
+      "departmentName": "IT, Compliance, and Security",
+      "teamName": "IT, Compliance, and Security",
+      "employmentType": "FullTime",
+      "location": "San Francisco, CA - US",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": "CA - US",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-05-22",
+      "descriptionHtml": "<p>Staff Product Security Engineer at Crusoe.</p>",
+      "descriptionPlain": "Staff Product Security Engineer at Crusoe.",
+      "jobUrl": "https://jobs.ashbyhq.com/crusoe/b1b99030-d393-4329-80fe-5bc2e4c93b03",
+      "applyUrl": "https://jobs.ashbyhq.com/crusoe/b1b99030-d393-4329-80fe-5bc2e4c93b03/application"
+    },
+    {
+      "id": "8ba43db9-91b8-45b7-bf82-3475adc2f457",
+      "title": "Wiring Technician",
+      "departmentName": "Manufacturing (MFG)",
+      "teamName": "Manufacturing (MFG)",
+      "employmentType": "FullTime",
+      "location": "Arvada, CO - US",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Arvada",
+          "addressRegion": "CO - US",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-12",
+      "descriptionHtml": "<p>Wiring Technician at Crusoe.</p>",
+      "descriptionPlain": "Wiring Technician at Crusoe.",
+      "jobUrl": "https://jobs.ashbyhq.com/crusoe/8ba43db9-91b8-45b7-bf82-3475adc2f457",
+      "applyUrl": "https://jobs.ashbyhq.com/crusoe/8ba43db9-91b8-45b7-bf82-3475adc2f457/application"
+    },
+    {
+      "id": "85dda5c0-4caf-4687-b5c0-fd9a0ef3f53f",
+      "title": "Senior Cloud Support Engineer",
+      "departmentName": "Cloud Go-To-Market (GTM)",
+      "teamName": "Cloud Go-To-Market (GTM)",
+      "employmentType": "FullTime",
+      "location": "San Francisco, CA - US",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": "CA - US",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-11-03",
+      "descriptionHtml": "<p>Senior Cloud Support Engineer at Crusoe.</p>",
+      "descriptionPlain": "Senior Cloud Support Engineer at Crusoe.",
+      "jobUrl": "https://jobs.ashbyhq.com/crusoe/85dda5c0-4caf-4687-b5c0-fd9a0ef3f53f",
+      "applyUrl": "https://jobs.ashbyhq.com/crusoe/85dda5c0-4caf-4687-b5c0-fd9a0ef3f53f/application"
+    }
+  ]
+}

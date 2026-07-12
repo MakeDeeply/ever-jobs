@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135779408",
+      "name": "Technical Outside Sales Representative",
+      "uuid": "rexel-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "REXEL1",
+        "name": "Rexel"
+      },
+      "releasedDate": "2026-07-03T19:50:49.502Z",
+      "location": {
+        "city": "Mississauga",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Mississauga, ON, Canada"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/REXEL1/744000135779408",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Technical Outside Sales Representative at Rexel.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135768079",
+      "name": "Responsable Régional des ventes - (départements 41/37/45/18)",
+      "uuid": "rexel-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "REXEL1",
+        "name": "Rexel"
+      },
+      "releasedDate": "2026-07-03T16:52:21.814Z",
+      "location": {
+        "city": "LA RICHE",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "LA RICHE, , France"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/REXEL1/744000135768079",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Responsable Régional des ventes - (départements 41/37/45/18) at Rexel.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135764799",
+      "name": "Warehouse Supervisor",
+      "uuid": "rexel-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "REXEL1",
+        "name": "Rexel"
+      },
+      "releasedDate": "2026-07-03T16:14:12.300Z",
+      "location": {
+        "city": "Belfast",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Belfast, Northern Ireland, United Kingdom"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/REXEL1/744000135764799",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Warehouse Supervisor at Rexel.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

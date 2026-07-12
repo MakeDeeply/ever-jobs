@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "348bbc09-f0e4-4283-ba13-588fdc216929",
+      "title": "Account Manager (Construction/Heavy Equipment)",
+      "departmentName": "Sales (Partner Growth)",
+      "teamName": "Sales (Partner Growth)",
+      "employmentType": "FullTime",
+      "location": "Toronto",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Toronto",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-11-03",
+      "descriptionHtml": "<p>Account Manager (Construction/Heavy Equipment) at Inspiration Commerce Group.</p>",
+      "descriptionPlain": "Account Manager (Construction/Heavy Equipment) at Inspiration Commerce Group.",
+      "jobUrl": "https://jobs.ashbyhq.com/inspiration-commerce-group/348bbc09-f0e4-4283-ba13-588fdc216929",
+      "applyUrl": "https://jobs.ashbyhq.com/inspiration-commerce-group/348bbc09-f0e4-4283-ba13-588fdc216929/application"
+    },
+    {
+      "id": "5ff31ee9-2c8a-4697-a63a-bada77556c85",
+      "title": "Inside Sales Representative",
+      "departmentName": "Sales (Partner Growth)",
+      "teamName": "Sales (Partner Growth)",
+      "employmentType": "FullTime",
+      "location": "Toronto",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Toronto",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-12-10",
+      "descriptionHtml": "<p>Inside Sales Representative at Inspiration Commerce Group.</p>",
+      "descriptionPlain": "Inside Sales Representative at Inspiration Commerce Group.",
+      "jobUrl": "https://jobs.ashbyhq.com/inspiration-commerce-group/5ff31ee9-2c8a-4697-a63a-bada77556c85",
+      "applyUrl": "https://jobs.ashbyhq.com/inspiration-commerce-group/5ff31ee9-2c8a-4697-a63a-bada77556c85/application"
+    },
+    {
+      "id": "ae338ac1-ab64-492c-a8f3-2ee2f33b488c",
+      "title": "Summer Intern (Ecommerce Operations)",
+      "departmentName": "Customer Operations",
+      "teamName": "Customer Operations",
+      "employmentType": "FullTime",
+      "location": "Toronto",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Toronto",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-13",
+      "descriptionHtml": "<p>Summer Intern (Ecommerce Operations) at Inspiration Commerce Group.</p>",
+      "descriptionPlain": "Summer Intern (Ecommerce Operations) at Inspiration Commerce Group.",
+      "jobUrl": "https://jobs.ashbyhq.com/inspiration-commerce-group/ae338ac1-ab64-492c-a8f3-2ee2f33b488c",
+      "applyUrl": "https://jobs.ashbyhq.com/inspiration-commerce-group/ae338ac1-ab64-492c-a8f3-2ee2f33b488c/application"
+    }
+  ]
+}

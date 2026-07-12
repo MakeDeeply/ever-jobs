@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ecdae57b-ce0f-40c1-b4b5-1ba75dd6ccf7",
+    "text": "Electrical Engineering - Internship",
+    "categories": {
+      "location": "Zurich",
+      "allLocations": [
+        "Zurich"
+      ],
+      "department": "Robotics & Solutions",
+      "team": "Robotics & Solutions",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1774449400088,
+    "descriptionPlain": "Electrical Engineering - Internship at ANYbotics.",
+    "description": "<p>Electrical Engineering - Internship at ANYbotics.</p>",
+    "hostedUrl": "https://jobs.lever.co/anybotics/ecdae57b-ce0f-40c1-b4b5-1ba75dd6ccf7",
+    "applyUrl": "https://jobs.lever.co/anybotics/ecdae57b-ce0f-40c1-b4b5-1ba75dd6ccf7/apply"
+  },
+  {
+    "id": "a705540b-3248-4fd3-a7df-279b2908304f",
+    "text": "Field Service Technician, Industrial Robotics",
+    "categories": {
+      "location": "Barcelona, Catalonia",
+      "allLocations": [
+        "Barcelona, Catalonia"
+      ],
+      "department": "Commercial",
+      "team": "Commercial",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1757590421477,
+    "descriptionPlain": "Field Service Technician, Industrial Robotics at ANYbotics.",
+    "description": "<p>Field Service Technician, Industrial Robotics at ANYbotics.</p>",
+    "hostedUrl": "https://jobs.lever.co/anybotics/a705540b-3248-4fd3-a7df-279b2908304f",
+    "applyUrl": "https://jobs.lever.co/anybotics/a705540b-3248-4fd3-a7df-279b2908304f/apply"
+  },
+  {
+    "id": "4f857d17-2d5e-4323-95f5-85552f8241fc",
+    "text": "Key Account Manager Oil & Gas - Robotics",
+    "categories": {
+      "location": "Dubai",
+      "allLocations": [
+        "Dubai"
+      ],
+      "department": "Commercial",
+      "team": "Commercial",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1771513175267,
+    "descriptionPlain": "Key Account Manager Oil & Gas - Robotics at ANYbotics.",
+    "description": "<p>Key Account Manager Oil & Gas - Robotics at ANYbotics.</p>",
+    "hostedUrl": "https://jobs.lever.co/anybotics/4f857d17-2d5e-4323-95f5-85552f8241fc",
+    "applyUrl": "https://jobs.lever.co/anybotics/4f857d17-2d5e-4323-95f5-85552f8241fc/apply"
+  }
+]

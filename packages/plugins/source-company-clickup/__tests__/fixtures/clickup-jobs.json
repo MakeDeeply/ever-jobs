@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "0202c777-6868-4558-895a-6007bd2980dd",
+      "title": "Senior Solutions Engineer, Commercial",
+      "departmentName": "Customer Experience",
+      "teamName": "Customer Experience",
+      "employmentType": "FullTime",
+      "location": "United States",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "United States",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-15",
+      "descriptionHtml": "<p>Senior Solutions Engineer, Commercial at ClickUp.</p>",
+      "descriptionPlain": "Senior Solutions Engineer, Commercial at ClickUp.",
+      "jobUrl": "https://jobs.ashbyhq.com/clickup/0202c777-6868-4558-895a-6007bd2980dd",
+      "applyUrl": "https://jobs.ashbyhq.com/clickup/0202c777-6868-4558-895a-6007bd2980dd/application"
+    },
+    {
+      "id": "037547da-067c-46f7-b0d6-7b580d42ecda",
+      "title": "Engineering Manager",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "United States",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "United States",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-03-20",
+      "descriptionHtml": "<p>Engineering Manager at ClickUp.</p>",
+      "descriptionPlain": "Engineering Manager at ClickUp.",
+      "jobUrl": "https://jobs.ashbyhq.com/clickup/037547da-067c-46f7-b0d6-7b580d42ecda",
+      "applyUrl": "https://jobs.ashbyhq.com/clickup/037547da-067c-46f7-b0d6-7b580d42ecda/application"
+    },
+    {
+      "id": "04f5dc76-f4d1-4112-9cff-79d3c202c8a6",
+      "title": "Senior AI Engineer - AI Platform",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "United States",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "United States",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-17",
+      "descriptionHtml": "<p>Senior AI Engineer - AI Platform at ClickUp.</p>",
+      "descriptionPlain": "Senior AI Engineer - AI Platform at ClickUp.",
+      "jobUrl": "https://jobs.ashbyhq.com/clickup/04f5dc76-f4d1-4112-9cff-79d3c202c8a6",
+      "applyUrl": "https://jobs.ashbyhq.com/clickup/04f5dc76-f4d1-4112-9cff-79d3c202c8a6/application"
+    }
+  ]
+}

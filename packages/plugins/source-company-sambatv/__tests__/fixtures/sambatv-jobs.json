@@ -1,0 +1,62 @@
+[
+  {
+    "id": "4b20bb38-f808-4c16-9ee4-6a44d6edf29d",
+    "text": "Account Executive",
+    "categories": {
+      "location": "Hamburg",
+      "allLocations": [
+        "Hamburg"
+      ],
+      "department": "Commercial",
+      "team": "Commercial",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1771417626588,
+    "descriptionPlain": "Account Executive at Samba TV.",
+    "description": "<p>Account Executive at Samba TV.</p>",
+    "hostedUrl": "https://jobs.lever.co/sambatv/4b20bb38-f808-4c16-9ee4-6a44d6edf29d",
+    "applyUrl": "https://jobs.lever.co/sambatv/4b20bb38-f808-4c16-9ee4-6a44d6edf29d/apply"
+  },
+  {
+    "id": "f35dcb02-28d9-4018-892c-436dad07a44c",
+    "text": "Account Executive",
+    "categories": {
+      "location": "New York City, New York",
+      "allLocations": [
+        "New York City, New York"
+      ],
+      "department": "Commercial",
+      "team": "Commercial",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1776360525561,
+    "descriptionPlain": "Account Executive at Samba TV.",
+    "description": "<p>Account Executive at Samba TV.</p>",
+    "hostedUrl": "https://jobs.lever.co/sambatv/f35dcb02-28d9-4018-892c-436dad07a44c",
+    "applyUrl": "https://jobs.lever.co/sambatv/f35dcb02-28d9-4018-892c-436dad07a44c/apply"
+  },
+  {
+    "id": "a0a1f3cc-9b2e-4440-b5c1-45ea050cf0b1",
+    "text": "AI Product Engineer",
+    "categories": {
+      "location": "San Francisco, California",
+      "allLocations": [
+        "San Francisco, California"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1773514310374,
+    "descriptionPlain": "AI Product Engineer at Samba TV.",
+    "description": "<p>AI Product Engineer at Samba TV.</p>",
+    "hostedUrl": "https://jobs.lever.co/sambatv/a0a1f3cc-9b2e-4440-b5c1-45ea050cf0b1",
+    "applyUrl": "https://jobs.lever.co/sambatv/a0a1f3cc-9b2e-4440-b5c1-45ea050cf0b1/apply"
+  }
+]

@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "02989a06-0562-4074-8f64-963716ae9801",
+      "title": "Senior Manager, Engineering-Clustering & Exposure",
+      "departmentName": "R&D",
+      "teamName": "R&D",
+      "employmentType": "FullTime",
+      "location": "Aarhus Office",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Aarhus Office",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-24",
+      "descriptionHtml": "<p>Senior Manager, Engineering-Clustering & Exposure at Chainalysis.</p>",
+      "descriptionPlain": "Senior Manager, Engineering-Clustering & Exposure at Chainalysis.",
+      "jobUrl": "https://jobs.ashbyhq.com/chainalysis-careers/02989a06-0562-4074-8f64-963716ae9801",
+      "applyUrl": "https://jobs.ashbyhq.com/chainalysis-careers/02989a06-0562-4074-8f64-963716ae9801/application"
+    },
+    {
+      "id": "0782bd50-fc84-45e5-a517-835bb2a79e37",
+      "title": "Senior Infrastructure Engineer, Government Systems",
+      "departmentName": "R&D",
+      "teamName": "R&D",
+      "employmentType": "FullTime",
+      "location": "New York",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "New York",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-14",
+      "descriptionHtml": "<p>Senior Infrastructure Engineer, Government Systems at Chainalysis.</p>",
+      "descriptionPlain": "Senior Infrastructure Engineer, Government Systems at Chainalysis.",
+      "jobUrl": "https://jobs.ashbyhq.com/chainalysis-careers/0782bd50-fc84-45e5-a517-835bb2a79e37",
+      "applyUrl": "https://jobs.ashbyhq.com/chainalysis-careers/0782bd50-fc84-45e5-a517-835bb2a79e37/application"
+    },
+    {
+      "id": "1686bf10-47f2-4fd8-a089-0dcb849c1657",
+      "title": "Vice President, Global Controller",
+      "departmentName": "Corporate Functions",
+      "teamName": "Corporate Functions",
+      "employmentType": "FullTime",
+      "location": "New York",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "New York",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-22",
+      "descriptionHtml": "<p>Vice President, Global Controller at Chainalysis.</p>",
+      "descriptionPlain": "Vice President, Global Controller at Chainalysis.",
+      "jobUrl": "https://jobs.ashbyhq.com/chainalysis-careers/1686bf10-47f2-4fd8-a089-0dcb849c1657",
+      "applyUrl": "https://jobs.ashbyhq.com/chainalysis-careers/1686bf10-47f2-4fd8-a089-0dcb849c1657/application"
+    }
+  ]
+}

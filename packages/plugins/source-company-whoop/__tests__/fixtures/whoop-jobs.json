@@ -1,0 +1,62 @@
+[
+  {
+    "id": "38493926-11d7-4dbc-8620-243ec9c93f9a",
+    "text": "Allocation Analyst, Wholesale Planning",
+    "categories": {
+      "location": "Boston, MA",
+      "allLocations": [
+        "Boston, MA"
+      ],
+      "department": "Operations",
+      "team": "Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1779984555484,
+    "descriptionPlain": "Allocation Analyst, Wholesale Planning at WHOOP.",
+    "description": "<p>Allocation Analyst, Wholesale Planning at WHOOP.</p>",
+    "hostedUrl": "https://jobs.lever.co/whoop/38493926-11d7-4dbc-8620-243ec9c93f9a",
+    "applyUrl": "https://jobs.lever.co/whoop/38493926-11d7-4dbc-8620-243ec9c93f9a/apply"
+  },
+  {
+    "id": "c1ee90e7-697b-49c2-b805-fa2c1ee20e4f",
+    "text": "Android Engineer",
+    "categories": {
+      "location": "Boston, MA",
+      "allLocations": [
+        "Boston, MA"
+      ],
+      "department": "Software",
+      "team": "Software",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1760017434671,
+    "descriptionPlain": "Android Engineer at WHOOP.",
+    "description": "<p>Android Engineer at WHOOP.</p>",
+    "hostedUrl": "https://jobs.lever.co/whoop/c1ee90e7-697b-49c2-b805-fa2c1ee20e4f",
+    "applyUrl": "https://jobs.lever.co/whoop/c1ee90e7-697b-49c2-b805-fa2c1ee20e4f/apply"
+  },
+  {
+    "id": "7470d286-69dd-4ed9-9931-186d8d4b91ae",
+    "text": "Android Engineer II  (Healthcare)",
+    "categories": {
+      "location": "Boston, MA",
+      "allLocations": [
+        "Boston, MA"
+      ],
+      "department": "Software",
+      "team": "Software",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1760017006944,
+    "descriptionPlain": "Android Engineer II  (Healthcare) at WHOOP.",
+    "description": "<p>Android Engineer II  (Healthcare) at WHOOP.</p>",
+    "hostedUrl": "https://jobs.lever.co/whoop/7470d286-69dd-4ed9-9931-186d8d4b91ae",
+    "applyUrl": "https://jobs.lever.co/whoop/7470d286-69dd-4ed9-9931-186d8d4b91ae/apply"
+  }
+]

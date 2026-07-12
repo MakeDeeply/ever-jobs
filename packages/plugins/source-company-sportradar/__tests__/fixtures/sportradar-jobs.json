@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135737625",
+      "name": "Mid Java Software Engineer",
+      "uuid": "sportradar-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Sportradar",
+        "name": "Sportradar"
+      },
+      "releasedDate": "2026-07-03T13:49:30.283Z",
+      "location": {
+        "city": "Warszawa",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Warszawa, Województwo mazowieckie, Poland"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Sportradar/744000135737625",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Mid Java Software Engineer at Sportradar.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135737276",
+      "name": "Senior Java Software Engineer",
+      "uuid": "sportradar-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Sportradar",
+        "name": "Sportradar"
+      },
+      "releasedDate": "2026-07-03T13:47:25.248Z",
+      "location": {
+        "city": "Warszawa",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Warszawa, Województwo mazowieckie, Poland"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Sportradar/744000135737276",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Java Software Engineer at Sportradar.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135738430",
+      "name": "Staff Java Software Engineer",
+      "uuid": "sportradar-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Sportradar",
+        "name": "Sportradar"
+      },
+      "releasedDate": "2026-07-03T13:45:29.228Z",
+      "location": {
+        "city": "Warszawa",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Warszawa, Województwo mazowieckie, Poland"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Sportradar/744000135738430",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Staff Java Software Engineer at Sportradar.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

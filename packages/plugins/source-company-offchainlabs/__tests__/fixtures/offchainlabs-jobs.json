@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ccd3b5d3-1797-4a06-98ae-22a6937ab8c8",
+    "text": "Director of Accounting",
+    "categories": {
+      "location": "New York City, NY",
+      "allLocations": [
+        "New York City, NY"
+      ],
+      "department": "Finance",
+      "team": "Finance",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1781733216563,
+    "descriptionPlain": "Director of Accounting at Offchain Labs.",
+    "description": "<p>Director of Accounting at Offchain Labs.</p>",
+    "hostedUrl": "https://jobs.lever.co/offchainlabs/ccd3b5d3-1797-4a06-98ae-22a6937ab8c8",
+    "applyUrl": "https://jobs.lever.co/offchainlabs/ccd3b5d3-1797-4a06-98ae-22a6937ab8c8/apply"
+  },
+  {
+    "id": "09521387-2a0a-423d-b9fb-6ae3bea40a3b",
+    "text": "Executive Assistant",
+    "categories": {
+      "location": "Remote",
+      "allLocations": [
+        "Remote"
+      ],
+      "department": "People",
+      "team": "People",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1777429445192,
+    "descriptionPlain": "Executive Assistant at Offchain Labs.",
+    "description": "<p>Executive Assistant at Offchain Labs.</p>",
+    "hostedUrl": "https://jobs.lever.co/offchainlabs/09521387-2a0a-423d-b9fb-6ae3bea40a3b",
+    "applyUrl": "https://jobs.lever.co/offchainlabs/09521387-2a0a-423d-b9fb-6ae3bea40a3b/apply"
+  },
+  {
+    "id": "4a9df0ee-1296-4366-b2b9-6a1d1f3da7fd",
+    "text": "Head of Enterprise",
+    "categories": {
+      "location": "Remote",
+      "allLocations": [
+        "Remote"
+      ],
+      "department": "Leadership",
+      "team": "Leadership",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1776691061383,
+    "descriptionPlain": "Head of Enterprise at Offchain Labs.",
+    "description": "<p>Head of Enterprise at Offchain Labs.</p>",
+    "hostedUrl": "https://jobs.lever.co/offchainlabs/4a9df0ee-1296-4366-b2b9-6a1d1f3da7fd",
+    "applyUrl": "https://jobs.lever.co/offchainlabs/4a9df0ee-1296-4366-b2b9-6a1d1f3da7fd/apply"
+  }
+]

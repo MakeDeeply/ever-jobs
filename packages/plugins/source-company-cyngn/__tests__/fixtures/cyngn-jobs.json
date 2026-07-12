@@ -1,0 +1,62 @@
+[
+  {
+    "id": "0d5a0008-85d6-4fdc-a6de-e29501528c55",
+    "text": "Deployment Engineer",
+    "categories": {
+      "location": "Remote US",
+      "allLocations": [
+        "Remote US"
+      ],
+      "department": "Engineering Services - QA",
+      "team": "Engineering Services - QA",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1767815474471,
+    "descriptionPlain": "Deployment Engineer at Cyngn.",
+    "description": "<p>Deployment Engineer at Cyngn.</p>",
+    "hostedUrl": "https://jobs.lever.co/cyngn/0d5a0008-85d6-4fdc-a6de-e29501528c55",
+    "applyUrl": "https://jobs.lever.co/cyngn/0d5a0008-85d6-4fdc-a6de-e29501528c55/apply"
+  },
+  {
+    "id": "a44a034c-c014-45c9-ba13-b5cb31dcb95e",
+    "text": "Field Service Engineer",
+    "categories": {
+      "location": "Mountain View, CA",
+      "allLocations": [
+        "Mountain View, CA"
+      ],
+      "department": "Engineering Services - QA",
+      "team": "Engineering Services - QA",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1755298943426,
+    "descriptionPlain": "Field Service Engineer at Cyngn.",
+    "description": "<p>Field Service Engineer at Cyngn.</p>",
+    "hostedUrl": "https://jobs.lever.co/cyngn/a44a034c-c014-45c9-ba13-b5cb31dcb95e",
+    "applyUrl": "https://jobs.lever.co/cyngn/a44a034c-c014-45c9-ba13-b5cb31dcb95e/apply"
+  },
+  {
+    "id": "c702012b-6718-4152-a152-d4a17f7dec78",
+    "text": "Office Manager",
+    "categories": {
+      "location": "Mountain View, CA",
+      "allLocations": [
+        "Mountain View, CA"
+      ],
+      "department": "Human Resources",
+      "team": "Human Resources",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1781727507953,
+    "descriptionPlain": "Office Manager at Cyngn.",
+    "description": "<p>Office Manager at Cyngn.</p>",
+    "hostedUrl": "https://jobs.lever.co/cyngn/c702012b-6718-4152-a152-d4a17f7dec78",
+    "applyUrl": "https://jobs.lever.co/cyngn/c702012b-6718-4152-a152-d4a17f7dec78/apply"
+  }
+]

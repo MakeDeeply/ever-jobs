@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "00fd8024-7804-4278-a38b-c9d60d929dbb",
+      "title": "Staff Product Designer (PST)",
+      "departmentName": "Product",
+      "teamName": "Product",
+      "employmentType": "FullTime",
+      "location": "San Francisco, CA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": "CA",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-12",
+      "descriptionHtml": "<p>Staff Product Designer (PST) at Deepgram.</p>",
+      "descriptionPlain": "Staff Product Designer (PST) at Deepgram.",
+      "jobUrl": "https://jobs.ashbyhq.com/deepgram/00fd8024-7804-4278-a38b-c9d60d929dbb",
+      "applyUrl": "https://jobs.ashbyhq.com/deepgram/00fd8024-7804-4278-a38b-c9d60d929dbb/application"
+    },
+    {
+      "id": "072271ea-2006-47af-8c4f-e8f9e54daa11",
+      "title": "Senior Director, Accounting",
+      "departmentName": "Finance",
+      "teamName": "Finance",
+      "employmentType": "FullTime",
+      "location": "USA | Remote",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "USA | Remote",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2026-06-03",
+      "descriptionHtml": "<p>Senior Director, Accounting at Deepgram.</p>",
+      "descriptionPlain": "Senior Director, Accounting at Deepgram.",
+      "jobUrl": "https://jobs.ashbyhq.com/deepgram/072271ea-2006-47af-8c4f-e8f9e54daa11",
+      "applyUrl": "https://jobs.ashbyhq.com/deepgram/072271ea-2006-47af-8c4f-e8f9e54daa11/application"
+    },
+    {
+      "id": "0796cc37-96a7-4158-8a00-155962da275a",
+      "title": "Backend Software Engineer - Active Learning Team",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "USA | Remote",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "USA | Remote",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2025-12-23",
+      "descriptionHtml": "<p>Backend Software Engineer - Active Learning Team at Deepgram.</p>",
+      "descriptionPlain": "Backend Software Engineer - Active Learning Team at Deepgram.",
+      "jobUrl": "https://jobs.ashbyhq.com/deepgram/0796cc37-96a7-4158-8a00-155962da275a",
+      "applyUrl": "https://jobs.ashbyhq.com/deepgram/0796cc37-96a7-4158-8a00-155962da275a/application"
+    }
+  ]
+}

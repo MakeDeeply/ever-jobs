@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "d3bc1ced-3ce4-4086-a050-555055dbb1ff",
+      "title": "Senior / Staff Fullstack Engineer",
+      "departmentName": "Product",
+      "teamName": "Product",
+      "employmentType": "FullTime",
+      "location": "Europe",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Europe",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2021-04-27",
+      "descriptionHtml": "<p>Senior / Staff Fullstack Engineer at Linear.</p>",
+      "descriptionPlain": "Senior / Staff Fullstack Engineer at Linear.",
+      "jobUrl": "https://jobs.ashbyhq.com/linear/d3bc1ced-3ce4-4086-a050-555055dbb1ff",
+      "applyUrl": "https://jobs.ashbyhq.com/linear/d3bc1ced-3ce4-4086-a050-555055dbb1ff/application"
+    },
+    {
+      "id": "cd5ae036-0223-427a-b038-ba16ef9dcb32",
+      "title": "Senior / Staff Fullstack Engineer",
+      "departmentName": "Product",
+      "teamName": "Product",
+      "employmentType": "FullTime",
+      "location": "North America",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "North America",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2021-08-18",
+      "descriptionHtml": "<p>Senior / Staff Fullstack Engineer at Linear.</p>",
+      "descriptionPlain": "Senior / Staff Fullstack Engineer at Linear.",
+      "jobUrl": "https://jobs.ashbyhq.com/linear/cd5ae036-0223-427a-b038-ba16ef9dcb32",
+      "applyUrl": "https://jobs.ashbyhq.com/linear/cd5ae036-0223-427a-b038-ba16ef9dcb32/application"
+    },
+    {
+      "id": "069c4628-88d7-4e4d-b393-c996fc7f3076",
+      "title": "Senior / Staff Product Engineer",
+      "departmentName": "Product",
+      "teamName": "Product",
+      "employmentType": "FullTime",
+      "location": "Europe",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Europe",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2022-01-22",
+      "descriptionHtml": "<p>Senior / Staff Product Engineer at Linear.</p>",
+      "descriptionPlain": "Senior / Staff Product Engineer at Linear.",
+      "jobUrl": "https://jobs.ashbyhq.com/linear/069c4628-88d7-4e4d-b393-c996fc7f3076",
+      "applyUrl": "https://jobs.ashbyhq.com/linear/069c4628-88d7-4e4d-b393-c996fc7f3076/application"
+    }
+  ]
+}

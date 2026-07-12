@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "5b699517-e846-4c29-84d5-d64f9d505e54",
+      "title": "Principal Software Engineer, Compute",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "El Segundo, CA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "El Segundo",
+          "addressRegion": "CA",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-04-07",
+      "descriptionHtml": "<p>Principal Software Engineer, Compute at Radiant Industries.</p>",
+      "descriptionPlain": "Principal Software Engineer, Compute at Radiant Industries.",
+      "jobUrl": "https://jobs.ashbyhq.com/radiant-industries/5b699517-e846-4c29-84d5-d64f9d505e54",
+      "applyUrl": "https://jobs.ashbyhq.com/radiant-industries/5b699517-e846-4c29-84d5-d64f9d505e54/application"
+    },
+    {
+      "id": "80c55972-f446-4b97-9124-51397e50eb4b",
+      "title": "Supply Chain Manager",
+      "departmentName": "Operations",
+      "teamName": "Operations",
+      "employmentType": "FullTime",
+      "location": "El Segundo, CA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "El Segundo",
+          "addressRegion": "CA",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-02",
+      "descriptionHtml": "<p>Supply Chain Manager at Radiant Industries.</p>",
+      "descriptionPlain": "Supply Chain Manager at Radiant Industries.",
+      "jobUrl": "https://jobs.ashbyhq.com/radiant-industries/80c55972-f446-4b97-9124-51397e50eb4b",
+      "applyUrl": "https://jobs.ashbyhq.com/radiant-industries/80c55972-f446-4b97-9124-51397e50eb4b/application"
+    },
+    {
+      "id": "ffe02e43-103c-4871-8f7f-e4262f9adb8a",
+      "title": "Nuclear Engineer",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "El Segundo, CA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "El Segundo",
+          "addressRegion": "CA",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-05-04",
+      "descriptionHtml": "<p>Nuclear Engineer at Radiant Industries.</p>",
+      "descriptionPlain": "Nuclear Engineer at Radiant Industries.",
+      "jobUrl": "https://jobs.ashbyhq.com/radiant-industries/ffe02e43-103c-4871-8f7f-e4262f9adb8a",
+      "applyUrl": "https://jobs.ashbyhq.com/radiant-industries/ffe02e43-103c-4871-8f7f-e4262f9adb8a/application"
+    }
+  ]
+}

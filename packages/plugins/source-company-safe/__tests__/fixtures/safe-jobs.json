@@ -1,0 +1,62 @@
+[
+  {
+    "id": "b454f01b-2145-4481-8f3e-95d3c01a5b74",
+    "text": "Director, Sales Development",
+    "categories": {
+      "location": "New York",
+      "allLocations": [
+        "New York"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1778822454399,
+    "descriptionPlain": "Director, Sales Development at Safe Security.",
+    "description": "<p>Director, Sales Development at Safe Security.</p>",
+    "hostedUrl": "https://jobs.lever.co/safe/b454f01b-2145-4481-8f3e-95d3c01a5b74",
+    "applyUrl": "https://jobs.lever.co/safe/b454f01b-2145-4481-8f3e-95d3c01a5b74/apply"
+  },
+  {
+    "id": "89fb68f8-df2c-4a33-90a6-4fd5ef71ad18",
+    "text": "Engineering Manager",
+    "categories": {
+      "location": "Bengaluru or New Delhi",
+      "allLocations": [
+        "Bengaluru or New Delhi"
+      ],
+      "department": "Product and Engineering",
+      "team": "Product and Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1779896289075,
+    "descriptionPlain": "Engineering Manager at Safe Security.",
+    "description": "<p>Engineering Manager at Safe Security.</p>",
+    "hostedUrl": "https://jobs.lever.co/safe/89fb68f8-df2c-4a33-90a6-4fd5ef71ad18",
+    "applyUrl": "https://jobs.lever.co/safe/89fb68f8-df2c-4a33-90a6-4fd5ef71ad18/apply"
+  },
+  {
+    "id": "47ce9d2d-a8de-44d9-aa96-241987c67211",
+    "text": "Principal Engineer - AI",
+    "categories": {
+      "location": "Bengaluru",
+      "allLocations": [
+        "Bengaluru"
+      ],
+      "department": "Product and Engineering",
+      "team": "Product and Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1759817841852,
+    "descriptionPlain": "Principal Engineer - AI at Safe Security.",
+    "description": "<p>Principal Engineer - AI at Safe Security.</p>",
+    "hostedUrl": "https://jobs.lever.co/safe/47ce9d2d-a8de-44d9-aa96-241987c67211",
+    "applyUrl": "https://jobs.lever.co/safe/47ce9d2d-a8de-44d9-aa96-241987c67211/apply"
+  }
+]

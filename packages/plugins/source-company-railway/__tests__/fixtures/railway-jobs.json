@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "25d8444a-47dc-4084-ae56-29a0f0b19b74",
+      "title": "Senior Platform Engineer: Storage",
+      "departmentName": "Platform",
+      "teamName": "Platform",
+      "employmentType": "FullTime",
+      "location": "Global",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Global",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-08-01",
+      "descriptionHtml": "<p>Senior Platform Engineer: Storage at Railway.</p>",
+      "descriptionPlain": "Senior Platform Engineer: Storage at Railway.",
+      "jobUrl": "https://jobs.ashbyhq.com/railway/25d8444a-47dc-4084-ae56-29a0f0b19b74",
+      "applyUrl": "https://jobs.ashbyhq.com/railway/25d8444a-47dc-4084-ae56-29a0f0b19b74/application"
+    },
+    {
+      "id": "4856389c-44d8-4635-ba51-5fc1b8a49ca8",
+      "title": "Senior Infra Engineer: Observability",
+      "departmentName": "Platform",
+      "teamName": "Platform",
+      "employmentType": "FullTime",
+      "location": "Global",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Global",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-01",
+      "descriptionHtml": "<p>Senior Infra Engineer: Observability at Railway.</p>",
+      "descriptionPlain": "Senior Infra Engineer: Observability at Railway.",
+      "jobUrl": "https://jobs.ashbyhq.com/railway/4856389c-44d8-4635-ba51-5fc1b8a49ca8",
+      "applyUrl": "https://jobs.ashbyhq.com/railway/4856389c-44d8-4635-ba51-5fc1b8a49ca8/application"
+    },
+    {
+      "id": "541836a1-6d3f-47bf-845f-5f48fe547568",
+      "title": "Infra Engineer - Datacenters",
+      "departmentName": "Platform",
+      "teamName": "Platform",
+      "employmentType": "FullTime",
+      "location": "Remote (United States)",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Remote (United States)",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2025-02-03",
+      "descriptionHtml": "<p>Infra Engineer - Datacenters at Railway.</p>",
+      "descriptionPlain": "Infra Engineer - Datacenters at Railway.",
+      "jobUrl": "https://jobs.ashbyhq.com/railway/541836a1-6d3f-47bf-845f-5f48fe547568",
+      "applyUrl": "https://jobs.ashbyhq.com/railway/541836a1-6d3f-47bf-845f-5f48fe547568/application"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "34fafaf7-cadc-460d-a244-93664c8a20a5",
+      "title": "Account Executive",
+      "departmentName": "Sales",
+      "teamName": "Sales",
+      "employmentType": "FullTime",
+      "location": "San Francisco",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-09",
+      "descriptionHtml": "<p>Account Executive at MotherDuck.</p>",
+      "descriptionPlain": "Account Executive at MotherDuck.",
+      "jobUrl": "https://jobs.ashbyhq.com/motherduck/34fafaf7-cadc-460d-a244-93664c8a20a5",
+      "applyUrl": "https://jobs.ashbyhq.com/motherduck/34fafaf7-cadc-460d-a244-93664c8a20a5/application"
+    },
+    {
+      "id": "464356b0-c414-436d-b17a-43e73f4c8f1c",
+      "title": "Software Engineer - Backend",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "Amsterdam",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Amsterdam",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-24",
+      "descriptionHtml": "<p>Software Engineer - Backend at MotherDuck.</p>",
+      "descriptionPlain": "Software Engineer - Backend at MotherDuck.",
+      "jobUrl": "https://jobs.ashbyhq.com/motherduck/464356b0-c414-436d-b17a-43e73f4c8f1c",
+      "applyUrl": "https://jobs.ashbyhq.com/motherduck/464356b0-c414-436d-b17a-43e73f4c8f1c/application"
+    },
+    {
+      "id": "780ba9a7-de83-4889-8a2c-0f7233729ad9",
+      "title": "Account Executive",
+      "departmentName": "Sales",
+      "teamName": "Sales",
+      "employmentType": "FullTime",
+      "location": "Seattle",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Seattle",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-22",
+      "descriptionHtml": "<p>Account Executive at MotherDuck.</p>",
+      "descriptionPlain": "Account Executive at MotherDuck.",
+      "jobUrl": "https://jobs.ashbyhq.com/motherduck/780ba9a7-de83-4889-8a2c-0f7233729ad9",
+      "applyUrl": "https://jobs.ashbyhq.com/motherduck/780ba9a7-de83-4889-8a2c-0f7233729ad9/application"
+    }
+  ]
+}

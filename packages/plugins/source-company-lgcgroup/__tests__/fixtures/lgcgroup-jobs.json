@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135727129",
+      "name": "Accountant NLS",
+      "uuid": "lgcgroup-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "LGCGroup",
+        "name": "LGC Group"
+      },
+      "releasedDate": "2026-07-03T12:47:43.828Z",
+      "location": {
+        "city": "London",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "London, England, United Kingdom"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Finance"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/LGCGroup/744000135727129",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Accountant NLS at LGC Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135723841",
+      "name": "Associate Director, Facilities",
+      "uuid": "lgcgroup-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "LGCGroup",
+        "name": "LGC Group"
+      },
+      "releasedDate": "2026-07-03T12:40:31.000Z",
+      "location": {
+        "city": "Milford",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Milford, MA, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Administration, Site Services and Support"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/LGCGroup/744000135723841",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Associate Director, Facilities at LGC Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135704638",
+      "name": "Chemielaborant*in / Labortechniker*in für DNA-/RNA-Analytik (m/w/d)",
+      "uuid": "lgcgroup-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "LGCGroup",
+        "name": "LGC Group"
+      },
+      "releasedDate": "2026-07-03T11:04:27.061Z",
+      "location": {
+        "city": "Kulmbach",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Kulmbach, BY, Germany"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Scientific / Technical Science"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/LGCGroup/744000135704638",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Chemielaborant*in / Labortechniker*in für DNA-/RNA-Analytik (m/w/d) at LGC Group.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

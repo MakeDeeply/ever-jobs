@@ -1,0 +1,62 @@
+[
+  {
+    "id": "0971f733-8318-486c-afa7-597a1d23f2f4",
+    "text": "Patient Navigator",
+    "categories": {
+      "location": "San Francisco, CA",
+      "allLocations": [
+        "San Francisco, CA"
+      ],
+      "department": "Operations",
+      "team": "Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1779316111722,
+    "descriptionPlain": "Patient Navigator at Trial Library.",
+    "description": "<p>Patient Navigator at Trial Library.</p>",
+    "hostedUrl": "https://jobs.lever.co/triallibrary/0971f733-8318-486c-afa7-597a1d23f2f4",
+    "applyUrl": "https://jobs.lever.co/triallibrary/0971f733-8318-486c-afa7-597a1d23f2f4/apply"
+  },
+  {
+    "id": "0200ec4a-9d4d-42f5-999d-e8eb1b187394",
+    "text": "Staff Engineer, Backend & Data",
+    "categories": {
+      "location": "San Francisco, CA",
+      "allLocations": [
+        "San Francisco, CA"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1779905945683,
+    "descriptionPlain": "Staff Engineer, Backend & Data at Trial Library.",
+    "description": "<p>Staff Engineer, Backend & Data at Trial Library.</p>",
+    "hostedUrl": "https://jobs.lever.co/triallibrary/0200ec4a-9d4d-42f5-999d-e8eb1b187394",
+    "applyUrl": "https://jobs.lever.co/triallibrary/0200ec4a-9d4d-42f5-999d-e8eb1b187394/apply"
+  },
+  {
+    "id": "814d2b77-74f1-426e-a69a-c5d8fdbe540a",
+    "text": "Strategic Finance & Operations Lead",
+    "categories": {
+      "location": "San Francisco, CA",
+      "allLocations": [
+        "San Francisco, CA"
+      ],
+      "department": "Finance",
+      "team": "Finance",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1762279003189,
+    "descriptionPlain": "Strategic Finance & Operations Lead at Trial Library.",
+    "description": "<p>Strategic Finance & Operations Lead at Trial Library.</p>",
+    "hostedUrl": "https://jobs.lever.co/triallibrary/814d2b77-74f1-426e-a69a-c5d8fdbe540a",
+    "applyUrl": "https://jobs.lever.co/triallibrary/814d2b77-74f1-426e-a69a-c5d8fdbe540a/apply"
+  }
+]

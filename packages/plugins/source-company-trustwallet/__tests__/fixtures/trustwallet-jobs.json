@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "04239652-62bb-43d7-87ea-844b0cdfc844",
+      "title": "Senior Data Analyst (Web3)",
+      "departmentName": "Product",
+      "teamName": "Product",
+      "employmentType": "FullTime",
+      "location": "Remote - Global",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Remote - Global",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2026-06-09",
+      "descriptionHtml": "<p>Senior Data Analyst (Web3) at Trust Wallet.</p>",
+      "descriptionPlain": "Senior Data Analyst (Web3) at Trust Wallet.",
+      "jobUrl": "https://jobs.ashbyhq.com/trust-wallet/04239652-62bb-43d7-87ea-844b0cdfc844",
+      "applyUrl": "https://jobs.ashbyhq.com/trust-wallet/04239652-62bb-43d7-87ea-844b0cdfc844/application"
+    },
+    {
+      "id": "2d265735-8142-42d6-8dcb-7fb508b1eaa5",
+      "title": "Brand Video Creator & KOL Partner (品牌视频创作者与KOL合作负责人)",
+      "departmentName": "Marketing",
+      "teamName": "Marketing",
+      "employmentType": "FullTime",
+      "location": "Remote - Global",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Remote - Global",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2026-06-30",
+      "descriptionHtml": "<p>Brand Video Creator & KOL Partner (品牌视频创作者与KOL合作负责人) at Trust Wallet.</p>",
+      "descriptionPlain": "Brand Video Creator & KOL Partner (品牌视频创作者与KOL合作负责人) at Trust Wallet.",
+      "jobUrl": "https://jobs.ashbyhq.com/trust-wallet/2d265735-8142-42d6-8dcb-7fb508b1eaa5",
+      "applyUrl": "https://jobs.ashbyhq.com/trust-wallet/2d265735-8142-42d6-8dcb-7fb508b1eaa5/application"
+    },
+    {
+      "id": "56363170-01d5-4838-9854-3e77c56a6ccc",
+      "title": "Senior Platform Engineer",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "Remote - Global",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Remote - Global",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2026-06-02",
+      "descriptionHtml": "<p>Senior Platform Engineer at Trust Wallet.</p>",
+      "descriptionPlain": "Senior Platform Engineer at Trust Wallet.",
+      "jobUrl": "https://jobs.ashbyhq.com/trust-wallet/56363170-01d5-4838-9854-3e77c56a6ccc",
+      "applyUrl": "https://jobs.ashbyhq.com/trust-wallet/56363170-01d5-4838-9854-3e77c56a6ccc/application"
+    }
+  ]
+}

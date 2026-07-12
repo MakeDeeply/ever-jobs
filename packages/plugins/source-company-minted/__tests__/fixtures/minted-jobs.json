@@ -1,0 +1,62 @@
+[
+  {
+    "id": "257779c0-1bde-4810-9992-cd12e621de6e",
+    "text": "AI & Automation Engineer",
+    "categories": {
+      "location": "Remote",
+      "allLocations": [
+        "Remote"
+      ],
+      "department": "Information Technology",
+      "team": "Information Technology",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1771543795526,
+    "descriptionPlain": "AI & Automation Engineer at Minted.",
+    "description": "<p>AI & Automation Engineer at Minted.</p>",
+    "hostedUrl": "https://jobs.lever.co/minted/257779c0-1bde-4810-9992-cd12e621de6e",
+    "applyUrl": "https://jobs.lever.co/minted/257779c0-1bde-4810-9992-cd12e621de6e/apply"
+  },
+  {
+    "id": "6949eda3-56b8-4875-92fb-e4d0ff388d59",
+    "text": "Seasonal Designer",
+    "categories": {
+      "location": "Remote",
+      "allLocations": [
+        "Remote"
+      ],
+      "department": "Seasonal Design Ops",
+      "team": "Seasonal Design Ops",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1781639723729,
+    "descriptionPlain": "Seasonal Designer at Minted.",
+    "description": "<p>Seasonal Designer at Minted.</p>",
+    "hostedUrl": "https://jobs.lever.co/minted/6949eda3-56b8-4875-92fb-e4d0ff388d59",
+    "applyUrl": "https://jobs.lever.co/minted/6949eda3-56b8-4875-92fb-e4d0ff388d59/apply"
+  },
+  {
+    "id": "32a0a2e3-604b-4e98-ac49-850912e3dad4",
+    "text": "Seasonal Print Quality Resolution Supervisor",
+    "categories": {
+      "location": "Remote",
+      "allLocations": [
+        "Remote"
+      ],
+      "department": "Seasonal Design Ops",
+      "team": "Seasonal Design Ops",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1782766866549,
+    "descriptionPlain": "Seasonal Print Quality Resolution Supervisor at Minted.",
+    "description": "<p>Seasonal Print Quality Resolution Supervisor at Minted.</p>",
+    "hostedUrl": "https://jobs.lever.co/minted/32a0a2e3-604b-4e98-ac49-850912e3dad4",
+    "applyUrl": "https://jobs.lever.co/minted/32a0a2e3-604b-4e98-ac49-850912e3dad4/apply"
+  }
+]

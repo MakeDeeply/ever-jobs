@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "005bfdfb-f470-47f8-9651-8adf2825bcaa",
+      "title": "Staff Frontend Engineer- RiskOs",
+      "departmentName": "Tech",
+      "teamName": "Tech",
+      "employmentType": "FullTime",
+      "location": "Hybrid - London",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Hybrid - London",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-02-11",
+      "descriptionHtml": "<p>Staff Frontend Engineer- RiskOs at Socure.</p>",
+      "descriptionPlain": "Staff Frontend Engineer- RiskOs at Socure.",
+      "jobUrl": "https://jobs.ashbyhq.com/socure/005bfdfb-f470-47f8-9651-8adf2825bcaa",
+      "applyUrl": "https://jobs.ashbyhq.com/socure/005bfdfb-f470-47f8-9651-8adf2825bcaa/application"
+    },
+    {
+      "id": "0850fa84-6faf-45dd-ab66-82aa3142c375",
+      "title": "Senior Product Marketing Manager, Identity & KYA",
+      "departmentName": "Marketing",
+      "teamName": "Marketing",
+      "employmentType": "FullTime",
+      "location": "Hybrid - New York",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Hybrid - New York",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-25",
+      "descriptionHtml": "<p>Senior Product Marketing Manager, Identity & KYA at Socure.</p>",
+      "descriptionPlain": "Senior Product Marketing Manager, Identity & KYA at Socure.",
+      "jobUrl": "https://jobs.ashbyhq.com/socure/0850fa84-6faf-45dd-ab66-82aa3142c375",
+      "applyUrl": "https://jobs.ashbyhq.com/socure/0850fa84-6faf-45dd-ab66-82aa3142c375/application"
+    },
+    {
+      "id": "0b83a57d-2566-48c3-a700-e36df48ec9dc",
+      "title": "AI Copywriter",
+      "departmentName": "Marketing",
+      "teamName": "Marketing",
+      "employmentType": "FullTime",
+      "location": "Hybrid - US",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Hybrid - US",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-01",
+      "descriptionHtml": "<p>AI Copywriter at Socure.</p>",
+      "descriptionPlain": "AI Copywriter at Socure.",
+      "jobUrl": "https://jobs.ashbyhq.com/socure/0b83a57d-2566-48c3-a700-e36df48ec9dc",
+      "applyUrl": "https://jobs.ashbyhq.com/socure/0b83a57d-2566-48c3-a700-e36df48ec9dc/application"
+    }
+  ]
+}

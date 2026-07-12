@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135577542",
+      "name": "Senior Director of Student Recruitment - South Florida",
+      "uuid": "kipp-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "KIPP",
+        "name": "KIPP"
+      },
+      "releasedDate": "2026-07-02T19:16:07.569Z",
+      "location": {
+        "city": "Miami",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Miami, FL, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Regional Support and Leadership"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/KIPP/744000135577542",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Director of Student Recruitment - South Florida at KIPP.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135353569",
+      "name": "2026-27 Elementary Assistant Principal of Student Support Services",
+      "uuid": "kipp-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "KIPP",
+        "name": "KIPP"
+      },
+      "releasedDate": "2026-07-01T21:51:28.746Z",
+      "location": {
+        "city": "Nashville",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Nashville, TN, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "School Leadership"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/KIPP/744000135353569",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>2026-27 Elementary Assistant Principal of Student Support Services at KIPP.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135350350",
+      "name": "[2026-2027] Social Worker - Elementary School",
+      "uuid": "kipp-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "KIPP",
+        "name": "KIPP"
+      },
+      "releasedDate": "2026-07-01T21:13:55.588Z",
+      "location": {
+        "city": "New York",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "New York, NY, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "School-based Support"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/KIPP/744000135350350",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>[2026-2027] Social Worker - Elementary School at KIPP.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

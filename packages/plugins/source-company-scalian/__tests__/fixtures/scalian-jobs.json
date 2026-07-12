@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135764259",
+      "name": "Chef de projet système embarqué - Bureau d'études (H/F)",
+      "uuid": "scalian-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Scalian",
+        "name": "Scalian"
+      },
+      "releasedDate": "2026-07-03T16:09:08.984Z",
+      "location": {
+        "city": "Toulouse",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Toulouse, Occitanie, France"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Mission Critical Systems"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Scalian/744000135764259",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Chef de projet système embarqué - Bureau d'études (H/F) at Scalian.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135663050",
+      "name": "Développeur Java/React H/F",
+      "uuid": "scalian-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Scalian",
+        "name": "Scalian"
+      },
+      "releasedDate": "2026-07-03T08:01:26.276Z",
+      "location": {
+        "city": "Rennes",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Rennes, , France"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Business Development"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Scalian/744000135663050",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Développeur Java/React H/F at Scalian.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135538301",
+      "name": "Source Inspector – Aerospace Manufacturing",
+      "uuid": "scalian-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Scalian",
+        "name": "Scalian"
+      },
+      "releasedDate": "2026-07-02T15:34:26.763Z",
+      "location": {
+        "city": "Belfast",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Belfast, , United Kingdom"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Quality Control"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Scalian/744000135538301",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Source Inspector – Aerospace Manufacturing at Scalian.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

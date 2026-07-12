@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000107378025",
+      "name": "Phlebotomist I - Full Time",
+      "uuid": "questdiagnostics-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "QuestDiagnostics7",
+        "name": "Quest Diagnostics"
+      },
+      "releasedDate": "2026-02-04T19:54:30.472Z",
+      "location": {
+        "city": "Royal Oak",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Royal Oak, MI, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/QuestDiagnostics7/744000107378025",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Phlebotomist I - Full Time at Quest Diagnostics.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000106939346",
+      "name": "Phlebotomist I - Full Time",
+      "uuid": "questdiagnostics-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "QuestDiagnostics7",
+        "name": "Quest Diagnostics"
+      },
+      "releasedDate": "2026-02-02T22:15:36.223Z",
+      "location": {
+        "city": "Royal Oak",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Royal Oak, MI, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/QuestDiagnostics7/744000106939346",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Phlebotomist I - Full Time at Quest Diagnostics.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000106863748",
+      "name": "Phlebotomist I",
+      "uuid": "questdiagnostics-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "QuestDiagnostics7",
+        "name": "Quest Diagnostics"
+      },
+      "releasedDate": "2026-02-02T15:39:21.483Z",
+      "location": {
+        "city": "Las Vegas",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Las Vegas, NV, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/QuestDiagnostics7/744000106863748",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Phlebotomist I at Quest Diagnostics.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

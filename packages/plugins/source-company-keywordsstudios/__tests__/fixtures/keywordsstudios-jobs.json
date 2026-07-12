@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135648309",
+      "name": "Unity Programmer",
+      "uuid": "keywordsstudios-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "KeywordsStudios",
+        "name": "Keywords Studios"
+      },
+      "releasedDate": "2026-07-03T06:17:21.251Z",
+      "location": {
+        "city": "Tokyo",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Tokyo, Tokyo, Japan"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/KeywordsStudios/744000135648309",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Unity Programmer at Keywords Studios.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000133742079",
+      "name": "Art Producer",
+      "uuid": "keywordsstudios-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "KeywordsStudios",
+        "name": "Keywords Studios"
+      },
+      "releasedDate": "2026-06-24T01:41:15.066Z",
+      "location": {
+        "city": "Box Hill",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Box Hill, VIC, Australia"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Production"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/KeywordsStudios/744000133742079",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Art Producer at Keywords Studios.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000133502219",
+      "name": "Administrative Assistant",
+      "uuid": "keywordsstudios-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "KeywordsStudios",
+        "name": "Keywords Studios"
+      },
+      "releasedDate": "2026-06-23T03:53:46.045Z",
+      "location": {
+        "city": "Brisbane",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Brisbane, QLD, Australia"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Shared Services - Administration"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/KeywordsStudios/744000133502219",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Administrative Assistant at Keywords Studios.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

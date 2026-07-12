@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000133450499",
+      "name": "Freelance Collections Documentation Specialist (Short-Term Contract) — Private Collection, Vancouver",
+      "uuid": "prosidianconsulting-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "prosidianconsulting",
+        "name": "ProSidian Consulting"
+      },
+      "releasedDate": "2026-06-22T20:29:57.695Z",
+      "location": {
+        "city": "Vancouver",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Vancouver, BC, Canada"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Consultant Services"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/prosidianconsulting/744000133450499",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Freelance Collections Documentation Specialist (Short-Term Contract) — Private Collection, Vancouver at ProSidian Consulting.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000133138959",
+      "name": "Business Writing Training Course Instructor",
+      "uuid": "prosidianconsulting-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "prosidianconsulting",
+        "name": "ProSidian Consulting"
+      },
+      "releasedDate": "2026-06-19T22:27:16.676Z",
+      "location": {
+        "city": "Fort Liberty",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Fort Liberty, NC, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Government Services"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/prosidianconsulting/744000133138959",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Business Writing Training Course Instructor at ProSidian Consulting.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000133138620",
+      "name": "Communication Training Course Instructor",
+      "uuid": "prosidianconsulting-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "prosidianconsulting",
+        "name": "ProSidian Consulting"
+      },
+      "releasedDate": "2026-06-19T22:17:12.541Z",
+      "location": {
+        "city": "Fort Liberty",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Fort Liberty, NC, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Government Services"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/prosidianconsulting/744000133138620",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Communication Training Course Instructor at ProSidian Consulting.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

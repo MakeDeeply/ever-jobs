@@ -1,0 +1,62 @@
+[
+  {
+    "id": "cfad09e6-8a41-45da-8bb3-a91464a08318",
+    "text": "Account Executive",
+    "categories": {
+      "location": "San Francisco, CA / Remote",
+      "allLocations": [
+        "San Francisco, CA / Remote"
+      ],
+      "department": "Revenue",
+      "team": "Revenue",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1756858899171,
+    "descriptionPlain": "Account Executive at Canvas Medical.",
+    "description": "<p>Account Executive at Canvas Medical.</p>",
+    "hostedUrl": "https://jobs.lever.co/canvasmedical/cfad09e6-8a41-45da-8bb3-a91464a08318",
+    "applyUrl": "https://jobs.lever.co/canvasmedical/cfad09e6-8a41-45da-8bb3-a91464a08318/apply"
+  },
+  {
+    "id": "01e8c00e-720c-43e1-a999-6f4c350ef5e9",
+    "text": "Applied AI Operations Lead",
+    "categories": {
+      "location": "San Francisco, CA / Remote",
+      "allLocations": [
+        "San Francisco, CA / Remote"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1757444201246,
+    "descriptionPlain": "Applied AI Operations Lead at Canvas Medical.",
+    "description": "<p>Applied AI Operations Lead at Canvas Medical.</p>",
+    "hostedUrl": "https://jobs.lever.co/canvasmedical/01e8c00e-720c-43e1-a999-6f4c350ef5e9",
+    "applyUrl": "https://jobs.lever.co/canvasmedical/01e8c00e-720c-43e1-a999-6f4c350ef5e9/apply"
+  },
+  {
+    "id": "188bcb78-cf6d-4ceb-a6de-f5b0556bc8df",
+    "text": "Applied AI Software Engineer",
+    "categories": {
+      "location": "San Francisco, CA / Remote",
+      "allLocations": [
+        "San Francisco, CA / Remote"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1749012748108,
+    "descriptionPlain": "Applied AI Software Engineer at Canvas Medical.",
+    "description": "<p>Applied AI Software Engineer at Canvas Medical.</p>",
+    "hostedUrl": "https://jobs.lever.co/canvasmedical/188bcb78-cf6d-4ceb-a6de-f5b0556bc8df",
+    "applyUrl": "https://jobs.lever.co/canvasmedical/188bcb78-cf6d-4ceb-a6de-f5b0556bc8df/apply"
+  }
+]

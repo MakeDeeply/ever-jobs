@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135770789",
+      "name": "Jefe Mantención Elect.- Instrum. STP/SSA",
+      "uuid": "debeersgroup-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "AngloAmericanDeBeersGroup",
+        "name": "De Beers Group"
+      },
+      "releasedDate": "2026-07-03T17:29:40.268Z",
+      "location": {
+        "city": "Santiago",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Santiago, , Chile"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AngloAmericanDeBeersGroup/744000135770789",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Jefe Mantención Elect.- Instrum. STP/SSA at De Beers Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135768589",
+      "name": "Técnico(a) Manutenção Elétrica Industrial II",
+      "uuid": "debeersgroup-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "AngloAmericanDeBeersGroup",
+        "name": "De Beers Group"
+      },
+      "releasedDate": "2026-07-03T16:57:01.581Z",
+      "location": {
+        "city": "Conceição do Mato Dentro",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Conceição do Mato Dentro, MINAS GERAIS, Brazil"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AngloAmericanDeBeersGroup/744000135768589",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Técnico(a) Manutenção Elétrica Industrial II at De Beers Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135759274",
+      "name": "Ingeniero(a) Metalurgista - Temporal",
+      "uuid": "debeersgroup-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "AngloAmericanDeBeersGroup",
+        "name": "De Beers Group"
+      },
+      "releasedDate": "2026-07-03T15:28:26.821Z",
+      "location": {
+        "city": "Moquegua",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Moquegua, , Peru"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Production"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AngloAmericanDeBeersGroup/744000135759274",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Ingeniero(a) Metalurgista - Temporal at De Beers Group.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

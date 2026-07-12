@@ -1,0 +1,62 @@
+[
+  {
+    "id": "152c4868-2708-4817-a2eb-25fc4141398c",
+    "text": "Demo Engineer",
+    "categories": {
+      "location": "Bangalore",
+      "allLocations": [
+        "Bangalore"
+      ],
+      "department": "Sales & Professional Services",
+      "team": "Sales & Professional Services",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1779975276156,
+    "descriptionPlain": "Demo Engineer at ASAPP.",
+    "description": "<p>Demo Engineer at ASAPP.</p>",
+    "hostedUrl": "https://jobs.lever.co/asapp-2/152c4868-2708-4817-a2eb-25fc4141398c",
+    "applyUrl": "https://jobs.lever.co/asapp-2/152c4868-2708-4817-a2eb-25fc4141398c/apply"
+  },
+  {
+    "id": "345bc8d7-f073-4721-a6ed-f4c45a099b01",
+    "text": "Head of IT",
+    "categories": {
+      "location": "New York",
+      "allLocations": [
+        "New York"
+      ],
+      "department": "Operations",
+      "team": "Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1781214494722,
+    "descriptionPlain": "Head of IT at ASAPP.",
+    "description": "<p>Head of IT at ASAPP.</p>",
+    "hostedUrl": "https://jobs.lever.co/asapp-2/345bc8d7-f073-4721-a6ed-f4c45a099b01",
+    "applyUrl": "https://jobs.lever.co/asapp-2/345bc8d7-f073-4721-a6ed-f4c45a099b01/apply"
+  },
+  {
+    "id": "5bc8eb75-4e7f-411d-8269-d6072c56e738",
+    "text": "Lead AI/ML Engineer",
+    "categories": {
+      "location": "New York",
+      "allLocations": [
+        "New York"
+      ],
+      "department": "Technology",
+      "team": "Technology",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1772729574196,
+    "descriptionPlain": "Lead AI/ML Engineer at ASAPP.",
+    "description": "<p>Lead AI/ML Engineer at ASAPP.</p>",
+    "hostedUrl": "https://jobs.lever.co/asapp-2/5bc8eb75-4e7f-411d-8269-d6072c56e738",
+    "applyUrl": "https://jobs.lever.co/asapp-2/5bc8eb75-4e7f-411d-8269-d6072c56e738/apply"
+  }
+]

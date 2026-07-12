@@ -1,0 +1,73 @@
+import { SourcePlugin, PluginRegistry } from '@ever-jobs/plugin';
+
+import { Injectable, Logger, Optional } from '@nestjs/common';
+import {
+  IScraper, ScraperInputDto, JobResponseDto, Site,
+} from '@ever-jobs/models';
+
+/**
+ * Brooks Running — Running footwear and apparel brand selling through retail and e-commerce.
+ *
+ * Brooks Running designs and sells running footwear, apparel, and
+ * accessories. It operates internationally with distribution and design
+ * functions spanning the US, Europe, and China, selling through wholesale,
+ * retail, and online channels.
+ *
+ * Sector: Retail / Apparel e-commerce. HQ: Seattle, Washington, USA.
+ *
+ * Source: Lever job board, company slug `brooksrunning`
+ * (`https://jobs.lever.co/brooksrunning`). The company's live
+ * postings are served by Lever. Rather than re-implement Lever parsing (and
+ * risk drift), this plugin resolves the registered Lever source plugin from
+ * the `PluginRegistry` at runtime and delegates the fetch + field mapping to
+ * it, then re-stamps the company identity (site, companyName, id prefix) onto
+ * the results — so every Lever field fix is inherited automatically. This
+ * honours the "no plugin imports a peer plugin directly; discover via the
+ * registry" rule.
+ */
+const COMPANY_SLUG = 'brooksrunning';
+const COMPANY_NAME = 'Brooks Running';
+
+@SourcePlugin({
+  site: Site.BROOKS_RUNNING,
+  name: COMPANY_NAME,
+  category: 'company',
+})
+@Injectable()
+export class BrooksRunningService implements IScraper {
+  private readonly logger = new Logger(BrooksRunningService.name);
+
+  constructor(
+    @Optional() private readonly registry?: PluginRegistry,
+  ) {}
+
+  async scrape(input: ScraperInputDto): Promise<JobResponseDto> {
+    const lever = this.registry?.getScraper(Site.LEVER);
+    if (!lever) {
+      this.logger.error(
+        'Lever source plugin is not registered; cannot scrape Brooks Running',
+      );
+      return new JobResponseDto([]);
+    }
+
+    this.logger.log(
+      `Brooks Running: delegating to Lever (slug ${COMPANY_SLUG})`,
+    );
+
+    const result = await lever.scrape({
+      ...input,
+      companySlug: COMPANY_SLUG,
+    } as ScraperInputDto);
+
+    for (const job of result.jobs) {
+      job.site = Site.BROOKS_RUNNING;
+      job.companyName = COMPANY_NAME;
+      if (job.id) {
+        job.id = job.id.replace(/^lever-/, 'brooksrunning-');
+      }
+    }
+
+    this.logger.log(`Brooks Running: scraped ${result.jobs.length} jobs`);
+    return result;
+  }
+}

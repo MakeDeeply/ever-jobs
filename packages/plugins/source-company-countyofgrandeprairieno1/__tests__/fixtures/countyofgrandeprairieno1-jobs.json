@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000132488849",
+      "name": "Heavy Equipment Operator - Plowtruck",
+      "uuid": "countyofgrandeprairieno1-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "CountyOfGrandePrairieNo1",
+        "name": "County of Grande Prairie No. 1"
+      },
+      "releasedDate": "2026-06-16T19:05:40.086Z",
+      "location": {
+        "city": "Clairmont",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Clairmont, AB, Canada"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Operations East"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CountyOfGrandePrairieNo1/744000132488849",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Heavy Equipment Operator - Plowtruck at County of Grande Prairie No. 1.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000132488769",
+      "name": "Heavy Equipment Operator - Lowbed",
+      "uuid": "countyofgrandeprairieno1-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "CountyOfGrandePrairieNo1",
+        "name": "County of Grande Prairie No. 1"
+      },
+      "releasedDate": "2026-06-16T19:04:58.197Z",
+      "location": {
+        "city": "Clairmont",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Clairmont, AB, Canada"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Operations East"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CountyOfGrandePrairieNo1/744000132488769",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Heavy Equipment Operator - Lowbed at County of Grande Prairie No. 1.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000128541110",
+      "name": "Supervisor Health, Safety, and Risk Management",
+      "uuid": "countyofgrandeprairieno1-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "CountyOfGrandePrairieNo1",
+        "name": "County of Grande Prairie No. 1"
+      },
+      "releasedDate": "2026-05-26T16:04:39.308Z",
+      "location": {
+        "city": "Clairmont",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Clairmont, AB, Canada"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Health and Safety"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CountyOfGrandePrairieNo1/744000128541110",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Supervisor Health, Safety, and Risk Management at County of Grande Prairie No. 1.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135743166",
+      "name": "Relationship Manager, International Wealth & Investment",
+      "uuid": "standardbankgroup-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "StandardBankGroup",
+        "name": "Standard Bank Group"
+      },
+      "releasedDate": "2026-07-03T14:11:17.643Z",
+      "location": {
+        "city": "Saint-Helier",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Saint-Helier, St Helier, Jersey"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Standard job"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/StandardBankGroup/744000135743166",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Relationship Manager, International Wealth & Investment at Standard Bank Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135743459",
+      "name": "Manager, Business Development",
+      "uuid": "standardbankgroup-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "StandardBankGroup",
+        "name": "Standard Bank Group"
+      },
+      "releasedDate": "2026-07-03T14:02:21.847Z",
+      "location": {
+        "city": "Nairobi",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Nairobi, Nairobi County, Kenya"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/StandardBankGroup/744000135743459",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Manager, Business Development at Standard Bank Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135741109",
+      "name": "Manager, Relationship, Ecosystems",
+      "uuid": "standardbankgroup-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "StandardBankGroup",
+        "name": "Standard Bank Group"
+      },
+      "releasedDate": "2026-07-03T13:52:25.546Z",
+      "location": {
+        "city": "Lagos",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Lagos, LA, Nigeria"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/StandardBankGroup/744000135741109",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Manager, Relationship, Ecosystems at Standard Bank Group.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

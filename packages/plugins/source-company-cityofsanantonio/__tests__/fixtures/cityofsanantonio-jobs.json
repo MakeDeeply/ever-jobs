@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000134826829",
+      "name": "Psychologist - Fire & EMS",
+      "uuid": "cityofsanantonio-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "CityOfSanAntonio",
+        "name": "City of San Antonio"
+      },
+      "releasedDate": "2026-06-29T15:29:14.932Z",
+      "location": {
+        "city": "San Antonio",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "San Antonio, TX, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Legal"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CityOfSanAntonio/744000134826829",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Psychologist - Fire & EMS at City of San Antonio.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000134817690",
+      "name": "Development Services Engineer",
+      "uuid": "cityofsanantonio-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "CityOfSanAntonio",
+        "name": "City of San Antonio"
+      },
+      "releasedDate": "2026-06-29T15:14:45.973Z",
+      "location": {
+        "city": "San Antonio",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "San Antonio, TX, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CityOfSanAntonio/744000134817690",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Development Services Engineer at City of San Antonio.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000134500504",
+      "name": "Architectural Project Manager",
+      "uuid": "cityofsanantonio-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "CityOfSanAntonio",
+        "name": "City of San Antonio"
+      },
+      "releasedDate": "2026-06-26T15:16:51.151Z",
+      "location": {
+        "city": "San Antonio",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "San Antonio, TX, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Public Relations"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CityOfSanAntonio/744000134500504",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Architectural Project Manager at City of San Antonio.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

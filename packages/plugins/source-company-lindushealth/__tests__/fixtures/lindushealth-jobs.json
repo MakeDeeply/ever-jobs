@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "1ba70465-2496-49ee-b50f-b200086a9ab2",
+      "title": "Chief Development Officer",
+      "departmentName": "Clinical Operations",
+      "teamName": "Clinical Operations",
+      "employmentType": "FullTime",
+      "location": "US",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "US",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-08",
+      "descriptionHtml": "<p>Chief Development Officer at Lindus Health.</p>",
+      "descriptionPlain": "Chief Development Officer at Lindus Health.",
+      "jobUrl": "https://jobs.ashbyhq.com/lindus/1ba70465-2496-49ee-b50f-b200086a9ab2",
+      "applyUrl": "https://jobs.ashbyhq.com/lindus/1ba70465-2496-49ee-b50f-b200086a9ab2/application"
+    },
+    {
+      "id": "57a1e4df-cf5f-4521-a53a-980b2dd6d243",
+      "title": "VP Product",
+      "departmentName": "Product and Engineering",
+      "teamName": "Product and Engineering",
+      "employmentType": "FullTime",
+      "location": "London",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "London",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-04-07",
+      "descriptionHtml": "<p>VP Product at Lindus Health.</p>",
+      "descriptionPlain": "VP Product at Lindus Health.",
+      "jobUrl": "https://jobs.ashbyhq.com/lindus/57a1e4df-cf5f-4521-a53a-980b2dd6d243",
+      "applyUrl": "https://jobs.ashbyhq.com/lindus/57a1e4df-cf5f-4521-a53a-980b2dd6d243/application"
+    },
+    {
+      "id": "7a86a965-78df-4adb-ada8-95671755d076",
+      "title": "Chief Development Officer",
+      "departmentName": "Clinical Operations",
+      "teamName": "Clinical Operations",
+      "employmentType": "FullTime",
+      "location": "London",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "London",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-10",
+      "descriptionHtml": "<p>Chief Development Officer at Lindus Health.</p>",
+      "descriptionPlain": "Chief Development Officer at Lindus Health.",
+      "jobUrl": "https://jobs.ashbyhq.com/lindus/7a86a965-78df-4adb-ada8-95671755d076",
+      "applyUrl": "https://jobs.ashbyhq.com/lindus/7a86a965-78df-4adb-ada8-95671755d076/application"
+    }
+  ]
+}

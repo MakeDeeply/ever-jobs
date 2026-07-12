@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ee87827b-616d-4c23-9fb3-d8b65f452f1a",
+    "text": "Business Development Representative",
+    "categories": {
+      "location": "Remote",
+      "allLocations": [
+        "Remote"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1779483948168,
+    "descriptionPlain": "Business Development Representative at Verifiable.",
+    "description": "<p>Business Development Representative at Verifiable.</p>",
+    "hostedUrl": "https://jobs.lever.co/verifiable/ee87827b-616d-4c23-9fb3-d8b65f452f1a",
+    "applyUrl": "https://jobs.lever.co/verifiable/ee87827b-616d-4c23-9fb3-d8b65f452f1a/apply"
+  },
+  {
+    "id": "5a01eded-7e4c-473d-8dd5-0711cd08ebb0",
+    "text": "Enterprise Account Executive",
+    "categories": {
+      "location": "Remote",
+      "allLocations": [
+        "Remote"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1754406518720,
+    "descriptionPlain": "Enterprise Account Executive at Verifiable.",
+    "description": "<p>Enterprise Account Executive at Verifiable.</p>",
+    "hostedUrl": "https://jobs.lever.co/verifiable/5a01eded-7e4c-473d-8dd5-0711cd08ebb0",
+    "applyUrl": "https://jobs.lever.co/verifiable/5a01eded-7e4c-473d-8dd5-0711cd08ebb0/apply"
+  },
+  {
+    "id": "3b667e06-f6b9-43a9-afd1-4c5fe053b0d7",
+    "text": "Enterprise Solutions Engineer",
+    "categories": {
+      "location": "Remote",
+      "allLocations": [
+        "Remote"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1775496491907,
+    "descriptionPlain": "Enterprise Solutions Engineer at Verifiable.",
+    "description": "<p>Enterprise Solutions Engineer at Verifiable.</p>",
+    "hostedUrl": "https://jobs.lever.co/verifiable/3b667e06-f6b9-43a9-afd1-4c5fe053b0d7",
+    "applyUrl": "https://jobs.lever.co/verifiable/3b667e06-f6b9-43a9-afd1-4c5fe053b0d7/apply"
+  }
+]
