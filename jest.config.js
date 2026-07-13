@@ -1137,6 +1137,7 @@ module.exports = {
     '^@ever-jobs/source-ats-joincom$': '<rootDir>/packages/plugins/source-ats-joincom/src/index.ts',
     '^@ever-jobs/source-ats-oracle$': '<rootDir>/packages/plugins/source-ats-oracle/src/index.ts',
     '^@ever-jobs/source-ats-mercor$': '<rootDir>/packages/plugins/source-ats-mercor/src/index.ts',
+    '^@ever-jobs/source-ats-gusto-hosted$': '<rootDir>/packages/plugins/source-ats-gusto-hosted/src/index.ts',
     '^@ever-jobs/source-tesla$': '<rootDir>/packages/plugins/source-tesla/src/index.ts',
     '^@ever-jobs/source-tesla-playwright$': '<rootDir>/packages/plugins/source-tesla-playwright/src/index.ts',
   },

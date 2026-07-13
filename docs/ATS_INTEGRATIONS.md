@@ -753,6 +753,17 @@ Austrian ATS (part of the onlyfy/XING group). The candidate portal is server-ren
 - **Tenant Resolution**: `handle` (sub-domain label) via `companySlug` or `companyUrl`; legacy `jobbase.io`/`prescreenapp.io` hosts 301-redirect here
 - **Known Limitation**: host-rebrand churn; single listing page observed; description served in the tenant's language when `lang=en` is unavailable (Spec 330, Q-058)
 
+### Gusto Hosted
+
+Multi-tenant job-board product hosted by Gusto (the payroll/HR vendor) at `jobs.gusto.com` for other companies. **Distinct from `source-company-gusto`**, which scrapes Gusto, Inc.'s OWN Greenhouse-backed careers (a single employer) and is left untouched — the two share a vendor name but are different targets (Spec 5054; fetch1 `gusto-board-vendor-collision-investigation.md`).
+
+- **Plugin**: `source-ats-gusto-hosted` (`Site.GUSTO_HOSTED = 'gusto_hosted'`)
+- **Method**: stealth headless browser (`BrowserPool.getPage({ proxy, stealth: true })`) → GET `/boards/{slug}` (enumerate `/postings/{postingSlug}` links) + GET `/postings/{postingSlug}` (bounded fan-out) → shared `parseJobPostingLd` (Spec 5022)
+- **Data Format**: HTML + schema.org `JobPosting` JSON-LD (title, description, datePosted, employmentType, hiringOrganization, location, baseSalary)
+- **Tenant Resolution**: board slug `<company>-<uuid>` via `companySlug`, or a `jobs.gusto.com/boards/<slug>` `companyUrl`
+- **Cloudflare**: both pages sit behind a Cloudflare managed challenge (plain HTTPS is 403'd `cf-mitigated: challenge`), so a real stealth browser clears it — same pattern as `source-company-desktopmetal` (Spec 5047). If the challenge is not cleared → `[]`; the plugin NEVER falls back to another company's board.
+- **Known Limitation**: live board/posting HTML capture deferred (the Turnstile challenge loops on a datacenter IP); board enumeration is anchored on the stable `/postings/{slug}` link shape and detail parsing on the stable JSON-LD contract (Spec 5054, `questions.md`)
+
 ---
 
 ## Architecture

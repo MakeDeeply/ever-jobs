@@ -10,6 +10,38 @@
 
 ---
 
+## Q-086 — gusto-hosted: board/posting HTML shape unverified live (Cloudflare)
+
+**Context:** Spec 5054 (new `source-ats-gusto-hosted`). The Gusto-hosted board
+(`jobs.gusto.com/boards/<slug>`) and posting pages
+(`jobs.gusto.com/postings/<postingSlug>`) sit behind a Cloudflare Turnstile
+managed challenge. On the Devin VM (a datacenter IP) the challenge loops
+indefinitely — the board's own JS/XHRs never fire — so a real board/posting HTML
+sample could not be captured to confirm the exact markup. The plugin was built
+against the two stable contracts that survive markup churn: the schema.org
+`JobPosting` JSON-LD block on posting pages (shared extractor, Spec 5022) and the
+`/postings/{slug}` anchor shape on the board.
+
+**Options:**
+
+- **A. Ship JSON-LD-first + link-shape enumeration, defer live capture (chosen).**
+  Enumerate postings from `<a href="/postings/{slug}">` links (defensive Cheerio;
+  de-duped) and parse each posting via `parseJobPostingLd`. On Cloudflare failure
+  / empty / malformed → `[]`, never a fallback to another board. Mark T7 (live
+  capture) pending in `tasks.md`.
+- **B. Block on a human-captured sample.** Correct but stalls the fix; the
+  collision (tenants harvesting Gusto, Inc.'s jobs) keeps shipping meanwhile.
+- **C. Reverse-engineer a Gusto JSON API.** Possibly lighter than a browser, but
+  unconfirmed to exist and against the "just harvest the pages" direction.
+
+**Default — proceeding (A).** The JSON-LD contract and `/postings/{slug}` link
+shape are stable enough to ship behind the BrowserPool-stealth path; a live
+capture from an allowed browser should confirm the board/posting selectors and
+promote the plugin beyond best-effort. Whether the Cloudflare challenge reliably
+clears from the production proxy pool is the operational open item.
+
+---
+
 ## Q-085 — submit4jobs: how to reach the CF-gated getJobs JSON API without a browser?
 
 **Context:** Spec 5043 (new `source-ats-submit4jobs`). Submit4Jobs / Pereless

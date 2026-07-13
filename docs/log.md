@@ -15,6 +15,51 @@
 
 ---
 
+## 2026-07-13 — Spec 5054 — source-ats-gusto-hosted
+
+**Change:** New `source-ats-gusto-hosted` ATS plugin for the **Gusto-hosted**
+multi-tenant board product (`https://jobs.gusto.com/boards/<slug>`), distinct
+from `source-company-gusto` (Gusto, Inc.'s own Greenhouse-backed careers, left
+untouched).
+
+- **Why.** Fixes a vendor-token collision documented in the fetch1 investigation
+  `gusto-board-vendor-collision-investigation.md`: upstream labelled hosted
+  boards `gusto`, colliding with `Site.GUSTO` (the employer), so every hosted
+  tenant (`material.inc`, `naturaresources.com`) routed to the company plugin and
+  harvested Gusto, Inc.'s own ~79 postings — an identical job set with
+  `companyName = "Gusto"`.
+- **Site.** `Site.GUSTO_HOSTED = 'gusto_hosted'` (category `ats`, `isAts: true`).
+- **Fetch (Cloudflare).** Board + detail hybrid (Specs 5040/5041) but
+  browser-fetched like Spec 5047: both pages sit behind a Cloudflare managed
+  challenge, so they load via `BrowserPool.getPage({ proxy, stealth: true })`.
+  Fetch methods are protected seams so unit tests substitute captured HTML
+  without a browser.
+- **Parse.** GET `/boards/{slug}` → Cheerio enumerates `<a href="/postings/{postingSlug}">`
+  (trailing `/applicants/new` stripped, de-duped); GET `/postings/{postingSlug}`
+  (bounded `Promise.allSettled` fan-out) → shared `parseJobPostingLd` (Spec 5022)
+  for title/description/date/employmentType/hiringOrganization/location/remote/
+  baseSalary. `jobType` via `getJobTypeFromString` (underscores → spaces);
+  `compensation` via `jobPostingLdToCompensation`; `emails` from the body.
+- **Slug-consumption contract (the fix).** Two different slugs → two different
+  boards/job sets — exactly what the employer plugin failed to do. Cloudflare
+  not cleared / empty / malformed → `[]`, NEVER a fallback to another board; a
+  failed detail page still emits the role from board fields.
+- **Registration.** All four places (Site enum, `ALL_SOURCE_MODULES`,
+  `tsconfig.base.json` paths, `jest.config.js` moduleNameMapper). No new
+  dependency.
+- **Tests.** 13 protected-seam unit tests (full mapping, slug consumption,
+  empty/malformed board, detail failure, de-dupe, `/applicants/new` stripping,
+  resultsWanted, remote-from-title, company precedence, no-slug, companyUrl
+  resolution, description formatting); package typecheck clean.
+- **Deferred.** Live board/posting HTML capture — the Cloudflare Turnstile
+  challenge loops on the Devin VM's datacenter IP (logged in `questions.md`);
+  detail parsing is anchored on the stable JSON-LD contract, board enumeration on
+  the stable `/postings/{slug}` link shape.
+- **fetch1 (other repo).** Host-token relabel `gusto → gusto_hosted` routes
+  boards to this plugin; tracked in fetch1, not here.
+
+---
+
 ## 2026-07-08 — Run #489 — Spec 5053 — source-company-galadyne
 
 **Change:** New single-company `source-company-galadyne` plugin for Galadyne
