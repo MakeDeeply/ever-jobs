@@ -15,6 +15,46 @@
 
 ---
 
+## 2026-07-14 — Spec 5055 — source-ats-successfactors Career Site Builder reader
+
+**Change:** Extended `source-ats-successfactors` with a **Career Site Builder
+(CSB / RMK)** read path — a third surface of the same requisitions, behind a
+deterministic switch: **OData** → **CSB** → native **careersection** HTML.
+
+- **Why.** Many SuccessFactors employers do not publish public OData and expose
+  jobs only through the CSB portal, frequently on their **own custom domain**
+  (e.g. `careers.example.com`, no `successfactors` in the hostname). For such a
+  tenant the OData probe 404s and the native careersection fallback targets the
+  wrong layout, so the plugin returned nothing.
+- **Switch.** The OData request is itself the probe — a tenant without OData
+  yields zero, the signal to try CSB. CSB is addressed by the portal URL
+  (`companyUrl` → origin via `resolveCsbBaseUrl`), not the instance subdomain;
+  the native careersection HTML remains the last-resort fallback.
+- **Reader.** Plain-HTTP list + detail hybrid (like Spec 5038; CSB is
+  server-rendered, not Cloudflare-gated), shared client + Cheerio. List:
+  `/tile-search-results/?...&startrow={N}` → enumerate `/job/{slug}/{jobId}/`
+  anchors (de-dupe by numeric `jobId`; paginate `startrow += 25` until no new
+  ids, capped by `SF_CSB_MAX_PAGES` / `resultsWanted`). Detail: bounded
+  `Promise.allSettled` fan-out → schema.org `JobPosting` **microdata**
+  (`itemprop=...`, not a JSON-LD block) for title / company / location / date /
+  description / industry.
+- **Mapping.** `id` = `sf-csb-{jobId}`, `atsId` = job id, `atsType` =
+  `successfactors`, `site` = `Site.SUCCESSFACTORS`; company from
+  `hiringOrganization`; location from `jobLocation › address`; `datePosted` via
+  `toDateOnly`; description formatted per `descriptionFormat`. `jobType` left
+  null on CSB (no `employmentType` in the observed microdata; OData still maps
+  it).
+- **Scope.** No change to the OData or careersection paths; no new package (CSB
+  is another surface of the same ATS — the four registration points are
+  unchanged); no new dependency. OData/HTML scrape methods promoted to
+  `protected` seams for testability.
+- **Tests.** 10 unit tests (mapping, pagination + de-dupe, `resultsWanted` cap,
+  missing-detail fallback, empty inputs, helper tests); package typecheck clean.
+- **Open questions.** Sub-path-hosted CSB portals and custom-domain detection
+  logged in `questions.md`.
+
+---
+
 ## 2026-07-13 — Spec 5054 — source-ats-gusto-hosted
 
 **Change:** New `source-ats-gusto-hosted` ATS plugin for the **Gusto-hosted**

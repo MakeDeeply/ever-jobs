@@ -90,8 +90,9 @@ Hiring platform designed for small and mid-sized businesses. Workable provides s
 
 SAP's cloud-based human experience management suite used by large enterprises worldwide. SuccessFactors Recruiting handles talent acquisition at scale with deep integration into SAP's broader HR ecosystem.
 
-- **Method**: OData API with HTML fallback
-- **Data Format**: XML/JSON, full requisition details
+- **Method**: three read surfaces, deterministic switch (Spec 5055) — OData API (preferred when an instance is known) → **Career Site Builder (CSB / RMK)** portal → native careersection HTML fallback
+- **Data Format**: OData XML/JSON with full requisition details; CSB portals are server-rendered HTML whose detail pages carry schema.org `JobPosting` **microdata** (not JSON-LD)
+- **CSB portals**: frequently on the employer's **own custom domain** (e.g. `careers.example.com`, no `successfactors` in the hostname) and often without public OData; addressed by the portal URL (`companyUrl`), list at `/tile-search-results/?...&startrow={N}`, detail at `/job/{slug}/{jobId}/`
 - **Notable Users**: Siemens, Accenture, Deloitte, EY
 
 ### Oracle Taleo
