@@ -15,6 +15,47 @@
 
 ---
 
+## 2026-07-14 — Spec 5060 — opt-in bare state/province classification (shared location parser)
+
+**Change:** Add an **opt-in** capability to the shared `parseLocationText` /
+`parseLocationList` so a caller can request that a **bare token** equal to a
+known US state/territory **name** (`"Virginia"`) or **2-letter code** (`"VA"`) be
+classified as a **state-only** `LocationDto` (`{ state: 'VA' }`) instead of
+falling into the `city` field.
+
+- **Why.** The parsers only fill `state` for an exact `City, ST` pair. The
+  private `normalizeUsState()` already maps both a full state name and a code to
+  a canonical code — but only inside `canonicalUsLocation()`, which requires a
+  comma-separated shape. So a lone token (no city, no comma, no structured state
+  field) skips that path and lands in `city` with `state` empty. That is wrong
+  for a source whose only location signal is a bare state (Spec 5059 IperionX,
+  whose roles state location as just `Virginia`).
+- **How.** New exported `ParseLocationOptions { allowBareStateProvince?:
+  boolean }` (re-exported via the `utils` barrel). `parseLocationText` and
+  `parseLocationList` gain an optional `options?` parameter; the list forwards it
+  to the text parser. A guarded branch runs **only** when the flag is set **and**
+  the qualifier-stripped geographic text has no comma — strictly after the
+  `City, ST` match — calling `normalizeUsState()` and returning `{ state: CODE }`
+  on a hit, else falling through to today's `city` fallback.
+- **Safety.** Default (flag absent/false) is **byte-for-byte unchanged** for
+  every existing caller; the `City, ST` and `city`-fallback paths are untouched.
+  Promotion of ambiguous words (`"Virginia"` MN city, `"Georgia"` the country)
+  happens **only** for a caller that opts in — never globally.
+- **Scope.** `packages/common` only (parser + tests) — no plugin, dependency, or
+  registration touched. This spec adds only the capability and does **not**
+  enable the flag anywhere; Spec 5059's IperionX plugin is the first consumer,
+  in its own PR (dependency order 5060 → 5059, like 5058 → 5057).
+- **Naming.** The flag is deliberately generic (state/**province**) so a later
+  spec can extend the opt-in to Canadian provinces / other subdivisions without
+  another signature change; this spec ships **US-only** behaviour (the shared
+  maps are US-only today).
+- **Tests.** 205 `packages/common` tests green (+5 new): default-off regression
+  (bare state stays a city), name/code promotion when enabled (incl. multi-word
+  name and any-case code, via both parsers), `City, ST` unchanged when enabled,
+  and negatives (non-state token, Canadian province, comma-bearing label not
+  promoted). `tsc --noEmit -p packages/common/tsconfig.json` clean.
+
+---
 ## 2026-07-14 — Spec 5057 — source-company-flymotion (Webflow careers)
 
 **Change:** New single-company `source-company-flymotion` plugin for FLYMOTION
