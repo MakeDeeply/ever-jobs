@@ -50,9 +50,9 @@ manufacturing), a **custom Wix (Thunderbolt)** careers site with **no ATS**.
   invoice reference and an unfinished `[insert weight] lbs` placeholder are ingested
   as-is); `emails` = `[]`. The page's Indeed company link is link-only, **never
   fetched**.
-- **Owner decisions (resolved in fetch1 before coding):** (1) Playwright/headless
-  harvest, (2) location from title prefix only, (3) blank `jobUrl`. No
-  `docs/questions.md` entries added.
+- **Owner decisions (resolved before coding):** (1) headless harvest, (2)
+  location from title prefix only, (3) blank `jobUrl`. No `docs/questions.md`
+  entries added.
 - **Registration.** All four places (Site enum, `ALL_SOURCE_MODULES`, tsconfig
   paths, jest moduleNameMapper). No new dependency (`playwright` + shared
   `BrowserPool` already present).
