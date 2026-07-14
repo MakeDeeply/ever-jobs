@@ -10,6 +10,40 @@
 
 ---
 
+## Q-090 — single-bound salary: scope of the shared parser extension (Spec 5058)
+
+**Context:** Spec 5058 teaches `extractSalary` to accept a single stated bound
+(lower-only `"From $X"` / upper-only `"Up to $Y"`). Two adjacent shapes were left
+out of the first cut to keep prose false positives at zero:
+
+1. **`"from $X to $Y"` word-separator ranges.** The two-ended range cascade only
+   recognises dash separators, so a `"to"`-separated range is not parsed as a
+   range. Spec 5058 deliberately does **not** rescue it as a single bound (a
+   range-tail guard leaves it a no-match) so we never truncate a real range to a
+   min-only floor — but it also means such a range yields no compensation today.
+2. **Symbol-less single amounts under a country hint** (e.g. `"at least 90 000"`
+   with a resolved country locale). The single-bound matcher requires a currency
+   symbol / ISO code on the amount, so these are dropped.
+
+**Options:**
+
+- **A. Ship single-bound only; defer both (chosen).** Currency-anchored lower/
+  upper bounds now parse; `"to"`-ranges and symbol-less amounts stay unparsed.
+  Zero new false-positive surface; the range-truncation trap is closed.
+- **B. Also add `"to"`/`"through"` as range separators.** Completes the range
+  cascade, but broadens the matcher into prose (`"$5 to 10 applicants"`) and
+  needs its own guard set — a separate spec.
+- **C. Also accept symbol-less single amounts under a strong country hint.**
+  Recovers a few more postings but reintroduces the bare-number prose risk the
+  currency anchor exists to prevent.
+
+**Default (proceeding):** **A** — narrowest correct change; B/C tracked here for a
+future spec if real sources demand them.
+
+**Resolution:** _pending review._
+
+---
+
 ## Q-088 — reelementtech: live role count and Webflow selector durability
 
 **Context:** Spec 5056 (`source-company-reelementtech`, custom Webflow careers).

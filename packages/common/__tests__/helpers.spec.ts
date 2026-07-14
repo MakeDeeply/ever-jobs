@@ -125,6 +125,104 @@ describe('extractSalary', () => {
   });
 });
 
+// Spec 5058 — single stated bound (lower-only / upper-only). A one-sided
+// figure the employer publishes should survive with only the stated end set,
+// never a fabricated opposite end.
+describe('extractSalary — single stated bound (Spec 5058)', () => {
+  it('parses a lower-only "From $X per year" as minAmount only', () => {
+    const result = extractSalary('Pay: From $48,000.00 per year');
+    expect(result.minAmount).toBe(48000);
+    expect(result.maxAmount).toBeNull();
+    expect(result.interval).toBe('yearly');
+    expect(result.currency).toBe('USD');
+  });
+
+  it('parses an upper-only "Up to $Y" as maxAmount only', () => {
+    const result = extractSalary('Up to $90,000 annually');
+    expect(result.minAmount).toBeNull();
+    expect(result.maxAmount).toBe(90000);
+    expect(result.interval).toBe('yearly');
+  });
+
+  it('parses the "$X+" trailer shape as a floor', () => {
+    const result = extractSalary('$120,000+');
+    expect(result.minAmount).toBe(120000);
+    expect(result.maxAmount).toBeNull();
+  });
+
+  it('parses "or less" trailer as a ceiling', () => {
+    const result = extractSalary('$60,000 or less');
+    expect(result.maxAmount).toBe(60000);
+    expect(result.minAmount).toBeNull();
+  });
+
+  it('honours the K suffix on a single bound', () => {
+    const result = extractSalary('from $120K');
+    expect(result.minAmount).toBe(120000);
+    expect(result.maxAmount).toBeNull();
+  });
+
+  it('detects hourly magnitude for a single bound', () => {
+    const result = extractSalary('starting at $25/hr');
+    expect(result.interval).toBe('hourly');
+    expect(result.minAmount).toBe(25);
+  });
+
+  it('honours an explicit interval hint on a single bound', () => {
+    // 2000/mo sits in the monthly magnitude band; a YEARLY hint would
+    // annualize to 24000 and pass — but as-hourly it would blow the ceiling.
+    const result = extractSalary('from $2,000', {
+      interval: CompensationInterval.MONTHLY,
+    });
+    expect(result.interval).toBe('monthly');
+    expect(result.minAmount).toBe(2000);
+    expect(result.maxAmount).toBeNull();
+  });
+
+  it('bounds-checks a single bound (below floor → null)', () => {
+    // $200/yr annualizes to $200 < lowerLimit(1000): rejected, not emitted.
+    const result = extractSalary('up to $200 per year', {
+      interval: CompensationInterval.YEARLY,
+    });
+    expect(result.minAmount).toBeNull();
+    expect(result.maxAmount).toBeNull();
+  });
+
+  it('does not fire when a dash range is present (cascade wins)', () => {
+    // The range cascade wins; single-bound never runs → both ends set.
+    const result = extractSalary('from $100,000 - $150,000');
+    expect(result.minAmount).toBe(100000);
+    expect(result.maxAmount).toBe(150000);
+  });
+
+  it('does not truncate a "from $X to $Y" range to a min-only floor', () => {
+    // The range cascade only recognises dash separators, so a "to"-range is
+    // still a no-match — but the single-bound guard must NOT rescue it as a
+    // bare $100,000 floor (which would silently drop the $150,000 ceiling).
+    const result = extractSalary('from $100,000 to $150,000 per year');
+    expect(result.minAmount).toBeNull();
+    expect(result.maxAmount).toBeNull();
+  });
+
+  it('ignores a symbol-less prose number even with a keyword', () => {
+    expect(extractSalary('at least 5 years of experience').minAmount).toBeNull();
+    expect(extractSalary('up to 3 direct reports').maxAmount).toBeNull();
+  });
+
+  it('does not lift a small figure out of "from $5 million"', () => {
+    const result = extractSalary('compensation from $5 million in funding');
+    expect(result.minAmount).toBeNull();
+    expect(result.maxAmount).toBeNull();
+  });
+
+  it('routes a single bound through salaryToCompensation', () => {
+    const comp = salaryToCompensation('From $48,000.00 per year');
+    expect(comp?.minAmount).toBe(48000);
+    expect(comp?.maxAmount).toBeUndefined();
+    expect(comp?.interval).toBe(CompensationInterval.YEARLY);
+  });
+});
+
 describe('salaryToCompensation — interval hint (Spec 5045)', () => {
   it('threads the interval hint into the CompensationDto', () => {
     const comp = salaryToCompensation('$35 - $40', {
