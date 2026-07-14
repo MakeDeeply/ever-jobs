@@ -1130,6 +1130,7 @@ import { CanekastModule } from './source-company-canekast';
 import { VelontraModule } from './source-company-velontra';
 import { SolideonModule } from './source-company-solideon';
 import { GaladyneModule } from './source-company-galadyne';
+import { GustoHostedModule } from './source-ats-gusto-hosted';
 import { AirwallexModule } from './source-company-airwallex';
 import { RenuityModule } from './source-company-renuity';
 import { EnpalModule } from './source-company-enpal';
@@ -2951,6 +2952,7 @@ export const ALL_SOURCE_MODULES = [
   VelontraModule,
   SolideonModule,
   GaladyneModule,
+  GustoHostedModule,
   AirwallexModule,
   RenuityModule,
   EnpalModule,

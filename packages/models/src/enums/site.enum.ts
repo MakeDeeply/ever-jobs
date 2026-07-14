@@ -2106,6 +2106,8 @@ export enum Site {
   SOLIDEON = 'solideon',
   // Phase 983: Spec 5053 — Galadyne (galadyne.io) company careers plugin (Next.js listing HTML + client-chunk job descriptions)
   GALADYNE = 'galadyne',
+  // Phase 984: Spec 5054 — Gusto-hosted multi-tenant job boards (jobs.gusto.com/boards/<slug>); distinct from GUSTO (Gusto, Inc.'s own careers)
+  GUSTO_HOSTED = 'gusto_hosted',
   // Phase 970: Spec 976 — Source Company Plugin: Airwallex
   AIRWALLEX = 'airwallex',
   // Phase 971: Spec 977 — Source Company Plugin: Renuity
