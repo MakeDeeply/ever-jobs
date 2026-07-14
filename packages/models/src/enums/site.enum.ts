@@ -2114,6 +2114,8 @@ export enum Site {
   FLYMOTION = 'flymotion',
   // Phase 987: Spec 5059 — IperionX (iperionx.com) company careers plugin (WordPress summary-only board; apply links out to Indeed, not scraped)
   IPERIONX = 'iperionx',
+  // Phase 988: Spec 5061 — Hylio (hyl.io) company careers plugin (Webflow CMS listing + /hiring/<slug> detail; apply links out to Indeed, not scraped)
+  HYLIO = 'hylio',
   // Phase 970: Spec 976 — Source Company Plugin: Airwallex
   AIRWALLEX = 'airwallex',
   // Phase 971: Spec 977 — Source Company Plugin: Renuity
