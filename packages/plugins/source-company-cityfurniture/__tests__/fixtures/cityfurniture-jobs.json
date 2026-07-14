@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "105577164",
+      "name": "eCommerce Acquisition Manager",
+      "uuid": "cityfurniture-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "CityFurniture1",
+        "name": "City Furniture"
+      },
+      "releasedDate": "2017-01-12T15:49:57.000Z",
+      "location": {
+        "city": "Tamarac",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Tamarac, FL, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Marketing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CityFurniture1/105577164",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>eCommerce Acquisition Manager at City Furniture.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "105573448",
+      "name": "Delivery Driver",
+      "uuid": "cityfurniture-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "CityFurniture1",
+        "name": "City Furniture"
+      },
+      "releasedDate": "2017-01-12T15:24:22.000Z",
+      "location": {
+        "city": "Tamarac",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Tamarac, FL, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Customer Service"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CityFurniture1/105573448",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Delivery Driver at City Furniture.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "85330668",
+      "name": "Sales Associate",
+      "uuid": "cityfurniture-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "CityFurniture1",
+        "name": "City Furniture"
+      },
+      "releasedDate": "2015-09-15T18:25:33.000Z",
+      "location": {
+        "city": "West Palm Beach",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "West Palm Beach, FL, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CityFurniture1/85330668",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Sales Associate at City Furniture.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "000c1c4f-00ac-400c-9a35-83b974d1dc3e",
+      "title": "(Senior) Programme Manager",
+      "departmentName": "CEO Office",
+      "teamName": "CEO Office",
+      "employmentType": "FullTime",
+      "location": "Munich",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Munich",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-13",
+      "descriptionHtml": "<p>(Senior) Programme Manager at SE3 Labs.</p>",
+      "descriptionPlain": "(Senior) Programme Manager at SE3 Labs.",
+      "jobUrl": "https://jobs.ashbyhq.com/se3/000c1c4f-00ac-400c-9a35-83b974d1dc3e",
+      "applyUrl": "https://jobs.ashbyhq.com/se3/000c1c4f-00ac-400c-9a35-83b974d1dc3e/application"
+    },
+    {
+      "id": "18061fba-690f-4053-b086-e755db6293ad",
+      "title": "Drone Test & Field Engineer",
+      "departmentName": "Hardware Development",
+      "teamName": "Hardware Development",
+      "employmentType": "FullTime",
+      "location": "Undisclosed test site 35km from Munich",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Undisclosed test site 35km from Munich",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-12-29",
+      "descriptionHtml": "<p>Drone Test & Field Engineer at SE3 Labs.</p>",
+      "descriptionPlain": "Drone Test & Field Engineer at SE3 Labs.",
+      "jobUrl": "https://jobs.ashbyhq.com/se3/18061fba-690f-4053-b086-e755db6293ad",
+      "applyUrl": "https://jobs.ashbyhq.com/se3/18061fba-690f-4053-b086-e755db6293ad/application"
+    },
+    {
+      "id": "4059b9fc-1267-4e4a-8f8b-0d339bab0615",
+      "title": "Government Relations Intern",
+      "departmentName": "CEO Office",
+      "teamName": "CEO Office",
+      "employmentType": "FullTime",
+      "location": "Munich",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Munich",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-14",
+      "descriptionHtml": "<p>Government Relations Intern at SE3 Labs.</p>",
+      "descriptionPlain": "Government Relations Intern at SE3 Labs.",
+      "jobUrl": "https://jobs.ashbyhq.com/se3/4059b9fc-1267-4e4a-8f8b-0d339bab0615",
+      "applyUrl": "https://jobs.ashbyhq.com/se3/4059b9fc-1267-4e4a-8f8b-0d339bab0615/application"
+    }
+  ]
+}

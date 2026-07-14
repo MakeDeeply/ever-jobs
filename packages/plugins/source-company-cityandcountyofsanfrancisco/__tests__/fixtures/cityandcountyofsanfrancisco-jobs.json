@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "3743990013919106",
+      "name": "Communications Specialist - Agency for Human Rights (9772)",
+      "uuid": "cityandcountyofsanfrancisco-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "cityandcountyofsanfrancisco1",
+        "name": "City and County of San Francisco"
+      },
+      "releasedDate": "2026-07-02T22:12:53.851Z",
+      "location": {
+        "city": "San Francisco",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "San Francisco, CA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Human Rights Commission"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/cityandcountyofsanfrancisco1/3743990013919106",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Communications Specialist - Agency for Human Rights (9772) at City and County of San Francisco.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "3743990013918807",
+      "name": "Senior Building Inspector - Project Delivery - Public Works (6333 PEX)",
+      "uuid": "cityandcountyofsanfrancisco-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "cityandcountyofsanfrancisco1",
+        "name": "City and County of San Francisco"
+      },
+      "releasedDate": "2026-07-02T22:06:59.044Z",
+      "location": {
+        "city": "San Francisco",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "San Francisco, CA, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Public Works"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/cityandcountyofsanfrancisco1/3743990013918807",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Building Inspector - Project Delivery - Public Works (6333 PEX) at City and County of San Francisco.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "3743990013916937",
+      "name": "1814 Benefits Supervisor - Member Services - San Francisco Employees' Retirement System (00101403)",
+      "uuid": "cityandcountyofsanfrancisco-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "cityandcountyofsanfrancisco1",
+        "name": "City and County of San Francisco"
+      },
+      "releasedDate": "2026-07-02T20:49:27.420Z",
+      "location": {
+        "city": "San Francisco",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "San Francisco, CA, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Retirement System"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/cityandcountyofsanfrancisco1/3743990013916937",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>1814 Benefits Supervisor - Member Services - San Francisco Employees' Retirement System (00101403) at City and County of San Francisco.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "09a6f900-f1f6-4edb-9296-03c6e5626799",
+      "title": "Software Engineer",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "Sarasota, FL HQ",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Sarasota",
+          "addressRegion": "FL HQ",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-10-24",
+      "descriptionHtml": "<p>Software Engineer at TENEX.AI.</p>",
+      "descriptionPlain": "Software Engineer at TENEX.AI.",
+      "jobUrl": "https://jobs.ashbyhq.com/tenex/09a6f900-f1f6-4edb-9296-03c6e5626799",
+      "applyUrl": "https://jobs.ashbyhq.com/tenex/09a6f900-f1f6-4edb-9296-03c6e5626799/application"
+    },
+    {
+      "id": "0d98d3c1-bf9b-458c-8d5e-6c39829283c1",
+      "title": "Principal AI Engineer",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "San Jose, CA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Jose",
+          "addressRegion": "CA",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-07-17",
+      "descriptionHtml": "<p>Principal AI Engineer at TENEX.AI.</p>",
+      "descriptionPlain": "Principal AI Engineer at TENEX.AI.",
+      "jobUrl": "https://jobs.ashbyhq.com/tenex/0d98d3c1-bf9b-458c-8d5e-6c39829283c1",
+      "applyUrl": "https://jobs.ashbyhq.com/tenex/0d98d3c1-bf9b-458c-8d5e-6c39829283c1/application"
+    },
+    {
+      "id": "162c1f2e-1111-41a1-a344-2222687283f8",
+      "title": "Senior Software Engineer",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "San Jose, CA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Jose",
+          "addressRegion": "CA",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-09-09",
+      "descriptionHtml": "<p>Senior Software Engineer at TENEX.AI.</p>",
+      "descriptionPlain": "Senior Software Engineer at TENEX.AI.",
+      "jobUrl": "https://jobs.ashbyhq.com/tenex/162c1f2e-1111-41a1-a344-2222687283f8",
+      "applyUrl": "https://jobs.ashbyhq.com/tenex/162c1f2e-1111-41a1-a344-2222687283f8/application"
+    }
+  ]
+}

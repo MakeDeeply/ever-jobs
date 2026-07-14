@@ -1,0 +1,62 @@
+[
+  {
+    "id": "37ea0096-1bef-4440-bf50-ee8ac2f54ed3",
+    "text": "Account Executive",
+    "categories": {
+      "location": "Spain",
+      "allLocations": [
+        "Spain"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1762637846833,
+    "descriptionPlain": "Account Executive at Jeeves.",
+    "description": "<p>Account Executive at Jeeves.</p>",
+    "hostedUrl": "https://jobs.lever.co/tryjeeves/37ea0096-1bef-4440-bf50-ee8ac2f54ed3",
+    "applyUrl": "https://jobs.lever.co/tryjeeves/37ea0096-1bef-4440-bf50-ee8ac2f54ed3/apply"
+  },
+  {
+    "id": "cb4232fe-a73c-4909-b7dd-a2ad0bdac6cd",
+    "text": "Account Executive",
+    "categories": {
+      "location": "London",
+      "allLocations": [
+        "London"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1762637704989,
+    "descriptionPlain": "Account Executive at Jeeves.",
+    "description": "<p>Account Executive at Jeeves.</p>",
+    "hostedUrl": "https://jobs.lever.co/tryjeeves/cb4232fe-a73c-4909-b7dd-a2ad0bdac6cd",
+    "applyUrl": "https://jobs.lever.co/tryjeeves/cb4232fe-a73c-4909-b7dd-a2ad0bdac6cd/apply"
+  },
+  {
+    "id": "ddadb39f-ae76-47ad-8cd7-e32610944501",
+    "text": "Account Executive",
+    "categories": {
+      "location": "Bogota",
+      "allLocations": [
+        "Bogota"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1730307386341,
+    "descriptionPlain": "Account Executive at Jeeves.",
+    "description": "<p>Account Executive at Jeeves.</p>",
+    "hostedUrl": "https://jobs.lever.co/tryjeeves/ddadb39f-ae76-47ad-8cd7-e32610944501",
+    "applyUrl": "https://jobs.lever.co/tryjeeves/ddadb39f-ae76-47ad-8cd7-e32610944501/apply"
+  }
+]

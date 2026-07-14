@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "116cb4ff-47cd-4284-83a2-5c1684275898",
+      "title": "Electrical Engineer (PCB / Low Voltage)",
+      "departmentName": "Electrical Engineering",
+      "teamName": "Electrical Engineering",
+      "employmentType": "FullTime",
+      "location": "San Francisco, CA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": "CA",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-09",
+      "descriptionHtml": "<p>Electrical Engineer (PCB / Low Voltage) at Droyd.</p>",
+      "descriptionPlain": "Electrical Engineer (PCB / Low Voltage) at Droyd.",
+      "jobUrl": "https://jobs.ashbyhq.com/droyd/116cb4ff-47cd-4284-83a2-5c1684275898",
+      "applyUrl": "https://jobs.ashbyhq.com/droyd/116cb4ff-47cd-4284-83a2-5c1684275898/application"
+    },
+    {
+      "id": "15f47d05-e5ec-435e-8432-88f6c6550adb",
+      "title": "Prototype Team Lead",
+      "departmentName": "Manufacturing & Shop",
+      "teamName": "Manufacturing & Shop",
+      "employmentType": "FullTime",
+      "location": "San Francisco, CA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": "CA",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-19",
+      "descriptionHtml": "<p>Prototype Team Lead at Droyd.</p>",
+      "descriptionPlain": "Prototype Team Lead at Droyd.",
+      "jobUrl": "https://jobs.ashbyhq.com/droyd/15f47d05-e5ec-435e-8432-88f6c6550adb",
+      "applyUrl": "https://jobs.ashbyhq.com/droyd/15f47d05-e5ec-435e-8432-88f6c6550adb/application"
+    },
+    {
+      "id": "1b015435-f3d4-40dc-8a09-93ab041ca8e2",
+      "title": "Head of GTM",
+      "departmentName": "Team Operations",
+      "teamName": "Team Operations",
+      "employmentType": "FullTime",
+      "location": "San Francisco, CA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": "CA",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-09",
+      "descriptionHtml": "<p>Head of GTM at Droyd.</p>",
+      "descriptionPlain": "Head of GTM at Droyd.",
+      "jobUrl": "https://jobs.ashbyhq.com/droyd/1b015435-f3d4-40dc-8a09-93ab041ca8e2",
+      "applyUrl": "https://jobs.ashbyhq.com/droyd/1b015435-f3d4-40dc-8a09-93ab041ca8e2/application"
+    }
+  ]
+}

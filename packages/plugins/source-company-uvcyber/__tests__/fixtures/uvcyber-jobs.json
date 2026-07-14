@@ -1,0 +1,62 @@
+[
+  {
+    "id": "a422bc12-0026-404b-b4c9-809109b7800c",
+    "text": "Application Security Testing-Staff Consultant",
+    "categories": {
+      "location": "Bengaluru",
+      "allLocations": [
+        "Bengaluru"
+      ],
+      "department": "Commercial",
+      "team": "Commercial",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1760443958937,
+    "descriptionPlain": "Application Security Testing-Staff Consultant at UltraViolet Cyber.",
+    "description": "<p>Application Security Testing-Staff Consultant at UltraViolet Cyber.</p>",
+    "hostedUrl": "https://jobs.lever.co/uvcyber/a422bc12-0026-404b-b4c9-809109b7800c",
+    "applyUrl": "https://jobs.lever.co/uvcyber/a422bc12-0026-404b-b4c9-809109b7800c/apply"
+  },
+  {
+    "id": "c7507339-ccd9-4b7d-9341-c725b7cc0f26",
+    "text": "Associate Principal Red Team Consultant",
+    "categories": {
+      "location": "Remote",
+      "allLocations": [
+        "Remote"
+      ],
+      "department": "Commercial",
+      "team": "Commercial",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1781803860667,
+    "descriptionPlain": "Associate Principal Red Team Consultant at UltraViolet Cyber.",
+    "description": "<p>Associate Principal Red Team Consultant at UltraViolet Cyber.</p>",
+    "hostedUrl": "https://jobs.lever.co/uvcyber/c7507339-ccd9-4b7d-9341-c725b7cc0f26",
+    "applyUrl": "https://jobs.lever.co/uvcyber/c7507339-ccd9-4b7d-9341-c725b7cc0f26/apply"
+  },
+  {
+    "id": "4c7a7dcb-b75a-49fc-a174-da21131499e4",
+    "text": "AWS Cloud Governance & Compliance Advisor (Top Secret)",
+    "categories": {
+      "location": "Springfield, VA",
+      "allLocations": [
+        "Springfield, VA"
+      ],
+      "department": "Federal",
+      "team": "Federal",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1781633478869,
+    "descriptionPlain": "AWS Cloud Governance & Compliance Advisor (Top Secret) at UltraViolet Cyber.",
+    "description": "<p>AWS Cloud Governance & Compliance Advisor (Top Secret) at UltraViolet Cyber.</p>",
+    "hostedUrl": "https://jobs.lever.co/uvcyber/4c7a7dcb-b75a-49fc-a174-da21131499e4",
+    "applyUrl": "https://jobs.lever.co/uvcyber/4c7a7dcb-b75a-49fc-a174-da21131499e4/apply"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "4a8b6ed4-063a-46c4-a624-d406a7b6f932",
+    "text": "Account Manager China",
+    "categories": {
+      "location": "Shanghai",
+      "allLocations": [
+        "Shanghai"
+      ],
+      "department": "Commercial",
+      "team": "Commercial",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1712899683020,
+    "descriptionPlain": "Account Manager China at dLocal.",
+    "description": "<p>Account Manager China at dLocal.</p>",
+    "hostedUrl": "https://jobs.lever.co/dlocal/4a8b6ed4-063a-46c4-a624-d406a7b6f932",
+    "applyUrl": "https://jobs.lever.co/dlocal/4a8b6ed4-063a-46c4-a624-d406a7b6f932/apply"
+  },
+  {
+    "id": "4a36dbc8-c986-464c-b6b2-c0f6adc84516",
+    "text": "Chief Compliance Officer - BSA Officer (BSAO)",
+    "categories": {
+      "location": "United States",
+      "allLocations": [
+        "United States"
+      ],
+      "department": "Compliance",
+      "team": "Compliance",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1773064283537,
+    "descriptionPlain": "Chief Compliance Officer - BSA Officer (BSAO) at dLocal.",
+    "description": "<p>Chief Compliance Officer - BSA Officer (BSAO) at dLocal.</p>",
+    "hostedUrl": "https://jobs.lever.co/dlocal/4a36dbc8-c986-464c-b6b2-c0f6adc84516",
+    "applyUrl": "https://jobs.lever.co/dlocal/4a36dbc8-c986-464c-b6b2-c0f6adc84516/apply"
+  },
+  {
+    "id": "1244cc72-c553-40ce-ac1a-afc2a5bb4dc3",
+    "text": "Cloud Architect",
+    "categories": {
+      "location": "Buenos Aires",
+      "allLocations": [
+        "Buenos Aires"
+      ],
+      "department": "Technology",
+      "team": "Technology",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1670257740509,
+    "descriptionPlain": "Cloud Architect at dLocal.",
+    "description": "<p>Cloud Architect at dLocal.</p>",
+    "hostedUrl": "https://jobs.lever.co/dlocal/1244cc72-c553-40ce-ac1a-afc2a5bb4dc3",
+    "applyUrl": "https://jobs.lever.co/dlocal/1244cc72-c553-40ce-ac1a-afc2a5bb4dc3/apply"
+  }
+]

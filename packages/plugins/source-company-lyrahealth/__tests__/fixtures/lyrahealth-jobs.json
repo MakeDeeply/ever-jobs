@@ -1,0 +1,62 @@
+[
+  {
+    "id": "8e7bb6b0-e4a5-4a00-85ab-f1c7ecfc3f40",
+    "text": "Account Manager",
+    "categories": {
+      "location": "Tokyo",
+      "allLocations": [
+        "Tokyo"
+      ],
+      "department": "Go-To-Market",
+      "team": "Go-To-Market",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1777282024523,
+    "descriptionPlain": "Account Manager at Lyra Health.",
+    "description": "<p>Account Manager at Lyra Health.</p>",
+    "hostedUrl": "https://jobs.lever.co/lyrahealth/8e7bb6b0-e4a5-4a00-85ab-f1c7ecfc3f40",
+    "applyUrl": "https://jobs.lever.co/lyrahealth/8e7bb6b0-e4a5-4a00-85ab-f1c7ecfc3f40/apply"
+  },
+  {
+    "id": "1f1193c0-6723-44f2-b4da-566b930ee2db",
+    "text": "Accounting Manager",
+    "categories": {
+      "location": "United States",
+      "allLocations": [
+        "United States"
+      ],
+      "department": "G&A",
+      "team": "G&A",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1777933997668,
+    "descriptionPlain": "Accounting Manager at Lyra Health.",
+    "description": "<p>Accounting Manager at Lyra Health.</p>",
+    "hostedUrl": "https://jobs.lever.co/lyrahealth/1f1193c0-6723-44f2-b4da-566b930ee2db",
+    "applyUrl": "https://jobs.lever.co/lyrahealth/1f1193c0-6723-44f2-b4da-566b930ee2db/apply"
+  },
+  {
+    "id": "7e94e8c4-148c-4194-847f-ae8058f42d84",
+    "text": "Affiliate EAP Counsellor (Network Partnership)",
+    "categories": {
+      "location": "Kochi",
+      "allLocations": [
+        "Kochi"
+      ],
+      "department": "Clinical Ops",
+      "team": "Clinical Ops",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1782466722239,
+    "descriptionPlain": "Affiliate EAP Counsellor (Network Partnership) at Lyra Health.",
+    "description": "<p>Affiliate EAP Counsellor (Network Partnership) at Lyra Health.</p>",
+    "hostedUrl": "https://jobs.lever.co/lyrahealth/7e94e8c4-148c-4194-847f-ae8058f42d84",
+    "applyUrl": "https://jobs.lever.co/lyrahealth/7e94e8c4-148c-4194-847f-ae8058f42d84/apply"
+  }
+]

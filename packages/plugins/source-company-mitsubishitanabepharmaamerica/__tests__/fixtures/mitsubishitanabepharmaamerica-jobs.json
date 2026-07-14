@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "112662984",
+      "name": "Pharmacovigilance (PV) Audit Manager (P/T Consultant)",
+      "uuid": "mitsubishitanabepharmaamerica-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "MitsubishiTanabePharmaAmerica",
+        "name": "Mitsubishi Tanabe Pharma America"
+      },
+      "releasedDate": "2017-04-06T13:52:41.000Z",
+      "location": {
+        "city": "Jersey City",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Jersey City, NJ, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Mitsubishi Tanabe Pharma Development America"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/MitsubishiTanabePharmaAmerica/112662984",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Pharmacovigilance (PV) Audit Manager (P/T Consultant) at Mitsubishi Tanabe Pharma America.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "112024727",
+      "name": "Senior Medical Director – Medical Safety Evaluation",
+      "uuid": "mitsubishitanabepharmaamerica-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "MitsubishiTanabePharmaAmerica",
+        "name": "Mitsubishi Tanabe Pharma America"
+      },
+      "releasedDate": "2017-03-30T15:28:15.000Z",
+      "location": {
+        "city": "Jersey City",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Jersey City, NJ, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/MitsubishiTanabePharmaAmerica/112024727",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Medical Director – Medical Safety Evaluation at Mitsubishi Tanabe Pharma America.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "112024535",
+      "name": "Associate Director, Business  Development",
+      "uuid": "mitsubishitanabepharmaamerica-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "MitsubishiTanabePharmaAmerica",
+        "name": "Mitsubishi Tanabe Pharma America"
+      },
+      "releasedDate": "2017-03-30T15:26:31.000Z",
+      "location": {
+        "city": "Jersey City",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Jersey City, NJ, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Mitsubishi Tanabe Pharma Development America"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/MitsubishiTanabePharmaAmerica/112024535",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Associate Director, Business  Development at Mitsubishi Tanabe Pharma America.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

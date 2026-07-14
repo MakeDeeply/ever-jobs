@@ -1,0 +1,62 @@
+[
+  {
+    "id": "00e36e70-3e10-4dc5-a5ea-600f6724a7c9",
+    "text": "Data Engineer-Marketing Technology",
+    "categories": {
+      "location": "Alpharetta, GA",
+      "allLocations": [
+        "Alpharetta, GA"
+      ],
+      "department": "NA G&A",
+      "team": "NA G&A",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1781159417800,
+    "descriptionPlain": "Data Engineer-Marketing Technology at Foxit.",
+    "description": "<p>Data Engineer-Marketing Technology at Foxit.</p>",
+    "hostedUrl": "https://jobs.lever.co/foxitsoftware/00e36e70-3e10-4dc5-a5ea-600f6724a7c9",
+    "applyUrl": "https://jobs.lever.co/foxitsoftware/00e36e70-3e10-4dc5-a5ea-600f6724a7c9/apply"
+  },
+  {
+    "id": "6eba8bae-945c-4296-9976-012d0c1a017a",
+    "text": "Director of Global IT - Dublin",
+    "categories": {
+      "location": "Dublin",
+      "allLocations": [
+        "Dublin"
+      ],
+      "department": "NA G&A",
+      "team": "NA G&A",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1782228699861,
+    "descriptionPlain": "Director of Global IT - Dublin at Foxit.",
+    "description": "<p>Director of Global IT - Dublin at Foxit.</p>",
+    "hostedUrl": "https://jobs.lever.co/foxitsoftware/6eba8bae-945c-4296-9976-012d0c1a017a",
+    "applyUrl": "https://jobs.lever.co/foxitsoftware/6eba8bae-945c-4296-9976-012d0c1a017a/apply"
+  },
+  {
+    "id": "217b00ee-0093-4158-9ecf-dab34e00d109",
+    "text": "Director, Global IT",
+    "categories": {
+      "location": "Alpharetta, GA",
+      "allLocations": [
+        "Alpharetta, GA"
+      ],
+      "department": "NA G&A",
+      "team": "NA G&A",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1781128238478,
+    "descriptionPlain": "Director, Global IT at Foxit.",
+    "description": "<p>Director, Global IT at Foxit.</p>",
+    "hostedUrl": "https://jobs.lever.co/foxitsoftware/217b00ee-0093-4158-9ecf-dab34e00d109",
+    "applyUrl": "https://jobs.lever.co/foxitsoftware/217b00ee-0093-4158-9ecf-dab34e00d109/apply"
+  }
+]

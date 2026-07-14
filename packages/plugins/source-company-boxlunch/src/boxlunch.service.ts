@@ -1,0 +1,73 @@
+import { SourcePlugin, PluginRegistry } from '@ever-jobs/plugin';
+
+import { Injectable, Logger, Optional } from '@nestjs/common';
+import {
+  IScraper, ScraperInputDto, JobResponseDto, Site,
+} from '@ever-jobs/models';
+
+/**
+ * BoxLunch & Hot Topic — Pop-culture specialty retailer operating the Hot Topic and BoxLunch store brands.
+ *
+ * BoxLunch and Hot Topic are pop-culture and licensed-merchandise specialty
+ * retailers operating mall-based stores across the United States. They sell
+ * apparel, accessories, and gifts tied to entertainment and music
+ * franchises.
+ *
+ * Sector: Retail. HQ: City of Industry, California, USA.
+ *
+ * Source: Lever job board, company slug `boxlunch`
+ * (`https://jobs.lever.co/boxlunch`). The company's live
+ * postings are served by Lever. Rather than re-implement Lever parsing (and
+ * risk drift), this plugin resolves the registered Lever source plugin from
+ * the `PluginRegistry` at runtime and delegates the fetch + field mapping to
+ * it, then re-stamps the company identity (site, companyName, id prefix) onto
+ * the results — so every Lever field fix is inherited automatically. This
+ * honours the "no plugin imports a peer plugin directly; discover via the
+ * registry" rule.
+ */
+const COMPANY_SLUG = 'boxlunch';
+const COMPANY_NAME = 'BoxLunch & Hot Topic';
+
+@SourcePlugin({
+  site: Site.BOXLUNCH_HOT_TOPIC,
+  name: COMPANY_NAME,
+  category: 'company',
+})
+@Injectable()
+export class BoxLunchHotTopicService implements IScraper {
+  private readonly logger = new Logger(BoxLunchHotTopicService.name);
+
+  constructor(
+    @Optional() private readonly registry?: PluginRegistry,
+  ) {}
+
+  async scrape(input: ScraperInputDto): Promise<JobResponseDto> {
+    const lever = this.registry?.getScraper(Site.LEVER);
+    if (!lever) {
+      this.logger.error(
+        'Lever source plugin is not registered; cannot scrape BoxLunch & Hot Topic',
+      );
+      return new JobResponseDto([]);
+    }
+
+    this.logger.log(
+      `BoxLunch & Hot Topic: delegating to Lever (slug ${COMPANY_SLUG})`,
+    );
+
+    const result = await lever.scrape({
+      ...input,
+      companySlug: COMPANY_SLUG,
+    } as ScraperInputDto);
+
+    for (const job of result.jobs) {
+      job.site = Site.BOXLUNCH_HOT_TOPIC;
+      job.companyName = COMPANY_NAME;
+      if (job.id) {
+        job.id = job.id.replace(/^lever-/, 'boxlunch-');
+      }
+    }
+
+    this.logger.log(`BoxLunch & Hot Topic: scraped ${result.jobs.length} jobs`);
+    return result;
+  }
+}

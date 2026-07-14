@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135484160",
+      "name": "Senior Software Engineer C++ (Endpoint Agent, OS internals)",
+      "uuid": "nexthink-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Nexthink",
+        "name": "Nexthink"
+      },
+      "releasedDate": "2026-07-02T12:13:14.188Z",
+      "location": {
+        "city": "Madrid",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Madrid, MD, Spain"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Data Platform"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Nexthink/744000135484160",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Software Engineer C++ (Endpoint Agent, OS internals) at Nexthink.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135486087",
+      "name": "Senior Software Engineer C++ (Endpoint Agent, OS internals)",
+      "uuid": "nexthink-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Nexthink",
+        "name": "Nexthink"
+      },
+      "releasedDate": "2026-07-02T12:11:29.753Z",
+      "location": {
+        "city": "Lausanne",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Lausanne, VD, Switzerland"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Data Platform"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Nexthink/744000135486087",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Software Engineer C++ (Endpoint Agent, OS internals) at Nexthink.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135483185",
+      "name": "Contract Renewal Specialist",
+      "uuid": "nexthink-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Nexthink",
+        "name": "Nexthink"
+      },
+      "releasedDate": "2026-07-02T12:01:28.865Z",
+      "location": {
+        "city": "Riyadh",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Riyadh, Riyadh Province, Saudi Arabia"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Renewal Specialist"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Nexthink/744000135483185",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Contract Renewal Specialist at Nexthink.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

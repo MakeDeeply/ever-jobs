@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "5289b920-24bf-46bb-bd92-bf3312770063",
+      "title": "Head of Marketing",
+      "departmentName": "Marketing",
+      "teamName": "Marketing",
+      "employmentType": "FullTime",
+      "location": "SF/NY/Hybrid",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "SF/NY/Hybrid",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-03-10",
+      "descriptionHtml": "<p>Head of Marketing at Gravity Climate.</p>",
+      "descriptionPlain": "Head of Marketing at Gravity Climate.",
+      "jobUrl": "https://jobs.ashbyhq.com/gravityclimate/5289b920-24bf-46bb-bd92-bf3312770063",
+      "applyUrl": "https://jobs.ashbyhq.com/gravityclimate/5289b920-24bf-46bb-bd92-bf3312770063/application"
+    },
+    {
+      "id": "5d69cc61-6915-432d-b343-8fbbe77d0ea8",
+      "title": "Climate Strategist",
+      "departmentName": "Climate Strategy",
+      "teamName": "Climate Strategy",
+      "employmentType": "FullTime",
+      "location": "Remote",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Remote",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2024-07-12",
+      "descriptionHtml": "<p>Climate Strategist at Gravity Climate.</p>",
+      "descriptionPlain": "Climate Strategist at Gravity Climate.",
+      "jobUrl": "https://jobs.ashbyhq.com/gravityclimate/5d69cc61-6915-432d-b343-8fbbe77d0ea8",
+      "applyUrl": "https://jobs.ashbyhq.com/gravityclimate/5d69cc61-6915-432d-b343-8fbbe77d0ea8/application"
+    },
+    {
+      "id": "95f9139c-fdbf-42db-a604-9dc7cf1b59d9",
+      "title": "Senior Software Engineer, Agent-Driven",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "San Francisco",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-01-11",
+      "descriptionHtml": "<p>Senior Software Engineer, Agent-Driven at Gravity Climate.</p>",
+      "descriptionPlain": "Senior Software Engineer, Agent-Driven at Gravity Climate.",
+      "jobUrl": "https://jobs.ashbyhq.com/gravityclimate/95f9139c-fdbf-42db-a604-9dc7cf1b59d9",
+      "applyUrl": "https://jobs.ashbyhq.com/gravityclimate/95f9139c-fdbf-42db-a604-9dc7cf1b59d9/application"
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135506312",
+      "name": "Category Manager (Senior/National)",
+      "uuid": "stratasfoods-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "StratasFoods",
+        "name": "Stratas Foods"
+      },
+      "releasedDate": "2026-07-02T13:31:28.090Z",
+      "location": {
+        "city": "Cordova",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Cordova, TN, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/StratasFoods/744000135506312",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Category Manager (Senior/National) at Stratas Foods.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135352809",
+      "name": "Senior Business Analyst",
+      "uuid": "stratasfoods-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "StratasFoods",
+        "name": "Stratas Foods"
+      },
+      "releasedDate": "2026-07-01T21:40:51.622Z",
+      "location": {
+        "city": "Cordova",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Cordova, TN, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "CFO / Legal / IT"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/StratasFoods/744000135352809",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Business Analyst at Stratas Foods.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135342219",
+      "name": "Operator - 2nd Shift (Heavy Duty) - Starting pay $18.06",
+      "uuid": "stratasfoods-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "StratasFoods",
+        "name": "Stratas Foods"
+      },
+      "releasedDate": "2026-07-01T19:59:09.397Z",
+      "location": {
+        "city": "Hillside",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Hillside, NJ, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Hillside Plant"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/StratasFoods/744000135342219",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Operator - 2nd Shift (Heavy Duty) - Starting pay $18.06 at Stratas Foods.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

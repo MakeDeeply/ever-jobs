@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "636fc439-83ad-4bf5-96a3-e25d8824d092",
+      "title": "Generative AI - 3D Foundation Model",
+      "departmentName": "Research",
+      "teamName": "Research",
+      "employmentType": "FullTime",
+      "location": "Bay Area Office",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Bay Area Office",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2024-10-30",
+      "descriptionHtml": "<p>Generative AI - 3D Foundation Model at Meshy.</p>",
+      "descriptionPlain": "Generative AI - 3D Foundation Model at Meshy.",
+      "jobUrl": "https://jobs.ashbyhq.com/meshy/636fc439-83ad-4bf5-96a3-e25d8824d092",
+      "applyUrl": "https://jobs.ashbyhq.com/meshy/636fc439-83ad-4bf5-96a3-e25d8824d092/application"
+    },
+    {
+      "id": "90988ed5-f767-4c0d-9cbc-b69d792db1a9",
+      "title": "Generative AI - ML System Engineering",
+      "departmentName": "Research",
+      "teamName": "Research",
+      "employmentType": "FullTime",
+      "location": "Bay Area Office",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Bay Area Office",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2024-12-12",
+      "descriptionHtml": "<p>Generative AI - ML System Engineering at Meshy.</p>",
+      "descriptionPlain": "Generative AI - ML System Engineering at Meshy.",
+      "jobUrl": "https://jobs.ashbyhq.com/meshy/90988ed5-f767-4c0d-9cbc-b69d792db1a9",
+      "applyUrl": "https://jobs.ashbyhq.com/meshy/90988ed5-f767-4c0d-9cbc-b69d792db1a9/application"
+    },
+    {
+      "id": "9527f581-8cfa-4761-8e28-368d0b5dae18",
+      "title": "Generative AI - Graphics Engineer",
+      "departmentName": "Research",
+      "teamName": "Research",
+      "employmentType": "FullTime",
+      "location": "Bay Area Office",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Bay Area Office",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-05-06",
+      "descriptionHtml": "<p>Generative AI - Graphics Engineer at Meshy.</p>",
+      "descriptionPlain": "Generative AI - Graphics Engineer at Meshy.",
+      "jobUrl": "https://jobs.ashbyhq.com/meshy/9527f581-8cfa-4761-8e28-368d0b5dae18",
+      "applyUrl": "https://jobs.ashbyhq.com/meshy/9527f581-8cfa-4761-8e28-368d0b5dae18/application"
+    }
+  ]
+}

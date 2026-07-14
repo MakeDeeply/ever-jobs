@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000133746278",
+      "name": "Sales Operations & Retail Support Intern (Malaysia & Singapore)",
+      "uuid": "lvmh-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "LVMH2",
+        "name": "LVMH"
+      },
+      "releasedDate": "2026-06-24T01:47:20.177Z",
+      "location": {
+        "city": "Singapore",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Singapore, , Singapore"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Retail (Benefit Cosmetics SEA)"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/LVMH2/744000133746278",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Sales Operations & Retail Support Intern (Malaysia & Singapore) at LVMH.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000133300019",
+      "name": "Business Controller",
+      "uuid": "lvmh-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "LVMH2",
+        "name": "LVMH"
+      },
+      "releasedDate": "2026-06-22T09:13:50.640Z",
+      "location": {
+        "city": "Singapore",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Singapore, , Singapore"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Finance  (LVMH Beauty - BPC)"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/LVMH2/744000133300019",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Business Controller at LVMH.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000130738559",
+      "name": "Regional Visual Merchandising Assistant Manager",
+      "uuid": "lvmh-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "LVMH2",
+        "name": "LVMH"
+      },
+      "releasedDate": "2026-06-08T08:40:46.368Z",
+      "location": {
+        "city": "Singapore",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Singapore, , Singapore"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Retail Design and VM (Guerlain APAC)"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/LVMH2/744000130738559",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Regional Visual Merchandising Assistant Manager at LVMH.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999666941613",
+      "name": "Service Desk Specialist II",
+      "uuid": "etalent-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "ETalent",
+        "name": "eTalent"
+      },
+      "releasedDate": "2018-03-06T15:01:50.000Z",
+      "location": {
+        "city": "Vienna",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Vienna, VA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ETalent/743999666941613",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Service Desk Specialist II at eTalent.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999666941365",
+      "name": "Software Engineer",
+      "uuid": "etalent-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "ETalent",
+        "name": "eTalent"
+      },
+      "releasedDate": "2018-03-06T14:58:20.000Z",
+      "location": {
+        "city": "Fort Stockton",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Fort Stockton, TX, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ETalent/743999666941365",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Software Engineer at eTalent.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999665695072",
+      "name": "FULLTIME POSITION for Director Data Management",
+      "uuid": "etalent-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "ETalent",
+        "name": "eTalent"
+      },
+      "releasedDate": "2018-02-06T16:15:51.000Z",
+      "location": {
+        "city": "Cambridge",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Cambridge, MA, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ETalent/743999665695072",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>FULLTIME POSITION for Director Data Management at eTalent.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

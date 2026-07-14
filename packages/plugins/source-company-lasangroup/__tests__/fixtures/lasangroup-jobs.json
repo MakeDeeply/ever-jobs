@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999705178834",
+      "name": "Waiter/Waitress",
+      "uuid": "lasangroup-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "LasanGroup",
+        "name": "Lasan Group"
+      },
+      "releasedDate": "2020-01-24T12:10:14.000Z",
+      "location": {
+        "city": "Birmingham",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Birmingham, , United Kingdom"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/LasanGroup/743999705178834",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Waiter/Waitress at Lasan Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999703971543",
+      "name": "Restaurant Manager",
+      "uuid": "lasangroup-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "LasanGroup",
+        "name": "Lasan Group"
+      },
+      "releasedDate": "2020-01-11T21:31:36.000Z",
+      "location": {
+        "city": "Birmingham",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Birmingham, , United Kingdom"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/LasanGroup/743999703971543",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Restaurant Manager at Lasan Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999698269169",
+      "name": "General Manager",
+      "uuid": "lasangroup-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "LasanGroup",
+        "name": "Lasan Group"
+      },
+      "releasedDate": "2019-10-28T11:14:06.000Z",
+      "location": {
+        "city": "Birmingham",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Birmingham, , United Kingdom"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/LasanGroup/743999698269169",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>General Manager at Lasan Group.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

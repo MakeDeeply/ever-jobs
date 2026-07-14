@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "3743990013911055",
+      "name": "Title Underwriter",
+      "uuid": "achieve-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Achieve1",
+        "name": "Achieve"
+      },
+      "releasedDate": "2026-07-02T17:40:10.608Z",
+      "location": {
+        "city": "Tempe",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Tempe, AZ, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "General Business"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Achieve1/3743990013911055",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Title Underwriter at Achieve.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "3743990013892486",
+      "name": "Debt Settlement - Administrative Back Office",
+      "uuid": "achieve-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Achieve1",
+        "name": "Achieve"
+      },
+      "releasedDate": "2026-07-01T20:43:15.900Z",
+      "location": {
+        "city": "Tempe",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Tempe, AZ, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Customer Service"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Achieve1/3743990013892486",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Debt Settlement - Administrative Back Office at Achieve.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "3743990013888107",
+      "name": "Customer Service",
+      "uuid": "achieve-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Achieve1",
+        "name": "Achieve"
+      },
+      "releasedDate": "2026-07-01T18:09:56.157Z",
+      "location": {
+        "city": "El Paso",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "El Paso, TX, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Administrative"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Achieve1/3743990013888107",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Customer Service at Achieve.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "00e1b7fd-70d5-4c12-b073-20b38e0fa59e",
+      "title": "Sales Team Lead",
+      "departmentName": "All Cost Centers",
+      "teamName": "All Cost Centers",
+      "employmentType": "FullTime",
+      "location": "Dubai - Main Office",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Dubai - Main Office",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-06",
+      "descriptionHtml": "<p>Sales Team Lead at Deliveroo.</p>",
+      "descriptionPlain": "Sales Team Lead at Deliveroo.",
+      "jobUrl": "https://jobs.ashbyhq.com/deliveroo/00e1b7fd-70d5-4c12-b073-20b38e0fa59e",
+      "applyUrl": "https://jobs.ashbyhq.com/deliveroo/00e1b7fd-70d5-4c12-b073-20b38e0fa59e/application"
+    },
+    {
+      "id": "010a8eb8-5087-41b7-971d-c2813612210f",
+      "title": "Engineering Manager, Agent Experience",
+      "departmentName": "All Cost Centers",
+      "teamName": "All Cost Centers",
+      "employmentType": "FullTime",
+      "location": "London - The River Building HQ",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "London - The River Building HQ",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-30",
+      "descriptionHtml": "<p>Engineering Manager, Agent Experience at Deliveroo.</p>",
+      "descriptionPlain": "Engineering Manager, Agent Experience at Deliveroo.",
+      "jobUrl": "https://jobs.ashbyhq.com/deliveroo/010a8eb8-5087-41b7-971d-c2813612210f",
+      "applyUrl": "https://jobs.ashbyhq.com/deliveroo/010a8eb8-5087-41b7-971d-c2813612210f/application"
+    },
+    {
+      "id": "05f9d362-1718-4109-80cc-eff5eea038f8",
+      "title": "Head of Product, Regulatory Finance",
+      "departmentName": "All Cost Centers",
+      "teamName": "All Cost Centers",
+      "employmentType": "FullTime",
+      "location": "London - The River Building HQ",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "London - The River Building HQ",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-22",
+      "descriptionHtml": "<p>Head of Product, Regulatory Finance at Deliveroo.</p>",
+      "descriptionPlain": "Head of Product, Regulatory Finance at Deliveroo.",
+      "jobUrl": "https://jobs.ashbyhq.com/deliveroo/05f9d362-1718-4109-80cc-eff5eea038f8",
+      "applyUrl": "https://jobs.ashbyhq.com/deliveroo/05f9d362-1718-4109-80cc-eff5eea038f8/application"
+    }
+  ]
+}

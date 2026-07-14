@@ -1,0 +1,62 @@
+[
+  {
+    "id": "5fa0bc89-99aa-45d9-bddc-76482c534d4a",
+    "text": "Associate Graphic Designer",
+    "categories": {
+      "location": "Los Angeles, CA",
+      "allLocations": [
+        "Los Angeles, CA"
+      ],
+      "department": "Graphic Design",
+      "team": "Graphic Design",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1782258299534,
+    "descriptionPlain": "Associate Graphic Designer at Madhappy.",
+    "description": "<p>Associate Graphic Designer at Madhappy.</p>",
+    "hostedUrl": "https://jobs.lever.co/madhappy/5fa0bc89-99aa-45d9-bddc-76482c534d4a",
+    "applyUrl": "https://jobs.lever.co/madhappy/5fa0bc89-99aa-45d9-bddc-76482c534d4a/apply"
+  },
+  {
+    "id": "ef3e9601-45c8-48b2-943a-efce9d7ccc2c",
+    "text": "Ecommerce Operations Associate",
+    "categories": {
+      "location": "Los Angeles, CA",
+      "allLocations": [
+        "Los Angeles, CA"
+      ],
+      "department": "Operations & Customer Care",
+      "team": "Operations & Customer Care",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1776193362577,
+    "descriptionPlain": "Ecommerce Operations Associate at Madhappy.",
+    "description": "<p>Ecommerce Operations Associate at Madhappy.</p>",
+    "hostedUrl": "https://jobs.lever.co/madhappy/ef3e9601-45c8-48b2-943a-efce9d7ccc2c",
+    "applyUrl": "https://jobs.lever.co/madhappy/ef3e9601-45c8-48b2-943a-efce9d7ccc2c/apply"
+  },
+  {
+    "id": "2bd9f32b-6da2-4528-9188-26383d84944d",
+    "text": "Madhappy Aspen Full-Time Store Supervisor",
+    "categories": {
+      "location": "Aspen, CO",
+      "allLocations": [
+        "Aspen, CO"
+      ],
+      "department": "Retail",
+      "team": "Retail",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1779130138171,
+    "descriptionPlain": "Madhappy Aspen Full-Time Store Supervisor at Madhappy.",
+    "description": "<p>Madhappy Aspen Full-Time Store Supervisor at Madhappy.</p>",
+    "hostedUrl": "https://jobs.lever.co/madhappy/2bd9f32b-6da2-4528-9188-26383d84944d",
+    "applyUrl": "https://jobs.lever.co/madhappy/2bd9f32b-6da2-4528-9188-26383d84944d/apply"
+  }
+]

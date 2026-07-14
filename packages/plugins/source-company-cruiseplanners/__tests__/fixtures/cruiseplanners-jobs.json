@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999688217418",
+      "name": "UI/UX Designer",
+      "uuid": "cruiseplanners-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "CruisePlanners",
+        "name": "Cruise Planners"
+      },
+      "releasedDate": "2019-05-14T16:06:16.000Z",
+      "location": {
+        "city": "Coral Springs",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Coral Springs, FL, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CruisePlanners/743999688217418",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>UI/UX Designer at Cruise Planners.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999688080715",
+      "name": "Sales Operations Analyst",
+      "uuid": "cruiseplanners-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "CruisePlanners",
+        "name": "Cruise Planners"
+      },
+      "releasedDate": "2019-05-10T22:06:09.000Z",
+      "location": {
+        "city": "Coral Springs",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Coral Springs, FL, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Analyst"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CruisePlanners/743999688080715",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Sales Operations Analyst at Cruise Planners.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999687856766",
+      "name": "Public Relations Intern",
+      "uuid": "cruiseplanners-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "CruisePlanners",
+        "name": "Cruise Planners"
+      },
+      "releasedDate": "2019-05-07T18:50:22.000Z",
+      "location": {
+        "city": "Coral Springs",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Coral Springs, FL, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Public Relations"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CruisePlanners/743999687856766",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Public Relations Intern at Cruise Planners.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

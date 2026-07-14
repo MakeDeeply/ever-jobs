@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135753070",
+      "name": "Temarondväktare till Securitas Göteborg",
+      "uuid": "securitas-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Securitas",
+        "name": "Securitas"
+      },
+      "releasedDate": "2026-07-03T14:56:12.221Z",
+      "location": {
+        "city": "Gothenburg",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Gothenburg, Västra Götaland County, Sweden"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Securitas/744000135753070",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Temarondväktare till Securitas Göteborg at Securitas.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135752068",
+      "name": "Relief Security Officer",
+      "uuid": "securitas-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Securitas",
+        "name": "Securitas"
+      },
+      "releasedDate": "2026-07-03T14:40:04.058Z",
+      "location": {
+        "city": "London",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "London, England, United Kingdom"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "General Business"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Securitas/744000135752068",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Relief Security Officer at Securitas.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135748296",
+      "name": "Geprüfte Schutz- und Sicherheitskraft/ Stellv. Objektleiter 21,83 €/Std. (m/w/d)",
+      "uuid": "securitas-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Securitas",
+        "name": "Securitas"
+      },
+      "releasedDate": "2026-07-03T14:26:34.596Z",
+      "location": {
+        "city": "Monheim am Rhein",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Monheim am Rhein, NRW, Germany"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Securitas/744000135748296",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Geprüfte Schutz- und Sicherheitskraft/ Stellv. Objektleiter 21,83 €/Std. (m/w/d) at Securitas.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

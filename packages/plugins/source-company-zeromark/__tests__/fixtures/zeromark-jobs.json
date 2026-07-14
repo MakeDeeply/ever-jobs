@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "41a742ee-ced1-4370-8936-43b35d761360",
+      "title": "Mechanical Design Engineer",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "New York, NY",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "New York",
+          "addressRegion": "NY",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-11",
+      "descriptionHtml": "<p>Mechanical Design Engineer at ZeroMark.</p>",
+      "descriptionPlain": "Mechanical Design Engineer at ZeroMark.",
+      "jobUrl": "https://jobs.ashbyhq.com/zeromark/41a742ee-ced1-4370-8936-43b35d761360",
+      "applyUrl": "https://jobs.ashbyhq.com/zeromark/41a742ee-ced1-4370-8936-43b35d761360/application"
+    },
+    {
+      "id": "4a6678a2-a3a4-41e6-a2f6-dd3a6b01c8e6",
+      "title": "Senior Machine Learning Operations Engineer",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "New York, NY",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "New York",
+          "addressRegion": "NY",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-11",
+      "descriptionHtml": "<p>Senior Machine Learning Operations Engineer at ZeroMark.</p>",
+      "descriptionPlain": "Senior Machine Learning Operations Engineer at ZeroMark.",
+      "jobUrl": "https://jobs.ashbyhq.com/zeromark/4a6678a2-a3a4-41e6-a2f6-dd3a6b01c8e6",
+      "applyUrl": "https://jobs.ashbyhq.com/zeromark/4a6678a2-a3a4-41e6-a2f6-dd3a6b01c8e6/application"
+    },
+    {
+      "id": "6da89902-7624-44ee-8ece-b2ff58354cd6",
+      "title": "Senior Mechatronics Engineer (Robotics)",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "New York, NY",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "New York",
+          "addressRegion": "NY",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-03-31",
+      "descriptionHtml": "<p>Senior Mechatronics Engineer (Robotics) at ZeroMark.</p>",
+      "descriptionPlain": "Senior Mechatronics Engineer (Robotics) at ZeroMark.",
+      "jobUrl": "https://jobs.ashbyhq.com/zeromark/6da89902-7624-44ee-8ece-b2ff58354cd6",
+      "applyUrl": "https://jobs.ashbyhq.com/zeromark/6da89902-7624-44ee-8ece-b2ff58354cd6/application"
+    }
+  ]
+}

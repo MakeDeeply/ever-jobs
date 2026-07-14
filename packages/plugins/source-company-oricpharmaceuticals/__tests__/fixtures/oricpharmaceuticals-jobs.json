@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "3743990013591186",
+      "name": "Research Associate II - Formulation (Contract)",
+      "uuid": "oricpharmaceuticals-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "ORICPharmaceuticals",
+        "name": "ORIC Pharmaceuticals"
+      },
+      "releasedDate": "2026-06-11T22:28:32.649Z",
+      "location": {
+        "city": "South San Francisco",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "South San Francisco, CA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "CMC Dev & Mfg"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ORICPharmaceuticals/3743990013591186",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Research Associate II - Formulation (Contract) at ORIC Pharmaceuticals.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "3743990013504016",
+      "name": "Director, Medical Affairs",
+      "uuid": "oricpharmaceuticals-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "ORICPharmaceuticals",
+        "name": "ORIC Pharmaceuticals"
+      },
+      "releasedDate": "2026-06-05T21:43:02.659Z",
+      "location": {
+        "city": "South San Francisco",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "South San Francisco, CA, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Medical Affairs"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ORICPharmaceuticals/3743990013504016",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Director, Medical Affairs at ORIC Pharmaceuticals.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "3743990013501357",
+      "name": "Associate Director, CMC Project Management",
+      "uuid": "oricpharmaceuticals-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "ORICPharmaceuticals",
+        "name": "ORIC Pharmaceuticals"
+      },
+      "releasedDate": "2026-06-05T19:55:48.951Z",
+      "location": {
+        "city": "South San Francisco",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "South San Francisco, CA, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Supply Chain & Program Mgmt"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ORICPharmaceuticals/3743990013501357",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Associate Director, CMC Project Management at ORIC Pharmaceuticals.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

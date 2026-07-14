@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "05085e52-174c-4d29-a31f-0e85970b8c55",
+      "title": "Security Engineer",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "New York City",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "New York City",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-02-25",
+      "descriptionHtml": "<p>Security Engineer at Candid Health.</p>",
+      "descriptionPlain": "Security Engineer at Candid Health.",
+      "jobUrl": "https://jobs.ashbyhq.com/candidhealth/05085e52-174c-4d29-a31f-0e85970b8c55",
+      "applyUrl": "https://jobs.ashbyhq.com/candidhealth/05085e52-174c-4d29-a31f-0e85970b8c55/application"
+    },
+    {
+      "id": "0842afe5-f841-49af-967c-f8ef36297f01",
+      "title": "TechOps Engineer",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "San Francisco",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-23",
+      "descriptionHtml": "<p>TechOps Engineer at Candid Health.</p>",
+      "descriptionPlain": "TechOps Engineer at Candid Health.",
+      "jobUrl": "https://jobs.ashbyhq.com/candidhealth/0842afe5-f841-49af-967c-f8ef36297f01",
+      "applyUrl": "https://jobs.ashbyhq.com/candidhealth/0842afe5-f841-49af-967c-f8ef36297f01/application"
+    },
+    {
+      "id": "0d7fd955-5b36-49d7-80f5-f1b0085f6112",
+      "title": "Marketing Strategy & Operations Lead",
+      "departmentName": "Marketing",
+      "teamName": "Marketing",
+      "employmentType": "FullTime",
+      "location": "San Francisco (CA),  Denver (CO), New York (NY)",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco (CA)",
+          "addressRegion": "Denver (CO)",
+          "addressCountry": "New York (NY)"
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-13",
+      "descriptionHtml": "<p>Marketing Strategy & Operations Lead at Candid Health.</p>",
+      "descriptionPlain": "Marketing Strategy & Operations Lead at Candid Health.",
+      "jobUrl": "https://jobs.ashbyhq.com/candidhealth/0d7fd955-5b36-49d7-80f5-f1b0085f6112",
+      "applyUrl": "https://jobs.ashbyhq.com/candidhealth/0d7fd955-5b36-49d7-80f5-f1b0085f6112/application"
+    }
+  ]
+}

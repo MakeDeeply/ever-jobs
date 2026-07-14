@@ -1,0 +1,74 @@
+import { SourcePlugin, PluginRegistry } from '@ever-jobs/plugin';
+
+import { Injectable, Logger, Optional } from '@nestjs/common';
+import {
+  IScraper, ScraperInputDto, JobResponseDto, Site,
+} from '@ever-jobs/models';
+
+/**
+ * Columbia University — Private Ivy League research university in New York City.
+ *
+ * Columbia University is a private Ivy League research university located in
+ * New York City. It offers undergraduate, graduate, and professional
+ * programs across a wide range of disciplines and conducts research across
+ * the sciences, humanities, and professional fields. This SmartRecruiters
+ * presence hosts adjunct, lecturer, and administrative openings.
+ *
+ * Sector: Education (higher education). HQ: New York, New York, USA.
+ *
+ * Source: SmartRecruiters job board, company identifier `ColumbiaUniversity1`
+ * (`https://jobs.smartrecruiters.com/ColumbiaUniversity1`). The company's live
+ * postings are served by SmartRecruiters. Rather than re-implement
+ * SmartRecruiters parsing (and risk drift), this plugin resolves the
+ * registered SmartRecruiters source plugin from the `PluginRegistry` at
+ * runtime and delegates the fetch + field mapping to it, then re-stamps the
+ * company identity (site, companyName, id prefix) onto the results — so every
+ * SmartRecruiters field fix is inherited automatically. This honours the "no
+ * plugin imports a peer plugin directly; discover via the registry" rule.
+ */
+const COMPANY_SLUG = 'ColumbiaUniversity1';
+const COMPANY_NAME = 'Columbia University';
+
+@SourcePlugin({
+  site: Site.COLUMBIA_UNIVERSITY,
+  name: COMPANY_NAME,
+  category: 'company',
+})
+@Injectable()
+export class ColumbiaUniversityService implements IScraper {
+  private readonly logger = new Logger(ColumbiaUniversityService.name);
+
+  constructor(
+    @Optional() private readonly registry?: PluginRegistry,
+  ) {}
+
+  async scrape(input: ScraperInputDto): Promise<JobResponseDto> {
+    const smartrecruiters = this.registry?.getScraper(Site.SMARTRECRUITERS);
+    if (!smartrecruiters) {
+      this.logger.error(
+        'SmartRecruiters source plugin is not registered; cannot scrape Columbia University',
+      );
+      return new JobResponseDto([]);
+    }
+
+    this.logger.log(
+      `Columbia University: delegating to SmartRecruiters (slug ${COMPANY_SLUG})`,
+    );
+
+    const result = await smartrecruiters.scrape({
+      ...input,
+      companySlug: COMPANY_SLUG,
+    } as ScraperInputDto);
+
+    for (const job of result.jobs) {
+      job.site = Site.COLUMBIA_UNIVERSITY;
+      job.companyName = COMPANY_NAME;
+      if (job.id) {
+        job.id = job.id.replace(/^sr-/, 'columbiauniversity-');
+      }
+    }
+
+    this.logger.log(`Columbia University: scraped ${result.jobs.length} jobs`);
+    return result;
+  }
+}

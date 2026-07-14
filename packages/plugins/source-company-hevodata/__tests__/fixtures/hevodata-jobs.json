@@ -1,0 +1,62 @@
+[
+  {
+    "id": "cfdb183c-e9f4-4877-8b8c-bd7a3b4a7fde",
+    "text": "Account Executive",
+    "categories": {
+      "location": "Bangalore, India",
+      "allLocations": [
+        "Bangalore, India"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1781107135316,
+    "descriptionPlain": "Account Executive at Hevo Data.",
+    "description": "<p>Account Executive at Hevo Data.</p>",
+    "hostedUrl": "https://jobs.lever.co/hevodata/cfdb183c-e9f4-4877-8b8c-bd7a3b4a7fde",
+    "applyUrl": "https://jobs.lever.co/hevodata/cfdb183c-e9f4-4877-8b8c-bd7a3b4a7fde/apply"
+  },
+  {
+    "id": "a7f26742-f965-4a59-840d-f7afa0a28176",
+    "text": "AI Solution Engineer",
+    "categories": {
+      "location": "Bangalore, India",
+      "allLocations": [
+        "Bangalore, India"
+      ],
+      "department": "Strategy",
+      "team": "Strategy",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1757064386743,
+    "descriptionPlain": "AI Solution Engineer at Hevo Data.",
+    "description": "<p>AI Solution Engineer at Hevo Data.</p>",
+    "hostedUrl": "https://jobs.lever.co/hevodata/a7f26742-f965-4a59-840d-f7afa0a28176",
+    "applyUrl": "https://jobs.lever.co/hevodata/a7f26742-f965-4a59-840d-f7afa0a28176/apply"
+  },
+  {
+    "id": "d8ea771e-fe9b-4c14-b184-4bed18296928",
+    "text": "Analytics Manager",
+    "categories": {
+      "location": "Bangalore, India",
+      "allLocations": [
+        "Bangalore, India"
+      ],
+      "department": "BizOps",
+      "team": "BizOps",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1768475159434,
+    "descriptionPlain": "Analytics Manager at Hevo Data.",
+    "description": "<p>Analytics Manager at Hevo Data.</p>",
+    "hostedUrl": "https://jobs.lever.co/hevodata/d8ea771e-fe9b-4c14-b184-4bed18296928",
+    "applyUrl": "https://jobs.lever.co/hevodata/d8ea771e-fe9b-4c14-b184-4bed18296928/apply"
+  }
+]

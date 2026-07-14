@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "1556e90c-1c75-494b-97d3-b471ae95fa6f",
+      "title": "Business Development Representative",
+      "departmentName": "Sales",
+      "teamName": "Sales",
+      "employmentType": "FullTime",
+      "location": "San Francisco",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-01-01",
+      "descriptionHtml": "<p>Business Development Representative at incident.io.</p>",
+      "descriptionPlain": "Business Development Representative at incident.io.",
+      "jobUrl": "https://jobs.ashbyhq.com/incident/1556e90c-1c75-494b-97d3-b471ae95fa6f",
+      "applyUrl": "https://jobs.ashbyhq.com/incident/1556e90c-1c75-494b-97d3-b471ae95fa6f/application"
+    },
+    {
+      "id": "19c3f375-bfaf-4c1c-91bb-5cac0d6b0367",
+      "title": "Enterprise Sales Manager",
+      "departmentName": "Sales",
+      "teamName": "Sales",
+      "employmentType": "FullTime",
+      "location": "San Francisco",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-12-17",
+      "descriptionHtml": "<p>Enterprise Sales Manager at incident.io.</p>",
+      "descriptionPlain": "Enterprise Sales Manager at incident.io.",
+      "jobUrl": "https://jobs.ashbyhq.com/incident/19c3f375-bfaf-4c1c-91bb-5cac0d6b0367",
+      "applyUrl": "https://jobs.ashbyhq.com/incident/19c3f375-bfaf-4c1c-91bb-5cac0d6b0367/application"
+    },
+    {
+      "id": "26af5e13-edee-41c3-9019-f886f404cd59",
+      "title": "Platform Engineer",
+      "departmentName": "Product Development",
+      "teamName": "Product Development",
+      "employmentType": "FullTime",
+      "location": "London",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "London",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-15",
+      "descriptionHtml": "<p>Platform Engineer at incident.io.</p>",
+      "descriptionPlain": "Platform Engineer at incident.io.",
+      "jobUrl": "https://jobs.ashbyhq.com/incident/26af5e13-edee-41c3-9019-f886f404cd59",
+      "applyUrl": "https://jobs.ashbyhq.com/incident/26af5e13-edee-41c3-9019-f886f404cd59/application"
+    }
+  ]
+}

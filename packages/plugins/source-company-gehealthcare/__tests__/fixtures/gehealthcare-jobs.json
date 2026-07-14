@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "83441060",
+      "name": "Technical Support Specialist I",
+      "uuid": "gehealthcare-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "GEHealthcare2",
+        "name": "GE HealthCare"
+      },
+      "releasedDate": "2015-06-10T16:54:19.000Z",
+      "location": {
+        "city": "Hartford",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Hartford, WI, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/GEHealthcare2/83441060",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Technical Support Specialist I at GE HealthCare.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "83440720",
+      "name": "Technical Support Specialist I",
+      "uuid": "gehealthcare-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "GEHealthcare2",
+        "name": "GE HealthCare"
+      },
+      "releasedDate": "2015-06-10T16:48:10.000Z",
+      "location": {
+        "city": "Waukesha",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Waukesha, WI, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Customer Service"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/GEHealthcare2/83440720",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Technical Support Specialist I at GE HealthCare.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "82988288",
+      "name": "Technical Support Specialist I",
+      "uuid": "gehealthcare-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "GEHealthcare2",
+        "name": "GE HealthCare"
+      },
+      "releasedDate": "2015-05-18T19:20:51.000Z",
+      "location": {
+        "city": "Milwaukee",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Milwaukee, WI, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Customer Service"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/GEHealthcare2/82988288",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Technical Support Specialist I at GE HealthCare.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

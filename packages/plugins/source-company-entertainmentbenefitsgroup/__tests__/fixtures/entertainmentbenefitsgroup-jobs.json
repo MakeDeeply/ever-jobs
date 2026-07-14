@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000134873789",
+      "name": "Workplace Experience Coordinator",
+      "uuid": "entertainmentbenefitsgroup-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "EntertainmentBenefitsGroup",
+        "name": "Entertainment Benefits Group"
+      },
+      "releasedDate": "2026-06-29T20:09:20.672Z",
+      "location": {
+        "city": "Orlando",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Orlando, FL, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Operations"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/EntertainmentBenefitsGroup/744000134873789",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Workplace Experience Coordinator at Entertainment Benefits Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000134864363",
+      "name": "Strategic Pricing Coordinator",
+      "uuid": "entertainmentbenefitsgroup-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "EntertainmentBenefitsGroup",
+        "name": "Entertainment Benefits Group"
+      },
+      "releasedDate": "2026-06-29T19:19:22.019Z",
+      "location": {
+        "city": "Las Vegas",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Las Vegas, NV, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Sales and Partner Development"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/EntertainmentBenefitsGroup/744000134864363",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Strategic Pricing Coordinator at Entertainment Benefits Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000134850483",
+      "name": "Director, Human Resources",
+      "uuid": "entertainmentbenefitsgroup-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "EntertainmentBenefitsGroup",
+        "name": "Entertainment Benefits Group"
+      },
+      "releasedDate": "2026-06-29T17:42:25.519Z",
+      "location": {
+        "city": "Orlando",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Orlando, FL, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Human Resources"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/EntertainmentBenefitsGroup/744000134850483",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Director, Human Resources at Entertainment Benefits Group.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

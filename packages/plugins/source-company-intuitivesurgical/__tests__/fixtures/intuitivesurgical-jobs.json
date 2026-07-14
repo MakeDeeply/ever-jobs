@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135806671",
+      "name": "Senior Analytics Engineer – Data Applications",
+      "uuid": "intuitivesurgical-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Intuitive",
+        "name": "Intuitive Surgical"
+      },
+      "releasedDate": "2026-07-04T01:28:28.454Z",
+      "location": {
+        "city": "Bengaluru",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Bengaluru, INDIA, India"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Intuitive/744000135806671",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Analytics Engineer – Data Applications at Intuitive Surgical.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135642670",
+      "name": "Senior Financial Analyst",
+      "uuid": "intuitivesurgical-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Intuitive",
+        "name": "Intuitive Surgical"
+      },
+      "releasedDate": "2026-07-03T05:31:20.091Z",
+      "location": {
+        "city": "Seoul",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Seoul, Seoul, Korea, republic of"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Accounting/Auditing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Intuitive/744000135642670",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Financial Analyst at Intuitive Surgical.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135521289",
+      "name": "Sr Mgr Commercial Distribution",
+      "uuid": "intuitivesurgical-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Intuitive",
+        "name": "Intuitive Surgical"
+      },
+      "releasedDate": "2026-07-02T14:28:41.596Z",
+      "location": {
+        "city": "Paris",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Paris, FRANCE, France"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Intuitive/744000135521289",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Sr Mgr Commercial Distribution at Intuitive Surgical.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

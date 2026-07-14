@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135567759",
+      "name": "Control Room Operator (TBM & Tunnel Operations)",
+      "uuid": "ontariotransitgroup-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "OntarioTransitGroup",
+        "name": "Ontario Transit Group"
+      },
+      "releasedDate": "2026-07-02T18:42:43.982Z",
+      "location": {
+        "city": "Toronto",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Toronto, ON, Canada"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Tunnel (TUNNEL)"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/OntarioTransitGroup/744000135567759",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Control Room Operator (TBM & Tunnel Operations) at Ontario Transit Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135566489",
+      "name": "Heavy Duty Mechanic",
+      "uuid": "ontariotransitgroup-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "OntarioTransitGroup",
+        "name": "Ontario Transit Group"
+      },
+      "releasedDate": "2026-07-02T18:35:13.401Z",
+      "location": {
+        "city": "Toronto",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Toronto, ON, Canada"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Unionized"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/OntarioTransitGroup/744000135566489",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Heavy Duty Mechanic at Ontario Transit Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000134876129",
+      "name": "Lifting Supervisor (Night Shift)",
+      "uuid": "ontariotransitgroup-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "OntarioTransitGroup",
+        "name": "Ontario Transit Group"
+      },
+      "releasedDate": "2026-06-29T20:29:13.040Z",
+      "location": {
+        "city": "Toronto",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Toronto, ON, Canada"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Implementation (IMPMNT)"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/OntarioTransitGroup/744000134876129",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Lifting Supervisor (Night Shift) at Ontario Transit Group.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

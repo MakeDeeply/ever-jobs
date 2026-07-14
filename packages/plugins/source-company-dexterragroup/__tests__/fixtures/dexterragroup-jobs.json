@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135774965",
+      "name": "Operations Manager",
+      "uuid": "dexterragroup-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Dexterra",
+        "name": "Dexterra Group"
+      },
+      "releasedDate": "2026-07-03T18:41:19.436Z",
+      "location": {
+        "city": "Edmonton",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Edmonton, AB, Canada"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Dexterra/744000135774965",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Operations Manager at Dexterra Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135761920",
+      "name": "Industrial Janitor",
+      "uuid": "dexterragroup-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Dexterra",
+        "name": "Dexterra Group"
+      },
+      "releasedDate": "2026-07-03T15:44:16.883Z",
+      "location": {
+        "city": "Grande Prairie",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Grande Prairie, AB, Canada"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Customer Service"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Dexterra/744000135761920",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Industrial Janitor at Dexterra Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135749257",
+      "name": "Project Manager",
+      "uuid": "dexterragroup-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Dexterra",
+        "name": "Dexterra Group"
+      },
+      "releasedDate": "2026-07-03T14:28:57.967Z",
+      "location": {
+        "city": "Mississauga",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Mississauga, ON, Canada"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Dexterra/744000135749257",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Project Manager at Dexterra Group.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

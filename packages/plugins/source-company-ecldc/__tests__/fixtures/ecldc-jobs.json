@@ -1,0 +1,62 @@
+[
+  {
+    "id": "1cfaa4d7-2429-444d-b347-626df1a4a541",
+    "text": "Data Center Cooling and Thermodynamics Engineer",
+    "categories": {
+      "location": "Mt. View California",
+      "allLocations": [
+        "Mt. View California"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1771269860665,
+    "descriptionPlain": "Data Center Cooling and Thermodynamics Engineer at ECL.",
+    "description": "<p>Data Center Cooling and Thermodynamics Engineer at ECL.</p>",
+    "hostedUrl": "https://jobs.lever.co/ecldc/1cfaa4d7-2429-444d-b347-626df1a4a541",
+    "applyUrl": "https://jobs.lever.co/ecldc/1cfaa4d7-2429-444d-b347-626df1a4a541/apply"
+  },
+  {
+    "id": "a2c77d43-98d0-4994-a33b-0b4a9d2188ad",
+    "text": "Data Center Operation - Engineer",
+    "categories": {
+      "location": "Mt. View California",
+      "allLocations": [
+        "Mt. View California"
+      ],
+      "department": "Data Center Operations",
+      "team": "Data Center Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1771357907531,
+    "descriptionPlain": "Data Center Operation - Engineer at ECL.",
+    "description": "<p>Data Center Operation - Engineer at ECL.</p>",
+    "hostedUrl": "https://jobs.lever.co/ecldc/a2c77d43-98d0-4994-a33b-0b4a9d2188ad",
+    "applyUrl": "https://jobs.lever.co/ecldc/a2c77d43-98d0-4994-a33b-0b4a9d2188ad/apply"
+  },
+  {
+    "id": "6a207176-3493-4067-bcf5-576e16e0b625",
+    "text": "Data Center Operation Tech",
+    "categories": {
+      "location": "Mt. View California",
+      "allLocations": [
+        "Mt. View California"
+      ],
+      "department": "Data Center Operations",
+      "team": "Data Center Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1771270985512,
+    "descriptionPlain": "Data Center Operation Tech at ECL.",
+    "description": "<p>Data Center Operation Tech at ECL.</p>",
+    "hostedUrl": "https://jobs.lever.co/ecldc/6a207176-3493-4067-bcf5-576e16e0b625",
+    "applyUrl": "https://jobs.lever.co/ecldc/6a207176-3493-4067-bcf5-576e16e0b625/apply"
+  }
+]

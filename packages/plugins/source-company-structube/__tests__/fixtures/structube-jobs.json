@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135772549",
+      "name": "Assistant Manager",
+      "uuid": "structube-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Structube1",
+        "name": "Structube"
+      },
+      "releasedDate": "2026-07-03T17:53:33.271Z",
+      "location": {
+        "city": "Mississauga",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Mississauga, ON, Canada"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Management"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Structube1/744000135772549",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Assistant Manager at Structube.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135772409",
+      "name": "Assistant Manager",
+      "uuid": "structube-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Structube1",
+        "name": "Structube"
+      },
+      "releasedDate": "2026-07-03T17:52:10.455Z",
+      "location": {
+        "city": "Toronto",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Toronto, ON, Canada"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Management"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Structube1/744000135772409",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Assistant Manager at Structube.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135772249",
+      "name": "Assistant(e) gérant(e)",
+      "uuid": "structube-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Structube1",
+        "name": "Structube"
+      },
+      "releasedDate": "2026-07-03T17:50:49.916Z",
+      "location": {
+        "city": "Gatineau",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Gatineau, QC, Canada"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Management"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Structube1/744000135772249",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Assistant(e) gérant(e) at Structube.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

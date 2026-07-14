@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135786239",
+      "name": "Senior Software Engineer",
+      "uuid": "wise-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Wise",
+        "name": "Wise"
+      },
+      "releasedDate": "2026-07-03T22:33:50.646Z",
+      "location": {
+        "city": "São Paulo",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "São Paulo, , Brazil"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Wise/744000135786239",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Software Engineer at Wise.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135786119",
+      "name": "Staff Software Engineer",
+      "uuid": "wise-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Wise",
+        "name": "Wise"
+      },
+      "releasedDate": "2026-07-03T22:32:47.009Z",
+      "location": {
+        "city": "São Paulo",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "São Paulo, , Brazil"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Wise/744000135786119",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Staff Software Engineer at Wise.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135785909",
+      "name": "Finance Manager - 6-Month Contract",
+      "uuid": "wise-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Wise",
+        "name": "Wise"
+      },
+      "releasedDate": "2026-07-03T22:25:08.359Z",
+      "location": {
+        "city": "São Paulo",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "São Paulo, , Brazil"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Finance"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Wise/744000135785909",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Finance Manager - 6-Month Contract at Wise.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

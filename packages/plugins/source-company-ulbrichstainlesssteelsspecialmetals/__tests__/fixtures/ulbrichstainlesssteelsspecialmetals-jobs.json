@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000133637261",
+      "name": "Sales Representative (Inside)",
+      "uuid": "ulbrichstainlesssteelsspecialmetals-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "UlbrichSteel",
+        "name": "Ulbrich Stainless Steels & Special Metals"
+      },
+      "releasedDate": "2026-06-23T15:34:16.387Z",
+      "location": {
+        "city": "North Haven",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "North Haven, CT, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/UlbrichSteel/744000133637261",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Sales Representative (Inside) at Ulbrich Stainless Steels & Special Metals.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000133100049",
+      "name": "Director of European Sales",
+      "uuid": "ulbrichstainlesssteelsspecialmetals-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "UlbrichSteel",
+        "name": "Ulbrich Stainless Steels & Special Metals"
+      },
+      "releasedDate": "2026-06-19T15:44:50.572Z",
+      "location": {
+        "city": "Anywhere",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Anywhere, , Germany"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/UlbrichSteel/744000133100049",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Director of European Sales at Ulbrich Stainless Steels & Special Metals.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000132865120",
+      "name": "Electrician",
+      "uuid": "ulbrichstainlesssteelsspecialmetals-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "UlbrichSteel",
+        "name": "Ulbrich Stainless Steels & Special Metals"
+      },
+      "releasedDate": "2026-06-18T13:15:04.722Z",
+      "location": {
+        "city": "Westminster",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Westminster, SC, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Manufacturing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/UlbrichSteel/744000132865120",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Electrician at Ulbrich Stainless Steels & Special Metals.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

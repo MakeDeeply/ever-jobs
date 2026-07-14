@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "18db80da-f7c1-49c8-9fc1-7940c8ebfc65",
+      "title": "Partnerships",
+      "departmentName": "Commercial",
+      "teamName": "Commercial",
+      "employmentType": "FullTime",
+      "location": "London",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "London",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-30",
+      "descriptionHtml": "<p>Partnerships at Axle Energy.</p>",
+      "descriptionPlain": "Partnerships at Axle Energy.",
+      "jobUrl": "https://jobs.ashbyhq.com/axle-careers/18db80da-f7c1-49c8-9fc1-7940c8ebfc65",
+      "applyUrl": "https://jobs.ashbyhq.com/axle-careers/18db80da-f7c1-49c8-9fc1-7940c8ebfc65/application"
+    },
+    {
+      "id": "2ec0da8b-73af-4c26-8595-249cb682bf62",
+      "title": "Talent",
+      "departmentName": "Commercial",
+      "teamName": "Commercial",
+      "employmentType": "FullTime",
+      "location": "London",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "London",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-30",
+      "descriptionHtml": "<p>Talent at Axle Energy.</p>",
+      "descriptionPlain": "Talent at Axle Energy.",
+      "jobUrl": "https://jobs.ashbyhq.com/axle-careers/2ec0da8b-73af-4c26-8595-249cb682bf62",
+      "applyUrl": "https://jobs.ashbyhq.com/axle-careers/2ec0da8b-73af-4c26-8595-249cb682bf62/application"
+    },
+    {
+      "id": "32af3177-62a3-42b8-a4bf-744b40e848c3",
+      "title": "Technical Operations",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "London",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "London",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-30",
+      "descriptionHtml": "<p>Technical Operations at Axle Energy.</p>",
+      "descriptionPlain": "Technical Operations at Axle Energy.",
+      "jobUrl": "https://jobs.ashbyhq.com/axle-careers/32af3177-62a3-42b8-a4bf-744b40e848c3",
+      "applyUrl": "https://jobs.ashbyhq.com/axle-careers/32af3177-62a3-42b8-a4bf-744b40e848c3/application"
+    }
+  ]
+}

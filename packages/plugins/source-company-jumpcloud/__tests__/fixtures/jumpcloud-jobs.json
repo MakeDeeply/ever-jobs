@@ -1,0 +1,62 @@
+[
+  {
+    "id": "0f12db70-b4ec-4238-89db-dbdbcacd08a6",
+    "text": "Channel Manager - Brazil",
+    "categories": {
+      "location": "São Paulo, Brazil - Remote",
+      "allLocations": [
+        "São Paulo, Brazil - Remote"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1773874144187,
+    "descriptionPlain": "Channel Manager - Brazil at JumpCloud.",
+    "description": "<p>Channel Manager - Brazil at JumpCloud.</p>",
+    "hostedUrl": "https://jobs.lever.co/jumpcloud/0f12db70-b4ec-4238-89db-dbdbcacd08a6",
+    "applyUrl": "https://jobs.lever.co/jumpcloud/0f12db70-b4ec-4238-89db-dbdbcacd08a6/apply"
+  },
+  {
+    "id": "d7ede670-a608-435f-9f4a-6595e33d63c9",
+    "text": "Channel Manager - United Arab Emirates",
+    "categories": {
+      "location": "Dubai, United Arab Emirates - Remote",
+      "allLocations": [
+        "Dubai, United Arab Emirates - Remote"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1780419970273,
+    "descriptionPlain": "Channel Manager - United Arab Emirates at JumpCloud.",
+    "description": "<p>Channel Manager - United Arab Emirates at JumpCloud.</p>",
+    "hostedUrl": "https://jobs.lever.co/jumpcloud/d7ede670-a608-435f-9f4a-6595e33d63c9",
+    "applyUrl": "https://jobs.lever.co/jumpcloud/d7ede670-a608-435f-9f4a-6595e33d63c9/apply"
+  },
+  {
+    "id": "d1bd2986-4e0b-46d3-aeb3-2f8efdb567ab",
+    "text": "Channel Sales Manager - India",
+    "categories": {
+      "location": "Bangalore, India - Remote",
+      "allLocations": [
+        "Bangalore, India - Remote"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1781559738081,
+    "descriptionPlain": "Channel Sales Manager - India at JumpCloud.",
+    "description": "<p>Channel Sales Manager - India at JumpCloud.</p>",
+    "hostedUrl": "https://jobs.lever.co/jumpcloud/d1bd2986-4e0b-46d3-aeb3-2f8efdb567ab",
+    "applyUrl": "https://jobs.lever.co/jumpcloud/d1bd2986-4e0b-46d3-aeb3-2f8efdb567ab/apply"
+  }
+]

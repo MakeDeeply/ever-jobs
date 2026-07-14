@@ -1,0 +1,62 @@
+[
+  {
+    "id": "d702dd2b-3acd-4b0d-865a-e973a2f6ea90",
+    "text": "1.10 Software Engineer, Human-Robot Interaction",
+    "categories": {
+      "location": "Boston, MA",
+      "allLocations": [
+        "Boston, MA"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1770223269507,
+    "descriptionPlain": "1.10 Software Engineer, Human-Robot Interaction at Field AI.",
+    "description": "<p>1.10 Software Engineer, Human-Robot Interaction at Field AI.</p>",
+    "hostedUrl": "https://jobs.lever.co/field-ai/d702dd2b-3acd-4b0d-865a-e973a2f6ea90",
+    "applyUrl": "https://jobs.lever.co/field-ai/d702dd2b-3acd-4b0d-865a-e973a2f6ea90/apply"
+  },
+  {
+    "id": "1ae59c17-eabd-4e36-a2c2-e9ac96ba0f85",
+    "text": "1.11 Senior Research Engineer – Humanoid Manipulation",
+    "categories": {
+      "location": "Boston, MA",
+      "allLocations": [
+        "Boston, MA"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1757635145568,
+    "descriptionPlain": "1.11 Senior Research Engineer – Humanoid Manipulation at Field AI.",
+    "description": "<p>1.11 Senior Research Engineer – Humanoid Manipulation at Field AI.</p>",
+    "hostedUrl": "https://jobs.lever.co/field-ai/1ae59c17-eabd-4e36-a2c2-e9ac96ba0f85",
+    "applyUrl": "https://jobs.lever.co/field-ai/1ae59c17-eabd-4e36-a2c2-e9ac96ba0f85/apply"
+  },
+  {
+    "id": "ec9469b7-eebe-476d-8929-b72603be5a85",
+    "text": "1.5 Robotics AI Engineer – Field Foundation Models & Dynamics Foundation Models",
+    "categories": {
+      "location": "Irvine, CA",
+      "allLocations": [
+        "Irvine, CA"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1737692667581,
+    "descriptionPlain": "1.5 Robotics AI Engineer – Field Foundation Models & Dynamics Foundation Models at Field AI.",
+    "description": "<p>1.5 Robotics AI Engineer – Field Foundation Models & Dynamics Foundation Models at Field AI.</p>",
+    "hostedUrl": "https://jobs.lever.co/field-ai/ec9469b7-eebe-476d-8929-b72603be5a85",
+    "applyUrl": "https://jobs.lever.co/field-ai/ec9469b7-eebe-476d-8929-b72603be5a85/apply"
+  }
+]

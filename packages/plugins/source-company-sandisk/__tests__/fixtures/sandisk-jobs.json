@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135679829",
+      "name": "Analyst 2, Import/Export",
+      "uuid": "sandisk-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Sandisk",
+        "name": "SanDisk"
+      },
+      "releasedDate": "2026-07-03T09:14:02.248Z",
+      "location": {
+        "city": "Bengaluru",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Bengaluru, KA, India"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Supply Chain"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Sandisk/744000135679829",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Analyst 2, Import/Export at SanDisk.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135676059",
+      "name": "Technologist, Mask Design Engineering",
+      "uuid": "sandisk-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Sandisk",
+        "name": "SanDisk"
+      },
+      "releasedDate": "2026-07-03T08:55:40.516Z",
+      "location": {
+        "city": "Bengaluru",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Bengaluru, KA, India"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Sandisk/744000135676059",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Technologist, Mask Design Engineering at SanDisk.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135675869",
+      "name": "Senior Engineer, Equipment Engineering",
+      "uuid": "sandisk-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Sandisk",
+        "name": "SanDisk"
+      },
+      "releasedDate": "2026-07-03T08:54:30.588Z",
+      "location": {
+        "city": "Batu Kawan",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Batu Kawan, Penang, Malaysia"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Sandisk/744000135675869",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Engineer, Equipment Engineering at SanDisk.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

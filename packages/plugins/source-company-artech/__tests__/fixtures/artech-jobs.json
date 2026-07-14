@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999659867496",
+      "name": "SQL Developer",
+      "uuid": "artech-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "ArtechInformationSystemLLC",
+        "name": "Artech"
+      },
+      "releasedDate": "2017-09-15T00:06:54.000Z",
+      "location": {
+        "city": "San Diego",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "San Diego, CA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ArtechInformationSystemLLC/743999659867496",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>SQL Developer at Artech.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999659867219",
+      "name": "Important- Excellent Job Opportunity for Business Analyst / Process Modeller in Lawrence Township, NJ-3- 6 Months (Chance of Extension)",
+      "uuid": "artech-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "ArtechInformationSystemLLC",
+        "name": "Artech"
+      },
+      "releasedDate": "2017-09-14T23:49:56.000Z",
+      "location": {
+        "city": "Lawrence Township",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Lawrence Township, NJ, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Management"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ArtechInformationSystemLLC/743999659867219",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Important- Excellent Job Opportunity for Business Analyst / Process Modeller in Lawrence Township, NJ-3- 6 Months (Chance of Extension) at Artech.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999659867053",
+      "name": "Data Center and Operations Engineer",
+      "uuid": "artech-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "ArtechInformationSystemLLC",
+        "name": "Artech"
+      },
+      "releasedDate": "2017-09-14T23:43:50.000Z",
+      "location": {
+        "city": "Knoxville",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Knoxville, TN, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ArtechInformationSystemLLC/743999659867053",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Data Center and Operations Engineer at Artech.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

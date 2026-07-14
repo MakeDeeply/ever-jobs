@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "01f1a2b8-dcae-4a8b-bd37-fe09cea3bdf9",
+      "title": "Sr. Software Engineer - MarTech (Remote)",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "Remote - United States",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Remote - United States",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2026-05-14",
+      "descriptionHtml": "<p>Sr. Software Engineer - MarTech (Remote) at Rula.</p>",
+      "descriptionPlain": "Sr. Software Engineer - MarTech (Remote) at Rula.",
+      "jobUrl": "https://jobs.ashbyhq.com/rula/01f1a2b8-dcae-4a8b-bd37-fe09cea3bdf9",
+      "applyUrl": "https://jobs.ashbyhq.com/rula/01f1a2b8-dcae-4a8b-bd37-fe09cea3bdf9/application"
+    },
+    {
+      "id": "1b1cade8-5d78-4290-9332-f965d6ae9905",
+      "title": "Sr. Health Systems Enterprise Account Executive (Remote)",
+      "departmentName": "Partnerships",
+      "teamName": "Partnerships",
+      "employmentType": "FullTime",
+      "location": "Remote - United States",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Remote - United States",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2026-02-16",
+      "descriptionHtml": "<p>Sr. Health Systems Enterprise Account Executive (Remote) at Rula.</p>",
+      "descriptionPlain": "Sr. Health Systems Enterprise Account Executive (Remote) at Rula.",
+      "jobUrl": "https://jobs.ashbyhq.com/rula/1b1cade8-5d78-4290-9332-f965d6ae9905",
+      "applyUrl": "https://jobs.ashbyhq.com/rula/1b1cade8-5d78-4290-9332-f965d6ae9905/application"
+    },
+    {
+      "id": "3013fcdb-0e71-42f2-b3f1-7e8e3b3a2c44",
+      "title": "Strategy & Operations Manager  (Remote)",
+      "departmentName": "Operations",
+      "teamName": "Operations",
+      "employmentType": "FullTime",
+      "location": "Remote - United States",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Remote - United States",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2026-06-18",
+      "descriptionHtml": "<p>Strategy & Operations Manager  (Remote) at Rula.</p>",
+      "descriptionPlain": "Strategy & Operations Manager  (Remote) at Rula.",
+      "jobUrl": "https://jobs.ashbyhq.com/rula/3013fcdb-0e71-42f2-b3f1-7e8e3b3a2c44",
+      "applyUrl": "https://jobs.ashbyhq.com/rula/3013fcdb-0e71-42f2-b3f1-7e8e3b3a2c44/application"
+    }
+  ]
+}

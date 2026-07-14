@@ -1,0 +1,62 @@
+[
+  {
+    "id": "a60fb104-ce93-4ba0-8763-ffb075b3eed1",
+    "text": "Account Executive, Commercial",
+    "categories": {
+      "location": "United States",
+      "allLocations": [
+        "United States"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1782753306506,
+    "descriptionPlain": "Account Executive, Commercial at Outreach.",
+    "description": "<p>Account Executive, Commercial at Outreach.</p>",
+    "hostedUrl": "https://jobs.lever.co/outreach/a60fb104-ce93-4ba0-8763-ffb075b3eed1",
+    "applyUrl": "https://jobs.lever.co/outreach/a60fb104-ce93-4ba0-8763-ffb075b3eed1/apply"
+  },
+  {
+    "id": "1ee6929b-42c3-4ada-83cf-2ea170f7b430",
+    "text": "AI GTM Architect (Revenue Operations)",
+    "categories": {
+      "location": "United States",
+      "allLocations": [
+        "United States"
+      ],
+      "department": "Revenue Operations",
+      "team": "Revenue Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1781713837266,
+    "descriptionPlain": "AI GTM Architect (Revenue Operations) at Outreach.",
+    "description": "<p>AI GTM Architect (Revenue Operations) at Outreach.</p>",
+    "hostedUrl": "https://jobs.lever.co/outreach/1ee6929b-42c3-4ada-83cf-2ea170f7b430",
+    "applyUrl": "https://jobs.lever.co/outreach/1ee6929b-42c3-4ada-83cf-2ea170f7b430/apply"
+  },
+  {
+    "id": "aa98974b-096f-403c-8d38-ba08961f0fd2",
+    "text": "Applied Scientist, Sync",
+    "categories": {
+      "location": "Seattle, WA",
+      "allLocations": [
+        "Seattle, WA"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1776724534372,
+    "descriptionPlain": "Applied Scientist, Sync at Outreach.",
+    "description": "<p>Applied Scientist, Sync at Outreach.</p>",
+    "hostedUrl": "https://jobs.lever.co/outreach/aa98974b-096f-403c-8d38-ba08961f0fd2",
+    "applyUrl": "https://jobs.lever.co/outreach/aa98974b-096f-403c-8d38-ba08961f0fd2/apply"
+  }
+]

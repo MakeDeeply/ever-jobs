@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999692253011",
+      "name": "MTS, Software",
+      "uuid": "maximintegrated-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "MaximIntegrated",
+        "name": "Maxim Integrated"
+      },
+      "releasedDate": "2019-07-24T16:17:29.000Z",
+      "location": {
+        "city": "Montréal",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Montréal, QC, Canada"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/MaximIntegrated/743999692253011",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>MTS, Software at Maxim Integrated.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999691846027",
+      "name": "MTS, Software",
+      "uuid": "maximintegrated-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "MaximIntegrated",
+        "name": "Maxim Integrated"
+      },
+      "releasedDate": "2019-07-16T22:52:16.000Z",
+      "location": {
+        "city": "Montréal",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Montréal, QC, Canada"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/MaximIntegrated/743999691846027",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>MTS, Software at Maxim Integrated.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "108956148",
+      "name": "Test Equipment Technician",
+      "uuid": "maximintegrated-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "MaximIntegrated",
+        "name": "Maxim Integrated"
+      },
+      "releasedDate": "2017-02-23T06:44:00.000Z",
+      "location": {
+        "city": "Cavite City",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Cavite City, , Philippines"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Production"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/MaximIntegrated/108956148",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Test Equipment Technician at Maxim Integrated.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

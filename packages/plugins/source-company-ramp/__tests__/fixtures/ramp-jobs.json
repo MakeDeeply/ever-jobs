@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "0907ae2a-5334-4d64-9a76-cc9428224546",
+      "title": "Director, Performance Marketing",
+      "departmentName": "Marketing",
+      "teamName": "Marketing",
+      "employmentType": "FullTime",
+      "location": "New York, NY (HQ)",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "New York",
+          "addressRegion": "NY (HQ)",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-11",
+      "descriptionHtml": "<p>Director, Performance Marketing at Ramp.</p>",
+      "descriptionPlain": "Director, Performance Marketing at Ramp.",
+      "jobUrl": "https://jobs.ashbyhq.com/ramp/0907ae2a-5334-4d64-9a76-cc9428224546",
+      "applyUrl": "https://jobs.ashbyhq.com/ramp/0907ae2a-5334-4d64-9a76-cc9428224546/application"
+    },
+    {
+      "id": "09a9381c-677b-40a5-9ff1-027bd4302c13",
+      "title": "Customer Activation Manager | Enterprise",
+      "departmentName": "Sales",
+      "teamName": "Sales",
+      "employmentType": "FullTime",
+      "location": "New York, NY (HQ)",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "New York",
+          "addressRegion": "NY (HQ)",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-03-27",
+      "descriptionHtml": "<p>Customer Activation Manager | Enterprise at Ramp.</p>",
+      "descriptionPlain": "Customer Activation Manager | Enterprise at Ramp.",
+      "jobUrl": "https://jobs.ashbyhq.com/ramp/09a9381c-677b-40a5-9ff1-027bd4302c13",
+      "applyUrl": "https://jobs.ashbyhq.com/ramp/09a9381c-677b-40a5-9ff1-027bd4302c13/application"
+    },
+    {
+      "id": "0d731586-3626-48fb-9dc5-3061ae5fd240",
+      "title": "Customer Experience Associate - London",
+      "departmentName": "Customer Experience",
+      "teamName": "Customer Experience",
+      "employmentType": "FullTime",
+      "location": "London",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "London",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-26",
+      "descriptionHtml": "<p>Customer Experience Associate - London at Ramp.</p>",
+      "descriptionPlain": "Customer Experience Associate - London at Ramp.",
+      "jobUrl": "https://jobs.ashbyhq.com/ramp/0d731586-3626-48fb-9dc5-3061ae5fd240",
+      "applyUrl": "https://jobs.ashbyhq.com/ramp/0d731586-3626-48fb-9dc5-3061ae5fd240/application"
+    }
+  ]
+}

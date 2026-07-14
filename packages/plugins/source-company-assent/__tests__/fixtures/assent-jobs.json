@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135512560",
+      "name": "French Marketing Manager",
+      "uuid": "assent-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Assent",
+        "name": "Assent"
+      },
+      "releasedDate": "2026-07-02T13:58:44.230Z",
+      "location": {
+        "city": "Amsterdam",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Amsterdam, NH, Netherlands"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Marketing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Assent/744000135512560",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>French Marketing Manager at Assent.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135510439",
+      "name": "Customer Success Manager- 1 Year Term",
+      "uuid": "assent-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Assent",
+        "name": "Assent"
+      },
+      "releasedDate": "2026-07-02T13:49:26.968Z",
+      "location": {
+        "city": "Ottawa",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Ottawa, ON, Canada"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Global Services"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Assent/744000135510439",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Customer Success Manager- 1 Year Term at Assent.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135222019",
+      "name": "Product Technical Support",
+      "uuid": "assent-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Assent",
+        "name": "Assent"
+      },
+      "releasedDate": "2026-07-01T09:56:25.807Z",
+      "location": {
+        "city": "George Town",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "George Town, Penang, Malaysia"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Global Services"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Assent/744000135222019",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Product Technical Support at Assent.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

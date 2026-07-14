@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999659678581",
+      "name": "JIRA Administrator/ Developer",
+      "uuid": "aditistaffing-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "AditiStaffing1",
+        "name": "Aditi Staffing"
+      },
+      "releasedDate": "2017-09-12T23:50:39.000Z",
+      "location": {
+        "city": "Bothell",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Bothell, WA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AditiStaffing1/743999659678581",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>JIRA Administrator/ Developer at Aditi Staffing.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999659678481",
+      "name": "Information Security Engineer",
+      "uuid": "aditistaffing-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "AditiStaffing1",
+        "name": "Aditi Staffing"
+      },
+      "releasedDate": "2017-09-12T23:49:46.000Z",
+      "location": {
+        "city": "Bellevue",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Bellevue, WA, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AditiStaffing1/743999659678481",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Information Security Engineer at Aditi Staffing.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999659678459",
+      "name": "Business Systems Analyst",
+      "uuid": "aditistaffing-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "AditiStaffing1",
+        "name": "Aditi Staffing"
+      },
+      "releasedDate": "2017-09-12T23:49:10.000Z",
+      "location": {
+        "city": "Bellevue",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Bellevue, WA, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Accounting/Auditing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AditiStaffing1/743999659678459",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Business Systems Analyst at Aditi Staffing.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

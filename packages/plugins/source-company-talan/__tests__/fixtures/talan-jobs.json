@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135767992",
+      "name": "AI Applications & Data Science Consultant",
+      "uuid": "talan-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Talan",
+        "name": "Talan"
+      },
+      "releasedDate": "2026-07-03T16:50:12.321Z",
+      "location": {
+        "city": "Rabat",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Rabat, Rabat-Salé-Kénitra, Morocco"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Business Intelligence"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Talan/744000135767992",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>AI Applications & Data Science Consultant at Talan.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135762324",
+      "name": "Chef de Projet Organisation Confirmé - F/H",
+      "uuid": "talan-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Talan",
+        "name": "Talan"
+      },
+      "releasedDate": "2026-07-03T15:49:10.398Z",
+      "location": {
+        "city": "Lille",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Lille, Hauts-de-France, France"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Business Analyst"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Talan/744000135762324",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Chef de Projet Organisation Confirmé - F/H at Talan.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135751299",
+      "name": "Forward Deployed Engineer IA & Data (H/F) - CDI",
+      "uuid": "talan-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Talan",
+        "name": "Talan"
+      },
+      "releasedDate": "2026-07-03T14:36:43.678Z",
+      "location": {
+        "city": "Paris",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Paris, IDF, France"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Engineering & Development IT"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Talan/744000135751299",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Forward Deployed Engineer IA & Data (H/F) - CDI at Talan.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

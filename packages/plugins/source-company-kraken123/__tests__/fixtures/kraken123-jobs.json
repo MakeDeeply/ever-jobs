@@ -1,0 +1,62 @@
+[
+  {
+    "id": "148be360-1dc9-4d31-80a4-a68f14a62609",
+    "text": "Client Delivery Lead",
+    "categories": {
+      "location": "Melbourne",
+      "allLocations": [
+        "Melbourne"
+      ],
+      "department": "Delivery 📦",
+      "team": "Delivery 📦",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1732579422218,
+    "descriptionPlain": "Client Delivery Lead at Kraken.",
+    "description": "<p>Client Delivery Lead at Kraken.</p>",
+    "hostedUrl": "https://jobs.lever.co/kraken123/148be360-1dc9-4d31-80a4-a68f14a62609",
+    "applyUrl": "https://jobs.lever.co/kraken123/148be360-1dc9-4d31-80a4-a68f14a62609/apply"
+  },
+  {
+    "id": "1653fd7b-783c-49b8-8609-580d997232e8",
+    "text": "Client Delivery Lead",
+    "categories": {
+      "location": "Tokyo",
+      "allLocations": [
+        "Tokyo"
+      ],
+      "department": "Delivery 📦",
+      "team": "Delivery 📦",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1765859318058,
+    "descriptionPlain": "Client Delivery Lead at Kraken.",
+    "description": "<p>Client Delivery Lead at Kraken.</p>",
+    "hostedUrl": "https://jobs.lever.co/kraken123/1653fd7b-783c-49b8-8609-580d997232e8",
+    "applyUrl": "https://jobs.lever.co/kraken123/1653fd7b-783c-49b8-8609-580d997232e8/apply"
+  },
+  {
+    "id": "bfa4dcab-bd90-45d1-a026-8ec4be91903d",
+    "text": "Client Delivery Lead",
+    "categories": {
+      "location": "Remote, ES",
+      "allLocations": [
+        "Remote, ES"
+      ],
+      "department": "Delivery 📦",
+      "team": "Delivery 📦",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1781189420042,
+    "descriptionPlain": "Client Delivery Lead at Kraken.",
+    "description": "<p>Client Delivery Lead at Kraken.</p>",
+    "hostedUrl": "https://jobs.lever.co/kraken123/bfa4dcab-bd90-45d1-a026-8ec4be91903d",
+    "applyUrl": "https://jobs.lever.co/kraken123/bfa4dcab-bd90-45d1-a026-8ec4be91903d/apply"
+  }
+]

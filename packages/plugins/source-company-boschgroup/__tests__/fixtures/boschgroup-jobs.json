@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135786859",
+      "name": "Associate Equipment Engineer",
+      "uuid": "boschgroup-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "BoschGroup",
+        "name": "Bosch Group"
+      },
+      "releasedDate": "2026-07-03T23:01:05.640Z",
+      "location": {
+        "city": "Roseville",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Roseville, CA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/BoschGroup/744000135786859",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Associate Equipment Engineer at Bosch Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135782029",
+      "name": "ASSISTENTE DE SUPORTE DE OPERAÇÕES DE EMERGÊNCIA (E-CALL) - PROJETO GLOBAL (34244,34729,34923)",
+      "uuid": "boschgroup-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "BoschGroup",
+        "name": "Bosch Group"
+      },
+      "releasedDate": "2026-07-03T20:55:46.473Z",
+      "location": {
+        "city": "Joinville",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Joinville, SANTA CATARINA, Brazil"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Customer Service"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/BoschGroup/744000135782029",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>ASSISTENTE DE SUPORTE DE OPERAÇÕES DE EMERGÊNCIA (E-CALL) - PROJETO GLOBAL (34244,34729,34923) at Bosch Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135777989",
+      "name": "Advanced Mechanical Engineer",
+      "uuid": "boschgroup-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "BoschGroup",
+        "name": "Bosch Group"
+      },
+      "releasedDate": "2026-07-03T19:24:00.167Z",
+      "location": {
+        "city": "Guadalajara",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Guadalajara, Jal., Mexico"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/BoschGroup/744000135777989",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Advanced Mechanical Engineer at Bosch Group.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

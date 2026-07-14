@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135742070",
+      "name": "Senior Aviation Planner",
+      "uuid": "cima-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "CIMA2",
+        "name": "CIMA+"
+      },
+      "releasedDate": "2026-07-03T14:02:02.092Z",
+      "location": {
+        "city": "Mississauga",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Mississauga, Ontario, Canada"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CIMA2/744000135742070",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Aviation Planner at CIMA+.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135738498",
+      "name": "Project Manager - Transportation Road Design",
+      "uuid": "cima-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "CIMA2",
+        "name": "CIMA+"
+      },
+      "releasedDate": "2026-07-03T13:40:14.442Z",
+      "location": {
+        "city": "Burlington",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Burlington, Ontario, Canada"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CIMA2/744000135738498",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Project Manager - Transportation Road Design at CIMA+.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135592959",
+      "name": "Electrical EIT Buildings",
+      "uuid": "cima-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "CIMA2",
+        "name": "CIMA+"
+      },
+      "releasedDate": "2026-07-02T20:44:18.302Z",
+      "location": {
+        "city": "Vancouver",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Vancouver, British Columbia, Canada"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CIMA2/744000135592959",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Electrical EIT Buildings at CIMA+.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

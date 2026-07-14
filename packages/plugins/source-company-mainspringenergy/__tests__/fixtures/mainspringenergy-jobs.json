@@ -1,0 +1,62 @@
+[
+  {
+    "id": "bc9190b2-505f-492e-9d4c-f80f86fb86bb",
+    "text": "Associate Manufacturing Engineer",
+    "categories": {
+      "location": "Menlo Park, CA",
+      "allLocations": [
+        "Menlo Park, CA"
+      ],
+      "department": "NPI - New Product Introduction",
+      "team": "NPI - New Product Introduction",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1772054091295,
+    "descriptionPlain": "Associate Manufacturing Engineer at Mainspring Energy.",
+    "description": "<p>Associate Manufacturing Engineer at Mainspring Energy.</p>",
+    "hostedUrl": "https://jobs.lever.co/mainspringenergy/bc9190b2-505f-492e-9d4c-f80f86fb86bb",
+    "applyUrl": "https://jobs.lever.co/mainspringenergy/bc9190b2-505f-492e-9d4c-f80f86fb86bb/apply"
+  },
+  {
+    "id": "9707025c-620c-44ad-91a5-75b6b2b5306a",
+    "text": "Associate Technical Writer",
+    "categories": {
+      "location": "Menlo Park, CA",
+      "allLocations": [
+        "Menlo Park, CA"
+      ],
+      "department": "Operational Tech and Sys",
+      "team": "Operational Tech and Sys",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1774639182975,
+    "descriptionPlain": "Associate Technical Writer at Mainspring Energy.",
+    "description": "<p>Associate Technical Writer at Mainspring Energy.</p>",
+    "hostedUrl": "https://jobs.lever.co/mainspringenergy/9707025c-620c-44ad-91a5-75b6b2b5306a",
+    "applyUrl": "https://jobs.lever.co/mainspringenergy/9707025c-620c-44ad-91a5-75b6b2b5306a/apply"
+  },
+  {
+    "id": "a5895965-48ab-4613-91a3-f37440ead706",
+    "text": "Commissioning Operations Engineer",
+    "categories": {
+      "location": "Menlo Park, CA",
+      "allLocations": [
+        "Menlo Park, CA"
+      ],
+      "department": "Project Delivery",
+      "team": "Project Delivery",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1768337984480,
+    "descriptionPlain": "Commissioning Operations Engineer at Mainspring Energy.",
+    "description": "<p>Commissioning Operations Engineer at Mainspring Energy.</p>",
+    "hostedUrl": "https://jobs.lever.co/mainspringenergy/a5895965-48ab-4613-91a3-f37440ead706",
+    "applyUrl": "https://jobs.lever.co/mainspringenergy/a5895965-48ab-4613-91a3-f37440ead706/apply"
+  }
+]

@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135690239",
+      "name": "Data Analyst Intern",
+      "uuid": "gameloft-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Gameloft",
+        "name": "Gameloft"
+      },
+      "releasedDate": "2026-07-03T09:57:39.606Z",
+      "location": {
+        "city": "Ho Chi Minh City",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Ho Chi Minh City, Ho Chi Minh, Vietnam"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "DATA SCIENCE"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Gameloft/744000135690239",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Data Analyst Intern at Gameloft.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135681359",
+      "name": "Senior Texture Artist",
+      "uuid": "gameloft-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Gameloft",
+        "name": "Gameloft"
+      },
+      "releasedDate": "2026-07-03T09:19:42.185Z",
+      "location": {
+        "city": "Bucharest",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Bucharest, Bucharest, Romania"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "ART & VIDEO"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Gameloft/744000135681359",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Texture Artist at Gameloft.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135653869",
+      "name": "Video Artist Intern",
+      "uuid": "gameloft-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Gameloft",
+        "name": "Gameloft"
+      },
+      "releasedDate": "2026-07-03T07:02:49.614Z",
+      "location": {
+        "city": "Barcelona",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Barcelona, CT, Spain"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "ART & VIDEO"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Gameloft/744000135653869",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Video Artist Intern at Gameloft.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

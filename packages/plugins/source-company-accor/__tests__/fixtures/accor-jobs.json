@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135781619",
+      "name": "Mucamas",
+      "uuid": "accor-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Accor",
+        "name": "Accor"
+      },
+      "releasedDate": "2026-07-03T20:42:25.737Z",
+      "location": {
+        "city": "Providencia",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Providencia, Santiago Metropolitan Region, Chile"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Production"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Accor/744000135781619",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Mucamas at Accor.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135745578",
+      "name": "STEWARD",
+      "uuid": "accor-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Accor",
+        "name": "Accor"
+      },
+      "releasedDate": "2026-07-03T14:11:37.953Z",
+      "location": {
+        "city": "Providencia",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Providencia, Santiago Metropolitan Region, Chile"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Accor/744000135745578",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>STEWARD at Accor.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135741414",
+      "name": "Hausdamenassistent (m/w/d)",
+      "uuid": "accor-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Accor",
+        "name": "Accor"
+      },
+      "releasedDate": "2026-07-03T14:03:34.174Z",
+      "location": {
+        "city": "Cologne",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Cologne, NRW, Germany"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Accor/744000135741414",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Hausdamenassistent (m/w/d) at Accor.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

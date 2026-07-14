@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999679204587",
+      "name": "Security Officer",
+      "uuid": "ictsukltd-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "ICTSUKLtd",
+        "name": "ICTS (UK) Ltd"
+      },
+      "releasedDate": "2018-11-12T11:20:00.000Z",
+      "location": {
+        "city": "Bristol",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Bristol, , United Kingdom"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ICTSUKLtd/743999679204587",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Security Officer at ICTS (UK) Ltd.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999678885609",
+      "name": "Security Officer",
+      "uuid": "ictsukltd-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "ICTSUKLtd",
+        "name": "ICTS (UK) Ltd"
+      },
+      "releasedDate": "2018-11-05T11:04:18.000Z",
+      "location": {
+        "city": "Dunstable",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Dunstable, Bedfordshire, , United Kingdom"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ICTSUKLtd/743999678885609",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Security Officer at ICTS (UK) Ltd.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999678567962",
+      "name": "Security Officer",
+      "uuid": "ictsukltd-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "ICTSUKLtd",
+        "name": "ICTS (UK) Ltd"
+      },
+      "releasedDate": "2018-10-29T10:15:35.000Z",
+      "location": {
+        "city": "Tilbury",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Tilbury, , United Kingdom"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ICTSUKLtd/743999678567962",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Security Officer at ICTS (UK) Ltd.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

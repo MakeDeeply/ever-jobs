@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "89b6a814-2886-4a59-be60-61ba4d7fd1e9",
+      "title": "Research Engineer",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "San Francisco",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-11-24",
+      "descriptionHtml": "<p>Research Engineer at Lotus Health.</p>",
+      "descriptionPlain": "Research Engineer at Lotus Health.",
+      "jobUrl": "https://jobs.ashbyhq.com/lotushealth/89b6a814-2886-4a59-be60-61ba4d7fd1e9",
+      "applyUrl": "https://jobs.ashbyhq.com/lotushealth/89b6a814-2886-4a59-be60-61ba4d7fd1e9/application"
+    },
+    {
+      "id": "ebbe7e8f-ff83-4e87-a4d5-4df186983935",
+      "title": "Videographer/Editor",
+      "departmentName": "Marketing",
+      "teamName": "Marketing",
+      "employmentType": "FullTime",
+      "location": "San Francisco",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-08",
+      "descriptionHtml": "<p>Videographer/Editor at Lotus Health.</p>",
+      "descriptionPlain": "Videographer/Editor at Lotus Health.",
+      "jobUrl": "https://jobs.ashbyhq.com/lotushealth/ebbe7e8f-ff83-4e87-a4d5-4df186983935",
+      "applyUrl": "https://jobs.ashbyhq.com/lotushealth/ebbe7e8f-ff83-4e87-a4d5-4df186983935/application"
+    },
+    {
+      "id": "f2d6ad5a-74b5-4c41-ab0b-0a74c3c44c69",
+      "title": "Content Director",
+      "departmentName": "Marketing",
+      "teamName": "Marketing",
+      "employmentType": "FullTime",
+      "location": "San Francisco",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-13",
+      "descriptionHtml": "<p>Content Director at Lotus Health.</p>",
+      "descriptionPlain": "Content Director at Lotus Health.",
+      "jobUrl": "https://jobs.ashbyhq.com/lotushealth/f2d6ad5a-74b5-4c41-ab0b-0a74c3c44c69",
+      "applyUrl": "https://jobs.ashbyhq.com/lotushealth/f2d6ad5a-74b5-4c41-ab0b-0a74c3c44c69/application"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "07ed3974-1e0e-444b-be5e-84a5f8d3bc9a",
+      "title": "Global Supply Chain Manager",
+      "departmentName": "Operations",
+      "teamName": "Operations",
+      "employmentType": "FullTime",
+      "location": "Palo Alto",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Palo Alto",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-10",
+      "descriptionHtml": "<p>Global Supply Chain Manager at Mind Robotics.</p>",
+      "descriptionPlain": "Global Supply Chain Manager at Mind Robotics.",
+      "jobUrl": "https://jobs.ashbyhq.com/mindrobotics/07ed3974-1e0e-444b-be5e-84a5f8d3bc9a",
+      "applyUrl": "https://jobs.ashbyhq.com/mindrobotics/07ed3974-1e0e-444b-be5e-84a5f8d3bc9a/application"
+    },
+    {
+      "id": "105d9f55-9914-49a3-a622-1565dcde5f01",
+      "title": "Data Architect, Robotics",
+      "departmentName": "Software Engineering",
+      "teamName": "Software Engineering",
+      "employmentType": "FullTime",
+      "location": "Palo Alto",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Palo Alto",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-01-26",
+      "descriptionHtml": "<p>Data Architect, Robotics at Mind Robotics.</p>",
+      "descriptionPlain": "Data Architect, Robotics at Mind Robotics.",
+      "jobUrl": "https://jobs.ashbyhq.com/mindrobotics/105d9f55-9914-49a3-a622-1565dcde5f01",
+      "applyUrl": "https://jobs.ashbyhq.com/mindrobotics/105d9f55-9914-49a3-a622-1565dcde5f01/application"
+    },
+    {
+      "id": "22df12cc-da7a-4965-a71c-0dc92d9db38a",
+      "title": "Senior Staff Technical Program Manager, Robotics Systems",
+      "departmentName": "Operations",
+      "teamName": "Operations",
+      "employmentType": "FullTime",
+      "location": "Palo Alto",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Palo Alto",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-02",
+      "descriptionHtml": "<p>Senior Staff Technical Program Manager, Robotics Systems at Mind Robotics.</p>",
+      "descriptionPlain": "Senior Staff Technical Program Manager, Robotics Systems at Mind Robotics.",
+      "jobUrl": "https://jobs.ashbyhq.com/mindrobotics/22df12cc-da7a-4965-a71c-0dc92d9db38a",
+      "applyUrl": "https://jobs.ashbyhq.com/mindrobotics/22df12cc-da7a-4965-a71c-0dc92d9db38a/application"
+    }
+  ]
+}

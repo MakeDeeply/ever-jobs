@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135774960",
+      "name": "Auditor Técnico de Obras Junior - Gás Natural - São Paulo",
+      "uuid": "turnertownsend-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "TurnerTownsend",
+        "name": "Turner & Townsend"
+      },
+      "releasedDate": "2026-07-03T18:40:04.428Z",
+      "location": {
+        "city": "São Paulo",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "São Paulo, Latin America, Brazil"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Energy and natural resources"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/TurnerTownsend/744000135774960",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Auditor Técnico de Obras Junior - Gás Natural - São Paulo at Turner & Townsend.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135763969",
+      "name": "Assistant Project Manager",
+      "uuid": "turnertownsend-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "TurnerTownsend",
+        "name": "Turner & Townsend"
+      },
+      "releasedDate": "2026-07-03T16:05:14.030Z",
+      "location": {
+        "city": "Dublin",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Dublin, Europe, Ireland"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Infrastructure"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/TurnerTownsend/744000135763969",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Assistant Project Manager at Turner & Townsend.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135757469",
+      "name": "Junior Programme Controller",
+      "uuid": "turnertownsend-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "TurnerTownsend",
+        "name": "Turner & Townsend"
+      },
+      "releasedDate": "2026-07-03T15:17:12.436Z",
+      "location": {
+        "city": "Dublin",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Dublin, Europe, Ireland"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Infrastructure"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/TurnerTownsend/744000135757469",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Junior Programme Controller at Turner & Townsend.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

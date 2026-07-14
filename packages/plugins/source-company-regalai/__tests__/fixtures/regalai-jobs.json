@@ -1,0 +1,62 @@
+[
+  {
+    "id": "7bbea0f0-9f63-4cc8-8d02-8eeec018bbcd",
+    "text": "AI Forward Deployed Engineer",
+    "categories": {
+      "location": "New York, New York",
+      "allLocations": [
+        "New York, New York"
+      ],
+      "department": "Product (NYC)",
+      "team": "Product (NYC)",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1776722878891,
+    "descriptionPlain": "AI Forward Deployed Engineer at Regal.",
+    "description": "<p>AI Forward Deployed Engineer at Regal.</p>",
+    "hostedUrl": "https://jobs.lever.co/regal.ai/7bbea0f0-9f63-4cc8-8d02-8eeec018bbcd",
+    "applyUrl": "https://jobs.lever.co/regal.ai/7bbea0f0-9f63-4cc8-8d02-8eeec018bbcd/apply"
+  },
+  {
+    "id": "66b2460b-2eb5-4317-b268-78dfca9bb425",
+    "text": "AI Product Specialist",
+    "categories": {
+      "location": "New York, New York",
+      "allLocations": [
+        "New York, New York"
+      ],
+      "department": "Product (NYC)",
+      "team": "Product (NYC)",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1776722943188,
+    "descriptionPlain": "AI Product Specialist at Regal.",
+    "description": "<p>AI Product Specialist at Regal.</p>",
+    "hostedUrl": "https://jobs.lever.co/regal.ai/66b2460b-2eb5-4317-b268-78dfca9bb425",
+    "applyUrl": "https://jobs.lever.co/regal.ai/66b2460b-2eb5-4317-b268-78dfca9bb425/apply"
+  },
+  {
+    "id": "40396367-62a6-4be6-a3b4-ac81f9200a6e",
+    "text": "Analytics Engineer",
+    "categories": {
+      "location": "New York, New York",
+      "allLocations": [
+        "New York, New York"
+      ],
+      "department": "Engineering (NYC)",
+      "team": "Engineering (NYC)",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1779823148064,
+    "descriptionPlain": "Analytics Engineer at Regal.",
+    "description": "<p>Analytics Engineer at Regal.</p>",
+    "hostedUrl": "https://jobs.lever.co/regal.ai/40396367-62a6-4be6-a3b4-ac81f9200a6e",
+    "applyUrl": "https://jobs.lever.co/regal.ai/40396367-62a6-4be6-a3b4-ac81f9200a6e/apply"
+  }
+]

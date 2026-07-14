@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "01a9d8af-6658-4277-924e-3f4f9daf6909",
+      "title": "Director of Electrical Engineering",
+      "departmentName": "Space Systems",
+      "teamName": "Space Systems",
+      "employmentType": "FullTime",
+      "location": "Ashburn HQ",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Ashburn HQ",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-11-11",
+      "descriptionHtml": "<p>Director of Electrical Engineering at Overview Energy.</p>",
+      "descriptionPlain": "Director of Electrical Engineering at Overview Energy.",
+      "jobUrl": "https://jobs.ashbyhq.com/overviewenergy/01a9d8af-6658-4277-924e-3f4f9daf6909",
+      "applyUrl": "https://jobs.ashbyhq.com/overviewenergy/01a9d8af-6658-4277-924e-3f4f9daf6909/application"
+    },
+    {
+      "id": "2ae47da4-521d-4167-b063-5a33fae64e6c",
+      "title": "Spacecraft Structures Engineer",
+      "departmentName": "Space Systems",
+      "teamName": "Space Systems",
+      "employmentType": "FullTime",
+      "location": "Ashburn HQ",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Ashburn HQ",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-03-30",
+      "descriptionHtml": "<p>Spacecraft Structures Engineer at Overview Energy.</p>",
+      "descriptionPlain": "Spacecraft Structures Engineer at Overview Energy.",
+      "jobUrl": "https://jobs.ashbyhq.com/overviewenergy/2ae47da4-521d-4167-b063-5a33fae64e6c",
+      "applyUrl": "https://jobs.ashbyhq.com/overviewenergy/2ae47da4-521d-4167-b063-5a33fae64e6c/application"
+    },
+    {
+      "id": "59a0ba4e-d1cf-451a-ac39-30834e3fe3a6",
+      "title": "Manufacturing Engineer",
+      "departmentName": "Space Systems",
+      "teamName": "Space Systems",
+      "employmentType": "FullTime",
+      "location": "Ashburn HQ",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Ashburn HQ",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-04-20",
+      "descriptionHtml": "<p>Manufacturing Engineer at Overview Energy.</p>",
+      "descriptionPlain": "Manufacturing Engineer at Overview Energy.",
+      "jobUrl": "https://jobs.ashbyhq.com/overviewenergy/59a0ba4e-d1cf-451a-ac39-30834e3fe3a6",
+      "applyUrl": "https://jobs.ashbyhq.com/overviewenergy/59a0ba4e-d1cf-451a-ac39-30834e3fe3a6/application"
+    }
+  ]
+}

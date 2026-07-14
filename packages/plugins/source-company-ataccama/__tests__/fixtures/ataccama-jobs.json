@@ -1,0 +1,62 @@
+[
+  {
+    "id": "fbb68954-627a-4cf7-8ce9-54236777d889",
+    "text": "Accountant",
+    "categories": {
+      "location": "Prague, Czechia",
+      "allLocations": [
+        "Prague, Czechia"
+      ],
+      "department": "Finance & Operations",
+      "team": "Finance & Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1780074168791,
+    "descriptionPlain": "Accountant at Ataccama.",
+    "description": "<p>Accountant at Ataccama.</p>",
+    "hostedUrl": "https://jobs.lever.co/ataccama/fbb68954-627a-4cf7-8ce9-54236777d889",
+    "applyUrl": "https://jobs.lever.co/ataccama/fbb68954-627a-4cf7-8ce9-54236777d889/apply"
+  },
+  {
+    "id": "49c2a1f7-2b34-47c5-814f-c74992a24048",
+    "text": "AI-Native Social & Content Manager",
+    "categories": {
+      "location": "Toronto, Ontario",
+      "allLocations": [
+        "Toronto, Ontario"
+      ],
+      "department": "Marketing",
+      "team": "Marketing",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1778015634749,
+    "descriptionPlain": "AI-Native Social & Content Manager at Ataccama.",
+    "description": "<p>AI-Native Social & Content Manager at Ataccama.</p>",
+    "hostedUrl": "https://jobs.lever.co/ataccama/49c2a1f7-2b34-47c5-814f-c74992a24048",
+    "applyUrl": "https://jobs.lever.co/ataccama/49c2a1f7-2b34-47c5-814f-c74992a24048/apply"
+  },
+  {
+    "id": "f4ddccf4-c4f8-4dbb-9bd6-8e60fb0825c2",
+    "text": "AI-Native Social & Content Manager",
+    "categories": {
+      "location": "Boston, Mass.",
+      "allLocations": [
+        "Boston, Mass."
+      ],
+      "department": "Marketing",
+      "team": "Marketing",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1778015376541,
+    "descriptionPlain": "AI-Native Social & Content Manager at Ataccama.",
+    "description": "<p>AI-Native Social & Content Manager at Ataccama.</p>",
+    "hostedUrl": "https://jobs.lever.co/ataccama/f4ddccf4-c4f8-4dbb-9bd6-8e60fb0825c2",
+    "applyUrl": "https://jobs.lever.co/ataccama/f4ddccf4-c4f8-4dbb-9bd6-8e60fb0825c2/apply"
+  }
+]

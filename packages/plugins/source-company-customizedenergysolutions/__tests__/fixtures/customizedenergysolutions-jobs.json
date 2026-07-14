@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000134694589",
+      "name": "Director, Wholesale Business Development",
+      "uuid": "customizedenergysolutions-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "CustomizedEnergySolutions",
+        "name": "Customized Energy Solutions"
+      },
+      "releasedDate": "2026-06-29T04:50:26.671Z",
+      "location": {
+        "city": "Philadelphia",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Philadelphia, PA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Business Development"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CustomizedEnergySolutions/744000134694589",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Director, Wholesale Business Development at Customized Energy Solutions.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000130352607",
+      "name": "Senior Database Administrator",
+      "uuid": "customizedenergysolutions-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "CustomizedEnergySolutions",
+        "name": "Customized Energy Solutions"
+      },
+      "releasedDate": "2026-06-05T02:52:10.201Z",
+      "location": {
+        "city": "Ho Chi Minh City",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Ho Chi Minh City, Ho Chi Minh, Vietnam"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CustomizedEnergySolutions/744000130352607",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Database Administrator at Customized Energy Solutions.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000129159265",
+      "name": "Senior QA Analyst",
+      "uuid": "customizedenergysolutions-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "CustomizedEnergySolutions",
+        "name": "Customized Energy Solutions"
+      },
+      "releasedDate": "2026-05-29T12:17:28.403Z",
+      "location": {
+        "city": "Pune",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Pune, MH, India"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Future Grid Services"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CustomizedEnergySolutions/744000129159265",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior QA Analyst at Customized Energy Solutions.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

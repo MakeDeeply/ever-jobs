@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135595670",
+      "name": "Sr. Manager, International Logistics",
+      "uuid": "thewonderfulcompany-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "TheWonderfulCompany",
+        "name": "The Wonderful Company"
+      },
+      "releasedDate": "2026-07-02T21:22:42.177Z",
+      "location": {
+        "city": "Los Angeles",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Los Angeles, CA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Logistics"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/TheWonderfulCompany/744000135595670",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Sr. Manager, International Logistics at The Wonderful Company.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135592819",
+      "name": "Campus Supervisor",
+      "uuid": "thewonderfulcompany-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "TheWonderfulCompany",
+        "name": "The Wonderful Company"
+      },
+      "releasedDate": "2026-07-02T20:42:53.222Z",
+      "location": {
+        "city": "Lost Hills",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Lost Hills, CA, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "WCPA"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/TheWonderfulCompany/744000135592819",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Campus Supervisor at The Wonderful Company.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135585049",
+      "name": "Facilities Technician (Painter)",
+      "uuid": "thewonderfulcompany-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "TheWonderfulCompany",
+        "name": "The Wonderful Company"
+      },
+      "releasedDate": "2026-07-02T19:31:46.064Z",
+      "location": {
+        "city": "Delano",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Delano, CA, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "WCPA"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/TheWonderfulCompany/744000135585049",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Facilities Technician (Painter) at The Wonderful Company.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

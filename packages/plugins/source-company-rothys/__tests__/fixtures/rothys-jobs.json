@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "0098652e-179b-4755-8b13-686c64eb0d07",
+      "title": "Footwear Developer, Women’s",
+      "departmentName": "Production/R&D",
+      "teamName": "Production/R&D",
+      "employmentType": "FullTime",
+      "location": "San Francisco",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-06",
+      "descriptionHtml": "<p>Footwear Developer, Women’s at Rothy's.</p>",
+      "descriptionPlain": "Footwear Developer, Women’s at Rothy's.",
+      "jobUrl": "https://jobs.ashbyhq.com/rothys/0098652e-179b-4755-8b13-686c64eb0d07",
+      "applyUrl": "https://jobs.ashbyhq.com/rothys/0098652e-179b-4755-8b13-686c64eb0d07/application"
+    },
+    {
+      "id": "0ee4ad53-9dea-4b1e-a85f-4881ec0f3896",
+      "title": "Store Manager - Bridgeport Village",
+      "departmentName": "Retail",
+      "teamName": "Retail",
+      "employmentType": "FullTime",
+      "location": "Tigard, OR",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Tigard",
+          "addressRegion": "OR",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-25",
+      "descriptionHtml": "<p>Store Manager - Bridgeport Village at Rothy's.</p>",
+      "descriptionPlain": "Store Manager - Bridgeport Village at Rothy's.",
+      "jobUrl": "https://jobs.ashbyhq.com/rothys/0ee4ad53-9dea-4b1e-a85f-4881ec0f3896",
+      "applyUrl": "https://jobs.ashbyhq.com/rothys/0ee4ad53-9dea-4b1e-a85f-4881ec0f3896/application"
+    },
+    {
+      "id": "26951a58-3298-4bff-9aa6-62d4353ae8ef",
+      "title": "Full-Time Keyholder - Ala Moana",
+      "departmentName": "Retail",
+      "teamName": "Retail",
+      "employmentType": "FullTime",
+      "location": "Honolulu, HI",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Honolulu",
+          "addressRegion": "HI",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-12-18",
+      "descriptionHtml": "<p>Full-Time Keyholder - Ala Moana at Rothy's.</p>",
+      "descriptionPlain": "Full-Time Keyholder - Ala Moana at Rothy's.",
+      "jobUrl": "https://jobs.ashbyhq.com/rothys/26951a58-3298-4bff-9aa6-62d4353ae8ef",
+      "applyUrl": "https://jobs.ashbyhq.com/rothys/26951a58-3298-4bff-9aa6-62d4353ae8ef/application"
+    }
+  ]
+}

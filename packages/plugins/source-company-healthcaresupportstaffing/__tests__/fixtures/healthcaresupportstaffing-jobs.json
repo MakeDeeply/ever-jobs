@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999659845790",
+      "name": "Healthcare CSR/Program Coordinator",
+      "uuid": "healthcaresupportstaffing-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "HealthcareSupportStaffing1",
+        "name": "Healthcare Support Staffing"
+      },
+      "releasedDate": "2017-09-14T20:07:00.000Z",
+      "location": {
+        "city": "Pittsburgh",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Pittsburgh, PA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Health Care Provider"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/HealthcareSupportStaffing1/743999659845790",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Healthcare CSR/Program Coordinator at Healthcare Support Staffing.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999659838275",
+      "name": "HR Representative",
+      "uuid": "healthcaresupportstaffing-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "HealthcareSupportStaffing1",
+        "name": "Healthcare Support Staffing"
+      },
+      "releasedDate": "2017-09-14T19:03:02.000Z",
+      "location": {
+        "city": "Livonia",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Livonia, MI, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Health Care Provider"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/HealthcareSupportStaffing1/743999659838275",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>HR Representative at Healthcare Support Staffing.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999659773582",
+      "name": "RN Case Manager",
+      "uuid": "healthcaresupportstaffing-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "HealthcareSupportStaffing1",
+        "name": "Healthcare Support Staffing"
+      },
+      "releasedDate": "2017-09-14T01:43:54.000Z",
+      "location": {
+        "city": "Los Angeles",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Los Angeles, CA, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Health Care Provider"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/HealthcareSupportStaffing1/743999659773582",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>RN Case Manager at Healthcare Support Staffing.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

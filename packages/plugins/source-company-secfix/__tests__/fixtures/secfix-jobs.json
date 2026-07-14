@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "0a77b39b-2436-4bc4-b502-06570c75b0b5",
+      "title": "Business Development Representative (BDR) SMB (German Speaking)",
+      "departmentName": "Sales",
+      "teamName": "Sales",
+      "employmentType": "FullTime",
+      "location": "Munich",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Munich",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-02-24",
+      "descriptionHtml": "<p>Business Development Representative (BDR) SMB (German Speaking) at Secfix.</p>",
+      "descriptionPlain": "Business Development Representative (BDR) SMB (German Speaking) at Secfix.",
+      "jobUrl": "https://jobs.ashbyhq.com/secfix/0a77b39b-2436-4bc4-b502-06570c75b0b5",
+      "applyUrl": "https://jobs.ashbyhq.com/secfix/0a77b39b-2436-4bc4-b502-06570c75b0b5/application"
+    },
+    {
+      "id": "31bd29d1-011f-4017-adfb-e84ac0edff1e",
+      "title": "Business Development Representative (BDR) SMB (English Speaking)",
+      "departmentName": "Sales",
+      "teamName": "Sales",
+      "employmentType": "FullTime",
+      "location": "Remote-Europe",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Remote-Europe",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2026-05-27",
+      "descriptionHtml": "<p>Business Development Representative (BDR) SMB (English Speaking) at Secfix.</p>",
+      "descriptionPlain": "Business Development Representative (BDR) SMB (English Speaking) at Secfix.",
+      "jobUrl": "https://jobs.ashbyhq.com/secfix/31bd29d1-011f-4017-adfb-e84ac0edff1e",
+      "applyUrl": "https://jobs.ashbyhq.com/secfix/31bd29d1-011f-4017-adfb-e84ac0edff1e/application"
+    },
+    {
+      "id": "3a37203a-25c1-4f5c-ac66-4a9edfc5f1d4",
+      "title": "Senior Information Security Specialist (German-speaking)",
+      "departmentName": "Security",
+      "teamName": "Security",
+      "employmentType": "FullTime",
+      "location": "Remote-Europe",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Remote-Europe",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2026-06-22",
+      "descriptionHtml": "<p>Senior Information Security Specialist (German-speaking) at Secfix.</p>",
+      "descriptionPlain": "Senior Information Security Specialist (German-speaking) at Secfix.",
+      "jobUrl": "https://jobs.ashbyhq.com/secfix/3a37203a-25c1-4f5c-ac66-4a9edfc5f1d4",
+      "applyUrl": "https://jobs.ashbyhq.com/secfix/3a37203a-25c1-4f5c-ac66-4a9edfc5f1d4/application"
+    }
+  ]
+}

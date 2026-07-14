@@ -1,0 +1,62 @@
+[
+  {
+    "id": "5eca795c-48dd-496a-be23-2181068a5450",
+    "text": "Analytics Engineer",
+    "categories": {
+      "location": "Remote-North & South America",
+      "allLocations": [
+        "Remote-North & South America"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1605753685375,
+    "descriptionPlain": "Analytics Engineer at Metabase.",
+    "description": "<p>Analytics Engineer at Metabase.</p>",
+    "hostedUrl": "https://jobs.lever.co/metabase/5eca795c-48dd-496a-be23-2181068a5450",
+    "applyUrl": "https://jobs.lever.co/metabase/5eca795c-48dd-496a-be23-2181068a5450/apply"
+  },
+  {
+    "id": "ee8203b5-2cf7-4eae-afd6-3f9724761ad9",
+    "text": "CI Engineer",
+    "categories": {
+      "location": "Global Remote",
+      "allLocations": [
+        "Global Remote"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1776800480563,
+    "descriptionPlain": "CI Engineer at Metabase.",
+    "description": "<p>CI Engineer at Metabase.</p>",
+    "hostedUrl": "https://jobs.lever.co/metabase/ee8203b5-2cf7-4eae-afd6-3f9724761ad9",
+    "applyUrl": "https://jobs.lever.co/metabase/ee8203b5-2cf7-4eae-afd6-3f9724761ad9/apply"
+  },
+  {
+    "id": "da72d8c9-9604-476a-8f3b-bc130890973b",
+    "text": "Demand Generation",
+    "categories": {
+      "location": "Remote-US",
+      "allLocations": [
+        "Remote-US"
+      ],
+      "department": "Marketing and Growth",
+      "team": "Marketing and Growth",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1780956959089,
+    "descriptionPlain": "Demand Generation at Metabase.",
+    "description": "<p>Demand Generation at Metabase.</p>",
+    "hostedUrl": "https://jobs.lever.co/metabase/da72d8c9-9604-476a-8f3b-bc130890973b",
+    "applyUrl": "https://jobs.lever.co/metabase/da72d8c9-9604-476a-8f3b-bc130890973b/apply"
+  }
+]

@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "021f0b91-9797-4e8e-a3d1-ff66d8a6164a",
+      "title": "Software Development Manager",
+      "departmentName": "Technology",
+      "teamName": "Technology",
+      "employmentType": "FullTime",
+      "location": "Auckland",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Auckland",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-04-02",
+      "descriptionHtml": "<p>Software Development Manager at Lightspeed Commerce.</p>",
+      "descriptionPlain": "Software Development Manager at Lightspeed Commerce.",
+      "jobUrl": "https://jobs.ashbyhq.com/lightspeedhq/021f0b91-9797-4e8e-a3d1-ff66d8a6164a",
+      "applyUrl": "https://jobs.ashbyhq.com/lightspeedhq/021f0b91-9797-4e8e-a3d1-ff66d8a6164a/application"
+    },
+    {
+      "id": "027eab41-b5c6-455f-b94e-9af88610348c",
+      "title": "Field Account Executive (m/w/d)",
+      "departmentName": "Sales",
+      "teamName": "Sales",
+      "employmentType": "FullTime",
+      "location": "Berlin",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Berlin",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2024-12-02",
+      "descriptionHtml": "<p>Field Account Executive (m/w/d) at Lightspeed Commerce.</p>",
+      "descriptionPlain": "Field Account Executive (m/w/d) at Lightspeed Commerce.",
+      "jobUrl": "https://jobs.ashbyhq.com/lightspeedhq/027eab41-b5c6-455f-b94e-9af88610348c",
+      "applyUrl": "https://jobs.ashbyhq.com/lightspeedhq/027eab41-b5c6-455f-b94e-9af88610348c/application"
+    },
+    {
+      "id": "05d52e0c-0117-432b-8e25-7f87960038e0",
+      "title": "gestionnaire principale du marketing produit, services financiers",
+      "departmentName": "Marketing",
+      "teamName": "Marketing",
+      "employmentType": "FullTime",
+      "location": "Montreal",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Montreal",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-21",
+      "descriptionHtml": "<p>gestionnaire principale du marketing produit, services financiers at Lightspeed Commerce.</p>",
+      "descriptionPlain": "gestionnaire principale du marketing produit, services financiers at Lightspeed Commerce.",
+      "jobUrl": "https://jobs.ashbyhq.com/lightspeedhq/05d52e0c-0117-432b-8e25-7f87960038e0",
+      "applyUrl": "https://jobs.ashbyhq.com/lightspeedhq/05d52e0c-0117-432b-8e25-7f87960038e0/application"
+    }
+  ]
+}

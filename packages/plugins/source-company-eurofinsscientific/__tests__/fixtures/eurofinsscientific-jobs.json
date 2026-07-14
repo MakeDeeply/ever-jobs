@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135782279",
+      "name": "Laborant- Laborantka",
+      "uuid": "eurofinsscientific-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Eurofins",
+        "name": "Eurofins Scientific"
+      },
+      "releasedDate": "2026-07-03T21:03:06.038Z",
+      "location": {
+        "city": "Nové Zámky",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Nové Zámky, Nitra Region, Slovakia (Slovak Republic)"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Testing & Laboratory"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Eurofins/744000135782279",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Laborant- Laborantka at Eurofins Scientific.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135777949",
+      "name": "Assistente de Login",
+      "uuid": "eurofinsscientific-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Eurofins",
+        "name": "Eurofins Scientific"
+      },
+      "releasedDate": "2026-07-03T19:23:43.644Z",
+      "location": {
+        "city": "Garibaldi",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Garibaldi, RS, Brazil"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Testing & Laboratory"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Eurofins/744000135777949",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Assistente de Login at Eurofins Scientific.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135771450",
+      "name": "Mitarbeiter Probenmanagement & Laborlogistik GMP (m/w/d)",
+      "uuid": "eurofinsscientific-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Eurofins",
+        "name": "Eurofins Scientific"
+      },
+      "releasedDate": "2026-07-03T17:48:52.417Z",
+      "location": {
+        "city": "Konstanz",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Konstanz, BW, Germany"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Testing & Laboratory"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Eurofins/744000135771450",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Mitarbeiter Probenmanagement & Laborlogistik GMP (m/w/d) at Eurofins Scientific.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "e355d724-61d7-478c-8103-5e7a069cb5e6",
+    "text": "Country Manager, Japan",
+    "categories": {
+      "location": "Tokyo",
+      "allLocations": [
+        "Tokyo"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1769417027199,
+    "descriptionPlain": "Country Manager, Japan at Sysdig.",
+    "description": "<p>Country Manager, Japan at Sysdig.</p>",
+    "hostedUrl": "https://jobs.lever.co/sysdig/e355d724-61d7-478c-8103-5e7a069cb5e6",
+    "applyUrl": "https://jobs.lever.co/sysdig/e355d724-61d7-478c-8103-5e7a069cb5e6/apply"
+  },
+  {
+    "id": "bfadc3a4-0226-4d2e-bfff-3e173e7c0736",
+    "text": "Engineering Manager",
+    "categories": {
+      "location": "Flexible - USA",
+      "allLocations": [
+        "Flexible - USA"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1782376060704,
+    "descriptionPlain": "Engineering Manager at Sysdig.",
+    "description": "<p>Engineering Manager at Sysdig.</p>",
+    "hostedUrl": "https://jobs.lever.co/sysdig/bfadc3a4-0226-4d2e-bfff-3e173e7c0736",
+    "applyUrl": "https://jobs.lever.co/sysdig/bfadc3a4-0226-4d2e-bfff-3e173e7c0736/apply"
+  },
+  {
+    "id": "2b03b718-218a-4980-b802-b8cf9fddd19d",
+    "text": "Senior Software Engineer, Monitor team",
+    "categories": {
+      "location": "Flexible - Italy",
+      "allLocations": [
+        "Flexible - Italy"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1782486989463,
+    "descriptionPlain": "Senior Software Engineer, Monitor team at Sysdig.",
+    "description": "<p>Senior Software Engineer, Monitor team at Sysdig.</p>",
+    "hostedUrl": "https://jobs.lever.co/sysdig/2b03b718-218a-4980-b802-b8cf9fddd19d",
+    "applyUrl": "https://jobs.lever.co/sysdig/2b03b718-218a-4980-b802-b8cf9fddd19d/apply"
+  }
+]

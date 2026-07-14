@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "3a4bc7e8-0756-4033-b210-bd6d275cfbee",
+      "title": "Team lead",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "San Francisco (On-Site)",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco (On-Site)",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2023-06-26",
+      "descriptionHtml": "<p>Team lead at Svix.</p>",
+      "descriptionPlain": "Team lead at Svix.",
+      "jobUrl": "https://jobs.ashbyhq.com/svix/3a4bc7e8-0756-4033-b210-bd6d275cfbee",
+      "applyUrl": "https://jobs.ashbyhq.com/svix/3a4bc7e8-0756-4033-b210-bd6d275cfbee/application"
+    },
+    {
+      "id": "84e99bc9-5cd6-4af0-af84-17d63a7494b5",
+      "title": "Rust Backend Engineer",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "San Francisco (On-Site)",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco (On-Site)",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2024-01-15",
+      "descriptionHtml": "<p>Rust Backend Engineer at Svix.</p>",
+      "descriptionPlain": "Rust Backend Engineer at Svix.",
+      "jobUrl": "https://jobs.ashbyhq.com/svix/84e99bc9-5cd6-4af0-af84-17d63a7494b5",
+      "applyUrl": "https://jobs.ashbyhq.com/svix/84e99bc9-5cd6-4af0-af84-17d63a7494b5/application"
+    },
+    {
+      "id": "c1776c54-7d9e-43a3-87be-35f0e5ec5809",
+      "title": "Founder associate",
+      "departmentName": "General",
+      "teamName": "General",
+      "employmentType": "FullTime",
+      "location": "San Francisco (On-Site)",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco (On-Site)",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-01",
+      "descriptionHtml": "<p>Founder associate at Svix.</p>",
+      "descriptionPlain": "Founder associate at Svix.",
+      "jobUrl": "https://jobs.ashbyhq.com/svix/c1776c54-7d9e-43a3-87be-35f0e5ec5809",
+      "applyUrl": "https://jobs.ashbyhq.com/svix/c1776c54-7d9e-43a3-87be-35f0e5ec5809/application"
+    }
+  ]
+}

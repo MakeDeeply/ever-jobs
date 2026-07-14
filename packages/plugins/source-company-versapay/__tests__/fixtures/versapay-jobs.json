@@ -1,0 +1,62 @@
+[
+  {
+    "id": "af496a99-b0d6-40a8-89ec-c485a91baf33",
+    "text": "Customer Account Manager",
+    "categories": {
+      "location": "Canada (Remote)",
+      "allLocations": [
+        "Canada (Remote)"
+      ],
+      "department": "Customer Success",
+      "team": "Customer Success",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1781636160336,
+    "descriptionPlain": "Customer Account Manager at Versapay.",
+    "description": "<p>Customer Account Manager at Versapay.</p>",
+    "hostedUrl": "https://jobs.lever.co/versapay/af496a99-b0d6-40a8-89ec-c485a91baf33",
+    "applyUrl": "https://jobs.lever.co/versapay/af496a99-b0d6-40a8-89ec-c485a91baf33/apply"
+  },
+  {
+    "id": "edcd2b34-2d93-4da9-99ac-ab164b340936",
+    "text": "Customer Account Manager",
+    "categories": {
+      "location": "United States (Remote)",
+      "allLocations": [
+        "United States (Remote)"
+      ],
+      "department": "Customer Success",
+      "team": "Customer Success",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1781636198636,
+    "descriptionPlain": "Customer Account Manager at Versapay.",
+    "description": "<p>Customer Account Manager at Versapay.</p>",
+    "hostedUrl": "https://jobs.lever.co/versapay/edcd2b34-2d93-4da9-99ac-ab164b340936",
+    "applyUrl": "https://jobs.lever.co/versapay/edcd2b34-2d93-4da9-99ac-ab164b340936/apply"
+  },
+  {
+    "id": "8d181ea4-f95b-48b1-ba80-3082143360fe",
+    "text": "Customer Success Manager",
+    "categories": {
+      "location": "United States (Remote)",
+      "allLocations": [
+        "United States (Remote)"
+      ],
+      "department": "Customer Success",
+      "team": "Customer Success",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1781893013460,
+    "descriptionPlain": "Customer Success Manager at Versapay.",
+    "description": "<p>Customer Success Manager at Versapay.</p>",
+    "hostedUrl": "https://jobs.lever.co/versapay/8d181ea4-f95b-48b1-ba80-3082143360fe",
+    "applyUrl": "https://jobs.lever.co/versapay/8d181ea4-f95b-48b1-ba80-3082143360fe/apply"
+  }
+]

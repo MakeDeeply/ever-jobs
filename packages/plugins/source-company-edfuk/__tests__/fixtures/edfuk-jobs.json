@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135732609",
+      "name": "Work Specification Engineer",
+      "uuid": "edfuk-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "EDF-UK",
+        "name": "EDF UK"
+      },
+      "releasedDate": "2026-07-03T13:16:12.506Z",
+      "location": {
+        "city": "Morecambe",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Morecambe, England, United Kingdom"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/EDF-UK/744000135732609",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Work Specification Engineer at EDF UK.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135701280",
+      "name": "Safety Manager",
+      "uuid": "edfuk-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "EDF-UK",
+        "name": "EDF UK"
+      },
+      "releasedDate": "2026-07-03T10:55:17.906Z",
+      "location": {
+        "city": "Bristol",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Bristol, England, United Kingdom"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/EDF-UK/744000135701280",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Safety Manager at EDF UK.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135679476",
+      "name": "Flexibility Product Design Lead",
+      "uuid": "edfuk-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "EDF-UK",
+        "name": "EDF UK"
+      },
+      "releasedDate": "2026-07-03T09:13:44.323Z",
+      "location": {
+        "city": "London",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "London, England, United Kingdom"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/EDF-UK/744000135679476",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Flexibility Product Design Lead at EDF UK.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

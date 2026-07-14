@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135778049",
+      "name": "Catering Assistant",
+      "uuid": "wshgroup-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "WSHGroup",
+        "name": "WSH Group"
+      },
+      "releasedDate": "2026-07-03T19:27:03.533Z",
+      "location": {
+        "city": "Watford",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Watford, England, United Kingdom"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Education"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/WSHGroup/744000135778049",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Catering Assistant at WSH Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135777869",
+      "name": "Caterlink - Relief Chef",
+      "uuid": "wshgroup-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "WSHGroup",
+        "name": "WSH Group"
+      },
+      "releasedDate": "2026-07-03T19:22:00.246Z",
+      "location": {
+        "city": "London",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "London, , United Kingdom"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Education"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/WSHGroup/744000135777869",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Caterlink - Relief Chef at WSH Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135759779",
+      "name": "Caterlink - Chef",
+      "uuid": "wshgroup-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "WSHGroup",
+        "name": "WSH Group"
+      },
+      "releasedDate": "2026-07-03T15:29:30.470Z",
+      "location": {
+        "city": "Pendlebury",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Pendlebury, England, United Kingdom"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Customer Service"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/WSHGroup/744000135759779",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Caterlink - Chef at WSH Group.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

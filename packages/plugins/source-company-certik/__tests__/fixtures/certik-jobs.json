@@ -1,0 +1,62 @@
+[
+  {
+    "id": "cea4ec5a-c373-4517-a211-5f1dfbaf9489",
+    "text": "Background Investigator",
+    "categories": {
+      "location": "Europe / Remote",
+      "allLocations": [
+        "Europe / Remote"
+      ],
+      "department": "Product",
+      "team": "Product",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1727362945576,
+    "descriptionPlain": "Background Investigator at CertiK.",
+    "description": "<p>Background Investigator at CertiK.</p>",
+    "hostedUrl": "https://jobs.lever.co/certik/cea4ec5a-c373-4517-a211-5f1dfbaf9489",
+    "applyUrl": "https://jobs.lever.co/certik/cea4ec5a-c373-4517-a211-5f1dfbaf9489/apply"
+  },
+  {
+    "id": "478ab0cd-9f5e-4b88-88b5-01d3beac4d81",
+    "text": "Blockchain Security Engineer - (Solidity / Rust / Golang)",
+    "categories": {
+      "location": "US / Remote",
+      "allLocations": [
+        "US / Remote"
+      ],
+      "department": "Blockchain Security Engineering",
+      "team": "Blockchain Security Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1757102509756,
+    "descriptionPlain": "Blockchain Security Engineer - (Solidity / Rust / Golang) at CertiK.",
+    "description": "<p>Blockchain Security Engineer - (Solidity / Rust / Golang) at CertiK.</p>",
+    "hostedUrl": "https://jobs.lever.co/certik/478ab0cd-9f5e-4b88-88b5-01d3beac4d81",
+    "applyUrl": "https://jobs.lever.co/certik/478ab0cd-9f5e-4b88-88b5-01d3beac4d81/apply"
+  },
+  {
+    "id": "e15a5a75-137f-4e37-a402-85079dd12b94",
+    "text": "Blockchain Security Engineer - Senior Level (Solidity / Rust / Golang )",
+    "categories": {
+      "location": "US / Remote",
+      "allLocations": [
+        "US / Remote"
+      ],
+      "department": "Blockchain Security Engineering",
+      "team": "Blockchain Security Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1613063820919,
+    "descriptionPlain": "Blockchain Security Engineer - Senior Level (Solidity / Rust / Golang ) at CertiK.",
+    "description": "<p>Blockchain Security Engineer - Senior Level (Solidity / Rust / Golang ) at CertiK.</p>",
+    "hostedUrl": "https://jobs.lever.co/certik/e15a5a75-137f-4e37-a402-85079dd12b94",
+    "applyUrl": "https://jobs.lever.co/certik/e15a5a75-137f-4e37-a402-85079dd12b94/apply"
+  }
+]

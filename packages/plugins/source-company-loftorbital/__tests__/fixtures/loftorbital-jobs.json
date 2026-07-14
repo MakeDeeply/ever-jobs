@@ -1,0 +1,62 @@
+[
+  {
+    "id": "711360ce-0c82-4032-9e57-a01f778792eb",
+    "text": "AIT Technician",
+    "categories": {
+      "location": "Golden, CO",
+      "allLocations": [
+        "Golden, CO"
+      ],
+      "department": "Operations",
+      "team": "Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1756227544757,
+    "descriptionPlain": "AIT Technician at Loft Orbital Solutions.",
+    "description": "<p>AIT Technician at Loft Orbital Solutions.</p>",
+    "hostedUrl": "https://jobs.lever.co/loftorbital/711360ce-0c82-4032-9e57-a01f778792eb",
+    "applyUrl": "https://jobs.lever.co/loftorbital/711360ce-0c82-4032-9e57-a01f778792eb/apply"
+  },
+  {
+    "id": "7e444994-afab-443b-b7eb-4ed6f745bf6a",
+    "text": "Attitude Guidance & Performance Engineer",
+    "categories": {
+      "location": "Golden, CO or San Francisco",
+      "allLocations": [
+        "Golden, CO or San Francisco"
+      ],
+      "department": "Mission & Program Engineering",
+      "team": "Mission & Program Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1781765229402,
+    "descriptionPlain": "Attitude Guidance & Performance Engineer at Loft Orbital Solutions.",
+    "description": "<p>Attitude Guidance & Performance Engineer at Loft Orbital Solutions.</p>",
+    "hostedUrl": "https://jobs.lever.co/loftorbital/7e444994-afab-443b-b7eb-4ed6f745bf6a",
+    "applyUrl": "https://jobs.lever.co/loftorbital/7e444994-afab-443b-b7eb-4ed6f745bf6a/apply"
+  },
+  {
+    "id": "750c2cdf-e914-4bd4-a86b-abb6044956bd",
+    "text": "Backend Engineer - Data Management Services",
+    "categories": {
+      "location": "Golden, CO or San Francisco",
+      "allLocations": [
+        "Golden, CO or San Francisco"
+      ],
+      "department": "Software",
+      "team": "Software",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1772115895335,
+    "descriptionPlain": "Backend Engineer - Data Management Services at Loft Orbital Solutions.",
+    "description": "<p>Backend Engineer - Data Management Services at Loft Orbital Solutions.</p>",
+    "hostedUrl": "https://jobs.lever.co/loftorbital/750c2cdf-e914-4bd4-a86b-abb6044956bd",
+    "applyUrl": "https://jobs.lever.co/loftorbital/750c2cdf-e914-4bd4-a86b-abb6044956bd/apply"
+  }
+]

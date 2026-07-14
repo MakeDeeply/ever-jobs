@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "013d54ba-6658-448b-9de6-c7ba8dcad77f",
+      "title": "Forward Deployed Infrastructure Engineer",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "London",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "London",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-17",
+      "descriptionHtml": "<p>Forward Deployed Infrastructure Engineer at Sierra.</p>",
+      "descriptionPlain": "Forward Deployed Infrastructure Engineer at Sierra.",
+      "jobUrl": "https://jobs.ashbyhq.com/sierra/013d54ba-6658-448b-9de6-c7ba8dcad77f",
+      "applyUrl": "https://jobs.ashbyhq.com/sierra/013d54ba-6658-448b-9de6-c7ba8dcad77f/application"
+    },
+    {
+      "id": "032c8ab4-1911-4477-bc39-9cfcd701d5a9",
+      "title": "Software Engineer, Voice",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "San Francisco, CA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": "CA",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-05",
+      "descriptionHtml": "<p>Software Engineer, Voice at Sierra.</p>",
+      "descriptionPlain": "Software Engineer, Voice at Sierra.",
+      "jobUrl": "https://jobs.ashbyhq.com/sierra/032c8ab4-1911-4477-bc39-9cfcd701d5a9",
+      "applyUrl": "https://jobs.ashbyhq.com/sierra/032c8ab4-1911-4477-bc39-9cfcd701d5a9/application"
+    },
+    {
+      "id": "03424869-528d-4db1-b099-5d7f736d1a39",
+      "title": "RFP Strategy & Operations Analyst",
+      "departmentName": "Operations",
+      "teamName": "Operations",
+      "employmentType": "FullTime",
+      "location": "San Francisco, CA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": "CA",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-12",
+      "descriptionHtml": "<p>RFP Strategy & Operations Analyst at Sierra.</p>",
+      "descriptionPlain": "RFP Strategy & Operations Analyst at Sierra.",
+      "jobUrl": "https://jobs.ashbyhq.com/sierra/03424869-528d-4db1-b099-5d7f736d1a39",
+      "applyUrl": "https://jobs.ashbyhq.com/sierra/03424869-528d-4db1-b099-5d7f736d1a39/application"
+    }
+  ]
+}

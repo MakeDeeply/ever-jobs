@@ -1,0 +1,62 @@
+[
+  {
+    "id": "8ea397ca-d54a-4957-b23c-6b9274a74509",
+    "text": "3PL & Production Logistics Specialist",
+    "categories": {
+      "location": "Warsaw",
+      "allLocations": [
+        "Warsaw"
+      ],
+      "department": "Technology",
+      "team": "Technology",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1776683550618,
+    "descriptionPlain": "3PL & Production Logistics Specialist at Larian Studios.",
+    "description": "<p>3PL & Production Logistics Specialist at Larian Studios.</p>",
+    "hostedUrl": "https://jobs.lever.co/larian/8ea397ca-d54a-4957-b23c-6b9274a74509",
+    "applyUrl": "https://jobs.lever.co/larian/8ea397ca-d54a-4957-b23c-6b9274a74509/apply"
+  },
+  {
+    "id": "426112f6-122c-4cef-b97f-37e7df14526f",
+    "text": "Animator – Open Application | Animateur - candidature libre",
+    "categories": {
+      "location": "Any",
+      "allLocations": [
+        "Any"
+      ],
+      "department": "Animation",
+      "team": "Animation",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1747304130972,
+    "descriptionPlain": "Animator – Open Application | Animateur - candidature libre at Larian Studios.",
+    "description": "<p>Animator – Open Application | Animateur - candidature libre at Larian Studios.</p>",
+    "hostedUrl": "https://jobs.lever.co/larian/426112f6-122c-4cef-b97f-37e7df14526f",
+    "applyUrl": "https://jobs.lever.co/larian/426112f6-122c-4cef-b97f-37e7df14526f/apply"
+  },
+  {
+    "id": "d865d147-375b-40c7-9f93-39dffd73a365",
+    "text": "Automation QA Analyst",
+    "categories": {
+      "location": "Warsaw",
+      "allLocations": [
+        "Warsaw"
+      ],
+      "department": "Quality Assurance",
+      "team": "Quality Assurance",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1778848719253,
+    "descriptionPlain": "Automation QA Analyst at Larian Studios.",
+    "description": "<p>Automation QA Analyst at Larian Studios.</p>",
+    "hostedUrl": "https://jobs.lever.co/larian/d865d147-375b-40c7-9f93-39dffd73a365",
+    "applyUrl": "https://jobs.lever.co/larian/d865d147-375b-40c7-9f93-39dffd73a365/apply"
+  }
+]

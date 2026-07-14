@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "104a1a8e-fb12-442d-8146-759b75d1e128",
+      "title": "Senior Software Engineer",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "New York City",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "New York City",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-12-14",
+      "descriptionHtml": "<p>Senior Software Engineer at Neon.</p>",
+      "descriptionPlain": "Senior Software Engineer at Neon.",
+      "jobUrl": "https://jobs.ashbyhq.com/neon/104a1a8e-fb12-442d-8146-759b75d1e128",
+      "applyUrl": "https://jobs.ashbyhq.com/neon/104a1a8e-fb12-442d-8146-759b75d1e128/application"
+    },
+    {
+      "id": "593e01db-ee32-40ba-845a-b2683025f0c3",
+      "title": "Software Engineer",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "San Francisco",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-12-05",
+      "descriptionHtml": "<p>Software Engineer at Neon.</p>",
+      "descriptionPlain": "Software Engineer at Neon.",
+      "jobUrl": "https://jobs.ashbyhq.com/neon/593e01db-ee32-40ba-845a-b2683025f0c3",
+      "applyUrl": "https://jobs.ashbyhq.com/neon/593e01db-ee32-40ba-845a-b2683025f0c3/application"
+    },
+    {
+      "id": "6d351ed6-76f6-4a9d-ab63-4f4dbf7e981f",
+      "title": "Senior Software Engineer",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "San Francisco",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-12-14",
+      "descriptionHtml": "<p>Senior Software Engineer at Neon.</p>",
+      "descriptionPlain": "Senior Software Engineer at Neon.",
+      "jobUrl": "https://jobs.ashbyhq.com/neon/6d351ed6-76f6-4a9d-ab63-4f4dbf7e981f",
+      "applyUrl": "https://jobs.ashbyhq.com/neon/6d351ed6-76f6-4a9d-ab63-4f4dbf7e981f/application"
+    }
+  ]
+}

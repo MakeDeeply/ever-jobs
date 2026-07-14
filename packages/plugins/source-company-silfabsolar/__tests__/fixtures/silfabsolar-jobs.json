@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135338349",
+      "name": "Quality Supervisor (Pitman Night Shift)",
+      "uuid": "silfabsolar-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "SilfabSolar",
+        "name": "Silfab Solar"
+      },
+      "releasedDate": "2026-07-01T19:25:45.928Z",
+      "location": {
+        "city": "Fort Mill",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Fort Mill, South Carolina, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Quality & Continuous Improvement"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SilfabSolar/744000135338349",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Quality Supervisor (Pitman Night Shift) at Silfab Solar.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135321249",
+      "name": "Process Engineer",
+      "uuid": "silfabsolar-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "SilfabSolar",
+        "name": "Silfab Solar"
+      },
+      "releasedDate": "2026-07-01T17:19:05.428Z",
+      "location": {
+        "city": "Fort Mill",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Fort Mill, South Carolina, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Maintenance & Reliability"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SilfabSolar/744000135321249",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Process Engineer at Silfab Solar.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135081560",
+      "name": "Production Supervisor Module (Pitman Day Shift)",
+      "uuid": "silfabsolar-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "SilfabSolar",
+        "name": "Silfab Solar"
+      },
+      "releasedDate": "2026-06-30T17:47:03.702Z",
+      "location": {
+        "city": "Fort Mill",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Fort Mill, South Carolina, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Production Operations"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SilfabSolar/744000135081560",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Production Supervisor Module (Pitman Day Shift) at Silfab Solar.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

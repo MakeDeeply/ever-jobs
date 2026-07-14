@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999653382091",
+      "name": "Labor and Delivery Nurse",
+      "uuid": "platinumhealthcarestaffing-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "PlatinumHealthcareStaffingInc",
+        "name": "Platinum Healthcare Staffing"
+      },
+      "releasedDate": "2017-06-16T14:17:47.000Z",
+      "location": {
+        "city": "Burlington",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Burlington, VT, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Health Care Provider"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/PlatinumHealthcareStaffingInc/743999653382091",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Labor and Delivery Nurse at Platinum Healthcare Staffing.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "86813459",
+      "name": "Registered Nurse",
+      "uuid": "platinumhealthcarestaffing-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "PlatinumHealthcareStaffingInc",
+        "name": "Platinum Healthcare Staffing"
+      },
+      "releasedDate": "2015-11-04T20:24:47.000Z",
+      "location": {
+        "city": "Los Angeles",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Los Angeles, CA, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Health Care Provider"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/PlatinumHealthcareStaffingInc/86813459",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Registered Nurse at Platinum Healthcare Staffing.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "85966900",
+      "name": "Travel RN",
+      "uuid": "platinumhealthcarestaffing-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "PlatinumHealthcareStaffingInc",
+        "name": "Platinum Healthcare Staffing"
+      },
+      "releasedDate": "2015-10-14T19:11:17.000Z",
+      "location": {
+        "city": "Manteca",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Manteca, CA, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Health Care Provider"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/PlatinumHealthcareStaffingInc/85966900",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Travel RN at Platinum Healthcare Staffing.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

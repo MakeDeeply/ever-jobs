@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135554879",
+      "name": "Retail Sales Associate - Archery Technician",
+      "uuid": "north40outfitters-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "North40Outfitters",
+        "name": "North 40 Outfitters"
+      },
+      "releasedDate": "2026-07-02T17:04:20.310Z",
+      "location": {
+        "city": "Spokane",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Spokane, WA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Sporting Goods"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/North40Outfitters/744000135554879",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Retail Sales Associate - Archery Technician at North 40 Outfitters.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135553209",
+      "name": "Retail Sales Associate - Fly Shop",
+      "uuid": "north40outfitters-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "North40Outfitters",
+        "name": "North 40 Outfitters"
+      },
+      "releasedDate": "2026-07-02T16:53:14.687Z",
+      "location": {
+        "city": "Spokane",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Spokane, WA, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Fishing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/North40Outfitters/744000135553209",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Retail Sales Associate - Fly Shop at North 40 Outfitters.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135541917",
+      "name": "Retail Sales Associate - Cashier",
+      "uuid": "north40outfitters-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "North40Outfitters",
+        "name": "North 40 Outfitters"
+      },
+      "releasedDate": "2026-07-02T15:58:04.124Z",
+      "location": {
+        "city": "Mead",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Mead, WA, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Cashier"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/North40Outfitters/744000135541917",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Retail Sales Associate - Cashier at North 40 Outfitters.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

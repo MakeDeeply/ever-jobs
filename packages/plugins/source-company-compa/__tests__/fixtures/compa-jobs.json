@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "036d803b-03c3-493e-b558-475872ef417d",
+      "title": "Jr. Finance & Strategy Analyst",
+      "departmentName": "Finance & Accounting",
+      "teamName": "Finance & Accounting",
+      "employmentType": "FullTime",
+      "location": "Orange County HQ",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Orange County HQ",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-27",
+      "descriptionHtml": "<p>Jr. Finance & Strategy Analyst at Compa.</p>",
+      "descriptionPlain": "Jr. Finance & Strategy Analyst at Compa.",
+      "jobUrl": "https://jobs.ashbyhq.com/compa/036d803b-03c3-493e-b558-475872ef417d",
+      "applyUrl": "https://jobs.ashbyhq.com/compa/036d803b-03c3-493e-b558-475872ef417d/application"
+    },
+    {
+      "id": "03b49d71-4f04-4b5e-9bca-c5fbab3f92ee",
+      "title": "Product Manager, AI Agents",
+      "departmentName": "Technology",
+      "teamName": "Technology",
+      "employmentType": "FullTime",
+      "location": "Engineering Sites- Orange County, Denver, Seattle, San Francisco",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Engineering Sites- Orange County",
+          "addressRegion": "Denver",
+          "addressCountry": "Seattle"
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-17",
+      "descriptionHtml": "<p>Product Manager, AI Agents at Compa.</p>",
+      "descriptionPlain": "Product Manager, AI Agents at Compa.",
+      "jobUrl": "https://jobs.ashbyhq.com/compa/03b49d71-4f04-4b5e-9bca-c5fbab3f92ee",
+      "applyUrl": "https://jobs.ashbyhq.com/compa/03b49d71-4f04-4b5e-9bca-c5fbab3f92ee/application"
+    },
+    {
+      "id": "41a7a165-cbe0-4c90-ace1-817f40f27133",
+      "title": "Staff Multi-Cloud Platform Engineer",
+      "departmentName": "Technology",
+      "teamName": "Technology",
+      "employmentType": "FullTime",
+      "location": "Engineering Sites- Orange County, Denver, Seattle, San Francisco",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Engineering Sites- Orange County",
+          "addressRegion": "Denver",
+          "addressCountry": "Seattle"
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-15",
+      "descriptionHtml": "<p>Staff Multi-Cloud Platform Engineer at Compa.</p>",
+      "descriptionPlain": "Staff Multi-Cloud Platform Engineer at Compa.",
+      "jobUrl": "https://jobs.ashbyhq.com/compa/41a7a165-cbe0-4c90-ace1-817f40f27133",
+      "applyUrl": "https://jobs.ashbyhq.com/compa/41a7a165-cbe0-4c90-ace1-817f40f27133/application"
+    }
+  ]
+}

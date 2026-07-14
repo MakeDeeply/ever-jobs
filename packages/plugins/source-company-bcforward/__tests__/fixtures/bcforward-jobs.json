@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999651326273",
+      "name": "QA Lab Technician",
+      "uuid": "bcforward-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "BCforward3",
+        "name": "BCforward"
+      },
+      "releasedDate": "2017-05-26T14:31:07.000Z",
+      "location": {
+        "city": "Albert Lea",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Albert Lea, MN, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/BCforward3/743999651326273",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>QA Lab Technician at BCforward.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "116020319",
+      "name": "Infogix/Splunk Lead",
+      "uuid": "bcforward-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "BCforward3",
+        "name": "BCforward"
+      },
+      "releasedDate": "2017-05-12T21:34:00.000Z",
+      "location": {
+        "city": "Atlanta",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Atlanta, GA, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Design"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/BCforward3/116020319",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Infogix/Splunk Lead at BCforward.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "115083324",
+      "name": "Accounts Payable Processor",
+      "uuid": "bcforward-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "BCforward3",
+        "name": "BCforward"
+      },
+      "releasedDate": "2017-05-03T14:12:18.000Z",
+      "location": {
+        "city": "San Antonio",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "San Antonio, TX, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Accounting/Auditing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/BCforward3/115083324",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Accounts Payable Processor at BCforward.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

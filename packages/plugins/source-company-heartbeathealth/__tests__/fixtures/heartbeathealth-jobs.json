@@ -1,0 +1,62 @@
+[
+  {
+    "id": "a43caa23-7683-4d50-ba56-75043c2bb816",
+    "text": "Account Manager",
+    "categories": {
+      "location": "remote",
+      "allLocations": [
+        "remote"
+      ],
+      "department": "Operations",
+      "team": "Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1778175602298,
+    "descriptionPlain": "Account Manager at Heartbeat Health.",
+    "description": "<p>Account Manager at Heartbeat Health.</p>",
+    "hostedUrl": "https://jobs.lever.co/heartbeathealth/a43caa23-7683-4d50-ba56-75043c2bb816",
+    "applyUrl": "https://jobs.lever.co/heartbeathealth/a43caa23-7683-4d50-ba56-75043c2bb816/apply"
+  },
+  {
+    "id": "a5c11be0-6f2c-4f56-a8e2-12c4b0e57e66",
+    "text": "Cardiac Sonographer- Denver/Colorado Springs, CO",
+    "categories": {
+      "location": "Denver, CO",
+      "allLocations": [
+        "Denver, CO"
+      ],
+      "department": "Clinic",
+      "team": "Clinic",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1775226415762,
+    "descriptionPlain": "Cardiac Sonographer- Denver/Colorado Springs, CO at Heartbeat Health.",
+    "description": "<p>Cardiac Sonographer- Denver/Colorado Springs, CO at Heartbeat Health.</p>",
+    "hostedUrl": "https://jobs.lever.co/heartbeathealth/a5c11be0-6f2c-4f56-a8e2-12c4b0e57e66",
+    "applyUrl": "https://jobs.lever.co/heartbeathealth/a5c11be0-6f2c-4f56-a8e2-12c4b0e57e66/apply"
+  },
+  {
+    "id": "6d2418b0-5538-4fd5-9849-826195cb3f88",
+    "text": "Cardiac Sonographer- Lexington, KY",
+    "categories": {
+      "location": "Lexington, KY",
+      "allLocations": [
+        "Lexington, KY"
+      ],
+      "department": "Clinic",
+      "team": "Clinic",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1776990441373,
+    "descriptionPlain": "Cardiac Sonographer- Lexington, KY at Heartbeat Health.",
+    "description": "<p>Cardiac Sonographer- Lexington, KY at Heartbeat Health.</p>",
+    "hostedUrl": "https://jobs.lever.co/heartbeathealth/6d2418b0-5538-4fd5-9849-826195cb3f88",
+    "applyUrl": "https://jobs.lever.co/heartbeathealth/6d2418b0-5538-4fd5-9849-826195cb3f88/apply"
+  }
+]

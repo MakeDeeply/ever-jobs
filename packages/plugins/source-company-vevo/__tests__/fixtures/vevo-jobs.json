@@ -1,0 +1,62 @@
+[
+  {
+    "id": "8738b501-4237-494c-9221-cb88af7c495b",
+    "text": "Account Executive",
+    "categories": {
+      "location": "New York, NY",
+      "allLocations": [
+        "New York, NY"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1773175209660,
+    "descriptionPlain": "Account Executive at Vevo.",
+    "description": "<p>Account Executive at Vevo.</p>",
+    "hostedUrl": "https://jobs.lever.co/vevo/8738b501-4237-494c-9221-cb88af7c495b",
+    "applyUrl": "https://jobs.lever.co/vevo/8738b501-4237-494c-9221-cb88af7c495b/apply"
+  },
+  {
+    "id": "c5bc8003-aaef-4d25-9286-44053414123d",
+    "text": "Account Manager",
+    "categories": {
+      "location": "New York, NY",
+      "allLocations": [
+        "New York, NY"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1780069940708,
+    "descriptionPlain": "Account Manager at Vevo.",
+    "description": "<p>Account Manager at Vevo.</p>",
+    "hostedUrl": "https://jobs.lever.co/vevo/c5bc8003-aaef-4d25-9286-44053414123d",
+    "applyUrl": "https://jobs.lever.co/vevo/c5bc8003-aaef-4d25-9286-44053414123d/apply"
+  },
+  {
+    "id": "db088f65-407f-484e-a576-4f37c16e6c0a",
+    "text": "Account Manager",
+    "categories": {
+      "location": "Chicago, IL",
+      "allLocations": [
+        "Chicago, IL"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1779127231572,
+    "descriptionPlain": "Account Manager at Vevo.",
+    "description": "<p>Account Manager at Vevo.</p>",
+    "hostedUrl": "https://jobs.lever.co/vevo/db088f65-407f-484e-a576-4f37c16e6c0a",
+    "applyUrl": "https://jobs.lever.co/vevo/db088f65-407f-484e-a576-4f37c16e6c0a/apply"
+  }
+]

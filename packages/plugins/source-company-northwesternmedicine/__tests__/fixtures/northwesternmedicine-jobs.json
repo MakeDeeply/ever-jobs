@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135634999",
+      "name": "Registered Nurse, Imaging Lakeview Full-Time Days",
+      "uuid": "northwesternmedicine-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "northwesternmedicine",
+        "name": "Northwestern Medicine"
+      },
+      "releasedDate": "2026-07-03T02:08:23.403Z",
+      "location": {
+        "city": "Chicago",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Chicago, IL, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Health Care Provider"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/northwesternmedicine/744000135634999",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Registered Nurse, Imaging Lakeview Full-Time Days at Northwestern Medicine.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135592510",
+      "name": "Behavioral Health Counselor PRN-Mobile Crisis Response",
+      "uuid": "northwesternmedicine-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "northwesternmedicine",
+        "name": "Northwestern Medicine"
+      },
+      "releasedDate": "2026-07-02T20:41:45.313Z",
+      "location": {
+        "city": "DeKalb",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "DeKalb, IL, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Health Care Provider"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/northwesternmedicine/744000135592510",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Behavioral Health Counselor PRN-Mobile Crisis Response at Northwestern Medicine.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135590529",
+      "name": "Occupational Therapist IHR-Casual Weekend Shifts",
+      "uuid": "northwesternmedicine-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "northwesternmedicine",
+        "name": "Northwestern Medicine"
+      },
+      "releasedDate": "2026-07-02T20:23:24.450Z",
+      "location": {
+        "city": "DeKalb",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "DeKalb, IL, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Health Care Provider"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/northwesternmedicine/744000135590529",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Occupational Therapist IHR-Casual Weekend Shifts at Northwestern Medicine.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

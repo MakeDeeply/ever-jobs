@@ -1,0 +1,62 @@
+[
+  {
+    "id": "b5c9f625-e90e-4559-8f0b-6a68362071ae",
+    "text": "Accounting Manager",
+    "categories": {
+      "location": "Palo Alto, CA",
+      "allLocations": [
+        "Palo Alto, CA"
+      ],
+      "department": "Finance",
+      "team": "Finance",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1730921318620,
+    "descriptionPlain": "Accounting Manager at GenBio AI.",
+    "description": "<p>Accounting Manager at GenBio AI.</p>",
+    "hostedUrl": "https://jobs.lever.co/genbio/b5c9f625-e90e-4559-8f0b-6a68362071ae",
+    "applyUrl": "https://jobs.lever.co/genbio/b5c9f625-e90e-4559-8f0b-6a68362071ae/apply"
+  },
+  {
+    "id": "ba9d68d4-b928-42e9-a442-b5c03f0c95b6",
+    "text": "Bioinformatics Data Engineer",
+    "categories": {
+      "location": "Abu Dhabi",
+      "allLocations": [
+        "Abu Dhabi"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1773363251792,
+    "descriptionPlain": "Bioinformatics Data Engineer at GenBio AI.",
+    "description": "<p>Bioinformatics Data Engineer at GenBio AI.</p>",
+    "hostedUrl": "https://jobs.lever.co/genbio/ba9d68d4-b928-42e9-a442-b5c03f0c95b6",
+    "applyUrl": "https://jobs.lever.co/genbio/ba9d68d4-b928-42e9-a442-b5c03f0c95b6/apply"
+  },
+  {
+    "id": "e540d52d-9606-4366-859e-c1c3864b2d2a",
+    "text": "IT Support Specialist",
+    "categories": {
+      "location": "Palo Alto, CA",
+      "allLocations": [
+        "Palo Alto, CA"
+      ],
+      "department": "Operations",
+      "team": "Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1777071008241,
+    "descriptionPlain": "IT Support Specialist at GenBio AI.",
+    "description": "<p>IT Support Specialist at GenBio AI.</p>",
+    "hostedUrl": "https://jobs.lever.co/genbio/e540d52d-9606-4366-859e-c1c3864b2d2a",
+    "applyUrl": "https://jobs.lever.co/genbio/e540d52d-9606-4366-859e-c1c3864b2d2a/apply"
+  }
+]

@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000131195069",
+      "name": "Senior Sales Manager - 2251",
+      "uuid": "kioxia-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Kioxia",
+        "name": "Kioxia"
+      },
+      "releasedDate": "2026-06-09T16:38:32.624Z",
+      "location": {
+        "city": "Round Rock",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Round Rock, TX, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Kioxia/744000131195069",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Sales Manager - 2251 at Kioxia.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000129796053",
+      "name": "Accounts Receivable Specialist - 2252",
+      "uuid": "kioxia-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Kioxia",
+        "name": "Kioxia"
+      },
+      "releasedDate": "2026-06-02T15:17:55.707Z",
+      "location": {
+        "city": "Irvine",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Irvine, CA, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Finance"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Kioxia/744000129796053",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Accounts Receivable Specialist - 2252 at Kioxia.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000129796899",
+      "name": "Accounts Receivable Specialist - 2252",
+      "uuid": "kioxia-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Kioxia",
+        "name": "Kioxia"
+      },
+      "releasedDate": "2026-06-02T15:17:23.171Z",
+      "location": {
+        "city": "San Jose",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "San Jose, CA, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Finance"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Kioxia/744000129796899",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Accounts Receivable Specialist - 2252 at Kioxia.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

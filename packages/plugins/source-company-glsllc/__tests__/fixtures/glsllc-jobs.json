@@ -1,0 +1,62 @@
+[
+  {
+    "id": "1234b227-f16a-473b-9583-27be29b40b45",
+    "text": "Area Sales Manager",
+    "categories": {
+      "location": "Modesto, California",
+      "allLocations": [
+        "Modesto, California"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1779225394674,
+    "descriptionPlain": "Area Sales Manager at Global Lending Services.",
+    "description": "<p>Area Sales Manager at Global Lending Services.</p>",
+    "hostedUrl": "https://jobs.lever.co/glsllc/1234b227-f16a-473b-9583-27be29b40b45",
+    "applyUrl": "https://jobs.lever.co/glsllc/1234b227-f16a-473b-9583-27be29b40b45/apply"
+  },
+  {
+    "id": "23ab18ad-710e-4764-bbcb-cd108534c678",
+    "text": "Area Sales Manager",
+    "categories": {
+      "location": "Fort Lauderdale, Florida",
+      "allLocations": [
+        "Fort Lauderdale, Florida"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1779371471749,
+    "descriptionPlain": "Area Sales Manager at Global Lending Services.",
+    "description": "<p>Area Sales Manager at Global Lending Services.</p>",
+    "hostedUrl": "https://jobs.lever.co/glsllc/23ab18ad-710e-4764-bbcb-cd108534c678",
+    "applyUrl": "https://jobs.lever.co/glsllc/23ab18ad-710e-4764-bbcb-cd108534c678/apply"
+  },
+  {
+    "id": "281d4e97-ae6d-47f1-9c7f-16ea8e369a16",
+    "text": "Area Sales Manager",
+    "categories": {
+      "location": "Lafayette, Louisiana",
+      "allLocations": [
+        "Lafayette, Louisiana"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1779134385730,
+    "descriptionPlain": "Area Sales Manager at Global Lending Services.",
+    "description": "<p>Area Sales Manager at Global Lending Services.</p>",
+    "hostedUrl": "https://jobs.lever.co/glsllc/281d4e97-ae6d-47f1-9c7f-16ea8e369a16",
+    "applyUrl": "https://jobs.lever.co/glsllc/281d4e97-ae6d-47f1-9c7f-16ea8e369a16/apply"
+  }
+]

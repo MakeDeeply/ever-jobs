@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135690549",
+      "name": "Instructional Designer",
+      "uuid": "allegisglobalsolutions-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "AllegisGlobalSolutions",
+        "name": "Allegis Global Solutions"
+      },
+      "releasedDate": "2026-07-03T09:59:09.605Z",
+      "location": {
+        "city": "Bengaluru",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Bengaluru, KA, India"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "INDIA"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AllegisGlobalSolutions/744000135690549",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Instructional Designer at Allegis Global Solutions.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135586574",
+      "name": "Recruitment Sourcing Specialist (Talent Pool)",
+      "uuid": "allegisglobalsolutions-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "AllegisGlobalSolutions",
+        "name": "Allegis Global Solutions"
+      },
+      "releasedDate": "2026-07-02T19:58:32.015Z",
+      "location": {
+        "city": "Tempe",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Tempe, AZ, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "NORTH AMERICA"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AllegisGlobalSolutions/744000135586574",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Recruitment Sourcing Specialist (Talent Pool) at Allegis Global Solutions.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135583950",
+      "name": "Fieldglass, VNDLY, Beeline Integration Architect",
+      "uuid": "allegisglobalsolutions-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "AllegisGlobalSolutions",
+        "name": "Allegis Global Solutions"
+      },
+      "releasedDate": "2026-07-02T19:31:20.587Z",
+      "location": {
+        "city": null,
+        "region": null,
+        "country": null,
+        "remote": true,
+        "fullLocation": "Remote, OR, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "QuantumWork Advisory"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AllegisGlobalSolutions/744000135583950",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Fieldglass, VNDLY, Beeline Integration Architect at Allegis Global Solutions.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

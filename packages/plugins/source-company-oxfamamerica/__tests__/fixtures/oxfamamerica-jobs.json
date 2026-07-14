@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135588199",
+      "name": "MEAL Consultant, ACT Project",
+      "uuid": "oxfamamerica-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "oxfamamerica2",
+        "name": "Oxfam America"
+      },
+      "releasedDate": "2026-07-02T20:05:01.950Z",
+      "location": {
+        "city": "Manila",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Manila, NCR, Philippines"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Humanitarian"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/oxfamamerica2/744000135588199",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>MEAL Consultant, ACT Project at Oxfam America.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135588079",
+      "name": "MEAL Consultant, ACT Project",
+      "uuid": "oxfamamerica-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "oxfamamerica2",
+        "name": "Oxfam America"
+      },
+      "releasedDate": "2026-07-02T20:03:53.608Z",
+      "location": {
+        "city": "Jakarta",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Jakarta, Jakarta, Indonesia"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Humanitarian"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/oxfamamerica2/744000135588079",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>MEAL Consultant, ACT Project at Oxfam America.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135587187",
+      "name": "MEAL Consultant, ACT Project",
+      "uuid": "oxfamamerica-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "oxfamamerica2",
+        "name": "Oxfam America"
+      },
+      "releasedDate": "2026-07-02T20:02:56.670Z",
+      "location": {
+        "city": "washington",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "washington, DC, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Humanitarian"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/oxfamamerica2/744000135587187",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>MEAL Consultant, ACT Project at Oxfam America.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

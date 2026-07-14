@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135778609",
+      "name": "HR Business Partner (f/m/d)",
+      "uuid": "ubisoft-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "ubisoft2",
+        "name": "Ubisoft"
+      },
+      "releasedDate": "2026-07-03T19:36:17.249Z",
+      "location": {
+        "city": "Mainz",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Mainz, RP, Germany"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Ubisoft"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ubisoft2/744000135778609",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>HR Business Partner (f/m/d) at Ubisoft.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135750460",
+      "name": "Project Manager, Creative Operations",
+      "uuid": "ubisoft-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "ubisoft2",
+        "name": "Ubisoft"
+      },
+      "releasedDate": "2026-07-03T14:38:58.553Z",
+      "location": {
+        "city": "Paris",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Paris, IDF, France"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Ubisoft"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ubisoft2/744000135750460",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Project Manager, Creative Operations at Ubisoft.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135750880",
+      "name": "Group Manager, Creative Project Management",
+      "uuid": "ubisoft-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "ubisoft2",
+        "name": "Ubisoft"
+      },
+      "releasedDate": "2026-07-03T14:37:54.229Z",
+      "location": {
+        "city": "Paris",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Paris, IDF, France"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Ubisoft"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ubisoft2/744000135750880",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Group Manager, Creative Project Management at Ubisoft.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

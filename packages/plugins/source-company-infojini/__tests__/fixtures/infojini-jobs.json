@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999659846886",
+      "name": "Transport Software Application Administrator",
+      "uuid": "infojini-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "InfojiniInc1",
+        "name": "Infojini"
+      },
+      "releasedDate": "2017-09-14T20:16:57.000Z",
+      "location": {
+        "city": "Austin",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Austin, TX, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Administrative"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/InfojiniInc1/743999659846886",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Transport Software Application Administrator at Infojini.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999659752375",
+      "name": "UX Designer",
+      "uuid": "infojini-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "InfojiniInc1",
+        "name": "Infojini"
+      },
+      "releasedDate": "2017-09-13T20:15:44.000Z",
+      "location": {
+        "city": "Secaucus",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Secaucus, NJ, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Design"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/InfojiniInc1/743999659752375",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>UX Designer at Infojini.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999659748608",
+      "name": "Technical Trainer",
+      "uuid": "infojini-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "InfojiniInc1",
+        "name": "Infojini"
+      },
+      "releasedDate": "2017-09-13T19:43:54.000Z",
+      "location": {
+        "city": "Annapolis",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Annapolis, MD, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Training"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/InfojiniInc1/743999659748608",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Technical Trainer at Infojini.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

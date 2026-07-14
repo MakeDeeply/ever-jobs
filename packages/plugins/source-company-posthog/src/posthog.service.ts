@@ -1,0 +1,74 @@
+import { SourcePlugin, PluginRegistry } from '@ever-jobs/plugin';
+
+import { Injectable, Logger, Optional } from '@nestjs/common';
+import {
+  IScraper, ScraperInputDto, JobResponseDto, Site,
+} from '@ever-jobs/models';
+
+/**
+ * PostHog — Open-source product analytics, session replay, feature flags, and experimentation platform.
+ *
+ * PostHog is a product-analytics and developer platform that combines
+ * product analytics, session replay, feature flags, A/B testing, and
+ * surveys. It offers an open-source edition alongside a hosted cloud
+ * product. The company is remote-first with a US headquarters in San
+ * Francisco.
+ *
+ * Sector: B2B SaaS / product analytics & developer tools. HQ: San Francisco, California, USA.
+ *
+ * Source: Ashby job board, company slug `posthog`
+ * (`https://jobs.ashbyhq.com/posthog`). The company's live
+ * postings are served by Ashby. Rather than re-implement Ashby parsing (and
+ * risk drift), this plugin resolves the registered Ashby source plugin from
+ * the `PluginRegistry` at runtime and delegates the fetch + field mapping to
+ * it, then re-stamps the company identity (site, companyName, id prefix) onto
+ * the results — so every Ashby field fix is inherited automatically. This
+ * honours the "no plugin imports a peer plugin directly; discover via the
+ * registry" rule.
+ */
+const COMPANY_SLUG = 'posthog';
+const COMPANY_NAME = 'PostHog';
+
+@SourcePlugin({
+  site: Site.POSTHOG,
+  name: COMPANY_NAME,
+  category: 'company',
+})
+@Injectable()
+export class PostHogService implements IScraper {
+  private readonly logger = new Logger(PostHogService.name);
+
+  constructor(
+    @Optional() private readonly registry?: PluginRegistry,
+  ) {}
+
+  async scrape(input: ScraperInputDto): Promise<JobResponseDto> {
+    const ashby = this.registry?.getScraper(Site.ASHBY);
+    if (!ashby) {
+      this.logger.error(
+        'Ashby source plugin is not registered; cannot scrape PostHog',
+      );
+      return new JobResponseDto([]);
+    }
+
+    this.logger.log(
+      `PostHog: delegating to Ashby (slug ${COMPANY_SLUG})`,
+    );
+
+    const result = await ashby.scrape({
+      ...input,
+      companySlug: COMPANY_SLUG,
+    } as ScraperInputDto);
+
+    for (const job of result.jobs) {
+      job.site = Site.POSTHOG;
+      job.companyName = COMPANY_NAME;
+      if (job.id) {
+        job.id = job.id.replace(/^ashby-/, 'posthog-');
+      }
+    }
+
+    this.logger.log(`PostHog: scraped ${result.jobs.length} jobs`);
+    return result;
+  }
+}

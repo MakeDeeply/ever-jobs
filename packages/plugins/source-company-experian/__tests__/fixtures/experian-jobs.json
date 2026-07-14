@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135787609",
+      "name": "Gerente de Experiência do Cliente",
+      "uuid": "experian-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Experian",
+        "name": "Experian"
+      },
+      "releasedDate": "2026-07-04T00:17:49.438Z",
+      "location": {
+        "city": "São Paulo",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "São Paulo, , Brazil"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Customer Service"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Experian/744000135787609",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Gerente de Experiência do Cliente at Experian.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135787569",
+      "name": "Gerente de Gestão do Cliente - (Atendimento PME)",
+      "uuid": "experian-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Experian",
+        "name": "Experian"
+      },
+      "releasedDate": "2026-07-04T00:14:12.552Z",
+      "location": {
+        "city": "São Paulo",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "São Paulo, , Brazil"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Customer Service"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Experian/744000135787569",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Gerente de Gestão do Cliente - (Atendimento PME) at Experian.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135786949",
+      "name": "LifeCycle & Monetization Specialist",
+      "uuid": "experian-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Experian",
+        "name": "Experian"
+      },
+      "releasedDate": "2026-07-03T23:03:39.512Z",
+      "location": {
+        "city": "Bogotá",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Bogotá, , Colombia"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Marketing and Communications"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Experian/744000135786949",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>LifeCycle & Monetization Specialist at Experian.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

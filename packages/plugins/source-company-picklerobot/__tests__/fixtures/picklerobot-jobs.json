@@ -1,0 +1,62 @@
+[
+  {
+    "id": "b2a24088-cc18-4ae0-afbc-2a107b4f9acb",
+    "text": "Backend Software Engineer – Autonomy",
+    "categories": {
+      "location": "Charlestown, MA",
+      "allLocations": [
+        "Charlestown, MA"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1778095448309,
+    "descriptionPlain": "Backend Software Engineer – Autonomy at Pickle Robot Company.",
+    "description": "<p>Backend Software Engineer – Autonomy at Pickle Robot Company.</p>",
+    "hostedUrl": "https://jobs.lever.co/picklerobot/b2a24088-cc18-4ae0-afbc-2a107b4f9acb",
+    "applyUrl": "https://jobs.lever.co/picklerobot/b2a24088-cc18-4ae0-afbc-2a107b4f9acb/apply"
+  },
+  {
+    "id": "19dec4f1-ec88-4095-bac8-dd5fb19d2ec1",
+    "text": "Backend Software Engineer – Human-Robot Interaction",
+    "categories": {
+      "location": "Charlestown, MA",
+      "allLocations": [
+        "Charlestown, MA"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1780950944053,
+    "descriptionPlain": "Backend Software Engineer – Human-Robot Interaction at Pickle Robot Company.",
+    "description": "<p>Backend Software Engineer – Human-Robot Interaction at Pickle Robot Company.</p>",
+    "hostedUrl": "https://jobs.lever.co/picklerobot/19dec4f1-ec88-4095-bac8-dd5fb19d2ec1",
+    "applyUrl": "https://jobs.lever.co/picklerobot/19dec4f1-ec88-4095-bac8-dd5fb19d2ec1/apply"
+  },
+  {
+    "id": "827b1012-843e-427e-869b-ca48c8d79afc",
+    "text": "Backend Software Engineer – Software Architecture",
+    "categories": {
+      "location": "Charlestown, MA",
+      "allLocations": [
+        "Charlestown, MA"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1781014609648,
+    "descriptionPlain": "Backend Software Engineer – Software Architecture at Pickle Robot Company.",
+    "description": "<p>Backend Software Engineer – Software Architecture at Pickle Robot Company.</p>",
+    "hostedUrl": "https://jobs.lever.co/picklerobot/827b1012-843e-427e-869b-ca48c8d79afc",
+    "applyUrl": "https://jobs.lever.co/picklerobot/827b1012-843e-427e-869b-ca48c8d79afc/apply"
+  }
+]

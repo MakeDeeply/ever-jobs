@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135746149",
+      "name": "Migration Architect",
+      "uuid": "version1-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Version1",
+        "name": "Version 1"
+      },
+      "releasedDate": "2026-07-03T14:15:15.617Z",
+      "location": {
+        "city": "London",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "London, Birmingham, Manchester, Newcastle upon Tyne, Edinburgh, Belfast, England, United Kingdom"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Digital, Data and Cloud"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Version1/744000135746149",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Migration Architect at Version 1.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135739310",
+      "name": "Associate Business Support",
+      "uuid": "version1-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Version1",
+        "name": "Version 1"
+      },
+      "releasedDate": "2026-07-03T13:54:14.447Z",
+      "location": {
+        "city": "Bengaluru",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Bengaluru, KA, India"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Business Support"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Version1/744000135739310",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Associate Business Support at Version 1.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135714879",
+      "name": "Senior Business Analyst (Digital Content & Web Transformation)",
+      "uuid": "version1-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Version1",
+        "name": "Version 1"
+      },
+      "releasedDate": "2026-07-03T12:00:43.253Z",
+      "location": {
+        "city": "Dublin",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Dublin, County Dublin, Ireland"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Public Sector & Utilities (Ireland)"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Version1/744000135714879",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Business Analyst (Digital Content & Web Transformation) at Version 1.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

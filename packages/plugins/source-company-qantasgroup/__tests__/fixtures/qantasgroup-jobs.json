@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "6000000001207389",
+      "name": "Senior Financial Analyst",
+      "uuid": "qantasgroup-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "QantasGroup",
+        "name": "Qantas Group"
+      },
+      "releasedDate": "2026-07-03T07:13:36.085Z",
+      "location": {
+        "city": "Sydney",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Sydney, New South Wales, Australia"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Accounting/Auditing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/QantasGroup/6000000001207389",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Financial Analyst at Qantas Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "6000000001207307",
+      "name": "Platform Manager - Salesforce",
+      "uuid": "qantasgroup-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "QantasGroup",
+        "name": "Qantas Group"
+      },
+      "releasedDate": "2026-07-03T07:00:18.253Z",
+      "location": {
+        "city": "Adelaide",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Adelaide, South Australia, Australia"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Management"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/QantasGroup/6000000001207307",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Platform Manager - Salesforce at Qantas Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "6000000001206901",
+      "name": "Qantas 2027 Engineering Apprenticeship Program - Sydney",
+      "uuid": "qantasgroup-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "QantasGroup",
+        "name": "Qantas Group"
+      },
+      "releasedDate": "2026-07-03T05:31:15.154Z",
+      "location": {
+        "city": "Sydney",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Sydney, New South Wales, Australia"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/QantasGroup/6000000001206901",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Qantas 2027 Engineering Apprenticeship Program - Sydney at Qantas Group.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

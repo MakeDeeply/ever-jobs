@@ -1,0 +1,73 @@
+import { SourcePlugin, PluginRegistry } from '@ever-jobs/plugin';
+
+import { Injectable, Logger, Optional } from '@nestjs/common';
+import {
+  IScraper, ScraperInputDto, JobResponseDto, Site,
+} from '@ever-jobs/models';
+
+/**
+ * Alpadia Language Schools — Language school and summer language camp operator, part of Kaplan International Languages.
+ *
+ * Alpadia Language Schools is a language-education provider founded in 1996
+ * that runs year-round language courses and residential summer language
+ * camps in Europe. It is part of Kaplan International Languages and hires
+ * teachers, camp staff, and customer-care and sales roles.
+ *
+ * Sector: Education (language schools). HQ: Montreux, Switzerland.
+ *
+ * Source: SmartRecruiters job board, company identifier `AlpadiaLanguageSchoolsSA`
+ * (`https://jobs.smartrecruiters.com/AlpadiaLanguageSchoolsSA`). The company's live
+ * postings are served by SmartRecruiters. Rather than re-implement
+ * SmartRecruiters parsing (and risk drift), this plugin resolves the
+ * registered SmartRecruiters source plugin from the `PluginRegistry` at
+ * runtime and delegates the fetch + field mapping to it, then re-stamps the
+ * company identity (site, companyName, id prefix) onto the results — so every
+ * SmartRecruiters field fix is inherited automatically. This honours the "no
+ * plugin imports a peer plugin directly; discover via the registry" rule.
+ */
+const COMPANY_SLUG = 'AlpadiaLanguageSchoolsSA';
+const COMPANY_NAME = 'Alpadia Language Schools';
+
+@SourcePlugin({
+  site: Site.ALPADIA_LANGUAGE_SCHOOLS,
+  name: COMPANY_NAME,
+  category: 'company',
+})
+@Injectable()
+export class AlpadiaLanguageSchoolsService implements IScraper {
+  private readonly logger = new Logger(AlpadiaLanguageSchoolsService.name);
+
+  constructor(
+    @Optional() private readonly registry?: PluginRegistry,
+  ) {}
+
+  async scrape(input: ScraperInputDto): Promise<JobResponseDto> {
+    const smartrecruiters = this.registry?.getScraper(Site.SMARTRECRUITERS);
+    if (!smartrecruiters) {
+      this.logger.error(
+        'SmartRecruiters source plugin is not registered; cannot scrape Alpadia Language Schools',
+      );
+      return new JobResponseDto([]);
+    }
+
+    this.logger.log(
+      `Alpadia Language Schools: delegating to SmartRecruiters (slug ${COMPANY_SLUG})`,
+    );
+
+    const result = await smartrecruiters.scrape({
+      ...input,
+      companySlug: COMPANY_SLUG,
+    } as ScraperInputDto);
+
+    for (const job of result.jobs) {
+      job.site = Site.ALPADIA_LANGUAGE_SCHOOLS;
+      job.companyName = COMPANY_NAME;
+      if (job.id) {
+        job.id = job.id.replace(/^sr-/, 'alpadialanguageschools-');
+      }
+    }
+
+    this.logger.log(`Alpadia Language Schools: scraped ${result.jobs.length} jobs`);
+    return result;
+  }
+}

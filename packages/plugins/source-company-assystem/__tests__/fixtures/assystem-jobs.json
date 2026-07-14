@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135766594",
+      "name": "Préventeur HSE Nucléaire H/F",
+      "uuid": "assystem-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "ASSYSTEM",
+        "name": "Assystem"
+      },
+      "releasedDate": "2026-07-03T16:32:43.319Z",
+      "location": {
+        "city": "Cherbourg-en-Cotentin",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Cherbourg-en-Cotentin, Normandy, France"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ASSYSTEM/744000135766594",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Préventeur HSE Nucléaire H/F at Assystem.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135763520",
+      "name": "Planificateur Nucléaire H/F",
+      "uuid": "assystem-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "ASSYSTEM",
+        "name": "Assystem"
+      },
+      "releasedDate": "2026-07-03T16:04:34.980Z",
+      "location": {
+        "city": "Cherbourg-en-Cotentin",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Cherbourg-en-Cotentin, Normandy, France"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ASSYSTEM/744000135763520",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Planificateur Nucléaire H/F at Assystem.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135744173",
+      "name": "Project Controls Manager",
+      "uuid": "assystem-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "ASSYSTEM",
+        "name": "Assystem"
+      },
+      "releasedDate": "2026-07-03T14:12:37.085Z",
+      "location": {
+        "city": "Birmingham",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Birmingham, England, United Kingdom"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Project Management"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ASSYSTEM/744000135744173",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Project Controls Manager at Assystem.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

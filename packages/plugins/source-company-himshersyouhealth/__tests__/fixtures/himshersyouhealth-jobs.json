@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "113dc031-9cfa-46ab-aa41-7384f2367f9f",
+      "title": "Hims & Hers Canada - Nurse Practitioner",
+      "departmentName": "PRACTITIONER",
+      "teamName": "PRACTITIONER",
+      "employmentType": "FullTime",
+      "location": "Canada Remote",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Canada Remote",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2026-01-16",
+      "descriptionHtml": "<p>Hims & Hers Canada - Nurse Practitioner at Hims & Hers (You Health).</p>",
+      "descriptionPlain": "Hims & Hers Canada - Nurse Practitioner at Hims & Hers (You Health).",
+      "jobUrl": "https://jobs.ashbyhq.com/you-health/113dc031-9cfa-46ab-aa41-7384f2367f9f",
+      "applyUrl": "https://jobs.ashbyhq.com/you-health/113dc031-9cfa-46ab-aa41-7384f2367f9f/application"
+    },
+    {
+      "id": "57bbf908-2fdf-4236-ada6-e04ff43fcb46",
+      "title": "Synchronous Telehealth Nurse Practitioner (1099)",
+      "departmentName": "PRACTITIONER",
+      "teamName": "PRACTITIONER",
+      "employmentType": "FullTime",
+      "location": "US Remote",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "US Remote",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2026-05-13",
+      "descriptionHtml": "<p>Synchronous Telehealth Nurse Practitioner (1099) at Hims & Hers (You Health).</p>",
+      "descriptionPlain": "Synchronous Telehealth Nurse Practitioner (1099) at Hims & Hers (You Health).",
+      "jobUrl": "https://jobs.ashbyhq.com/you-health/57bbf908-2fdf-4236-ada6-e04ff43fcb46",
+      "applyUrl": "https://jobs.ashbyhq.com/you-health/57bbf908-2fdf-4236-ada6-e04ff43fcb46/application"
+    },
+    {
+      "id": "647ff8fc-f31a-430c-bbbf-d5c30fdb5bdb",
+      "title": "Telehealth Nurse Practitioner (1099)",
+      "departmentName": "PRACTITIONER",
+      "teamName": "PRACTITIONER",
+      "employmentType": "FullTime",
+      "location": "US Remote",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "US Remote",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2025-04-10",
+      "descriptionHtml": "<p>Telehealth Nurse Practitioner (1099) at Hims & Hers (You Health).</p>",
+      "descriptionPlain": "Telehealth Nurse Practitioner (1099) at Hims & Hers (You Health).",
+      "jobUrl": "https://jobs.ashbyhq.com/you-health/647ff8fc-f31a-430c-bbbf-d5c30fdb5bdb",
+      "applyUrl": "https://jobs.ashbyhq.com/you-health/647ff8fc-f31a-430c-bbbf-d5c30fdb5bdb/application"
+    }
+  ]
+}

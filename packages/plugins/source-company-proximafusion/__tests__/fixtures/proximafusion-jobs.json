@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "07efc37f-cbec-4106-bf8e-4b487ad4cf27",
+      "title": "Construction Project Manager",
+      "departmentName": "Technical Operations / Manufacturing",
+      "teamName": "Technical Operations / Manufacturing",
+      "employmentType": "FullTime",
+      "location": "Munich",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Munich",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-02-04",
+      "descriptionHtml": "<p>Construction Project Manager at Proxima Fusion.</p>",
+      "descriptionPlain": "Construction Project Manager at Proxima Fusion.",
+      "jobUrl": "https://jobs.ashbyhq.com/proxima-fusion/07efc37f-cbec-4106-bf8e-4b487ad4cf27",
+      "applyUrl": "https://jobs.ashbyhq.com/proxima-fusion/07efc37f-cbec-4106-bf8e-4b487ad4cf27/application"
+    },
+    {
+      "id": "421e64d3-c777-49a9-a8bc-006c32438fcc",
+      "title": "Lead Recruiter",
+      "departmentName": "People & Workplace Experience",
+      "teamName": "People & Workplace Experience",
+      "employmentType": "FullTime",
+      "location": "Munich",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Munich",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-22",
+      "descriptionHtml": "<p>Lead Recruiter at Proxima Fusion.</p>",
+      "descriptionPlain": "Lead Recruiter at Proxima Fusion.",
+      "jobUrl": "https://jobs.ashbyhq.com/proxima-fusion/421e64d3-c777-49a9-a8bc-006c32438fcc",
+      "applyUrl": "https://jobs.ashbyhq.com/proxima-fusion/421e64d3-c777-49a9-a8bc-006c32438fcc/application"
+    },
+    {
+      "id": "1b5ad75c-4c97-4a92-9150-ea8536c6b18d",
+      "title": "Unsolicited Application",
+      "departmentName": "No Department",
+      "teamName": "No Department",
+      "employmentType": "FullTime",
+      "location": "Munich",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Munich",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-08-22",
+      "descriptionHtml": "<p>Unsolicited Application at Proxima Fusion.</p>",
+      "descriptionPlain": "Unsolicited Application at Proxima Fusion.",
+      "jobUrl": "https://jobs.ashbyhq.com/proxima-fusion/1b5ad75c-4c97-4a92-9150-ea8536c6b18d",
+      "applyUrl": "https://jobs.ashbyhq.com/proxima-fusion/1b5ad75c-4c97-4a92-9150-ea8536c6b18d/application"
+    }
+  ]
+}

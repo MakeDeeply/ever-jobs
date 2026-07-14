@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135743930",
+      "name": "Project Development Manager (m/w/d)",
+      "uuid": "ibvogt-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "ib-vogt-GmbH",
+        "name": "ib vogt"
+      },
+      "releasedDate": "2026-07-03T14:21:01.477Z",
+      "location": {
+        "city": "Berlin",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Berlin, Berlin, Germany"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ib-vogt-GmbH/744000135743930",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Project Development Manager (m/w/d) at ib vogt.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135746879",
+      "name": "Project Development Manager (m/f/d)",
+      "uuid": "ibvogt-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "ib-vogt-GmbH",
+        "name": "ib vogt"
+      },
+      "releasedDate": "2026-07-03T14:17:44.904Z",
+      "location": {
+        "city": "Berlin",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Berlin, Berlin, Germany"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ib-vogt-GmbH/744000135746879",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Project Development Manager (m/f/d) at ib vogt.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135462782",
+      "name": "Project Origination Manager (aka Manager Project Origination, Außendienst Landsicherung, Akquisiteur Solar PV, Grundstücksakquisiteuer) (m/f/d)",
+      "uuid": "ibvogt-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "ib-vogt-GmbH",
+        "name": "ib vogt"
+      },
+      "releasedDate": "2026-07-02T10:01:46.960Z",
+      "location": {
+        "city": "Berlin",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Berlin, Berlin, Germany"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Business Development"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ib-vogt-GmbH/744000135462782",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Project Origination Manager (aka Manager Project Origination, Außendienst Landsicherung, Akquisiteur Solar PV, Grundstücksakquisiteuer) (m/f/d) at ib vogt.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

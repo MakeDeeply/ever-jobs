@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "0a6f412b-512d-4366-9a50-dc05d749856b",
+      "title": "VP of Credit",
+      "departmentName": "Data",
+      "teamName": "Data",
+      "employmentType": "FullTime",
+      "location": "New York City (Hybrid)",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "New York City (Hybrid)",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-02-06",
+      "descriptionHtml": "<p>VP of Credit at Brigit.</p>",
+      "descriptionPlain": "VP of Credit at Brigit.",
+      "jobUrl": "https://jobs.ashbyhq.com/brigit/0a6f412b-512d-4366-9a50-dc05d749856b",
+      "applyUrl": "https://jobs.ashbyhq.com/brigit/0a6f412b-512d-4366-9a50-dc05d749856b/application"
+    },
+    {
+      "id": "0c836406-9bce-4047-b52e-06ea2ebb6580",
+      "title": "Lead Data Analyst, Payments Platform",
+      "departmentName": "Data",
+      "teamName": "Data",
+      "employmentType": "FullTime",
+      "location": "New York City (Hybrid)",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "New York City (Hybrid)",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-18",
+      "descriptionHtml": "<p>Lead Data Analyst, Payments Platform at Brigit.</p>",
+      "descriptionPlain": "Lead Data Analyst, Payments Platform at Brigit.",
+      "jobUrl": "https://jobs.ashbyhq.com/brigit/0c836406-9bce-4047-b52e-06ea2ebb6580",
+      "applyUrl": "https://jobs.ashbyhq.com/brigit/0c836406-9bce-4047-b52e-06ea2ebb6580/application"
+    },
+    {
+      "id": "4f6e5057-28d6-4d51-a1fc-6825f967834b",
+      "title": "Senior Data Analyst, Line of Credit",
+      "departmentName": "Data",
+      "teamName": "Data",
+      "employmentType": "FullTime",
+      "location": "New York City (Hybrid)",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "New York City (Hybrid)",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-24",
+      "descriptionHtml": "<p>Senior Data Analyst, Line of Credit at Brigit.</p>",
+      "descriptionPlain": "Senior Data Analyst, Line of Credit at Brigit.",
+      "jobUrl": "https://jobs.ashbyhq.com/brigit/4f6e5057-28d6-4d51-a1fc-6825f967834b",
+      "applyUrl": "https://jobs.ashbyhq.com/brigit/4f6e5057-28d6-4d51-a1fc-6825f967834b/application"
+    }
+  ]
+}

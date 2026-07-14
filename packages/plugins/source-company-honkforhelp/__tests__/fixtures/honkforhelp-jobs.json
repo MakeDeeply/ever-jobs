@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ca5f9b65-f667-4a00-8f07-1e7462aaddeb",
+    "text": "Customer Service Operations Manager",
+    "categories": {
+      "location": "Remote",
+      "allLocations": [
+        "Remote"
+      ],
+      "department": "Operations",
+      "team": "Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1780939331811,
+    "descriptionPlain": "Customer Service Operations Manager at HONK.",
+    "description": "<p>Customer Service Operations Manager at HONK.</p>",
+    "hostedUrl": "https://jobs.lever.co/honkforhelp/ca5f9b65-f667-4a00-8f07-1e7462aaddeb",
+    "applyUrl": "https://jobs.lever.co/honkforhelp/ca5f9b65-f667-4a00-8f07-1e7462aaddeb/apply"
+  },
+  {
+    "id": "0541e809-a592-4f52-bb01-0ed410ad9eb6",
+    "text": "FP&A Manager",
+    "categories": {
+      "location": "Chicago, IL",
+      "allLocations": [
+        "Chicago, IL"
+      ],
+      "department": "Finance and Accounting",
+      "team": "Finance and Accounting",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1780506418789,
+    "descriptionPlain": "FP&A Manager at HONK.",
+    "description": "<p>FP&A Manager at HONK.</p>",
+    "hostedUrl": "https://jobs.lever.co/honkforhelp/0541e809-a592-4f52-bb01-0ed410ad9eb6",
+    "applyUrl": "https://jobs.lever.co/honkforhelp/0541e809-a592-4f52-bb01-0ed410ad9eb6/apply"
+  },
+  {
+    "id": "21789d73-fd0e-4bb8-91fc-49a1bdbf7ca0",
+    "text": "Network Growth Specialist",
+    "categories": {
+      "location": "Remote",
+      "allLocations": [
+        "Remote"
+      ],
+      "department": "Operations",
+      "team": "Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1777930564982,
+    "descriptionPlain": "Network Growth Specialist at HONK.",
+    "description": "<p>Network Growth Specialist at HONK.</p>",
+    "hostedUrl": "https://jobs.lever.co/honkforhelp/21789d73-fd0e-4bb8-91fc-49a1bdbf7ca0",
+    "applyUrl": "https://jobs.lever.co/honkforhelp/21789d73-fd0e-4bb8-91fc-49a1bdbf7ca0/apply"
+  }
+]

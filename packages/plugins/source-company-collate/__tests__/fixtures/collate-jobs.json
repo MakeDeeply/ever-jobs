@@ -1,0 +1,62 @@
+[
+  {
+    "id": "377f2cf3-6285-42c1-8130-dd3dd2c866cb",
+    "text": "AI Engineer",
+    "categories": {
+      "location": "San Francisco",
+      "allLocations": [
+        "San Francisco"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1736291832784,
+    "descriptionPlain": "AI Engineer at Collate.",
+    "description": "<p>AI Engineer at Collate.</p>",
+    "hostedUrl": "https://jobs.lever.co/collate/377f2cf3-6285-42c1-8130-dd3dd2c866cb",
+    "applyUrl": "https://jobs.lever.co/collate/377f2cf3-6285-42c1-8130-dd3dd2c866cb/apply"
+  },
+  {
+    "id": "e2d6a632-127a-409d-818b-d465f95bda0a",
+    "text": "AI Research Scientist",
+    "categories": {
+      "location": "San Francisco",
+      "allLocations": [
+        "San Francisco"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1757965196600,
+    "descriptionPlain": "AI Research Scientist at Collate.",
+    "description": "<p>AI Research Scientist at Collate.</p>",
+    "hostedUrl": "https://jobs.lever.co/collate/e2d6a632-127a-409d-818b-d465f95bda0a",
+    "applyUrl": "https://jobs.lever.co/collate/e2d6a632-127a-409d-818b-d465f95bda0a/apply"
+  },
+  {
+    "id": "1bc7e8de-ab81-47ba-9352-0f90ef7aabc1",
+    "text": "All Other Roles",
+    "categories": {
+      "location": "San Francisco",
+      "allLocations": [
+        "San Francisco"
+      ],
+      "department": "Other",
+      "team": "Other",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1736292655043,
+    "descriptionPlain": "All Other Roles at Collate.",
+    "description": "<p>All Other Roles at Collate.</p>",
+    "hostedUrl": "https://jobs.lever.co/collate/1bc7e8de-ab81-47ba-9352-0f90ef7aabc1",
+    "applyUrl": "https://jobs.lever.co/collate/1bc7e8de-ab81-47ba-9352-0f90ef7aabc1/apply"
+  }
+]

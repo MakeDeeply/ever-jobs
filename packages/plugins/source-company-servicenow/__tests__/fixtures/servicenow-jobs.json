@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135774769",
+      "name": "Staff Database Engineer",
+      "uuid": "servicenow-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "ServiceNow",
+        "name": "ServiceNow"
+      },
+      "releasedDate": "2026-07-03T18:24:03.715Z",
+      "location": {
+        "city": "Toronto",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Toronto, Ontario, Canada"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Engineering, Infrastructure and Operations"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ServiceNow/744000135774769",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Staff Database Engineer at ServiceNow.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135711260",
+      "name": "Principal Platform Architect",
+      "uuid": "servicenow-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "ServiceNow",
+        "name": "ServiceNow"
+      },
+      "releasedDate": "2026-07-03T11:53:58.674Z",
+      "location": {
+        "city": "Staines",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Staines, , United Kingdom"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Customer Outcomes"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ServiceNow/744000135711260",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Principal Platform Architect at ServiceNow.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135652689",
+      "name": "Advisory Solution Consultant, Malaysia",
+      "uuid": "servicenow-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "ServiceNow",
+        "name": "ServiceNow"
+      },
+      "releasedDate": "2026-07-03T06:53:57.336Z",
+      "location": {
+        "city": "Kuala Lumpur",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Kuala Lumpur, , Malaysia"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ServiceNow/744000135652689",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Advisory Solution Consultant, Malaysia at ServiceNow.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

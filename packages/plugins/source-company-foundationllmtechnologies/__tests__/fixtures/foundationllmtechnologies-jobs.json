@@ -1,0 +1,62 @@
+[
+  {
+    "id": "7f22a7e0-7957-4f6f-a107-be7b3b4602a3",
+    "text": "Mechanical Data Engineer (Mechanical + Data Engineering Required)",
+    "categories": {
+      "location": "Boston, MA",
+      "allLocations": [
+        "Boston, MA"
+      ],
+      "department": "Product",
+      "team": "Product",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1777465467427,
+    "descriptionPlain": "Mechanical Data Engineer (Mechanical + Data Engineering Required) at Foundation EGI.",
+    "description": "<p>Mechanical Data Engineer (Mechanical + Data Engineering Required) at Foundation EGI.</p>",
+    "hostedUrl": "https://jobs.lever.co/foundation-llm-technologies/7f22a7e0-7957-4f6f-a107-be7b3b4602a3",
+    "applyUrl": "https://jobs.lever.co/foundation-llm-technologies/7f22a7e0-7957-4f6f-a107-be7b3b4602a3/apply"
+  },
+  {
+    "id": "29e7cd26-c574-48ab-be4c-d18f3bb8ca37",
+    "text": "ML Ops Engineer (Boston, MA)",
+    "categories": {
+      "location": "Boston, MA",
+      "allLocations": [
+        "Boston, MA"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1778720005957,
+    "descriptionPlain": "ML Ops Engineer (Boston, MA) at Foundation EGI.",
+    "description": "<p>ML Ops Engineer (Boston, MA) at Foundation EGI.</p>",
+    "hostedUrl": "https://jobs.lever.co/foundation-llm-technologies/29e7cd26-c574-48ab-be4c-d18f3bb8ca37",
+    "applyUrl": "https://jobs.lever.co/foundation-llm-technologies/29e7cd26-c574-48ab-be4c-d18f3bb8ca37/apply"
+  },
+  {
+    "id": "c95bfb37-fa11-4145-b361-5c575b5fd39f",
+    "text": "Research Scientist- Geometry & Machine Learning",
+    "categories": {
+      "location": "Remote",
+      "allLocations": [
+        "Remote"
+      ],
+      "department": "Research & Development",
+      "team": "Research & Development",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1780926389252,
+    "descriptionPlain": "Research Scientist- Geometry & Machine Learning at Foundation EGI.",
+    "description": "<p>Research Scientist- Geometry & Machine Learning at Foundation EGI.</p>",
+    "hostedUrl": "https://jobs.lever.co/foundation-llm-technologies/c95bfb37-fa11-4145-b361-5c575b5fd39f",
+    "applyUrl": "https://jobs.lever.co/foundation-llm-technologies/c95bfb37-fa11-4145-b361-5c575b5fd39f/apply"
+  }
+]

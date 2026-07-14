@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "05b9e54a-82d9-48e5-8783-67ad8f8548df",
+      "title": "Strategic Sourcing Manager",
+      "departmentName": "Operations",
+      "teamName": "Operations",
+      "employmentType": "FullTime",
+      "location": "Los Angeles, CA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Los Angeles",
+          "addressRegion": "CA",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-29",
+      "descriptionHtml": "<p>Strategic Sourcing Manager at Observable Space.</p>",
+      "descriptionPlain": "Strategic Sourcing Manager at Observable Space.",
+      "jobUrl": "https://jobs.ashbyhq.com/observable-space/05b9e54a-82d9-48e5-8783-67ad8f8548df",
+      "applyUrl": "https://jobs.ashbyhq.com/observable-space/05b9e54a-82d9-48e5-8783-67ad8f8548df/application"
+    },
+    {
+      "id": "0d6161d9-52fd-4ea2-be4b-601dddaf5489",
+      "title": "Director of Sales, Space-based Optics",
+      "departmentName": "Sales",
+      "teamName": "Sales",
+      "employmentType": "FullTime",
+      "location": "Los Angeles, CA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Los Angeles",
+          "addressRegion": "CA",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-01",
+      "descriptionHtml": "<p>Director of Sales, Space-based Optics at Observable Space.</p>",
+      "descriptionPlain": "Director of Sales, Space-based Optics at Observable Space.",
+      "jobUrl": "https://jobs.ashbyhq.com/observable-space/0d6161d9-52fd-4ea2-be4b-601dddaf5489",
+      "applyUrl": "https://jobs.ashbyhq.com/observable-space/0d6161d9-52fd-4ea2-be4b-601dddaf5489/application"
+    },
+    {
+      "id": "14deb013-a40f-4325-be09-b981f3920ef7",
+      "title": "Full Stack Software Engineer",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "Los Angeles, CA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Los Angeles",
+          "addressRegion": "CA",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-10-20",
+      "descriptionHtml": "<p>Full Stack Software Engineer at Observable Space.</p>",
+      "descriptionPlain": "Full Stack Software Engineer at Observable Space.",
+      "jobUrl": "https://jobs.ashbyhq.com/observable-space/14deb013-a40f-4325-be09-b981f3920ef7",
+      "applyUrl": "https://jobs.ashbyhq.com/observable-space/14deb013-a40f-4325-be09-b981f3920ef7/application"
+    }
+  ]
+}

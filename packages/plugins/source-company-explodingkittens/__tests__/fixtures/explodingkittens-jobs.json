@@ -1,0 +1,62 @@
+[
+  {
+    "id": "9620e5f6-2aed-4bc0-8c6e-b655f08d544f",
+    "text": "Contract Game Designer",
+    "categories": {
+      "location": "Los Angeles, CA",
+      "allLocations": [
+        "Los Angeles, CA"
+      ],
+      "department": "Creative Development",
+      "team": "Creative Development",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1779978689914,
+    "descriptionPlain": "Contract Game Designer at Exploding Kittens.",
+    "description": "<p>Contract Game Designer at Exploding Kittens.</p>",
+    "hostedUrl": "https://jobs.lever.co/explodingkittens/9620e5f6-2aed-4bc0-8c6e-b655f08d544f",
+    "applyUrl": "https://jobs.lever.co/explodingkittens/9620e5f6-2aed-4bc0-8c6e-b655f08d544f/apply"
+  },
+  {
+    "id": "5b52fa63-bea2-4370-95c6-e65c3ebd9dab",
+    "text": "Financial Planning & Analysis Manager/Senior Manager",
+    "categories": {
+      "location": "Los Angeles, CA",
+      "allLocations": [
+        "Los Angeles, CA"
+      ],
+      "department": "Finance & Accounting",
+      "team": "Finance & Accounting",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1779977829670,
+    "descriptionPlain": "Financial Planning & Analysis Manager/Senior Manager at Exploding Kittens.",
+    "description": "<p>Financial Planning & Analysis Manager/Senior Manager at Exploding Kittens.</p>",
+    "hostedUrl": "https://jobs.lever.co/explodingkittens/5b52fa63-bea2-4370-95c6-e65c3ebd9dab",
+    "applyUrl": "https://jobs.lever.co/explodingkittens/5b52fa63-bea2-4370-95c6-e65c3ebd9dab/apply"
+  },
+  {
+    "id": "01dccb68-76da-4553-9dfb-0eebd3b7dc75",
+    "text": "International Sales Manager",
+    "categories": {
+      "location": "Amsterdam",
+      "allLocations": [
+        "Amsterdam"
+      ],
+      "department": "International",
+      "team": "International",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1770922710643,
+    "descriptionPlain": "International Sales Manager at Exploding Kittens.",
+    "description": "<p>International Sales Manager at Exploding Kittens.</p>",
+    "hostedUrl": "https://jobs.lever.co/explodingkittens/01dccb68-76da-4553-9dfb-0eebd3b7dc75",
+    "applyUrl": "https://jobs.lever.co/explodingkittens/01dccb68-76da-4553-9dfb-0eebd3b7dc75/apply"
+  }
+]

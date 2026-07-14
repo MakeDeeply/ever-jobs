@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135647255",
+      "name": "Data Security & Governance Officer",
+      "uuid": "minorinternational-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "MinorInternational",
+        "name": "Minor International"
+      },
+      "releasedDate": "2026-07-03T06:16:55.773Z",
+      "location": {
+        "city": "Brisbane City",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Brisbane City, QLD, Australia"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/MinorInternational/744000135647255",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Data Security & Governance Officer at Minor International.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135636679",
+      "name": "Executive Chef",
+      "uuid": "minorinternational-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "MinorInternational",
+        "name": "Minor International"
+      },
+      "releasedDate": "2026-07-03T02:58:14.022Z",
+      "location": {
+        "city": "Sydney",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Sydney, NSW, Australia"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Kitchen & Culinary"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/MinorInternational/744000135636679",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Executive Chef at Minor International.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135633518",
+      "name": "Casual Cleaner",
+      "uuid": "minorinternational-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "MinorInternational",
+        "name": "Minor International"
+      },
+      "releasedDate": "2026-07-03T01:36:52.253Z",
+      "location": {
+        "city": "Adelaide",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Adelaide, SA, Australia"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Housekeeping"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/MinorInternational/744000135633518",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Casual Cleaner at Minor International.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "061e0fe9-37a6-4f38-b056-dd0b5973b57f",
+      "title": "Sr. IT Systems Engineer, AI & Business Solutions",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "United States",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "United States",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-02",
+      "descriptionHtml": "<p>Sr. IT Systems Engineer, AI & Business Solutions at Dave.</p>",
+      "descriptionPlain": "Sr. IT Systems Engineer, AI & Business Solutions at Dave.",
+      "jobUrl": "https://jobs.ashbyhq.com/dave/061e0fe9-37a6-4f38-b056-dd0b5973b57f",
+      "applyUrl": "https://jobs.ashbyhq.com/dave/061e0fe9-37a6-4f38-b056-dd0b5973b57f/application"
+    },
+    {
+      "id": "0f8b9959-80bd-4d8c-9ca8-b24bba3d5d63",
+      "title": "Senior Product Manager, Flex",
+      "departmentName": "Product",
+      "teamName": "Product",
+      "employmentType": "FullTime",
+      "location": "United States",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "United States",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-26",
+      "descriptionHtml": "<p>Senior Product Manager, Flex at Dave.</p>",
+      "descriptionPlain": "Senior Product Manager, Flex at Dave.",
+      "jobUrl": "https://jobs.ashbyhq.com/dave/0f8b9959-80bd-4d8c-9ca8-b24bba3d5d63",
+      "applyUrl": "https://jobs.ashbyhq.com/dave/0f8b9959-80bd-4d8c-9ca8-b24bba3d5d63/application"
+    },
+    {
+      "id": "1d6c3974-a158-4857-8553-5224ebf336bc",
+      "title": "Senior Data Analyst",
+      "departmentName": "Data",
+      "teamName": "Data",
+      "employmentType": "FullTime",
+      "location": "United States",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "United States",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-15",
+      "descriptionHtml": "<p>Senior Data Analyst at Dave.</p>",
+      "descriptionPlain": "Senior Data Analyst at Dave.",
+      "jobUrl": "https://jobs.ashbyhq.com/dave/1d6c3974-a158-4857-8553-5224ebf336bc",
+      "applyUrl": "https://jobs.ashbyhq.com/dave/1d6c3974-a158-4857-8553-5224ebf336bc/application"
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135548226",
+      "name": "Adjunct Lecturer, Technology Management Capstone (On-Campus, Fall 2026)",
+      "uuid": "columbiauniversity-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "ColumbiaUniversity1",
+        "name": "Columbia University"
+      },
+      "releasedDate": "2026-07-02T16:15:39.189Z",
+      "location": {
+        "city": "New York",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "New York, NY, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Technology Management"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ColumbiaUniversity1/744000135548226",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Adjunct Lecturer, Technology Management Capstone (On-Campus, Fall 2026) at Columbia University.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000126332469",
+      "name": "Pre-College Instructor, The Origin and Evolution of the Universe (Online), Summer 2026",
+      "uuid": "columbiauniversity-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "ColumbiaUniversity1",
+        "name": "Columbia University"
+      },
+      "releasedDate": "2026-05-13T14:34:14.736Z",
+      "location": {
+        "city": "New York",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "New York, NY, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "High School Programs"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ColumbiaUniversity1/744000126332469",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Pre-College Instructor, The Origin and Evolution of the Universe (Online), Summer 2026 at Columbia University.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000121798456",
+      "name": "Pre-College Instructor, Urban Planning and Design (On-Campus), Summer 2026",
+      "uuid": "columbiauniversity-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "ColumbiaUniversity1",
+        "name": "Columbia University"
+      },
+      "releasedDate": "2026-04-20T14:33:23.753Z",
+      "location": {
+        "city": "New York",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "New York, NY, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "High School Programs"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ColumbiaUniversity1/744000121798456",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Pre-College Instructor, Urban Planning and Design (On-Campus), Summer 2026 at Columbia University.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

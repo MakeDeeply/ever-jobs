@@ -1,0 +1,62 @@
+[
+  {
+    "id": "72018943-446e-4cc3-b9ab-fcbff8f6d654",
+    "text": "Account Manager",
+    "categories": {
+      "location": "Louisville, KY",
+      "allLocations": [
+        "Louisville, KY"
+      ],
+      "department": "Enterprise",
+      "team": "Enterprise",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1745338986394,
+    "descriptionPlain": "Account Manager at Everlywell.",
+    "description": "<p>Account Manager at Everlywell.</p>",
+    "hostedUrl": "https://jobs.lever.co/everlywell/72018943-446e-4cc3-b9ab-fcbff8f6d654",
+    "applyUrl": "https://jobs.lever.co/everlywell/72018943-446e-4cc3-b9ab-fcbff8f6d654/apply"
+  },
+  {
+    "id": "948104c7-330a-4674-b1a3-2d5b57d43b1e",
+    "text": "Applied Scientist — ML, Experimentation & Decision Systems",
+    "categories": {
+      "location": "Austin, TX",
+      "allLocations": [
+        "Austin, TX"
+      ],
+      "department": "Technology",
+      "team": "Technology",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1772830965111,
+    "descriptionPlain": "Applied Scientist — ML, Experimentation & Decision Systems at Everlywell.",
+    "description": "<p>Applied Scientist — ML, Experimentation & Decision Systems at Everlywell.</p>",
+    "hostedUrl": "https://jobs.lever.co/everlywell/948104c7-330a-4674-b1a3-2d5b57d43b1e",
+    "applyUrl": "https://jobs.lever.co/everlywell/948104c7-330a-4674-b1a3-2d5b57d43b1e/apply"
+  },
+  {
+    "id": "2471d898-c08c-4008-a4e5-28deb810743f",
+    "text": "Communications Configuration Specialist",
+    "categories": {
+      "location": "Austin, TX",
+      "allLocations": [
+        "Austin, TX"
+      ],
+      "department": "Enterprise",
+      "team": "Enterprise",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1781623829774,
+    "descriptionPlain": "Communications Configuration Specialist at Everlywell.",
+    "description": "<p>Communications Configuration Specialist at Everlywell.</p>",
+    "hostedUrl": "https://jobs.lever.co/everlywell/2471d898-c08c-4008-a4e5-28deb810743f",
+    "applyUrl": "https://jobs.lever.co/everlywell/2471d898-c08c-4008-a4e5-28deb810743f/apply"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "f567c4e4-719d-4196-a775-f190ba81443e",
+    "text": "Accounting Manager",
+    "categories": {
+      "location": "Remote",
+      "allLocations": [
+        "Remote"
+      ],
+      "department": "Finance & Accounting",
+      "team": "Finance & Accounting",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1768489919555,
+    "descriptionPlain": "Accounting Manager at Venus Aerospace.",
+    "description": "<p>Accounting Manager at Venus Aerospace.</p>",
+    "hostedUrl": "https://jobs.lever.co/venusaero/f567c4e4-719d-4196-a775-f190ba81443e",
+    "applyUrl": "https://jobs.lever.co/venusaero/f567c4e4-719d-4196-a775-f190ba81443e/apply"
+  },
+  {
+    "id": "acffc707-7ff6-40cb-8c73-804e80eddd60",
+    "text": "CNC Programmer",
+    "categories": {
+      "location": "Houston, TX",
+      "allLocations": [
+        "Houston, TX"
+      ],
+      "department": "Supply Chain & Logistics",
+      "team": "Supply Chain & Logistics",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1772086939587,
+    "descriptionPlain": "CNC Programmer at Venus Aerospace.",
+    "description": "<p>CNC Programmer at Venus Aerospace.</p>",
+    "hostedUrl": "https://jobs.lever.co/venusaero/acffc707-7ff6-40cb-8c73-804e80eddd60",
+    "applyUrl": "https://jobs.lever.co/venusaero/acffc707-7ff6-40cb-8c73-804e80eddd60/apply"
+  },
+  {
+    "id": "51de9fdc-fc79-447a-8fdc-a1092cfc9873",
+    "text": "Contracts Specialist",
+    "categories": {
+      "location": "Houston, TX",
+      "allLocations": [
+        "Houston, TX"
+      ],
+      "department": "Legal",
+      "team": "Legal",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1779917995715,
+    "descriptionPlain": "Contracts Specialist at Venus Aerospace.",
+    "description": "<p>Contracts Specialist at Venus Aerospace.</p>",
+    "hostedUrl": "https://jobs.lever.co/venusaero/51de9fdc-fc79-447a-8fdc-a1092cfc9873",
+    "applyUrl": "https://jobs.lever.co/venusaero/51de9fdc-fc79-447a-8fdc-a1092cfc9873/apply"
+  }
+]

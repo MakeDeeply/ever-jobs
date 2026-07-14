@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135781039",
+      "name": "Technicien(ne) comptable & paie",
+      "uuid": "spectrumhealthcare-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "SpectrumHealthCare",
+        "name": "Spectrum Health Care"
+      },
+      "releasedDate": "2026-07-03T20:27:43.296Z",
+      "location": {
+        "city": "Montreal",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Montreal, QC, Canada"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Finance"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SpectrumHealthCare/744000135781039",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Technicien(ne) comptable & paie at Spectrum Health Care.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135591759",
+      "name": "Coordonnateur(trice) des services à domicile",
+      "uuid": "spectrumhealthcare-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "SpectrumHealthCare",
+        "name": "Spectrum Health Care"
+      },
+      "releasedDate": "2026-07-02T20:32:16.221Z",
+      "location": {
+        "city": "Montreal",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Montreal, QC, Canada"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Administration"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SpectrumHealthCare/744000135591759",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Coordonnateur(trice) des services à domicile at Spectrum Health Care.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000134792676",
+      "name": "Client Services Coordinator, PT",
+      "uuid": "spectrumhealthcare-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "SpectrumHealthCare",
+        "name": "Spectrum Health Care"
+      },
+      "releasedDate": "2026-06-29T13:33:33.393Z",
+      "location": {
+        "city": "Toronto",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Toronto, ON, Canada"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Administration"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SpectrumHealthCare/744000134792676",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Client Services Coordinator, PT at Spectrum Health Care.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

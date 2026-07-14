@@ -1,0 +1,62 @@
+[
+  {
+    "id": "6bf747be-864b-4d14-b800-12060c89e7f2",
+    "text": "Emerging Account Executive",
+    "categories": {
+      "location": "NYC or Remote",
+      "allLocations": [
+        "NYC or Remote"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1761339981993,
+    "descriptionPlain": "Emerging Account Executive at Olo.",
+    "description": "<p>Emerging Account Executive at Olo.</p>",
+    "hostedUrl": "https://jobs.lever.co/olo/6bf747be-864b-4d14-b800-12060c89e7f2",
+    "applyUrl": "https://jobs.lever.co/olo/6bf747be-864b-4d14-b800-12060c89e7f2/apply"
+  },
+  {
+    "id": "7e8cc864-bc46-4e69-bbab-4ed37e354191",
+    "text": "Engineering Manager",
+    "categories": {
+      "location": "Belfast, Northern Ireland, Remote",
+      "allLocations": [
+        "Belfast, Northern Ireland, Remote"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1764945549197,
+    "descriptionPlain": "Engineering Manager at Olo.",
+    "description": "<p>Engineering Manager at Olo.</p>",
+    "hostedUrl": "https://jobs.lever.co/olo/7e8cc864-bc46-4e69-bbab-4ed37e354191",
+    "applyUrl": "https://jobs.lever.co/olo/7e8cc864-bc46-4e69-bbab-4ed37e354191/apply"
+  },
+  {
+    "id": "0ce64927-8110-46b2-81f9-17c5803cef21",
+    "text": "Fullstack Software Engineer - Catering",
+    "categories": {
+      "location": "Belfast, Northern Ireland, Remote",
+      "allLocations": [
+        "Belfast, Northern Ireland, Remote"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1772711814672,
+    "descriptionPlain": "Fullstack Software Engineer - Catering at Olo.",
+    "description": "<p>Fullstack Software Engineer - Catering at Olo.</p>",
+    "hostedUrl": "https://jobs.lever.co/olo/0ce64927-8110-46b2-81f9-17c5803cef21",
+    "applyUrl": "https://jobs.lever.co/olo/0ce64927-8110-46b2-81f9-17c5803cef21/apply"
+  }
+]

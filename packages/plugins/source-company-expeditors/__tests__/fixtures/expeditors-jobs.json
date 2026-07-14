@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135787359",
+      "name": "Guadalajara | Ejecutivo Servicio al Cliente en Aduanas | Customer Service Representative - Customs Brokerage",
+      "uuid": "expeditors-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Expeditors",
+        "name": "Expeditors"
+      },
+      "releasedDate": "2026-07-03T23:35:02.503Z",
+      "location": {
+        "city": "Guadalajara",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Guadalajara, Jalisco, Mexico"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Customs Brokerage"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Expeditors/744000135787359",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Guadalajara | Ejecutivo Servicio al Cliente en Aduanas | Customer Service Representative - Customs Brokerage at Expeditors.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135786988",
+      "name": "International Transportation Specialist",
+      "uuid": "expeditors-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Expeditors",
+        "name": "Expeditors"
+      },
+      "releasedDate": "2026-07-03T23:10:31.798Z",
+      "location": {
+        "city": "Alajuela",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Alajuela, Alajuela Province, Costa Rica"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Air Services"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Expeditors/744000135786988",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>International Transportation Specialist at Expeditors.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135703399",
+      "name": "In-house Account Management Coordinator",
+      "uuid": "expeditors-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Expeditors",
+        "name": "Expeditors"
+      },
+      "releasedDate": "2026-07-03T10:59:51.536Z",
+      "location": {
+        "city": "Hong Kong Island",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Hong Kong Island, , Hong Kong"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Account Management"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Expeditors/744000135703399",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>In-house Account Management Coordinator at Expeditors.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

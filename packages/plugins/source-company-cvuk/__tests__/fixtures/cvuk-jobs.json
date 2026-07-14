@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999704401317",
+      "name": "Sales Consultants Wanted - Luxury Pawn Store - Central London",
+      "uuid": "cvuk-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "CVUK",
+        "name": "CVUK"
+      },
+      "releasedDate": "2020-01-16T14:04:40.000Z",
+      "location": {
+        "city": "Central London",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Central London, , United Kingdom"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CVUK/743999704401317",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Sales Consultants Wanted - Luxury Pawn Store - Central London at CVUK.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999704150420",
+      "name": "Beauty therapists Wanted! - Central London",
+      "uuid": "cvuk-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "CVUK",
+        "name": "CVUK"
+      },
+      "releasedDate": "2020-01-14T10:59:01.000Z",
+      "location": {
+        "city": "Central London",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Central London, , United Kingdom"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CVUK/743999704150420",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Beauty therapists Wanted! - Central London at CVUK.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999703872726",
+      "name": "Store Manager",
+      "uuid": "cvuk-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "CVUK",
+        "name": "CVUK"
+      },
+      "releasedDate": "2020-01-10T12:51:54.000Z",
+      "location": {
+        "city": "London",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "London, , United Kingdom"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CVUK/743999703872726",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Store Manager at CVUK.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

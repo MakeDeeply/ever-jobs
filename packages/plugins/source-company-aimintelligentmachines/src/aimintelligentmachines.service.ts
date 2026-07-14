@@ -1,0 +1,74 @@
+import { SourcePlugin, PluginRegistry } from '@ever-jobs/plugin';
+
+import { Injectable, Logger, Optional } from '@nestjs/common';
+import {
+  IScraper, ScraperInputDto, JobResponseDto, Site,
+} from '@ever-jobs/models';
+
+/**
+ * AIM Intelligent Machines — Develops autonomy software that operates heavy equipment across construction and defense.
+ *
+ * AIM Intelligent Machines builds an autonomy platform that runs existing
+ * heavy earthmoving machinery, initially in construction and mining and
+ * expanding into defense applications. Its system provides AI-driven
+ * perception and control for equipment fleets. The company has received a US
+ * Air Force contract for autonomous construction.
+ *
+ * Sector: Defense & Autonomy. HQ: Seattle, Washington, USA.
+ *
+ * Source: Ashby job board, company slug `aim`
+ * (`https://jobs.ashbyhq.com/aim`). The company's live
+ * postings are served by Ashby. Rather than re-implement Ashby parsing (and
+ * risk drift), this plugin resolves the registered Ashby source plugin from
+ * the `PluginRegistry` at runtime and delegates the fetch + field mapping to
+ * it, then re-stamps the company identity (site, companyName, id prefix) onto
+ * the results — so every Ashby field fix is inherited automatically. This
+ * honours the "no plugin imports a peer plugin directly; discover via the
+ * registry" rule.
+ */
+const COMPANY_SLUG = 'aim';
+const COMPANY_NAME = 'AIM Intelligent Machines';
+
+@SourcePlugin({
+  site: Site.AIM_INTELLIGENT_MACHINES,
+  name: COMPANY_NAME,
+  category: 'company',
+})
+@Injectable()
+export class AIMIntelligentMachinesService implements IScraper {
+  private readonly logger = new Logger(AIMIntelligentMachinesService.name);
+
+  constructor(
+    @Optional() private readonly registry?: PluginRegistry,
+  ) {}
+
+  async scrape(input: ScraperInputDto): Promise<JobResponseDto> {
+    const ashby = this.registry?.getScraper(Site.ASHBY);
+    if (!ashby) {
+      this.logger.error(
+        'Ashby source plugin is not registered; cannot scrape AIM Intelligent Machines',
+      );
+      return new JobResponseDto([]);
+    }
+
+    this.logger.log(
+      `AIM Intelligent Machines: delegating to Ashby (slug ${COMPANY_SLUG})`,
+    );
+
+    const result = await ashby.scrape({
+      ...input,
+      companySlug: COMPANY_SLUG,
+    } as ScraperInputDto);
+
+    for (const job of result.jobs) {
+      job.site = Site.AIM_INTELLIGENT_MACHINES;
+      job.companyName = COMPANY_NAME;
+      if (job.id) {
+        job.id = job.id.replace(/^ashby-/, 'aimintelligentmachines-');
+      }
+    }
+
+    this.logger.log(`AIM Intelligent Machines: scraped ${result.jobs.length} jobs`);
+    return result;
+  }
+}

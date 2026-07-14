@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135768599",
+      "name": "Support Coordination",
+      "uuid": "alten-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "ALTEN",
+        "name": "ALTEN"
+      },
+      "releasedDate": "2026-07-03T16:57:01.801Z",
+      "location": {
+        "city": "Dakar",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Dakar, Dakar Region, Senegal"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Others"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ALTEN/744000135768599",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Support Coordination at ALTEN.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135765189",
+      "name": "Production Controller",
+      "uuid": "alten-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "ALTEN",
+        "name": "ALTEN"
+      },
+      "releasedDate": "2026-07-03T16:16:48.383Z",
+      "location": {
+        "city": "Portsmouth",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Portsmouth, England, United Kingdom"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Aeronautics"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ALTEN/744000135765189",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Production Controller at ALTEN.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135760030",
+      "name": "Chef de Projet Expert Manufacturing Engineering",
+      "uuid": "alten-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "ALTEN",
+        "name": "ALTEN"
+      },
+      "releasedDate": "2026-07-03T15:37:54.558Z",
+      "location": {
+        "city": "Boulogne-Billancourt",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Boulogne-Billancourt, IDF, France"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Aeronautics"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ALTEN/744000135760030",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Chef de Projet Expert Manufacturing Engineering at ALTEN.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

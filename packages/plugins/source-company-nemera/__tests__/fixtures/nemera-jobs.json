@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135737920",
+      "name": "Lider ds. metod i niezawodności (k/m/n)",
+      "uuid": "nemera-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Nemera",
+        "name": "Nemera"
+      },
+      "releasedDate": "2026-07-03T13:38:12.024Z",
+      "location": {
+        "city": "Szczecin",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Szczecin, West Pomeranian Voivodeship, Poland"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Maintenance"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Nemera/744000135737920",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Lider ds. metod i niezawodności (k/m/n) at Nemera.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135487619",
+      "name": "Stagiaire Ingénieur Opérations Industrielles – Performance Industrielle F/H/X",
+      "uuid": "nemera-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Nemera",
+        "name": "Nemera"
+      },
+      "releasedDate": "2026-07-02T12:16:07.636Z",
+      "location": {
+        "city": "Lyon",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Lyon, Auvergne-Rhône-Alpes, France"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Manufacturing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Nemera/744000135487619",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Stagiaire Ingénieur Opérations Industrielles – Performance Industrielle F/H/X at Nemera.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135466789",
+      "name": "Technicien Régleur Injection Plastique 2x8 - F/H/X",
+      "uuid": "nemera-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Nemera",
+        "name": "Nemera"
+      },
+      "releasedDate": "2026-07-02T10:19:35.279Z",
+      "location": {
+        "city": "La Verpillière",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "La Verpillière, Auvergne-Rhône-Alpes, France"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Manufacturing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Nemera/744000135466789",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Technicien Régleur Injection Plastique 2x8 - F/H/X at Nemera.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

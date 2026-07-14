@@ -1,0 +1,62 @@
+[
+  {
+    "id": "f4746da4-8eb8-43e2-b7ce-bf3c7cf9640d",
+    "text": "Autonomy System Test Engineer",
+    "categories": {
+      "location": "Foster City, CA",
+      "allLocations": [
+        "Foster City, CA"
+      ],
+      "department": "Software",
+      "team": "Software",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1777936261125,
+    "descriptionPlain": "Autonomy System Test Engineer at Zoox.",
+    "description": "<p>Autonomy System Test Engineer at Zoox.</p>",
+    "hostedUrl": "https://jobs.lever.co/zoox/f4746da4-8eb8-43e2-b7ce-bf3c7cf9640d",
+    "applyUrl": "https://jobs.lever.co/zoox/f4746da4-8eb8-43e2-b7ce-bf3c7cf9640d/apply"
+  },
+  {
+    "id": "e36cc53e-5bd5-43b9-9a90-ec9b7c6abda9",
+    "text": "AV Safety Data Reporting Engineer",
+    "categories": {
+      "location": "Foster City, CA",
+      "allLocations": [
+        "Foster City, CA"
+      ],
+      "department": "Safety Strategy and Operations",
+      "team": "Safety Strategy and Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1757985728853,
+    "descriptionPlain": "AV Safety Data Reporting Engineer at Zoox.",
+    "description": "<p>AV Safety Data Reporting Engineer at Zoox.</p>",
+    "hostedUrl": "https://jobs.lever.co/zoox/e36cc53e-5bd5-43b9-9a90-ec9b7c6abda9",
+    "applyUrl": "https://jobs.lever.co/zoox/e36cc53e-5bd5-43b9-9a90-ec9b7c6abda9/apply"
+  },
+  {
+    "id": "5fb23003-057f-4488-84c2-80ca98cc795d",
+    "text": "Business Recruiter",
+    "categories": {
+      "location": "Foster City, CA",
+      "allLocations": [
+        "Foster City, CA"
+      ],
+      "department": "People Experience",
+      "team": "People Experience",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1779306560238,
+    "descriptionPlain": "Business Recruiter at Zoox.",
+    "description": "<p>Business Recruiter at Zoox.</p>",
+    "hostedUrl": "https://jobs.lever.co/zoox/5fb23003-057f-4488-84c2-80ca98cc795d",
+    "applyUrl": "https://jobs.lever.co/zoox/5fb23003-057f-4488-84c2-80ca98cc795d/apply"
+  }
+]

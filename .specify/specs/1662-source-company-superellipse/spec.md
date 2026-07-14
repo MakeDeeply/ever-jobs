@@ -1,0 +1,63 @@
+# Spec: 1662 — Source Company Plugin: Superellipse
+
+| Field | Value |
+| --- | --- |
+| Spec ID | 1662 |
+| Slug | source-company-superellipse |
+| Status | accepted |
+| Owner | claude (run #444) |
+| Created | 2026-07-05 |
+| Last updated | 2026-07-05 |
+| Supersedes | (none) |
+| Related specs | 1593, 1375, 1194, 975 |
+
+## Summary
+
+New **Recruitee-backed company-direct** source plugin
+`source-company-superellipse` for **Superellipse** (Digital design and engineering studio (innovation agency).). Sector:
+Software / Design & engineering studio. HQ: Antwerp, Belgium.
+
+The company's live postings are served by **Recruitee** on subdomain
+`superellipse` (`https://superellipse.recruitee.com`), which exposed
+**3 live role(s)** at probe time (public Recruitee careers API,
+`MIN_JOBS = 3` gate). Discovered and gated through the deterministic Recruitee
+company-source pipeline (`probe-recruitee → assemble → scaffold-recruitee →
+wire`) — see `.specify/specs/1593-recruitee-company-source-pipeline/`.
+
+## Constitution cross-check
+
+- **TypeScript-only** — plugin is TS; no JS/Python. ✔
+- **Modular / plugin** — a self-contained `source-company-superellipse` package,
+  installable/removable via the barrel + `Site` enum; no core changes. ✔
+- **No peer imports** — delegates to the Recruitee ATS plugin via
+  `PluginRegistry` at runtime (never imports it directly). ✔
+- **Performance** — zero extra network cost over the Recruitee plugin it
+  delegates to (single public careers fetch); identity re-stamp is O(n) over
+  jobs. ✔
+- **No competitor references** — documented purely on the company's public
+  merits. ✔
+
+## User story
+
+> As an **aggregator caller**, I want **`Site.SUPERELLIPSE`** in the source
+> registry, so that a single `siteType: [Site.SUPERELLIPSE]` request returns
+> Superellipse's live Recruitee postings, re-stamped with the company
+> identity.
+
+## Functional requirements
+
+| ID | Requirement | Priority |
+|----|-------------|----------|
+| FR-1 | Add `Site.SUPERELLIPSE = 'superellipse'` to the `Site` enum. | must |
+| FR-2 | `SuperellipseService` implements `IScraper`, `@SourcePlugin({ site: Site.SUPERELLIPSE, name: 'Superellipse', category: 'company' })`. | must |
+| FR-3 | Resolve the Recruitee scraper from `PluginRegistry`; delegate `scrape({ ...input, companySlug: 'superellipse' })`. | must |
+| FR-4 | Re-stamp each `JobPostDto`: `site = Site.SUPERELLIPSE`, `companyName = 'Superellipse'`, `id` prefix `recruitee-`→`superellipse-`. | must |
+| FR-5 | Fail-safe: return an empty `JobResponseDto` when Recruitee is unavailable / unregistered. | must |
+| FR-6 | tsconfig path-alias + jest moduleNameMapper + barrel registration. | must |
+| FR-7 | Mocked unit suite green (DI resolution, enum value, delegation, pass-through, resilience, cap). | must |
+
+## Highlights
+
+- Recruitee board verified with 3 active offers
+- Based in Antwerp with roles also in Mechelen
+- Design and engineering studio

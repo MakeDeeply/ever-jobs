@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "9721a4c7-ff1e-47ca-a89e-97688ebff96c",
+      "title": "Software Engineer, Applied AI",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "Seattle",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Seattle",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-02-25",
+      "descriptionHtml": "<p>Software Engineer, Applied AI at HackerOne.</p>",
+      "descriptionPlain": "Software Engineer, Applied AI at HackerOne.",
+      "jobUrl": "https://jobs.ashbyhq.com/hackerone/9721a4c7-ff1e-47ca-a89e-97688ebff96c",
+      "applyUrl": "https://jobs.ashbyhq.com/hackerone/9721a4c7-ff1e-47ca-a89e-97688ebff96c/application"
+    },
+    {
+      "id": "ba577aad-d2c1-4467-9a97-14ddcc11759b",
+      "title": "Staff Software Engineer, Applied AI",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "Seattle",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Seattle",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-02-25",
+      "descriptionHtml": "<p>Staff Software Engineer, Applied AI at HackerOne.</p>",
+      "descriptionPlain": "Staff Software Engineer, Applied AI at HackerOne.",
+      "jobUrl": "https://jobs.ashbyhq.com/hackerone/ba577aad-d2c1-4467-9a97-14ddcc11759b",
+      "applyUrl": "https://jobs.ashbyhq.com/hackerone/ba577aad-d2c1-4467-9a97-14ddcc11759b/application"
+    },
+    {
+      "id": "f93b1823-7292-4b59-9594-36680123c42f",
+      "title": "Senior Manager, AI Engineering",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "Seattle",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Seattle",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-08",
+      "descriptionHtml": "<p>Senior Manager, AI Engineering at HackerOne.</p>",
+      "descriptionPlain": "Senior Manager, AI Engineering at HackerOne.",
+      "jobUrl": "https://jobs.ashbyhq.com/hackerone/f93b1823-7292-4b59-9594-36680123c42f",
+      "applyUrl": "https://jobs.ashbyhq.com/hackerone/f93b1823-7292-4b59-9594-36680123c42f/application"
+    }
+  ]
+}

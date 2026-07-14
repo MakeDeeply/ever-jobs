@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135782579",
+      "name": "Gestionnaire administratif(ve)",
+      "uuid": "aecom-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "AECOM2",
+        "name": "AECOM"
+      },
+      "releasedDate": "2026-07-03T21:13:19.105Z",
+      "location": {
+        "city": "Montréal",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Montréal, QC, Canada"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Administrative"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AECOM2/744000135782579",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Gestionnaire administratif(ve) at AECOM.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135773579",
+      "name": "Senior Electrical Instrumentation & Controls Engineer",
+      "uuid": "aecom-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "AECOM2",
+        "name": "AECOM"
+      },
+      "releasedDate": "2026-07-03T18:05:35.037Z",
+      "location": {
+        "city": "Burnaby",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Burnaby, BC, Canada"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AECOM2/744000135773579",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Electrical Instrumentation & Controls Engineer at AECOM.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135768379",
+      "name": "BIM Coordinator - Digital (Data Centers)",
+      "uuid": "aecom-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "AECOM2",
+        "name": "AECOM"
+      },
+      "releasedDate": "2026-07-03T16:55:23.635Z",
+      "location": {
+        "city": "Bogota",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Bogota, COLOMBIA, Colombia"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AECOM2/744000135768379",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>BIM Coordinator - Digital (Data Centers) at AECOM.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

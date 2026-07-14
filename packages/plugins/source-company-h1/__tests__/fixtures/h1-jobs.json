@@ -1,0 +1,62 @@
+[
+  {
+    "id": "c8dff275-d3c9-455d-b8fb-93c869a2be67",
+    "text": "AI Scientist",
+    "categories": {
+      "location": "Copenhagen",
+      "allLocations": [
+        "Copenhagen"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1779189537494,
+    "descriptionPlain": "AI Scientist at H1.",
+    "description": "<p>AI Scientist at H1.</p>",
+    "hostedUrl": "https://jobs.lever.co/h1/c8dff275-d3c9-455d-b8fb-93c869a2be67",
+    "applyUrl": "https://jobs.lever.co/h1/c8dff275-d3c9-455d-b8fb-93c869a2be67/apply"
+  },
+  {
+    "id": "4af1c591-ae68-4491-a3cf-6e527b905a2b",
+    "text": "Business Development Representative",
+    "categories": {
+      "location": "New York",
+      "allLocations": [
+        "New York"
+      ],
+      "department": "Sales Reps",
+      "team": "Sales Reps",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1773763642588,
+    "descriptionPlain": "Business Development Representative at H1.",
+    "description": "<p>Business Development Representative at H1.</p>",
+    "hostedUrl": "https://jobs.lever.co/h1/4af1c591-ae68-4491-a3cf-6e527b905a2b",
+    "applyUrl": "https://jobs.lever.co/h1/4af1c591-ae68-4491-a3cf-6e527b905a2b/apply"
+  },
+  {
+    "id": "e7754bba-3c9b-4e96-9a96-d1f7650f7085",
+    "text": "Clinical Operations Business Analyst",
+    "categories": {
+      "location": "Copenhagen",
+      "allLocations": [
+        "Copenhagen"
+      ],
+      "department": "Professional Services",
+      "team": "Professional Services",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1779190462385,
+    "descriptionPlain": "Clinical Operations Business Analyst at H1.",
+    "description": "<p>Clinical Operations Business Analyst at H1.</p>",
+    "hostedUrl": "https://jobs.lever.co/h1/e7754bba-3c9b-4e96-9a96-d1f7650f7085",
+    "applyUrl": "https://jobs.lever.co/h1/e7754bba-3c9b-4e96-9a96-d1f7650f7085/apply"
+  }
+]

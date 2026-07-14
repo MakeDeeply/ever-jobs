@@ -1,0 +1,62 @@
+[
+  {
+    "id": "8c046850-87dd-432c-80ab-37a88db46167",
+    "text": "Join us to build the future of drug discovery",
+    "categories": {
+      "location": "South San Francisco",
+      "allLocations": [
+        "South San Francisco"
+      ],
+      "department": "General",
+      "team": "General",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1669931824682,
+    "descriptionPlain": "Join us to build the future of drug discovery at Tahoe Therapeutics.",
+    "description": "<p>Join us to build the future of drug discovery at Tahoe Therapeutics.</p>",
+    "hostedUrl": "https://jobs.lever.co/tahoebio-ai/8c046850-87dd-432c-80ab-37a88db46167",
+    "applyUrl": "https://jobs.lever.co/tahoebio-ai/8c046850-87dd-432c-80ab-37a88db46167/apply"
+  },
+  {
+    "id": "7af0bf4e-54b9-420f-96fa-24058a2794af",
+    "text": "Senior Machine Learning Engineer",
+    "categories": {
+      "location": "South San Francisco",
+      "allLocations": [
+        "South San Francisco"
+      ],
+      "department": "Machine Learning",
+      "team": "Machine Learning",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1764644409797,
+    "descriptionPlain": "Senior Machine Learning Engineer at Tahoe Therapeutics.",
+    "description": "<p>Senior Machine Learning Engineer at Tahoe Therapeutics.</p>",
+    "hostedUrl": "https://jobs.lever.co/tahoebio-ai/7af0bf4e-54b9-420f-96fa-24058a2794af",
+    "applyUrl": "https://jobs.lever.co/tahoebio-ai/7af0bf4e-54b9-420f-96fa-24058a2794af/apply"
+  },
+  {
+    "id": "8fe3e406-050f-498c-8f75-3cb780dec092",
+    "text": "Senior Machine Learning Scientist",
+    "categories": {
+      "location": "South San Francisco",
+      "allLocations": [
+        "South San Francisco"
+      ],
+      "department": "Machine Learning",
+      "team": "Machine Learning",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1763409171096,
+    "descriptionPlain": "Senior Machine Learning Scientist at Tahoe Therapeutics.",
+    "description": "<p>Senior Machine Learning Scientist at Tahoe Therapeutics.</p>",
+    "hostedUrl": "https://jobs.lever.co/tahoebio-ai/8fe3e406-050f-498c-8f75-3cb780dec092",
+    "applyUrl": "https://jobs.lever.co/tahoebio-ai/8fe3e406-050f-498c-8f75-3cb780dec092/apply"
+  }
+]

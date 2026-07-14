@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "0398ed30-d390-480e-acec-8055d8679980",
+      "title": "Vice President, Market Access",
+      "departmentName": "Commercial",
+      "teamName": "Commercial",
+      "employmentType": "FullTime",
+      "location": "Boston",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Boston",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-13",
+      "descriptionHtml": "<p>Vice President, Market Access at Bicara Therapeutics.</p>",
+      "descriptionPlain": "Vice President, Market Access at Bicara Therapeutics.",
+      "jobUrl": "https://jobs.ashbyhq.com/bicara-therapeutics/0398ed30-d390-480e-acec-8055d8679980",
+      "applyUrl": "https://jobs.ashbyhq.com/bicara-therapeutics/0398ed30-d390-480e-acec-8055d8679980/application"
+    },
+    {
+      "id": "04518c68-11db-4e36-993b-f9519e9e4eef",
+      "title": "Senior Manager, Payroll and Equity",
+      "departmentName": "G&A",
+      "teamName": "G&A",
+      "employmentType": "FullTime",
+      "location": "Boston",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Boston",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-04-28",
+      "descriptionHtml": "<p>Senior Manager, Payroll and Equity at Bicara Therapeutics.</p>",
+      "descriptionPlain": "Senior Manager, Payroll and Equity at Bicara Therapeutics.",
+      "jobUrl": "https://jobs.ashbyhq.com/bicara-therapeutics/04518c68-11db-4e36-993b-f9519e9e4eef",
+      "applyUrl": "https://jobs.ashbyhq.com/bicara-therapeutics/04518c68-11db-4e36-993b-f9519e9e4eef/application"
+    },
+    {
+      "id": "05fc1edd-5f54-48d3-86d3-9d32fcbbf09c",
+      "title": "Senior Medical Science Liaison (multiple territories)",
+      "departmentName": "Medical Affairs",
+      "teamName": "Medical Affairs",
+      "employmentType": "FullTime",
+      "location": "United States",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "United States",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-22",
+      "descriptionHtml": "<p>Senior Medical Science Liaison (multiple territories) at Bicara Therapeutics.</p>",
+      "descriptionPlain": "Senior Medical Science Liaison (multiple territories) at Bicara Therapeutics.",
+      "jobUrl": "https://jobs.ashbyhq.com/bicara-therapeutics/05fc1edd-5f54-48d3-86d3-9d32fcbbf09c",
+      "applyUrl": "https://jobs.ashbyhq.com/bicara-therapeutics/05fc1edd-5f54-48d3-86d3-9d32fcbbf09c/application"
+    }
+  ]
+}

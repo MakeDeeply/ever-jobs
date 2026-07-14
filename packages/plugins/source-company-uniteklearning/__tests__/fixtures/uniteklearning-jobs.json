@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135604034",
+      "name": "Career Services Advisor",
+      "uuid": "uniteklearning-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "UnitekLearning",
+        "name": "Unitek Learning"
+      },
+      "releasedDate": "2026-07-02T22:58:48.846Z",
+      "location": {
+        "city": "Albuquerque",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Albuquerque, NM, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "70 - Career Services"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/UnitekLearning/744000135604034",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Career Services Advisor at Unitek Learning.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135590999",
+      "name": "Senior Director, HR Operations, Shared Services & HR Technology",
+      "uuid": "uniteklearning-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "UnitekLearning",
+        "name": "Unitek Learning"
+      },
+      "releasedDate": "2026-07-02T20:26:09.764Z",
+      "location": {
+        "city": "Tempe",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Tempe, AZ, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "82 - HR"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/UnitekLearning/744000135590999",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Director, HR Operations, Shared Services & HR Technology at Unitek Learning.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135590540",
+      "name": "Employer Partnership & Placement Specialist - Medical Assisting",
+      "uuid": "uniteklearning-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "UnitekLearning",
+        "name": "Unitek Learning"
+      },
+      "releasedDate": "2026-07-02T20:23:50.201Z",
+      "location": {
+        "city": "Concord",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Concord, CA, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "70 - Career Services"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/UnitekLearning/744000135590540",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Employer Partnership & Placement Specialist - Medical Assisting at Unitek Learning.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

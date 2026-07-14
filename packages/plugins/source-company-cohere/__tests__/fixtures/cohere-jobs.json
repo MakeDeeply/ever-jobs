@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "013d4545-8343-40f1-9de5-9fdc0f0dd5bb",
+      "title": "Manager of Technical Staff, Sovereign AI",
+      "departmentName": "Modeling",
+      "teamName": "Modeling",
+      "employmentType": "FullTime",
+      "location": "Toronto",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Toronto",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-04-14",
+      "descriptionHtml": "<p>Manager of Technical Staff, Sovereign AI at Cohere.</p>",
+      "descriptionPlain": "Manager of Technical Staff, Sovereign AI at Cohere.",
+      "jobUrl": "https://jobs.ashbyhq.com/cohere/013d4545-8343-40f1-9de5-9fdc0f0dd5bb",
+      "applyUrl": "https://jobs.ashbyhq.com/cohere/013d4545-8343-40f1-9de5-9fdc0f0dd5bb/application"
+    },
+    {
+      "id": "01a34bc3-6421-4af2-bf5b-f42e98155dda",
+      "title": "Technical Program Manager, AI Delivery for Public Sector & Defence",
+      "departmentName": "Product Management & Program Management",
+      "teamName": "Product Management & Program Management",
+      "employmentType": "FullTime",
+      "location": "Ottawa",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Ottawa",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-12",
+      "descriptionHtml": "<p>Technical Program Manager, AI Delivery for Public Sector & Defence at Cohere.</p>",
+      "descriptionPlain": "Technical Program Manager, AI Delivery for Public Sector & Defence at Cohere.",
+      "jobUrl": "https://jobs.ashbyhq.com/cohere/01a34bc3-6421-4af2-bf5b-f42e98155dda",
+      "applyUrl": "https://jobs.ashbyhq.com/cohere/01a34bc3-6421-4af2-bf5b-f42e98155dda/application"
+    },
+    {
+      "id": "031c2335-db85-4265-8a88-a54b911be36a",
+      "title": "Forward Deployed Engineer, Agentic Platform (Korea)",
+      "departmentName": "Modeling",
+      "teamName": "Modeling",
+      "employmentType": "FullTime",
+      "location": "Korea",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Korea",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-01-28",
+      "descriptionHtml": "<p>Forward Deployed Engineer, Agentic Platform (Korea) at Cohere.</p>",
+      "descriptionPlain": "Forward Deployed Engineer, Agentic Platform (Korea) at Cohere.",
+      "jobUrl": "https://jobs.ashbyhq.com/cohere/031c2335-db85-4265-8a88-a54b911be36a",
+      "applyUrl": "https://jobs.ashbyhq.com/cohere/031c2335-db85-4265-8a88-a54b911be36a/application"
+    }
+  ]
+}

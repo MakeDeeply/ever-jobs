@@ -1,0 +1,62 @@
+[
+  {
+    "id": "47b343ad-6553-4a99-96a0-3cdaa6d48124",
+    "text": "Data Engineer",
+    "categories": {
+      "location": "Austin, TX",
+      "allLocations": [
+        "Austin, TX"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1782925756226,
+    "descriptionPlain": "Data Engineer at CertifID.",
+    "description": "<p>Data Engineer at CertifID.</p>",
+    "hostedUrl": "https://jobs.lever.co/certifid/47b343ad-6553-4a99-96a0-3cdaa6d48124",
+    "applyUrl": "https://jobs.lever.co/certifid/47b343ad-6553-4a99-96a0-3cdaa6d48124/apply"
+  },
+  {
+    "id": "71858d6a-3e17-4ffb-8449-6e1fa1f57e37",
+    "text": "Data Engineer",
+    "categories": {
+      "location": "Remote - India",
+      "allLocations": [
+        "Remote - India"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1782928293272,
+    "descriptionPlain": "Data Engineer at CertifID.",
+    "description": "<p>Data Engineer at CertifID.</p>",
+    "hostedUrl": "https://jobs.lever.co/certifid/71858d6a-3e17-4ffb-8449-6e1fa1f57e37",
+    "applyUrl": "https://jobs.lever.co/certifid/71858d6a-3e17-4ffb-8449-6e1fa1f57e37/apply"
+  },
+  {
+    "id": "89cba1af-fcba-4de8-8a0e-63b910bb9eee",
+    "text": "Principal Product Manager, Growth",
+    "categories": {
+      "location": "United States",
+      "allLocations": [
+        "United States"
+      ],
+      "department": "Product",
+      "team": "Product",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1777561699172,
+    "descriptionPlain": "Principal Product Manager, Growth at CertifID.",
+    "description": "<p>Principal Product Manager, Growth at CertifID.</p>",
+    "hostedUrl": "https://jobs.lever.co/certifid/89cba1af-fcba-4de8-8a0e-63b910bb9eee",
+    "applyUrl": "https://jobs.lever.co/certifid/89cba1af-fcba-4de8-8a0e-63b910bb9eee/apply"
+  }
+]

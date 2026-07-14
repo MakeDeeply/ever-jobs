@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135585179",
+      "name": "Dietitian - Per Diem",
+      "uuid": "kittitasvalleyhealthcare-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "KittitasValleyHealthcare",
+        "name": "Kittitas Valley Healthcare"
+      },
+      "releasedDate": "2026-07-02T19:33:35.074Z",
+      "location": {
+        "city": "Ellensburg",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Ellensburg, WA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Clinical"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/KittitasValleyHealthcare/744000135585179",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Dietitian - Per Diem at Kittitas Valley Healthcare.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135327380",
+      "name": "Medical Laboratory Scientist (MLS)/Medical Laboratory Technician (MLT) - Full Time (40 hours/week)",
+      "uuid": "kittitasvalleyhealthcare-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "KittitasValleyHealthcare",
+        "name": "Kittitas Valley Healthcare"
+      },
+      "releasedDate": "2026-07-01T18:10:16.784Z",
+      "location": {
+        "city": "Ellensburg",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Ellensburg, WA, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Clinical"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/KittitasValleyHealthcare/744000135327380",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Medical Laboratory Scientist (MLS)/Medical Laboratory Technician (MLT) - Full Time (40 hours/week) at Kittitas Valley Healthcare.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000134875081",
+      "name": "Patient Care Technician - CCU - Full Time (36 hours/week) - Nights",
+      "uuid": "kittitasvalleyhealthcare-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "KittitasValleyHealthcare",
+        "name": "Kittitas Valley Healthcare"
+      },
+      "releasedDate": "2026-06-29T20:27:04.134Z",
+      "location": {
+        "city": "Ellensburg",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Ellensburg, WA, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Clinical"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/KittitasValleyHealthcare/744000134875081",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Patient Care Technician - CCU - Full Time (36 hours/week) - Nights at Kittitas Valley Healthcare.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

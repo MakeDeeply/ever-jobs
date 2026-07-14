@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135342819",
+      "name": "Class A CDL Driver",
+      "uuid": "pslogistics-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "PSLogistics",
+        "name": "PS Logistics"
+      },
+      "releasedDate": "2026-07-01T20:03:53.224Z",
+      "location": {
+        "city": "Greenwood",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Greenwood, IN, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Warehouse Services"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/PSLogistics/744000135342819",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Class A CDL Driver at PS Logistics.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135254240",
+      "name": "CDL Driver",
+      "uuid": "pslogistics-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "PSLogistics",
+        "name": "PS Logistics"
+      },
+      "releasedDate": "2026-07-01T12:41:32.045Z",
+      "location": {
+        "city": "Janesville",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Janesville, WI, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Dedicated Mill Trucking"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/PSLogistics/744000135254240",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>CDL Driver at PS Logistics.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000134847032",
+      "name": "Diesel Technician",
+      "uuid": "pslogistics-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "PSLogistics",
+        "name": "PS Logistics"
+      },
+      "releasedDate": "2026-06-29T17:19:46.928Z",
+      "location": {
+        "city": "Tuscaloosa",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Tuscaloosa, AL, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Maintenance"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/PSLogistics/744000134847032",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Diesel Technician at PS Logistics.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

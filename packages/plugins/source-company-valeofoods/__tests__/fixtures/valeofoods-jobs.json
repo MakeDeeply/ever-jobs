@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135731459",
+      "name": "Food Production Operative",
+      "uuid": "valeofoods-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "valeofoods",
+        "name": "Valeo Foods"
+      },
+      "releasedDate": "2026-07-03T13:10:11.003Z",
+      "location": {
+        "city": "Gateshead",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Gateshead, England, United Kingdom"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/valeofoods/744000135731459",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Food Production Operative at Valeo Foods.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135242130",
+      "name": "Hygiene Operative",
+      "uuid": "valeofoods-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "valeofoods",
+        "name": "Valeo Foods"
+      },
+      "releasedDate": "2026-07-01T11:52:55.178Z",
+      "location": {
+        "city": "Blackpool",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Blackpool, England, United Kingdom"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/valeofoods/744000135242130",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Hygiene Operative at Valeo Foods.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135239116",
+      "name": "Production Operative",
+      "uuid": "valeofoods-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "valeofoods",
+        "name": "Valeo Foods"
+      },
+      "releasedDate": "2026-07-01T11:34:59.417Z",
+      "location": {
+        "city": "Blackpool",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Blackpool, England, United Kingdom"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Production"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/valeofoods/744000135239116",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Production Operative at Valeo Foods.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

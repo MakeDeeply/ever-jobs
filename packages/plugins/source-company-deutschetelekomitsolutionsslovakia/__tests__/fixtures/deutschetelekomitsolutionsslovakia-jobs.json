@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135733329",
+      "name": "DevOps Engineer for T-Cloud Public (m/f/d)",
+      "uuid": "deutschetelekomitsolutionsslovakia-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "DeutscheTelekomITSolutionsSlovakia",
+        "name": "Deutsche Telekom IT Solutions Slovakia"
+      },
+      "releasedDate": "2026-07-03T13:18:52.973Z",
+      "location": {
+        "city": "Košice",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Košice, Košický kraj, Slovakia (Slovak Republic)"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "PU Cloud Services"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/DeutscheTelekomITSolutionsSlovakia/744000135733329",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>DevOps Engineer for T-Cloud Public (m/f/d) at Deutsche Telekom IT Solutions Slovakia.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135685449",
+      "name": "Lead Delivery Solution Manager with german (m,f,d)",
+      "uuid": "deutschetelekomitsolutionsslovakia-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "DeutscheTelekomITSolutionsSlovakia",
+        "name": "Deutsche Telekom IT Solutions Slovakia"
+      },
+      "releasedDate": "2026-07-03T09:38:52.372Z",
+      "location": {
+        "city": "Juh",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Juh, Košický kraj, Slovakia (Slovak Republic)"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Telekom Business Customers"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/DeutscheTelekomITSolutionsSlovakia/744000135685449",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Lead Delivery Solution Manager with german (m,f,d) at Deutsche Telekom IT Solutions Slovakia.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135653020",
+      "name": "QA Automation Engineer for FCI (m/f/d)",
+      "uuid": "deutschetelekomitsolutionsslovakia-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "DeutscheTelekomITSolutionsSlovakia",
+        "name": "Deutsche Telekom IT Solutions Slovakia"
+      },
+      "releasedDate": "2026-07-03T06:56:40.430Z",
+      "location": {
+        "city": "Košice",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Košice, Košický kraj, Slovakia (Slovak Republic)"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "PU Cloud Services"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/DeutscheTelekomITSolutionsSlovakia/744000135653020",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>QA Automation Engineer for FCI (m/f/d) at Deutsche Telekom IT Solutions Slovakia.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

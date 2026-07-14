@@ -1,0 +1,62 @@
+[
+  {
+    "id": "5c8c534e-fa04-45a8-b1b4-99d28f34de0d",
+    "text": "Account Coordinator - Art Transport & Logistics",
+    "categories": {
+      "location": "New York",
+      "allLocations": [
+        "New York"
+      ],
+      "department": "Operations",
+      "team": "Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1728466090326,
+    "descriptionPlain": "Account Coordinator - Art Transport & Logistics at Convelio.",
+    "description": "<p>Account Coordinator - Art Transport & Logistics at Convelio.</p>",
+    "hostedUrl": "https://jobs.lever.co/convelio/5c8c534e-fa04-45a8-b1b4-99d28f34de0d",
+    "applyUrl": "https://jobs.lever.co/convelio/5c8c534e-fa04-45a8-b1b4-99d28f34de0d/apply"
+  },
+  {
+    "id": "2d8a62b4-27ad-44c2-9a84-15fff7cc95e0",
+    "text": "Account Logistics Manager",
+    "categories": {
+      "location": "New York",
+      "allLocations": [
+        "New York"
+      ],
+      "department": "Operations",
+      "team": "Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1730967111749,
+    "descriptionPlain": "Account Logistics Manager at Convelio.",
+    "description": "<p>Account Logistics Manager at Convelio.</p>",
+    "hostedUrl": "https://jobs.lever.co/convelio/2d8a62b4-27ad-44c2-9a84-15fff7cc95e0",
+    "applyUrl": "https://jobs.lever.co/convelio/2d8a62b4-27ad-44c2-9a84-15fff7cc95e0/apply"
+  },
+  {
+    "id": "7375dd4f-0c49-40b2-8d62-a153e4240280",
+    "text": "Art Shipping Coordinator - French & English bilingual",
+    "categories": {
+      "location": "Paris",
+      "allLocations": [
+        "Paris"
+      ],
+      "department": "Operations",
+      "team": "Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1753790874704,
+    "descriptionPlain": "Art Shipping Coordinator - French & English bilingual at Convelio.",
+    "description": "<p>Art Shipping Coordinator - French & English bilingual at Convelio.</p>",
+    "hostedUrl": "https://jobs.lever.co/convelio/7375dd4f-0c49-40b2-8d62-a153e4240280",
+    "applyUrl": "https://jobs.lever.co/convelio/7375dd4f-0c49-40b2-8d62-a153e4240280/apply"
+  }
+]

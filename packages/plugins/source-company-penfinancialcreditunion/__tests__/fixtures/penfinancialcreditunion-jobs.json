@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000133088773",
+      "name": "Part Time Member Service Representative - Supporting the Fonthill Branch",
+      "uuid": "penfinancialcreditunion-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "PenFinancialCreditUnion",
+        "name": "PenFinancial Credit Union"
+      },
+      "releasedDate": "2026-06-19T14:53:39.576Z",
+      "location": {
+        "city": "Pelham",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Pelham, ON, Canada"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Finance"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/PenFinancialCreditUnion/744000133088773",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Part Time Member Service Representative - Supporting the Fonthill Branch at PenFinancial Credit Union.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000132202648",
+      "name": "Local Business Advisor",
+      "uuid": "penfinancialcreditunion-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "PenFinancialCreditUnion",
+        "name": "PenFinancial Credit Union"
+      },
+      "releasedDate": "2026-06-15T13:27:58.177Z",
+      "location": {
+        "city": "Welland",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Welland, ON, Canada"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Finance"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/PenFinancialCreditUnion/744000132202648",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Local Business Advisor at PenFinancial Credit Union.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000131518529",
+      "name": "PT Contact Center Representative",
+      "uuid": "penfinancialcreditunion-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "PenFinancialCreditUnion",
+        "name": "PenFinancial Credit Union"
+      },
+      "releasedDate": "2026-06-10T18:35:32.464Z",
+      "location": {
+        "city": "Welland",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Welland, ON, Canada"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Customer Service"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/PenFinancialCreditUnion/744000131518529",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>PT Contact Center Representative at PenFinancial Credit Union.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

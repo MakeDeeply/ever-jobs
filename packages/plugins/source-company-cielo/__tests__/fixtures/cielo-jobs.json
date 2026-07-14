@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135774308",
+      "name": "Client Recruitment Quality Lead",
+      "uuid": "cielo-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Cielo2",
+        "name": "Cielo"
+      },
+      "releasedDate": "2026-07-03T18:15:48.794Z",
+      "location": {
+        "city": "London",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "London, ENGLAND, United Kingdom"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Client Services"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Cielo2/744000135774308",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Client Recruitment Quality Lead at Cielo.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135750196",
+      "name": "Senior Recruiter (Hybrid)",
+      "uuid": "cielo-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Cielo2",
+        "name": "Cielo"
+      },
+      "releasedDate": "2026-07-03T14:41:51.277Z",
+      "location": {
+        "city": "Toronto",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Toronto, ON, Canada"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Client Services"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Cielo2/744000135750196",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Recruiter (Hybrid) at Cielo.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135675259",
+      "name": "Senior Recruiter Tech GTM",
+      "uuid": "cielo-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Cielo2",
+        "name": "Cielo"
+      },
+      "releasedDate": "2026-07-03T08:51:22.322Z",
+      "location": {
+        "city": "Warsaw",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Warsaw, Masovian Voivodeship, Poland"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Client Services"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Cielo2/744000135675259",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Recruiter Tech GTM at Cielo.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

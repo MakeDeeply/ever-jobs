@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999748437786",
+      "name": "Head of Facilities Management",
+      "uuid": "universityofthewestofengland-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "UniversityOfTheWestOfEngland",
+        "name": "University of the West of England"
+      },
+      "releasedDate": "2021-05-17T10:31:44.000Z",
+      "location": {
+        "city": "Bristol",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Bristol, , United Kingdom"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/UniversityOfTheWestOfEngland/743999748437786",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Head of Facilities Management at University of the West of England.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999747885319",
+      "name": "IT Endpoint Engineer",
+      "uuid": "universityofthewestofengland-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "UniversityOfTheWestOfEngland",
+        "name": "University of the West of England"
+      },
+      "releasedDate": "2021-05-12T09:50:40.000Z",
+      "location": {
+        "city": "Bristol",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Bristol, , United Kingdom"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/UniversityOfTheWestOfEngland/743999747885319",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>IT Endpoint Engineer at University of the West of England.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999743965903",
+      "name": "Senior IT-Systems Engineer",
+      "uuid": "universityofthewestofengland-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "UniversityOfTheWestOfEngland",
+        "name": "University of the West of England"
+      },
+      "releasedDate": "2021-04-23T10:31:53.000Z",
+      "location": {
+        "city": "Bristol",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Bristol, , United Kingdom"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/UniversityOfTheWestOfEngland/743999743965903",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior IT-Systems Engineer at University of the West of England.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

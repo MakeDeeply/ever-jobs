@@ -1,0 +1,62 @@
+[
+  {
+    "id": "a6c8be24-c978-485a-b874-49e92a5e737a",
+    "text": "Producer (Multiple Levels)",
+    "categories": {
+      "location": "Los Angeles, United States",
+      "allLocations": [
+        "Los Angeles, United States"
+      ],
+      "department": "Production & Studio Operations",
+      "team": "Production & Studio Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1776377221581,
+    "descriptionPlain": "Producer (Multiple Levels) at Magnopus.",
+    "description": "<p>Producer (Multiple Levels) at Magnopus.</p>",
+    "hostedUrl": "https://jobs.lever.co/magnopus/a6c8be24-c978-485a-b874-49e92a5e737a",
+    "applyUrl": "https://jobs.lever.co/magnopus/a6c8be24-c978-485a-b874-49e92a5e737a/apply"
+  },
+  {
+    "id": "1ada1f4b-0969-417f-b659-a89087594846",
+    "text": "Senior Artist (Virtual Art Department)",
+    "categories": {
+      "location": "Los Angeles, United States",
+      "allLocations": [
+        "Los Angeles, United States"
+      ],
+      "department": "Production & Studio Operations",
+      "team": "Production & Studio Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1780605277995,
+    "descriptionPlain": "Senior Artist (Virtual Art Department) at Magnopus.",
+    "description": "<p>Senior Artist (Virtual Art Department) at Magnopus.</p>",
+    "hostedUrl": "https://jobs.lever.co/magnopus/1ada1f4b-0969-417f-b659-a89087594846",
+    "applyUrl": "https://jobs.lever.co/magnopus/1ada1f4b-0969-417f-b659-a89087594846/apply"
+  },
+  {
+    "id": "721fb47c-6892-45cc-b542-a6827b39560b",
+    "text": "Technical Artist (Virtual Art Department)",
+    "categories": {
+      "location": "Los Angeles, United States",
+      "allLocations": [
+        "Los Angeles, United States"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1778878096826,
+    "descriptionPlain": "Technical Artist (Virtual Art Department) at Magnopus.",
+    "description": "<p>Technical Artist (Virtual Art Department) at Magnopus.</p>",
+    "hostedUrl": "https://jobs.lever.co/magnopus/721fb47c-6892-45cc-b542-a6827b39560b",
+    "applyUrl": "https://jobs.lever.co/magnopus/721fb47c-6892-45cc-b542-a6827b39560b/apply"
+  }
+]

@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "00a73ca7-86c2-437d-89dc-fb2baf2b9b98",
+      "title": "Psychiatric Nurse Practitioner- Minnesota",
+      "departmentName": "SonderMind Provider Group",
+      "teamName": "SonderMind Provider Group",
+      "employmentType": "FullTime",
+      "location": "Minneapolis",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Minneapolis",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-12-01",
+      "descriptionHtml": "<p>Psychiatric Nurse Practitioner- Minnesota at SonderMind.</p>",
+      "descriptionPlain": "Psychiatric Nurse Practitioner- Minnesota at SonderMind.",
+      "jobUrl": "https://jobs.ashbyhq.com/sondermind/00a73ca7-86c2-437d-89dc-fb2baf2b9b98",
+      "applyUrl": "https://jobs.ashbyhq.com/sondermind/00a73ca7-86c2-437d-89dc-fb2baf2b9b98/application"
+    },
+    {
+      "id": "01797ead-5744-4c74-980a-3e4da4e254e8",
+      "title": "Licensed Psychiatrist- Oregon",
+      "departmentName": "SonderMind Provider Group",
+      "teamName": "SonderMind Provider Group",
+      "employmentType": "FullTime",
+      "location": "Portland",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Portland",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-11-25",
+      "descriptionHtml": "<p>Licensed Psychiatrist- Oregon at SonderMind.</p>",
+      "descriptionPlain": "Licensed Psychiatrist- Oregon at SonderMind.",
+      "jobUrl": "https://jobs.ashbyhq.com/sondermind/01797ead-5744-4c74-980a-3e4da4e254e8",
+      "applyUrl": "https://jobs.ashbyhq.com/sondermind/01797ead-5744-4c74-980a-3e4da4e254e8/application"
+    },
+    {
+      "id": "028b91a0-7752-40d6-b4a9-df97c0c5764d",
+      "title": "Licensed Psychiatrist -Washington",
+      "departmentName": "SonderMind Provider Group",
+      "teamName": "SonderMind Provider Group",
+      "employmentType": "FullTime",
+      "location": "Seattle",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Seattle",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-11-25",
+      "descriptionHtml": "<p>Licensed Psychiatrist -Washington at SonderMind.</p>",
+      "descriptionPlain": "Licensed Psychiatrist -Washington at SonderMind.",
+      "jobUrl": "https://jobs.ashbyhq.com/sondermind/028b91a0-7752-40d6-b4a9-df97c0c5764d",
+      "applyUrl": "https://jobs.ashbyhq.com/sondermind/028b91a0-7752-40d6-b4a9-df97c0c5764d/application"
+    }
+  ]
+}

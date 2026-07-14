@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999658739733",
+      "name": "Mortgage Loan Officer- Entry Level Training",
+      "uuid": "jgwentworthhomelending-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "JGWentworthHomeLendingLLC",
+        "name": "JG Wentworth Home Lending"
+      },
+      "releasedDate": "2017-08-28T21:01:22.000Z",
+      "location": {
+        "city": "Wayne",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Wayne, PA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Finance"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/JGWentworthHomeLendingLLC/743999658739733",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Mortgage Loan Officer- Entry Level Training at JG Wentworth Home Lending.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999658429048",
+      "name": "Automation Engineer / Developer",
+      "uuid": "jgwentworthhomelending-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "JGWentworthHomeLendingLLC",
+        "name": "JG Wentworth Home Lending"
+      },
+      "releasedDate": "2017-08-23T14:55:38.000Z",
+      "location": {
+        "city": "Woodbridge",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Woodbridge, VA, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Analyst"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/JGWentworthHomeLendingLLC/743999658429048",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Automation Engineer / Developer at JG Wentworth Home Lending.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999658428674",
+      "name": "Automation Engineer / Developer",
+      "uuid": "jgwentworthhomelending-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "JGWentworthHomeLendingLLC",
+        "name": "JG Wentworth Home Lending"
+      },
+      "releasedDate": "2017-08-23T14:54:25.000Z",
+      "location": {
+        "city": "Wayne",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Wayne, PA, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Analyst"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/JGWentworthHomeLendingLLC/743999658428674",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Automation Engineer / Developer at JG Wentworth Home Lending.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

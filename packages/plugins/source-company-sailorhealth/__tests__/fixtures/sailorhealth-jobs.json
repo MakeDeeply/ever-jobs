@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "00a5c8d5-6de5-4fa0-b117-4a73437ec1ad",
+      "title": "Mental Health Therapist for Seniors (Remote - Licensed in South Carolina)",
+      "departmentName": "Clinical",
+      "teamName": "Clinical",
+      "employmentType": "FullTime",
+      "location": "South Carolina",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "South Carolina",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-16",
+      "descriptionHtml": "<p>Mental Health Therapist for Seniors (Remote - Licensed in South Carolina) at Sailor Health.</p>",
+      "descriptionPlain": "Mental Health Therapist for Seniors (Remote - Licensed in South Carolina) at Sailor Health.",
+      "jobUrl": "https://jobs.ashbyhq.com/sailorhealth/00a5c8d5-6de5-4fa0-b117-4a73437ec1ad",
+      "applyUrl": "https://jobs.ashbyhq.com/sailorhealth/00a5c8d5-6de5-4fa0-b117-4a73437ec1ad/application"
+    },
+    {
+      "id": "0591b4f5-a505-4a1b-967d-9666a8c3d1de",
+      "title": "Clinical Recruiter - Remote",
+      "departmentName": "Provider Growth",
+      "teamName": "Provider Growth",
+      "employmentType": "FullTime",
+      "location": "Canada",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Canada",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-02-07",
+      "descriptionHtml": "<p>Clinical Recruiter - Remote at Sailor Health.</p>",
+      "descriptionPlain": "Clinical Recruiter - Remote at Sailor Health.",
+      "jobUrl": "https://jobs.ashbyhq.com/sailorhealth/0591b4f5-a505-4a1b-967d-9666a8c3d1de",
+      "applyUrl": "https://jobs.ashbyhq.com/sailorhealth/0591b4f5-a505-4a1b-967d-9666a8c3d1de/application"
+    },
+    {
+      "id": "06a885ff-29b7-4bf4-9877-a654bb49d2c0",
+      "title": "2026 RN Healthcare Advocate (Remote)",
+      "departmentName": "Healthcare Advocacy",
+      "teamName": "Healthcare Advocacy",
+      "employmentType": "FullTime",
+      "location": "USA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "USA",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-01-04",
+      "descriptionHtml": "<p>2026 RN Healthcare Advocate (Remote) at Sailor Health.</p>",
+      "descriptionPlain": "2026 RN Healthcare Advocate (Remote) at Sailor Health.",
+      "jobUrl": "https://jobs.ashbyhq.com/sailorhealth/06a885ff-29b7-4bf4-9877-a654bb49d2c0",
+      "applyUrl": "https://jobs.ashbyhq.com/sailorhealth/06a885ff-29b7-4bf4-9877-a654bb49d2c0/application"
+    }
+  ]
+}

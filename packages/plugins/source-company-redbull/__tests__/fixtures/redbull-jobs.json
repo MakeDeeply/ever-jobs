@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135777079",
+      "name": "Account Sales Manager",
+      "uuid": "redbull-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "RedBull",
+        "name": "Red Bull"
+      },
+      "releasedDate": "2026-07-03T19:05:52.514Z",
+      "location": {
+        "city": "Tulsa",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Tulsa, OK, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/RedBull/744000135777079",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Account Sales Manager at Red Bull.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135771729",
+      "name": "Account Sales Manager",
+      "uuid": "redbull-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "RedBull",
+        "name": "Red Bull"
+      },
+      "releasedDate": "2026-07-03T17:42:35.582Z",
+      "location": {
+        "city": "Maple Grove",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Maple Grove, MN, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/RedBull/744000135771729",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Account Sales Manager at Red Bull.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135769359",
+      "name": "Student Marketeer - Illinois State University",
+      "uuid": "redbull-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "RedBull",
+        "name": "Red Bull"
+      },
+      "releasedDate": "2026-07-03T17:09:56.197Z",
+      "location": {
+        "city": "Normal",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Normal, IL, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Student Jobs"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/RedBull/744000135769359",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Student Marketeer - Illinois State University at Red Bull.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

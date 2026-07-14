@@ -1,0 +1,62 @@
+[
+  {
+    "id": "4b87e4bb-255c-4df6-89bb-0283f48b292c",
+    "text": "Calibration and Localization Engineer",
+    "categories": {
+      "location": "San Francisco",
+      "allLocations": [
+        "San Francisco"
+      ],
+      "department": "Software Team",
+      "team": "Software Team",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1776734047005,
+    "descriptionPlain": "Calibration and Localization Engineer at Humble.",
+    "description": "<p>Calibration and Localization Engineer at Humble.</p>",
+    "hostedUrl": "https://jobs.lever.co/humble-robotics/4b87e4bb-255c-4df6-89bb-0283f48b292c",
+    "applyUrl": "https://jobs.lever.co/humble-robotics/4b87e4bb-255c-4df6-89bb-0283f48b292c/apply"
+  },
+  {
+    "id": "2ec28360-6769-4f02-b320-2a26ceb92ab1",
+    "text": "Controls Engineer",
+    "categories": {
+      "location": "San Francisco",
+      "allLocations": [
+        "San Francisco"
+      ],
+      "department": "Software Team",
+      "team": "Software Team",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1776733373604,
+    "descriptionPlain": "Controls Engineer at Humble.",
+    "description": "<p>Controls Engineer at Humble.</p>",
+    "hostedUrl": "https://jobs.lever.co/humble-robotics/2ec28360-6769-4f02-b320-2a26ceb92ab1",
+    "applyUrl": "https://jobs.lever.co/humble-robotics/2ec28360-6769-4f02-b320-2a26ceb92ab1/apply"
+  },
+  {
+    "id": "f187c481-ece9-4ea5-8cce-3bcd96f7001e",
+    "text": "Data Engineer",
+    "categories": {
+      "location": "San Francisco",
+      "allLocations": [
+        "San Francisco"
+      ],
+      "department": "Software Team",
+      "team": "Software Team",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1776733720010,
+    "descriptionPlain": "Data Engineer at Humble.",
+    "description": "<p>Data Engineer at Humble.</p>",
+    "hostedUrl": "https://jobs.lever.co/humble-robotics/f187c481-ece9-4ea5-8cce-3bcd96f7001e",
+    "applyUrl": "https://jobs.lever.co/humble-robotics/f187c481-ece9-4ea5-8cce-3bcd96f7001e/apply"
+  }
+]
