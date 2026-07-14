@@ -15,6 +15,43 @@
 
 ---
 
+## 2026-07-14 — Spec 5061 — source-company-hylio (Webflow two-step careers; apply→Indeed link-only)
+
+**Change:** New single-company `source-company-hylio` plugin for Hylio (`hyl.io`,
+agricultural drones / UAS manufacturing), a **custom Webflow** careers site with
+**no ATS**.
+
+- **Shape.** Unlike IperionX (Spec 5059, summary-only), Hylio publishes a **full
+  JD on its own domain**, so this is a standard **two-step** Webflow scraper
+  (like Specs 5056/5057). Both fetched pages are on `hyl.io`.
+- **Indeed is never fetched.** Each card's "APPLY" links out to an `indeed.com`
+  URL; it is stored as `applyUrl` only and is never requested (not as a source,
+  not during parsing). `jobUrl` is the employer's own on-domain
+  `/hiring/{slug}` detail page. The unit test's fetch seam throws if any Indeed
+  URL is requested, proving this.
+- **Listing.** GET `/hiring/job-board` → anchor on each `.jobtitle` block,
+  resolve the enclosing `.w-layout-grid` card, read the detail slug from the
+  on-domain `/hiring/{slug}` "LEARN MORE" link (excluding the board index), the
+  `<h1>` title (inner `<br>` normalized to a space, `DRONE<br/>TECHNICIAN` →
+  `DRONE TECHNICIAN`), and the Indeed apply URL; deduped by slug.
+- **Detail.** GET each `/hiring/{slug}` (bounded `Promise.allSettled` fan-out) →
+  the JD body → markdown, plus the stated `Job Type:` and `Pay:` lines.
+- **Mapping.** `id` = `hylio-<slug>`; `companyName` = `Hylio`; `description` =
+  detail JD → markdown; `compensation` = `Pay: $16.00 - $20.00 per hour` via
+  shared `salaryToCompensation` (Spec 5058), hourly; `employmentType`/`jobType`
+  = `Job Type: Full-time` via `getJobTypeFromString` → `FULL_TIME`.
+- **Location = null.** The site states no per-role location (only "in-person"
+  free text in the body, which nothing parses); the `Houston, TX` corporate HQ
+  is never synthesized. `isRemote` = `false` (work-mode is never parsed from free
+  text in this repo, so "in-person" is a plain default, not a classification).
+  `datePosted` = null; `emails` = `[]`.
+- **Registration.** All four places (Site enum `HYLIO`, `ALL_SOURCE_MODULES`,
+  tsconfig paths, jest moduleNameMapper). No new dependency.
+- **Tests.** 8 fixture-based unit tests over captured job-board + detail HTML;
+  package `tsc` clean (only the known cross-package TS6059 rootDir noise).
+
+---
+
 ## 2026-07-14 — Spec 5060 — opt-in bare state/province classification (shared location parser)
 
 **Change:** Add an **opt-in** capability to the shared `parseLocationText` /
