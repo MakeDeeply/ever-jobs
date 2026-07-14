@@ -1856,6 +1856,7 @@
       "@ever-jobs/source-company-flymotion": ["packages/plugins/source-company-flymotion/src/index.ts"],
       "@ever-jobs/source-company-iperionx": ["packages/plugins/source-company-iperionx/src/index.ts"],
       "@ever-jobs/source-company-hylio": ["packages/plugins/source-company-hylio/src/index.ts"],
+      "@ever-jobs/source-company-truemetalsupply": ["packages/plugins/source-company-truemetalsupply/src/index.ts"],
       "@ever-jobs/source-tesla": ["packages/plugins/source-tesla/src/index.ts"],
       "@ever-jobs/source-tesla-playwright": ["packages/plugins/source-tesla-playwright/src/index.ts"]
     }

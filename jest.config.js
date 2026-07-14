@@ -1840,6 +1840,7 @@ module.exports = {
     '^@ever-jobs/source-company-flymotion$': '<rootDir>/packages/plugins/source-company-flymotion/src/index.ts',
     '^@ever-jobs/source-company-iperionx$': '<rootDir>/packages/plugins/source-company-iperionx/src/index.ts',
     '^@ever-jobs/source-company-hylio$': '<rootDir>/packages/plugins/source-company-hylio/src/index.ts',
+    '^@ever-jobs/source-company-truemetalsupply$': '<rootDir>/packages/plugins/source-company-truemetalsupply/src/index.ts',
     '^@ever-jobs/source-tesla$': '<rootDir>/packages/plugins/source-tesla/src/index.ts',
     '^@ever-jobs/source-tesla-playwright$': '<rootDir>/packages/plugins/source-tesla-playwright/src/index.ts',
   },
