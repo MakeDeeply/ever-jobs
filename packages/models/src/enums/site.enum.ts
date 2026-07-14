@@ -2116,6 +2116,8 @@ export enum Site {
   IPERIONX = 'iperionx',
   // Phase 988: Spec 5061 — Hylio (hyl.io) company careers plugin (Webflow CMS listing + /hiring/<slug> detail; apply links out to Indeed, not scraped)
   HYLIO = 'hylio',
+  // Phase 989: Spec 5062 — True Metal Supply (truemetalsupply.com) company careers plugin (Wix popup/lightbox JDs; headless BrowserPool; title-only location)
+  TRUEMETALSUPPLY = 'truemetalsupply',
   // Phase 970: Spec 976 — Source Company Plugin: Airwallex
   AIRWALLEX = 'airwallex',
   // Phase 971: Spec 977 — Source Company Plugin: Renuity

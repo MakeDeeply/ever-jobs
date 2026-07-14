@@ -15,6 +15,57 @@
 
 ---
 
+## 2026-07-14 — Spec 5062 — source-company-truemetalsupply (Wix popup/lightbox JDs; headless BrowserPool; title-only location; blank jobUrl)
+
+**Change:** New single-company `source-company-truemetalsupply` plugin for True
+Metal Supply (`truemetalsupply.com`, metal roofing / building-material
+manufacturing), a **custom Wix (Thunderbolt)** careers site with **no ATS**.
+
+- **Why headless.** The openings are **client-rendered**: `/careers` shows a "Job
+  Descriptions" group of Wix stylable buttons (`aria-haspopup="dialog"`); clicking
+  one opens a Wix **popup/lightbox** with that role's full JD. The initial HTML has
+  only the button labels (not the JD bodies), and the popups are **not standalone
+  routes** (their `copy-of-*` slugs soft-404), so plain HTTP cannot see them. The
+  page is driven with the shared **`BrowserPool`** headless Chromium (stealth) —
+  the same shared-browser precedent as `source-company-desktopmetal` (5047) — not
+  a plugin-local launch. (The plain-HTTP Wix siteAssets JSON path was rejected as
+  brittle: strict param set → HTTP 400, and per-publish `siteRevision` +
+  content-hash filenames.)
+- **Flow.** open `/careers` headless → click each `[aria-haspopup="dialog"]`
+  trigger → read the opened `[role="dialog"]` popup's text + inner HTML → Escape →
+  next. A dialog is kept only when its text carries **≥2 JD section markers**
+  (About Us / Position Overview / Responsibilities / Requirements / Qualifications
+  / Why Join Us / About the Role), dropping non-job dialogs (e.g. the "Color Chart
+  & SRI Values" popup) without pinning a fixed title list; deduped by title. Seven
+  live roles.
+- **Mapping.** `id` = `truemetalsupply-<slugified-title>`; `title` = popup title
+  (dialog's first non-empty line); `companyName` = `True Metal Supply`;
+  `companyUrl` = `/careers`; `jobUrl` = **blank (`''`)** — no per-role URL exists
+  (owner decision); `description` = popup body → markdown; `location` = derived
+  **only** from a known facility-city title prefix (`Asheville Facility Manager` →
+  `{ city: 'Asheville' }`) via shared `parseLocationList`, else **null** (Knoxville
+  HQ never synthesized; incidental body text like CDL-A's "greater Knoxville area"
+  never parsed); `isRemote` = `false`; `datePosted` = `null`; compensation /
+  employmentType / jobType / apply URL absent on-site → empty (a stray `$0.00`
+  invoice reference and an unfinished `[insert weight] lbs` placeholder are ingested
+  as-is); `emails` = `[]`. The page's Indeed company link is link-only, **never
+  fetched**.
+- **Owner decisions (resolved before coding):** (1) headless harvest, (2)
+  location from title prefix only, (3) blank `jobUrl`. No `docs/questions.md`
+  entries added.
+- **Registration.** All four places (Site enum, `ALL_SOURCE_MODULES`, tsconfig
+  paths, jest moduleNameMapper). No new dependency (`playwright` + shared
+  `BrowserPool` already present).
+- **Tests.** 9 fixture-based unit tests over captured real dialog HTML/text for
+  all seven roles (browser step mocked — no real browser/network): DI + Site enum,
+  seven-role mapping with blank `jobUrl` + empty fields, Estimator id + markdown
+  description, title-prefix-only location (Asheville only; CDL-A null),
+  `collectDialogs` filter/dedup via a fake Playwright page (color-chart dropped),
+  input filters, empty board, browser-step-throw degradation. `tsc` clean (only
+  baseline TS6059 rootDir noise).
+
+---
+
 ## 2026-07-14 — Spec 5061 — source-company-hylio (Webflow two-step careers; apply→Indeed link-only)
 
 **Change:** New single-company `source-company-hylio` plugin for Hylio (`hyl.io`,
