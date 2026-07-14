@@ -15,6 +15,46 @@
 
 ---
 
+## 2026-07-14 — Spec 5065 — source-company-mara (Webflow SSR single-page /career cards; stated San Francisco + Full Time; apply -> LinkedIn, link-only)
+
+**Change:** New single-company `source-company-mara` plugin for Mara Defense
+(`mara.inc`), a **custom Webflow** careers site with **no ATS**.
+
+- **Why plain HTTP.** The openings are server-rendered in the static `/career`
+  HTML (title, highlight qualifier, location, employment type) — plain HTTP +
+  Cheerio, single step, no headless browser and no per-role detail fan-out. The
+  page's JSON-LD is only `WebPage`/`BreadcrumbList` (no `JobPosting` data).
+- **Single step, one page.** GET `/career` enumerates each opening as a
+  `.mr-job-content-box` card (human-authored Webflow classes). Per card: title
+  (`.mr-h4`, with the highlight chip `.label-transparant` appended in parens
+  only when it is not already contained in the title), the two `.label-location`
+  chips classified by shape (a job-type chip is the employment type, the other
+  is the location — order not assumed), and the LinkedIn apply URL. The board
+  template also renders a placeholder card whose apply button points at `#`;
+  only cards with a real LinkedIn apply URL are ingested.
+- **Field mapping.** `id` = `mara-<title-slug>` (the site exposes no per-role URL
+  slug to reuse); `companyName` = `Mara Defense`; `companyUrl` = `/career`;
+  `jobUrl` = `''` (no on-domain per-role page); `applyUrl` = the card's LinkedIn
+  URL (linked, never fetched); `location` = `San Francisco` (stated) via shared
+  `parseLocationList` (no state synthesized — the site states city only);
+  `employmentType` = `Full Time` and `jobType` = `FULL_TIME` via
+  `getJobTypeFromString`; `isRemote` = false; `description` / `compensation` /
+  `datePosted` = empty (none stated); `emails` = `[]`.
+- **Non-goals.** The apply link points at LinkedIn; it is carried on `applyUrl`
+  but never fetched/probed/harvested. No Indeed URL. No fields fabricated (no
+  salary/description/date stated, no state synthesized); no email harvested; the
+  placeholder template card is not ingested.
+- **Registration + tests.** Registered in all four places (Site enum,
+  `ALL_SOURCE_MODULES`, tsconfig paths, jest moduleNameMapper). No new
+  dependency. 10 fixture-based unit tests over the captured `/career` page (+ an
+  empty-board fixture): DI + Site enum, two-openings-only (placeholder skipped),
+  highlight append/no-duplication rule, title-derived id + blank jobUrl +
+  LinkedIn applyUrl (no Indeed), `San Francisco` location with no fabricated
+  state + not-remote, `Full Time` → `FULL_TIME`, empty compensation/description/
+  date/emails, input filters, empty board.
+
+---
+
 ## 2026-07-14 — Spec 5064 — source-company-terminusindustrials (Next.js SSR single-page /careers; inline JD; stated Austin TX + Full-time; apply -> on-page modal form)
 
 **Change:** New single-company `source-company-terminusindustrials` plugin for

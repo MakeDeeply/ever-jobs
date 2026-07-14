@@ -2122,6 +2122,8 @@ export enum Site {
   FRAMEWORK = 'framework',
   // Phase 991: Spec 5064 — Terminus Industrials (terminusindustrials.com) company careers plugin (Next.js SSR; single-page /careers with inline JD; stated location + employment type; apply -> on-page modal form)
   TERMINUSINDUSTRIALS = 'terminusindustrials',
+  // Phase 992: Spec 5065 — Mara Defense (mara.inc) company careers plugin (Webflow SSR; single-page /career cards; stated location + employment type; apply -> LinkedIn, link-only)
+  MARA = 'mara',
   // Phase 970: Spec 976 — Source Company Plugin: Airwallex
   AIRWALLEX = 'airwallex',
   // Phase 971: Spec 977 — Source Company Plugin: Renuity
