@@ -1133,6 +1133,7 @@ import { GaladyneModule } from './source-company-galadyne';
 import { GustoHostedModule } from './source-ats-gusto-hosted';
 import { ReelementtechModule } from './source-company-reelementtech';
 import { FlymotionModule } from './source-company-flymotion';
+import { IperionxModule } from './source-company-iperionx';
 import { AirwallexModule } from './source-company-airwallex';
 import { RenuityModule } from './source-company-renuity';
 import { EnpalModule } from './source-company-enpal';
@@ -2957,6 +2958,7 @@ export const ALL_SOURCE_MODULES = [
   GustoHostedModule,
   ReelementtechModule,
   FlymotionModule,
+  IperionxModule,
   AirwallexModule,
   RenuityModule,
   EnpalModule,

@@ -56,6 +56,52 @@ falling into the `city` field.
   promoted). `tsc --noEmit -p packages/common/tsconfig.json` clean.
 
 ---
+## 2026-07-14 — Spec 5059 — source-company-iperionx (WordPress summary-only careers)
+
+**Change:** New single-company `source-company-iperionx` plugin for IperionX
+(`iperionx.com`, titanium metals manufacturing).
+
+- **Site.** Custom **WordPress** careers page, **no ATS**. Distinct from the
+  other company careers plugins: `/careers/` is a **summary-only board** —
+  each role shows only a title, a 1–2 sentence blurb, and an "Apply Now" button
+  that links **out to an Indeed job page** (`indeed.com/job/{slug}`). The full
+  JD lives on Indeed, which is **deliberately not scraped**; the Indeed URL is
+  used only as the apply/job link and is never fetched. Server-rendered
+  (Cloudflare-fronted but no JS challenge) → plain HTTP + Cheerio, no headless
+  browser. Kept a **company plugin** (like Specs
+  5042/5045/5046/5047/5048/5049/5050/5051/5052/5053/5056/5057).
+- **Read.** **Single** fetch, **no per-role fan-out** (there is no on-domain
+  detail page): GET `/careers/` → `parseListing` anchors on each
+  `a[href*="indeed.com/job/"]` "Apply Now" link (which naturally skips the
+  section header and newsletter blocks), de-dupes by Indeed slug, and reads the
+  `<h3>` title + `.subheading` blurb from the same `.pr-10.py-10` card.
+- **Why empty fields are expected.** This is the deliberate "get the minimal
+  info they show and accept empty fields" case. The site states no salary, no
+  posted date, no employment type, so `compensation` is omitted and
+  `datePosted`/`employmentType`/`jobType` are left unset — nothing is
+  fabricated.
+- **Mapping.** `id` = `iperionx-<indeed-slug>`; `companyName` = `IperionX`;
+  `jobUrl` = `applyUrl` = the Indeed job URL (never fetched); `companyUrl` =
+  `/careers/`; `title` = the `<h3>` with its trailing " - {location}" suffix
+  removed (`Production Supervisor - Night - Virginia` →
+  `Production Supervisor - Night`); `description` = the short blurb → markdown;
+  `location` = the per-role stated `Virginia` via `parseLocationList([...], {
+  allowBareStateProvince: true })` (Spec 5060) → `{ state: 'VA' }` — never the
+  `Charlotte, NC` corporate HQ; `isRemote` = `false`; `emails` = `[]`; no
+  `jobFunction`. No editorial filtering; asserts no fixed count (6 live now).
+- **Depends on Spec 5060** (shared opt-in bare state/province classification):
+  the plugin opts into `allowBareStateProvince` so the bare `Virginia` suffix is
+  filed as `{ state: 'VA' }` instead of a city — resolved centrally, not with a
+  plugin-local state map.
+- **Registration.** Site enum, `ALL_SOURCE_MODULES`, tsconfig paths, jest
+  moduleNameMapper. No new dependency.
+- **Tests.** Fixture-based unit tests over captured careers HTML (6 tests:
+  enumeration + deduped Indeed apply URLs, title location-suffix strip + blurb
+  markdown, per-role `Virginia` → `{ state: 'VA' }` location, empty unstated
+  fields, input filters, empty listing). Package typecheck clean (only the known
+  cross-package TS6059 rootDir noise, same as every plugin).
+
+---
 ## 2026-07-14 — Spec 5057 — source-company-flymotion (Webflow careers)
 
 **Change:** New single-company `source-company-flymotion` plugin for FLYMOTION
