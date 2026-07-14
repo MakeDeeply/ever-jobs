@@ -22,9 +22,9 @@ enforces `min < max`. A posting that states a **single** bound is dropped:
 - upper-only: `"Up to $90,000"`, `"$60,000 or less"`
 
 These are real, employer-published figures (e.g. Spec 5057 FLYMOTION's live role
-states `Pay: From $48,000.00 per year`). Callers currently either lose the number
-or hand-roll a min-only fallback locally (as Spec 5057 initially did), which
-invites drift and duplicates parsing logic that belongs in the shared helper.
+states `Pay: From $48,000.00 per year`). Without shared support such a figure is
+simply lost — or would have to be worked around in individual plugins,
+duplicating parsing logic that belongs in the shared helper.
 
 ## Scope
 

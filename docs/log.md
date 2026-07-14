@@ -24,9 +24,9 @@ a one-sided figure is no longer dropped or worked around locally.
   prefix/suffix/bare cascade captures two numbers around a dash and the bounds
   check enforces `min < max`. A posting stating just one bound — lower-only
   (`"From $48,000 per year"`, `"$120,000+"`, `"at least $90k"`) or upper-only
-  (`"Up to $90,000"`, `"$60,000 or less"`) — returned nothing, so Spec 5057
-  (FLYMOTION) had to hand-roll a plugin-local min-only fallback. This lifts the
-  behaviour into the shared helper where it belongs.
+  (`"Up to $90,000"`, `"$60,000 or less"`) — returned nothing. Handling it in
+  the shared helper means single-bound pay is parsed once, centrally, rather than
+  lost or worked around in individual plugins.
 - **How.** New module-private `matchSingleBoundSalary(salaryStr, symbolAlt,
   numSrc)` runs **only after** the range cascade misses → two-ended behaviour is
   byte-for-byte unchanged (every existing fixture green). Sets only the stated
