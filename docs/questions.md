@@ -10,6 +10,42 @@
 
 ---
 
+## Q-087 — successfactors-csb: portal base as origin, and custom-domain detection
+
+**Context:** Spec 5055 (CSB read path for `source-ats-successfactors`). The CSB
+reader resolves the portal base as the **origin** of `companyUrl`
+(`new URL(companyUrl).origin`) and fetches `/tile-search-results/` and
+`/job/{slug}/{jobId}/` from there. Two loose ends:
+
+1. **Sub-path-hosted portals.** Some CSB instances are served under a path
+   (`example.com/careers/...`) rather than at the host root. Taking only the
+   origin would drop the path prefix and 404 the tile endpoint.
+2. **Detection.** A custom-domain CSB portal (e.g. `careers.example.com`) carries
+   no `successfactors` in its hostname — the ATS fingerprints
+   (`careerN.successfactors.com`, `company=C<digits>P`, `/tile-search-results/`,
+   `data-careersite-propertyid`) live only in the page HTML. Deciding *that a
+   given careers URL is SuccessFactors CSB* (and recovering `{instance}:{companyId}`)
+   is an upstream-pipeline concern, out of scope for this plugin, which assumes it
+   is already routed the portal URL.
+
+**Options:**
+
+- **A. Origin-only base + `htmlLooksLikeCsb` helper exposed, defer sub-path
+  handling (chosen).** Covers the common root-hosted case (the observed tenants);
+  ship `htmlLooksLikeCsb` (≥2 content fingerprints, or one plus a
+  `careerN.successfactors.com` reference) for the upstream detector to reuse.
+- **B. Accept a full base path in `companyUrl`.** Preserve the path when the URL
+  points below the root. More general, but no confirmed sub-path tenant to
+  validate against yet.
+- **C. Auto-follow a marketing page to the real portal.** Convenient but
+  speculative; belongs in the upstream career-page resolver, not the harvester.
+
+**Default — proceeding (A).** Origin base matches every observed CSB tenant;
+`htmlLooksLikeCsb` gives the upstream detector a reusable fingerprint. Revisit B
+if a sub-path-hosted CSB portal appears.
+
+---
+
 ## Q-086 — gusto-hosted: board/posting HTML shape unverified live (Cloudflare)
 
 **Context:** Spec 5054 (new `source-ats-gusto-hosted`). The Gusto-hosted board
