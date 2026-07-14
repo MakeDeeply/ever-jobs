@@ -15,6 +15,49 @@
 
 ---
 
+## 2026-07-14 — Spec 5057 — source-company-flymotion (Webflow careers)
+
+**Change:** New single-company `source-company-flymotion` plugin for FLYMOTION
+(`flymotionus.com`, public-safety drone & training).
+
+- **Site.** Custom **Webflow** careers site, **no ATS**, no external board.
+  Applying is an embedded **HubSpot form** (`share.hsforms.com/...`) — an
+  application-capture widget, not a job board/API, so there is nothing to route
+  to a shared ATS reader. Fully server-rendered (`/careers` 301s to
+  `www.flymotionus.com/company/careers`, no JS challenge) → plain HTTP + Cheerio,
+  no headless browser. Kept a **company plugin** (like Specs
+  5042/5045/5046/5047/5048/5049/5050/5051/5052/5053/5056).
+- **Read.** Two-step: (1) GET `/company/careers` → `parseListing` enumerates each
+  `.careers-job-listing-panel` (its `<a href="/jobs/{slug}">`, de-duped by slug)
+  with the card's title, stated location badge, and employment-type detail;
+  (2) GET each `/jobs/{slug}` (bounded `Promise.allSettled` fan-out) →
+  `parseDetail` reads the `<h1>`, the `.w-richtext` block into a markdown
+  description, and the labelled detail cards (`Job Type` / `Location` /
+  `Posted`), plus the stated pay from the rich-text `Pay:` section. Detail
+  failure → role still emits from listing fields (title/location/type) with a
+  null description.
+- **Mapping.** `id` = `flymotion-<slug>`; `companyName` = `FLYMOTION`; `jobUrl` =
+  `applyUrl` = `/jobs/{slug}` detail page (the HubSpot form lives there);
+  `companyUrl` = `/company/careers`; `location` = per-role stated value
+  (`Tampa, FL`) via `parseLocationList`; `employmentType`/`jobType` from the
+  `Job Type` card (`Full-Time` → `Full-time`/`JobType.FULL_TIME` via
+  `getJobTypeFromString`); `datePosted` from the `Posted` card (null if
+  unparseable); `compensation` from the stated `Pay:` amount via the shared
+  `salaryToCompensation` — which as of Spec 5058 parses a single "From $48,000
+  per year" as a **min-only** `CompensationDto` (no plugin-local fallback);
+  omitted if none stated; `isRemote` = `false`; `emails` = `[]`; no
+  `jobFunction`. No editorial filtering; asserts no fixed count.
+- **Depends on Spec 5058** (shared single-bound salary parsing) — Q-089 resolved
+  as C: the plugin no longer hand-rolls a min-only regex.
+- **Registration.** All four places (Site enum, `ALL_SOURCE_MODULES`, tsconfig
+  paths, jest moduleNameMapper). No new dependency.
+- **Tests.** 8 fixture-based unit tests (enumeration + on-page apply, per-role
+  `Tampa, FL` location, structured detail cards (type/jobType/date), single-bound
+  pay via the shared helper, JD from `.w-richtext`, detail-unavailable
+  degradation, input filters, empty listing).
+
+---
+
 ## 2026-07-14 — Spec 5058 — single-bound salary parsing (lower-only / upper-only)
 
 **Change:** Teach the shared salary parser to accept a **single stated bound**, so

@@ -2110,6 +2110,8 @@ export enum Site {
   GUSTO_HOSTED = 'gusto_hosted',
   // Phase 985: Spec 5056 — ReElement Technologies (reelementtech.com) company careers plugin (Webflow CMS listing + /jobs/<slug> detail)
   REELEMENTTECH = 'reelementtech',
+  // Phase 986: Spec 5057 — FLYMOTION (flymotionus.com) company careers plugin (Webflow CMS listing + /jobs/<slug> detail; HubSpot apply form)
+  FLYMOTION = 'flymotion',
   // Phase 970: Spec 976 — Source Company Plugin: Airwallex
   AIRWALLEX = 'airwallex',
   // Phase 971: Spec 977 — Source Company Plugin: Renuity

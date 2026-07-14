@@ -44,6 +44,36 @@ future spec if real sources demand them.
 
 ---
 
+## Q-089 — flymotion: single-amount ("From $X per year") compensation
+
+**Context:** Spec 5057 (`source-company-flymotion`, custom Webflow careers). The
+one live role (`Event Coordinator`, `Tampa, FL`, `Full-Time`) states pay in the
+rich-text body as **`Pay: From $48,000.00 per year`** — a single lower-bound
+amount, not a range. The shared `salaryToCompensation` / `extractSalary` helper
+originally required a **two-ended range** (min *and* max, `min < max`), so a
+single stated amount yielded `null`. The employer clearly states the figure, so
+dropping it loses real data.
+
+**Options:**
+
+- **A. Min-only `CompensationDto` fallback in the plugin.** A local regex in the
+  plugin emitting `new CompensationDto({ interval, minAmount })` when the shared
+  helper returns `null`. Honest to the source, but duplicates salary parsing that
+  belongs in the shared layer.
+- **B. Omit compensation entirely.** Would silently discard a figure the employer
+  explicitly publishes.
+- **C. Extend the shared helper to accept single bounds (chosen).** Generalise
+  `extractSalary` to parse a lower-only / upper-only figure so every plugin
+  benefits and no adapter hand-rolls salary logic.
+
+**Resolution:** **C — resolved (Spec 5058).** The shared helper now parses a
+single stated bound (see Q-090), so FLYMOTION's `compensationFromPay` calls
+`salaryToCompensation(payText, { interval })` directly with **no** plugin-local
+fallback. The interval is `YEARLY` unless the pay text says hourly (`per hour` /
+`/hr`).
+
+---
+
 ## Q-088 — reelementtech: live role count and Webflow selector durability
 
 **Context:** Spec 5056 (`source-company-reelementtech`, custom Webflow careers).
