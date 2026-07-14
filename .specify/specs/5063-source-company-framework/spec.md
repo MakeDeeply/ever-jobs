@@ -48,7 +48,7 @@ Plain-HTTP fetch (no headless browser — server-rendered Framer). Two steps, bo
 - **No generic-email harvesting.** The site footer shows a generic `contact@framework.co` address; it is **not** harvested as a job email — `emails` = `[]`.
 - **No fabricated fields.** `employmentType` / `jobType` / `datePosted` are left null (none stated); the HQ is never synthesized (the detail page states the real `Los Angeles, CA` location).
 - **No plugin-local salary logic.** The salary range is resolved via the shared `salaryToCompensation` (Spec 5058), not a plugin-local parser. The stated `+` (open-ended marker) and `| Generous Equity` note are not modeled as additional structured compensation — the value is the `$150k-$200k` annual range.
-- **No editorial filtering / fixed count.** Every live role is ingested. The upstream registry row reads `1 job`, but the live page lists **two** roles (Senior Software Engineer, Senior Mechanical Engineer); the plugin enumerates whatever the board links and never hardcodes a count.
+- **No editorial filtering / fixed count.** Every live role the board links is ingested (two at implementation time: Senior Software Engineer, Senior Mechanical Engineer). The plugin enumerates whatever `/hiring` links and never hardcodes a count.
 
 ## Contracts
 
@@ -62,7 +62,7 @@ Plain-HTTP fetch (no headless browser — server-rendered Framer). Two steps, bo
 Fixture-based unit tests over the captured `/hiring` + two `/jobs/{slug}` detail pages (the detail fetch seam throws if any non-`framework.co` URL is requested, proving nothing off-domain is fetched):
 
 - module resolves through NestJS DI; `Site.FRAMEWORK === 'framework'`
-- both live roles enumerated and deduped despite the stale `1 job` registry count, with `framework-<slug>` id, `Site.FRAMEWORK`, company name, `emails=[]`
+- both live roles enumerated and deduped, with `framework-<slug>` id, `Site.FRAMEWORK`, company name, `emails=[]`
 - `jobUrl` is the on-domain `/jobs/{slug}` page; `applyUrl` is the shared `/apply` form; `jobUrl` is never an Indeed URL
 - `location` is `Los Angeles, CA` (city `Los Angeles` / state `CA`); `isRemote=false`
 - stated `$150k-$200k+ | Generous Equity` → yearly compensation, min 150000 / max 200000 / USD (shared helper)

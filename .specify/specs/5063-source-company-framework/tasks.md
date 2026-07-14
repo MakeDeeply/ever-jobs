@@ -6,7 +6,7 @@
 - [x] `framework.service.ts` — two-step listing (slug enumeration) + detail parse (title/location/salary/JD sections → markdown), mapping (jobUrl on-domain `/jobs/{slug}` / applyUrl shared `/apply`), input filters
 - [x] On-domain only: nothing off-domain is fetched; generic `contact@framework.co` is not harvested (`emails=[]`)
 - [x] Location: `Los Angeles, CA` via `parseLocationList`; `isRemote=false`; compensation via shared `salaryToCompensation` (yearly `$150k-$200k`)
-- [x] Count: enumerate both live roles despite the stale `1 job` registry row; no fixed count
+- [x] Count: enumerate every role `/hiring` links (two live at implementation time); no fixed count
 - [x] Register `Site.FRAMEWORK = 'framework'`
 - [x] Append `FrameworkModule` to `ALL_SOURCE_MODULES`
 - [x] Add tsconfig path alias + jest `moduleNameMapper`

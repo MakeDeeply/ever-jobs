@@ -32,9 +32,9 @@ Automation (`framework.co`, automated apparel-manufacturing facilities), a
   / `[data-framer-name="Salary"]` named containers, and the JD from the named
   rich-text sections (`Who we are` / `Life at Frameworks` / `Requirements`) →
   markdown.
-- **Count.** Two live roles (Senior Software Engineer, Senior Mechanical
-  Engineer) despite the stale `1 job` registry row — the plugin ingests whatever
-  the board links and never hardcodes a count.
+- **Count.** Two live roles at implementation time (Senior Software Engineer,
+  Senior Mechanical Engineer) — the plugin ingests whatever `/hiring` links and
+  never hardcodes a count.
 - **Field mapping.** `id` = `framework-<slug>`; `companyName` =
   `Framework Automation`; `companyUrl` = `/hiring`; `jobUrl` = the on-domain
   `/jobs/{slug}` detail page (canonical); `applyUrl` = the shared on-domain
