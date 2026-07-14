@@ -15,6 +15,36 @@
 
 ---
 
+## 2026-07-14 — Spec 5056 — source-company-reelementtech (Webflow careers)
+
+**Change:** New single-company `source-company-reelementtech` plugin for ReElement
+Technologies (`reelementtech.com`, rare-earth & critical-minerals processing).
+
+- **Site.** Custom **Webflow** careers site, no ATS, no external board. Fully
+  server-rendered (`reelementtech.com` 301s to `www`, no JS challenge) → plain
+  HTTP + Cheerio, no headless browser. Kept a **company plugin** (like Specs
+  5042/5045/5046/5047/5048/5049/5050/5051/5052/5053).
+- **Read.** Two-step: (1) GET `/careers` → `parseListing` enumerates each
+  `<a class="job-heading" href="/jobs/{slug}">` (de-duped by slug) with the
+  stated location from the sibling paragraph of the same card; (2) GET each
+  `/jobs/{slug}` (bounded `Promise.allSettled` fan-out) → `parseDetail` reads the
+  `.w-richtext` block into a markdown description (the on-page Webflow apply form
+  sits outside `.w-richtext`, so it is naturally excluded). Detail failure →
+  role still emits from listing fields with a null description.
+- **Mapping.** `id` = `reelementtech-<slug>`; `companyName` = `ReElement
+  Technologies`; `jobUrl` = `applyUrl` = `/jobs/{slug}` detail page; `companyUrl`
+  = `/careers`; `location` = each card's stated value (`Marion, IN`, the
+  brownfield facility — never the `Fishers, IN` corporate-HQ footer address);
+  `isRemote` = `false`; `datePosted` = `null`; `compensation` omitted; `emails`
+  = `[]`; no `jobFunction`. No editorial filtering; asserts no fixed count.
+- **Registration.** All four places (Site enum, `ALL_SOURCE_MODULES`, tsconfig
+  paths, jest moduleNameMapper). No new dependency.
+- **Tests.** 6 fixture-based unit tests (enumeration + on-page apply, per-role
+  `Marion, IN` location vs. HQ footer, JD from `.w-richtext`, detail-unavailable
+  degradation, input filters, empty listing).
+
+---
+
 ## 2026-07-14 — Spec 5055 — source-ats-successfactors Career Site Builder reader
 
 **Change:** Extended `source-ats-successfactors` with a **Career Site Builder
