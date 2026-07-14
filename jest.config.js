@@ -1843,6 +1843,7 @@ module.exports = {
     '^@ever-jobs/source-company-truemetalsupply$': '<rootDir>/packages/plugins/source-company-truemetalsupply/src/index.ts',
     '^@ever-jobs/source-company-framework$': '<rootDir>/packages/plugins/source-company-framework/src/index.ts',
     '^@ever-jobs/source-company-terminusindustrials$': '<rootDir>/packages/plugins/source-company-terminusindustrials/src/index.ts',
+    '^@ever-jobs/source-company-mara$': '<rootDir>/packages/plugins/source-company-mara/src/index.ts',
     '^@ever-jobs/source-tesla$': '<rootDir>/packages/plugins/source-tesla/src/index.ts',
     '^@ever-jobs/source-tesla-playwright$': '<rootDir>/packages/plugins/source-tesla-playwright/src/index.ts',
   },
