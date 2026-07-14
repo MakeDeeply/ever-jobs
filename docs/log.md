@@ -22,12 +22,11 @@ multi-tenant board product (`https://jobs.gusto.com/boards/<slug>`), distinct
 from `source-company-gusto` (Gusto, Inc.'s own Greenhouse-backed careers, left
 untouched).
 
-- **Why.** Fixes a vendor-token collision documented in the fetch1 investigation
-  `gusto-board-vendor-collision-investigation.md`: upstream labelled hosted
-  boards `gusto`, colliding with `Site.GUSTO` (the employer), so every hosted
-  tenant (`material.inc`, `naturaresources.com`) routed to the company plugin and
-  harvested Gusto, Inc.'s own ~79 postings — an identical job set with
-  `companyName = "Gusto"`.
+- **Why.** Fixes a vendor-token collision: an upstream harvesting pipeline
+  labelled hosted boards `gusto`, colliding with `Site.GUSTO` (the employer), so
+  every hosted tenant (`material.inc`, `naturaresources.com`) routed to the
+  company plugin and harvested Gusto, Inc.'s own ~79 postings — an identical job
+  set with `companyName = "Gusto"`.
 - **Site.** `Site.GUSTO_HOSTED = 'gusto_hosted'` (category `ats`, `isAts: true`).
 - **Fetch (Cloudflare).** Board + detail hybrid (Specs 5040/5041) but
   browser-fetched like Spec 5047: both pages sit behind a Cloudflare managed
@@ -55,8 +54,8 @@ untouched).
   challenge loops on the Devin VM's datacenter IP (logged in `questions.md`);
   detail parsing is anchored on the stable JSON-LD contract, board enumeration on
   the stable `/postings/{slug}` link shape.
-- **fetch1 (other repo).** Host-token relabel `gusto → gusto_hosted` routes
-  boards to this plugin; tracked in fetch1, not here.
+- **Upstream pipeline.** A host-token relabel `gusto → gusto_hosted` routes
+  boards to this plugin; out of scope here.
 
 ---
 

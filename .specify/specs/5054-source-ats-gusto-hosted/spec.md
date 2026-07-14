@@ -21,14 +21,13 @@ That plugin scrapes Gusto, Inc.'s OWN corporate careers — a single employer,
 backed by a hardcoded Greenhouse board (`api.greenhouse.io/v1/boards/gusto`) —
 and correctly ignores any tenant slug. It was never a multi-tenant board reader.
 
-The upstream fetch1 pipeline detected `jobs.gusto.com/boards/<slug>` correctly as
-the Gusto-hosted board product but labelled it with the host token `gusto`, which
-collided with `Site.GUSTO` (the employer). Every hosted tenant therefore routed
-to `source-company-gusto` and harvested Gusto, Inc.'s own ~79 postings —
+The upstream harvesting pipeline detected `jobs.gusto.com/boards/<slug>` correctly
+as the Gusto-hosted board product but labelled it with the host token `gusto`,
+which collided with `Site.GUSTO` (the employer). Every hosted tenant therefore
+routed to `source-company-gusto` and harvested Gusto, Inc.'s own ~79 postings —
 attributing them to the tenant (`companyName = "Gusto"`, all URLs
 `job-boards.greenhouse.io/gusto/...`). Two unrelated tenants (`material.inc`,
-`naturaresources.com`) returned an **identical** job set. See the fetch1
-investigation `gusto-board-vendor-collision-investigation.md`.
+`naturaresources.com`) returned an **identical** job set.
 
 The fix is two-part (this spec is the ever-jobs half):
 
@@ -36,7 +35,7 @@ The fix is two-part (this spec is the ever-jobs half):
   (`Site.GUSTO_HOSTED = 'gusto_hosted'`, category `ats`) that consumes the tenant
   slug and scrapes that tenant's own board. `source-company-gusto` is left
   untouched.
-- **fetch1** (out of scope here, tracked in that repo): relabel the host token
+- **upstream pipeline** (out of scope here): relabel the host token
   `gusto → gusto_hosted` so boards route to this plugin, never the employer one.
 
 ## Scope

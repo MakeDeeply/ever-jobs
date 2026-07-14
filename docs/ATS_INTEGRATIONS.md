@@ -755,7 +755,7 @@ Austrian ATS (part of the onlyfy/XING group). The candidate portal is server-ren
 
 ### Gusto Hosted
 
-Multi-tenant job-board product hosted by Gusto (the payroll/HR vendor) at `jobs.gusto.com` for other companies. **Distinct from `source-company-gusto`**, which scrapes Gusto, Inc.'s OWN Greenhouse-backed careers (a single employer) and is left untouched — the two share a vendor name but are different targets (Spec 5054; fetch1 `gusto-board-vendor-collision-investigation.md`).
+Multi-tenant job-board product hosted by Gusto (the payroll/HR vendor) at `jobs.gusto.com` for other companies. **Distinct from `source-company-gusto`**, which scrapes Gusto, Inc.'s OWN Greenhouse-backed careers (a single employer) and is left untouched — the two share a vendor name but are different targets (Spec 5054).
 
 - **Plugin**: `source-ats-gusto-hosted` (`Site.GUSTO_HOSTED = 'gusto_hosted'`)
 - **Method**: stealth headless browser (`BrowserPool.getPage({ proxy, stealth: true })`) → GET `/boards/{slug}` (enumerate `/postings/{postingSlug}` links) + GET `/postings/{postingSlug}` (bounded fan-out) → shared `parseJobPostingLd` (Spec 5022)

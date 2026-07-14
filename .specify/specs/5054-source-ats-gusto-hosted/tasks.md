@@ -11,8 +11,8 @@
 - [x] T1 — Confirm the target: Gusto-hosted multi-tenant boards
   (`jobs.gusto.com/boards/<slug>` + `/postings/<postingSlug>`), distinct from
   `source-company-gusto` (Gusto, Inc.'s own Greenhouse-backed careers). Root
-  cause + fix recorded in the fetch1 investigation
-  `gusto-board-vendor-collision-investigation.md`.
+  cause: an upstream harvesting pipeline labelled hosted boards with the `gusto`
+  host token, colliding with `Site.GUSTO` (the employer).
 - [x] T2 — Register `Site.GUSTO_HOSTED = 'gusto_hosted'` and scaffold the package
   (`packages/plugins/source-ats-gusto-hosted/`); wire the four registration
   points (enum, `packages/plugins/index.ts`, `tsconfig.base.json`,

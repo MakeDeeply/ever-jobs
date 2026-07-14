@@ -15,8 +15,7 @@
  * IMPORTANT — this is NOT `source-company-gusto`. That plugin scrapes Gusto,
  * Inc.'s OWN corporate careers (a single employer, Greenhouse-backed). This
  * plugin scrapes the per-tenant boards Gusto HOSTS for other companies. The two
- * share the vendor name but are different targets; see Spec 5054 and the fetch1
- * investigation `gusto-board-vendor-collision-investigation.md`.
+ * share the vendor name but are different targets; see Spec 5054.
  *
  * Both pages sit behind a Cloudflare managed challenge, so they are loaded with
  * the shared stealth headless browser (`BrowserPool`), the same approach as
