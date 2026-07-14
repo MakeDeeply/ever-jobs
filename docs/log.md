@@ -15,6 +15,42 @@
 
 ---
 
+## 2026-07-14 — Spec 5058 — single-bound salary parsing (lower-only / upper-only)
+
+**Change:** Teach the shared salary parser to accept a **single stated bound**, so
+a one-sided figure is no longer dropped or worked around locally.
+
+- **Why.** `extractSalary` only recognised a two-ended range (`min – max`): the
+  prefix/suffix/bare cascade captures two numbers around a dash and the bounds
+  check enforces `min < max`. A posting stating just one bound — lower-only
+  (`"From $48,000 per year"`, `"$120,000+"`, `"at least $90k"`) or upper-only
+  (`"Up to $90,000"`, `"$60,000 or less"`) — returned nothing, so Spec 5057
+  (FLYMOTION) had to hand-roll a plugin-local min-only fallback. This lifts the
+  behaviour into the shared helper where it belongs.
+- **How.** New module-private `matchSingleBoundSalary(salaryStr, symbolAlt,
+  numSrc)` runs **only after** the range cascade misses → two-ended behaviour is
+  byte-for-byte unchanged (every existing fixture green). Sets only the stated
+  `minAmount` / `maxAmount`; `compensationFromSalary` already emits a one-sided
+  `CompensationDto` (Spec 5018), so `salaryToCompensation` gains single-bound
+  support with no mapping change.
+- **Safety.** The amount must carry a currency symbol / ISO code, so bare prose
+  (`"at least 5 years"`) can't match. A numeric-boundary lookahead forces maximal
+  number matching (no `100` out of `100,000`); a range-tail lookahead refuses to
+  truncate a `"from $X to $Y"` range into a min-only floor (stays a no-match); a
+  scale-word lookahead blocks lifting `$5` out of `"from $5 million"`. The single
+  value is intervalled (hint else magnitude) and `[lowerLimit, upperLimit]`
+  bounds-checked exactly like a range end.
+- **Scope.** `packages/common` only (helper + tests) — no plugin, dependency, or
+  registration touched. Deferred shapes (`"to"`-ranges, symbol-less amounts under
+  a country hint) recorded in Q-090.
+- **Files.** `packages/common/src/utils/helpers.ts`,
+  `packages/common/__tests__/helpers.spec.ts`,
+  `.specify/specs/5058-salary-single-bound/{spec,plan,tasks}.md`, `docs/index.md`,
+  `docs/questions.md` (Q-090).
+- **Tests.** `npx jest packages/common` → 200 green (+13 new single-bound cases).
+
+---
+
 ## 2026-07-14 — Spec 5056 — source-company-reelementtech (Webflow careers)
 
 **Change:** New single-company `source-company-reelementtech` plugin for ReElement
