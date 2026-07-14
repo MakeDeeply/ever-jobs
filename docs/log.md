@@ -15,6 +15,49 @@
 
 ---
 
+## 2026-07-14 — Spec 5064 — source-company-terminusindustrials (Next.js SSR single-page /careers; inline JD; stated Austin TX + Full-time; apply -> on-page modal form)
+
+**Change:** New single-company `source-company-terminusindustrials` plugin for
+Terminus Industrials (`terminusindustrials.com`, a defense-grade advanced
+manufacturer of large power transformers), a **custom Next.js** careers site
+with **no ATS**.
+
+- **Why plain HTTP.** The page is server-rendered Next.js (Vercel + Cloudflare),
+  so the role title, department, location, employment type, and full JD are all
+  in the server-rendered HTML of `/careers` — plain HTTP + Cheerio, no headless
+  browser and no per-role detail fan-out (unlike 5062/5063).
+- **Single step, one page.** GET `/careers` enumerates each role as a
+  `Careers_card__*` block. CSS-module class names are hashed
+  (`Careers_card__cQ1y`), but the `Careers_<name>__` prefix is stable across
+  builds, so selectors match on that prefix via `[class*="Careers_<name>__"]`.
+  Per card: title (`Careers_cardTitle__*`, incl. the qualifier), the meta chips
+  (`Careers_metaItem__*`) classified by shape (a `City, ST` chip is the location,
+  a job-type chip is the employment type, the remaining chip is the department —
+  order not assumed), and the inline JD sections (`Careers_section__*`: Job
+  Summary / Key Responsibilities / Desired Qualifications) → markdown.
+- **Field mapping.** `id` = `terminusindustrials-<title-slug>` (the site exposes
+  no per-role URL slug to reuse); `companyName` = `Terminus Industrials`;
+  `companyUrl` = `/careers`; `jobUrl` = `/careers` (no per-role detail route, so
+  the careers page is the canonical URL); `applyUrl` = null (applying is an
+  on-page modal form with no standalone URL); `location` = `Austin, TX` (stated)
+  via shared `parseLocationList`; `employmentType` = `Full-time` and `jobType` =
+  `FULL_TIME` via `getJobTypeFromString`; `department` = `Engineering`;
+  `isRemote` = false; `compensation` / `datePosted` = empty (none stated);
+  `emails` = `[]`.
+- **Non-goals.** No Indeed / off-domain URL exists or is fetched. The role's JD
+  is also offered as an on-domain PDF; the HTML already carries the same JD, so
+  the PDF is not fetched/parsed. No fields fabricated (no salary/date stated); no
+  email harvested.
+- **Registration + tests.** Registered in all four places (Site enum,
+  `ALL_SOURCE_MODULES`, tsconfig paths, jest moduleNameMapper). No new
+  dependency. 8 fixture-based unit tests over the captured `/careers` page (+ an
+  empty-board fixture): DI + Site enum, on-domain role mapping (title-derived id,
+  `/careers` jobUrl, null applyUrl, no compensation, no Indeed), `Austin, TX`
+  location + not-remote, `Full-time` → `FULL_TIME` + department, JD markdown,
+  input filters, empty board.
+
+---
+
 ## 2026-07-14 — Spec 5063 — source-company-framework (Framer SSG two-step; on-domain /jobs/{slug} + shared /apply; stated LA location + $150k-$200k range)
 
 **Change:** New single-company `source-company-framework` plugin for Framework

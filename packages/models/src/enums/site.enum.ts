@@ -2120,6 +2120,8 @@ export enum Site {
   TRUEMETALSUPPLY = 'truemetalsupply',
   // Phase 990: Spec 5063 — Framework Automation (framework.co) company careers plugin (Framer SSG; two-step /hiring -> /jobs/{slug}; stated location + salary; apply -> shared /apply form)
   FRAMEWORK = 'framework',
+  // Phase 991: Spec 5064 — Terminus Industrials (terminusindustrials.com) company careers plugin (Next.js SSR; single-page /careers with inline JD; stated location + employment type; apply -> on-page modal form)
+  TERMINUSINDUSTRIALS = 'terminusindustrials',
   // Phase 970: Spec 976 — Source Company Plugin: Airwallex
   AIRWALLEX = 'airwallex',
   // Phase 971: Spec 977 — Source Company Plugin: Renuity
