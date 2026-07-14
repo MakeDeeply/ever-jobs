@@ -1,6 +1,11 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
-import { JobType, ScraperInputDto, Site } from '@ever-jobs/models';
+import {
+  CompensationInterval,
+  JobType,
+  ScraperInputDto,
+  Site,
+} from '@ever-jobs/models';
 import { FlymotionService } from '../src/flymotion.service';
 
 const FIXTURES = join(__dirname, 'fixtures');
@@ -72,13 +77,18 @@ describe('FlymotionService', () => {
     expect((job.datePosted as Date).getUTCFullYear()).toBe(2024);
   });
 
-  it('parses the stated pay into structured compensation', async () => {
+  it('parses the stated single-bound pay via the shared helper (min-only)', async () => {
+    // "Pay: From $48,000.00 per year" is a lower bound only. The shared
+    // salaryToCompensation (Spec 5058) yields minAmount with no fabricated
+    // ceiling — the plugin no longer hand-rolls a local fallback.
     const svc = makeService();
     const { jobs } = await svc.scrape(new ScraperInputDto());
 
     const comp = jobs[0].compensation;
     expect(comp).toBeTruthy();
     expect(comp?.minAmount).toBe(48000);
+    expect(comp?.maxAmount).toBeUndefined();
+    expect(comp?.interval).toBe(CompensationInterval.YEARLY);
     expect(comp?.currency).toBe('USD');
   });
 

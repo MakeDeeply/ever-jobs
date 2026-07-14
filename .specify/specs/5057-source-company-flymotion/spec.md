@@ -34,7 +34,7 @@ The listing is the source of *which roles are open* (plus a location/type fallba
     - `location` — the per-role stated location (e.g. `Tampa, FL`) via `parseLocationList`
     - `employmentType` / `jobType` — from the stated `Job Type` card (`Full-Time` → `Full-time` / `JobType.FULL_TIME`)
     - `datePosted` — the stated `Posted` card date (null if absent/unparseable)
-    - `compensation` — the stated `Pay:` amount (a range via the shared salary parser; a single "From $X per year" as a min-only `CompensationDto`); omitted if none stated
+    - `compensation` — the stated `Pay:` amount via the shared salary parser `salaryToCompensation`, which as of Spec 5058 handles both a range and a single "From $X per year" (→ min-only `CompensationDto`); omitted if none stated
     - `isRemote` — `false` (on-site)
     - `emails` — `[]`
 
@@ -49,7 +49,7 @@ The listing is the source of *which roles are open* (plus a location/type fallba
 ## Contracts
 
 - Implements `IScraper` via the `@SourcePlugin` decorator (`Site.FLYMOTION`).
-- HTTP goes through the shared `@ever-jobs/common` client; location via `parseLocationList`; description via `markdownConverter`; job type via `getJobTypeFromString`; ranged pay via `salaryToCompensation`.
+- HTTP goes through the shared `@ever-jobs/common` client; location via `parseLocationList`; description via `markdownConverter`; job type via `getJobTypeFromString`; pay (range or single bound) via `salaryToCompensation` (single-bound support added in Spec 5058).
 - Per-role detail fetches fan out with `Promise.allSettled` (bounded, one request per role).
 
 ## Test plan

@@ -275,25 +275,17 @@ export class FlymotionService implements IScraper {
   }
 
   /**
-   * Resolve stated pay into structured compensation. A two-ended range goes
-   * through the shared salary parser; a single stated amount ("From $48,000 per
-   * year") that the shared parser cannot represent is mapped to a min-only
-   * {@link CompensationDto}. Returns null when no amount is stated.
+   * Resolve stated pay into structured compensation via the shared salary
+   * parser, which handles both a two-ended range and a single stated bound
+   * ("From $48,000 per year" → min-only) as of Spec 5058. Returns null when no
+   * amount is stated.
    */
   private compensationFromPay(payText: string | null): CompensationDto | null {
     if (!payText) return null;
     const interval = /per\s+hour|hourly|\/\s*hr\b/i.test(payText)
       ? CompensationInterval.HOURLY
       : CompensationInterval.YEARLY;
-
-    const ranged = salaryToCompensation(payText, { interval });
-    if (ranged) return ranged;
-
-    const single = payText.match(/\$\s?(\d[\d,]*(?:\.\d+)?)/);
-    if (!single) return null;
-    const amount = Number(single[1].replace(/,/g, ''));
-    if (!Number.isFinite(amount) || amount <= 0) return null;
-    return new CompensationDto({ interval, minAmount: amount });
+    return salaryToCompensation(payText, { interval });
   }
 
   private normalizeEmploymentType(value: string | null): string | null {
