@@ -25,7 +25,6 @@
 
 - Framer markup is bespoke; the detail Location/Salary named containers and the JD section names may drift on a redesign → the affected field degrades (description → null, or salary/location → null) and the role still emits with its slug title + on-domain URLs. Selectors validated against captured fixtures for both live roles.
 - Salary is stated as `$150k-$200k+ | Generous Equity`; the shared `salaryToCompensation` reads the `$150k-$200k` annual range and ignores the `+` / equity note. The `+` open-ended marker and equity are not modeled as extra structured compensation.
-- Live count varies (the site currently lists two roles). The plugin ingests whatever `/hiring` links and never hardcodes a count.
 - The site footer shows a generic `contact@framework.co`; it is not harvested — `emails` = `[]`.
 
 ## Dependencies

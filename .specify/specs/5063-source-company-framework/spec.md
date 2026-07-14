@@ -48,7 +48,6 @@ Plain-HTTP fetch (no headless browser — server-rendered Framer). Two steps, bo
 - **No generic-email harvesting.** The site footer shows a generic `contact@framework.co` address; it is **not** harvested as a job email — `emails` = `[]`.
 - **No fabricated fields.** `employmentType` / `jobType` / `datePosted` are left null (none stated); the HQ is never synthesized (the detail page states the real `Los Angeles, CA` location).
 - **No plugin-local salary logic.** The salary range is resolved via the shared `salaryToCompensation` (Spec 5058), not a plugin-local parser. The stated `+` (open-ended marker) and `| Generous Equity` note are not modeled as additional structured compensation — the value is the `$150k-$200k` annual range.
-- **No editorial filtering / fixed count.** Every live role the board links is ingested (two at implementation time: Senior Software Engineer, Senior Mechanical Engineer). The plugin enumerates whatever `/hiring` links and never hardcodes a count.
 
 ## Contracts
 

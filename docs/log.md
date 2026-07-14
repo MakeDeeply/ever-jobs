@@ -33,8 +33,7 @@ Automation (`framework.co`, automated apparel-manufacturing facilities), a
   rich-text sections (`Who we are` / `Life at Frameworks` / `Requirements`) →
   markdown.
 - **Count.** Two live roles at implementation time (Senior Software Engineer,
-  Senior Mechanical Engineer) — the plugin ingests whatever `/hiring` links and
-  never hardcodes a count.
+  Senior Mechanical Engineer); the plugin ingests whatever `/hiring` links.
 - **Field mapping.** `id` = `framework-<slug>`; `companyName` =
   `Framework Automation`; `companyUrl` = `/hiring`; `jobUrl` = the on-domain
   `/jobs/{slug}` detail page (canonical); `applyUrl` = the shared on-domain
