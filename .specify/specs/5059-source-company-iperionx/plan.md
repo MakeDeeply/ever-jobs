@@ -1,0 +1,29 @@
+# Plan: 5059 — source-company-iperionx
+
+## Phases
+
+1. **Scaffold plugin package** `packages/plugins/source-company-iperionx`
+    - `package.json`, `tsconfig.json`, `src/{index,iperionx.module,iperionx.service,iperionx.constants,iperionx.types}.ts`
+2. **Constants/types** — origin, careers URL, Indeed apply-link match + `/job/` path, defaults; single `IperionxOpening` interface (no detail type — the page is summary-only)
+3. **Service** — `IScraper.scrape`:
+    - fetch `/careers/` → `parseListing` (anchor on `a[href*="indeed.com/job/"]`, deduped by Indeed slug; card `<h3>` title + `.subheading` blurb via `.closest('.pr-10.py-10')`)
+    - `splitTitleLocation` — strip a trailing " - {location}" from the title
+    - `toJobPost` mapping (location via `parseLocationList`, description via `markdownConverter`; empty fields left unset)
+    - `applyInput` (searchTerm/location/isRemote/jobType filters + offset/resultsWanted)
+    - **no** per-role detail fetch (the "detail" is an off-site Indeed page, deliberately not read)
+4. **Register in 4 places** — `Site.IPERIONX`, `ALL_SOURCE_MODULES`, tsconfig path alias, jest `moduleNameMapper`
+5. **Tests** — fixture-based unit tests over the captured careers page
+6. **Docs** — `docs/index.md`, `docs/log.md` (top), `docs/questions.md`
+
+## Packages touched
+
+- `packages/plugins/source-company-iperionx` (new)
+- `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`
+- `docs/*`
+
+## Risks
+
+- WordPress markup is bespoke; the card selector (`.pr-10.py-10` container + `h3` + `.subheading`) may drift on a redesign → parser returns empty and logs a warning (never invents data). Selectors are validated against a captured fixture.
+- The page is **summary-only**: many fields are unavailable on-site and are intentionally left empty. This is by design (Q-091), not a parsing gap; the full JD lives on Indeed, which is out of scope.
+- Location is stated only as a bare state (`Virginia`). The shared `parseLocationList` surfaces it as the location token; it does not classify a bare state into the `state` field (see Q-091). Never substituted with the `Charlotte, NC` corporate HQ.
+- Live count varies (data row said 6). The plugin ingests whatever is live and asserts no count.

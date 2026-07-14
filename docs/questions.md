@@ -10,6 +10,42 @@
 
 ---
 
+## Q-091 — iperionx: summary-only careers board (details on Indeed)
+
+**Context:** Spec 5059 (`source-company-iperionx`, custom WordPress careers). The
+`/careers/` page is a **summary-only board** — each role shows only a title, a
+1–2 sentence blurb, and an "Apply Now" button that links **out to an Indeed job
+page** (`indeed.com/job/{slug}`). The full job detail (description, salary, dates,
+employment type) lives on Indeed. Two questions: (1) do we scrape Indeed to enrich
+the record, and (2) how do we represent the many fields the on-site summary does
+not state?
+
+**Options:**
+
+- **A. Scrape Indeed for full detail.** Richest record, but Indeed is a
+  third-party job board (not the employer's own surface), is explicitly
+  out-of-scope for this task, and is hostile to scraping. Rejected.
+- **B. Skip the company — too little on-site data.** Would drop 6 real, live
+  employer-published roles. Rejected.
+- **C. Ingest the on-site summary; accept empty fields (chosen).** Map only what
+  the employer states on its own page (title, short blurb, per-role location,
+  Indeed apply link) and leave the rest empty — no fabricated salary/date/type.
+  The Indeed URL is stored as the apply/job link only and is never fetched.
+
+**Resolution:** **C — resolved (Spec 5059).** Per the owner's instruction for this
+row ("get the minimal info they show and accept lots of empty fields; details are
+on Indeed but I do NOT want to scrape that"). So the plugin does a single
+`/careers/` fetch, no per-role fan-out, and emits `datePosted=null`, no
+`compensation`, and unset `employmentType`/`jobType`. Note on **location**: the
+site states only a bare state (`Virginia`) as a title suffix; the shared
+`parseLocationList` surfaces it as the location token but does not classify a
+bare state name into the `state` field (it lands as the location display value).
+That is acceptable for this summary-only source; a shared-parser change to
+recognize bare US state names is **not** made here (it would risk mislabelling
+city names like "Virginia, MN" across all plugins).
+
+---
+
 ## Q-090 — single-bound salary: scope of the shared parser extension (Spec 5058)
 
 **Context:** Spec 5058 teaches `extractSalary` to accept a single stated bound
