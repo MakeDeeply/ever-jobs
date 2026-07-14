@@ -10,6 +10,39 @@
 
 ---
 
+## Q-088 — reelementtech: live role count and Webflow selector durability
+
+**Context:** Spec 5056 (`source-company-reelementtech`, custom Webflow careers).
+Two loose ends surfaced while building:
+
+1. **Live count varies.** The seed data row noted 3 roles; the live `/careers`
+   currently lists 2 (`Human Resources (HR) Manager`, `Environmental, Health &
+   Safety (EHS) Manager`, both `Marion, IN`). The 3rd appears closed/removed
+   since capture. The plugin ingests whatever is live and asserts **no** fixed
+   count, so this needs no code change — noting it so a future "only 2, expected
+   3" observation isn't treated as a regression.
+2. **Bespoke Webflow selectors.** Enumeration keys on the site's own classes
+   (`a.job-heading`, the card wrapper `.brix---card---icon-left---content-right`,
+   the location paragraph `.brix---paragraph-default-12 p`) and the detail
+   `.w-richtext` block. A Webflow redesign could rename these.
+
+**Options:**
+
+- **A. Pin the current classes + graceful empty (chosen).** Parse the observed
+  markup; on a miss, log a warning and return `[]` (never invent data). Validated
+  against captured fixtures. Cheapest, matches the other single-company Webflow
+  plugins (Spec 5048).
+- **B. Generalize to any `/jobs/` anchor regardless of card class.** More
+  redesign-tolerant for enumeration, but loses the reliable per-card location
+  pairing (location would need a fuzzier sibling walk).
+- **C. Headless render + heuristic extraction.** Overkill — the site is fully
+  server-rendered; adds a browser dependency for no gain.
+
+**Default:** A (proceeding). Revisit only if the site is redesigned and the
+selectors stop matching (symptom: `no roles found on the careers page`).
+
+---
+
 ## Q-087 — successfactors-csb: portal base as origin, and custom-domain detection
 
 **Context:** Spec 5055 (CSB read path for `source-ats-successfactors`). The CSB

@@ -2108,6 +2108,8 @@ export enum Site {
   GALADYNE = 'galadyne',
   // Phase 984: Spec 5054 — Gusto-hosted multi-tenant job boards (jobs.gusto.com/boards/<slug>); distinct from GUSTO (Gusto, Inc.'s own careers)
   GUSTO_HOSTED = 'gusto_hosted',
+  // Phase 985: Spec 5056 — ReElement Technologies (reelementtech.com) company careers plugin (Webflow CMS listing + /jobs/<slug> detail)
+  REELEMENTTECH = 'reelementtech',
   // Phase 970: Spec 976 — Source Company Plugin: Airwallex
   AIRWALLEX = 'airwallex',
   // Phase 971: Spec 977 — Source Company Plugin: Renuity
