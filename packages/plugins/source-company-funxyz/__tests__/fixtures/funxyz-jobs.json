@@ -1,0 +1,62 @@
+[
+  {
+    "id": "a6764645-a33f-48e0-a82d-3496f9c8573d",
+    "text": "Backend Engineer",
+    "categories": {
+      "location": "New York, NY",
+      "allLocations": [
+        "New York, NY"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1747097798207,
+    "descriptionPlain": "Backend Engineer at Fun.xyz.",
+    "description": "<p>Backend Engineer at Fun.xyz.</p>",
+    "hostedUrl": "https://jobs.lever.co/funxyz/a6764645-a33f-48e0-a82d-3496f9c8573d",
+    "applyUrl": "https://jobs.lever.co/funxyz/a6764645-a33f-48e0-a82d-3496f9c8573d/apply"
+  },
+  {
+    "id": "006c67e4-cf9a-4644-85fb-9b4c314f1090",
+    "text": "Backend Engineer (Singapore)",
+    "categories": {
+      "location": "Singapore",
+      "allLocations": [
+        "Singapore"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1747098250045,
+    "descriptionPlain": "Backend Engineer (Singapore) at Fun.xyz.",
+    "description": "<p>Backend Engineer (Singapore) at Fun.xyz.</p>",
+    "hostedUrl": "https://jobs.lever.co/funxyz/006c67e4-cf9a-4644-85fb-9b4c314f1090",
+    "applyUrl": "https://jobs.lever.co/funxyz/006c67e4-cf9a-4644-85fb-9b4c314f1090/apply"
+  },
+  {
+    "id": "cd82743c-7ce6-4b78-89c9-bbd832e560d9",
+    "text": "Business Development Lead",
+    "categories": {
+      "location": "New York, NY",
+      "allLocations": [
+        "New York, NY"
+      ],
+      "department": "Sales and Client Success",
+      "team": "Sales and Client Success",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1767902465074,
+    "descriptionPlain": "Business Development Lead at Fun.xyz.",
+    "description": "<p>Business Development Lead at Fun.xyz.</p>",
+    "hostedUrl": "https://jobs.lever.co/funxyz/cd82743c-7ce6-4b78-89c9-bbd832e560d9",
+    "applyUrl": "https://jobs.lever.co/funxyz/cd82743c-7ce6-4b78-89c9-bbd832e560d9/apply"
+  }
+]

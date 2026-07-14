@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135597600",
+      "name": "Hardware Quality Inspector- 2nd shift",
+      "uuid": "seakrengineering-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "SEAKREngineering",
+        "name": "SEAKR Engineering"
+      },
+      "releasedDate": "2026-07-02T21:38:18.266Z",
+      "location": {
+        "city": "Centennial",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Centennial, CO, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Product Assurance"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SEAKREngineering/744000135597600",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Hardware Quality Inspector- 2nd shift at SEAKR Engineering.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135593827",
+      "name": "Senior Digital Electronics Circuit Design & Test Engineer",
+      "uuid": "seakrengineering-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "SEAKREngineering",
+        "name": "SEAKR Engineering"
+      },
+      "releasedDate": "2026-07-02T20:51:50.509Z",
+      "location": {
+        "city": "Englewood",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Englewood, CO, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SEAKREngineering/744000135593827",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Digital Electronics Circuit Design & Test Engineer at SEAKR Engineering.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135593689",
+      "name": "Senior Space Electronics Systems Engineer",
+      "uuid": "seakrengineering-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "SEAKREngineering",
+        "name": "SEAKR Engineering"
+      },
+      "releasedDate": "2026-07-02T20:49:38.844Z",
+      "location": {
+        "city": "Centennial",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Centennial, CO, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SEAKREngineering/744000135593689",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Space Electronics Systems Engineer at SEAKR Engineering.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

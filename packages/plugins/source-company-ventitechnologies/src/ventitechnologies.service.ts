@@ -1,0 +1,73 @@
+import { SourcePlugin, PluginRegistry } from '@ever-jobs/plugin';
+
+import { Injectable, Logger, Optional } from '@nestjs/common';
+import {
+  IScraper, ScraperInputDto, JobResponseDto, Site,
+} from '@ever-jobs/models';
+
+/**
+ * Venti Technologies — Develops safe-speed autonomous logistics vehicles for industrial sites.
+ *
+ * Venti Technologies builds autonomous logistics systems and self-driving
+ * vehicles for industrial and logistics operations at ports, warehouses, and
+ * supply chain sites. The company maintains offices in Singapore, Cambridge
+ * (Massachusetts), and Suzhou (China).
+ *
+ * Sector: Autonomy / Industrial logistics. HQ: Singapore.
+ *
+ * Source: Ashby job board, company slug `goventi`
+ * (`https://jobs.ashbyhq.com/goventi`). The company's live
+ * postings are served by Ashby. Rather than re-implement Ashby parsing (and
+ * risk drift), this plugin resolves the registered Ashby source plugin from
+ * the `PluginRegistry` at runtime and delegates the fetch + field mapping to
+ * it, then re-stamps the company identity (site, companyName, id prefix) onto
+ * the results — so every Ashby field fix is inherited automatically. This
+ * honours the "no plugin imports a peer plugin directly; discover via the
+ * registry" rule.
+ */
+const COMPANY_SLUG = 'goventi';
+const COMPANY_NAME = 'Venti Technologies';
+
+@SourcePlugin({
+  site: Site.VENTI_TECHNOLOGIES,
+  name: COMPANY_NAME,
+  category: 'company',
+})
+@Injectable()
+export class VentiTechnologiesService implements IScraper {
+  private readonly logger = new Logger(VentiTechnologiesService.name);
+
+  constructor(
+    @Optional() private readonly registry?: PluginRegistry,
+  ) {}
+
+  async scrape(input: ScraperInputDto): Promise<JobResponseDto> {
+    const ashby = this.registry?.getScraper(Site.ASHBY);
+    if (!ashby) {
+      this.logger.error(
+        'Ashby source plugin is not registered; cannot scrape Venti Technologies',
+      );
+      return new JobResponseDto([]);
+    }
+
+    this.logger.log(
+      `Venti Technologies: delegating to Ashby (slug ${COMPANY_SLUG})`,
+    );
+
+    const result = await ashby.scrape({
+      ...input,
+      companySlug: COMPANY_SLUG,
+    } as ScraperInputDto);
+
+    for (const job of result.jobs) {
+      job.site = Site.VENTI_TECHNOLOGIES;
+      job.companyName = COMPANY_NAME;
+      if (job.id) {
+        job.id = job.id.replace(/^ashby-/, 'ventitechnologies-');
+      }
+    }
+
+    this.logger.log(`Venti Technologies: scraped ${result.jobs.length} jobs`);
+    return result;
+  }
+}

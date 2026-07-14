@@ -1,0 +1,62 @@
+[
+  {
+    "id": "c9665860-932e-41d3-b41f-5b8d6a5eb0d7",
+    "text": "Account Executive - Commercial Team",
+    "categories": {
+      "location": "San Francisco",
+      "allLocations": [
+        "San Francisco"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1640285134428,
+    "descriptionPlain": "Account Executive - Commercial Team at Windfall.",
+    "description": "<p>Account Executive - Commercial Team at Windfall.</p>",
+    "hostedUrl": "https://jobs.lever.co/windfalldata/c9665860-932e-41d3-b41f-5b8d6a5eb0d7",
+    "applyUrl": "https://jobs.lever.co/windfalldata/c9665860-932e-41d3-b41f-5b8d6a5eb0d7/apply"
+  },
+  {
+    "id": "5225c23a-7962-4ee2-a5a6-fef9a297b952",
+    "text": "Account Executive - Mid-Market - Nonprofit Team",
+    "categories": {
+      "location": "San Francisco",
+      "allLocations": [
+        "San Francisco"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1640279588439,
+    "descriptionPlain": "Account Executive - Mid-Market - Nonprofit Team at Windfall.",
+    "description": "<p>Account Executive - Mid-Market - Nonprofit Team at Windfall.</p>",
+    "hostedUrl": "https://jobs.lever.co/windfalldata/5225c23a-7962-4ee2-a5a6-fef9a297b952",
+    "applyUrl": "https://jobs.lever.co/windfalldata/5225c23a-7962-4ee2-a5a6-fef9a297b952/apply"
+  },
+  {
+    "id": "d309d40d-0325-4913-820f-832089865db0",
+    "text": "Customer Success Manager",
+    "categories": {
+      "location": "San Francisco",
+      "allLocations": [
+        "San Francisco"
+      ],
+      "department": "Customer Success",
+      "team": "Customer Success",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1693501548810,
+    "descriptionPlain": "Customer Success Manager at Windfall.",
+    "description": "<p>Customer Success Manager at Windfall.</p>",
+    "hostedUrl": "https://jobs.lever.co/windfalldata/d309d40d-0325-4913-820f-832089865db0",
+    "applyUrl": "https://jobs.lever.co/windfalldata/d309d40d-0325-4913-820f-832089865db0/apply"
+  }
+]

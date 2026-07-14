@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "054c68ad-b35a-4c4e-83d4-dfc9cf39b54b",
+      "title": "In-Orbit Services Mechanical Engineer",
+      "departmentName": "US & Future Programs",
+      "teamName": "US & Future Programs",
+      "employmentType": "FullTime",
+      "location": "Munich, Germany",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Munich",
+          "addressRegion": "Germany",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-16",
+      "descriptionHtml": "<p>In-Orbit Services Mechanical Engineer at The Exploration Company.</p>",
+      "descriptionPlain": "In-Orbit Services Mechanical Engineer at The Exploration Company.",
+      "jobUrl": "https://jobs.ashbyhq.com/the-exploration-company/054c68ad-b35a-4c4e-83d4-dfc9cf39b54b",
+      "applyUrl": "https://jobs.ashbyhq.com/the-exploration-company/054c68ad-b35a-4c4e-83d4-dfc9cf39b54b/application"
+    },
+    {
+      "id": "05a9d35e-dd40-4d07-8a4f-a1efd3c76677",
+      "title": "Lunar Lander Test Bench Development Senior Engineer",
+      "departmentName": "US & Future Programs",
+      "teamName": "US & Future Programs",
+      "employmentType": "FullTime",
+      "location": "Dubai",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Dubai",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-04-27",
+      "descriptionHtml": "<p>Lunar Lander Test Bench Development Senior Engineer at The Exploration Company.</p>",
+      "descriptionPlain": "Lunar Lander Test Bench Development Senior Engineer at The Exploration Company.",
+      "jobUrl": "https://jobs.ashbyhq.com/the-exploration-company/05a9d35e-dd40-4d07-8a4f-a1efd3c76677",
+      "applyUrl": "https://jobs.ashbyhq.com/the-exploration-company/05a9d35e-dd40-4d07-8a4f-a1efd3c76677/application"
+    },
+    {
+      "id": "09b8179a-0534-4344-9bfe-f8a37bdf3a51",
+      "title": "Advanced Projects Ground Operations",
+      "departmentName": "US & Future Programs",
+      "teamName": "US & Future Programs",
+      "employmentType": "FullTime",
+      "location": "Bordeaux, France",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Bordeaux",
+          "addressRegion": "France",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-02-20",
+      "descriptionHtml": "<p>Advanced Projects Ground Operations at The Exploration Company.</p>",
+      "descriptionPlain": "Advanced Projects Ground Operations at The Exploration Company.",
+      "jobUrl": "https://jobs.ashbyhq.com/the-exploration-company/09b8179a-0534-4344-9bfe-f8a37bdf3a51",
+      "applyUrl": "https://jobs.ashbyhq.com/the-exploration-company/09b8179a-0534-4344-9bfe-f8a37bdf3a51/application"
+    }
+  ]
+}

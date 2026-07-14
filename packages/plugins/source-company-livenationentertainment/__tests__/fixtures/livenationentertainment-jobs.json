@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999674838033",
+      "name": "Facilities Coordinator",
+      "uuid": "livenationentertainment-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "LiveNationEntertainment",
+        "name": "Live Nation Entertainment"
+      },
+      "releasedDate": "2018-08-07T21:13:42.000Z",
+      "location": {
+        "city": "Beverly Hills",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Beverly Hills, CA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Administrative"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/LiveNationEntertainment/743999674838033",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Facilities Coordinator at Live Nation Entertainment.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999663962919",
+      "name": "C Level Executive Assistant",
+      "uuid": "livenationentertainment-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "LiveNationEntertainment",
+        "name": "Live Nation Entertainment"
+      },
+      "releasedDate": "2017-12-20T06:23:40.000Z",
+      "location": {
+        "city": "Beverly Hills",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Beverly Hills, CA, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Administrative"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/LiveNationEntertainment/743999663962919",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>C Level Executive Assistant at Live Nation Entertainment.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999660368229",
+      "name": "Corporate Executive Assistant",
+      "uuid": "livenationentertainment-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "LiveNationEntertainment",
+        "name": "Live Nation Entertainment"
+      },
+      "releasedDate": "2017-09-25T23:12:01.000Z",
+      "location": {
+        "city": "Los Angeles",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Los Angeles, CA, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Administrative"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/LiveNationEntertainment/743999660368229",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Corporate Executive Assistant at Live Nation Entertainment.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

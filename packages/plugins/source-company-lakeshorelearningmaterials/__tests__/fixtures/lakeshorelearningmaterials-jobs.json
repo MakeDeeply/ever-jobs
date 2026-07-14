@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135116129",
+      "name": "DC Operations Engineer (On-site)",
+      "uuid": "lakeshorelearningmaterials-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Lakeshore",
+        "name": "Lakeshore Learning Materials"
+      },
+      "releasedDate": "2026-06-30T22:13:34.036Z",
+      "location": {
+        "city": "Garland",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Garland, UT, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Distribution"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Lakeshore/744000135116129",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>DC Operations Engineer (On-site) at Lakeshore Learning Materials.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135072325",
+      "name": "Classroom Installer - Various Locations",
+      "uuid": "lakeshorelearningmaterials-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Lakeshore",
+        "name": "Lakeshore Learning Materials"
+      },
+      "releasedDate": "2026-06-30T16:42:43.593Z",
+      "location": {
+        "city": "Springfield",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Springfield, MO, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Lakeshore/744000135072325",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Classroom Installer - Various Locations at Lakeshore Learning Materials.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135071359",
+      "name": "Classroom Installer - Various Locations",
+      "uuid": "lakeshorelearningmaterials-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Lakeshore",
+        "name": "Lakeshore Learning Materials"
+      },
+      "releasedDate": "2026-06-30T16:33:19.921Z",
+      "location": {
+        "city": "Denver",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Denver, CO, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Lakeshore/744000135071359",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Classroom Installer - Various Locations at Lakeshore Learning Materials.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

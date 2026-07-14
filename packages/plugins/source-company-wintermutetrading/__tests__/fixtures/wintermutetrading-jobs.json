@@ -1,0 +1,62 @@
+[
+  {
+    "id": "8119b21c-aa47-4113-bd25-f785f8fc44c1",
+    "text": "Algorithmic Trader",
+    "categories": {
+      "location": "New York",
+      "allLocations": [
+        "New York"
+      ],
+      "department": "Trading",
+      "team": "Trading",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1767805994342,
+    "descriptionPlain": "Algorithmic Trader at Wintermute.",
+    "description": "<p>Algorithmic Trader at Wintermute.</p>",
+    "hostedUrl": "https://jobs.lever.co/wintermute-trading/8119b21c-aa47-4113-bd25-f785f8fc44c1",
+    "applyUrl": "https://jobs.lever.co/wintermute-trading/8119b21c-aa47-4113-bd25-f785f8fc44c1/apply"
+  },
+  {
+    "id": "b14e6e12-1f39-41b8-a3ed-8b02ac8b1464",
+    "text": "Algorithmic Trader",
+    "categories": {
+      "location": "London",
+      "allLocations": [
+        "London"
+      ],
+      "department": "Trading",
+      "team": "Trading",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1743757076187,
+    "descriptionPlain": "Algorithmic Trader at Wintermute.",
+    "description": "<p>Algorithmic Trader at Wintermute.</p>",
+    "hostedUrl": "https://jobs.lever.co/wintermute-trading/b14e6e12-1f39-41b8-a3ed-8b02ac8b1464",
+    "applyUrl": "https://jobs.lever.co/wintermute-trading/b14e6e12-1f39-41b8-a3ed-8b02ac8b1464/apply"
+  },
+  {
+    "id": "c0ce4a33-d749-447b-aa79-78a69ce48c6f",
+    "text": "Algorithmic Trader",
+    "categories": {
+      "location": "Singapore",
+      "allLocations": [
+        "Singapore"
+      ],
+      "department": "Trading",
+      "team": "Trading",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1733395004909,
+    "descriptionPlain": "Algorithmic Trader at Wintermute.",
+    "description": "<p>Algorithmic Trader at Wintermute.</p>",
+    "hostedUrl": "https://jobs.lever.co/wintermute-trading/c0ce4a33-d749-447b-aa79-78a69ce48c6f",
+    "applyUrl": "https://jobs.lever.co/wintermute-trading/c0ce4a33-d749-447b-aa79-78a69ce48c6f/apply"
+  }
+]

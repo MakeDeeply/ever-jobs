@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135784189",
+      "name": "Program Optimization Analyst",
+      "uuid": "transatat-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "TransatAT1",
+        "name": "Transat AT"
+      },
+      "releasedDate": "2026-07-03T21:37:53.219Z",
+      "location": {
+        "city": "Montreal",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Montreal, Quebec, Canada"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Gestion des revenus et tarification"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/TransatAT1/744000135784189",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Program Optimization Analyst at Transat AT.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135784089",
+      "name": "Analyste Optimisation du Programme",
+      "uuid": "transatat-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "TransatAT1",
+        "name": "Transat AT"
+      },
+      "releasedDate": "2026-07-03T21:37:26.696Z",
+      "location": {
+        "city": "Montreal",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Montreal, Quebec, Canada"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Gestion des revenus et tarification"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/TransatAT1/744000135784089",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Analyste Optimisation du Programme at Transat AT.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135493729",
+      "name": "Specialist, Maintenance Control Center (MCC)",
+      "uuid": "transatat-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "TransatAT1",
+        "name": "Transat AT"
+      },
+      "releasedDate": "2026-07-02T12:43:42.938Z",
+      "location": {
+        "city": "Montreal",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Montreal, Quebec, Canada"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Opérations techniques"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/TransatAT1/744000135493729",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Specialist, Maintenance Control Center (MCC) at Transat AT.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

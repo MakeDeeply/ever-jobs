@@ -1,0 +1,62 @@
+[
+  {
+    "id": "6cfb0abb-a618-448c-9a10-64805f9f0a32",
+    "text": "Director of Solutions Engineering",
+    "categories": {
+      "location": "Remote",
+      "allLocations": [
+        "Remote"
+      ],
+      "department": "Customer Success",
+      "team": "Customer Success",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1778788736022,
+    "descriptionPlain": "Director of Solutions Engineering at Proof.",
+    "description": "<p>Director of Solutions Engineering at Proof.</p>",
+    "hostedUrl": "https://jobs.lever.co/proof/6cfb0abb-a618-448c-9a10-64805f9f0a32",
+    "applyUrl": "https://jobs.lever.co/proof/6cfb0abb-a618-448c-9a10-64805f9f0a32/apply"
+  },
+  {
+    "id": "eeb2b79d-9173-4ab6-b922-194cb9298937",
+    "text": "Senior AI Counsel",
+    "categories": {
+      "location": "Remote",
+      "allLocations": [
+        "Remote"
+      ],
+      "department": "Legal",
+      "team": "Legal",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1782313800791,
+    "descriptionPlain": "Senior AI Counsel at Proof.",
+    "description": "<p>Senior AI Counsel at Proof.</p>",
+    "hostedUrl": "https://jobs.lever.co/proof/eeb2b79d-9173-4ab6-b922-194cb9298937",
+    "applyUrl": "https://jobs.lever.co/proof/eeb2b79d-9173-4ab6-b922-194cb9298937/apply"
+  },
+  {
+    "id": "398186bb-457d-453f-a747-57c72217e12e",
+    "text": "Senior Full Stack Software Engineer",
+    "categories": {
+      "location": "Remote",
+      "allLocations": [
+        "Remote"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1780601583668,
+    "descriptionPlain": "Senior Full Stack Software Engineer at Proof.",
+    "description": "<p>Senior Full Stack Software Engineer at Proof.</p>",
+    "hostedUrl": "https://jobs.lever.co/proof/398186bb-457d-453f-a747-57c72217e12e",
+    "applyUrl": "https://jobs.lever.co/proof/398186bb-457d-453f-a747-57c72217e12e/apply"
+  }
+]

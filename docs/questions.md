@@ -407,6 +407,239 @@ separately as a future cross-ATS spec.
 
 ---
 
+## Q-WORKABLE-1 — Workable board-name anchor + empty-but-real accounts
+
+**Context:** Spec 1677. The public Workable widget API
+(`https://apply.workable.com/api/v1/widget/accounts/<slug>`) returns HTTP 200 with
+a `{ name, description, jobs: [...] }` envelope for **every real account** — even
+ones with **zero open roles** (`jobs: []`) — while a non-existent slug returns a
+plain-text `Not Found`. The `name` field is usually just the account slug echoed
+back, not a polished brand name. Many well-known brands own a Workable account but
+currently host zero live roles (having paused hiring or migrated backends).
+
+**Options:**
+
+- **A. Gate on job-count only (`jobs.length >= MIN_JOBS = 3`, each title-bearing);
+  capture the envelope `name` as informational `boardName`; enforce brand-match at
+  descriptor-assembly time** (the verified `displayName` + `companySlug` pair
+  supplied by discovery). An empty-but-real account simply fails the gate.
+- **B. Hard brand-match the wire `name` against the claimed display name** —
+  useless here, because `name` is normally the slug, not the brand.
+
+**Default (proceeding):** **A** — consistent with
+Q-RECRUITEE-1 / Q-SR-1 / Q-LEVER-1 / Q-ASHBY-1. The count gate naturally excludes
+the many empty-but-real Workable accounts; `boardName` is retained for
+auditability only.
+
+**Resolution:** _pending review._
+
+---
+
+## Q-RECRUITEE-2 — Recruitee per-company subdomain host model
+
+**Context:** Spec 1593. Unlike the four earlier backends (Greenhouse, Ashby,
+Lever, SmartRecruiters), which all serve every board from a **shared API host**
+with the company slug in a path segment, **Recruitee** hosts each board on its own
+**subdomain**: `https://<slug>.recruitee.com/api/offers`. The slug is therefore
+interpolated into the DNS host rather than a URL path.
+
+**Options:**
+
+- **A. Interpolate the slug into the host** via a small `boardUrl(slug)` helper
+  (`https://${encodeURIComponent(slug)}.recruitee.com/api/offers`), and keep the
+  usual `companySlug` (live subdomain) / `slug` (plugin dir/enum) split even though
+  Recruitee subdomains are conventionally lowercase and the two usually coincide.
+- **B. Assume slug == subdomain and drop `companySlug`** — loses parity with the
+  other four pipelines and breaks on any mixed-case / punctuated subdomain.
+
+**Default (proceeding):** **A** — one-line host builder, retains the
+`companySlug`/`slug` split for pipeline symmetry and forward-safety. The delegated
+`source-ats-recruitee` plugin already builds the same subdomain URL, so the probe
+and the runtime plugin agree.
+
+**Resolution:** _pending review._
+
+---
+
+## Q-RECRUITEE-1 — Recruitee board-name anchor: where do we enforce brand-match?
+
+**Context:** Spec 1593. Like SmartRecruiters (and unlike Ashby/Lever), each
+Recruitee offer carries `company_name` on the wire, so a board display name IS
+available from `https://<slug>.recruitee.com/api/offers`.
+
+**Options:**
+
+- **A. Gate on job-count only; capture `company_name` as informational
+  `boardName`; enforce brand-match at descriptor-assembly time** (the verified
+  `displayName` + `companySlug` pair supplied by discovery).
+- **B. Hard brand-match the wire `company_name` against the claimed display name**
+  — brittle (legal-entity vs. brand mismatches, localised names).
+
+**Default (proceeding):** **A** — consistent with Q-SR-1 / Q-LEVER-1 / Q-ASHBY-1.
+Discovery self-verifies each subdomain against the live API (≥3 title-bearing
+offers), and the central deterministic probe re-gates every candidate before
+scaffolding. `boardName` is retained for auditability only.
+
+**Resolution:** _pending review._
+
+---
+
+## Q-SR-2 — SmartRecruiters case-sensitive identifier vs. plugin-dir naming
+
+**Context:** Spec 1375. The SmartRecruiters public Posting API is keyed on a
+**case-sensitive company identifier** (e.g. `BoschGroup`, `WesternDigital`,
+`Visa`), whereas a plugin dir / `Site` enum value must be a clean, hyphen-free,
+**lowercase** token and the enum KEY must be a valid TS identifier (cannot begin
+with a digit).
+
+**Options:**
+
+- **A. Carry two fields:** `companySlug` (the exact case-sensitive identifier,
+  used on the wire) and `slug` (the lowercase, alnum-only plugin dir / enum value
+  / `id` prefix, derived from the canonical display name). Reject any candidate
+  whose display-name-derived `enumKey` starts with a digit or collides with an
+  existing enum key/value.
+- **B. Lower-case the identifier for the wire too** — breaks, because the
+  SmartRecruiters API 404s / returns `totalFound: 0` on the wrong casing.
+
+**Default (proceeding):** **A** — mirrors the Lever/Ashby resolution
+(Q-LEVER-2 / Q-ASHBY-2). `assemble-smartrecruiters-batch.ts` derives `slug`,
+`className`, `enumKey` from the display name and preserves `companySlug` verbatim,
+with digit-prefix + collision rejection.
+
+**Resolution:** _pending review._
+
+---
+
+## Q-SR-1 — SmartRecruiters board-name anchor: where do we enforce brand-match?
+
+**Context:** Spec 1375. Unlike Ashby/Lever (bare arrays, no board name), the
+public SmartRecruiters Posting API envelope
+(`https://api.smartrecruiters.com/v1/companies/<slug>/postings`) **does** expose
+`content[i].company.name`, so a board display name IS available on the wire.
+
+**Options:**
+
+- **A. Gate on job-count only; capture `company.name` as informational
+  `boardName`; enforce brand-match at descriptor-assembly time** (the verified
+  `displayName` + `companySlug` pair supplied by discovery).
+- **B. Hard brand-match the wire `company.name` against the claimed display name**
+  — brittle (legal-entity vs. brand mismatches: `BoschGroup` → "Bosch Group").
+- **C. Authenticated Customer API** — richer metadata but requires a per-company
+  key; not viable for public discovery.
+
+**Default (proceeding):** **A** — consistent with Q-LEVER-1 / Q-ASHBY-1.
+Discovery self-verified each identifier against the live API (≥3 title-bearing
+postings), and the central deterministic probe re-gates every candidate before
+scaffolding. `boardName` is retained for auditability only.
+
+**Resolution:** _pending review._
+
+---
+
+## Q-LEVER-2 — Lever slug vs. plugin-dir naming for hyphenated/dotted slugs
+
+**Context:** Spec 1194. A live Lever slug may contain hyphens or dots (e.g.
+`spear-ai`, `arcteryx.com`, `cscgeneration-2`), but a plugin dir / `Site` enum
+value must be a clean, hyphen-free token, and the enum KEY must be a valid TS
+identifier (cannot begin with a digit).
+
+**Options:**
+
+- **A. Carry two fields:** `companySlug` (the live Lever slug, used on the wire)
+  and `slug` (the hyphen-free plugin dir / enum value / `id` prefix, derived by
+  lower-casing + stripping non-alphanumerics). Reject any candidate whose
+  display-name-derived `enumKey` starts with a digit.
+- **B. Force the plugin dir to equal the raw Lever slug** — breaks on dots and
+  collides with the enum-identifier rules.
+
+**Default (proceeding):** **A** — mirrors the Ashby resolution (Q-ASHBY-2). The
+scaffolder writes `Site.<ENUMKEY> = '<slug>'` and delegates
+`scrape({ ...input, companySlug })`.
+
+**Resolution:** _pending review._
+
+---
+
+## Q-LEVER-1 — Lever has no board-name anchor: where do we enforce brand-match?
+
+**Context:** Spec 1194. Like the public Ashby Posting API (Q-ASHBY-1), the public
+Lever Postings API (`https://api.lever.co/v0/postings/<slug>?mode=json`) returns
+a **bare JSON array** of postings with **no board / org display name** — so the
+Greenhouse-style board-name brand anchor does not exist on the wire.
+
+**Options:**
+
+- **A. Gate on job-count only; enforce brand-match at descriptor-assembly time**
+  (the verified `displayName` + `companySlug` pair supplied by discovery).
+- **B. Cross-check a posting's `hostedUrl` host to confirm the slug belongs to
+  the claimed brand.**
+- **C. Use the authenticated Lever API (returns richer metadata) — requires a
+  per-company key; not viable for public discovery.**
+
+**Default (proceeding):** **A** — identical to the Ashby resolution. Discovery
+self-verified each slug against the live API (≥3 title-bearing postings), and the
+central deterministic probe re-gates every candidate before scaffolding.
+
+**Resolution:** _pending review._
+
+---
+
+## Q-ASHBY-1 — Ashby has no board-name anchor: where do we enforce brand-match?
+
+**Context:** Spec 975. The Greenhouse company-source probe gates partly on the
+board's `name` field (`https://boards-api.greenhouse.io/v1/boards/<slug>` →
+`{ name }`) as a brand-match anchor. The **public Ashby Posting API**
+(`https://api.ashbyhq.com/posting-api/job-board/<slug>`) returns only
+`{ apiVersion, jobs[] }` — **no board/org display name** — so that anchor does
+not exist on the wire.
+
+**Options:**
+
+- **A. Gate on job-count only; enforce brand-match at descriptor-assembly time**
+  (the verified `displayName` + `companySlug` pair supplied by discovery, which
+  already confirmed the slug maps to the real company).
+- **B. Additionally cross-check the company's careers page / a job's `jobUrl`
+  host to confirm the slug belongs to the claimed brand.**
+- **C. Use the authenticated Posting API (returns org metadata) — requires a
+  per-company API key; not viable for public discovery.**
+
+**Default (proceeding):** **A.** The probe gate is purely count-based
+(`jobs.length >= 3`, title-bearing); brand-match is a discovery-time
+responsibility (the researcher confirms the slug↔company mapping before the slug
+enters the batch). B is a cheap future hardening; C is out of scope (no keys).
+
+**Resolution:** _pending review._
+
+---
+
+## Q-ASHBY-2 — Ashby slug vs. plugin-dir/enum naming for hyphenated slugs
+
+**Context:** Spec 975. Ashby board slugs frequently contain hyphens
+(`allen-control-systems`), but plugin directories, `Site` enum values, and
+`JobPostDto` id prefixes in this repo use hyphen-free identifiers
+(`allencontrolsystems`). The Greenhouse pipeline conflated the two (board slug
+== plugin slug). The Ashby descriptor therefore needs two fields.
+
+**Options:**
+
+- **A. Carry both: `companySlug` (real Ashby board slug, hyphens allowed) +
+  `slug` (hyphen-free plugin dir / enum value / id prefix, derived from the
+  display name).**
+- **B. Keep hyphens everywhere (dir `source-company-allen-control-systems`,
+  enum value `'allen-control-systems'`).**
+- **C. Strip hyphens from the Ashby slug (it then 404s — the board no longer
+  resolves).**
+
+**Default (proceeding):** **A.** Matches the existing
+`source-company-allencontrolsystems` precedent (dir/enum hyphen-free, board slug
+`allen-control-systems`), keeps enum members clean, and never breaks the live
+fetch. C is wrong (breaks resolution); B diverges from precedent.
+
+**Resolution:** _pending review._
+
+---
+
 ## Q-072 — workatastartup: harvest the YC public mirror or the canonical WaaS board?
 
 **Context:** Spec 5023. YC Work at a Startup exposes the same board at two URL

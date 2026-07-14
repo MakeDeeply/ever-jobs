@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135605400",
+      "name": "Bus Person - Casual Dining",
+      "uuid": "wynnresorts-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "WynnResorts",
+        "name": "Wynn Resorts"
+      },
+      "releasedDate": "2026-07-02T23:24:57.646Z",
+      "location": {
+        "city": "Las Vegas",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Las Vegas, NV, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Customer Service"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/WynnResorts/744000135605400",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Bus Person - Casual Dining at Wynn Resorts.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135603204",
+      "name": "Housekeeping - Guest Room Attendant",
+      "uuid": "wynnresorts-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "WynnResorts",
+        "name": "Wynn Resorts"
+      },
+      "releasedDate": "2026-07-02T22:44:01.133Z",
+      "location": {
+        "city": "Las Vegas",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Las Vegas, NV, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Production"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/WynnResorts/744000135603204",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Housekeeping - Guest Room Attendant at Wynn Resorts.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135590249",
+      "name": "Wynn Rewards - Casino Host",
+      "uuid": "wynnresorts-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "WynnResorts",
+        "name": "Wynn Resorts"
+      },
+      "releasedDate": "2026-07-02T20:21:14.449Z",
+      "location": {
+        "city": "Everett",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Everett, MA, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Distribution"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/WynnResorts/744000135590249",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Wynn Rewards - Casino Host at Wynn Resorts.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

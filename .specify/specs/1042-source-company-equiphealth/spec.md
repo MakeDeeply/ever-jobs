@@ -1,0 +1,60 @@
+# Spec: 1042 — Source Company Plugin: Equip Health
+
+| Field | Value |
+| --- | --- |
+| Spec ID | 1042 |
+| Slug | source-company-equiphealth |
+| Status | accepted |
+| Owner | claude (run #441) |
+| Created | 2026-07-02 |
+| Last updated | 2026-07-02 |
+| Supersedes | (none) |
+| Related specs | 975, 5017 |
+
+## Summary
+
+New **Ashby-backed company-direct** source plugin `source-company-equiphealth` for
+**Equip Health** (Virtual, evidence-based treatment for eating disorders.). Sector: Healthtech (eating disorder care). HQ: Carlsbad, CA, USA.
+
+The company's live postings are served by **Ashby** on job board
+`equip` (`https://jobs.ashbyhq.com/equip`), which exposed
+**41 live role(s)** at probe time (public Ashby Posting API,
+`MIN_JOBS = 3` gate). Discovered and gated through the deterministic Ashby
+company-source pipeline (`probe-ashby → assemble → scaffold-ashby → wire`) —
+see `.specify/specs/975-ashby-company-source-pipeline/`.
+
+## Constitution cross-check
+
+- **TypeScript-only** — plugin is TS; no JS/Python. ✔
+- **Modular / plugin** — a self-contained `source-company-equiphealth` package,
+  installable/removable via the barrel + `Site` enum; no core changes. ✔
+- **No peer imports** — delegates to the Ashby ATS plugin via `PluginRegistry`
+  at runtime (never imports it directly). ✔
+- **Performance** — zero extra network cost over the Ashby plugin it delegates
+  to (single public job-board fetch); identity re-stamp is O(n) over jobs. ✔
+- **No competitor references** — documented purely on the company's public
+  merits. ✔
+
+## User story
+
+> As an **aggregator caller**, I want **`Site.EQUIP_HEALTH`** in the source
+> registry, so that a single `siteType: [Site.EQUIP_HEALTH]` request returns
+> Equip Health's live Ashby postings, re-stamped with the company identity.
+
+## Functional requirements
+
+| ID | Requirement | Priority |
+|----|-------------|----------|
+| FR-1 | Add `Site.EQUIP_HEALTH = 'equiphealth'` to the `Site` enum. | must |
+| FR-2 | `EquipHealthService` implements `IScraper`, `@SourcePlugin({ site: Site.EQUIP_HEALTH, name: 'Equip Health', category: 'company' })`. | must |
+| FR-3 | Resolve the Ashby scraper from `PluginRegistry`; delegate `scrape({ ...input, companySlug: 'equip' })`. | must |
+| FR-4 | Re-stamp each `JobPostDto`: `site = Site.EQUIP_HEALTH`, `companyName = 'Equip Health'`, `id` prefix `ashby-`→`equiphealth-`. | must |
+| FR-5 | Fail-safe: return an empty `JobResponseDto` when Ashby is unavailable / unregistered. | must |
+| FR-6 | tsconfig path-alias + jest moduleNameMapper + barrel registration. | must |
+| FR-7 | Mocked unit suite green (DI resolution, enum value, delegation, pass-through, resilience, cap). | must |
+
+## Highlights
+
+- Virtual eating-disorder treatment
+- Five-person care team model including peer and family mentors
+- Accepts insurance across many US states

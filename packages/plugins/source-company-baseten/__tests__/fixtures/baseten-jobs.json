@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "081cb52b-5e88-40a1-8def-1e82c8bc97de",
+      "title": "Software Engineer - Internal Platform",
+      "departmentName": "EPD",
+      "teamName": "EPD",
+      "employmentType": "FullTime",
+      "location": "San Francisco",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-03-26",
+      "descriptionHtml": "<p>Software Engineer - Internal Platform at Baseten.</p>",
+      "descriptionPlain": "Software Engineer - Internal Platform at Baseten.",
+      "jobUrl": "https://jobs.ashbyhq.com/baseten/081cb52b-5e88-40a1-8def-1e82c8bc97de",
+      "applyUrl": "https://jobs.ashbyhq.com/baseten/081cb52b-5e88-40a1-8def-1e82c8bc97de/application"
+    },
+    {
+      "id": "0870ed34-7365-4b9f-a50a-481783b8c266",
+      "title": "Engineering Manager, Cloud Platform",
+      "departmentName": "EPD",
+      "teamName": "EPD",
+      "employmentType": "FullTime",
+      "location": "San Francisco",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-09",
+      "descriptionHtml": "<p>Engineering Manager, Cloud Platform at Baseten.</p>",
+      "descriptionPlain": "Engineering Manager, Cloud Platform at Baseten.",
+      "jobUrl": "https://jobs.ashbyhq.com/baseten/0870ed34-7365-4b9f-a50a-481783b8c266",
+      "applyUrl": "https://jobs.ashbyhq.com/baseten/0870ed34-7365-4b9f-a50a-481783b8c266/application"
+    },
+    {
+      "id": "0cf1410f-39ca-47b5-9fc3-8e75bd9c1e0e",
+      "title": "Assistant General Counsel, Infrastructure & Compute",
+      "departmentName": "G&A",
+      "teamName": "G&A",
+      "employmentType": "FullTime",
+      "location": "San Francisco",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-02",
+      "descriptionHtml": "<p>Assistant General Counsel, Infrastructure & Compute at Baseten.</p>",
+      "descriptionPlain": "Assistant General Counsel, Infrastructure & Compute at Baseten.",
+      "jobUrl": "https://jobs.ashbyhq.com/baseten/0cf1410f-39ca-47b5-9fc3-8e75bd9c1e0e",
+      "applyUrl": "https://jobs.ashbyhq.com/baseten/0cf1410f-39ca-47b5-9fc3-8e75bd9c1e0e/application"
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135509164",
+      "name": "Partner Manager",
+      "uuid": "ecovadis-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "ecovadis",
+        "name": "EcoVadis"
+      },
+      "releasedDate": "2026-07-02T13:51:04.740Z",
+      "location": {
+        "city": "Berlin",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Berlin, BE, Germany"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Customer Relationship"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ecovadis/744000135509164",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Partner Manager at EcoVadis.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000134736909",
+      "name": "Membership Executive (Upselling/ Inside Sales) - Mandarin Speaker",
+      "uuid": "ecovadis-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "ecovadis",
+        "name": "EcoVadis"
+      },
+      "releasedDate": "2026-06-29T09:15:16.275Z",
+      "location": {
+        "city": "Hong Kong",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Hong Kong, , Hong Kong"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ecovadis/744000134736909",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Membership Executive (Upselling/ Inside Sales) - Mandarin Speaker at EcoVadis.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000134207967",
+      "name": "Strategic Account Executive - Nordics",
+      "uuid": "ecovadis-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "ecovadis",
+        "name": "EcoVadis"
+      },
+      "releasedDate": "2026-06-25T08:59:11.135Z",
+      "location": {
+        "city": "Warsaw",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Warsaw, Masovian Voivodeship, Poland"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ecovadis/744000134207967",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Strategic Account Executive - Nordics at EcoVadis.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

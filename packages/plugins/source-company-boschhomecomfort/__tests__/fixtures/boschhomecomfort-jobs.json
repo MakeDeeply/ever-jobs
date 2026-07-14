@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135581572",
+      "name": "Tube Machine Setup Operator - 1st shift",
+      "uuid": "boschhomecomfort-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Bosch-HomeComfort",
+        "name": "Bosch Home Comfort"
+      },
+      "releasedDate": "2026-07-02T19:22:34.620Z",
+      "location": {
+        "city": "Wichita",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Wichita, KS, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Manufacturing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Bosch-HomeComfort/744000135581572",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Tube Machine Setup Operator - 1st shift at Bosch Home Comfort.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135560399",
+      "name": "Cycle Counter",
+      "uuid": "boschhomecomfort-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Bosch-HomeComfort",
+        "name": "Bosch Home Comfort"
+      },
+      "releasedDate": "2026-07-02T17:50:11.431Z",
+      "location": {
+        "city": "Park City",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Park City, KS, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Distribution"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Bosch-HomeComfort/744000135560399",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Cycle Counter at Bosch Home Comfort.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135494145",
+      "name": "Quality Engineer",
+      "uuid": "boschhomecomfort-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Bosch-HomeComfort",
+        "name": "Bosch Home Comfort"
+      },
+      "releasedDate": "2026-07-02T12:53:48.784Z",
+      "location": {
+        "city": "Norman",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Norman, OK, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Manufacturing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Bosch-HomeComfort/744000135494145",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Quality Engineer at Bosch Home Comfort.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

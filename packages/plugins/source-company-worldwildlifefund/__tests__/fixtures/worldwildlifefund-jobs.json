@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135338765",
+      "name": "Sr. Director, Web Experience and Digital Strategy",
+      "uuid": "worldwildlifefund-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "WorldWildlifeFundInc1",
+        "name": "World Wildlife Fund"
+      },
+      "releasedDate": "2026-07-01T19:33:46.457Z",
+      "location": {
+        "city": "Washington D.C.",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Washington D.C., , United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Membership and Communications"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/WorldWildlifeFundInc1/744000135338765",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Sr. Director, Web Experience and Digital Strategy at World Wildlife Fund.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135330254",
+      "name": "Senior Director, Corporate Engagement, Forests",
+      "uuid": "worldwildlifefund-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "WorldWildlifeFundInc1",
+        "name": "World Wildlife Fund"
+      },
+      "releasedDate": "2026-07-01T18:39:45.558Z",
+      "location": {
+        "city": "Washington D.C.",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Washington D.C., , United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Forest"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/WorldWildlifeFundInc1/744000135330254",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Director, Corporate Engagement, Forests at World Wildlife Fund.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135320309",
+      "name": "Compensation Analyst - R4551",
+      "uuid": "worldwildlifefund-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "WorldWildlifeFundInc1",
+        "name": "World Wildlife Fund"
+      },
+      "releasedDate": "2026-07-01T17:09:55.747Z",
+      "location": {
+        "city": "Washington D.C.",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Washington D.C., , United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "People and Culture"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/WorldWildlifeFundInc1/744000135320309",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Compensation Analyst - R4551 at World Wildlife Fund.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "87085404",
+      "name": "Talent Acquisition Partner",
+      "uuid": "zenithtalent-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "ZenithTalentCorporation",
+        "name": "Zenith Talent"
+      },
+      "releasedDate": "2015-11-09T18:33:02.000Z",
+      "location": {
+        "city": "Boston",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Boston, MA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ZenithTalentCorporation/87085404",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Talent Acquisition Partner at Zenith Talent.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "87085244",
+      "name": "Art Director",
+      "uuid": "zenithtalent-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "ZenithTalentCorporation",
+        "name": "Zenith Talent"
+      },
+      "releasedDate": "2015-11-09T18:30:35.000Z",
+      "location": {
+        "city": "San Diego",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "San Diego, CA, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ZenithTalentCorporation/87085244",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Art Director at Zenith Talent.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "87085132",
+      "name": "Process Engineer, IC Device Assembly Operations",
+      "uuid": "zenithtalent-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "ZenithTalentCorporation",
+        "name": "Zenith Talent"
+      },
+      "releasedDate": "2015-11-09T18:29:04.000Z",
+      "location": {
+        "city": "San Diego",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "San Diego, CA, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ZenithTalentCorporation/87085132",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Process Engineer, IC Device Assembly Operations at Zenith Talent.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

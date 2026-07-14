@@ -1,0 +1,62 @@
+[
+  {
+    "id": "5a37ae6b-f80b-4436-8793-5e16f560d161",
+    "text": "Automation Engineer",
+    "categories": {
+      "location": "Bogotá, Bogotá D.C.",
+      "allLocations": [
+        "Bogotá, Bogotá D.C."
+      ],
+      "department": "Operations",
+      "team": "Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1776876462500,
+    "descriptionPlain": "Automation Engineer at PayJoy.",
+    "description": "<p>Automation Engineer at PayJoy.</p>",
+    "hostedUrl": "https://jobs.lever.co/payjoy/5a37ae6b-f80b-4436-8793-5e16f560d161",
+    "applyUrl": "https://jobs.lever.co/payjoy/5a37ae6b-f80b-4436-8793-5e16f560d161/apply"
+  },
+  {
+    "id": "f4f70254-63f2-40ca-a157-1885158fdf8a",
+    "text": "Banco de Talentos - Pessoas com Deficiência",
+    "categories": {
+      "location": "São Paulo",
+      "allLocations": [
+        "São Paulo"
+      ],
+      "department": "People",
+      "team": "People",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1756408242330,
+    "descriptionPlain": "Banco de Talentos - Pessoas com Deficiência at PayJoy.",
+    "description": "<p>Banco de Talentos - Pessoas com Deficiência at PayJoy.</p>",
+    "hostedUrl": "https://jobs.lever.co/payjoy/f4f70254-63f2-40ca-a157-1885158fdf8a",
+    "applyUrl": "https://jobs.lever.co/payjoy/f4f70254-63f2-40ca-a157-1885158fdf8a/apply"
+  },
+  {
+    "id": "b09a0379-8170-4c34-9b65-bdf03fcf7a51",
+    "text": "Business Analytics Manager",
+    "categories": {
+      "location": "Mexico City, CDMX",
+      "allLocations": [
+        "Mexico City, CDMX"
+      ],
+      "department": "Operations",
+      "team": "Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1777477376900,
+    "descriptionPlain": "Business Analytics Manager at PayJoy.",
+    "description": "<p>Business Analytics Manager at PayJoy.</p>",
+    "hostedUrl": "https://jobs.lever.co/payjoy/b09a0379-8170-4c34-9b65-bdf03fcf7a51",
+    "applyUrl": "https://jobs.lever.co/payjoy/b09a0379-8170-4c34-9b65-bdf03fcf7a51/apply"
+  }
+]

@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135753369",
+      "name": "Agent de collecte chauffeur SPL F/H (Javené- Ille et Villaine)",
+      "uuid": "tessenderlogroup-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "TessenderloGroup",
+        "name": "Tessenderlo Group"
+      },
+      "releasedDate": "2026-07-03T14:47:49.822Z",
+      "location": {
+        "city": "JAVENE",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "JAVENE, , France"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Akiolis-DIRECTION TRANSPORT"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/TessenderloGroup/744000135753369",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Agent de collecte chauffeur SPL F/H (Javené- Ille et Villaine) at Tessenderlo Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135713209",
+      "name": "Responsable Maintenance Site F/H",
+      "uuid": "tessenderlogroup-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "TessenderloGroup",
+        "name": "Tessenderlo Group"
+      },
+      "releasedDate": "2026-07-03T11:52:41.869Z",
+      "location": {
+        "city": "Le Sourn",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Le Sourn, Bretagne, France"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Akiolis-DIRECTION INDUSTRIELLE"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/TessenderloGroup/744000135713209",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Responsable Maintenance Site F/H at Tessenderlo Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135506679",
+      "name": "Przedstawiciel Handlowy (k/m/n)",
+      "uuid": "tessenderlogroup-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "TessenderloGroup",
+        "name": "Tessenderlo Group"
+      },
+      "releasedDate": "2026-07-02T13:32:46.818Z",
+      "location": {
+        "city": "i dawne kaliskie",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "i dawne kaliskie, , Poland"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/TessenderloGroup/744000135506679",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Przedstawiciel Handlowy (k/m/n) at Tessenderlo Group.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

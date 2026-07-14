@@ -1,0 +1,72 @@
+import { SourcePlugin, PluginRegistry } from '@ever-jobs/plugin';
+
+import { Injectable, Logger, Optional } from '@nestjs/common';
+import {
+  IScraper, ScraperInputDto, JobResponseDto, Site,
+} from '@ever-jobs/models';
+
+/**
+ * Venus Aerospace — Develops rotating detonation rocket engines and high-speed propulsion systems.
+ *
+ * Venus Aerospace develops rocket propulsion technology, including a
+ * rotating detonation rocket engine and detonation ramjet systems, aimed at
+ * high-speed flight applications.
+ *
+ * Sector: Space/Aerospace. HQ: Houston, Texas, United States.
+ *
+ * Source: Lever job board, company slug `venusaero`
+ * (`https://jobs.lever.co/venusaero`). The company's live
+ * postings are served by Lever. Rather than re-implement Lever parsing (and
+ * risk drift), this plugin resolves the registered Lever source plugin from
+ * the `PluginRegistry` at runtime and delegates the fetch + field mapping to
+ * it, then re-stamps the company identity (site, companyName, id prefix) onto
+ * the results — so every Lever field fix is inherited automatically. This
+ * honours the "no plugin imports a peer plugin directly; discover via the
+ * registry" rule.
+ */
+const COMPANY_SLUG = 'venusaero';
+const COMPANY_NAME = 'Venus Aerospace';
+
+@SourcePlugin({
+  site: Site.VENUS_AEROSPACE,
+  name: COMPANY_NAME,
+  category: 'company',
+})
+@Injectable()
+export class VenusAerospaceService implements IScraper {
+  private readonly logger = new Logger(VenusAerospaceService.name);
+
+  constructor(
+    @Optional() private readonly registry?: PluginRegistry,
+  ) {}
+
+  async scrape(input: ScraperInputDto): Promise<JobResponseDto> {
+    const lever = this.registry?.getScraper(Site.LEVER);
+    if (!lever) {
+      this.logger.error(
+        'Lever source plugin is not registered; cannot scrape Venus Aerospace',
+      );
+      return new JobResponseDto([]);
+    }
+
+    this.logger.log(
+      `Venus Aerospace: delegating to Lever (slug ${COMPANY_SLUG})`,
+    );
+
+    const result = await lever.scrape({
+      ...input,
+      companySlug: COMPANY_SLUG,
+    } as ScraperInputDto);
+
+    for (const job of result.jobs) {
+      job.site = Site.VENUS_AEROSPACE;
+      job.companyName = COMPANY_NAME;
+      if (job.id) {
+        job.id = job.id.replace(/^lever-/, 'venusaero-');
+      }
+    }
+
+    this.logger.log(`Venus Aerospace: scraped ${result.jobs.length} jobs`);
+    return result;
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "01da8934-d3e3-4ebb-beb9-681b3c24fb9c",
+      "title": "Staff Software Engineer, AI Platform",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "San Francisco",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-04-24",
+      "descriptionHtml": "<p>Staff Software Engineer, AI Platform at Harvey.</p>",
+      "descriptionPlain": "Staff Software Engineer, AI Platform at Harvey.",
+      "jobUrl": "https://jobs.ashbyhq.com/harvey/01da8934-d3e3-4ebb-beb9-681b3c24fb9c",
+      "applyUrl": "https://jobs.ashbyhq.com/harvey/01da8934-d3e3-4ebb-beb9-681b3c24fb9c/application"
+    },
+    {
+      "id": "01f31ece-f3fe-4991-b6fb-b59f21faa8e9",
+      "title": "Staff Software Engineer, Full Stack",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "Toronto",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Toronto",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-02-11",
+      "descriptionHtml": "<p>Staff Software Engineer, Full Stack at Harvey.</p>",
+      "descriptionPlain": "Staff Software Engineer, Full Stack at Harvey.",
+      "jobUrl": "https://jobs.ashbyhq.com/harvey/01f31ece-f3fe-4991-b6fb-b59f21faa8e9",
+      "applyUrl": "https://jobs.ashbyhq.com/harvey/01f31ece-f3fe-4991-b6fb-b59f21faa8e9/application"
+    },
+    {
+      "id": "04e17f81-d0a7-4f83-8526-ec4c9532ddcc",
+      "title": "Senior Software Engineer, Frontend",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "San Francisco",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2024-03-08",
+      "descriptionHtml": "<p>Senior Software Engineer, Frontend at Harvey.</p>",
+      "descriptionPlain": "Senior Software Engineer, Frontend at Harvey.",
+      "jobUrl": "https://jobs.ashbyhq.com/harvey/04e17f81-d0a7-4f83-8526-ec4c9532ddcc",
+      "applyUrl": "https://jobs.ashbyhq.com/harvey/04e17f81-d0a7-4f83-8526-ec4c9532ddcc/application"
+    }
+  ]
+}

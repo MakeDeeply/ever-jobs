@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999713532287",
+      "name": "Freight Broker Agent - Remote",
+      "uuid": "cardinallogistics-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "CardinalLogistics1",
+        "name": "Cardinal Logistics"
+      },
+      "releasedDate": "2020-06-11T20:04:54.000Z",
+      "location": {
+        "city": "Cleveland",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Cleveland, OH, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CardinalLogistics1/743999713532287",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Freight Broker Agent - Remote at Cardinal Logistics.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999713532100",
+      "name": "Freight Broker Agent - Remote",
+      "uuid": "cardinallogistics-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "CardinalLogistics1",
+        "name": "Cardinal Logistics"
+      },
+      "releasedDate": "2020-06-11T20:02:55.000Z",
+      "location": {
+        "city": "St. Louis",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "St. Louis, MO, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CardinalLogistics1/743999713532100",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Freight Broker Agent - Remote at Cardinal Logistics.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999713532020",
+      "name": "Freight Broker Agent - Remote",
+      "uuid": "cardinallogistics-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "CardinalLogistics1",
+        "name": "Cardinal Logistics"
+      },
+      "releasedDate": "2020-06-11T20:01:53.000Z",
+      "location": {
+        "city": "Kansas City",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Kansas City, KS, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CardinalLogistics1/743999713532020",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Freight Broker Agent - Remote at Cardinal Logistics.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

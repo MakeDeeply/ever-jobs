@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "01a5eda6-afb7-49db-bb3b-e5601f6e4da8",
+      "title": "Senior Manager, Global Payroll Systems & Equity Operations",
+      "departmentName": "Finance",
+      "teamName": "Finance",
+      "employmentType": "FullTime",
+      "location": "Ireland - Remote",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Ireland - Remote",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2026-06-24",
+      "descriptionHtml": "<p>Senior Manager, Global Payroll Systems & Equity Operations at Hopper.</p>",
+      "descriptionPlain": "Senior Manager, Global Payroll Systems & Equity Operations at Hopper.",
+      "jobUrl": "https://jobs.ashbyhq.com/hopper/01a5eda6-afb7-49db-bb3b-e5601f6e4da8",
+      "applyUrl": "https://jobs.ashbyhq.com/hopper/01a5eda6-afb7-49db-bb3b-e5601f6e4da8/application"
+    },
+    {
+      "id": "021c3d35-e0e1-4a4c-adab-40fda221e026",
+      "title": "Principal Product Manager, HTS API Marketplace",
+      "departmentName": "Travel Tech",
+      "teamName": "Travel Tech",
+      "employmentType": "FullTime",
+      "location": "US - Remote",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "US - Remote",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2026-04-28",
+      "descriptionHtml": "<p>Principal Product Manager, HTS API Marketplace at Hopper.</p>",
+      "descriptionPlain": "Principal Product Manager, HTS API Marketplace at Hopper.",
+      "jobUrl": "https://jobs.ashbyhq.com/hopper/021c3d35-e0e1-4a4c-adab-40fda221e026",
+      "applyUrl": "https://jobs.ashbyhq.com/hopper/021c3d35-e0e1-4a4c-adab-40fda221e026/application"
+    },
+    {
+      "id": "02a4d00d-df80-453b-8225-560d0b68ab91",
+      "title": "Staff Backend Software Engineer",
+      "departmentName": "Commerce",
+      "teamName": "Commerce",
+      "employmentType": "FullTime",
+      "location": "Ireland - Remote",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Ireland - Remote",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2026-06-30",
+      "descriptionHtml": "<p>Staff Backend Software Engineer at Hopper.</p>",
+      "descriptionPlain": "Staff Backend Software Engineer at Hopper.",
+      "jobUrl": "https://jobs.ashbyhq.com/hopper/02a4d00d-df80-453b-8225-560d0b68ab91",
+      "applyUrl": "https://jobs.ashbyhq.com/hopper/02a4d00d-df80-453b-8225-560d0b68ab91/application"
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135750787",
+      "name": "Production Engineer, Category Green Plants",
+      "uuid": "interikeagroup-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "InterIKEAGroup",
+        "name": "Inter IKEA Group"
+      },
+      "releasedDate": "2026-07-03T14:37:44.237Z",
+      "location": {
+        "city": "Warszawa",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Warszawa, , Poland"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Quality & Lean"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/InterIKEAGroup/744000135750787",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Production Engineer, Category Green Plants at Inter IKEA Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135662634",
+      "name": "Production Engineer, Protein Category in IKEA Food",
+      "uuid": "interikeagroup-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "InterIKEAGroup",
+        "name": "Inter IKEA Group"
+      },
+      "releasedDate": "2026-07-03T07:56:40.209Z",
+      "location": {
+        "city": "Älmhult",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Älmhult, , Sweden"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Engineering & Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/InterIKEAGroup/744000135662634",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Production Engineer, Protein Category in IKEA Food at Inter IKEA Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135649749",
+      "name": "People & Culture Administrator",
+      "uuid": "interikeagroup-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "InterIKEAGroup",
+        "name": "Inter IKEA Group"
+      },
+      "releasedDate": "2026-07-03T06:28:59.802Z",
+      "location": {
+        "city": "Hultsfred",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Hultsfred, , Sweden"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "***Please choose"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/InterIKEAGroup/744000135649749",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>People & Culture Administrator at Inter IKEA Group.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

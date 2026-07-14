@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135760909",
+      "name": "System Engineer (Containerization)",
+      "uuid": "avaloq-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Avaloq1",
+        "name": "Avaloq"
+      },
+      "releasedDate": "2026-07-03T15:36:09.345Z",
+      "location": {
+        "city": "Bioggio",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Bioggio, Canton Ticino, Switzerland"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Sales & Delivery"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Avaloq1/744000135760909",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>System Engineer (Containerization) at Avaloq.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135759335",
+      "name": "System Engineer (Database Administrator)",
+      "uuid": "avaloq-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Avaloq1",
+        "name": "Avaloq"
+      },
+      "releasedDate": "2026-07-03T15:29:21.047Z",
+      "location": {
+        "city": "Bioggio",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Bioggio, Canton Ticino, Switzerland"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Sales & Delivery"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Avaloq1/744000135759335",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>System Engineer (Database Administrator) at Avaloq.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135638349",
+      "name": "Quality Assurance Associate (Fresh Graduate)",
+      "uuid": "avaloq-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Avaloq1",
+        "name": "Avaloq"
+      },
+      "releasedDate": "2026-07-03T03:55:18.931Z",
+      "location": {
+        "city": "Makati City",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Makati City, National Capital Region, Philippines"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Product & Development"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Avaloq1/744000135638349",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Quality Assurance Associate (Fresh Graduate) at Avaloq.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135787029",
+      "name": "Ayudante General",
+      "uuid": "sika-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "SikaAG",
+        "name": "Sika"
+      },
+      "releasedDate": "2026-07-03T23:11:25.899Z",
+      "location": {
+        "city": "Tula",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Tula, Hgo., Mexico"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Production"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SikaAG/744000135787029",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Ayudante General at Sika.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135786659",
+      "name": "Supervisor de Promotoría - Homecenters Monterrey",
+      "uuid": "sika-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "SikaAG",
+        "name": "Sika"
+      },
+      "releasedDate": "2026-07-03T22:55:20.342Z",
+      "location": {
+        "city": "Monterrey",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Monterrey, N.L., Mexico"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SikaAG/744000135786659",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Supervisor de Promotoría - Homecenters Monterrey at Sika.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135786159",
+      "name": "Aplicador Técnico – Construcción | Guadalajara",
+      "uuid": "sika-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "SikaAG",
+        "name": "Sika"
+      },
+      "releasedDate": "2026-07-03T22:33:15.346Z",
+      "location": {
+        "city": "Guadalajara",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Guadalajara, Jal., Mexico"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SikaAG/744000135786159",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Aplicador Técnico – Construcción | Guadalajara at Sika.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

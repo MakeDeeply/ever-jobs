@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135743279",
+      "name": "Sales Associate - 20h/week",
+      "uuid": "salomon-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Salomon",
+        "name": "Salomon"
+      },
+      "releasedDate": "2026-07-03T14:02:03.235Z",
+      "location": {
+        "city": "Ellesmere Port",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Ellesmere Port, , United Kingdom"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Salomon/744000135743279",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Sales Associate - 20h/week at Salomon.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135740491",
+      "name": "Conseiller de ventes H/F 20h",
+      "uuid": "salomon-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Salomon",
+        "name": "Salomon"
+      },
+      "releasedDate": "2026-07-03T13:50:08.633Z",
+      "location": {
+        "city": "Le Chesnay-Rocquencourt",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Le Chesnay-Rocquencourt, , France"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "D2C - Retail Stores"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Salomon/744000135740491",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Conseiller de ventes H/F 20h at Salomon.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135461849",
+      "name": "Sales Tools & Processes Specialist",
+      "uuid": "salomon-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Salomon",
+        "name": "Salomon"
+      },
+      "releasedDate": "2026-07-02T09:56:42.470Z",
+      "location": {
+        "city": "Annecy",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Annecy, , France"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Salomon/744000135461849",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Sales Tools & Processes Specialist at Salomon.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

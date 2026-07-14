@@ -1,0 +1,72 @@
+import { SourcePlugin, PluginRegistry } from '@ever-jobs/plugin';
+
+import { Injectable, Logger, Optional } from '@nestjs/common';
+import {
+  IScraper, ScraperInputDto, JobResponseDto, Site,
+} from '@ever-jobs/models';
+
+/**
+ * GenBio AI — Builds pan-modal large biological models for biomedicine.
+ *
+ * GenBio AI develops pan-modal Large Biological Models for biomedicine, with
+ * bioinformatics data engineering and research roles across US and Abu Dhabi
+ * locations.
+ *
+ * Sector: AI / biological foundation models. HQ: Palo Alto, California, USA.
+ *
+ * Source: Lever job board, company slug `genbio`
+ * (`https://jobs.lever.co/genbio`). The company's live
+ * postings are served by Lever. Rather than re-implement Lever parsing (and
+ * risk drift), this plugin resolves the registered Lever source plugin from
+ * the `PluginRegistry` at runtime and delegates the fetch + field mapping to
+ * it, then re-stamps the company identity (site, companyName, id prefix) onto
+ * the results — so every Lever field fix is inherited automatically. This
+ * honours the "no plugin imports a peer plugin directly; discover via the
+ * registry" rule.
+ */
+const COMPANY_SLUG = 'genbio';
+const COMPANY_NAME = 'GenBio AI';
+
+@SourcePlugin({
+  site: Site.GENBIO_AI,
+  name: COMPANY_NAME,
+  category: 'company',
+})
+@Injectable()
+export class GenBioAIService implements IScraper {
+  private readonly logger = new Logger(GenBioAIService.name);
+
+  constructor(
+    @Optional() private readonly registry?: PluginRegistry,
+  ) {}
+
+  async scrape(input: ScraperInputDto): Promise<JobResponseDto> {
+    const lever = this.registry?.getScraper(Site.LEVER);
+    if (!lever) {
+      this.logger.error(
+        'Lever source plugin is not registered; cannot scrape GenBio AI',
+      );
+      return new JobResponseDto([]);
+    }
+
+    this.logger.log(
+      `GenBio AI: delegating to Lever (slug ${COMPANY_SLUG})`,
+    );
+
+    const result = await lever.scrape({
+      ...input,
+      companySlug: COMPANY_SLUG,
+    } as ScraperInputDto);
+
+    for (const job of result.jobs) {
+      job.site = Site.GENBIO_AI;
+      job.companyName = COMPANY_NAME;
+      if (job.id) {
+        job.id = job.id.replace(/^lever-/, 'genbio-');
+      }
+    }
+
+    this.logger.log(`GenBio AI: scraped ${result.jobs.length} jobs`);
+    return result;
+  }
+}

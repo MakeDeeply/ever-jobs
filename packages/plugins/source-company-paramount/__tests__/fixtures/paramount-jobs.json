@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000119699543",
+      "name": "Workers' Compensation Paralegal",
+      "uuid": "paramount-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "ParamountATL",
+        "name": "Paramount"
+      },
+      "releasedDate": "2026-04-09T20:54:31.804Z",
+      "location": {
+        "city": "Atlanta",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Atlanta, GA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Legal"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ParamountATL/744000119699543",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Workers' Compensation Paralegal at Paramount.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000119698417",
+      "name": "Legal Billing Specialist",
+      "uuid": "paramount-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "ParamountATL",
+        "name": "Paramount"
+      },
+      "releasedDate": "2026-04-09T20:46:40.318Z",
+      "location": {
+        "city": "Atlanta",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Atlanta, GA, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Legal"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ParamountATL/744000119698417",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Legal Billing Specialist at Paramount.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999991761051",
+      "name": "Legal Secretaries/Legal Assistants",
+      "uuid": "paramount-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "ParamountATL",
+        "name": "Paramount"
+      },
+      "releasedDate": "2024-06-03T19:28:29.821Z",
+      "location": {
+        "city": "Atlanta",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Atlanta, GA, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Legal"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ParamountATL/743999991761051",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Legal Secretaries/Legal Assistants at Paramount.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

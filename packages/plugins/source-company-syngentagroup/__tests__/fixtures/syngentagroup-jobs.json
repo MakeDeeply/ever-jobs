@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135775119",
+      "name": "Analista Químico Jr.",
+      "uuid": "syngentagroup-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "SyngentaGroup",
+        "name": "Syngenta Group"
+      },
+      "releasedDate": "2026-07-03T18:30:07.962Z",
+      "location": {
+        "city": "Paulínia",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Paulínia, SP, Brazil"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Development"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SyngentaGroup/744000135775119",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Analista Químico Jr. at Syngenta Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135769839",
+      "name": "Gerente Comercial",
+      "uuid": "syngentagroup-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "SyngentaGroup",
+        "name": "Syngenta Group"
+      },
+      "releasedDate": "2026-07-03T17:20:01.483Z",
+      "location": {
+        "city": "Heroica Veracruz",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Heroica Veracruz, Ver., Mexico"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Commercial"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SyngentaGroup/744000135769839",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Gerente Comercial at Syngenta Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135746390",
+      "name": "Ger GTM Acesso Direto III (Seeds)",
+      "uuid": "syngentagroup-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "SyngentaGroup",
+        "name": "Syngenta Group"
+      },
+      "releasedDate": "2026-07-03T14:18:52.711Z",
+      "location": {
+        "city": "Sao Paulo",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Sao Paulo, SÃO PAULO, Brazil"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Commercial"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SyngentaGroup/744000135746390",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Ger GTM Acesso Direto III (Seeds) at Syngenta Group.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

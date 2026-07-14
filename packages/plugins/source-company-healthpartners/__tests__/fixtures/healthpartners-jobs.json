@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "108476451",
+      "name": "Director of Nursing-Birth Center at Regions Hospital",
+      "uuid": "healthpartners-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "HealthPartners1",
+        "name": "HealthPartners"
+      },
+      "releasedDate": "2017-02-16T18:33:44.000Z",
+      "location": {
+        "city": "Saint Paul",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Saint Paul, MN, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Management"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/HealthPartners1/108476451",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Director of Nursing-Birth Center at Regions Hospital at HealthPartners.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "94654392",
+      "name": "Telephone Nurse Triage (CareLine RN)",
+      "uuid": "healthpartners-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "HealthPartners1",
+        "name": "HealthPartners"
+      },
+      "releasedDate": "2016-07-22T19:11:49.000Z",
+      "location": {
+        "city": "Bloomington",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Bloomington, MN, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Health Care Provider"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/HealthPartners1/94654392",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Telephone Nurse Triage (CareLine RN) at HealthPartners.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "94478649",
+      "name": "Nurse Supervisor, Telephone Triage Center (CareLine)",
+      "uuid": "healthpartners-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "HealthPartners1",
+        "name": "HealthPartners"
+      },
+      "releasedDate": "2016-07-18T20:39:47.000Z",
+      "location": {
+        "city": "Minneapolis",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Minneapolis, MN, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Health Care Provider"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/HealthPartners1/94478649",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Nurse Supervisor, Telephone Triage Center (CareLine) at HealthPartners.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

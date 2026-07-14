@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "86388137",
+      "name": "Account Executive- Industrial (outside sales role)",
+      "uuid": "northstarstaffingsolutions-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "NorthStarStaffingSolutions1",
+        "name": "North Star Staffing Solutions"
+      },
+      "releasedDate": "2015-10-28T18:58:45.000Z",
+      "location": {
+        "city": "San Jose",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "San Jose, CA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/NorthStarStaffingSolutions1/86388137",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Account Executive- Industrial (outside sales role) at North Star Staffing Solutions.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "86387687",
+      "name": "Human Resource Manager",
+      "uuid": "northstarstaffingsolutions-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "NorthStarStaffingSolutions1",
+        "name": "North Star Staffing Solutions"
+      },
+      "releasedDate": "2015-10-28T18:48:53.000Z",
+      "location": {
+        "city": "Columbus",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Columbus, OH, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Human Resources"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/NorthStarStaffingSolutions1/86387687",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Human Resource Manager at North Star Staffing Solutions.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "86387211",
+      "name": "Inside Sales Specialist",
+      "uuid": "northstarstaffingsolutions-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "NorthStarStaffingSolutions1",
+        "name": "North Star Staffing Solutions"
+      },
+      "releasedDate": "2015-10-28T18:39:37.000Z",
+      "location": {
+        "city": "San Antonio",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "San Antonio, TX, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/NorthStarStaffingSolutions1/86387211",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Inside Sales Specialist at North Star Staffing Solutions.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135654350",
+      "name": "Property Manager | FIFO | 5:2 roster | Western Australia",
+      "uuid": "sodexo-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Sodexo",
+        "name": "Sodexo"
+      },
+      "releasedDate": "2026-07-03T07:07:34.048Z",
+      "location": {
+        "city": "Western Australia",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Western Australia , WA, Australia"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Administrative"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Sodexo/744000135654350",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Property Manager | FIFO | 5:2 roster | Western Australia at Sodexo.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135401609",
+      "name": "Chefs | FIFO | 2:1 | Sydney, New South Wales",
+      "uuid": "sodexo-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Sodexo",
+        "name": "Sodexo"
+      },
+      "releasedDate": "2026-07-02T02:16:38.959Z",
+      "location": {
+        "city": "New South Wales",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "New South Wales, SYDCHEF, Australia"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Customer Service"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Sodexo/744000135401609",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Chefs | FIFO | 2:1 | Sydney, New South Wales at Sodexo.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135122660",
+      "name": "Cook / All rounder | Mon-Fri, Full-time | Sydney, NSW",
+      "uuid": "sodexo-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Sodexo",
+        "name": "Sodexo"
+      },
+      "releasedDate": "2026-06-30T23:18:07.175Z",
+      "location": {
+        "city": "New South Wales",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "New South Wales, REF28039N, Australia"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Customer Service"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Sodexo/744000135122660",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Cook / All rounder | Mon-Fri, Full-time | Sydney, NSW at Sodexo.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

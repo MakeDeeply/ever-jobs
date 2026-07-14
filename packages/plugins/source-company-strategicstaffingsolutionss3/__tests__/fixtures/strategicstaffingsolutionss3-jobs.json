@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999679839885",
+      "name": "Salesforce Developer",
+      "uuid": "strategicstaffingsolutionss3-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "StrategicStaffingSolutionsS3",
+        "name": "Strategic Staffing Solutions (S3)"
+      },
+      "releasedDate": "2018-11-27T06:36:44.000Z",
+      "location": {
+        "city": "Chandler",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Chandler, AZ, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/StrategicStaffingSolutionsS3/743999679839885",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Salesforce Developer at Strategic Staffing Solutions (S3).</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999671141463",
+      "name": "Consumer Reporting Analyst - Phoenix, AZ",
+      "uuid": "strategicstaffingsolutionss3-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "StrategicStaffingSolutionsS3",
+        "name": "Strategic Staffing Solutions (S3)"
+      },
+      "releasedDate": "2018-05-30T04:47:46.000Z",
+      "location": {
+        "city": "Phoenix",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Phoenix, AZ, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Analyst"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/StrategicStaffingSolutionsS3/743999671141463",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Consumer Reporting Analyst - Phoenix, AZ at Strategic Staffing Solutions (S3).</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999671019700",
+      "name": "Sr. Administrative Assistant",
+      "uuid": "strategicstaffingsolutionss3-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "StrategicStaffingSolutionsS3",
+        "name": "Strategic Staffing Solutions (S3)"
+      },
+      "releasedDate": "2018-05-26T12:25:33.000Z",
+      "location": {
+        "city": "San Antonio",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "San Antonio, TX, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Administrative"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/StrategicStaffingSolutionsS3/743999671019700",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Sr. Administrative Assistant at Strategic Staffing Solutions (S3).</p>"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135777629",
+      "name": "Legal Fintech Analyst",
+      "uuid": "deliveryhero-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "DeliveryHero",
+        "name": "Delivery Hero"
+      },
+      "releasedDate": "2026-07-03T19:17:37.795Z",
+      "location": {
+        "city": "Buenos Aires",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Buenos Aires, , Argentina"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Legal"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/DeliveryHero/744000135777629",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Legal Fintech Analyst at Delivery Hero.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135771539",
+      "name": "Shift Supervisor Bahia Blanca",
+      "uuid": "deliveryhero-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "DeliveryHero",
+        "name": "Delivery Hero"
+      },
+      "releasedDate": "2026-07-03T17:41:42.040Z",
+      "location": {
+        "city": "Buenos Aires",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Buenos Aires, , Argentina"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "General Business"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/DeliveryHero/744000135771539",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Shift Supervisor Bahia Blanca at Delivery Hero.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135763719",
+      "name": "Técnico Superior en PRL (They/She/He)",
+      "uuid": "deliveryhero-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "DeliveryHero",
+        "name": "Delivery Hero"
+      },
+      "releasedDate": "2026-07-03T16:01:33.541Z",
+      "location": {
+        "city": "Barcelona",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Barcelona, , Spain"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "General Business"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/DeliveryHero/744000135763719",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Técnico Superior en PRL (They/She/He) at Delivery Hero.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

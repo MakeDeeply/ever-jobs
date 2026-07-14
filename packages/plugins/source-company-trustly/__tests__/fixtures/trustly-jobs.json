@@ -1,0 +1,62 @@
+[
+  {
+    "id": "bc43cb49-1944-4af5-af3a-fad2b186b777",
+    "text": "Chief Data Officer",
+    "categories": {
+      "location": "San Francisco, CA",
+      "allLocations": [
+        "San Francisco, CA"
+      ],
+      "department": "Tech",
+      "team": "Tech",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1776192848197,
+    "descriptionPlain": "Chief Data Officer at Trustly.",
+    "description": "<p>Chief Data Officer at Trustly.</p>",
+    "hostedUrl": "https://jobs.lever.co/trustly/bc43cb49-1944-4af5-af3a-fad2b186b777",
+    "applyUrl": "https://jobs.lever.co/trustly/bc43cb49-1944-4af5-af3a-fad2b186b777/apply"
+  },
+  {
+    "id": "070189d3-8216-4e5f-b9c1-0e3a699669db",
+    "text": "Chief Information Security Officer",
+    "categories": {
+      "location": "San Francisco, CA",
+      "allLocations": [
+        "San Francisco, CA"
+      ],
+      "department": "Tech",
+      "team": "Tech",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1776192469933,
+    "descriptionPlain": "Chief Information Security Officer at Trustly.",
+    "description": "<p>Chief Information Security Officer at Trustly.</p>",
+    "hostedUrl": "https://jobs.lever.co/trustly/070189d3-8216-4e5f-b9c1-0e3a699669db",
+    "applyUrl": "https://jobs.lever.co/trustly/070189d3-8216-4e5f-b9c1-0e3a699669db/apply"
+  },
+  {
+    "id": "88cf187b-6eaf-43d7-bf9a-1c8c7d0e37c3",
+    "text": "Director Finance Operations",
+    "categories": {
+      "location": "London, United Kingdom",
+      "allLocations": [
+        "London, United Kingdom"
+      ],
+      "department": "Finance",
+      "team": "Finance",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1780660060159,
+    "descriptionPlain": "Director Finance Operations at Trustly.",
+    "description": "<p>Director Finance Operations at Trustly.</p>",
+    "hostedUrl": "https://jobs.lever.co/trustly/88cf187b-6eaf-43d7-bf9a-1c8c7d0e37c3",
+    "applyUrl": "https://jobs.lever.co/trustly/88cf187b-6eaf-43d7-bf9a-1c8c7d0e37c3/apply"
+  }
+]

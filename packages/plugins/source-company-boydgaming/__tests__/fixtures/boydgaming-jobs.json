@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "3743990013928216",
+      "name": "Woodfire Grille Server",
+      "uuid": "boydgaming-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "BoydGaming",
+        "name": "Boyd Gaming"
+      },
+      "releasedDate": "2026-07-03T21:30:03.720Z",
+      "location": {
+        "city": "Dubuque",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Dubuque, , United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Diamond Jo Casino Dubuque"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/BoydGaming/3743990013928216",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Woodfire Grille Server at Boyd Gaming.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "3743990013927476",
+      "name": "Cage Cashier",
+      "uuid": "boydgaming-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "BoydGaming",
+        "name": "Boyd Gaming"
+      },
+      "releasedDate": "2026-07-03T20:31:13.020Z",
+      "location": {
+        "city": "Kenner",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Kenner, , United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Treasure Chest Casino"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/BoydGaming/3743990013927476",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Cage Cashier at Boyd Gaming.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "3743990013927356",
+      "name": "Full-Time Housekeeper",
+      "uuid": "boydgaming-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "BoydGaming",
+        "name": "Boyd Gaming"
+      },
+      "releasedDate": "2026-07-03T19:45:16.894Z",
+      "location": {
+        "city": "Dubuque",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Dubuque, , United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Diamond Jo Casino Dubuque"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/BoydGaming/3743990013927356",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Full-Time Housekeeper at Boyd Gaming.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

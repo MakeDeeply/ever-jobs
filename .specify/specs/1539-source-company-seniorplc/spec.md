@@ -1,0 +1,65 @@
+# Spec: 1539 — Source Company Plugin: Senior plc
+
+| Field | Value |
+| --- | --- |
+| Spec ID | 1539 |
+| Slug | source-company-seniorplc |
+| Status | accepted |
+| Owner | claude (run #443) |
+| Created | 2026-07-04 |
+| Last updated | 2026-07-04 |
+| Supersedes | (none) |
+| Related specs | 1375, 1194, 975 |
+
+## Summary
+
+New **SmartRecruiters-backed company-direct** source plugin
+`source-company-seniorplc` for **Senior plc** (Engineering group manufacturing components and systems for aerospace, defense, and energy.). Sector:
+Aerospace & defense (engineered components). HQ: Rickmansworth, England, United Kingdom.
+
+The company's live postings are served by **SmartRecruiters** on company
+identifier `SeniorPlc1` (`https://jobs.smartrecruiters.com/SeniorPlc1`),
+which exposed **100 live role(s)** at probe time (public SmartRecruiters
+Posting API, `MIN_JOBS = 3` gate). Discovered and gated through the deterministic
+SmartRecruiters company-source pipeline (`probe-smartrecruiters → assemble →
+scaffold-smartrecruiters → wire`) — see
+`.specify/specs/1375-smartrecruiters-company-source-pipeline/`.
+
+## Constitution cross-check
+
+- **TypeScript-only** — plugin is TS; no JS/Python. ✔
+- **Modular / plugin** — a self-contained `source-company-seniorplc` package,
+  installable/removable via the barrel + `Site` enum; no core changes. ✔
+- **No peer imports** — delegates to the SmartRecruiters ATS plugin via
+  `PluginRegistry` at runtime (never imports it directly). ✔
+- **Performance** — zero extra network cost over the SmartRecruiters plugin it
+  delegates to (single public Posting fetch); identity re-stamp is O(n) over
+  jobs. ✔
+- **No competitor references** — documented purely on the company's public
+  merits. ✔
+
+## User story
+
+> As an **aggregator caller**, I want **`Site.SENIOR_PLC`** in the source
+> registry, so that a single `siteType: [Site.SENIOR_PLC]` request returns
+> Senior plc's live SmartRecruiters postings, re-stamped with the company
+> identity.
+
+## Functional requirements
+
+| ID | Requirement | Priority |
+|----|-------------|----------|
+| FR-1 | Add `Site.SENIOR_PLC = 'seniorplc'` to the `Site` enum. | must |
+| FR-2 | `SeniorPlcService` implements `IScraper`, `@SourcePlugin({ site: Site.SENIOR_PLC, name: 'Senior plc', category: 'company' })`. | must |
+| FR-3 | Resolve the SmartRecruiters scraper from `PluginRegistry`; delegate `scrape({ ...input, companySlug: 'SeniorPlc1' })`. | must |
+| FR-4 | Re-stamp each `JobPostDto`: `site = Site.SENIOR_PLC`, `companyName = 'Senior plc'`, `id` prefix `sr-`→`seniorplc-`. | must |
+| FR-5 | Fail-safe: return an empty `JobResponseDto` when SmartRecruiters is unavailable / unregistered. | must |
+| FR-6 | tsconfig path-alias + jest moduleNameMapper + barrel registration. | must |
+| FR-7 | Mocked unit suite green (DI resolution, enum value, delegation, pass-through, resilience, cap). | must |
+
+## Highlights
+
+- Aerospace and defense components
+- High-technology engineered systems
+- Land vehicle and energy markets
+- Multiple operating businesses across countries

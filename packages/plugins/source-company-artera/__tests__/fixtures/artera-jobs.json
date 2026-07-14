@@ -1,0 +1,62 @@
+[
+  {
+    "id": "d3c0ca46-28cd-4193-a678-ef95002dce01",
+    "text": "Machine Learning Engineer (Platform)",
+    "categories": {
+      "location": "Remote-US",
+      "allLocations": [
+        "Remote-US"
+      ],
+      "department": "Tech",
+      "team": "Tech",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1769056331307,
+    "descriptionPlain": "Machine Learning Engineer (Platform) at Artera.",
+    "description": "<p>Machine Learning Engineer (Platform) at Artera.</p>",
+    "hostedUrl": "https://jobs.lever.co/artera/d3c0ca46-28cd-4193-a678-ef95002dce01",
+    "applyUrl": "https://jobs.lever.co/artera/d3c0ca46-28cd-4193-a678-ef95002dce01/apply"
+  },
+  {
+    "id": "f115ac1d-d023-4182-82b5-67ef3328537e",
+    "text": "Sales Account Executive (Alabama & West Georgia)",
+    "categories": {
+      "location": "Remote-US",
+      "allLocations": [
+        "Remote-US"
+      ],
+      "department": "Operations",
+      "team": "Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1780088797729,
+    "descriptionPlain": "Sales Account Executive (Alabama & West Georgia) at Artera.",
+    "description": "<p>Sales Account Executive (Alabama & West Georgia) at Artera.</p>",
+    "hostedUrl": "https://jobs.lever.co/artera/f115ac1d-d023-4182-82b5-67ef3328537e",
+    "applyUrl": "https://jobs.lever.co/artera/f115ac1d-d023-4182-82b5-67ef3328537e/apply"
+  },
+  {
+    "id": "d1a1bff0-8cda-42c5-b8b9-e2f9bc0116e9",
+    "text": "Sales Account Executive (Chicago)",
+    "categories": {
+      "location": "Remote-US",
+      "allLocations": [
+        "Remote-US"
+      ],
+      "department": "Operations",
+      "team": "Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1737579395811,
+    "descriptionPlain": "Sales Account Executive (Chicago) at Artera.",
+    "description": "<p>Sales Account Executive (Chicago) at Artera.</p>",
+    "hostedUrl": "https://jobs.lever.co/artera/d1a1bff0-8cda-42c5-b8b9-e2f9bc0116e9",
+    "applyUrl": "https://jobs.lever.co/artera/d1a1bff0-8cda-42c5-b8b9-e2f9bc0116e9/apply"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "27d06840-4354-4ddc-830e-6465c252226c",
+    "text": "Demand Planner",
+    "categories": {
+      "location": "Larchmont, NY",
+      "allLocations": [
+        "Larchmont, NY"
+      ],
+      "department": "HQ",
+      "team": "HQ",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1780335869963,
+    "descriptionPlain": "Demand Planner at Rowan.",
+    "description": "<p>Demand Planner at Rowan.</p>",
+    "hostedUrl": "https://jobs.lever.co/heyrowan/27d06840-4354-4ddc-830e-6465c252226c",
+    "applyUrl": "https://jobs.lever.co/heyrowan/27d06840-4354-4ddc-830e-6465c252226c/apply"
+  },
+  {
+    "id": "465ee49b-ece0-499b-9dd0-f2d3e475d1ee",
+    "text": "District Manager, Chicago",
+    "categories": {
+      "location": "Chicago, IL",
+      "allLocations": [
+        "Chicago, IL"
+      ],
+      "department": "Studio | Brick + Mortar",
+      "team": "Studio | Brick + Mortar",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1782514122457,
+    "descriptionPlain": "District Manager, Chicago at Rowan.",
+    "description": "<p>District Manager, Chicago at Rowan.</p>",
+    "hostedUrl": "https://jobs.lever.co/heyrowan/465ee49b-ece0-499b-9dd0-f2d3e475d1ee",
+    "applyUrl": "https://jobs.lever.co/heyrowan/465ee49b-ece0-499b-9dd0-f2d3e475d1ee/apply"
+  },
+  {
+    "id": "318214fb-2142-494c-baf3-1872e94ea903",
+    "text": "Merchandise Assistant",
+    "categories": {
+      "location": "Larchmont, NY",
+      "allLocations": [
+        "Larchmont, NY"
+      ],
+      "department": "HQ",
+      "team": "HQ",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1779304805473,
+    "descriptionPlain": "Merchandise Assistant at Rowan.",
+    "description": "<p>Merchandise Assistant at Rowan.</p>",
+    "hostedUrl": "https://jobs.lever.co/heyrowan/318214fb-2142-494c-baf3-1872e94ea903",
+    "applyUrl": "https://jobs.lever.co/heyrowan/318214fb-2142-494c-baf3-1872e94ea903/apply"
+  }
+]

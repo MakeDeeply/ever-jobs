@@ -1,0 +1,62 @@
+[
+  {
+    "id": "39d8d767-ed73-456f-bd7b-006381e084fa",
+    "text": "Associate Mortgage Specialist",
+    "categories": {
+      "location": "West Roseville, CA",
+      "allLocations": [
+        "West Roseville, CA"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1740693421110,
+    "descriptionPlain": "Associate Mortgage Specialist at GoodLeap.",
+    "description": "<p>Associate Mortgage Specialist at GoodLeap.</p>",
+    "hostedUrl": "https://jobs.lever.co/goodleap/39d8d767-ed73-456f-bd7b-006381e084fa",
+    "applyUrl": "https://jobs.lever.co/goodleap/39d8d767-ed73-456f-bd7b-006381e084fa/apply"
+  },
+  {
+    "id": "71050719-1bff-4c79-a6a3-891c6079d407",
+    "text": "Bilingual Client Support Manager",
+    "categories": {
+      "location": "Bentonville, AR",
+      "allLocations": [
+        "Bentonville, AR"
+      ],
+      "department": "Client Support",
+      "team": "Client Support",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1782236903279,
+    "descriptionPlain": "Bilingual Client Support Manager at GoodLeap.",
+    "description": "<p>Bilingual Client Support Manager at GoodLeap.</p>",
+    "hostedUrl": "https://jobs.lever.co/goodleap/71050719-1bff-4c79-a6a3-891c6079d407",
+    "applyUrl": "https://jobs.lever.co/goodleap/71050719-1bff-4c79-a6a3-891c6079d407/apply"
+  },
+  {
+    "id": "74786e27-ac6f-41dd-8a8d-a19ea4ad171f",
+    "text": "Bilingual Client Support Manager",
+    "categories": {
+      "location": "Roseville, CA - HQ",
+      "allLocations": [
+        "Roseville, CA - HQ"
+      ],
+      "department": "Client Support",
+      "team": "Client Support",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1782236644213,
+    "descriptionPlain": "Bilingual Client Support Manager at GoodLeap.",
+    "description": "<p>Bilingual Client Support Manager at GoodLeap.</p>",
+    "hostedUrl": "https://jobs.lever.co/goodleap/74786e27-ac6f-41dd-8a8d-a19ea4ad171f",
+    "applyUrl": "https://jobs.lever.co/goodleap/74786e27-ac6f-41dd-8a8d-a19ea4ad171f/apply"
+  }
+]

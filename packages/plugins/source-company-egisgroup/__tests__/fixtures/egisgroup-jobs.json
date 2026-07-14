@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135782879",
+      "name": "Engenheiro Júnior - Geotecnia (São Paulo)",
+      "uuid": "egisgroup-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "EgisGroup",
+        "name": "Egis Group"
+      },
+      "releasedDate": "2026-07-03T21:15:52.049Z",
+      "location": {
+        "city": "São Paulo",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "São Paulo, SP, Brazil"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/EgisGroup/744000135782879",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Engenheiro Júnior - Geotecnia (São Paulo) at Egis Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135780870",
+      "name": "Engenheiro Pleno - Geotecnia (Curitiba)",
+      "uuid": "egisgroup-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "EgisGroup",
+        "name": "Egis Group"
+      },
+      "releasedDate": "2026-07-03T20:24:13.759Z",
+      "location": {
+        "city": "Curitiba",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Curitiba, PR, Brazil"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/EgisGroup/744000135780870",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Engenheiro Pleno - Geotecnia (Curitiba) at Egis Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135780829",
+      "name": "Engenheiro Civil Sênior - Geotecnia (Curitiba)",
+      "uuid": "egisgroup-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "EgisGroup",
+        "name": "Egis Group"
+      },
+      "releasedDate": "2026-07-03T20:22:32.893Z",
+      "location": {
+        "city": "Curitiba",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Curitiba, PR, Brazil"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/EgisGroup/744000135780829",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Engenheiro Civil Sênior - Geotecnia (Curitiba) at Egis Group.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

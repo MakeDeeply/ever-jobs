@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000132171214",
+      "name": "Abercrombie & Fitch - Assistant Manager, Franklin Park",
+      "uuid": "abercrombiefitchco-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "AbercrombieAndFitchCo",
+        "name": "Abercrombie & Fitch Co."
+      },
+      "releasedDate": "2026-06-15T11:01:18.920Z",
+      "location": {
+        "city": "Toledo",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Toledo, OH, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Stores - Abercrombie & Fitch"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AbercrombieAndFitchCo/744000132171214",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Abercrombie & Fitch - Assistant Manager, Franklin Park at Abercrombie & Fitch Co..</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000132170550",
+      "name": "Abercrombie & Fitch - Brand Representative, Franklin Park",
+      "uuid": "abercrombiefitchco-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "AbercrombieAndFitchCo",
+        "name": "Abercrombie & Fitch Co."
+      },
+      "releasedDate": "2026-06-15T11:01:14.986Z",
+      "location": {
+        "city": "Toledo",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Toledo, OH, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Stores - Abercrombie & Fitch"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AbercrombieAndFitchCo/744000132170550",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Abercrombie & Fitch - Brand Representative, Franklin Park at Abercrombie & Fitch Co..</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000132171439",
+      "name": "Abercrombie & Fitch - Key Lead, Franklin Park",
+      "uuid": "abercrombiefitchco-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "AbercrombieAndFitchCo",
+        "name": "Abercrombie & Fitch Co."
+      },
+      "releasedDate": "2026-06-15T11:01:12.143Z",
+      "location": {
+        "city": "Toledo",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Toledo, US-OH, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Stores - Abercrombie & Fitch"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AbercrombieAndFitchCo/744000132171439",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Abercrombie & Fitch - Key Lead, Franklin Park at Abercrombie & Fitch Co..</p>"
+          }
+        }
+      }
+    }
+  ]
+}

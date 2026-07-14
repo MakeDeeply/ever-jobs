@@ -1,0 +1,62 @@
+[
+  {
+    "id": "f2ab14ed-0258-4dc6-bd52-c96eb7d968e5",
+    "text": "Account Executive - Small Business",
+    "categories": {
+      "location": "New York Office",
+      "allLocations": [
+        "New York Office"
+      ],
+      "department": "Sales & Partnerships",
+      "team": "Sales & Partnerships",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1782498827119,
+    "descriptionPlain": "Account Executive - Small Business at Aircall.",
+    "description": "<p>Account Executive - Small Business at Aircall.</p>",
+    "hostedUrl": "https://jobs.lever.co/aircall/f2ab14ed-0258-4dc6-bd52-c96eb7d968e5",
+    "applyUrl": "https://jobs.lever.co/aircall/f2ab14ed-0258-4dc6-bd52-c96eb7d968e5/apply"
+  },
+  {
+    "id": "69766b74-ff2f-4427-aae5-004c5fbb2545",
+    "text": "Account Executive - Strategic",
+    "categories": {
+      "location": "Sydney Office",
+      "allLocations": [
+        "Sydney Office"
+      ],
+      "department": "Sales & Partnerships",
+      "team": "Sales & Partnerships",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1773784560620,
+    "descriptionPlain": "Account Executive - Strategic at Aircall.",
+    "description": "<p>Account Executive - Strategic at Aircall.</p>",
+    "hostedUrl": "https://jobs.lever.co/aircall/69766b74-ff2f-4427-aae5-004c5fbb2545",
+    "applyUrl": "https://jobs.lever.co/aircall/69766b74-ff2f-4427-aae5-004c5fbb2545/apply"
+  },
+  {
+    "id": "30d2ebf9-a650-4b7d-8035-0bf12d7c31f3",
+    "text": "Account Executive , DACH market",
+    "categories": {
+      "location": "Berlin Office",
+      "allLocations": [
+        "Berlin Office"
+      ],
+      "department": "Sales & Partnerships",
+      "team": "Sales & Partnerships",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1720606707905,
+    "descriptionPlain": "Account Executive , DACH market at Aircall.",
+    "description": "<p>Account Executive , DACH market at Aircall.</p>",
+    "hostedUrl": "https://jobs.lever.co/aircall/30d2ebf9-a650-4b7d-8035-0bf12d7c31f3",
+    "applyUrl": "https://jobs.lever.co/aircall/30d2ebf9-a650-4b7d-8035-0bf12d7c31f3/apply"
+  }
+]

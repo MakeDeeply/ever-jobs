@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135652277",
+      "name": "Kitchen Steward",
+      "uuid": "constancehotelsresorts-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "ConstanceHospitalityManagement",
+        "name": "Constance Hotels & Resorts"
+      },
+      "releasedDate": "2026-07-03T07:02:47.121Z",
+      "location": {
+        "city": "Constance Ephelia",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Constance Ephelia, , Seychelles"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Stewarding"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ConstanceHospitalityManagement/744000135652277",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Kitchen Steward at Constance Hotels & Resorts.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135649070",
+      "name": "Executive Sous Chef - Fine Dining",
+      "uuid": "constancehotelsresorts-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "ConstanceHospitalityManagement",
+        "name": "Constance Hotels & Resorts"
+      },
+      "releasedDate": "2026-07-03T06:26:48.202Z",
+      "location": {
+        "city": "Constance Ephelia",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Constance Ephelia, , Seychelles"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Kitchen Admin"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ConstanceHospitalityManagement/744000135649070",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Executive Sous Chef - Fine Dining at Constance Hotels & Resorts.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135643019",
+      "name": "Handyman (Casual)",
+      "uuid": "constancehotelsresorts-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "ConstanceHospitalityManagement",
+        "name": "Constance Hotels & Resorts"
+      },
+      "releasedDate": "2026-07-03T05:27:14.689Z",
+      "location": {
+        "city": "Constance Prince Maurice",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Constance Prince Maurice, , Mauritius"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ConstanceHospitalityManagement/744000135643019",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Handyman (Casual) at Constance Hotels & Resorts.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

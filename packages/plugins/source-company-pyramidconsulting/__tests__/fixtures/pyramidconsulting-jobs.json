@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "105073703",
+      "name": "P2P Developer",
+      "uuid": "pyramidconsulting-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "PyramidIT1",
+        "name": "Pyramid Consulting"
+      },
+      "releasedDate": "2017-01-05T19:23:34.000Z",
+      "location": {
+        "city": "San Jose",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "San Jose, CA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/PyramidIT1/105073703",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>P2P Developer at Pyramid Consulting.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "105073574",
+      "name": "Oracle EBS HR Application Architect",
+      "uuid": "pyramidconsulting-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "PyramidIT1",
+        "name": "Pyramid Consulting"
+      },
+      "releasedDate": "2017-01-05T19:21:45.000Z",
+      "location": {
+        "city": "Miami",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Miami, FL, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/PyramidIT1/105073574",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Oracle EBS HR Application Architect at Pyramid Consulting.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "105073546",
+      "name": "QUMAS Sr Developer and Configurator",
+      "uuid": "pyramidconsulting-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "PyramidIT1",
+        "name": "Pyramid Consulting"
+      },
+      "releasedDate": "2017-01-05T19:20:57.000Z",
+      "location": {
+        "city": "Princeton",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Princeton, NJ, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/PyramidIT1/105073546",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>QUMAS Sr Developer and Configurator at Pyramid Consulting.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

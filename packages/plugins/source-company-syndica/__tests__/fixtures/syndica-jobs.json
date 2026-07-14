@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "15ab4e32-0f32-41a0-b8b0-16b6518158e9",
+      "title": "Senior Software Engineer (Zig/Rust)",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "Remote",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Remote",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2023-07-14",
+      "descriptionHtml": "<p>Senior Software Engineer (Zig/Rust) at Syndica.</p>",
+      "descriptionPlain": "Senior Software Engineer (Zig/Rust) at Syndica.",
+      "jobUrl": "https://jobs.ashbyhq.com/syndica/15ab4e32-0f32-41a0-b8b0-16b6518158e9",
+      "applyUrl": "https://jobs.ashbyhq.com/syndica/15ab4e32-0f32-41a0-b8b0-16b6518158e9/application"
+    },
+    {
+      "id": "1e21d4e9-a888-45ef-95a6-1aeb76b5c5a9",
+      "title": "Research Manager",
+      "departmentName": "Data & Research",
+      "teamName": "Data & Research",
+      "employmentType": "FullTime",
+      "location": "Remote",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Remote",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2025-07-07",
+      "descriptionHtml": "<p>Research Manager at Syndica.</p>",
+      "descriptionPlain": "Research Manager at Syndica.",
+      "jobUrl": "https://jobs.ashbyhq.com/syndica/1e21d4e9-a888-45ef-95a6-1aeb76b5c5a9",
+      "applyUrl": "https://jobs.ashbyhq.com/syndica/1e21d4e9-a888-45ef-95a6-1aeb76b5c5a9/application"
+    },
+    {
+      "id": "27ff63f6-a750-4028-b3ac-fd11388ba6ab",
+      "title": "Revenue Growth Manager (B2B Sales)",
+      "departmentName": "General",
+      "teamName": "General",
+      "employmentType": "FullTime",
+      "location": "Remote (US only)",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Remote (US only)",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2025-06-16",
+      "descriptionHtml": "<p>Revenue Growth Manager (B2B Sales) at Syndica.</p>",
+      "descriptionPlain": "Revenue Growth Manager (B2B Sales) at Syndica.",
+      "jobUrl": "https://jobs.ashbyhq.com/syndica/27ff63f6-a750-4028-b3ac-fd11388ba6ab",
+      "applyUrl": "https://jobs.ashbyhq.com/syndica/27ff63f6-a750-4028-b3ac-fd11388ba6ab/application"
+    }
+  ]
+}

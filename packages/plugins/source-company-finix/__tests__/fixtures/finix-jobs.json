@@ -1,0 +1,62 @@
+[
+  {
+    "id": "68f25f58-45ad-4683-adbc-8d40c3e0b62c",
+    "text": "Business Operations Analyst",
+    "categories": {
+      "location": "San Francisco",
+      "allLocations": [
+        "San Francisco"
+      ],
+      "department": "Operations",
+      "team": "Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1782175171318,
+    "descriptionPlain": "Business Operations Analyst at Finix.",
+    "description": "<p>Business Operations Analyst at Finix.</p>",
+    "hostedUrl": "https://jobs.lever.co/finix/68f25f58-45ad-4683-adbc-8d40c3e0b62c",
+    "applyUrl": "https://jobs.lever.co/finix/68f25f58-45ad-4683-adbc-8d40c3e0b62c/apply"
+  },
+  {
+    "id": "d6544849-9fa4-4a52-93df-4e1cb1c5f071",
+    "text": "Customer Delivery Manager",
+    "categories": {
+      "location": "San Francisco",
+      "allLocations": [
+        "San Francisco"
+      ],
+      "department": "Revenue",
+      "team": "Revenue",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1763755957742,
+    "descriptionPlain": "Customer Delivery Manager at Finix.",
+    "description": "<p>Customer Delivery Manager at Finix.</p>",
+    "hostedUrl": "https://jobs.lever.co/finix/d6544849-9fa4-4a52-93df-4e1cb1c5f071",
+    "applyUrl": "https://jobs.lever.co/finix/d6544849-9fa4-4a52-93df-4e1cb1c5f071/apply"
+  },
+  {
+    "id": "44827c17-871d-4db4-9fc5-81783971f98b",
+    "text": "Enterprise Account Executive",
+    "categories": {
+      "location": "San Francisco",
+      "allLocations": [
+        "San Francisco"
+      ],
+      "department": "Revenue",
+      "team": "Revenue",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1628000710790,
+    "descriptionPlain": "Enterprise Account Executive at Finix.",
+    "description": "<p>Enterprise Account Executive at Finix.</p>",
+    "hostedUrl": "https://jobs.lever.co/finix/44827c17-871d-4db4-9fc5-81783971f98b",
+    "applyUrl": "https://jobs.lever.co/finix/44827c17-871d-4db4-9fc5-81783971f98b/apply"
+  }
+]

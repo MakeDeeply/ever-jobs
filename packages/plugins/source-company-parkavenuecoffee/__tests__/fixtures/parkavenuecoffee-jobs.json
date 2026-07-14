@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000122327367",
+      "name": "Coffee Production Assistant",
+      "uuid": "parkavenuecoffee-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "ParkAvenueCoffee",
+        "name": "Park Avenue Coffee"
+      },
+      "releasedDate": "2026-04-22T19:31:45.508Z",
+      "location": {
+        "city": "St. Louis",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "St. Louis, MO, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Production"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ParkAvenueCoffee/744000122327367",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Coffee Production Assistant at Park Avenue Coffee.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000113746829",
+      "name": "Delivery Driver",
+      "uuid": "parkavenuecoffee-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "ParkAvenueCoffee",
+        "name": "Park Avenue Coffee"
+      },
+      "releasedDate": "2026-03-10T15:12:05.955Z",
+      "location": {
+        "city": "St. Louis",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "St. Louis, MO, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ParkAvenueCoffee/744000113746829",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Delivery Driver at Park Avenue Coffee.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000112960437",
+      "name": "Barista",
+      "uuid": "parkavenuecoffee-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "ParkAvenueCoffee",
+        "name": "Park Avenue Coffee"
+      },
+      "releasedDate": "2026-03-05T15:22:48.257Z",
+      "location": {
+        "city": "St. Louis",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "St. Louis, MO, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ParkAvenueCoffee/744000112960437",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Barista at Park Avenue Coffee.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

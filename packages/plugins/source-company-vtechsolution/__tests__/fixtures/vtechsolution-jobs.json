@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999658915754",
+      "name": "Business Analyst - IIBA Certification",
+      "uuid": "vtechsolution-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "VTechSolution1",
+        "name": "vTech Solution"
+      },
+      "releasedDate": "2017-08-30T22:47:37.000Z",
+      "location": {
+        "city": "Harrisburg",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Harrisburg, PA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/VTechSolution1/743999658915754",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Business Analyst - IIBA Certification at vTech Solution.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999658896006",
+      "name": "CCIE - Network Engineer",
+      "uuid": "vtechsolution-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "VTechSolution1",
+        "name": "vTech Solution"
+      },
+      "releasedDate": "2017-08-30T19:19:47.000Z",
+      "location": {
+        "city": "Harrisburg",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Harrisburg, PA, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/VTechSolution1/743999658896006",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>CCIE - Network Engineer at vTech Solution.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999658884453",
+      "name": "Software Engineer",
+      "uuid": "vtechsolution-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "VTechSolution1",
+        "name": "vTech Solution"
+      },
+      "releasedDate": "2017-08-30T17:06:33.000Z",
+      "location": {
+        "city": "Palm Bay",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Palm Bay, FL, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/VTechSolution1/743999658884453",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Software Engineer at vTech Solution.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

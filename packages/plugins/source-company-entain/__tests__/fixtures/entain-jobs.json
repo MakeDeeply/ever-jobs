@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135769299",
+      "name": "Retail Customer Service",
+      "uuid": "entain-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Entain",
+        "name": "Entain"
+      },
+      "releasedDate": "2026-07-03T17:09:19.896Z",
+      "location": {
+        "city": "Dublin",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Dublin, Leinster, Ireland"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Customer Service"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Entain/744000135769299",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Retail Customer Service at Entain.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135766789",
+      "name": "Retail Customer Service",
+      "uuid": "entain-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Entain",
+        "name": "Entain"
+      },
+      "releasedDate": "2026-07-03T16:32:50.887Z",
+      "location": {
+        "city": "Dunfermline",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Dunfermline, Scotland, United Kingdom"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Customer Service"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Entain/744000135766789",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Retail Customer Service at Entain.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135766409",
+      "name": "Retail Customer Service",
+      "uuid": "entain-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Entain",
+        "name": "Entain"
+      },
+      "releasedDate": "2026-07-03T16:30:10.362Z",
+      "location": {
+        "city": "Uckfield",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Uckfield, England, United Kingdom"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Customer Service"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Entain/744000135766409",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Retail Customer Service at Entain.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

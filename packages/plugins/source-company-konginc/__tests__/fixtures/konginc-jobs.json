@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "0322932b-a817-4d25-b784-ea23316852ef",
+      "title": "Enterprise Account Manager",
+      "departmentName": "All Cost Center",
+      "teamName": "All Cost Center",
+      "employmentType": "FullTime",
+      "location": "Maharashtra, India",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Maharashtra",
+          "addressRegion": "India",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-15",
+      "descriptionHtml": "<p>Enterprise Account Manager at Kong Inc..</p>",
+      "descriptionPlain": "Enterprise Account Manager at Kong Inc..",
+      "jobUrl": "https://jobs.ashbyhq.com/kong/0322932b-a817-4d25-b784-ea23316852ef",
+      "applyUrl": "https://jobs.ashbyhq.com/kong/0322932b-a817-4d25-b784-ea23316852ef/application"
+    },
+    {
+      "id": "04fc9680-5663-4c61-85a6-096b7201b401",
+      "title": "Enterprise Account Executive",
+      "departmentName": "All Cost Center",
+      "teamName": "All Cost Center",
+      "employmentType": "FullTime",
+      "location": "London, England, United Kingdom",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "London",
+          "addressRegion": "England",
+          "addressCountry": "United Kingdom"
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-09",
+      "descriptionHtml": "<p>Enterprise Account Executive at Kong Inc..</p>",
+      "descriptionPlain": "Enterprise Account Executive at Kong Inc..",
+      "jobUrl": "https://jobs.ashbyhq.com/kong/04fc9680-5663-4c61-85a6-096b7201b401",
+      "applyUrl": "https://jobs.ashbyhq.com/kong/04fc9680-5663-4c61-85a6-096b7201b401/application"
+    },
+    {
+      "id": "0858fd35-64b6-4f1a-bab2-71e6c276ad17",
+      "title": "Senior Practice Manager",
+      "departmentName": "All Cost Center",
+      "teamName": "All Cost Center",
+      "employmentType": "FullTime",
+      "location": "New Jersey, United States",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "New Jersey",
+          "addressRegion": "United States",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-03-19",
+      "descriptionHtml": "<p>Senior Practice Manager at Kong Inc..</p>",
+      "descriptionPlain": "Senior Practice Manager at Kong Inc..",
+      "jobUrl": "https://jobs.ashbyhq.com/kong/0858fd35-64b6-4f1a-bab2-71e6c276ad17",
+      "applyUrl": "https://jobs.ashbyhq.com/kong/0858fd35-64b6-4f1a-bab2-71e6c276ad17/application"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "04cfe84f-023a-438e-a5dc-789884545e66",
+      "title": "Autonomy Engineer, Controls",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "Seattle, WA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Seattle",
+          "addressRegion": "WA",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-12-03",
+      "descriptionHtml": "<p>Autonomy Engineer, Controls at BRINC.</p>",
+      "descriptionPlain": "Autonomy Engineer, Controls at BRINC.",
+      "jobUrl": "https://jobs.ashbyhq.com/brinc/04cfe84f-023a-438e-a5dc-789884545e66",
+      "applyUrl": "https://jobs.ashbyhq.com/brinc/04cfe84f-023a-438e-a5dc-789884545e66/application"
+    },
+    {
+      "id": "05ef02f7-dec3-4534-aeb3-4c2ee0f51923",
+      "title": "Station Technician",
+      "departmentName": "Manufacturing & Production",
+      "teamName": "Manufacturing & Production",
+      "employmentType": "FullTime",
+      "location": "Seattle, WA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Seattle",
+          "addressRegion": "WA",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-23",
+      "descriptionHtml": "<p>Station Technician at BRINC.</p>",
+      "descriptionPlain": "Station Technician at BRINC.",
+      "jobUrl": "https://jobs.ashbyhq.com/brinc/05ef02f7-dec3-4534-aeb3-4c2ee0f51923",
+      "applyUrl": "https://jobs.ashbyhq.com/brinc/05ef02f7-dec3-4534-aeb3-4c2ee0f51923/application"
+    },
+    {
+      "id": "328bfe1a-bdae-4759-bd58-50dd62aa8b2b",
+      "title": "Software Engineer, Test (SDET)",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "Seattle, WA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Seattle",
+          "addressRegion": "WA",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-17",
+      "descriptionHtml": "<p>Software Engineer, Test (SDET) at BRINC.</p>",
+      "descriptionPlain": "Software Engineer, Test (SDET) at BRINC.",
+      "jobUrl": "https://jobs.ashbyhq.com/brinc/328bfe1a-bdae-4759-bd58-50dd62aa8b2b",
+      "applyUrl": "https://jobs.ashbyhq.com/brinc/328bfe1a-bdae-4759-bd58-50dd62aa8b2b/application"
+    }
+  ]
+}

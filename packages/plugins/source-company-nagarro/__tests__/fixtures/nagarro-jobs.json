@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135786390",
+      "name": "Staff Engineer - SAP WM",
+      "uuid": "nagarro-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Nagarro1",
+        "name": "Nagarro"
+      },
+      "releasedDate": "2026-07-03T22:41:47.039Z",
+      "location": {
+        "city": "Mexico City",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Mexico City, , Mexico"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Nagarro1/744000135786390",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Staff Engineer - SAP WM at Nagarro.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135765395",
+      "name": "Strategic Data Architecture & Advisory (m/f/d)",
+      "uuid": "nagarro-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Nagarro1",
+        "name": "Nagarro"
+      },
+      "releasedDate": "2026-07-03T16:22:47.003Z",
+      "location": {
+        "city": "Munich",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Munich, , Germany"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Nagarro1/744000135765395",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Strategic Data Architecture & Advisory (m/f/d) at Nagarro.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135752410",
+      "name": "ITSM / CMDB Engineer",
+      "uuid": "nagarro-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Nagarro1",
+        "name": "Nagarro"
+      },
+      "releasedDate": "2026-07-03T14:43:15.376Z",
+      "location": {
+        "city": "London",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "London, , United Kingdom"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Nagarro1/744000135752410",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>ITSM / CMDB Engineer at Nagarro.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

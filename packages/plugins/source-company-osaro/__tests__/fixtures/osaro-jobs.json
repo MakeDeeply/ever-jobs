@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ab8362cf-9932-4018-a8d4-3659fc188d4e",
+    "text": "Deployment Engineer",
+    "categories": {
+      "location": "San Francisco or Remote",
+      "allLocations": [
+        "San Francisco or Remote"
+      ],
+      "department": "Operations",
+      "team": "Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1696367579252,
+    "descriptionPlain": "Deployment Engineer at OSARO.",
+    "description": "<p>Deployment Engineer at OSARO.</p>",
+    "hostedUrl": "https://jobs.lever.co/osaro/ab8362cf-9932-4018-a8d4-3659fc188d4e",
+    "applyUrl": "https://jobs.lever.co/osaro/ab8362cf-9932-4018-a8d4-3659fc188d4e/apply"
+  },
+  {
+    "id": "e902d6c1-bcfb-443e-90cb-7b0d2fc69a9c",
+    "text": "Director of Finance",
+    "categories": {
+      "location": "San Francisco",
+      "allLocations": [
+        "San Francisco"
+      ],
+      "department": "Operations",
+      "team": "Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1675798583140,
+    "descriptionPlain": "Director of Finance at OSARO.",
+    "description": "<p>Director of Finance at OSARO.</p>",
+    "hostedUrl": "https://jobs.lever.co/osaro/e902d6c1-bcfb-443e-90cb-7b0d2fc69a9c",
+    "applyUrl": "https://jobs.lever.co/osaro/e902d6c1-bcfb-443e-90cb-7b0d2fc69a9c/apply"
+  },
+  {
+    "id": "8f66deed-01d8-42c4-bf32-1ebfa4a9ab78",
+    "text": "Maintenance Technician",
+    "categories": {
+      "location": "San Francisco",
+      "allLocations": [
+        "San Francisco"
+      ],
+      "department": "Manufacturing",
+      "team": "Manufacturing",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1633477866723,
+    "descriptionPlain": "Maintenance Technician at OSARO.",
+    "description": "<p>Maintenance Technician at OSARO.</p>",
+    "hostedUrl": "https://jobs.lever.co/osaro/8f66deed-01d8-42c4-bf32-1ebfa4a9ab78",
+    "applyUrl": "https://jobs.lever.co/osaro/8f66deed-01d8-42c4-bf32-1ebfa4a9ab78/apply"
+  }
+]

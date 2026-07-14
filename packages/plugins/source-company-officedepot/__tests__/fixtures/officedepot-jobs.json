@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "87068646",
+      "name": "Senior Sales Consultant",
+      "uuid": "officedepot-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "OfficeDepot",
+        "name": "Office Depot"
+      },
+      "releasedDate": "2015-11-09T00:21:37.000Z",
+      "location": {
+        "city": "Marysville",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Marysville, WA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/OfficeDepot/87068646",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Sales Consultant at Office Depot.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "86726730",
+      "name": "Stores Team - Hiring Event - 11/12/15",
+      "uuid": "officedepot-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "OfficeDepot",
+        "name": "Office Depot"
+      },
+      "releasedDate": "2015-11-03T02:20:24.000Z",
+      "location": {
+        "city": "Portland",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Portland, OR, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/OfficeDepot/86726730",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Stores Team - Hiring Event - 11/12/15 at Office Depot.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "86205623",
+      "name": "Sales - Stores Team - Hiring Event - 10/28/15",
+      "uuid": "officedepot-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "OfficeDepot",
+        "name": "Office Depot"
+      },
+      "releasedDate": "2015-10-22T20:32:45.000Z",
+      "location": {
+        "city": "Castle Rock",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Castle Rock, CO, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/OfficeDepot/86205623",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Sales - Stores Team - Hiring Event - 10/28/15 at Office Depot.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

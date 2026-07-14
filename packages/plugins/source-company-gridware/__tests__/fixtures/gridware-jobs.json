@@ -1,0 +1,62 @@
+[
+  {
+    "id": "9afa4aa4-1903-44ad-b574-21d9b612815f",
+    "text": "Compliance Engineer",
+    "categories": {
+      "location": "San Francisco, CA",
+      "allLocations": [
+        "San Francisco, CA"
+      ],
+      "department": "IT",
+      "team": "IT",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1774398432543,
+    "descriptionPlain": "Compliance Engineer at Gridware.",
+    "description": "<p>Compliance Engineer at Gridware.</p>",
+    "hostedUrl": "https://jobs.lever.co/gridware/9afa4aa4-1903-44ad-b574-21d9b612815f",
+    "applyUrl": "https://jobs.lever.co/gridware/9afa4aa4-1903-44ad-b574-21d9b612815f/apply"
+  },
+  {
+    "id": "ffe216c9-1fb4-4e35-87a6-af89ab08c28c",
+    "text": "Data Engineer, Active Grid Response",
+    "categories": {
+      "location": "San Francisco, CA",
+      "allLocations": [
+        "San Francisco, CA"
+      ],
+      "department": "Data Platform",
+      "team": "Data Platform",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1764638487062,
+    "descriptionPlain": "Data Engineer, Active Grid Response at Gridware.",
+    "description": "<p>Data Engineer, Active Grid Response at Gridware.</p>",
+    "hostedUrl": "https://jobs.lever.co/gridware/ffe216c9-1fb4-4e35-87a6-af89ab08c28c",
+    "applyUrl": "https://jobs.lever.co/gridware/ffe216c9-1fb4-4e35-87a6-af89ab08c28c/apply"
+  },
+  {
+    "id": "192c93b0-2dad-4130-89f8-b7fc03b337ff",
+    "text": "Director of Business Development, Central US",
+    "categories": {
+      "location": "Remote",
+      "allLocations": [
+        "Remote"
+      ],
+      "department": "GTM",
+      "team": "GTM",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1781106068079,
+    "descriptionPlain": "Director of Business Development, Central US at Gridware.",
+    "description": "<p>Director of Business Development, Central US at Gridware.</p>",
+    "hostedUrl": "https://jobs.lever.co/gridware/192c93b0-2dad-4130-89f8-b7fc03b337ff",
+    "applyUrl": "https://jobs.lever.co/gridware/192c93b0-2dad-4130-89f8-b7fc03b337ff/apply"
+  }
+]

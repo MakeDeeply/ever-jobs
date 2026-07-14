@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135550470",
+      "name": "Process Designer",
+      "uuid": "crb-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "CRB",
+        "name": "CRB"
+      },
+      "releasedDate": "2026-07-02T16:33:51.496Z",
+      "location": {
+        "city": "Mississauga",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Mississauga, ON, Canada"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "CRB Canada Inc."
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CRB/744000135550470",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Process Designer at CRB.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135468239",
+      "name": "Projektingenieur Prozesstechnik für pharmazeutische/ biotechnologische Anlagen (m/w/d)",
+      "uuid": "crb-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "CRB",
+        "name": "CRB"
+      },
+      "releasedDate": "2026-07-02T10:27:18.965Z",
+      "location": {
+        "city": "Basel",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Basel, BS, Switzerland"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "CRB Group GmbH"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CRB/744000135468239",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Projektingenieur Prozesstechnik für pharmazeutische/ biotechnologische Anlagen (m/w/d) at CRB.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135461575",
+      "name": "Junior Projektleiter Elektro (m/w/d)– Technische Gebäudeausrüstung (TGA)",
+      "uuid": "crb-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "CRB",
+        "name": "CRB"
+      },
+      "releasedDate": "2026-07-02T10:08:55.656Z",
+      "location": {
+        "city": "Basel",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Basel, BS, Switzerland"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "CRB Group GmbH"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CRB/744000135461575",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Junior Projektleiter Elektro (m/w/d)– Technische Gebäudeausrüstung (TGA) at CRB.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

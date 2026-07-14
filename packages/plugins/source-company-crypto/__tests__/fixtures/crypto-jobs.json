@@ -1,0 +1,62 @@
+[
+  {
+    "id": "4c8eb143-aff6-45cd-9f1e-46e298016270",
+    "text": "(Senior) Cloud Infrastructure Engineer / System & Cloud Engineer",
+    "categories": {
+      "location": "Singapore, Singapore",
+      "allLocations": [
+        "Singapore, Singapore"
+      ],
+      "department": "Security",
+      "team": "Security",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1778241119587,
+    "descriptionPlain": "(Senior) Cloud Infrastructure Engineer / System & Cloud Engineer at Crypto.com.",
+    "description": "<p>(Senior) Cloud Infrastructure Engineer / System & Cloud Engineer at Crypto.com.</p>",
+    "hostedUrl": "https://jobs.lever.co/crypto/4c8eb143-aff6-45cd-9f1e-46e298016270",
+    "applyUrl": "https://jobs.lever.co/crypto/4c8eb143-aff6-45cd-9f1e-46e298016270/apply"
+  },
+  {
+    "id": "36a8ec74-5066-47e2-a097-e0ee680509f0",
+    "text": "AI Security Engineer",
+    "categories": {
+      "location": "Hong Kong, Hong Kong SAR",
+      "allLocations": [
+        "Hong Kong, Hong Kong SAR"
+      ],
+      "department": "Security",
+      "team": "Security",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1775120768174,
+    "descriptionPlain": "AI Security Engineer at Crypto.com.",
+    "description": "<p>AI Security Engineer at Crypto.com.</p>",
+    "hostedUrl": "https://jobs.lever.co/crypto/36a8ec74-5066-47e2-a097-e0ee680509f0",
+    "applyUrl": "https://jobs.lever.co/crypto/36a8ec74-5066-47e2-a097-e0ee680509f0/apply"
+  },
+  {
+    "id": "e912aef9-5639-4e3d-accb-92d330860421",
+    "text": "AI Security Engineer (DevSecOps)",
+    "categories": {
+      "location": "Singapore, Singapore",
+      "allLocations": [
+        "Singapore, Singapore"
+      ],
+      "department": "Security",
+      "team": "Security",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1775141863130,
+    "descriptionPlain": "AI Security Engineer (DevSecOps) at Crypto.com.",
+    "description": "<p>AI Security Engineer (DevSecOps) at Crypto.com.</p>",
+    "hostedUrl": "https://jobs.lever.co/crypto/e912aef9-5639-4e3d-accb-92d330860421",
+    "applyUrl": "https://jobs.lever.co/crypto/e912aef9-5639-4e3d-accb-92d330860421/apply"
+  }
+]

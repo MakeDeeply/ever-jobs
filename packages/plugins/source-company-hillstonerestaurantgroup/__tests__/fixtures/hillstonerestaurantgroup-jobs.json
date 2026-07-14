@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135544780",
+      "name": "Line Cook",
+      "uuid": "hillstonerestaurantgroup-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "HillstoneRestaurantGroup",
+        "name": "Hillstone Restaurant Group"
+      },
+      "releasedDate": "2026-07-02T16:09:19.950Z",
+      "location": {
+        "city": "Dallas",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Dallas, TX, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Restaurant Staff"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/HillstoneRestaurantGroup/744000135544780",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Line Cook at Hillstone Restaurant Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135546989",
+      "name": "Dishwasher",
+      "uuid": "hillstonerestaurantgroup-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "HillstoneRestaurantGroup",
+        "name": "Hillstone Restaurant Group"
+      },
+      "releasedDate": "2026-07-02T16:09:13.727Z",
+      "location": {
+        "city": "Dallas",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Dallas, TX, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Restaurant Staff"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/HillstoneRestaurantGroup/744000135546989",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Dishwasher at Hillstone Restaurant Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135543316",
+      "name": "Server",
+      "uuid": "hillstonerestaurantgroup-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "HillstoneRestaurantGroup",
+        "name": "Hillstone Restaurant Group"
+      },
+      "releasedDate": "2026-07-02T15:59:52.671Z",
+      "location": {
+        "city": "Dallas",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Dallas, TX, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Restaurant Staff"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/HillstoneRestaurantGroup/744000135543316",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Server at Hillstone Restaurant Group.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

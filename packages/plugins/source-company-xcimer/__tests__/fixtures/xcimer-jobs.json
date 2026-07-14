@@ -1,0 +1,62 @@
+[
+  {
+    "id": "e533fae5-2c1a-47f0-8555-56ff6843dec9",
+    "text": "Adaptive Optics Engineer",
+    "categories": {
+      "location": "Denver, CO",
+      "allLocations": [
+        "Denver, CO"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1777659912075,
+    "descriptionPlain": "Adaptive Optics Engineer at Xcimer Energy.",
+    "description": "<p>Adaptive Optics Engineer at Xcimer Energy.</p>",
+    "hostedUrl": "https://jobs.lever.co/xcimer/e533fae5-2c1a-47f0-8555-56ff6843dec9",
+    "applyUrl": "https://jobs.lever.co/xcimer/e533fae5-2c1a-47f0-8555-56ff6843dec9/apply"
+  },
+  {
+    "id": "9c8ce801-9ba4-4320-8619-3873b1fd5e42",
+    "text": "Coatings Materials Scientist",
+    "categories": {
+      "location": "Denver, CO",
+      "allLocations": [
+        "Denver, CO"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1779921127430,
+    "descriptionPlain": "Coatings Materials Scientist at Xcimer Energy.",
+    "description": "<p>Coatings Materials Scientist at Xcimer Energy.</p>",
+    "hostedUrl": "https://jobs.lever.co/xcimer/9c8ce801-9ba4-4320-8619-3873b1fd5e42",
+    "applyUrl": "https://jobs.lever.co/xcimer/9c8ce801-9ba4-4320-8619-3873b1fd5e42/apply"
+  },
+  {
+    "id": "c3c45905-50c3-48f0-a156-bfbcb5186722",
+    "text": "Control Systems Engineer – Manufacturing & Automation",
+    "categories": {
+      "location": "Denver, CO",
+      "allLocations": [
+        "Denver, CO"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1776801417307,
+    "descriptionPlain": "Control Systems Engineer – Manufacturing & Automation at Xcimer Energy.",
+    "description": "<p>Control Systems Engineer – Manufacturing & Automation at Xcimer Energy.</p>",
+    "hostedUrl": "https://jobs.lever.co/xcimer/c3c45905-50c3-48f0-a156-bfbcb5186722",
+    "applyUrl": "https://jobs.lever.co/xcimer/c3c45905-50c3-48f0-a156-bfbcb5186722/apply"
+  }
+]

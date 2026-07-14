@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "11b54218-44f5-4cec-bc66-9abfb140f3c5",
+      "title": "Senior Developer Advocate",
+      "departmentName": "Marketing",
+      "teamName": "Marketing",
+      "employmentType": "FullTime",
+      "location": "Remote in the United States",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Remote in the United States",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2026-05-26",
+      "descriptionHtml": "<p>Senior Developer Advocate at Sanity.</p>",
+      "descriptionPlain": "Senior Developer Advocate at Sanity.",
+      "jobUrl": "https://jobs.ashbyhq.com/sanity/11b54218-44f5-4cec-bc66-9abfb140f3c5",
+      "applyUrl": "https://jobs.ashbyhq.com/sanity/11b54218-44f5-4cec-bc66-9abfb140f3c5/application"
+    },
+    {
+      "id": "29d2b4fb-a14d-4769-b984-54b275d2efda",
+      "title": "Enterprise Account Executive (US)",
+      "departmentName": "Sales",
+      "teamName": "Sales",
+      "employmentType": "FullTime",
+      "location": "Remote in the United States",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Remote in the United States",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2026-04-06",
+      "descriptionHtml": "<p>Enterprise Account Executive (US) at Sanity.</p>",
+      "descriptionPlain": "Enterprise Account Executive (US) at Sanity.",
+      "jobUrl": "https://jobs.ashbyhq.com/sanity/29d2b4fb-a14d-4769-b984-54b275d2efda",
+      "applyUrl": "https://jobs.ashbyhq.com/sanity/29d2b4fb-a14d-4769-b984-54b275d2efda/application"
+    },
+    {
+      "id": "2a3c282b-21f0-475b-8115-525275a209a4",
+      "title": "Enterprise Account Executive - Existing Customers (US/Canada)",
+      "departmentName": "Sales",
+      "teamName": "Sales",
+      "employmentType": "FullTime",
+      "location": "Remote in the United States or Canada",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Remote in the United States or Canada",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2026-04-06",
+      "descriptionHtml": "<p>Enterprise Account Executive - Existing Customers (US/Canada) at Sanity.</p>",
+      "descriptionPlain": "Enterprise Account Executive - Existing Customers (US/Canada) at Sanity.",
+      "jobUrl": "https://jobs.ashbyhq.com/sanity/2a3c282b-21f0-475b-8115-525275a209a4",
+      "applyUrl": "https://jobs.ashbyhq.com/sanity/2a3c282b-21f0-475b-8115-525275a209a4/application"
+    }
+  ]
+}

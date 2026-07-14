@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135737270",
+      "name": "Working Student Executive Office  (m/f/x) - from October 2026",
+      "uuid": "scalablecapital-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "scalablegmbh",
+        "name": "Scalable Capital"
+      },
+      "releasedDate": "2026-07-03T13:40:08.185Z",
+      "location": {
+        "city": "München",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "München, BY, Germany"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Interns & Working Students"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/scalablegmbh/744000135737270",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Working Student Executive Office  (m/f/x) - from October 2026 at Scalable Capital.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135708060",
+      "name": "(Senior) Fraud Operations Expert (m/f/x)",
+      "uuid": "scalablecapital-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "scalablegmbh",
+        "name": "Scalable Capital"
+      },
+      "releasedDate": "2026-07-03T11:29:20.395Z",
+      "location": {
+        "city": "Berlin",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Berlin, BE, Germany"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Banking Operations"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/scalablegmbh/744000135708060",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>(Senior) Fraud Operations Expert (m/f/x) at Scalable Capital.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135236659",
+      "name": "Senior Rust Software Engineer - Banking Platform (m/f/x)",
+      "uuid": "scalablecapital-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "scalablegmbh",
+        "name": "Scalable Capital"
+      },
+      "releasedDate": "2026-07-01T11:12:57.055Z",
+      "location": {
+        "city": "Berlin",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Berlin, BE, Germany"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/scalablegmbh/744000135236659",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Rust Software Engineer - Banking Platform (m/f/x) at Scalable Capital.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135591757",
+      "name": "Associate Design Engineer",
+      "uuid": "fortunebrandsinnovations-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "FortuneBrands",
+        "name": "Fortune Brands Innovations"
+      },
+      "releasedDate": "2026-07-02T20:54:28.354Z",
+      "location": {
+        "city": "Monterrey",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Monterrey, NUEVO LEON, Mexico"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Design"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/FortuneBrands/744000135591757",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Associate Design Engineer at Fortune Brands Innovations.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135593039",
+      "name": "Design Engineer",
+      "uuid": "fortunebrandsinnovations-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "FortuneBrands",
+        "name": "Fortune Brands Innovations"
+      },
+      "releasedDate": "2026-07-02T20:45:25.158Z",
+      "location": {
+        "city": "Monterrey",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Monterrey, NUEVO LEON, Mexico"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/FortuneBrands/744000135593039",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Design Engineer at Fortune Brands Innovations.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135592169",
+      "name": "Design Engineer",
+      "uuid": "fortunebrandsinnovations-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "FortuneBrands",
+        "name": "Fortune Brands Innovations"
+      },
+      "releasedDate": "2026-07-02T20:36:40.060Z",
+      "location": {
+        "city": "Monterrey",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Monterrey, N.L., Mexico"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/FortuneBrands/744000135592169",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Design Engineer at Fortune Brands Innovations.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

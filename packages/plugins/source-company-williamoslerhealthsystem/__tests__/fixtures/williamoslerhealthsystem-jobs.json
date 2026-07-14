@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135731998",
+      "name": "MDR Technician - Medical Device Reprocessing",
+      "uuid": "williamoslerhealthsystem-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "williamoslerhealthsystem1",
+        "name": "William Osler Health System"
+      },
+      "releasedDate": "2026-07-03T13:11:52.177Z",
+      "location": {
+        "city": "Brampton",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Brampton, ON, Canada"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Health Care Provider"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/williamoslerhealthsystem1/744000135731998",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>MDR Technician - Medical Device Reprocessing at William Osler Health System.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135587869",
+      "name": "Registered Practical Nurse - Stroke Unit",
+      "uuid": "williamoslerhealthsystem-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "williamoslerhealthsystem1",
+        "name": "William Osler Health System"
+      },
+      "releasedDate": "2026-07-02T20:02:54.341Z",
+      "location": {
+        "city": "Brampton",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Brampton, ON, Canada"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Health Care Provider"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/williamoslerhealthsystem1/744000135587869",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Registered Practical Nurse - Stroke Unit at William Osler Health System.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135571169",
+      "name": "Echocardiography Technologist - Non-Invasive Cardiology - Multiple Sites",
+      "uuid": "williamoslerhealthsystem-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "williamoslerhealthsystem1",
+        "name": "William Osler Health System"
+      },
+      "releasedDate": "2026-07-02T19:07:50.723Z",
+      "location": {
+        "city": "Brampton",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Brampton, ON, Canada"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Health Care Provider"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/williamoslerhealthsystem1/744000135571169",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Echocardiography Technologist - Non-Invasive Cardiology - Multiple Sites at William Osler Health System.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "486df51b-65f4-4a1c-b5ca-ada8c51956e5",
+    "text": "AI R&D Manager",
+    "categories": {
+      "location": "Paris",
+      "allLocations": [
+        "Paris"
+      ],
+      "department": "Platform",
+      "team": "Platform",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1765193391830,
+    "descriptionPlain": "AI R&D Manager at Aqemia.",
+    "description": "<p>AI R&D Manager at Aqemia.</p>",
+    "hostedUrl": "https://jobs.lever.co/aqemia.com/486df51b-65f4-4a1c-b5ca-ada8c51956e5",
+    "applyUrl": "https://jobs.lever.co/aqemia.com/486df51b-65f4-4a1c-b5ca-ada8c51956e5/apply"
+  },
+  {
+    "id": "86c528d2-7019-47e2-ad2f-2a5cfebb34b8",
+    "text": "Applied AI Scientist",
+    "categories": {
+      "location": "Paris",
+      "allLocations": [
+        "Paris"
+      ],
+      "department": "Platform",
+      "team": "Platform",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1751989195669,
+    "descriptionPlain": "Applied AI Scientist at Aqemia.",
+    "description": "<p>Applied AI Scientist at Aqemia.</p>",
+    "hostedUrl": "https://jobs.lever.co/aqemia.com/86c528d2-7019-47e2-ad2f-2a5cfebb34b8",
+    "applyUrl": "https://jobs.lever.co/aqemia.com/86c528d2-7019-47e2-ad2f-2a5cfebb34b8/apply"
+  },
+  {
+    "id": "7bf361a6-5030-4f91-8f71-029e27270bd9",
+    "text": "Computational Chemist",
+    "categories": {
+      "location": "London",
+      "allLocations": [
+        "London"
+      ],
+      "department": "Drug Discovery Programs",
+      "team": "Drug Discovery Programs",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1779279761416,
+    "descriptionPlain": "Computational Chemist at Aqemia.",
+    "description": "<p>Computational Chemist at Aqemia.</p>",
+    "hostedUrl": "https://jobs.lever.co/aqemia.com/7bf361a6-5030-4f91-8f71-029e27270bd9",
+    "applyUrl": "https://jobs.lever.co/aqemia.com/7bf361a6-5030-4f91-8f71-029e27270bd9/apply"
+  }
+]

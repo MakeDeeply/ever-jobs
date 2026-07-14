@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135698139",
+      "name": "Servicetechniker  (m/w/d)",
+      "uuid": "smithsgroup-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "SmithsGroup2",
+        "name": "Smiths Group"
+      },
+      "releasedDate": "2026-07-03T10:30:37.921Z",
+      "location": {
+        "city": "Frankfurt am Main",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Frankfurt am Main, HE, Germany"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Customer Service"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SmithsGroup2/744000135698139",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Servicetechniker  (m/w/d) at Smiths Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135662241",
+      "name": "Servicetechniker",
+      "uuid": "smithsgroup-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "SmithsGroup2",
+        "name": "Smiths Group"
+      },
+      "releasedDate": "2026-07-03T08:05:03.096Z",
+      "location": {
+        "city": "Dortmund",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Dortmund, NRW, Germany"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "After Sales Service & Repair"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SmithsGroup2/744000135662241",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Servicetechniker at Smiths Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135632280",
+      "name": "Human Resource Manager",
+      "uuid": "smithsgroup-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "SmithsGroup2",
+        "name": "Smiths Group"
+      },
+      "releasedDate": "2026-07-03T01:32:53.658Z",
+      "location": {
+        "city": "Johor Bahru",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Johor Bahru, Johor, Malaysia"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Human Resources"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SmithsGroup2/744000135632280",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Human Resource Manager at Smiths Group.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

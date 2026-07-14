@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "067fef83-0fe8-4f2f-81c4-f72115256782",
+      "title": "R&D Technician (electrical assembly)",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "San Leandro HQ",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Leandro HQ",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-09",
+      "descriptionHtml": "<p>R&D Technician (electrical assembly) at Charge Robotics.</p>",
+      "descriptionPlain": "R&D Technician (electrical assembly) at Charge Robotics.",
+      "jobUrl": "https://jobs.ashbyhq.com/charge-robotics/067fef83-0fe8-4f2f-81c4-f72115256782",
+      "applyUrl": "https://jobs.ashbyhq.com/charge-robotics/067fef83-0fe8-4f2f-81c4-f72115256782/application"
+    },
+    {
+      "id": "1332c484-ded3-44f0-b2c6-55460dbf8c7e",
+      "title": "Head of Manufacturing",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "San Leandro HQ",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Leandro HQ",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-09",
+      "descriptionHtml": "<p>Head of Manufacturing at Charge Robotics.</p>",
+      "descriptionPlain": "Head of Manufacturing at Charge Robotics.",
+      "jobUrl": "https://jobs.ashbyhq.com/charge-robotics/1332c484-ded3-44f0-b2c6-55460dbf8c7e",
+      "applyUrl": "https://jobs.ashbyhq.com/charge-robotics/1332c484-ded3-44f0-b2c6-55460dbf8c7e/application"
+    },
+    {
+      "id": "19133a2e-f262-4f3d-bcbd-f45434ee45a7",
+      "title": "Mechanical Engineer (all levels)",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "San Leandro HQ",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Leandro HQ",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-12-16",
+      "descriptionHtml": "<p>Mechanical Engineer (all levels) at Charge Robotics.</p>",
+      "descriptionPlain": "Mechanical Engineer (all levels) at Charge Robotics.",
+      "jobUrl": "https://jobs.ashbyhq.com/charge-robotics/19133a2e-f262-4f3d-bcbd-f45434ee45a7",
+      "applyUrl": "https://jobs.ashbyhq.com/charge-robotics/19133a2e-f262-4f3d-bcbd-f45434ee45a7/application"
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999651259080",
+      "name": "Director Clinical ICU/Telemetry",
+      "uuid": "healtheast-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "HealthEastCareSystem",
+        "name": "HealthEast"
+      },
+      "releasedDate": "2017-05-25T20:32:01.000Z",
+      "location": {
+        "city": "St Paul",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "St Paul, MN, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Administrative"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/HealthEastCareSystem/743999651259080",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Director Clinical ICU/Telemetry at HealthEast.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "84449992",
+      "name": "Quality & Patient Safety Specialist",
+      "uuid": "healtheast-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "HealthEastCareSystem",
+        "name": "HealthEast"
+      },
+      "releasedDate": "2015-08-03T21:24:39.000Z",
+      "location": {
+        "city": "St Paul",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "St Paul, MN, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/HealthEastCareSystem/84449992",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Quality & Patient Safety Specialist at HealthEast.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "80752496",
+      "name": "Clinical Manager",
+      "uuid": "healtheast-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "HealthEastCareSystem",
+        "name": "HealthEast"
+      },
+      "releasedDate": "2015-01-14T00:01:16.000Z",
+      "location": {
+        "city": "St Paul",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "St Paul, MN, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Management"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/HealthEastCareSystem/80752496",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Clinical Manager at HealthEast.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

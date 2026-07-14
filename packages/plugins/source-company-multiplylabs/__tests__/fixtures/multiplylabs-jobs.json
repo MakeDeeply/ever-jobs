@@ -1,0 +1,62 @@
+[
+  {
+    "id": "37022063-7951-483c-9c6a-b8c2da887574",
+    "text": "Executive Assistant to the CEO",
+    "categories": {
+      "location": "San Francisco",
+      "allLocations": [
+        "San Francisco"
+      ],
+      "department": "Business Operations",
+      "team": "Business Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1777465369959,
+    "descriptionPlain": "Executive Assistant to the CEO at Multiply Labs.",
+    "description": "<p>Executive Assistant to the CEO at Multiply Labs.</p>",
+    "hostedUrl": "https://jobs.lever.co/multiplylabs/37022063-7951-483c-9c6a-b8c2da887574",
+    "applyUrl": "https://jobs.lever.co/multiplylabs/37022063-7951-483c-9c6a-b8c2da887574/apply"
+  },
+  {
+    "id": "a5e42c86-1ef6-43c4-9366-40019f610073",
+    "text": "Open Applications at Multiply Labs",
+    "categories": {
+      "location": "San Francisco",
+      "allLocations": [
+        "San Francisco"
+      ],
+      "department": "General Interest",
+      "team": "General Interest",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1762978034368,
+    "descriptionPlain": "Open Applications at Multiply Labs at Multiply Labs.",
+    "description": "<p>Open Applications at Multiply Labs at Multiply Labs.</p>",
+    "hostedUrl": "https://jobs.lever.co/multiplylabs/a5e42c86-1ef6-43c4-9366-40019f610073",
+    "applyUrl": "https://jobs.lever.co/multiplylabs/a5e42c86-1ef6-43c4-9366-40019f610073/apply"
+  },
+  {
+    "id": "c9fe817b-745a-4c68-a157-1b2afdc09f9a",
+    "text": "Robotics Field Engineer",
+    "categories": {
+      "location": "Los Angeles",
+      "allLocations": [
+        "Los Angeles"
+      ],
+      "department": "Robotics Software",
+      "team": "Robotics Software",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1771264504804,
+    "descriptionPlain": "Robotics Field Engineer at Multiply Labs.",
+    "description": "<p>Robotics Field Engineer at Multiply Labs.</p>",
+    "hostedUrl": "https://jobs.lever.co/multiplylabs/c9fe817b-745a-4c68-a157-1b2afdc09f9a",
+    "applyUrl": "https://jobs.lever.co/multiplylabs/c9fe817b-745a-4c68-a157-1b2afdc09f9a/apply"
+  }
+]

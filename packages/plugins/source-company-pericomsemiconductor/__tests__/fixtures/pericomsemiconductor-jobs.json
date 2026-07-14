@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "91258754",
+      "name": "Shipping Clerk (Temporary)",
+      "uuid": "pericomsemiconductor-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "PericomSemiconductorCorporation",
+        "name": "Pericom Semiconductor"
+      },
+      "releasedDate": "2016-04-07T19:36:07.000Z",
+      "location": {
+        "city": "Milpitas",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Milpitas, CA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/PericomSemiconductorCorporation/91258754",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Shipping Clerk (Temporary) at Pericom Semiconductor.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "81591350",
+      "name": "Inside Sales Representative",
+      "uuid": "pericomsemiconductor-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "PericomSemiconductorCorporation",
+        "name": "Pericom Semiconductor"
+      },
+      "releasedDate": "2015-03-12T18:13:14.000Z",
+      "location": {
+        "city": "Milpitas",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Milpitas, CA, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/PericomSemiconductorCorporation/81591350",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Inside Sales Representative at Pericom Semiconductor.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "80240823",
+      "name": "Regional Sales Director",
+      "uuid": "pericomsemiconductor-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "PericomSemiconductorCorporation",
+        "name": "Pericom Semiconductor"
+      },
+      "releasedDate": "2014-11-25T01:40:25.000Z",
+      "location": {
+        "city": "San Jose",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "San Jose, CA, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/PericomSemiconductorCorporation/80240823",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Regional Sales Director at Pericom Semiconductor.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

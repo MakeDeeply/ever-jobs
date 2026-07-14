@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135727449",
+      "name": "Principal/Lead Dynamics 365 F&SCM Consultant - Finance",
+      "uuid": "telefnicatech-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "telefonicatech",
+        "name": "Telefónica Tech"
+      },
+      "releasedDate": "2026-07-03T12:49:26.318Z",
+      "location": {
+        "city": "Aberdeen",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Aberdeen, Scotland, United Kingdom"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Business Applications"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/telefonicatech/744000135727449",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Principal/Lead Dynamics 365 F&SCM Consultant - Finance at Telefónica Tech.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135727074",
+      "name": "Principal/Lead Dynamics 365 F&SCM Consultant - Finance",
+      "uuid": "telefnicatech-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "telefonicatech",
+        "name": "Telefónica Tech"
+      },
+      "releasedDate": "2026-07-03T12:48:55.534Z",
+      "location": {
+        "city": "Glasgow",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Glasgow, Scotland, United Kingdom"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Business Applications"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/telefonicatech/744000135727074",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Principal/Lead Dynamics 365 F&SCM Consultant - Finance at Telefónica Tech.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135725645",
+      "name": "Copy of Senior Dynamics 365 F&SCM Consultant - Finance",
+      "uuid": "telefnicatech-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "telefonicatech",
+        "name": "Telefónica Tech"
+      },
+      "releasedDate": "2026-07-03T12:47:43.628Z",
+      "location": {
+        "city": "Glasgow",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Glasgow, Scotland, United Kingdom"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Business Applications"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/telefonicatech/744000135725645",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Copy of Senior Dynamics 365 F&SCM Consultant - Finance at Telefónica Tech.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

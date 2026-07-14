@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999763456512",
+      "name": "Product Marketing Manager",
+      "uuid": "spaceknow-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "SpaceknowInc",
+        "name": "SpaceKnow"
+      },
+      "releasedDate": "2021-07-27T14:25:57.000Z",
+      "location": {
+        "city": "Praha 8",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Praha 8, Hlavní město Praha, Czechia"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Marketing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SpaceknowInc/743999763456512",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Product Marketing Manager at SpaceKnow.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999749088534",
+      "name": "Head of Business Development, NowCasting Solutions",
+      "uuid": "spaceknow-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "SpaceknowInc",
+        "name": "SpaceKnow"
+      },
+      "releasedDate": "2021-05-20T10:02:34.000Z",
+      "location": {
+        "city": "New York",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "New York, NY, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Business Development"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SpaceknowInc/743999749088534",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Head of Business Development, NowCasting Solutions at SpaceKnow.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999684663167",
+      "name": "Backend Developer (Python)",
+      "uuid": "spaceknow-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "SpaceknowInc",
+        "name": "SpaceKnow"
+      },
+      "releasedDate": "2019-03-05T15:14:04.000Z",
+      "location": {
+        "city": "Praha 8",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Praha 8, Hlavní město Praha, Czechia"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SpaceknowInc/743999684663167",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Backend Developer (Python) at SpaceKnow.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

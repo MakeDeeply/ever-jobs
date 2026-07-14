@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135756759",
+      "name": "Independence (Internal Compliance) Senior Manager",
+      "uuid": "deloitte-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Deloitte6",
+        "name": "Deloitte"
+      },
+      "releasedDate": "2026-07-03T15:12:08.919Z",
+      "location": {
+        "city": "Midrand",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Midrand, GP, South Africa"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Consulting"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Deloitte6/744000135756759",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Independence (Internal Compliance) Senior Manager at Deloitte.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135702839",
+      "name": "Vacation Programme - Strategy & Transactions 2026(CT)",
+      "uuid": "deloitte-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Deloitte6",
+        "name": "Deloitte"
+      },
+      "releasedDate": "2026-07-03T10:57:58.189Z",
+      "location": {
+        "city": "Cape Town",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Cape Town, WC, South Africa"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Strategy & Business Design - Economics"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Deloitte6/744000135702839",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Vacation Programme - Strategy & Transactions 2026(CT) at Deloitte.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135702529",
+      "name": "Vacation Programme - Strategy & Transactions 2026(JHB)",
+      "uuid": "deloitte-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Deloitte6",
+        "name": "Deloitte"
+      },
+      "releasedDate": "2026-07-03T10:57:04.730Z",
+      "location": {
+        "city": "Midrand",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Midrand, GP, South Africa"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Strategy & Business Design - Economics"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Deloitte6/744000135702529",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Vacation Programme - Strategy & Transactions 2026(JHB) at Deloitte.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

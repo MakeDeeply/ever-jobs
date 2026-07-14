@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "3b8a5eb3-597d-4ba4-a3db-a6805741c924",
+      "title": "3D Motion & Marketing Designer",
+      "departmentName": "Marketing",
+      "teamName": "Marketing",
+      "employmentType": "FullTime",
+      "location": "United States - Remote",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "United States - Remote",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2025-11-14",
+      "descriptionHtml": "<p>3D Motion & Marketing Designer at Paxos Labs.</p>",
+      "descriptionPlain": "3D Motion & Marketing Designer at Paxos Labs.",
+      "jobUrl": "https://jobs.ashbyhq.com/paxoslabs/3b8a5eb3-597d-4ba4-a3db-a6805741c924",
+      "applyUrl": "https://jobs.ashbyhq.com/paxoslabs/3b8a5eb3-597d-4ba4-a3db-a6805741c924/application"
+    },
+    {
+      "id": "409a0ba3-f6f1-42fc-afbc-f80efe0a4fb2",
+      "title": "Content & Social Manager",
+      "departmentName": "Marketing",
+      "teamName": "Marketing",
+      "employmentType": "FullTime",
+      "location": "SF Bay Area",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "SF Bay Area",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-11-14",
+      "descriptionHtml": "<p>Content & Social Manager at Paxos Labs.</p>",
+      "descriptionPlain": "Content & Social Manager at Paxos Labs.",
+      "jobUrl": "https://jobs.ashbyhq.com/paxoslabs/409a0ba3-f6f1-42fc-afbc-f80efe0a4fb2",
+      "applyUrl": "https://jobs.ashbyhq.com/paxoslabs/409a0ba3-f6f1-42fc-afbc-f80efe0a4fb2/application"
+    },
+    {
+      "id": "5caa6fbf-3f7c-4b67-88cf-653db51fdf2b",
+      "title": "Fullstack Product Engineer",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "In-Person NYC",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "In-Person NYC",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-02-16",
+      "descriptionHtml": "<p>Fullstack Product Engineer at Paxos Labs.</p>",
+      "descriptionPlain": "Fullstack Product Engineer at Paxos Labs.",
+      "jobUrl": "https://jobs.ashbyhq.com/paxoslabs/5caa6fbf-3f7c-4b67-88cf-653db51fdf2b",
+      "applyUrl": "https://jobs.ashbyhq.com/paxoslabs/5caa6fbf-3f7c-4b67-88cf-653db51fdf2b/application"
+    }
+  ]
+}

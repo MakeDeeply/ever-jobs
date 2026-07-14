@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135786979",
+      "name": "Curing Presses Set up Technician TELP",
+      "uuid": "continental-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Continental",
+        "name": "Continental"
+      },
+      "releasedDate": "2026-07-03T23:03:54.032Z",
+      "location": {
+        "city": "San Luis Potosí",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "San Luis Potosí, S.L.P., Mexico"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Manufacturing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Continental/744000135786979",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Curing Presses Set up Technician TELP at Continental.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135773349",
+      "name": "PI Tires Engineer (temporary)",
+      "uuid": "continental-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Continental",
+        "name": "Continental"
+      },
+      "releasedDate": "2026-07-03T18:03:23.171Z",
+      "location": {
+        "city": "San Luis Potosí",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "San Luis Potosí, S.L.P., Mexico"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Product Management"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Continental/744000135773349",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>PI Tires Engineer (temporary) at Continental.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135716352",
+      "name": "Praktikum - HR Ausbildung, Recruiting & Personalentwicklung - REF98048S",
+      "uuid": "continental-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Continental",
+        "name": "Continental"
+      },
+      "releasedDate": "2026-07-03T12:13:09.026Z",
+      "location": {
+        "city": "Korbach",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Korbach, HE, Germany"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Human Resources"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Continental/744000135716352",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Praktikum - HR Ausbildung, Recruiting & Personalentwicklung - REF98048S at Continental.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135711559",
+      "name": "Principal Engineer, Data Analytics Engineering [ 8+ years ]",
+      "uuid": "westerndigital-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "WesternDigital",
+        "name": "Western Digital"
+      },
+      "releasedDate": "2026-07-03T11:44:38.665Z",
+      "location": {
+        "city": "Bengaluru",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Bengaluru, KA, India"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/WesternDigital/744000135711559",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Principal Engineer, Data Analytics Engineering [ 8+ years ] at Western Digital.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135705479",
+      "name": "Werkstudent (m/w/d) im Bereich R&D Engineering",
+      "uuid": "westerndigital-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "WesternDigital",
+        "name": "Western Digital"
+      },
+      "releasedDate": "2026-07-03T11:07:25.193Z",
+      "location": {
+        "city": "Ulm",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Ulm, BW, Germany"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Research"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/WesternDigital/744000135705479",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Werkstudent (m/w/d) im Bereich R&D Engineering at Western Digital.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135642699",
+      "name": "QC Visual Inspection Operator",
+      "uuid": "westerndigital-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "WesternDigital",
+        "name": "Western Digital"
+      },
+      "releasedDate": "2026-07-03T05:20:34.180Z",
+      "location": {
+        "city": "Bayan Lepas",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Bayan Lepas, Penang, Malaysia"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Manufacturing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/WesternDigital/744000135642699",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>QC Visual Inspection Operator at Western Digital.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

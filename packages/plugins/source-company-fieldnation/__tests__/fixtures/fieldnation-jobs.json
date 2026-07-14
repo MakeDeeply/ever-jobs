@@ -1,0 +1,62 @@
+[
+  {
+    "id": "7c4a002f-2186-4d70-a055-dc93956e9a19",
+    "text": "Associate Product Marketing Manager",
+    "categories": {
+      "location": "Dhaka",
+      "allLocations": [
+        "Dhaka"
+      ],
+      "department": "Marketing",
+      "team": "Marketing",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1781285564390,
+    "descriptionPlain": "Associate Product Marketing Manager at Field Nation.",
+    "description": "<p>Associate Product Marketing Manager at Field Nation.</p>",
+    "hostedUrl": "https://jobs.lever.co/fieldnation/7c4a002f-2186-4d70-a055-dc93956e9a19",
+    "applyUrl": "https://jobs.lever.co/fieldnation/7c4a002f-2186-4d70-a055-dc93956e9a19/apply"
+  },
+  {
+    "id": "fad8ce7e-7a18-4961-acab-d20a52c70f45",
+    "text": "Business Development Specialist (Night Shift)",
+    "categories": {
+      "location": "Dhaka",
+      "allLocations": [
+        "Dhaka"
+      ],
+      "department": "Marketing",
+      "team": "Marketing",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1774458063374,
+    "descriptionPlain": "Business Development Specialist (Night Shift) at Field Nation.",
+    "description": "<p>Business Development Specialist (Night Shift) at Field Nation.</p>",
+    "hostedUrl": "https://jobs.lever.co/fieldnation/fad8ce7e-7a18-4961-acab-d20a52c70f45",
+    "applyUrl": "https://jobs.lever.co/fieldnation/fad8ce7e-7a18-4961-acab-d20a52c70f45/apply"
+  },
+  {
+    "id": "b79f3286-f96d-4e6e-a274-fe61a7af1c95",
+    "text": "Content and Editorial Manager",
+    "categories": {
+      "location": "Minnesota",
+      "allLocations": [
+        "Minnesota"
+      ],
+      "department": "Marketing",
+      "team": "Marketing",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1780333918278,
+    "descriptionPlain": "Content and Editorial Manager at Field Nation.",
+    "description": "<p>Content and Editorial Manager at Field Nation.</p>",
+    "hostedUrl": "https://jobs.lever.co/fieldnation/b79f3286-f96d-4e6e-a274-fe61a7af1c95",
+    "applyUrl": "https://jobs.lever.co/fieldnation/b79f3286-f96d-4e6e-a274-fe61a7af1c95/apply"
+  }
+]

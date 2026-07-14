@@ -1,0 +1,62 @@
+[
+  {
+    "id": "bcaed1bf-d74b-477d-919f-b472ae2a25d7",
+    "text": "Lifecycle Marketing Manager",
+    "categories": {
+      "location": "United States",
+      "allLocations": [
+        "United States"
+      ],
+      "department": "Marketing",
+      "team": "Marketing",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1747326521015,
+    "descriptionPlain": "Lifecycle Marketing Manager at DeleteMe.",
+    "description": "<p>Lifecycle Marketing Manager at DeleteMe.</p>",
+    "hostedUrl": "https://jobs.lever.co/deleteme/bcaed1bf-d74b-477d-919f-b472ae2a25d7",
+    "applyUrl": "https://jobs.lever.co/deleteme/bcaed1bf-d74b-477d-919f-b472ae2a25d7/apply"
+  },
+  {
+    "id": "4e49da0e-1d77-4a5a-9814-695b0fa1480b",
+    "text": "Privacy Advisor",
+    "categories": {
+      "location": "Boston, MA",
+      "allLocations": [
+        "Boston, MA"
+      ],
+      "department": "Privacy Operations",
+      "team": "Privacy Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1771361786120,
+    "descriptionPlain": "Privacy Advisor at DeleteMe.",
+    "description": "<p>Privacy Advisor at DeleteMe.</p>",
+    "hostedUrl": "https://jobs.lever.co/deleteme/4e49da0e-1d77-4a5a-9814-695b0fa1480b",
+    "applyUrl": "https://jobs.lever.co/deleteme/4e49da0e-1d77-4a5a-9814-695b0fa1480b/apply"
+  },
+  {
+    "id": "1ad06f05-8ca1-4025-9fcc-0df6e514f84a",
+    "text": "Product Manager, Cybersecurity",
+    "categories": {
+      "location": "Boston, MA",
+      "allLocations": [
+        "Boston, MA"
+      ],
+      "department": "Product",
+      "team": "Product",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1777409809842,
+    "descriptionPlain": "Product Manager, Cybersecurity at DeleteMe.",
+    "description": "<p>Product Manager, Cybersecurity at DeleteMe.</p>",
+    "hostedUrl": "https://jobs.lever.co/deleteme/1ad06f05-8ca1-4025-9fcc-0df6e514f84a",
+    "applyUrl": "https://jobs.lever.co/deleteme/1ad06f05-8ca1-4025-9fcc-0df6e514f84a/apply"
+  }
+]

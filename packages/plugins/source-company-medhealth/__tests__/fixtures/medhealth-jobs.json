@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135644348",
+      "name": "State Manager",
+      "uuid": "medhealth-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "medhealth3",
+        "name": "MedHealth"
+      },
+      "releasedDate": "2026-07-03T05:49:05.392Z",
+      "location": {
+        "city": "Flexible on City",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Flexible on City, Flexible on State, Australia"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "IPAR"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/medhealth3/744000135644348",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>State Manager at MedHealth.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135641319",
+      "name": "Rehabilitation Consultant",
+      "uuid": "medhealth-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "medhealth3",
+        "name": "MedHealth"
+      },
+      "releasedDate": "2026-07-03T04:53:52.568Z",
+      "location": {
+        "city": "Adelaide",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Adelaide, SA, Australia"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "IPAR"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/medhealth3/744000135641319",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Rehabilitation Consultant at MedHealth.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135637519",
+      "name": "Marketing Communications Manager",
+      "uuid": "medhealth-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "medhealth3",
+        "name": "MedHealth"
+      },
+      "releasedDate": "2026-07-03T03:30:29.305Z",
+      "location": {
+        "city": "Melbourne",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Melbourne, VIC, Australia"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Cogent"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/medhealth3/744000135637519",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Marketing Communications Manager at MedHealth.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

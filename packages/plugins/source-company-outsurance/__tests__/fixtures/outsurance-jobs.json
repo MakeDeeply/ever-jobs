@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135685195",
+      "name": "Client Care Advisor",
+      "uuid": "outsurance-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "OUTsurance",
+        "name": "OUTsurance"
+      },
+      "releasedDate": "2026-07-03T09:43:56.016Z",
+      "location": {
+        "city": "Centurion",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Centurion, GP, South Africa"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "CLIENT CARE"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/OUTsurance/744000135685195",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Client Care Advisor at OUTsurance.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135517279",
+      "name": "Commercial Client Care Advisor",
+      "uuid": "outsurance-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "OUTsurance",
+        "name": "OUTsurance"
+      },
+      "releasedDate": "2026-07-02T14:15:22.619Z",
+      "location": {
+        "city": "Centurion",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Centurion, GP, South Africa"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "BUSINESS"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/OUTsurance/744000135517279",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Commercial Client Care Advisor at OUTsurance.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135505159",
+      "name": "OUTbound Referral Advisor",
+      "uuid": "outsurance-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "OUTsurance",
+        "name": "OUTsurance"
+      },
+      "releasedDate": "2026-07-02T13:26:25.083Z",
+      "location": {
+        "city": "Centurion",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Centurion, GP, South Africa"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "TELESALES"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/OUTsurance/744000135505159",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>OUTbound Referral Advisor at OUTsurance.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

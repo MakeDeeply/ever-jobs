@@ -1,0 +1,62 @@
+[
+  {
+    "id": "b240768a-a7d6-4431-8e35-e50a99ed8aac",
+    "text": "Consultant, SailPoint ISC",
+    "categories": {
+      "location": "Reading, UK",
+      "allLocations": [
+        "Reading, UK"
+      ],
+      "department": "Identity Services",
+      "team": "Identity Services",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1772731849273,
+    "descriptionPlain": "Consultant, SailPoint ISC at Cyderes.",
+    "description": "<p>Consultant, SailPoint ISC at Cyderes.</p>",
+    "hostedUrl": "https://jobs.lever.co/cyderes/b240768a-a7d6-4431-8e35-e50a99ed8aac",
+    "applyUrl": "https://jobs.lever.co/cyderes/b240768a-a7d6-4431-8e35-e50a99ed8aac/apply"
+  },
+  {
+    "id": "15e6e338-dc66-457e-8684-1f1a2a222aa4",
+    "text": "Enterprise Account Executive",
+    "categories": {
+      "location": "Los Angeles, CA",
+      "allLocations": [
+        "Los Angeles, CA"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1779997234504,
+    "descriptionPlain": "Enterprise Account Executive at Cyderes.",
+    "description": "<p>Enterprise Account Executive at Cyderes.</p>",
+    "hostedUrl": "https://jobs.lever.co/cyderes/15e6e338-dc66-457e-8684-1f1a2a222aa4",
+    "applyUrl": "https://jobs.lever.co/cyderes/15e6e338-dc66-457e-8684-1f1a2a222aa4/apply"
+  },
+  {
+    "id": "23be9a70-1b6a-40d8-a355-57ef1e1fd9a1",
+    "text": "Enterprise Account Executive",
+    "categories": {
+      "location": "Kansas City, MO",
+      "allLocations": [
+        "Kansas City, MO"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1779996737623,
+    "descriptionPlain": "Enterprise Account Executive at Cyderes.",
+    "description": "<p>Enterprise Account Executive at Cyderes.</p>",
+    "hostedUrl": "https://jobs.lever.co/cyderes/23be9a70-1b6a-40d8-a355-57ef1e1fd9a1",
+    "applyUrl": "https://jobs.lever.co/cyderes/23be9a70-1b6a-40d8-a355-57ef1e1fd9a1/apply"
+  }
+]

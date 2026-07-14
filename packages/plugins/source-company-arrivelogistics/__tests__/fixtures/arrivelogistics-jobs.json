@@ -1,0 +1,62 @@
+[
+  {
+    "id": "7abd76e2-dd39-4cb0-b5a9-557a330f98be",
+    "text": "Account Coordinator",
+    "categories": {
+      "location": "Guadalajara, JAL",
+      "allLocations": [
+        "Guadalajara, JAL"
+      ],
+      "department": "BizDev Traditional Success",
+      "team": "BizDev Traditional Success",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1734469213310,
+    "descriptionPlain": "Account Coordinator at Arrive Logistics.",
+    "description": "<p>Account Coordinator at Arrive Logistics.</p>",
+    "hostedUrl": "https://jobs.lever.co/arrivelogistics/7abd76e2-dd39-4cb0-b5a9-557a330f98be",
+    "applyUrl": "https://jobs.lever.co/arrivelogistics/7abd76e2-dd39-4cb0-b5a9-557a330f98be/apply"
+  },
+  {
+    "id": "ea7a0099-c159-4cb0-8eb8-c14b7e3ac80c",
+    "text": "Automation Engineer",
+    "categories": {
+      "location": "Chicago, IL",
+      "allLocations": [
+        "Chicago, IL"
+      ],
+      "department": "Development",
+      "team": "Development",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1743516550210,
+    "descriptionPlain": "Automation Engineer at Arrive Logistics.",
+    "description": "<p>Automation Engineer at Arrive Logistics.</p>",
+    "hostedUrl": "https://jobs.lever.co/arrivelogistics/ea7a0099-c159-4cb0-8eb8-c14b7e3ac80c",
+    "applyUrl": "https://jobs.lever.co/arrivelogistics/ea7a0099-c159-4cb0-8eb8-c14b7e3ac80c/apply"
+  },
+  {
+    "id": "03ac2420-8753-4294-a570-a5503c7bc7c9",
+    "text": "Business Development Representative",
+    "categories": {
+      "location": "Chicago, IL",
+      "allLocations": [
+        "Chicago, IL"
+      ],
+      "department": "Entry Level Sales",
+      "team": "Entry Level Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1672173758643,
+    "descriptionPlain": "Business Development Representative at Arrive Logistics.",
+    "description": "<p>Business Development Representative at Arrive Logistics.</p>",
+    "hostedUrl": "https://jobs.lever.co/arrivelogistics/03ac2420-8753-4294-a570-a5503c7bc7c9",
+    "applyUrl": "https://jobs.lever.co/arrivelogistics/03ac2420-8753-4294-a570-a5503c7bc7c9/apply"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "0b8d7031-bb42-4bdc-9266-fda91d1ae018",
+    "text": "Brand Designer (AU)",
+    "categories": {
+      "location": "Remote (AU)",
+      "allLocations": [
+        "Remote (AU)"
+      ],
+      "department": "Design",
+      "team": "Design",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1782770373320,
+    "descriptionPlain": "Brand Designer (AU) at HappyCo.",
+    "description": "<p>Brand Designer (AU) at HappyCo.</p>",
+    "hostedUrl": "https://jobs.lever.co/happyco/0b8d7031-bb42-4bdc-9266-fda91d1ae018",
+    "applyUrl": "https://jobs.lever.co/happyco/0b8d7031-bb42-4bdc-9266-fda91d1ae018/apply"
+  },
+  {
+    "id": "76fcfd71-56e8-44ee-961a-e02081cd9c3a",
+    "text": "Brand Designer (USA)",
+    "categories": {
+      "location": "United States",
+      "allLocations": [
+        "United States"
+      ],
+      "department": "Design",
+      "team": "Design",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1782769568641,
+    "descriptionPlain": "Brand Designer (USA) at HappyCo.",
+    "description": "<p>Brand Designer (USA) at HappyCo.</p>",
+    "hostedUrl": "https://jobs.lever.co/happyco/76fcfd71-56e8-44ee-961a-e02081cd9c3a",
+    "applyUrl": "https://jobs.lever.co/happyco/76fcfd71-56e8-44ee-961a-e02081cd9c3a/apply"
+  },
+  {
+    "id": "f9dde308-e690-4600-84c0-b44180c51891",
+    "text": "Call Handling Specialist",
+    "categories": {
+      "location": "United States",
+      "allLocations": [
+        "United States"
+      ],
+      "department": "Services",
+      "team": "Services",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1763080049167,
+    "descriptionPlain": "Call Handling Specialist at HappyCo.",
+    "description": "<p>Call Handling Specialist at HappyCo.</p>",
+    "hostedUrl": "https://jobs.lever.co/happyco/f9dde308-e690-4600-84c0-b44180c51891",
+    "applyUrl": "https://jobs.lever.co/happyco/f9dde308-e690-4600-84c0-b44180c51891/apply"
+  }
+]

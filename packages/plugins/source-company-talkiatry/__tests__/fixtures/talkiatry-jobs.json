@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "001ddf14-ea78-44db-844b-00de7c4381d0",
+      "title": "Remote Psychiatrist (MD/DO) - New Jersey",
+      "departmentName": "Clinical",
+      "teamName": "Clinical",
+      "employmentType": "FullTime",
+      "location": "New Jersey",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "New Jersey",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-03-20",
+      "descriptionHtml": "<p>Remote Psychiatrist (MD/DO) - New Jersey at Talkiatry.</p>",
+      "descriptionPlain": "Remote Psychiatrist (MD/DO) - New Jersey at Talkiatry.",
+      "jobUrl": "https://jobs.ashbyhq.com/talkiatry/001ddf14-ea78-44db-844b-00de7c4381d0",
+      "applyUrl": "https://jobs.ashbyhq.com/talkiatry/001ddf14-ea78-44db-844b-00de7c4381d0/application"
+    },
+    {
+      "id": "0367b210-17a4-4a12-bbf3-008dd53de5c2",
+      "title": "Remote Therapist - Colorado",
+      "departmentName": "Clinical",
+      "teamName": "Clinical",
+      "employmentType": "FullTime",
+      "location": "Colorado",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Colorado",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-24",
+      "descriptionHtml": "<p>Remote Therapist - Colorado at Talkiatry.</p>",
+      "descriptionPlain": "Remote Therapist - Colorado at Talkiatry.",
+      "jobUrl": "https://jobs.ashbyhq.com/talkiatry/0367b210-17a4-4a12-bbf3-008dd53de5c2",
+      "applyUrl": "https://jobs.ashbyhq.com/talkiatry/0367b210-17a4-4a12-bbf3-008dd53de5c2/application"
+    },
+    {
+      "id": "050defe2-ec65-4db1-b943-091550ed26fc",
+      "title": "Remote Therapist - South Dakota",
+      "departmentName": "Clinical",
+      "teamName": "Clinical",
+      "employmentType": "FullTime",
+      "location": "South Dakota",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "South Dakota",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-03-20",
+      "descriptionHtml": "<p>Remote Therapist - South Dakota at Talkiatry.</p>",
+      "descriptionPlain": "Remote Therapist - South Dakota at Talkiatry.",
+      "jobUrl": "https://jobs.ashbyhq.com/talkiatry/050defe2-ec65-4db1-b943-091550ed26fc",
+      "applyUrl": "https://jobs.ashbyhq.com/talkiatry/050defe2-ec65-4db1-b943-091550ed26fc/application"
+    }
+  ]
+}

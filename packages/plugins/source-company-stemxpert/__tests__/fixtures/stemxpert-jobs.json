@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999659630407",
+      "name": "Conditioning/Seed/Agriculture/Fertilizers/Pesticides/Farmer",
+      "uuid": "stemxpert-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "StemXpert1",
+        "name": "Stem Xpert"
+      },
+      "releasedDate": "2017-09-12T15:20:40.000Z",
+      "location": {
+        "city": "Pekin",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Pekin, IL, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Manufacturing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/StemXpert1/743999659630407",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Conditioning/Seed/Agriculture/Fertilizers/Pesticides/Farmer at Stem Xpert.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999659617879",
+      "name": "Shipping & Receiving/Packout Associate/Material Handler",
+      "uuid": "stemxpert-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "StemXpert1",
+        "name": "Stem Xpert"
+      },
+      "releasedDate": "2017-09-12T13:50:48.000Z",
+      "location": {
+        "city": "Tipp City",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Tipp City, OH, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Manufacturing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/StemXpert1/743999659617879",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Shipping & Receiving/Packout Associate/Material Handler at Stem Xpert.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999659529076",
+      "name": "Warehouse Worker",
+      "uuid": "stemxpert-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "StemXpert1",
+        "name": "Stem Xpert"
+      },
+      "releasedDate": "2017-09-11T13:53:32.000Z",
+      "location": {
+        "city": "Vernon",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Vernon, CA, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/StemXpert1/743999659529076",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Warehouse Worker at Stem Xpert.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

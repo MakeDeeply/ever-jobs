@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135670272",
+      "name": "Account Executive - Grenoble F/H/X",
+      "uuid": "avivgroup-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "avivgroup",
+        "name": "AVIV Group"
+      },
+      "releasedDate": "2026-07-03T08:45:10.163Z",
+      "location": {
+        "city": "Grenoble",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Grenoble, Auvergne-Rhône-Alpes, France"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Sales (WD Function)"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/avivgroup/744000135670272",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Account Executive - Grenoble F/H/X at AVIV Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135475059",
+      "name": "Executive Assistant to the CTO (f/m/d)",
+      "uuid": "avivgroup-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "avivgroup",
+        "name": "AVIV Group"
+      },
+      "releasedDate": "2026-07-02T11:13:03.665Z",
+      "location": {
+        "city": "Berlin",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Berlin, BE, Germany"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "People & Organisation (WD Function)"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/avivgroup/744000135475059",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Executive Assistant to the CTO (f/m/d) at AVIV Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135287482",
+      "name": "Senior Product Manager - Core Classified & Listing Import Products",
+      "uuid": "avivgroup-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "avivgroup",
+        "name": "AVIV Group"
+      },
+      "releasedDate": "2026-07-01T14:41:36.469Z",
+      "location": {
+        "city": "Berlin",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Berlin, BE, Germany"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Product (WD Function)"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/avivgroup/744000135287482",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Product Manager - Core Classified & Listing Import Products at AVIV Group.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "5b406fb1-f03f-4a58-a989-81f5ed8fc53d",
+    "text": "Account Executive",
+    "categories": {
+      "location": "Tampa, Florida",
+      "allLocations": [
+        "Tampa, Florida"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1770290407832,
+    "descriptionPlain": "Account Executive at Evident.",
+    "description": "<p>Account Executive at Evident.</p>",
+    "hostedUrl": "https://jobs.lever.co/evidentid/5b406fb1-f03f-4a58-a989-81f5ed8fc53d",
+    "applyUrl": "https://jobs.lever.co/evidentid/5b406fb1-f03f-4a58-a989-81f5ed8fc53d/apply"
+  },
+  {
+    "id": "7ccc70aa-bcbc-4bed-a15d-a2b3790c7a6b",
+    "text": "Account Executive",
+    "categories": {
+      "location": "Atlanta, GA",
+      "allLocations": [
+        "Atlanta, GA"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1770032870417,
+    "descriptionPlain": "Account Executive at Evident.",
+    "description": "<p>Account Executive at Evident.</p>",
+    "hostedUrl": "https://jobs.lever.co/evidentid/7ccc70aa-bcbc-4bed-a15d-a2b3790c7a6b",
+    "applyUrl": "https://jobs.lever.co/evidentid/7ccc70aa-bcbc-4bed-a15d-a2b3790c7a6b/apply"
+  },
+  {
+    "id": "b4108137-99a5-4034-ba50-8e363b44f757",
+    "text": "Insurance Certificate Operations Manager",
+    "categories": {
+      "location": "Atlanta, GA",
+      "allLocations": [
+        "Atlanta, GA"
+      ],
+      "department": "Operations",
+      "team": "Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1780665764025,
+    "descriptionPlain": "Insurance Certificate Operations Manager at Evident.",
+    "description": "<p>Insurance Certificate Operations Manager at Evident.</p>",
+    "hostedUrl": "https://jobs.lever.co/evidentid/b4108137-99a5-4034-ba50-8e363b44f757",
+    "applyUrl": "https://jobs.lever.co/evidentid/b4108137-99a5-4034-ba50-8e363b44f757/apply"
+  }
+]

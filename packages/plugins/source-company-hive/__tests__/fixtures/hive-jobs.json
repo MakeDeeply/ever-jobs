@@ -1,0 +1,62 @@
+[
+  {
+    "id": "366ff84b-4572-4fed-b16b-d15397de79c8",
+    "text": "Account Executive",
+    "categories": {
+      "location": "Seattle",
+      "allLocations": [
+        "Seattle"
+      ],
+      "department": "Hive",
+      "team": "Hive",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1713211312048,
+    "descriptionPlain": "Account Executive at Hive.",
+    "description": "<p>Account Executive at Hive.</p>",
+    "hostedUrl": "https://jobs.lever.co/hive/366ff84b-4572-4fed-b16b-d15397de79c8",
+    "applyUrl": "https://jobs.lever.co/hive/366ff84b-4572-4fed-b16b-d15397de79c8/apply"
+  },
+  {
+    "id": "de2752ae-9c9d-4fcd-8e47-5d7a761bb47f",
+    "text": "Account Executive",
+    "categories": {
+      "location": "San Francisco",
+      "allLocations": [
+        "San Francisco"
+      ],
+      "department": "Hive",
+      "team": "Hive",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1713211256242,
+    "descriptionPlain": "Account Executive at Hive.",
+    "description": "<p>Account Executive at Hive.</p>",
+    "hostedUrl": "https://jobs.lever.co/hive/de2752ae-9c9d-4fcd-8e47-5d7a761bb47f",
+    "applyUrl": "https://jobs.lever.co/hive/de2752ae-9c9d-4fcd-8e47-5d7a761bb47f/apply"
+  },
+  {
+    "id": "616508dc-3db5-46aa-9ff1-93fe21e08c04",
+    "text": "Account Executive - Media & Sports",
+    "categories": {
+      "location": "San Francisco",
+      "allLocations": [
+        "San Francisco"
+      ],
+      "department": "Hive",
+      "team": "Hive",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1707354167370,
+    "descriptionPlain": "Account Executive - Media & Sports at Hive.",
+    "description": "<p>Account Executive - Media & Sports at Hive.</p>",
+    "hostedUrl": "https://jobs.lever.co/hive/616508dc-3db5-46aa-9ff1-93fe21e08c04",
+    "applyUrl": "https://jobs.lever.co/hive/616508dc-3db5-46aa-9ff1-93fe21e08c04/apply"
+  }
+]

@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135722195",
+      "name": "Manager, Alumni Social Media",
+      "uuid": "covista-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Covista",
+        "name": "Covista"
+      },
+      "releasedDate": "2026-07-03T12:34:11.872Z",
+      "location": {
+        "city": "Chicago",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Chicago, IL, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Government Relations & Regulatory Affairs"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Covista/744000135722195",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Manager, Alumni Social Media at Covista.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135721282",
+      "name": "Manager, Alumni Social Media",
+      "uuid": "covista-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Covista",
+        "name": "Covista"
+      },
+      "releasedDate": "2026-07-03T12:33:14.636Z",
+      "location": {
+        "city": "Minneapolis",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Minneapolis, MN, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Government Relations & Regulatory Affairs"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Covista/744000135721282",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Manager, Alumni Social Media at Covista.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135598449",
+      "name": "Complex Adult Health/Critical Care Clinical Faculty (Part-Time)- Wilmington, Delaware",
+      "uuid": "covista-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Covista",
+        "name": "Covista"
+      },
+      "releasedDate": "2026-07-02T21:32:45.562Z",
+      "location": {
+        "city": "Wilmington",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Wilmington, DE, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Faculty"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Covista/744000135598449",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Complex Adult Health/Critical Care Clinical Faculty (Part-Time)- Wilmington, Delaware at Covista.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135736309",
+      "name": "Team Member - Eataly Caffè Hudson Yards (Tipped)",
+      "uuid": "eataly-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Eataly",
+        "name": "Eataly"
+      },
+      "releasedDate": "2026-07-03T13:32:06.304Z",
+      "location": {
+        "city": "New York",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "New York, NY, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Cafes & Quick Service"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Eataly/744000135736309",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Team Member - Eataly Caffè Hudson Yards (Tipped) at Eataly.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135590591",
+      "name": "Events & Education Specialist",
+      "uuid": "eataly-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Eataly",
+        "name": "Eataly"
+      },
+      "releasedDate": "2026-07-02T20:26:43.922Z",
+      "location": {
+        "city": "Los Angeles",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Los Angeles, CA, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "General"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Eataly/744000135590591",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Events & Education Specialist at Eataly.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135560884",
+      "name": "Bread Baker (Overnight, Full-Time) - Eataly Sherway Gardens",
+      "uuid": "eataly-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Eataly",
+        "name": "Eataly"
+      },
+      "releasedDate": "2026-07-02T17:57:58.060Z",
+      "location": {
+        "city": "Toronto",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Toronto, ON, Canada"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Bread Bakery & Pastry"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Eataly/744000135560884",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Bread Baker (Overnight, Full-Time) - Eataly Sherway Gardens at Eataly.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135670709",
+      "name": "Software Engineer, EOS (Early-career/Mid-level) - Sydney",
+      "uuid": "aristanetworks-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "aristanetworks",
+        "name": "Arista Networks"
+      },
+      "releasedDate": "2026-07-03T08:26:01.017Z",
+      "location": {
+        "city": "Sydney",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Sydney, NSW, Australia"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Software Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/aristanetworks/744000135670709",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Software Engineer, EOS (Early-career/Mid-level) - Sydney at Arista Networks.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135500220",
+      "name": "Software Engineer, Network Systems",
+      "uuid": "aristanetworks-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "aristanetworks",
+        "name": "Arista Networks"
+      },
+      "releasedDate": "2026-07-02T13:27:48.448Z",
+      "location": {
+        "city": "Bengaluru",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Bengaluru, KA, India"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Software Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/aristanetworks/744000135500220",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Software Engineer, Network Systems at Arista Networks.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135469549",
+      "name": "Senior Software Engineer - C++ - Platform - Romania",
+      "uuid": "aristanetworks-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "aristanetworks",
+        "name": "Arista Networks"
+      },
+      "releasedDate": "2026-07-02T10:33:08.057Z",
+      "location": {
+        "city": "Bucharest",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Bucharest, Bucharest, Romania"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Software Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/aristanetworks/744000135469549",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Software Engineer - C++ - Platform - Romania at Arista Networks.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

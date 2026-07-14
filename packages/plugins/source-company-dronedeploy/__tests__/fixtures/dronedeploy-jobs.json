@@ -1,0 +1,62 @@
+[
+  {
+    "id": "35e22786-0923-4b33-b578-5171058cc0f3",
+    "text": "Account Executive (USA)",
+    "categories": {
+      "location": "Remote",
+      "allLocations": [
+        "Remote"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1768416535188,
+    "descriptionPlain": "Account Executive (USA) at DroneDeploy.",
+    "description": "<p>Account Executive (USA) at DroneDeploy.</p>",
+    "hostedUrl": "https://jobs.lever.co/dronedeploy/35e22786-0923-4b33-b578-5171058cc0f3",
+    "applyUrl": "https://jobs.lever.co/dronedeploy/35e22786-0923-4b33-b578-5171058cc0f3/apply"
+  },
+  {
+    "id": "6d0695e5-94dc-4b63-be4a-5f91ac8e67df",
+    "text": "Account Executive, Territory - AEC (USA)",
+    "categories": {
+      "location": "Remote",
+      "allLocations": [
+        "Remote"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1776795607177,
+    "descriptionPlain": "Account Executive, Territory - AEC (USA) at DroneDeploy.",
+    "description": "<p>Account Executive, Territory - AEC (USA) at DroneDeploy.</p>",
+    "hostedUrl": "https://jobs.lever.co/dronedeploy/6d0695e5-94dc-4b63-be4a-5f91ac8e67df",
+    "applyUrl": "https://jobs.lever.co/dronedeploy/6d0695e5-94dc-4b63-be4a-5f91ac8e67df/apply"
+  },
+  {
+    "id": "87187be5-1fe1-400f-b4c6-014977e9cde3",
+    "text": "Lead Software Engineer, 3D Computer Vision (USA)",
+    "categories": {
+      "location": "Remote",
+      "allLocations": [
+        "Remote"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1780696615393,
+    "descriptionPlain": "Lead Software Engineer, 3D Computer Vision (USA) at DroneDeploy.",
+    "description": "<p>Lead Software Engineer, 3D Computer Vision (USA) at DroneDeploy.</p>",
+    "hostedUrl": "https://jobs.lever.co/dronedeploy/87187be5-1fe1-400f-b4c6-014977e9cde3",
+    "applyUrl": "https://jobs.lever.co/dronedeploy/87187be5-1fe1-400f-b4c6-014977e9cde3/apply"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "f50713a5-1d1b-4f31-97b7-be57e022ec64",
+    "text": "Contract IT Support Engineer (US Shift)",
+    "categories": {
+      "location": "India (Remote)",
+      "allLocations": [
+        "India (Remote)"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1769838943896,
+    "descriptionPlain": "Contract IT Support Engineer (US Shift) at Findem.",
+    "description": "<p>Contract IT Support Engineer (US Shift) at Findem.</p>",
+    "hostedUrl": "https://jobs.lever.co/findem/f50713a5-1d1b-4f31-97b7-be57e022ec64",
+    "applyUrl": "https://jobs.lever.co/findem/f50713a5-1d1b-4f31-97b7-be57e022ec64/apply"
+  },
+  {
+    "id": "d1f48556-a8c9-46b7-b089-4317ec2dd280",
+    "text": "Principal Product Manager",
+    "categories": {
+      "location": "US (Remote)",
+      "allLocations": [
+        "US (Remote)"
+      ],
+      "department": "Product",
+      "team": "Product",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1782932070272,
+    "descriptionPlain": "Principal Product Manager at Findem.",
+    "description": "<p>Principal Product Manager at Findem.</p>",
+    "hostedUrl": "https://jobs.lever.co/findem/d1f48556-a8c9-46b7-b089-4317ec2dd280",
+    "applyUrl": "https://jobs.lever.co/findem/d1f48556-a8c9-46b7-b089-4317ec2dd280/apply"
+  },
+  {
+    "id": "452941cc-36f7-4974-b8b4-43ceae6577dd",
+    "text": "Talent Intelligence Architect (Agency Recruiter)",
+    "categories": {
+      "location": "Bangalore",
+      "allLocations": [
+        "Bangalore"
+      ],
+      "department": "Others",
+      "team": "Others",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1782793207968,
+    "descriptionPlain": "Talent Intelligence Architect (Agency Recruiter) at Findem.",
+    "description": "<p>Talent Intelligence Architect (Agency Recruiter) at Findem.</p>",
+    "hostedUrl": "https://jobs.lever.co/findem/452941cc-36f7-4974-b8b4-43ceae6577dd",
+    "applyUrl": "https://jobs.lever.co/findem/452941cc-36f7-4974-b8b4-43ceae6577dd/apply"
+  }
+]

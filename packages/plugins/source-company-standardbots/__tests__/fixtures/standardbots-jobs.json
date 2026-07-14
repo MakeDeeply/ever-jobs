@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "04b31525-c965-4a6f-b276-de6086e331c3",
+      "title": "SDET -  Senior Software Developer Engineer in Test (SDET)",
+      "departmentName": "Software",
+      "teamName": "Software",
+      "employmentType": "FullTime",
+      "location": "Glen Cove, NY",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Glen Cove",
+          "addressRegion": "NY",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-12",
+      "descriptionHtml": "<p>SDET -  Senior Software Developer Engineer in Test (SDET) at Standard Bots.</p>",
+      "descriptionPlain": "SDET -  Senior Software Developer Engineer in Test (SDET) at Standard Bots.",
+      "jobUrl": "https://jobs.ashbyhq.com/standardbots/04b31525-c965-4a6f-b276-de6086e331c3",
+      "applyUrl": "https://jobs.ashbyhq.com/standardbots/04b31525-c965-4a6f-b276-de6086e331c3/application"
+    },
+    {
+      "id": "1266ad8f-b2a8-41f9-ba83-8a54b9c022f2",
+      "title": "AI Applications Engineer (Glen Cove, NY)",
+      "departmentName": "Applications Engineering",
+      "teamName": "Applications Engineering",
+      "employmentType": "FullTime",
+      "location": "Glen Cove, NY",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Glen Cove",
+          "addressRegion": "NY",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-01-23",
+      "descriptionHtml": "<p>AI Applications Engineer (Glen Cove, NY) at Standard Bots.</p>",
+      "descriptionPlain": "AI Applications Engineer (Glen Cove, NY) at Standard Bots.",
+      "jobUrl": "https://jobs.ashbyhq.com/standardbots/1266ad8f-b2a8-41f9-ba83-8a54b9c022f2",
+      "applyUrl": "https://jobs.ashbyhq.com/standardbots/1266ad8f-b2a8-41f9-ba83-8a54b9c022f2/application"
+    },
+    {
+      "id": "22f3f040-7c21-478b-9ebc-ed285beb6156",
+      "title": "CAD Designer",
+      "departmentName": "Implementation",
+      "teamName": "Implementation",
+      "employmentType": "FullTime",
+      "location": "Philadelphia, PA",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Philadelphia",
+          "addressRegion": "PA",
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-03-01",
+      "descriptionHtml": "<p>CAD Designer at Standard Bots.</p>",
+      "descriptionPlain": "CAD Designer at Standard Bots.",
+      "jobUrl": "https://jobs.ashbyhq.com/standardbots/22f3f040-7c21-478b-9ebc-ed285beb6156",
+      "applyUrl": "https://jobs.ashbyhq.com/standardbots/22f3f040-7c21-478b-9ebc-ed285beb6156/application"
+    }
+  ]
+}

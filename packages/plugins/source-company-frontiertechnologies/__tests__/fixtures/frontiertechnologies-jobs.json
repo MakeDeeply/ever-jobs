@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999655680642",
+      "name": "EAI Developer",
+      "uuid": "frontiertechnologies-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "FrontierTechnologiesLLC1",
+        "name": "Frontier Technologies"
+      },
+      "releasedDate": "2017-07-13T16:08:25.000Z",
+      "location": {
+        "city": "Boca Raton",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Boca Raton, FL, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/FrontierTechnologiesLLC1/743999655680642",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>EAI Developer at Frontier Technologies.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999655331218",
+      "name": "java",
+      "uuid": "frontiertechnologies-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "FrontierTechnologiesLLC1",
+        "name": "Frontier Technologies"
+      },
+      "releasedDate": "2017-07-10T15:01:33.000Z",
+      "location": {
+        "city": "Tampa",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Tampa, FL, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/FrontierTechnologiesLLC1/743999655331218",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>java at Frontier Technologies.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "106234568",
+      "name": "Java Developer",
+      "uuid": "frontiertechnologies-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "FrontierTechnologiesLLC1",
+        "name": "Frontier Technologies"
+      },
+      "releasedDate": "2017-01-20T16:30:03.000Z",
+      "location": {
+        "city": "Middletown",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Middletown, NJ, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/FrontierTechnologiesLLC1/106234568",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Java Developer at Frontier Technologies.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

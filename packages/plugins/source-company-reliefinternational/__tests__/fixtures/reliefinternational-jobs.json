@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999766402506",
+      "name": "HR Intern: Support Refugee Application Process – Afghanistan",
+      "uuid": "reliefinternational-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "ReliefInternational",
+        "name": "Relief International"
+      },
+      "releasedDate": "2021-08-12T13:04:56.000Z",
+      "location": {
+        "city": "Washington",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Washington, DC, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Human Resources"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ReliefInternational/743999766402506",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>HR Intern: Support Refugee Application Process – Afghanistan at Relief International.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999687077560",
+      "name": "Communications and Development Intern",
+      "uuid": "reliefinternational-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "ReliefInternational",
+        "name": "Relief International"
+      },
+      "releasedDate": "2019-04-22T18:15:05.000Z",
+      "location": {
+        "city": "Washington",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Washington, DC, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ReliefInternational/743999687077560",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Communications and Development Intern at Relief International.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999686071892",
+      "name": "Human Resources (Organizational Development &Training) Intern",
+      "uuid": "reliefinternational-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "ReliefInternational",
+        "name": "Relief International"
+      },
+      "releasedDate": "2019-04-02T13:29:39.000Z",
+      "location": {
+        "city": "Washington",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Washington, DC, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/ReliefInternational/743999686071892",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Human Resources (Organizational Development &Training) Intern at Relief International.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

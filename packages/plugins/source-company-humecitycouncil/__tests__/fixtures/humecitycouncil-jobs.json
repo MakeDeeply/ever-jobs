@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135645220",
+      "name": "Care Partner",
+      "uuid": "humecitycouncil-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "HumeCityCouncil",
+        "name": "Hume City Council"
+      },
+      "releasedDate": "2026-07-03T05:56:04.057Z",
+      "location": {
+        "city": "Broadmeadows",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Broadmeadows, VIC, Australia"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Community Health & Wellbeing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/HumeCityCouncil/744000135645220",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Care Partner at Hume City Council.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135417464",
+      "name": "Enhanced Parenting Practitioner",
+      "uuid": "humecitycouncil-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "HumeCityCouncil",
+        "name": "Hume City Council"
+      },
+      "releasedDate": "2026-07-02T06:32:03.793Z",
+      "location": {
+        "city": "Craigieburn",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Craigieburn, VIC, Australia"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Family, Youth & Children"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/HumeCityCouncil/744000135417464",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Enhanced Parenting Practitioner at Hume City Council.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135412689",
+      "name": "Regional Leader Youth Engagement",
+      "uuid": "humecitycouncil-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "HumeCityCouncil",
+        "name": "Hume City Council"
+      },
+      "releasedDate": "2026-07-02T05:36:38.428Z",
+      "location": {
+        "city": "Broadmeadows",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Broadmeadows, VIC, Australia"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Family, Youth & Children"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/HumeCityCouncil/744000135412689",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Regional Leader Youth Engagement at Hume City Council.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

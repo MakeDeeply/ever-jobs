@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000134449970",
+      "name": "Underwriting Team Lead - Remote",
+      "uuid": "longbridgefinancial-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "LongbridgeFinancial",
+        "name": "Longbridge Financial"
+      },
+      "releasedDate": "2026-06-26T11:25:03.782Z",
+      "location": {
+        "city": "Paramus",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Paramus, NJ, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Administrative"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/LongbridgeFinancial/744000134449970",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Underwriting Team Lead - Remote at Longbridge Financial.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000134258180",
+      "name": "Mortgage Compliance Officer - Remote",
+      "uuid": "longbridgefinancial-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "LongbridgeFinancial",
+        "name": "Longbridge Financial"
+      },
+      "releasedDate": "2026-06-25T12:47:47.240Z",
+      "location": {
+        "city": "Paramus",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Paramus, NJ, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/LongbridgeFinancial/744000134258180",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Mortgage Compliance Officer - Remote at Longbridge Financial.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000132871687",
+      "name": "Closing Specialist I  - In Office / Paramus, NJ or Houston, TX",
+      "uuid": "longbridgefinancial-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "LongbridgeFinancial",
+        "name": "Longbridge Financial"
+      },
+      "releasedDate": "2026-06-18T13:42:50.179Z",
+      "location": {
+        "city": "Houston",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Houston, TX, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/LongbridgeFinancial/744000132871687",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Closing Specialist I  - In Office / Paramus, NJ or Houston, TX at Longbridge Financial.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

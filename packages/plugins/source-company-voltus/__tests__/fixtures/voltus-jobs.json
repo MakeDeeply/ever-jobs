@@ -1,0 +1,62 @@
+[
+  {
+    "id": "db4f5f94-0539-4d5b-b434-ae680689f39b",
+    "text": "Administrative Assistant",
+    "categories": {
+      "location": "Remote",
+      "allLocations": [
+        "Remote"
+      ],
+      "department": "People & Culture",
+      "team": "People & Culture",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1781122278888,
+    "descriptionPlain": "Administrative Assistant at Voltus.",
+    "description": "<p>Administrative Assistant at Voltus.</p>",
+    "hostedUrl": "https://jobs.lever.co/voltus/db4f5f94-0539-4d5b-b434-ae680689f39b",
+    "applyUrl": "https://jobs.lever.co/voltus/db4f5f94-0539-4d5b-b434-ae680689f39b/apply"
+  },
+  {
+    "id": "bdf6b1bb-df21-4541-8426-fbfdd3ae2ea8",
+    "text": "Director of Communications",
+    "categories": {
+      "location": "Remote",
+      "allLocations": [
+        "Remote"
+      ],
+      "department": "Marketing & Sales Operations",
+      "team": "Marketing & Sales Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1781298680988,
+    "descriptionPlain": "Director of Communications at Voltus.",
+    "description": "<p>Director of Communications at Voltus.</p>",
+    "hostedUrl": "https://jobs.lever.co/voltus/bdf6b1bb-df21-4541-8426-fbfdd3ae2ea8",
+    "applyUrl": "https://jobs.lever.co/voltus/bdf6b1bb-df21-4541-8426-fbfdd3ae2ea8/apply"
+  },
+  {
+    "id": "a7d9918d-c8e1-4009-872e-98953b4986e6",
+    "text": "Director of Product, Customer Experience",
+    "categories": {
+      "location": "Remote",
+      "allLocations": [
+        "Remote"
+      ],
+      "department": "Product",
+      "team": "Product",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1781713461413,
+    "descriptionPlain": "Director of Product, Customer Experience at Voltus.",
+    "description": "<p>Director of Product, Customer Experience at Voltus.</p>",
+    "hostedUrl": "https://jobs.lever.co/voltus/a7d9918d-c8e1-4009-872e-98953b4986e6",
+    "applyUrl": "https://jobs.lever.co/voltus/a7d9918d-c8e1-4009-872e-98953b4986e6/apply"
+  }
+]

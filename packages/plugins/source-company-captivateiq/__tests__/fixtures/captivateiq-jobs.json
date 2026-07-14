@@ -1,0 +1,62 @@
+[
+  {
+    "id": "30d59ccd-574d-45d4-84d0-6f577d2cb0e5",
+    "text": "Account Director",
+    "categories": {
+      "location": "Remote",
+      "allLocations": [
+        "Remote"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1736468556247,
+    "descriptionPlain": "Account Director at CaptivateIQ.",
+    "description": "<p>Account Director at CaptivateIQ.</p>",
+    "hostedUrl": "https://jobs.lever.co/captivateiq/30d59ccd-574d-45d4-84d0-6f577d2cb0e5",
+    "applyUrl": "https://jobs.lever.co/captivateiq/30d59ccd-574d-45d4-84d0-6f577d2cb0e5/apply"
+  },
+  {
+    "id": "fa5bb62f-a7c7-4171-8356-fa9cfd7bff00",
+    "text": "Alliances Director, Technology Partnerships",
+    "categories": {
+      "location": "Remote",
+      "allLocations": [
+        "Remote"
+      ],
+      "department": "Alliances and Growth",
+      "team": "Alliances and Growth",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1771367259731,
+    "descriptionPlain": "Alliances Director, Technology Partnerships at CaptivateIQ.",
+    "description": "<p>Alliances Director, Technology Partnerships at CaptivateIQ.</p>",
+    "hostedUrl": "https://jobs.lever.co/captivateiq/fa5bb62f-a7c7-4171-8356-fa9cfd7bff00",
+    "applyUrl": "https://jobs.lever.co/captivateiq/fa5bb62f-a7c7-4171-8356-fa9cfd7bff00/apply"
+  },
+  {
+    "id": "1e78058c-a54c-4fbc-8142-fa2356709ee2",
+    "text": "Business Development Representative",
+    "categories": {
+      "location": "Austin, Texas",
+      "allLocations": [
+        "Austin, Texas"
+      ],
+      "department": "Marketing",
+      "team": "Marketing",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1778269676700,
+    "descriptionPlain": "Business Development Representative at CaptivateIQ.",
+    "description": "<p>Business Development Representative at CaptivateIQ.</p>",
+    "hostedUrl": "https://jobs.lever.co/captivateiq/1e78058c-a54c-4fbc-8142-fa2356709ee2",
+    "applyUrl": "https://jobs.lever.co/captivateiq/1e78058c-a54c-4fbc-8142-fa2356709ee2/apply"
+  }
+]

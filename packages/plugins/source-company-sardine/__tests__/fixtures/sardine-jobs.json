@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "030e9a89-d3f9-4021-9b5d-3b2b386beebc",
+      "title": "Senior Data Scientist",
+      "departmentName": "Fraud Ops and Analytics",
+      "teamName": "Fraud Ops and Analytics",
+      "employmentType": "FullTime",
+      "location": "United Kingdom",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "United Kingdom",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-03-20",
+      "descriptionHtml": "<p>Senior Data Scientist at Sardine.</p>",
+      "descriptionPlain": "Senior Data Scientist at Sardine.",
+      "jobUrl": "https://jobs.ashbyhq.com/sardine/030e9a89-d3f9-4021-9b5d-3b2b386beebc",
+      "applyUrl": "https://jobs.ashbyhq.com/sardine/030e9a89-d3f9-4021-9b5d-3b2b386beebc/application"
+    },
+    {
+      "id": "0602a07b-6f97-44c8-84e0-b2b1483852e9",
+      "title": "Senior Software Engineer - AI Experiences",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "Canada",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Canada",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-25",
+      "descriptionHtml": "<p>Senior Software Engineer - AI Experiences at Sardine.</p>",
+      "descriptionPlain": "Senior Software Engineer - AI Experiences at Sardine.",
+      "jobUrl": "https://jobs.ashbyhq.com/sardine/0602a07b-6f97-44c8-84e0-b2b1483852e9",
+      "applyUrl": "https://jobs.ashbyhq.com/sardine/0602a07b-6f97-44c8-84e0-b2b1483852e9/application"
+    },
+    {
+      "id": "122f0715-0d0a-42b3-94f5-0a59d4169d69",
+      "title": "Software Backend Engineer",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "India",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "India",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-11",
+      "descriptionHtml": "<p>Software Backend Engineer at Sardine.</p>",
+      "descriptionPlain": "Software Backend Engineer at Sardine.",
+      "jobUrl": "https://jobs.ashbyhq.com/sardine/122f0715-0d0a-42b3-94f5-0a59d4169d69",
+      "applyUrl": "https://jobs.ashbyhq.com/sardine/122f0715-0d0a-42b3-94f5-0a59d4169d69/application"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "7d77e811-fd18-45b6-972f-788fd4459caa",
+    "text": "Associate Product Developer  - Denim",
+    "categories": {
+      "location": "Los Angeles, CA",
+      "allLocations": [
+        "Los Angeles, CA"
+      ],
+      "department": "CORPORATE",
+      "team": "CORPORATE",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1756846128406,
+    "descriptionPlain": "Associate Product Developer  - Denim at Good American.",
+    "description": "<p>Associate Product Developer  - Denim at Good American.</p>",
+    "hostedUrl": "https://jobs.lever.co/goodamerican/7d77e811-fd18-45b6-972f-788fd4459caa",
+    "applyUrl": "https://jobs.lever.co/goodamerican/7d77e811-fd18-45b6-972f-788fd4459caa/apply"
+  },
+  {
+    "id": "b571a94c-d1cd-4813-9dc1-974105d778f0",
+    "text": "Century City - Sales Associate",
+    "categories": {
+      "location": "Los Angeles, CA",
+      "allLocations": [
+        "Los Angeles, CA"
+      ],
+      "department": "RETAIL STORES",
+      "team": "RETAIL STORES",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1703132878246,
+    "descriptionPlain": "Century City - Sales Associate at Good American.",
+    "description": "<p>Century City - Sales Associate at Good American.</p>",
+    "hostedUrl": "https://jobs.lever.co/goodamerican/b571a94c-d1cd-4813-9dc1-974105d778f0",
+    "applyUrl": "https://jobs.lever.co/goodamerican/b571a94c-d1cd-4813-9dc1-974105d778f0/apply"
+  },
+  {
+    "id": "67ee4a84-a7f8-455e-9925-d2341cc336ee",
+    "text": "Controller (TEMP)",
+    "categories": {
+      "location": "Beverly Hills",
+      "allLocations": [
+        "Beverly Hills"
+      ],
+      "department": "CORPORATE",
+      "team": "CORPORATE",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1782752437994,
+    "descriptionPlain": "Controller (TEMP) at Good American.",
+    "description": "<p>Controller (TEMP) at Good American.</p>",
+    "hostedUrl": "https://jobs.lever.co/goodamerican/67ee4a84-a7f8-455e-9925-d2341cc336ee",
+    "applyUrl": "https://jobs.lever.co/goodamerican/67ee4a84-a7f8-455e-9925-d2341cc336ee/apply"
+  }
+]

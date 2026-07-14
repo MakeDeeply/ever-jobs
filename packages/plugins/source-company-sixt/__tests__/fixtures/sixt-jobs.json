@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135771105",
+      "name": "Trainee Revenue Management (m/f/d)",
+      "uuid": "sixt-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Sixt",
+        "name": "SIXT"
+      },
+      "releasedDate": "2026-07-03T17:49:34.981Z",
+      "location": {
+        "city": "Pullach",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Pullach, , Germany"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Pricing & Yield Management"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Sixt/744000135771105",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Trainee Revenue Management (m/f/d) at SIXT.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135763789",
+      "name": "HR Business Partner",
+      "uuid": "sixt-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Sixt",
+        "name": "SIXT"
+      },
+      "releasedDate": "2026-07-03T16:04:03.492Z",
+      "location": {
+        "city": "Manchester",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Manchester, England, United Kingdom"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Human Resources & Training"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Sixt/744000135763789",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>HR Business Partner at SIXT.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135761009",
+      "name": "(Senior) Social Media Data & AI Specialist (m/f/d)",
+      "uuid": "sixt-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Sixt",
+        "name": "SIXT"
+      },
+      "releasedDate": "2026-07-03T15:37:50.149Z",
+      "location": {
+        "city": "Lisbon",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Lisbon, , Portugal"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Marketing & Communications"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Sixt/744000135761009",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>(Senior) Social Media Data & AI Specialist (m/f/d) at SIXT.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "0647fecc-42a7-4e64-b909-ad38254af37f",
+      "title": "Lead Application Security Engineer",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "NYC",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "NYC",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-04-16",
+      "descriptionHtml": "<p>Lead Application Security Engineer at Adaptive Security.</p>",
+      "descriptionPlain": "Lead Application Security Engineer at Adaptive Security.",
+      "jobUrl": "https://jobs.ashbyhq.com/adaptivesecurity/0647fecc-42a7-4e64-b909-ad38254af37f",
+      "applyUrl": "https://jobs.ashbyhq.com/adaptivesecurity/0647fecc-42a7-4e64-b909-ad38254af37f/application"
+    },
+    {
+      "id": "45c0f21f-155e-468d-b812-f5839592cd7d",
+      "title": "Business Development Representative - Sydney",
+      "departmentName": "Sales",
+      "teamName": "Sales",
+      "employmentType": "FullTime",
+      "location": "Sydney",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Sydney",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-02-19",
+      "descriptionHtml": "<p>Business Development Representative - Sydney at Adaptive Security.</p>",
+      "descriptionPlain": "Business Development Representative - Sydney at Adaptive Security.",
+      "jobUrl": "https://jobs.ashbyhq.com/adaptivesecurity/45c0f21f-155e-468d-b812-f5839592cd7d",
+      "applyUrl": "https://jobs.ashbyhq.com/adaptivesecurity/45c0f21f-155e-468d-b812-f5839592cd7d/application"
+    },
+    {
+      "id": "547fef33-6371-4a49-9085-5810744f95b0",
+      "title": "Founding Machine Learning Engineer",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "NYC",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "NYC",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-02-24",
+      "descriptionHtml": "<p>Founding Machine Learning Engineer at Adaptive Security.</p>",
+      "descriptionPlain": "Founding Machine Learning Engineer at Adaptive Security.",
+      "jobUrl": "https://jobs.ashbyhq.com/adaptivesecurity/547fef33-6371-4a49-9085-5810744f95b0",
+      "applyUrl": "https://jobs.ashbyhq.com/adaptivesecurity/547fef33-6371-4a49-9085-5810744f95b0/application"
+    }
+  ]
+}

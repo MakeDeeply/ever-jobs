@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999825777632",
+      "name": "Software Engineer",
+      "uuid": "gousto-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Gousto",
+        "name": "Gousto"
+      },
+      "releasedDate": "2022-05-11T08:44:53.000Z",
+      "location": {
+        "city": "Edinburgh",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Edinburgh, GB-SCT, United Kingdom"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "R&D"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Gousto/743999825777632",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Software Engineer at Gousto.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999825777594",
+      "name": "Registered Nurse",
+      "uuid": "gousto-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Gousto",
+        "name": "Gousto"
+      },
+      "releasedDate": "2022-05-11T08:44:51.000Z",
+      "location": {
+        "city": "Manchester",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Manchester, GB-ENG, United Kingdom"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Healthcare"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Gousto/743999825777594",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Registered Nurse at Gousto.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999825777589",
+      "name": "Executive",
+      "uuid": "gousto-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Gousto",
+        "name": "Gousto"
+      },
+      "releasedDate": "2022-05-11T08:44:49.000Z",
+      "location": {
+        "city": "London",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "London, GB-ENG, United Kingdom"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Executive"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Gousto/743999825777589",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Executive at Gousto.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

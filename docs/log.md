@@ -718,6 +718,433 @@ sites: 243 + 19 + 96 + 158 jobs. Oracle suite green (17 tests, 7 new).
 
 ---
 
+## 2026-07-06 — Scheduled run #445 (**Workable company-source pipeline foundation** — Spec 1677; first batch deferred to next run by an external rate-limit)
+
+**Scope:** Opened a **sixth**, deterministic **Workable-backed** company-source pipeline — the
+sibling of the Greenhouse, Ashby (Spec 975), Lever (Spec 1194), SmartRecruiters (Spec 1375), and
+Recruitee (Spec 1593) pipelines — to keep diversifying the company-direct backend mix, this time
+toward the **very large global startup / SMB population** that Workable over-indexes on. The
+`source-ats-workable` plugin already ships and is registered under `Site.WORKABLE`, but no
+company-direct plugin delegated to it, so the large population of companies hosting careers on
+**Workable** (`https://apply.workable.com/api/v1/widget/accounts/<slug>`, public zero-auth widget
+careers API) was invisible to the five existing discovery gates. This run built and validated the
+reusable Workable plumbing **and** persisted a 382-company discovery corpus for the batch; the live
+discovery gate itself was blocked by an external Cloudflare rate-limit (see below), so the first
+plugin batch is deferred to the next run.
+
+**Baseline at run start:** Local `develop` even with `origin/develop` at `005aebc1` (run #444, 83
+Recruitee plugins), CI **green**, working tree clean. Next spec number per the band-aware allocator
+(band `ever-jobs/ever-jobs` = 1–4999) was **1677**. The four external reference repos under the
+parent `OTHERS/` directory (outside this repo) were reviewed for situational awareness; tracked
+**outside** this repo per the no-competitor-references rule.
+
+**What shipped (all TypeScript, additive — nothing removed):**
+
+- **`scripts/probe-workable-company-source.ts`** — deterministic discovery probe for the **public,
+  zero-auth Workable widget careers API**. Like Recruitee (`{ offers: [...] }`) and SmartRecruiters
+  (`{ content: [...] }`), the payload is a **`{ jobs: [...] }` envelope**; unlike Recruitee's
+  per-company subdomain host it is a **shared host** (`apply.workable.com`, slug in the path — same
+  model as Greenhouse). The stable per-job id is **`shortcode`** (fallback `code`), not `id`. The
+  envelope also carries a top-level `name` (usually the account slug echoed back), captured into
+  `boardName` for parity; the gate stays purely count-based (`jobs.length >= MIN_JOBS (3)`, each
+  `title`-bearing). Location is composed from the structured `locations[]` entry, then flat
+  `city/state/country`, then a `telecommuting` remote flag. Network I/O isolated in `probeOne`; the
+  decision surface (`gateBoard`, `extractListings`, `boardUrl`) is pure and unit-tested.
+  **Hardened against Cloudflare rate-limiting** (see the operational note): default concurrency **4**
+  with a **300 ms** inter-request delay and **exponential backoff on HTTP 429 / `error code: 1015`**
+  (`getJson` distinguishes a genuine miss from a rate-limit; `getJsonWithRetry` retries the latter).
+  All throttling knobs overridable via `PROBE_CONCURRENCY` / `PROBE_DELAY_MS` / `PROBE_MAX_RETRIES`.
+- **`scripts/__tests__/probe-workable-company-source.spec.ts`** — **21 unit tests**, no live network
+  (pins `gateBoard`/`extractListings`/`boardUrl`, incl. envelope-shape, `shortcode`/`code` id
+  fallback, structured-vs-flat location composition, remote flag, published_on/created_at timestamp
+  fallback, `name`-capture, untitled-padding rejection). Green.
+- **`scripts/scaffold-workable-company-source.ts`** — pure, conflict-free file emitter that
+  materialises, per descriptor, the full `source-company-<slug>` package (package.json, tsconfig,
+  index, module, **registry-delegation service**, generic mocked test, Workable **`{jobs:[...]}`
+  widget fixture**) **and** the `.specify/specs/<specNo>-source-company-<slug>/` spec/plan/tasks. The
+  generated service resolves `Site.WORKABLE` from the `PluginRegistry`, delegates `scrape({ ...input,
+  companySlug })`, and re-stamps `site`/`companyName`/`id` (`workable-`→`<slug>-`). Never touches
+  shared wiring files.
+- **`scripts/assemble-workable-batch.ts`** — deterministic descriptor join (survivors + factual
+  enrichment → batch), deriving `className`/`moduleName`/`serviceName`/`enumKey`/`slug` from the
+  display name and rejecting digit-prefix enumKeys + slug/enumKey collisions against `site.enum.ts`.
+- **`scripts/seeds/workable-candidates.json`** (+ `scripts/seeds/README.md`) — a **reusable
+  382-company Workable discovery corpus** (factual enrichment keyed by `companySlug`), brainstormed
+  this run by a 30-cell parallel sector×region discovery workflow (21 cells completed;
+  WebFetch-verified). Persisted so the next run live-probes the pool directly instead of re-running
+  the token-expensive brainstorm.
+- **`.specify/specs/1677-workable-company-source-pipeline/`** — spec/plan/tasks for the pipeline
+  foundation (constitution cross-check; backend-contract table across all six backends).
+
+**End-to-end smoke (proves the generator, no live network):** a throwaway descriptor was scaffolded
+→ wired into the four shared files (`site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`,
+`jest.config.js`) → the generated plugin's mocked unit suite ran **9/9 green** → **fully reverted**
+(package + spec dirs removed, wiring files `git checkout`-restored; `grep` confirms zero residue).
+
+**Why the first batch is deferred (external blocker, honestly reported):** `apply.workable.com` sits
+behind **Cloudflare**, which returns **HTTP 429 / `error code: 1015`** on bursty traffic. The initial
+382-candidate live probe (concurrency 16) tripped the IP-wide rate-limit; a subsequent **gentle**
+re-probe (concurrency 4 + 300 ms delay + 1015 backoff) still returned **0 survivors** because the IP
+penalty was still active (a fresh single request confirmed HTTP 429). A Cloudflare-1015 burst penalty
+persists ~30–60 min, beyond this hourly run's time budget. Rather than fabricate `jobCount`s or ship
+empty-board plugins, the batch is deferred: the **next run** re-probes the persisted seed corpus with
+the now-default gentle probe (the penalty will have expired) and lands Specs 1678+. This is recorded
+as **Q-WORKABLE-1** in `docs/questions.md`.
+
+## 2026-07-05 — Scheduled run #444 (**Recruitee company-source pipeline foundation + first 83-plugin batch** — Specs 1593, 1594–1676)
+
+**Scope:** Opened a **fifth**, deterministic **Recruitee-backed** company-source pipeline — the
+sibling of the Greenhouse, Ashby (Spec 975), Lever (Spec 1194), and SmartRecruiters (Spec 1375)
+pipelines — to keep diversifying the company-direct backend mix, this time toward the **European
+(NL/DE/BE/FR) SMB and scale-up** segment that Recruitee over-indexes on. The `source-ats-recruitee`
+plugin already ships and is registered under `Site.RECRUITEE`, but no company-direct plugin delegated
+to it, so the substantial population of European companies hosting careers on **Recruitee**
+(`https://<slug>.recruitee.com`, public careers API `https://<slug>.recruitee.com/api/offers`) was
+invisible to the Greenhouse, Ashby, Lever, and SmartRecruiters discovery gates. This run built and
+validated the reusable Recruitee plumbing **and** landed a first 83-company batch on top of it.
+
+**Baseline at run start:** Local `develop` even with `origin/develop` at `983d1e7d` (run #443, 217
+SmartRecruiters plugins), CI **green**, working tree clean. Next spec number per the band-aware
+allocator (band `ever-jobs/ever-jobs` = 1–4999) was **1593**. The four external reference repos under
+the parent `OTHERS/` directory (outside this repo) were `git pull`-ed for situational awareness —
+`career-ops` had upstream movement (web/i18n/product only; the earlier-noted new SAP SuccessFactors /
+Amazon / Avature providers remain covered by existing `source-ats-*` backends here). Tracked **outside**
+this repo per the no-competitor-references rule.
+
+**What shipped (all TypeScript, additive — nothing removed):**
+
+- **`scripts/probe-recruitee-company-source.ts`** — deterministic discovery probe for the **public,
+  zero-auth Recruitee careers API**. Like SmartRecruiters (`{ content: [...] }`) and unlike Lever/Ashby
+  (bare arrays), the payload is an **`{ offers: [...] }` envelope**, so `gateBoard`/`extractListings`
+  read the `offers` array. The one operational wrinkle is the **per-company subdomain host model**: the
+  slug is interpolated into the DNS host via a `boardUrl(slug)` helper
+  (`https://<slug>.recruitee.com/api/offers`) rather than a shared-host path. Each offer carries
+  `company_name`, so a board display name IS on the wire and is captured into `boardName` (informational;
+  the gate stays count-based: `offers.length >= MIN_JOBS (3)`, each `title`-bearing). Location is
+  composed (`location` → `city/state/country` → Remote); the loose `"YYYY-MM-DD HH:MM:SS UTC"` timestamp
+  is normalised to ISO. Network I/O isolated in `probeOne`; the decision surface (`gateBoard`,
+  `extractListings`, `boardUrl`) is pure and unit-tested. Bounded-concurrency worker pool (16).
+- **`scripts/__tests__/probe-recruitee-company-source.spec.ts`** — **19 unit tests**, no live network
+  (pins `gateBoard`/`extractListings`/`boardUrl`, incl. envelope-shape, location composition, remote
+  flag, loose/ISO timestamp parsing, board-name capture, untitled-padding rejection). Green.
+- **`scripts/scaffold-recruitee-company-source.ts`** — pure, conflict-free file emitter that
+  materialises, per descriptor, the full `source-company-<slug>` package (package.json, tsconfig, index,
+  module, **registry-delegation service**, generic mocked test, Recruitee **`{offers:[...]}` envelope**
+  fixture) **and** the `.specify/specs/<specNo>-source-company-<slug>/` spec/plan/tasks. The generated
+  service resolves `Site.RECRUITEE` from the `PluginRegistry`, delegates `scrape({ ...input,
+  companySlug })`, and re-stamps `site`/`companyName`/`id` (`recruitee-`→`<slug>-`). Never touches shared
+  wiring files.
+- **`scripts/assemble-recruitee-batch.ts`** — deterministic descriptor assembler that joins the probe
+  survivors + enrichment (keyed by `companySlug`) + a contiguous spec-number range. Derives
+  `slug`/`className`/`enumKey` from the canonical `displayName`; **rejects** candidates whose derived
+  `enumKey` starts with a digit or whose `slug`/`enumKey` collides with the live `site.enum.ts` or an
+  in-batch peer (never silently dropped — every rejection is logged).
+- **`scripts/process-recruitee-discovery.ts`** — marshals the discovery-workflow output
+  (`{ result: { companies: [...] } }`) into the enrichment + candidate-slug files, decoding HTML
+  entities, deduping by case-insensitive `companySlug`, and merging any extra hand-written seed
+  enrichment files.
+- **`scripts/wire-company-source.ts`** — confirmed **backend-agnostic** and reused **unchanged**; the
+  Recruitee batch descriptor is field-compatible with it.
+
+**Foundation verification:** probe unit suite **19/19 green**; live endpoint confirmed against
+`channable` (34 roles) + `sendcloud` — HTTP 200, `{ offers: [...] }` carrying `company_name`; end-to-end
+smoke (scaffold throwaway `channable` descriptor → wire into the 4 shared files → generated plugin jest
+**9/9 green** → fully reverted, `git status` clean).
+
+**Discovery + first batch (Specs 1594–1676):** a 20-agent parallel discovery workflow (general-purpose
+agents, one per European segment: NL/DE/BE/FR/Nordic/UK e-commerce, SaaS, fintech, HR-tech, health-tech,
+mobility, gaming, energy, travel, edtech, agencies, proptech, cybersecurity, manufacturing) web-verified
+and returned **230 unique Recruitee subdomains** with factual enrichment. Marshaled + merged with a
+hand-probed seed list, then re-gated by the **central deterministic probe**: **84/230 survived**
+(≥3 live title-bearing offers — a ~37% survival rate, far above the ~5% of blind subdomain guessing).
+Assembly produced **83 descriptors** (1 rejected: `rebuy` — slug collides with an existing plugin).
+Scaffolded all 83 + wired into the four shared files (`site.enum.ts`, `packages/plugins/index.ts`,
+`tsconfig.base.json`, `jest.config.js`). Company-source plugin count **1438 → 1521**.
+
+**Tests:** all **83 generated suites green — 747 tests, 0 failures** (`jest --testPathPatterns`, ~9.5
+min). Probe unit suite 19/19. Docs lint (`npm run lint:docs`) green — every one of the 84 new specs is
+linked from `docs/index.md`.
+
+**Docs:** `docs/index.md` — added the Spec 1593 pipeline-foundation row + all 83 batch rows
+(1594–1676); footer bumped to run #444. `docs/questions.md` — added **Q-RECRUITEE-1** (count-only gate,
+brand-match deferred to descriptor assembly — consistent with Q-SR-1/Q-LEVER-1/Q-ASHBY-1) and
+**Q-RECRUITEE-2** (per-company subdomain host model). This `docs/log.md` entry.
+
+**Notes / decisions (autonomous):**
+
+- Chose Recruitee as the fifth backend because its `source-ats-recruitee` plugin already ships, its
+  public API is zero-auth and stable (`{ offers: [...] }`), and it opens an under-covered **European
+  SMB/scale-up** segment orthogonal to the enterprise-skewed SmartRecruiters corpus.
+- Preferred verified agent-discovery (each candidate web-checked) over blind slug guessing; the central
+  probe remains the source-of-truth gate, so hallucinated/dead subdomains are filtered deterministically.
+- `verified=false` on every generated plugin until an authenticated live harvest confirms field mapping
+  (same convention as the Greenhouse/Ashby/Lever/SmartRecruiters batches).
+
+---
+
+## 2026-07-04 — Scheduled run #443 (**SmartRecruiters company-source pipeline foundation + first 217-plugin batch** — Specs 1375, 1376–1592)
+
+**Scope:** Opened a fourth, deterministic **SmartRecruiters-backed** company-source pipeline — the
+sibling of the Greenhouse, Ashby (Spec 975), and Lever (Spec 1194) pipelines — to keep diversifying the
+company-direct backend mix, this time toward the **large-enterprise** segment that SmartRecruiters
+over-indexes on. The `source-ats-smartrecruiters` plugin already ships and is registered under
+`Site.SMARTRECRUITERS`, but no company-direct plugin delegated to it, so the substantial population of
+enterprise and mid-market brands hosting careers on **SmartRecruiters**
+(`https://jobs.smartrecruiters.com/<Identifier>`, public Posting API
+`https://api.smartrecruiters.com/v1/companies/<Identifier>/postings?limit=100`) was invisible to the
+Greenhouse, Ashby, and Lever discovery gates. This run built and validated the reusable
+SmartRecruiters plumbing **and** landed a first 217-company batch on top of it.
+
+**Baseline at run start:** Local `develop` even with `origin/develop` at `49d16362` (run #442, 180
+Lever plugins), CI **green**, working tree clean. Next spec number per the band-aware allocator
+(`scripts/next-spec-number.ts`, band `ever-jobs/ever-jobs` = 1–4999) was **1375**. The four external
+reference repos under the parent `OTHERS/` directory (outside this repo) were `git pull`-ed for
+situational awareness — `career-ops` had upstream movement (new SAP SuccessFactors / Amazon / Avature
+zero-token providers; all already covered by existing `source-ats-*` backends here). Tracked **outside**
+this repo per the no-competitor-references rule.
+
+**What shipped (all TypeScript, additive — nothing removed):**
+
+- **`scripts/probe-smartrecruiters-company-source.ts`** — deterministic discovery probe for the
+  **public, zero-auth SmartRecruiters Posting API**. Unlike Ashby/Lever (bare arrays), the payload is a
+  **`{ offset, limit, totalFound, content: [...] }` envelope**, so `gateBoard`/`extractListings` read the
+  `content` array. Each posting carries `company.name`, so — unlike Lever/Ashby — a board display name
+  IS on the wire and is captured into `boardName` (informational; the gate stays count-based:
+  `content.length >= MIN_JOBS (3)`, each `name`-bearing). Structured `location` is composed
+  (`fullLocation` → city/region/country → Remote). Network I/O isolated in `probeOne`; the decision
+  surface (`gateBoard`, `extractListings`) is pure and unit-tested. Bounded-concurrency worker pool (16).
+- **`scripts/__tests__/probe-smartrecruiters-company-source.spec.ts`** — **15 unit tests**, no live
+  network (pins `gateBoard`/`extractListings`, incl. envelope-shape, location composition, remote flag,
+  `function.label` department fallback, board-name capture). Green.
+- **`scripts/scaffold-smartrecruiters-company-source.ts`** — pure, conflict-free file emitter that
+  materialises, per descriptor, the full `source-company-<slug>` package (package.json, tsconfig, index,
+  module, **registry-delegation service**, generic mocked test, SmartRecruiters **`{content:[...]}`
+  envelope** fixture) **and** the `.specify/specs/<specNo>-source-company-<slug>/` spec/plan/tasks. The
+  generated service resolves `Site.SMARTRECRUITERS` from the `PluginRegistry`, delegates
+  `scrape({ ...input, companySlug })`, and re-stamps `site`/`companyName`/`id` (`sr-`→`<slug>-`). Never
+  touches shared wiring files.
+- **`scripts/assemble-smartrecruiters-batch.ts`** — deterministic descriptor assembler that joins the
+  probe survivors + enrichment (keyed by the case-sensitive `companySlug`) + a contiguous spec-number
+  range. Derives `slug`/`className`/`enumKey` from the canonical `displayName`; **rejects** candidates
+  whose derived `enumKey` starts with a digit or whose `slug`/`enumKey` collides with the live
+  `site.enum.ts` or an in-batch peer (never silently dropped — every rejection is logged).
+- **`scripts/process-sr-discovery.ts`** — marshals the discovery-workflow output into the enrichment +
+  candidate-slug files, decoding HTML entities (`&amp;` → `&`, numeric refs, …) that the web-discovery
+  agents emitted in prose fields.
+- **`scripts/wire-company-source.ts`** — confirmed **backend-agnostic** and reused **unchanged**; the
+  SmartRecruiters batch descriptor is field-compatible. The descriptor additionally carries a distinct
+  **`companySlug`** (the case-sensitive live SmartRecruiters identifier, which may contain mixed case /
+  trailing digits — e.g. `BoschGroup`, `ABInBev1`) separate from **`slug`** (hyphen-free lowercase
+  plugin dir/enum value/id prefix), per Q-SR-2.
+
+**Validation (foundation):** Probe unit suite **15/15 green**. End-to-end smoke test: scaffolded a
+throwaway descriptor → wired it into the four shared files → `jest` on the generated plugin **9/9 green**
+→ **fully reverted** (`git checkout` on the four shared files, `rm -rf` on the throwaway package + spec
+dir; `git status` clean). All three new pipeline scripts `tsc --noEmit` clean. Live endpoint confirmed
+against `Visa`, `BoschGroup` (4647 roles), `WesternDigital` (290), `ServiceNow` (396) — HTTP 200,
+`{ content: [...] }` envelope.
+
+**First SmartRecruiters company batch — 217 new plugins (Specs 1376–1592):** A **parallel multi-agent
+workflow** (14 sector-specialist agents; ~980k subagent tokens, 415 tool calls, ~740s wall-clock)
+web-discovered SmartRecruiters company boards across fourteen sectors (enterprise tech, industrial/auto,
+finance/fintech, retail/CPG, health/pharma, energy/climate, telecom/media/gaming, logistics/travel,
+professional services/staffing, food/agri, construction/real-estate, aerospace/defense/semis,
+education/public-sector, and European/UK enterprises) and **self-verified** each candidate's exact
+case-sensitive identifier against the public Posting API (≥ 3 live postings) before returning it —
+**223** unique verified candidates. Those were re-probed **centrally** through the deterministic
+`scripts/probe-smartrecruiters-company-source.ts` gate (the authoritative source of truth) —
+**220/223 survived** (≥ 3 live roles). Descriptors were assembled via
+`scripts/assemble-smartrecruiters-batch.ts` (className/moduleName/enumKey derived from each canonical
+`displayName`; **3 rejected** — `360 IT Professionals` for a digit-prefix enumKey, `AccorHotel` and
+`LinkedIn3` for `slug` collisions against `accor`/an existing `linkedin` plugin), leaving **217**.
+Those were scaffolded via `scripts/scaffold-smartrecruiters-company-source.ts` and wired via the
+backend-agnostic `scripts/wire-company-source.ts`. Each plugin is a thin **registry-delegation** service
+(resolve `Site.SMARTRECRUITERS`, delegate `scrape({ ...input, companySlug })`, re-stamp identity) —
+inheriting every SmartRecruiters field fix (structured location composition, department mapping, remote
+inference, description-section assembly) automatically. Wiring is fully additive: **+217** jest mappers,
+**+217** tsconfig aliases, **+217** enum members + barrel imports/module entries.
+
+**Validation (batch):** Sampled **10 generated plugin suites** (AbbVie, Abercrombie & Fitch, AB InBev,
+Accor, Visa, Wise + the last six specs) → **90/90 jest green**. Models package `tsc --noEmit` clean.
+The plugins **barrel** (`packages/plugins/index.ts`, now importing all 217 new modules) `tsc --noEmit`
+clean via an ephemeral entry tsconfig. Zero duplicate enum keys/values. Ephemeral batch files
+(`.sr-*.json`, `.sr-candidates.txt`) deleted pre-commit (not gitignored under the `.sr-` prefix).
+
+**Docs:** `docs/index.md` — added the Spec 1375 pipeline row + refreshed the footer. `docs/questions.md`
+— added **Q-SR-1** (count-only gate; brand-match deferred to descriptor assembly; `company.name`
+captured as informational `boardName`) and **Q-SR-2** (case-sensitive `companySlug` vs. lowercase plugin
+`slug`), both defaulted to option **A** (consistent with the Lever/Ashby resolutions).
+
+## 2026-07-03 — Scheduled run #442 (**Lever company-source pipeline foundation + first 180-plugin batch** — Specs 1194, 1195–1374)
+
+**Scope:** Opened a third, deterministic **Lever-backed** company-source pipeline — the sibling of the
+Greenhouse and Ashby (Spec 975) pipelines — to continue diversifying the company-direct backend mix.
+The `source-ats-lever` plugin already ships and is registered under `Site.LEVER`, but no company-direct
+plugin delegated to it, so the large population of scale-ups and mid-market companies hosting careers
+on **Lever** (`jobs.lever.co/<slug>`, public Postings API `api.lever.co/v0/postings/<slug>?mode=json`)
+was invisible to both the Greenhouse and Ashby discovery gates. This run built and validated the
+reusable Lever plumbing **and** landed a first 180-company batch on top of it.
+
+**Baseline at run start:** Local `develop` even with `origin/develop` at `378bf201` (run #441, 218
+Ashby plugins), CI **green**, working tree clean. Next spec number per the band-aware allocator
+(`scripts/next-spec-number.ts`, band `ever-jobs/ever-jobs` = 1–4999) was **1194**. The four external
+reference repos under the parent `OTHERS/` directory (outside this repo) were `git pull`-ed for
+situational awareness — `career-ops` had upstream movement (a new provider + a startup-boards registry
+entry + an experimental web UI), tracked **outside** this repo per the no-competitor-references rule.
+
+**What shipped (all TypeScript, additive — nothing removed):**
+
+- **`scripts/probe-lever-company-source.ts`** — deterministic discovery probe for the **public,
+  zero-auth Lever Postings API** (`https://api.lever.co/v0/postings/<slug>?mode=json` → a **bare JSON
+  array** of postings). Like Ashby (and unlike Greenhouse), the payload exposes **no board display
+  name**, so the gate is purely count-based (`jobs.length >= MIN_JOBS (3)`, each `text`-bearing).
+  Network I/O isolated in `probeOne`; the decision surface (`gateBoard`, `extractListings`) is pure
+  and unit-tested. Bounded-concurrency worker pool (16); `extractListings` prefers
+  `categories.allLocations[0]` over `categories.location`, falls back to `categories.team` for
+  department, and normalises the epoch-millis `createdAt`.
+- **`scripts/__tests__/probe-lever-company-source.spec.ts`** — **13 unit tests**, no live network
+  (pins `gateBoard`/`extractListings`). Green.
+- **`scripts/scaffold-lever-company-source.ts`** — pure, conflict-free file emitter that materialises,
+  per descriptor, the full `source-company-<slug>` package (package.json, tsconfig, index, module,
+  **registry-delegation service**, generic mocked test, Lever **bare-array** job-board fixture) **and**
+  the `.specify/specs/<specNo>-source-company-<slug>/` spec/plan/tasks. The generated service resolves
+  `Site.LEVER` from the `PluginRegistry`, delegates `scrape({ ...input, companySlug })`, and re-stamps
+  `site`/`companyName`/`id` (`lever-`→`<slug>-`). Never touches shared wiring files.
+- **`scripts/wire-company-source.ts`** — confirmed **backend-agnostic** and reused **unchanged**; the
+  Lever batch descriptor is field-compatible (`slug`/`moduleName`/`enumKey`/`displayName`/`specNo`/
+  `phaseNo`). The descriptor additionally carries a distinct **`companySlug`** (the live Lever slug,
+  which may contain hyphens/dots) separate from **`slug`** (hyphen-free plugin dir/enum value/id
+  prefix), per Q-LEVER-2.
+
+**Validation:** Probe unit suite **13/13 green**. End-to-end smoke test: scaffolded a throwaway
+descriptor → wired it into the four shared files → `jest` on the generated plugin **9/9 green** →
+**fully reverted** (`git checkout` on the four shared files, `rm -rf` on the throwaway package + spec
+dir; `git status` clean). This proves the emitter, the generated test, and the wiring are correct
+against a known-good template before any real batch is generated.
+
+**First Lever company batch — 180 new plugins (Specs 1195–1374):** A **parallel multi-agent workflow**
+(12 sector-specialist agents; ~831k subagent tokens, 574 tool calls) web-discovered **216** candidate
+Lever boards across twelve sectors (AI/ML, dev-tools/infra, fintech, crypto, data-infra, security,
+health/biotech, robotics/hardware, climate, B2B SaaS, e-commerce/marketplaces, gaming/media/education/
+logistics) and **self-verified** each against the public Lever Postings API (≥ 3 live postings) before
+returning it. The merged set was slug-normalised and deduped, then collision-checked against the live
+`site.enum.ts` + `packages/plugins/index.ts`: **23 rejected** (in-batch duplicate slugs; `enumKey`
+starting with a digit — `1inch`, `360learning`; one enum-key collision — `loopreturns`→`LOOP`),
+leaving **193** unique candidates. Those were re-probed **centrally** through the deterministic
+`scripts/probe-lever-company-source.ts` gate (the authoritative source of truth) — **180/193 survived**
+(≥ 3 live roles). Descriptors were assembled (className/moduleName/enumKey derived from each canonical
+`displayName`), scaffolded via `scripts/scaffold-lever-company-source.ts` and wired via the
+backend-agnostic `scripts/wire-company-source.ts`. Each plugin is a thin **registry-delegation** service
+(resolve `Site.LEVER`, delegate `scrape({ ...input, companySlug })`, re-stamp identity) — inheriting
+every Lever field fix (location parsing, structured-first compensation, remote/hybrid inference)
+automatically. Wiring is fully additive: **+180** jest mappers, **+180** tsconfig aliases, **+360** enum
+lines (comment + entry ×180), **+360** barrel lines (import + module entry ×180), zero deletions.
+Company-direct plugin count **1041 → 1221**.
+
+**Verification:** Probe suite 13/13. Sample of 6 generated plugins across the batch — including the
+edge-case slugs `arcteryxcom` (Arc'teryx, apostrophe-escaped className), `cscgeneration2`, `spearai`
+(dotted/suffixed/hyphen-stripped) — **54/54 tests green** via `jest`. `tsc --noEmit` surfaced only
+pre-existing `apps/api/src/cache` env-dep errors (`cacheable`/`@keyv/redis` absent in the sandbox),
+none in the new files. Full CI suite is the final gate on push.
+
+**Docs:** `docs/index.md` gained the 1194 pipeline row + 180 plugin rows (Specs 1195–1374) and a fresh
+`_Last revised_` footer; `docs/questions.md` gained **Q-LEVER-1** (no board-name anchor) and
+**Q-LEVER-2** (slug vs. plugin-dir naming), both resolving to the Ashby precedent; the Lever pipeline
+foundation is documented under `.specify/specs/1194-lever-company-source-pipeline/`.
+
+**Notes:**
+
+- Lever slugs are treated case-insensitively (lower-cased before probing); a handful of case-sensitive
+  boards that 404 lower-cased are simply among the 13 that did not survive the central gate — the gate
+  handled them correctly, no false positives shipped.
+- The competitor-watch note for `career-ops` v1.16.0 movement lives **outside** this repo (parent-dir
+  watch file), never here, per the no-competitor-references rule.
+
+---
+
+## 2026-07-02 — Scheduled run #441 (**Ashby company-source pipeline foundation** — Spec 975)
+
+**Scope:** Opened a new, deterministic **Ashby-backed** company-source pipeline — the sibling of the
+existing Greenhouse pipeline — to correct a structural skew in the corpus: of the ~829 company-direct
+plugins, **~97 % (803) are Greenhouse** and only a handful (`allencontrolsystems`, `openai`) delegate
+to **Ashby**. Many well-funded modern startups (AI/ML, developer-tools/infra, fintech, crypto,
+data-infra, security) host their careers on Ashby (`jobs.ashbyhq.com/<slug>`) and are therefore
+**invisible to the Greenhouse-only discovery gate**. This run built and validated the reusable
+plumbing that makes those companies discoverable; a first Ashby company batch lands under Specs 976+.
+
+**Baseline at run start:** Local `develop` even with `origin/develop` at `3ca794cf` (run #440, 170
+Greenhouse plugins), CI **green**, working tree clean. Next spec number per the band-aware allocator
+(`scripts/next-spec-number.ts`, band `ever-jobs/ever-jobs` = 1–4999) was **975**. The four external
+reference repos under the parent `OTHERS/` directory (outside this repo) were `git pull`-ed for
+situational awareness — `career-ops` had upstream movement (Ashby/Teamtailor/HigherEdJobs provider
+activity), tracked **outside** this repo per the no-competitor-references rule.
+
+**What shipped (all TypeScript, additive — nothing removed):**
+
+- **`scripts/probe-ashby-company-source.ts`** — deterministic discovery probe for the **public,
+  zero-auth Ashby Posting API** (`https://api.ashbyhq.com/posting-api/job-board/<slug>` →
+  `{ apiVersion, jobs[] }`). Unlike Greenhouse, Ashby's public payload exposes **no board display
+  name**, so the gate is purely count-based (`jobs.length >= MIN_JOBS (3)`, each title-bearing).
+  Network I/O isolated in `probeOne`; the decision surface (`gateBoard`, `extractListings`) is pure
+  and unit-tested. Bounded-concurrency worker pool (16); `extractListings` tolerates both public
+  (`departmentName`/`publishedDate`) and authenticated (`department`/`publishedAt`) field names.
+- **`scripts/__tests__/probe-ashby-company-source.spec.ts`** — **11 unit tests**, no live network
+  (pins `gateBoard`/`extractListings`). Green.
+- **`scripts/scaffold-ashby-company-source.ts`** — pure, conflict-free file emitter that materialises,
+  per descriptor, the full `source-company-<slug>` package (package.json, tsconfig, index, module,
+  **registry-delegation service**, generic mocked test, Ashby job-board fixture) **and** the
+  `.specify/specs/<specNo>-source-company-<slug>/` spec/plan/tasks. The generated service is the
+  proven `source-company-allencontrolsystems` pattern parametrised: resolve `Site.ASHBY` from the
+  `PluginRegistry`, delegate `scrape({ ...input, companySlug })`, re-stamp `site`/`companyName`/`id`
+  (`ashby-`→`<slug>-`), fail-safe empty on unavailability. Never touches shared wiring files.
+- **`scripts/wire-company-source.ts`** — confirmed **backend-agnostic** and reused **unchanged**; the
+  Ashby batch descriptor is field-compatible (`slug`/`moduleName`/`enumKey`/`displayName`/`specNo`/
+  `phaseNo`). The descriptor additionally carries a distinct **`companySlug`** (the live Ashby board
+  slug, which may contain hyphens) separate from **`slug`** (hyphen-free plugin dir / enum value / id
+  prefix), per Q-ASHBY-2.
+
+**Validation:** Probe unit suite **11/11 green**. End-to-end smoke test: scaffolded a throwaway
+descriptor → wired it into the four shared files → `jest` on the generated plugin **9/9 green** →
+**fully reverted** (`git checkout` on the four shared files, `rm -rf` on the throwaway package + spec
+dir; `git status` clean). This proves the emitter, the generated test, and the wiring are correct
+against a known-good template before any real batch is generated.
+
+**First Ashby company batch — 218 new plugins (Specs 976–1193):** A **parallel multi-agent workflow**
+(12 sector-specialist agents; 755k subagent tokens, 403 tool calls) web-discovered **270** candidate
+Ashby boards across twelve sectors (AI/ML, dev-tools/infra, fintech, crypto, data-infra, security,
+health/biotech, robotics/hardware, climate, B2B SaaS, e-commerce/marketplaces, aerospace/defense) and
+**self-verified** each against the public Ashby Posting API (≥ 3 live jobs) before returning it. The
+merged set was slug-normalised, deduped against the existing corpus (14 already present, e.g. OpenAI /
+ClickHouse / Cerebras), leaving **229** unique candidates. Those were re-probed **centrally** through
+the deterministic `scripts/probe-ashby-company-source.ts` gate (the authoritative source of truth) —
+**222/229 survived** (≥ 3 live roles). Descriptor assembly derived `className` / `moduleName` /
+`enumKey` / plugin-`slug` from each canonical `displayName` and **collision-checked** every one against
+the live `site.enum.ts` + `packages/plugins/index.ts`: **4 rejected** (`1Password`, `0G Labs` — TS enum
+members cannot begin with a digit; `Etched`, `Mercor` — enumKey/module collisions with existing
+plugins), leaving **218** clean descriptors (Specs 976–1193; phases 970–1187), scaffolded via
+`scripts/scaffold-ashby-company-source.ts` and wired via the backend-agnostic
+`scripts/wire-company-source.ts`. Each plugin is a thin **registry-delegation** service (resolve
+`Site.ASHBY`, delegate `scrape({ ...input, companySlug })`, re-stamp identity) — inheriting every Ashby
+field fix, no bespoke parsing. Top boards by live-role count: Airwallex (593), Renuity (407), Enpal
+(354), Crusoe (350), Harvey (321), Saronic Technologies (269), Applied Intuition (248), Lightspeed
+Commerce (208). This lifts the Ashby-backed company-direct count from **2 → 220** and the total
+company-direct corpus to **1041**. The remaining ~4 collision-rejected + non-surviving candidates are
+recorded in the run scratch (not committed) for future disambiguation. Per-company enrichment prose is
+strictly factual (company-only, no competitor references); `verified=false` until authenticated.
+
+**Batch validation:** Full-project `tsc --noEmit` **clean** for all 218 plugins + the four wired
+files (only residual errors are the pre-existing, unrelated `apps/api/src/cache` `cacheable` /
+`@keyv/redis` type decls, resolved by CI's `npm ci`). The **218 generated mocked unit suites — 1962
+tests — all green** (`jest`, 544 s; each suite pins DI resolution, the `Site` enum value, the
+delegation happy-path, input pass-through, resilience, and the `resultsWanted` cap). Doc-lint clean
+(all 654 new spec/plan/tasks files indexed in `docs/index.md`).
+
+**Docs:** Added Spec 975 (spec/plan/tasks); indexed it in `docs/index.md`; recorded **Q-ASHBY-1**
+(no board-name brand anchor → brand-match enforced at assembly time) and **Q-ASHBY-2** (dual
+`companySlug`/`slug` naming) in `docs/questions.md`. No competitor intel in-repo.
+
+---
+
 ## 2026-06-28 — Run #473 — Spec 5036 — source-ats-appone
 
 **Change:** New `source-ats-appone` plugin (`Site.APPONE = 'appone'`). AppOne

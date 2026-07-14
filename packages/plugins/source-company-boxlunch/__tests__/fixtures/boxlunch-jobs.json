@@ -1,0 +1,62 @@
+[
+  {
+    "id": "00e6cd18-dcbc-4eed-9a47-0ec81a021724",
+    "text": "Full-Time Assistant Manager",
+    "categories": {
+      "location": "San Antonio, TX",
+      "allLocations": [
+        "San Antonio, TX"
+      ],
+      "department": "71",
+      "team": "71",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1679600181162,
+    "descriptionPlain": "Full-Time Assistant Manager at BoxLunch & Hot Topic.",
+    "description": "<p>Full-Time Assistant Manager at BoxLunch & Hot Topic.</p>",
+    "hostedUrl": "https://jobs.lever.co/boxlunch/00e6cd18-dcbc-4eed-9a47-0ec81a021724",
+    "applyUrl": "https://jobs.lever.co/boxlunch/00e6cd18-dcbc-4eed-9a47-0ec81a021724/apply"
+  },
+  {
+    "id": "016aa1fe-453b-43d7-88bd-a52e21eb3c80",
+    "text": "Full-Time Assistant Manager",
+    "categories": {
+      "location": "Temecula, CA",
+      "allLocations": [
+        "Temecula, CA"
+      ],
+      "department": "21",
+      "team": "21",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1627399858806,
+    "descriptionPlain": "Full-Time Assistant Manager at BoxLunch & Hot Topic.",
+    "description": "<p>Full-Time Assistant Manager at BoxLunch & Hot Topic.</p>",
+    "hostedUrl": "https://jobs.lever.co/boxlunch/016aa1fe-453b-43d7-88bd-a52e21eb3c80",
+    "applyUrl": "https://jobs.lever.co/boxlunch/016aa1fe-453b-43d7-88bd-a52e21eb3c80/apply"
+  },
+  {
+    "id": "01e806ff-1603-4702-bab3-0f21d3b7f3b9",
+    "text": "Full-Time Assistant Manager",
+    "categories": {
+      "location": "Warwick, RI",
+      "allLocations": [
+        "Warwick, RI"
+      ],
+      "department": "419",
+      "team": "419",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1722882870231,
+    "descriptionPlain": "Full-Time Assistant Manager at BoxLunch & Hot Topic.",
+    "description": "<p>Full-Time Assistant Manager at BoxLunch & Hot Topic.</p>",
+    "hostedUrl": "https://jobs.lever.co/boxlunch/01e806ff-1603-4702-bab3-0f21d3b7f3b9",
+    "applyUrl": "https://jobs.lever.co/boxlunch/01e806ff-1603-4702-bab3-0f21d3b7f3b9/apply"
+  }
+]

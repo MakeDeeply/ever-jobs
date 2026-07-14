@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "03aee44c-e6db-479f-94c4-1eda8cc6bf9f",
+      "title": "Sales Engineer, Enterprise",
+      "departmentName": "Sales & Success",
+      "teamName": "Sales & Success",
+      "employmentType": "FullTime",
+      "location": "NAMER",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "NAMER",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-04-22",
+      "descriptionHtml": "<p>Sales Engineer, Enterprise at Zapier.</p>",
+      "descriptionPlain": "Sales Engineer, Enterprise at Zapier.",
+      "jobUrl": "https://jobs.ashbyhq.com/zapier/03aee44c-e6db-479f-94c4-1eda8cc6bf9f",
+      "applyUrl": "https://jobs.ashbyhq.com/zapier/03aee44c-e6db-479f-94c4-1eda8cc6bf9f/application"
+    },
+    {
+      "id": "1297c435-7a77-4f7a-8210-ad41ba78c83e",
+      "title": "Finance Manager, R&D Finance & FinOps",
+      "departmentName": "Finance",
+      "teamName": "Finance",
+      "employmentType": "FullTime",
+      "location": "NAMER",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "NAMER",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-30",
+      "descriptionHtml": "<p>Finance Manager, R&D Finance & FinOps at Zapier.</p>",
+      "descriptionPlain": "Finance Manager, R&D Finance & FinOps at Zapier.",
+      "jobUrl": "https://jobs.ashbyhq.com/zapier/1297c435-7a77-4f7a-8210-ad41ba78c83e",
+      "applyUrl": "https://jobs.ashbyhq.com/zapier/1297c435-7a77-4f7a-8210-ad41ba78c83e/application"
+    },
+    {
+      "id": "1767482d-de23-460c-80eb-6d0a3caa72ab",
+      "title": "Staff Engineer, Backend, Revenue",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "NAMER",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "NAMER",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-30",
+      "descriptionHtml": "<p>Staff Engineer, Backend, Revenue at Zapier.</p>",
+      "descriptionPlain": "Staff Engineer, Backend, Revenue at Zapier.",
+      "jobUrl": "https://jobs.ashbyhq.com/zapier/1767482d-de23-460c-80eb-6d0a3caa72ab",
+      "applyUrl": "https://jobs.ashbyhq.com/zapier/1767482d-de23-460c-80eb-6d0a3caa72ab/application"
+    }
+  ]
+}

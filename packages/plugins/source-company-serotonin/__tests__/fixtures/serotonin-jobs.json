@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ec1a6359-0989-4ea3-96a1-6418cb4b62a8",
+    "text": "AI Infra Engineer",
+    "categories": {
+      "location": "New York",
+      "allLocations": [
+        "New York"
+      ],
+      "department": "AI",
+      "team": "AI",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1782446293659,
+    "descriptionPlain": "AI Infra Engineer at Serotonin.",
+    "description": "<p>AI Infra Engineer at Serotonin.</p>",
+    "hostedUrl": "https://jobs.lever.co/serotonin/ec1a6359-0989-4ea3-96a1-6418cb4b62a8",
+    "applyUrl": "https://jobs.lever.co/serotonin/ec1a6359-0989-4ea3-96a1-6418cb4b62a8/apply"
+  },
+  {
+    "id": "2c326744-138f-4f77-a8dd-4e2487d9933e",
+    "text": "Blockchain, Data Analytics (Remote)",
+    "categories": {
+      "location": "New York",
+      "allLocations": [
+        "New York"
+      ],
+      "department": "Growth Marketing",
+      "team": "Growth Marketing",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1757093179385,
+    "descriptionPlain": "Blockchain, Data Analytics (Remote) at Serotonin.",
+    "description": "<p>Blockchain, Data Analytics (Remote) at Serotonin.</p>",
+    "hostedUrl": "https://jobs.lever.co/serotonin/2c326744-138f-4f77-a8dd-4e2487d9933e",
+    "applyUrl": "https://jobs.lever.co/serotonin/2c326744-138f-4f77-a8dd-4e2487d9933e/apply"
+  },
+  {
+    "id": "95fe516c-2686-4b69-9c97-a060f63afe6e",
+    "text": "Pitch Yourself",
+    "categories": {
+      "location": "New York",
+      "allLocations": [
+        "New York"
+      ],
+      "department": "HR",
+      "team": "HR",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1749057222957,
+    "descriptionPlain": "Pitch Yourself at Serotonin.",
+    "description": "<p>Pitch Yourself at Serotonin.</p>",
+    "hostedUrl": "https://jobs.lever.co/serotonin/95fe516c-2686-4b69-9c97-a060f63afe6e",
+    "applyUrl": "https://jobs.lever.co/serotonin/95fe516c-2686-4b69-9c97-a060f63afe6e/apply"
+  }
+]

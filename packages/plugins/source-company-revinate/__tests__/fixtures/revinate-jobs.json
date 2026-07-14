@@ -1,0 +1,62 @@
+[
+  {
+    "id": "05e16a93-bad4-4d32-8e91-78adc348534e",
+    "text": "Data Warehouse Engineer",
+    "categories": {
+      "location": "Atlanta, GA",
+      "allLocations": [
+        "Atlanta, GA"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1779907837174,
+    "descriptionPlain": "Data Warehouse Engineer at Revinate.",
+    "description": "<p>Data Warehouse Engineer at Revinate.</p>",
+    "hostedUrl": "https://jobs.lever.co/revinate/05e16a93-bad4-4d32-8e91-78adc348534e",
+    "applyUrl": "https://jobs.lever.co/revinate/05e16a93-bad4-4d32-8e91-78adc348534e/apply"
+  },
+  {
+    "id": "80fa6b18-01be-46b0-ad54-a49268bef1dd",
+    "text": "Director, Monetization and Market Intelligence",
+    "categories": {
+      "location": "Atlanta, GA",
+      "allLocations": [
+        "Atlanta, GA"
+      ],
+      "department": "Product",
+      "team": "Product",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1782835832251,
+    "descriptionPlain": "Director, Monetization and Market Intelligence at Revinate.",
+    "description": "<p>Director, Monetization and Market Intelligence at Revinate.</p>",
+    "hostedUrl": "https://jobs.lever.co/revinate/80fa6b18-01be-46b0-ad54-a49268bef1dd",
+    "applyUrl": "https://jobs.lever.co/revinate/80fa6b18-01be-46b0-ad54-a49268bef1dd/apply"
+  },
+  {
+    "id": "aeeaef23-ae5e-48f0-a9e0-a24143c92d96",
+    "text": "Enterprise Client Sales Consultant",
+    "categories": {
+      "location": "India",
+      "allLocations": [
+        "India"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1776775758868,
+    "descriptionPlain": "Enterprise Client Sales Consultant at Revinate.",
+    "description": "<p>Enterprise Client Sales Consultant at Revinate.</p>",
+    "hostedUrl": "https://jobs.lever.co/revinate/aeeaef23-ae5e-48f0-a9e0-a24143c92d96",
+    "applyUrl": "https://jobs.lever.co/revinate/aeeaef23-ae5e-48f0-a9e0-a24143c92d96/apply"
+  }
+]

@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135548239",
+      "name": "Group Leader - Assembly - 1st Shift",
+      "uuid": "matholdings-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "MATHoldings",
+        "name": "MAT Holdings"
+      },
+      "releasedDate": "2026-07-02T16:15:39.693Z",
+      "location": {
+        "city": "Jackson",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Jackson, TN, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Assembly"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/MATHoldings/744000135548239",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Group Leader - Assembly - 1st Shift at MAT Holdings.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135536934",
+      "name": "General Labor",
+      "uuid": "matholdings-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "MATHoldings",
+        "name": "MAT Holdings"
+      },
+      "releasedDate": "2026-07-02T15:28:01.671Z",
+      "location": {
+        "city": "Ingersoll",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Ingersoll, ON, Canada"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Warehouse"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/MATHoldings/744000135536934",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>General Labor at MAT Holdings.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000134506629",
+      "name": "1st Shift Forklift/Material Handler/Packer",
+      "uuid": "matholdings-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "MATHoldings",
+        "name": "MAT Holdings"
+      },
+      "releasedDate": "2026-06-26T15:38:23.881Z",
+      "location": {
+        "city": "Jackson",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Jackson, TN, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Manufacturing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/MATHoldings/744000134506629",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>1st Shift Forklift/Material Handler/Packer at MAT Holdings.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

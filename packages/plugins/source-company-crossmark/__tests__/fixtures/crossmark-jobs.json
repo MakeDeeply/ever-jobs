@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999658732332",
+      "name": "INTERVIEW TODAY!!! (Part-Time Job). RETAIL RESET MERCHANDISER",
+      "uuid": "crossmark-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "CROSSMARK1",
+        "name": "CROSSMARK"
+      },
+      "releasedDate": "2017-08-28T19:45:57.000Z",
+      "location": {
+        "city": "Rochester",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Rochester, MN, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CROSSMARK1/743999658732332",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>INTERVIEW TODAY!!! (Part-Time Job). RETAIL RESET MERCHANDISER at CROSSMARK.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999658723972",
+      "name": "INTERVIEW TODAY!!! (Part-Time Job). RETAIL RESET MERCHANDISER",
+      "uuid": "crossmark-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "CROSSMARK1",
+        "name": "CROSSMARK"
+      },
+      "releasedDate": "2017-08-28T18:25:35.000Z",
+      "location": {
+        "city": "Delafield",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Delafield, WI, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CROSSMARK1/743999658723972",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>INTERVIEW TODAY!!! (Part-Time Job). RETAIL RESET MERCHANDISER at CROSSMARK.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999658723682",
+      "name": "INTERVIEW TODAY!!! (Part-Time Job). RETAIL RESET MERCHANDISER",
+      "uuid": "crossmark-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "CROSSMARK1",
+        "name": "CROSSMARK"
+      },
+      "releasedDate": "2017-08-28T18:22:19.000Z",
+      "location": {
+        "city": "Burlington",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Burlington, WI, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CROSSMARK1/743999658723682",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>INTERVIEW TODAY!!! (Part-Time Job). RETAIL RESET MERCHANDISER at CROSSMARK.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

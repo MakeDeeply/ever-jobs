@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "3743990013917746",
+      "name": "UKG Pro WFM Specialist (Advanced Scheduler)",
+      "uuid": "stanfordmedicinechildrenshealth-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "StanfordMedicineChildrensHealth",
+        "name": "Stanford Medicine Children's Health"
+      },
+      "releasedDate": "2026-07-02T21:16:36.405Z",
+      "location": {
+        "city": "PALO ALTO",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "PALO ALTO, CA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Human Resources LPCH"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/StanfordMedicineChildrensHealth/3743990013917746",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>UKG Pro WFM Specialist (Advanced Scheduler) at Stanford Medicine Children's Health.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "3743990013903697",
+      "name": "Clinical Nurse II, Operating Room",
+      "uuid": "stanfordmedicinechildrenshealth-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "StanfordMedicineChildrensHealth",
+        "name": "Stanford Medicine Children's Health"
+      },
+      "releasedDate": "2026-07-02T14:35:21.236Z",
+      "location": {
+        "city": "PALO ALTO",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "PALO ALTO, CA, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "TxCtr-OR"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/StanfordMedicineChildrensHealth/3743990013903697",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Clinical Nurse II, Operating Room at Stanford Medicine Children's Health.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "3743990013894976",
+      "name": "Clinical Nurse Specialist, Transport and CRRT",
+      "uuid": "stanfordmedicinechildrenshealth-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "StanfordMedicineChildrensHealth",
+        "name": "Stanford Medicine Children's Health"
+      },
+      "releasedDate": "2026-07-01T22:59:14.389Z",
+      "location": {
+        "city": "PALO ALTO",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "PALO ALTO, CA, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "CPEI Practice and Education"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/StanfordMedicineChildrensHealth/3743990013894976",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Clinical Nurse Specialist, Transport and CRRT at Stanford Medicine Children's Health.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

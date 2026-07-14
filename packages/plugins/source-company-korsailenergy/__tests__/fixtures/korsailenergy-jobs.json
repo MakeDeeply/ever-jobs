@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999767537589",
+      "name": "Project Development Associate",
+      "uuid": "korsailenergy-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "KorsailEnergy",
+        "name": "Korsail Energy"
+      },
+      "releasedDate": "2021-08-18T20:20:32.000Z",
+      "location": {
+        "city": "Denver",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Denver, CO, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Project Management"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/KorsailEnergy/743999767537589",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Project Development Associate at Korsail Energy.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999766152232",
+      "name": "Project Development Engineer - Solar and Storage",
+      "uuid": "korsailenergy-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "KorsailEnergy",
+        "name": "Korsail Energy"
+      },
+      "releasedDate": "2021-08-10T22:35:44.000Z",
+      "location": {
+        "city": "Denver",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Denver, CO, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/KorsailEnergy/743999766152232",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Project Development Engineer - Solar and Storage at Korsail Energy.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999766149453",
+      "name": "Project Development Analyst",
+      "uuid": "korsailenergy-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "KorsailEnergy",
+        "name": "Korsail Energy"
+      },
+      "releasedDate": "2021-08-10T22:01:58.000Z",
+      "location": {
+        "city": "Denver",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Denver, CO, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Project Management"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/KorsailEnergy/743999766149453",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Project Development Analyst at Korsail Energy.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

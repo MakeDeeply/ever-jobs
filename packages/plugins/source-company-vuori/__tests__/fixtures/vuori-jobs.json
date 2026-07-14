@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135767519",
+      "name": "Retail Sales Associate - Upper East Side",
+      "uuid": "vuori-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "VuoriInc",
+        "name": "Vuori"
+      },
+      "releasedDate": "2026-07-03T16:42:37.031Z",
+      "location": {
+        "city": "New York",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "New York, NY, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/VuoriInc/744000135767519",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Retail Sales Associate - Upper East Side at Vuori.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135596189",
+      "name": "Product Manager, Enterprise Analytics",
+      "uuid": "vuori-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "VuoriInc",
+        "name": "Vuori"
+      },
+      "releasedDate": "2026-07-02T21:14:31.797Z",
+      "location": {
+        "city": "Carlsbad",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Carlsbad, CA, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "HQ - Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/VuoriInc/744000135596189",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Product Manager, Enterprise Analytics at Vuori.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135528996",
+      "name": "Retail Sales Associate (Kings Road, 16 Hrs Per Week)",
+      "uuid": "vuori-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "VuoriInc",
+        "name": "Vuori"
+      },
+      "releasedDate": "2026-07-02T15:02:41.105Z",
+      "location": {
+        "city": "London",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "London, England, United Kingdom"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/VuoriInc/744000135528996",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Retail Sales Associate (Kings Road, 16 Hrs Per Week) at Vuori.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

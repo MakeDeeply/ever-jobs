@@ -1,0 +1,62 @@
+[
+  {
+    "id": "fd7f0836-395d-4fa9-a4aa-553a00265980",
+    "text": "Reserve Engineer (On-site) - Arlington, VA",
+    "categories": {
+      "location": "Arlington, VA",
+      "allLocations": [
+        "Arlington, VA"
+      ],
+      "department": "Operations",
+      "team": "Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1746470681400,
+    "descriptionPlain": "Reserve Engineer (On-site) - Arlington, VA at Cobalt Robotics.",
+    "description": "<p>Reserve Engineer (On-site) - Arlington, VA at Cobalt Robotics.</p>",
+    "hostedUrl": "https://jobs.lever.co/cobaltrobotics/fd7f0836-395d-4fa9-a4aa-553a00265980",
+    "applyUrl": "https://jobs.lever.co/cobaltrobotics/fd7f0836-395d-4fa9-a4aa-553a00265980/apply"
+  },
+  {
+    "id": "ac6bc204-80b6-4741-a609-2c7297c53949",
+    "text": "Reserve Engineer (On-site) - Charlotte, NC",
+    "categories": {
+      "location": "Charlotte, NC",
+      "allLocations": [
+        "Charlotte, NC"
+      ],
+      "department": "Operations",
+      "team": "Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1736486890749,
+    "descriptionPlain": "Reserve Engineer (On-site) - Charlotte, NC at Cobalt Robotics.",
+    "description": "<p>Reserve Engineer (On-site) - Charlotte, NC at Cobalt Robotics.</p>",
+    "hostedUrl": "https://jobs.lever.co/cobaltrobotics/ac6bc204-80b6-4741-a609-2c7297c53949",
+    "applyUrl": "https://jobs.lever.co/cobaltrobotics/ac6bc204-80b6-4741-a609-2c7297c53949/apply"
+  },
+  {
+    "id": "6625910d-f2d4-4c3c-9965-dc52054b74c4",
+    "text": "Reserve Engineer (On-site) - Dallas, TX",
+    "categories": {
+      "location": "Dallas, TX",
+      "allLocations": [
+        "Dallas, TX"
+      ],
+      "department": "Operations",
+      "team": "Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1738687326089,
+    "descriptionPlain": "Reserve Engineer (On-site) - Dallas, TX at Cobalt Robotics.",
+    "description": "<p>Reserve Engineer (On-site) - Dallas, TX at Cobalt Robotics.</p>",
+    "hostedUrl": "https://jobs.lever.co/cobaltrobotics/6625910d-f2d4-4c3c-9965-dc52054b74c4",
+    "applyUrl": "https://jobs.lever.co/cobaltrobotics/6625910d-f2d4-4c3c-9965-dc52054b74c4/apply"
+  }
+]

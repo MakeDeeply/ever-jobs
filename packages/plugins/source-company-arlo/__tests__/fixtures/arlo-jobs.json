@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "11108cb1-7050-4f31-bc03-0369d84a1b4d",
+      "title": "Growth Marketing Lead",
+      "departmentName": "Health Plan Operations",
+      "teamName": "Health Plan Operations",
+      "employmentType": "FullTime",
+      "location": "New York City",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "New York City",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-12-01",
+      "descriptionHtml": "<p>Growth Marketing Lead at Arlo.</p>",
+      "descriptionPlain": "Growth Marketing Lead at Arlo.",
+      "jobUrl": "https://jobs.ashbyhq.com/arlo/11108cb1-7050-4f31-bc03-0369d84a1b4d",
+      "applyUrl": "https://jobs.ashbyhq.com/arlo/11108cb1-7050-4f31-bc03-0369d84a1b4d/application"
+    },
+    {
+      "id": "1429423a-a98b-459d-8d89-b80e0862ab8c",
+      "title": "Product Engineer",
+      "departmentName": "Engineering & Product",
+      "teamName": "Engineering & Product",
+      "employmentType": "FullTime",
+      "location": "New York City",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "New York City",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-08",
+      "descriptionHtml": "<p>Product Engineer at Arlo.</p>",
+      "descriptionPlain": "Product Engineer at Arlo.",
+      "jobUrl": "https://jobs.ashbyhq.com/arlo/1429423a-a98b-459d-8d89-b80e0862ab8c",
+      "applyUrl": "https://jobs.ashbyhq.com/arlo/1429423a-a98b-459d-8d89-b80e0862ab8c/application"
+    },
+    {
+      "id": "18923aa2-a029-43d8-8fd6-1cf883f14ef8",
+      "title": "Applied AI Engineer",
+      "departmentName": "Engineering & Product",
+      "teamName": "Engineering & Product",
+      "employmentType": "FullTime",
+      "location": "New York City",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "New York City",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2025-12-01",
+      "descriptionHtml": "<p>Applied AI Engineer at Arlo.</p>",
+      "descriptionPlain": "Applied AI Engineer at Arlo.",
+      "jobUrl": "https://jobs.ashbyhq.com/arlo/18923aa2-a029-43d8-8fd6-1cf883f14ef8",
+      "applyUrl": "https://jobs.ashbyhq.com/arlo/18923aa2-a029-43d8-8fd6-1cf883f14ef8/application"
+    }
+  ]
+}

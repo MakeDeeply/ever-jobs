@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "007766fd-b946-4940-8984-64d44aa604f7",
+      "title": "Electronics Technician",
+      "departmentName": "R&D",
+      "teamName": "R&D",
+      "employmentType": "FullTime",
+      "location": "Lausanne",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Lausanne",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-30",
+      "descriptionHtml": "<p>Electronics Technician at Harmattan AI.</p>",
+      "descriptionPlain": "Electronics Technician at Harmattan AI.",
+      "jobUrl": "https://jobs.ashbyhq.com/harmattan-ai/007766fd-b946-4940-8984-64d44aa604f7",
+      "applyUrl": "https://jobs.ashbyhq.com/harmattan-ai/007766fd-b946-4940-8984-64d44aa604f7/application"
+    },
+    {
+      "id": "00f273c5-77ae-4311-b027-53a8ce7d2a9c",
+      "title": "Data Engineer - Foundational",
+      "departmentName": "R&D",
+      "teamName": "R&D",
+      "employmentType": "FullTime",
+      "location": "Paris",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Paris",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-03-06",
+      "descriptionHtml": "<p>Data Engineer - Foundational at Harmattan AI.</p>",
+      "descriptionPlain": "Data Engineer - Foundational at Harmattan AI.",
+      "jobUrl": "https://jobs.ashbyhq.com/harmattan-ai/00f273c5-77ae-4311-b027-53a8ce7d2a9c",
+      "applyUrl": "https://jobs.ashbyhq.com/harmattan-ai/00f273c5-77ae-4311-b027-53a8ce7d2a9c/application"
+    },
+    {
+      "id": "011a5200-11fe-449b-8cfc-1430f8f02427",
+      "title": "Machine Learning Engineer (Semantic Scene Understanding)",
+      "departmentName": "R&D",
+      "teamName": "R&D",
+      "employmentType": "FullTime",
+      "location": "Zurich",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Zurich",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-18",
+      "descriptionHtml": "<p>Machine Learning Engineer (Semantic Scene Understanding) at Harmattan AI.</p>",
+      "descriptionPlain": "Machine Learning Engineer (Semantic Scene Understanding) at Harmattan AI.",
+      "jobUrl": "https://jobs.ashbyhq.com/harmattan-ai/011a5200-11fe-449b-8cfc-1430f8f02427",
+      "applyUrl": "https://jobs.ashbyhq.com/harmattan-ai/011a5200-11fe-449b-8cfc-1430f8f02427/application"
+    }
+  ]
+}

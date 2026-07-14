@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000133467589",
+      "name": "Director of Marketing",
+      "uuid": "truewerk-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Truewerk",
+        "name": "Truewerk"
+      },
+      "releasedDate": "2026-06-22T22:55:40.132Z",
+      "location": {
+        "city": "Denver",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Denver, CO, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Marketing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Truewerk/744000133467589",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Director of Marketing at Truewerk.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000132501139",
+      "name": "Demand Planner",
+      "uuid": "truewerk-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Truewerk",
+        "name": "Truewerk"
+      },
+      "releasedDate": "2026-06-16T20:41:56.580Z",
+      "location": {
+        "city": "Denver",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Denver, CO, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Strategy/Planning"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Truewerk/744000132501139",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Demand Planner at Truewerk.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000129244500",
+      "name": "Senior Manager of Materials",
+      "uuid": "truewerk-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Truewerk",
+        "name": "Truewerk"
+      },
+      "releasedDate": "2026-05-29T19:19:53.585Z",
+      "location": {
+        "city": "Denver",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Denver, CO, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Product Management"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Truewerk/744000129244500",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Manager of Materials at Truewerk.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

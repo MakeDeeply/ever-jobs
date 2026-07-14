@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000132636160",
+      "name": "Project Execution Manager",
+      "uuid": "powergenrenewableenergy-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "PowerGenRenewableEnergy",
+        "name": "PowerGen Renewable Energy"
+      },
+      "releasedDate": "2026-06-17T13:05:33.046Z",
+      "location": {
+        "city": "Lagos",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Lagos, LA, Nigeria"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/PowerGenRenewableEnergy/744000132636160",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Project Execution Manager at PowerGen Renewable Energy.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000129465429",
+      "name": "HSES Asssociate",
+      "uuid": "powergenrenewableenergy-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "PowerGenRenewableEnergy",
+        "name": "PowerGen Renewable Energy"
+      },
+      "releasedDate": "2026-06-01T11:45:01.290Z",
+      "location": {
+        "city": "Freetown",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Freetown, Western Area, Sierra Leone"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/PowerGenRenewableEnergy/744000129465429",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>HSES Asssociate at PowerGen Renewable Energy.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000126721814",
+      "name": "Senior Project Manager – Utility-Scale Solar PV & BESS",
+      "uuid": "powergenrenewableenergy-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "PowerGenRenewableEnergy",
+        "name": "PowerGen Renewable Energy"
+      },
+      "releasedDate": "2026-05-15T15:25:16.240Z",
+      "location": {
+        "city": "Nairobi",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Nairobi, Nairobi County, Kenya"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/PowerGenRenewableEnergy/744000126721814",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior Project Manager – Utility-Scale Solar PV & BESS at PowerGen Renewable Energy.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

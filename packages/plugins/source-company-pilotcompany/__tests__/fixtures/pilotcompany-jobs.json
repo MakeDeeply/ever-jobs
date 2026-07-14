@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135810659",
+      "name": "Wendy's Cashier",
+      "uuid": "pilotcompany-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "PilotCompany",
+        "name": "Pilot Company"
+      },
+      "releasedDate": "2026-07-04T01:50:30.656Z",
+      "location": {
+        "city": "Orland",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Orland, CA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Retail Operations (OPSTRAVELCENTER)"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/PilotCompany/744000135810659",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Wendy's Cashier at Pilot Company.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135805887",
+      "name": "Cashier",
+      "uuid": "pilotcompany-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "PilotCompany",
+        "name": "Pilot Company"
+      },
+      "releasedDate": "2026-07-04T01:27:50.216Z",
+      "location": {
+        "city": "Greenwood",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Greenwood, LA, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Retail Operations (OPSTRAVELCENTER)"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/PilotCompany/744000135805887",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Cashier at Pilot Company.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135801323",
+      "name": "Fuel Attendant",
+      "uuid": "pilotcompany-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "PilotCompany",
+        "name": "Pilot Company"
+      },
+      "releasedDate": "2026-07-04T01:22:36.553Z",
+      "location": {
+        "city": "Salem",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Salem, OR, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Retail Operations (OPSTRAVELCENTER)"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/PilotCompany/744000135801323",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Fuel Attendant at Pilot Company.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

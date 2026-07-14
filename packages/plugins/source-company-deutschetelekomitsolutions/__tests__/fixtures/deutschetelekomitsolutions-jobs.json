@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135712380",
+      "name": "Cloud Architect for T Cloud Public (REF4695N)",
+      "uuid": "deutschetelekomitsolutions-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "deutschetelekomitsolutions",
+        "name": "Deutsche Telekom IT Solutions"
+      },
+      "releasedDate": "2026-07-03T12:04:17.191Z",
+      "location": {
+        "city": "Budapest",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Budapest, Debrecen, Szeged, Pécs, , Hungary"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "T Cloud Public"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/deutschetelekomitsolutions/744000135712380",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Cloud Architect for T Cloud Public (REF4695N) at Deutsche Telekom IT Solutions.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135677860",
+      "name": "UX/UI Designer - TRAINEE (REF5644K)",
+      "uuid": "deutschetelekomitsolutions-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "deutschetelekomitsolutions",
+        "name": "Deutsche Telekom IT Solutions"
+      },
+      "releasedDate": "2026-07-03T09:15:31.271Z",
+      "location": {
+        "city": "Budapest",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Budapest, , Hungary"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Technik HU"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/deutschetelekomitsolutions/744000135677860",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>UX/UI Designer - TRAINEE (REF5644K) at Deutsche Telekom IT Solutions.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135656579",
+      "name": "Test Automation Engineer (REF5477I)",
+      "uuid": "deutschetelekomitsolutions-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "deutschetelekomitsolutions",
+        "name": "Deutsche Telekom IT Solutions"
+      },
+      "releasedDate": "2026-07-03T07:18:19.254Z",
+      "location": {
+        "city": "Budapest Debrecen Pécs Szeged",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Budapest Debrecen Pécs Szeged, , Hungary"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Digital Enabler"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/deutschetelekomitsolutions/744000135656579",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Test Automation Engineer (REF5477I) at Deutsche Telekom IT Solutions.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

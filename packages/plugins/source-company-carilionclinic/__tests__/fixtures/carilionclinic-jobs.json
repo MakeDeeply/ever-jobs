@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000071360700",
+      "name": "Clinical Psychologists",
+      "uuid": "carilionclinic-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "CarilionClinic",
+        "name": "Carilion Clinic"
+      },
+      "releasedDate": "2025-07-17T17:27:20.935Z",
+      "location": {
+        "city": "Cave Spring",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Cave Spring, VA, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Health Care Provider"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CarilionClinic/744000071360700",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Clinical Psychologists at Carilion Clinic.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000071357771",
+      "name": "Hospital Dentist",
+      "uuid": "carilionclinic-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "CarilionClinic",
+        "name": "Carilion Clinic"
+      },
+      "releasedDate": "2025-07-17T16:57:00.295Z",
+      "location": {
+        "city": "Cave Spring",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Cave Spring, VA, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Health Care Provider"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CarilionClinic/744000071357771",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Hospital Dentist at Carilion Clinic.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000059111355",
+      "name": "Developmental Pediatrician",
+      "uuid": "carilionclinic-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "CarilionClinic",
+        "name": "Carilion Clinic"
+      },
+      "releasedDate": "2025-05-13T15:56:18.224Z",
+      "location": {
+        "city": "Cave Spring",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Cave Spring, VA, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Health Care Provider"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/CarilionClinic/744000059111355",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Developmental Pediatrician at Carilion Clinic.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

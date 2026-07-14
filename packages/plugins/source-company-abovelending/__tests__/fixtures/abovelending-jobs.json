@@ -1,0 +1,62 @@
+[
+  {
+    "id": "4764137c-0a9f-45b8-b177-2979f70a3978",
+    "text": "Director, Business Analytics",
+    "categories": {
+      "location": "Chicago, IL",
+      "allLocations": [
+        "Chicago, IL"
+      ],
+      "department": "Business Analytics",
+      "team": "Business Analytics",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1781647626442,
+    "descriptionPlain": "Director, Business Analytics at Above Lending.",
+    "description": "<p>Director, Business Analytics at Above Lending.</p>",
+    "hostedUrl": "https://jobs.lever.co/abovelending/4764137c-0a9f-45b8-b177-2979f70a3978",
+    "applyUrl": "https://jobs.lever.co/abovelending/4764137c-0a9f-45b8-b177-2979f70a3978/apply"
+  },
+  {
+    "id": "099a6d67-99d2-47bd-b4e9-87e0e44e3fbd",
+    "text": "Loan Sales Representative",
+    "categories": {
+      "location": "Remote",
+      "allLocations": [
+        "Remote"
+      ],
+      "department": "Sales & Operations",
+      "team": "Sales & Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1781181724214,
+    "descriptionPlain": "Loan Sales Representative at Above Lending.",
+    "description": "<p>Loan Sales Representative at Above Lending.</p>",
+    "hostedUrl": "https://jobs.lever.co/abovelending/099a6d67-99d2-47bd-b4e9-87e0e44e3fbd",
+    "applyUrl": "https://jobs.lever.co/abovelending/099a6d67-99d2-47bd-b4e9-87e0e44e3fbd/apply"
+  },
+  {
+    "id": "24a78b7a-d21b-4b64-8d61-6dc458a5fd54",
+    "text": "Sales Training Specialist",
+    "categories": {
+      "location": "Chicago, IL",
+      "allLocations": [
+        "Chicago, IL"
+      ],
+      "department": "Sales & Operations",
+      "team": "Sales & Operations",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1781720566388,
+    "descriptionPlain": "Sales Training Specialist at Above Lending.",
+    "description": "<p>Sales Training Specialist at Above Lending.</p>",
+    "hostedUrl": "https://jobs.lever.co/abovelending/24a78b7a-d21b-4b64-8d61-6dc458a5fd54",
+    "applyUrl": "https://jobs.lever.co/abovelending/24a78b7a-d21b-4b64-8d61-6dc458a5fd54/apply"
+  }
+]

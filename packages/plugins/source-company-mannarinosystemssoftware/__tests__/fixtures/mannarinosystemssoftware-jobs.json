@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999741467980",
+      "name": "SENIOR SYSTEM ENGINEER",
+      "uuid": "mannarinosystemssoftware-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "MannarinoSystemsSoftwareInc",
+        "name": "Mannarino Systems & Software"
+      },
+      "releasedDate": "2021-04-04T23:40:08.000Z",
+      "location": {
+        "city": "Montréal",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Montréal, QC, Canada"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/MannarinoSystemsSoftwareInc/743999741467980",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>SENIOR SYSTEM ENGINEER at Mannarino Systems & Software.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999740898589",
+      "name": "SENIOR SAFETY ENGINEER",
+      "uuid": "mannarinosystemssoftware-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "MannarinoSystemsSoftwareInc",
+        "name": "Mannarino Systems & Software"
+      },
+      "releasedDate": "2021-03-31T18:15:48.000Z",
+      "location": {
+        "city": "Montréal",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Montréal, QC, Canada"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/MannarinoSystemsSoftwareInc/743999740898589",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>SENIOR SAFETY ENGINEER at Mannarino Systems & Software.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999731624244",
+      "name": "EMBEDDED SOFTWARE ARCHITECT",
+      "uuid": "mannarinosystemssoftware-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "MannarinoSystemsSoftwareInc",
+        "name": "Mannarino Systems & Software"
+      },
+      "releasedDate": "2021-01-16T01:02:23.000Z",
+      "location": {
+        "city": "Montréal",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Montréal, QC, Canada"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Engineering"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/MannarinoSystemsSoftwareInc/743999731624244",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>EMBEDDED SOFTWARE ARCHITECT at Mannarino Systems & Software.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

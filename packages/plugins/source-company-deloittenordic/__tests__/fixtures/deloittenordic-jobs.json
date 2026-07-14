@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135660091",
+      "name": "Business Analyst / Consultant / Senior Consultant, Strategy & Business Design (Monitor Deloitte)",
+      "uuid": "deloittenordic-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "DeloitteNordic",
+        "name": "Deloitte (Nordic)"
+      },
+      "releasedDate": "2026-07-03T07:48:53.394Z",
+      "location": {
+        "city": "Helsinki",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Helsinki, Uusimaa, Finland"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Strategy/Planning"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/DeloitteNordic/744000135660091",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Business Analyst / Consultant / Senior Consultant, Strategy & Business Design (Monitor Deloitte) at Deloitte (Nordic).</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135459089",
+      "name": "Nyutdannet i 2027 og vil jobbe med strategi og ledelse i Deloitte?",
+      "uuid": "deloittenordic-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "DeloitteNordic",
+        "name": "Deloitte (Nordic)"
+      },
+      "releasedDate": "2026-07-02T09:46:32.601Z",
+      "location": {
+        "city": "Oslo",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Oslo, Oslo, Norway"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Consulting"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/DeloitteNordic/744000135459089",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Nyutdannet i 2027 og vil jobbe med strategi og ledelse i Deloitte? at Deloitte (Nordic).</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135429749",
+      "name": "Erfaren rådgiver til CFO-området hos Deloitte København",
+      "uuid": "deloittenordic-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "DeloitteNordic",
+        "name": "Deloitte (Nordic)"
+      },
+      "releasedDate": "2026-07-02T07:20:53.673Z",
+      "location": {
+        "city": "København",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "København, , Denmark"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Consulting"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/DeloitteNordic/744000135429749",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Erfaren rådgiver til CFO-området hos Deloitte København at Deloitte (Nordic).</p>"
+          }
+        }
+      }
+    }
+  ]
+}

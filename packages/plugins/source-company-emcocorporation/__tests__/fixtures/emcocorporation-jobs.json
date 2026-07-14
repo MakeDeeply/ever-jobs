@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135748165",
+      "name": "Management Development Program - Atlantic Waterworks - New Graduates",
+      "uuid": "emcocorporation-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "EMCOCorporation",
+        "name": "EMCO Corporation"
+      },
+      "releasedDate": "2026-07-03T14:43:36.350Z",
+      "location": {
+        "city": "Moncton",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Moncton, NB, Canada"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Management Development"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/EMCOCorporation/744000135748165",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Management Development Program - Atlantic Waterworks - New Graduates at EMCO Corporation.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135751940",
+      "name": "Management Development Program - Atlantic Waterworks - New Graduates",
+      "uuid": "emcocorporation-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "EMCOCorporation",
+        "name": "EMCO Corporation"
+      },
+      "releasedDate": "2026-07-03T14:42:49.582Z",
+      "location": {
+        "city": "Dartmouth",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Dartmouth, NS, Canada"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Management Development"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/EMCOCorporation/744000135751940",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Management Development Program - Atlantic Waterworks - New Graduates at EMCO Corporation.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135749244",
+      "name": "Management Development Program - Atlantic Waterworks - New Graduates",
+      "uuid": "emcocorporation-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "EMCOCorporation",
+        "name": "EMCO Corporation"
+      },
+      "releasedDate": "2026-07-03T14:41:03.438Z",
+      "location": {
+        "city": "St. John's",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "St. John's, NL, Canada"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Management Development"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/EMCOCorporation/744000135749244",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Management Development Program - Atlantic Waterworks - New Graduates at EMCO Corporation.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000134603129",
+      "name": "High School Drumline Coach",
+      "uuid": "uncommonschools-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "UncommonSchools",
+        "name": "Uncommon Schools"
+      },
+      "releasedDate": "2026-06-27T13:25:03.483Z",
+      "location": {
+        "city": "New York",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "New York, NY, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Non-supported Hires"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/UncommonSchools/744000134603129",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>High School Drumline Coach at Uncommon Schools.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000134602689",
+      "name": "Custodian",
+      "uuid": "uncommonschools-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "UncommonSchools",
+        "name": "Uncommon Schools"
+      },
+      "releasedDate": "2026-06-27T12:58:06.869Z",
+      "location": {
+        "city": "Newark",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Newark, NJ, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Non-supported Hires"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/UncommonSchools/744000134602689",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Custodian at Uncommon Schools.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000134552169",
+      "name": "Staff Accountant",
+      "uuid": "uncommonschools-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "UncommonSchools",
+        "name": "Uncommon Schools"
+      },
+      "releasedDate": "2026-06-26T21:01:14.307Z",
+      "location": {
+        "city": "New York",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "New York, NY, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Home Office"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/UncommonSchools/744000134552169",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Staff Accountant at Uncommon Schools.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

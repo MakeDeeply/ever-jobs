@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "99219198",
+      "name": "Engery Consultant",
+      "uuid": "simplisolar-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "Simplisolar",
+        "name": "Simplisolar"
+      },
+      "releasedDate": "2016-09-29T15:50:55.000Z",
+      "location": {
+        "city": "Price",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Price, UT, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Simplisolar/99219198",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Engery Consultant at Simplisolar.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "95907815",
+      "name": "Energy Consultant (receive 2 prequalified every day)",
+      "uuid": "simplisolar-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "Simplisolar",
+        "name": "Simplisolar"
+      },
+      "releasedDate": "2016-08-20T16:39:37.000Z",
+      "location": {
+        "city": "Idaho Falls",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Idaho Falls, ID, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Simplisolar/95907815",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Energy Consultant (receive 2 prequalified every day) at Simplisolar.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "95398076",
+      "name": "Energy Consultant (receive 2 prequalified every day)",
+      "uuid": "simplisolar-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "Simplisolar",
+        "name": "Simplisolar"
+      },
+      "releasedDate": "2016-08-09T19:42:20.000Z",
+      "location": {
+        "city": "Magna",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Magna, UT, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/Simplisolar/95398076",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Energy Consultant (receive 2 prequalified every day) at Simplisolar.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

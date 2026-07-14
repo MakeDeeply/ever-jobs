@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135787869",
+      "name": "Sr Manufacturing Test Engineer",
+      "uuid": "renesaselectronics-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "RenesasElectronics",
+        "name": "Renesas Electronics"
+      },
+      "releasedDate": "2026-07-04T00:49:16.951Z",
+      "location": {
+        "city": "Suzhou",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Suzhou, , China"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Manufacturing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/RenesasElectronics/744000135787869",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Sr Manufacturing Test Engineer at Renesas Electronics.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135776139",
+      "name": "先端半導体パッケージ設計・開発リーダー / Advanced Semiconductor Package Design & Development Leader",
+      "uuid": "renesaselectronics-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "RenesasElectronics",
+        "name": "Renesas Electronics"
+      },
+      "releasedDate": "2026-07-03T18:52:42.783Z",
+      "location": {
+        "city": "Kodaira",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Kodaira, , Japan"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Manufacturing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/RenesasElectronics/744000135776139",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>先端半導体パッケージ設計・開発リーダー / Advanced Semiconductor Package Design & Development Leader at Renesas Electronics.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135766339",
+      "name": "Staff Product Security Engineer",
+      "uuid": "renesaselectronics-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "RenesasElectronics",
+        "name": "Renesas Electronics"
+      },
+      "releasedDate": "2026-07-03T16:29:44.456Z",
+      "location": {
+        "city": "Cambridge",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Cambridge, England, United Kingdom"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Manufacturing"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/RenesasElectronics/744000135766339",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Staff Product Security Engineer at Renesas Electronics.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135343349",
+      "name": "Senior MS Fabric Data Engineer - Azure",
+      "uuid": "derextechnologies-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "DerexTechnologiesInc",
+        "name": "Derex Technologies"
+      },
+      "releasedDate": "2026-07-01T20:09:01.788Z",
+      "location": {
+        "city": "St. Louis",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "St. Louis, MO, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/DerexTechnologiesInc/744000135343349",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior MS Fabric Data Engineer - Azure at Derex Technologies.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135328334",
+      "name": "Senior HPE NonStop (Tandem) Systems Engineer",
+      "uuid": "derextechnologies-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "DerexTechnologiesInc",
+        "name": "Derex Technologies"
+      },
+      "releasedDate": "2026-07-01T18:20:46.624Z",
+      "location": {
+        "city": "Jersey City",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Jersey City, NJ, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/DerexTechnologiesInc/744000135328334",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Senior HPE NonStop (Tandem) Systems Engineer at Derex Technologies.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135312679",
+      "name": "Epic Business Intelligence Analyst Sr",
+      "uuid": "derextechnologies-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "DerexTechnologiesInc",
+        "name": "Derex Technologies"
+      },
+      "releasedDate": "2026-07-01T16:22:45.430Z",
+      "location": {
+        "city": "Washington",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Washington, DC, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/DerexTechnologiesInc/744000135312679",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Epic Business Intelligence Analyst Sr at Derex Technologies.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

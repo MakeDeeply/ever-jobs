@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "114985593",
+      "name": "Mortgage Branch Manager",
+      "uuid": "primelending-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "PrimeLending",
+        "name": "PrimeLending"
+      },
+      "releasedDate": "2017-05-02T16:44:12.000Z",
+      "location": {
+        "city": "Tallahassee",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Tallahassee, FL, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Finance"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/PrimeLending/114985593",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Mortgage Branch Manager at PrimeLending.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "100922858",
+      "name": "Mortgage Loan Processor",
+      "uuid": "primelending-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "PrimeLending",
+        "name": "PrimeLending"
+      },
+      "releasedDate": "2016-10-24T14:24:44.000Z",
+      "location": {
+        "city": "Charlotte",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Charlotte, NC, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Finance"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/PrimeLending/100922858",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Mortgage Loan Processor at PrimeLending.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "92512039",
+      "name": "Team Loan Officer",
+      "uuid": "primelending-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "PrimeLending",
+        "name": "PrimeLending"
+      },
+      "releasedDate": "2016-05-23T15:03:08.000Z",
+      "location": {
+        "city": "Melbourne",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Melbourne, FL, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Finance"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/PrimeLending/92512039",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Team Loan Officer at PrimeLending.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999657011736",
+      "name": "ECM Infrastructure Engineer",
+      "uuid": "atriagroup-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "AtriaGroupLLC",
+        "name": "Atria Group"
+      },
+      "releasedDate": "2017-08-02T18:35:21.000Z",
+      "location": {
+        "city": "Dallas",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Dallas, TX, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AtriaGroupLLC/743999657011736",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>ECM Infrastructure Engineer at Atria Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999657011602",
+      "name": "Java Developer",
+      "uuid": "atriagroup-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "AtriaGroupLLC",
+        "name": "Atria Group"
+      },
+      "releasedDate": "2017-08-02T18:33:43.000Z",
+      "location": {
+        "city": "Dallas",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Dallas, TX, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AtriaGroupLLC/743999657011602",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Java Developer at Atria Group.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999655449938",
+      "name": "SAP Mobility Lead",
+      "uuid": "atriagroup-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "AtriaGroupLLC",
+        "name": "Atria Group"
+      },
+      "releasedDate": "2017-07-11T14:33:09.000Z",
+      "location": {
+        "city": "King of Prussia",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "King of Prussia, PA, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AtriaGroupLLC/743999655449938",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>SAP Mobility Lead at Atria Group.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

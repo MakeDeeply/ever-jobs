@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "1676aeb1-6966-4bda-964c-2658bd151c7b",
+      "title": "Associate Program Manager",
+      "departmentName": "Counsel",
+      "teamName": "Counsel",
+      "employmentType": "FullTime",
+      "location": "Kansas City, MO; New York, NY; San Francisco, CA; Sunnyvale, CA (Hybrid); United States -Remote",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Kansas City",
+          "addressRegion": "MO; New York",
+          "addressCountry": "NY; San Francisco"
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2025-09-08",
+      "descriptionHtml": "<p>Associate Program Manager at Lead Bank.</p>",
+      "descriptionPlain": "Associate Program Manager at Lead Bank.",
+      "jobUrl": "https://jobs.ashbyhq.com/leadbank/1676aeb1-6966-4bda-964c-2658bd151c7b",
+      "applyUrl": "https://jobs.ashbyhq.com/leadbank/1676aeb1-6966-4bda-964c-2658bd151c7b/application"
+    },
+    {
+      "id": "1c535395-4ac1-44c9-9cde-61aac2069a7c",
+      "title": "Part-Time Teller",
+      "departmentName": "Retail",
+      "teamName": "Retail",
+      "employmentType": "FullTime",
+      "location": "Lee's Summit, MO; Blue Springs, MO (On-Site)",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Lee's Summit",
+          "addressRegion": "MO; Blue Springs",
+          "addressCountry": "MO (On-Site)"
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-22",
+      "descriptionHtml": "<p>Part-Time Teller at Lead Bank.</p>",
+      "descriptionPlain": "Part-Time Teller at Lead Bank.",
+      "jobUrl": "https://jobs.ashbyhq.com/leadbank/1c535395-4ac1-44c9-9cde-61aac2069a7c",
+      "applyUrl": "https://jobs.ashbyhq.com/leadbank/1c535395-4ac1-44c9-9cde-61aac2069a7c/application"
+    },
+    {
+      "id": "1c7d9343-9b62-4313-958c-5dc4b2e0a0c2",
+      "title": "Financial Crimes Analyst I",
+      "departmentName": "Counsel",
+      "teamName": "Counsel",
+      "employmentType": "FullTime",
+      "location": "United States -Remote",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "United States -Remote",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": true,
+      "isListed": true,
+      "publishedDate": "2026-06-30",
+      "descriptionHtml": "<p>Financial Crimes Analyst I at Lead Bank.</p>",
+      "descriptionPlain": "Financial Crimes Analyst I at Lead Bank.",
+      "jobUrl": "https://jobs.ashbyhq.com/leadbank/1c7d9343-9b62-4313-958c-5dc4b2e0a0c2",
+      "applyUrl": "https://jobs.ashbyhq.com/leadbank/1c7d9343-9b62-4313-958c-5dc4b2e0a0c2/application"
+    }
+  ]
+}

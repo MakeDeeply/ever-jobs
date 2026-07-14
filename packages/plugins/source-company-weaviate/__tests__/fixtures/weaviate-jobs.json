@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "9f1dc66e-6c7a-4e3c-97ac-76910b8df08f",
+      "title": "Developer Marketing Manager",
+      "departmentName": "Growth",
+      "teamName": "Growth",
+      "employmentType": "FullTime",
+      "location": "Europe",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Europe",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-03-27",
+      "descriptionHtml": "<p>Developer Marketing Manager at Weaviate.</p>",
+      "descriptionPlain": "Developer Marketing Manager at Weaviate.",
+      "jobUrl": "https://jobs.ashbyhq.com/weaviate/9f1dc66e-6c7a-4e3c-97ac-76910b8df08f",
+      "applyUrl": "https://jobs.ashbyhq.com/weaviate/9f1dc66e-6c7a-4e3c-97ac-76910b8df08f/application"
+    },
+    {
+      "id": "0d1c47c4-bc5b-45d8-8791-8f30f0fb2a12",
+      "title": "Developer Advocate Intern",
+      "departmentName": "Growth",
+      "teamName": "Growth",
+      "employmentType": "FullTime",
+      "location": "Europe",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Europe",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-07",
+      "descriptionHtml": "<p>Developer Advocate Intern at Weaviate.</p>",
+      "descriptionPlain": "Developer Advocate Intern at Weaviate.",
+      "jobUrl": "https://jobs.ashbyhq.com/weaviate/0d1c47c4-bc5b-45d8-8791-8f30f0fb2a12",
+      "applyUrl": "https://jobs.ashbyhq.com/weaviate/0d1c47c4-bc5b-45d8-8791-8f30f0fb2a12/application"
+    },
+    {
+      "id": "c4c18609-c956-4a33-9a73-ad1d7680de6b",
+      "title": "Product Manager, Database",
+      "departmentName": "Product",
+      "teamName": "Product",
+      "employmentType": "FullTime",
+      "location": "Europe",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Europe",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-29",
+      "descriptionHtml": "<p>Product Manager, Database at Weaviate.</p>",
+      "descriptionPlain": "Product Manager, Database at Weaviate.",
+      "jobUrl": "https://jobs.ashbyhq.com/weaviate/c4c18609-c956-4a33-9a73-ad1d7680de6b",
+      "applyUrl": "https://jobs.ashbyhq.com/weaviate/c4c18609-c956-4a33-9a73-ad1d7680de6b/application"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "fad1bba7-ecb5-4332-b084-f3fe789175f5",
+    "text": "Channel Sales Development Representative (SDR)",
+    "categories": {
+      "location": "Remote, USA",
+      "allLocations": [
+        "Remote, USA"
+      ],
+      "department": "Revenue",
+      "team": "Revenue",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "remote",
+    "createdAt": 1778790490620,
+    "descriptionPlain": "Channel Sales Development Representative (SDR) at FinQuery.",
+    "description": "<p>Channel Sales Development Representative (SDR) at FinQuery.</p>",
+    "hostedUrl": "https://jobs.lever.co/finquery/fad1bba7-ecb5-4332-b084-f3fe789175f5",
+    "applyUrl": "https://jobs.lever.co/finquery/fad1bba7-ecb5-4332-b084-f3fe789175f5/apply"
+  },
+  {
+    "id": "53102f84-3899-438c-918b-08956d4687cc",
+    "text": "Customer Success Manager II",
+    "categories": {
+      "location": "United Kingdom",
+      "allLocations": [
+        "United Kingdom"
+      ],
+      "department": "Customer Success",
+      "team": "Customer Success",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1781119511763,
+    "descriptionPlain": "Customer Success Manager II at FinQuery.",
+    "description": "<p>Customer Success Manager II at FinQuery.</p>",
+    "hostedUrl": "https://jobs.lever.co/finquery/53102f84-3899-438c-918b-08956d4687cc",
+    "applyUrl": "https://jobs.lever.co/finquery/53102f84-3899-438c-918b-08956d4687cc/apply"
+  },
+  {
+    "id": "8c89a48f-186b-4266-8b93-d885977d7cd4",
+    "text": "Customer Success Manager II",
+    "categories": {
+      "location": "Atlanta, GA",
+      "allLocations": [
+        "Atlanta, GA"
+      ],
+      "department": "Customer Success",
+      "team": "Customer Success",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1782239553459,
+    "descriptionPlain": "Customer Success Manager II at FinQuery.",
+    "description": "<p>Customer Success Manager II at FinQuery.</p>",
+    "hostedUrl": "https://jobs.lever.co/finquery/8c89a48f-186b-4266-8b93-d885977d7cd4",
+    "applyUrl": "https://jobs.lever.co/finquery/8c89a48f-186b-4266-8b93-d885977d7cd4/apply"
+  }
+]

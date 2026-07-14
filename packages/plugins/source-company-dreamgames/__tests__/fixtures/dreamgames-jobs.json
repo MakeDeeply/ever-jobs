@@ -1,0 +1,62 @@
+[
+  {
+    "id": "c2df6f02-acf2-4a99-97c8-4e06d9768e2a",
+    "text": "Concept Artist",
+    "categories": {
+      "location": "Istanbul",
+      "allLocations": [
+        "Istanbul"
+      ],
+      "department": "Art",
+      "team": "Art",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1574165871116,
+    "descriptionPlain": "Concept Artist at Dream Games.",
+    "description": "<p>Concept Artist at Dream Games.</p>",
+    "hostedUrl": "https://jobs.lever.co/dreamgames/c2df6f02-acf2-4a99-97c8-4e06d9768e2a",
+    "applyUrl": "https://jobs.lever.co/dreamgames/c2df6f02-acf2-4a99-97c8-4e06d9768e2a/apply"
+  },
+  {
+    "id": "36e9e67a-d287-4794-a4ec-95cac8950169",
+    "text": "DevOps Engineer",
+    "categories": {
+      "location": "Istanbul",
+      "allLocations": [
+        "Istanbul"
+      ],
+      "department": "Engineering",
+      "team": "Engineering",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1590769442791,
+    "descriptionPlain": "DevOps Engineer at Dream Games.",
+    "description": "<p>DevOps Engineer at Dream Games.</p>",
+    "hostedUrl": "https://jobs.lever.co/dreamgames/36e9e67a-d287-4794-a4ec-95cac8950169",
+    "applyUrl": "https://jobs.lever.co/dreamgames/36e9e67a-d287-4794-a4ec-95cac8950169/apply"
+  },
+  {
+    "id": "651c57dd-3705-4f5f-bc9f-7f9e4c4cab46",
+    "text": "Executive Assistant",
+    "categories": {
+      "location": "Istanbul",
+      "allLocations": [
+        "Istanbul"
+      ],
+      "department": "People",
+      "team": "People",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1673850208941,
+    "descriptionPlain": "Executive Assistant at Dream Games.",
+    "description": "<p>Executive Assistant at Dream Games.</p>",
+    "hostedUrl": "https://jobs.lever.co/dreamgames/651c57dd-3705-4f5f-bc9f-7f9e4c4cab46",
+    "applyUrl": "https://jobs.lever.co/dreamgames/651c57dd-3705-4f5f-bc9f-7f9e4c4cab46/apply"
+  }
+]

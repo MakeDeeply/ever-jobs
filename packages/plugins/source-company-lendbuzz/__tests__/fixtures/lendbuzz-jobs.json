@@ -1,0 +1,62 @@
+[
+  {
+    "id": "70a64bb1-0487-4ab4-acdb-df9f47e00170",
+    "text": "Auto Finance Sales Training Lead",
+    "categories": {
+      "location": "Boston, MA",
+      "allLocations": [
+        "Boston, MA"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1749264268489,
+    "descriptionPlain": "Auto Finance Sales Training Lead at Lendbuzz.",
+    "description": "<p>Auto Finance Sales Training Lead at Lendbuzz.</p>",
+    "hostedUrl": "https://jobs.lever.co/lendbuzz/70a64bb1-0487-4ab4-acdb-df9f47e00170",
+    "applyUrl": "https://jobs.lever.co/lendbuzz/70a64bb1-0487-4ab4-acdb-df9f47e00170/apply"
+  },
+  {
+    "id": "35bfbd4d-33dd-4e3f-9458-dd27ccdb0874",
+    "text": "Bilingual Dealership Account Manager - Fall River, MA",
+    "categories": {
+      "location": "Fall River, MA",
+      "allLocations": [
+        "Fall River, MA"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1778524818682,
+    "descriptionPlain": "Bilingual Dealership Account Manager - Fall River, MA at Lendbuzz.",
+    "description": "<p>Bilingual Dealership Account Manager - Fall River, MA at Lendbuzz.</p>",
+    "hostedUrl": "https://jobs.lever.co/lendbuzz/35bfbd4d-33dd-4e3f-9458-dd27ccdb0874",
+    "applyUrl": "https://jobs.lever.co/lendbuzz/35bfbd4d-33dd-4e3f-9458-dd27ccdb0874/apply"
+  },
+  {
+    "id": "95628c0e-f7f8-4947-a8c7-4394caff4875",
+    "text": "Bilingual Dealership Account Manager - Hartford, CT",
+    "categories": {
+      "location": "Hartford, CT",
+      "allLocations": [
+        "Hartford, CT"
+      ],
+      "department": "Sales",
+      "team": "Sales",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1782252813938,
+    "descriptionPlain": "Bilingual Dealership Account Manager - Hartford, CT at Lendbuzz.",
+    "description": "<p>Bilingual Dealership Account Manager - Hartford, CT at Lendbuzz.</p>",
+    "hostedUrl": "https://jobs.lever.co/lendbuzz/95628c0e-f7f8-4947-a8c7-4394caff4875",
+    "applyUrl": "https://jobs.lever.co/lendbuzz/95628c0e-f7f8-4947-a8c7-4394caff4875/apply"
+  }
+]

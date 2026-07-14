@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135711510",
+      "name": "IT Workplace Intelligence - Apprenticeship",
+      "uuid": "believe-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "believe",
+        "name": "Believe"
+      },
+      "releasedDate": "2026-07-03T11:46:11.838Z",
+      "location": {
+        "city": "Paris",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Paris, , France"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/believe/744000135711510",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>IT Workplace Intelligence - Apprenticeship at Believe.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135711869",
+      "name": "Digital Mediabuyer Assistant - Stage",
+      "uuid": "believe-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "believe",
+        "name": "Believe"
+      },
+      "releasedDate": "2026-07-03T11:45:37.232Z",
+      "location": {
+        "city": "Paris",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Paris, , France"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/believe/744000135711869",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Digital Mediabuyer Assistant - Stage at Believe.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135711636",
+      "name": "Assistant·e Chef·fe de Projet Merch & E-commerce - Alternance",
+      "uuid": "believe-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "believe",
+        "name": "Believe"
+      },
+      "releasedDate": "2026-07-03T11:44:57.024Z",
+      "location": {
+        "city": "Paris",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Paris, , France"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/believe/744000135711636",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Assistant·e Chef·fe de Projet Merch & E-commerce - Alternance at Believe.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

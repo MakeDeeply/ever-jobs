@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135767999",
+      "name": "Operador (a) de Tempo Real Pleno",
+      "uuid": "statkraft-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "statkraft1",
+        "name": "Statkraft"
+      },
+      "releasedDate": "2026-07-03T16:48:56.520Z",
+      "location": {
+        "city": "Florianópolis",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Florianópolis, Santa Catarina, Brazil"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/statkraft1/744000135767999",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Operador (a) de Tempo Real Pleno at Statkraft.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135756269",
+      "name": "Land Manager",
+      "uuid": "statkraft-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "statkraft1",
+        "name": "Statkraft"
+      },
+      "releasedDate": "2026-07-03T15:08:17.482Z",
+      "location": {
+        "city": "Milan",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Milan, Lombardy, Italy"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/statkraft1/744000135756269",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Land Manager at Statkraft.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135721662",
+      "name": "CSIRT Security Operations Analyst",
+      "uuid": "statkraft-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "statkraft1",
+        "name": "Statkraft"
+      },
+      "releasedDate": "2026-07-03T12:31:32.361Z",
+      "location": {
+        "city": "Oslo",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Oslo, Oslo County, Norway"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/statkraft1/744000135721662",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>CSIRT Security Operations Analyst at Statkraft.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "8cdfbac8-ee33-4826-8f17-3bff094bbfbb",
+      "title": "Chief Technology Officer",
+      "departmentName": "Executive",
+      "teamName": "Executive",
+      "employmentType": "FullTime",
+      "location": "Seattle",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Seattle",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-04-27",
+      "descriptionHtml": "<p>Chief Technology Officer at AIM Intelligent Machines.</p>",
+      "descriptionPlain": "Chief Technology Officer at AIM Intelligent Machines.",
+      "jobUrl": "https://jobs.ashbyhq.com/aim/8cdfbac8-ee33-4826-8f17-3bff094bbfbb",
+      "applyUrl": "https://jobs.ashbyhq.com/aim/8cdfbac8-ee33-4826-8f17-3bff094bbfbb/application"
+    },
+    {
+      "id": "9f3e1f94-acf9-4ce2-ab5b-d986874a9bdc",
+      "title": "Senior Software Engineer",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "Seattle",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Seattle",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-03-08",
+      "descriptionHtml": "<p>Senior Software Engineer at AIM Intelligent Machines.</p>",
+      "descriptionPlain": "Senior Software Engineer at AIM Intelligent Machines.",
+      "jobUrl": "https://jobs.ashbyhq.com/aim/9f3e1f94-acf9-4ce2-ab5b-d986874a9bdc",
+      "applyUrl": "https://jobs.ashbyhq.com/aim/9f3e1f94-acf9-4ce2-ab5b-d986874a9bdc/application"
+    },
+    {
+      "id": "00fe80a3-134e-4bd9-899b-f63149bcf220",
+      "title": "Senior Perception Engineer",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "Seattle",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "Seattle",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-03-08",
+      "descriptionHtml": "<p>Senior Perception Engineer at AIM Intelligent Machines.</p>",
+      "descriptionPlain": "Senior Perception Engineer at AIM Intelligent Machines.",
+      "jobUrl": "https://jobs.ashbyhq.com/aim/00fe80a3-134e-4bd9-899b-f63149bcf220",
+      "applyUrl": "https://jobs.ashbyhq.com/aim/00fe80a3-134e-4bd9-899b-f63149bcf220/application"
+    }
+  ]
+}

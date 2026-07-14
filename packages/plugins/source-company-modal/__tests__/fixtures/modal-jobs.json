@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "9b33ebe7-e829-4f03-97ba-5c94dbd7daf6",
+      "title": "Member of Technical Staff - Systems",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "New York",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "New York",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2024-10-23",
+      "descriptionHtml": "<p>Member of Technical Staff - Systems at Modal.</p>",
+      "descriptionPlain": "Member of Technical Staff - Systems at Modal.",
+      "jobUrl": "https://jobs.ashbyhq.com/modal/9b33ebe7-e829-4f03-97ba-5c94dbd7daf6",
+      "applyUrl": "https://jobs.ashbyhq.com/modal/9b33ebe7-e829-4f03-97ba-5c94dbd7daf6/application"
+    },
+    {
+      "id": "dd84cf88-1f13-4f39-b371-237e103fce34",
+      "title": "Member of Technical Staff - Product (Frontend)",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "New York",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "New York",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2024-02-16",
+      "descriptionHtml": "<p>Member of Technical Staff - Product (Frontend) at Modal.</p>",
+      "descriptionPlain": "Member of Technical Staff - Product (Frontend) at Modal.",
+      "jobUrl": "https://jobs.ashbyhq.com/modal/dd84cf88-1f13-4f39-b371-237e103fce34",
+      "applyUrl": "https://jobs.ashbyhq.com/modal/dd84cf88-1f13-4f39-b371-237e103fce34/application"
+    },
+    {
+      "id": "9fadb51f-ce11-41b1-84d5-470e66cc8ee9",
+      "title": "Forward Deployed Engineer - ML",
+      "departmentName": "Engineering",
+      "teamName": "Engineering",
+      "employmentType": "FullTime",
+      "location": "New York",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "New York",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-02-23",
+      "descriptionHtml": "<p>Forward Deployed Engineer - ML at Modal.</p>",
+      "descriptionPlain": "Forward Deployed Engineer - ML at Modal.",
+      "jobUrl": "https://jobs.ashbyhq.com/modal/9fadb51f-ce11-41b1-84d5-470e66cc8ee9",
+      "applyUrl": "https://jobs.ashbyhq.com/modal/9fadb51f-ce11-41b1-84d5-470e66cc8ee9/application"
+    }
+  ]
+}

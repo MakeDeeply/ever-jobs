@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999967263154",
+      "name": "Education Business Development Manager",
+      "uuid": "swisshospitality-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "SwissHospitality",
+        "name": "Swiss Hospitality"
+      },
+      "releasedDate": "2024-02-13T08:43:41.164Z",
+      "location": {
+        "city": "Riyadh",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Riyadh, Riyadh Province, Saudi Arabia"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Business Development"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SwissHospitality/743999967263154",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Education Business Development Manager at Swiss Hospitality.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999954375263",
+      "name": "Student Recruitment Manager",
+      "uuid": "swisshospitality-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "SwissHospitality",
+        "name": "Swiss Hospitality"
+      },
+      "releasedDate": "2023-12-24T10:07:51.915Z",
+      "location": {
+        "city": "Riyadh",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Riyadh, Riyadh Province, Saudi Arabia"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SwissHospitality/743999954375263",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Student Recruitment Manager at Swiss Hospitality.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999938549619",
+      "name": "Sales Executive (Education and Training Programs)",
+      "uuid": "swisshospitality-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "SwissHospitality",
+        "name": "Swiss Hospitality"
+      },
+      "releasedDate": "2023-10-20T15:47:27.599Z",
+      "location": {
+        "city": "Riyadh",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Riyadh, Riyadh Province, Saudi Arabia"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Sales"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/SwissHospitality/743999938549619",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Sales Executive (Education and Training Programs) at Swiss Hospitality.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

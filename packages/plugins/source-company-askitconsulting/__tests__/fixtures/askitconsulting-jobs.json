@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "743999659846158",
+      "name": "In Person Interview for Help Desk Analyst in Little Rock, AR",
+      "uuid": "askitconsulting-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "AskITConsulting",
+        "name": "Ask IT Consulting"
+      },
+      "releasedDate": "2017-09-14T20:09:15.000Z",
+      "location": {
+        "city": "Little Rock",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Little Rock, AR, United States"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AskITConsulting/743999659846158",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>In Person Interview for Help Desk Analyst in Little Rock, AR at Ask IT Consulting.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999659834250",
+      "name": "Denodo Developer / Administrator",
+      "uuid": "askitconsulting-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "AskITConsulting",
+        "name": "Ask IT Consulting"
+      },
+      "releasedDate": "2017-09-14T17:59:57.000Z",
+      "location": {
+        "city": "San Francisco",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "San Francisco, CA, United States"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AskITConsulting/743999659834250",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Denodo Developer / Administrator at Ask IT Consulting.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "743999659816691",
+      "name": "Data Warehouse Architect",
+      "uuid": "askitconsulting-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "AskITConsulting",
+        "name": "Ask IT Consulting"
+      },
+      "releasedDate": "2017-09-14T15:17:41.000Z",
+      "location": {
+        "city": "Lansing",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Lansing, MI, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Information Technology"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/AskITConsulting/743999659816691",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Data Warehouse Architect at Ask IT Consulting.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

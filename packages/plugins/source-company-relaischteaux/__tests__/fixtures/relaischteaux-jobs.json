@@ -1,0 +1,112 @@
+{
+  "offset": 0,
+  "limit": 100,
+  "totalFound": 3,
+  "content": [
+    {
+      "id": "744000135786429",
+      "name": "Spa Supervisor - The Wickaninnish Inn",
+      "uuid": "relaischteaux-uuid-1",
+      "refNumber": "REF1",
+      "company": {
+        "identifier": "RelaisChateaux",
+        "name": "Relais & Châteaux"
+      },
+      "releasedDate": "2026-07-03T22:41:00.103Z",
+      "location": {
+        "city": "Tofino",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Tofino, BC, Canada"
+      },
+      "department": {
+        "id": "dept-1",
+        "label": "Other"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/RelaisChateaux/744000135786429",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Spa Supervisor - The Wickaninnish Inn at Relais & Châteaux.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135783269",
+      "name": "Spa Manager - The Wickaninnish Inn",
+      "uuid": "relaischteaux-uuid-2",
+      "refNumber": "REF2",
+      "company": {
+        "identifier": "RelaisChateaux",
+        "name": "Relais & Châteaux"
+      },
+      "releasedDate": "2026-07-03T21:23:32.251Z",
+      "location": {
+        "city": "Tofino",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Tofino, BC, Canada"
+      },
+      "department": {
+        "id": "dept-2",
+        "label": "Spa & Leisure"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/RelaisChateaux/744000135783269",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Spa Manager - The Wickaninnish Inn at Relais & Châteaux.</p>"
+          }
+        }
+      }
+    },
+    {
+      "id": "744000135781579",
+      "name": "Restaurant Manager",
+      "uuid": "relaischteaux-uuid-3",
+      "refNumber": "REF3",
+      "company": {
+        "identifier": "RelaisChateaux",
+        "name": "Relais & Châteaux"
+      },
+      "releasedDate": "2026-07-03T20:41:01.925Z",
+      "location": {
+        "city": "Westerly",
+        "region": null,
+        "country": null,
+        "remote": false,
+        "fullLocation": "Westerly, RI, United States"
+      },
+      "department": {
+        "id": "dept-3",
+        "label": "Restauration Staff"
+      },
+      "typeOfEmployment": {
+        "id": "permanent",
+        "label": "Full-time"
+      },
+      "ref": "https://jobs.smartrecruiters.com/RelaisChateaux/744000135781579",
+      "jobAd": {
+        "sections": {
+          "jobDescription": {
+            "title": "Job Description",
+            "text": "<p>Restaurant Manager at Relais & Châteaux.</p>"
+          }
+        }
+      }
+    }
+  ]
+}

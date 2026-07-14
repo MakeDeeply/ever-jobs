@@ -1,0 +1,62 @@
+[
+  {
+    "id": "424a74a8-1337-4eb9-9ffc-ed52eabba591",
+    "text": "3D Artist",
+    "categories": {
+      "location": "Istanbul",
+      "allLocations": [
+        "Istanbul"
+      ],
+      "department": "Art",
+      "team": "Art",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1740740395393,
+    "descriptionPlain": "3D Artist at Grand Games.",
+    "description": "<p>3D Artist at Grand Games.</p>",
+    "hostedUrl": "https://jobs.lever.co/grand/424a74a8-1337-4eb9-9ffc-ed52eabba591",
+    "applyUrl": "https://jobs.lever.co/grand/424a74a8-1337-4eb9-9ffc-ed52eabba591/apply"
+  },
+  {
+    "id": "f4facce6-b7d5-44de-9819-f9017cc43397",
+    "text": "3D Marketing Artist",
+    "categories": {
+      "location": "Istanbul",
+      "allLocations": [
+        "Istanbul"
+      ],
+      "department": "Marketing",
+      "team": "Marketing",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1747300848554,
+    "descriptionPlain": "3D Marketing Artist at Grand Games.",
+    "description": "<p>3D Marketing Artist at Grand Games.</p>",
+    "hostedUrl": "https://jobs.lever.co/grand/f4facce6-b7d5-44de-9819-f9017cc43397",
+    "applyUrl": "https://jobs.lever.co/grand/f4facce6-b7d5-44de-9819-f9017cc43397/apply"
+  },
+  {
+    "id": "800e31c8-10af-40eb-9026-701cce7b8c8a",
+    "text": "Game Developer",
+    "categories": {
+      "location": "Istanbul",
+      "allLocations": [
+        "Istanbul"
+      ],
+      "department": "Development",
+      "team": "Development",
+      "commitment": "Full-time"
+    },
+    "country": null,
+    "workplaceType": "on-site",
+    "createdAt": 1744018337980,
+    "descriptionPlain": "Game Developer at Grand Games.",
+    "description": "<p>Game Developer at Grand Games.</p>",
+    "hostedUrl": "https://jobs.lever.co/grand/800e31c8-10af-40eb-9026-701cce7b8c8a",
+    "applyUrl": "https://jobs.lever.co/grand/800e31c8-10af-40eb-9026-701cce7b8c8a/apply"
+  }
+]

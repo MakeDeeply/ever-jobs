@@ -1,0 +1,71 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "933d309d-0fb4-42cc-a025-3fcfe4b22faa",
+      "title": "Principal Enterprise Architect",
+      "departmentName": "Technology",
+      "teamName": "Technology",
+      "employmentType": "FullTime",
+      "location": "US HQ",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "US HQ",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-06-30",
+      "descriptionHtml": "<p>Principal Enterprise Architect at TOMS.</p>",
+      "descriptionPlain": "Principal Enterprise Architect at TOMS.",
+      "jobUrl": "https://jobs.ashbyhq.com/toms/933d309d-0fb4-42cc-a025-3fcfe4b22faa",
+      "applyUrl": "https://jobs.ashbyhq.com/toms/933d309d-0fb4-42cc-a025-3fcfe4b22faa/application"
+    },
+    {
+      "id": "9f00962d-4bb8-4dc4-bc81-236d81d715d3",
+      "title": "Supply Chain Intern - EMEA",
+      "departmentName": "EMEA",
+      "teamName": "EMEA",
+      "employmentType": "FullTime",
+      "location": "EMEA HQ - Amsterdam",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "EMEA HQ - Amsterdam",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-28",
+      "descriptionHtml": "<p>Supply Chain Intern - EMEA at TOMS.</p>",
+      "descriptionPlain": "Supply Chain Intern - EMEA at TOMS.",
+      "jobUrl": "https://jobs.ashbyhq.com/toms/9f00962d-4bb8-4dc4-bc81-236d81d715d3",
+      "applyUrl": "https://jobs.ashbyhq.com/toms/9f00962d-4bb8-4dc4-bc81-236d81d715d3/application"
+    },
+    {
+      "id": "ac96fc38-1317-4178-b376-307493746956",
+      "title": "Digital Marketing & eCommerce Intern - EMEA",
+      "departmentName": "EMEA",
+      "teamName": "EMEA",
+      "employmentType": "FullTime",
+      "location": "EMEA HQ - Amsterdam",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "EMEA HQ - Amsterdam",
+          "addressRegion": null,
+          "addressCountry": null
+        }
+      },
+      "isRemote": false,
+      "isListed": true,
+      "publishedDate": "2026-05-28",
+      "descriptionHtml": "<p>Digital Marketing & eCommerce Intern - EMEA at TOMS.</p>",
+      "descriptionPlain": "Digital Marketing & eCommerce Intern - EMEA at TOMS.",
+      "jobUrl": "https://jobs.ashbyhq.com/toms/ac96fc38-1317-4178-b376-307493746956",
+      "applyUrl": "https://jobs.ashbyhq.com/toms/ac96fc38-1317-4178-b376-307493746956/application"
+    }
+  ]
+}
