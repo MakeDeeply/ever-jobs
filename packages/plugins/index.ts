@@ -1136,6 +1136,7 @@ import { FlymotionModule } from './source-company-flymotion';
 import { IperionxModule } from './source-company-iperionx';
 import { HylioModule } from './source-company-hylio';
 import { TrueMetalSupplyModule } from './source-company-truemetalsupply';
+import { FrameworkModule } from './source-company-framework';
 import { AirwallexModule } from './source-company-airwallex';
 import { RenuityModule } from './source-company-renuity';
 import { EnpalModule } from './source-company-enpal';
@@ -2963,6 +2964,7 @@ export const ALL_SOURCE_MODULES = [
   IperionxModule,
   HylioModule,
   TrueMetalSupplyModule,
+  FrameworkModule,
   AirwallexModule,
   RenuityModule,
   EnpalModule,

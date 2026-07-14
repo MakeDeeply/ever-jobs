@@ -15,6 +15,51 @@
 
 ---
 
+## 2026-07-14 — Spec 5063 — source-company-framework (Framer SSG two-step; on-domain /jobs/{slug} + shared /apply; stated LA location + $150k-$200k range)
+
+**Change:** New single-company `source-company-framework` plugin for Framework
+Automation (`framework.co`, automated apparel-manufacturing facilities), a
+**custom Framer** careers site with **no ATS**.
+
+- **Why plain HTTP.** The page is server-side generated (`server: Framer`,
+  `ssg-status: optimized`), so all role text, location, salary, and JD are in the
+  server-rendered HTML — plain HTTP + Cheerio, no headless browser (unlike 5062).
+- **Two steps, both on `framework.co`.** GET `/hiring` enumerates on-domain
+  `/jobs/{slug}` links (deduped by slug; the Framer listing markup is soup, so
+  only the slug is harvested and a slug-derived title is the fallback). GET each
+  `/jobs/{slug}` (bounded `Promise.allSettled` fan-out) parses the title (from
+  `<title>`, ` - Framework` suffix stripped), the `[data-framer-name="Location"]`
+  / `[data-framer-name="Salary"]` named containers, and the JD from the named
+  rich-text sections (`Who we are` / `Life at Frameworks` / `Requirements`) →
+  markdown.
+- **Count.** Two live roles at implementation time (Senior Software Engineer,
+  Senior Mechanical Engineer); the plugin ingests whatever `/hiring` links.
+- **Field mapping.** `id` = `framework-<slug>`; `companyName` =
+  `Framework Automation`; `companyUrl` = `/hiring`; `jobUrl` = the on-domain
+  `/jobs/{slug}` detail page (canonical); `applyUrl` = the shared on-domain
+  `/apply` form (no per-role apply URL); `location` = `Los Angeles, CA` via shared
+  `parseLocationList`; `compensation` = the stated
+  `$150k-$200k+ | Generous Equity` → the `$150k-$200k` yearly range via shared
+  `salaryToCompensation` (min 150000 / max 200000 / USD; the `+` open-ended marker
+  and equity note are not modeled as extra structured comp); `isRemote` =
+  `false`; `employmentType` / `jobType` / `datePosted` = null (not stated);
+  `emails` = `[]` — the generic footer `contact@framework.co` is not harvested.
+- **No off-domain.** No Indeed / third-party URL exists on this surface or is
+  fetched (the test seam throws on any non-`framework.co` URL).
+- **Errors.** Per-role detail failure degrades to the listing-only fields (slug
+  title + on-domain URLs, null description/location/compensation); a top-level
+  failure returns an empty `JobResponseDto`.
+- **Registration.** All four places (Site enum `FRAMEWORK`, `ALL_SOURCE_MODULES`,
+  tsconfig path alias, jest `moduleNameMapper`). No new dependency.
+- **Tests.** 9 fixture-based unit tests over the captured `/hiring` + two
+  `/jobs/{slug}` pages: DI + Site enum, both-role enumeration despite the stale
+  count with on-domain `jobUrl` / shared `/apply` / empty fields, `Los Angeles,
+  CA` location, `$150k-$200k` yearly range, JD markdown, null
+  employmentType/jobType/datePosted, detail-failure degradation, input filters,
+  empty board. `tsc` clean (baseline TS6059 rootDir noise only).
+
+---
+
 ## 2026-07-14 — Spec 5062 — source-company-truemetalsupply (Wix popup/lightbox JDs; headless BrowserPool; title-only location; blank jobUrl)
 
 **Change:** New single-company `source-company-truemetalsupply` plugin for True
