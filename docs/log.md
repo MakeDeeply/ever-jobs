@@ -15,6 +15,38 @@
 
 ---
 
+## 2026-07-15 — Spec 5067 — stop putting `mailto:` in `applyUrl` (carry the address in `emails`)
+
+**Change:** `applyUrl` is for a navigable web URL; an email apply address belongs
+in `emails`. Some plugins synthesized `applyUrl = mailto:<address>` — removed,
+keeping the address in `emails`. Establishes the convention set by
+`source-company-vight` (5066): apply-by-email ⇒ address on `emails`, `applyUrl`
+unset.
+
+- **Why it was wrong.** A `mailto:` is not a web URL (a consumer that opens/
+  validates `applyUrl` as http(s) breaks); it duplicates `emails`; and every
+  occurrence was self-authored in recent work, not an established convention.
+- **Company plugins** (`source-company-buildcover`, `source-company-desktopmetal`,
+  `source-notion-pages`): each already populated `emails`, so only the
+  `applyUrl: emails[0] ? \`mailto:${emails[0]}\` : null` line was dropped.
+- **`source-ats-niceboard`:** `buildApplyUrl` now returns only a real off-board
+  `apply_url` (else null — the call site already falls back to the on-board
+  `jobUrl`, a real URL, so `applyUrl` is never null there); a new `buildEmails`
+  unions the tenant's `apply_email` (first) with `extractEmails(description)`,
+  de-duped, so the address the removed `mailto:` used to carry stays on `emails`.
+- **Non-goals.** No `JobPostDto`/validation change; descriptive "no `mailto:`"
+  comments (reelementtech/solideon/galadyne/spikeaerospace/nanonuclearenergy) and
+  the SuccessFactors test-fixture `descriptionHtml` mailto are left as-is; no new
+  plugin/registration.
+- **Tests.** buildcover/desktopmetal/notion email-apply assertions flip from
+  `applyUrl == mailto:<addr>` to `applyUrl == null` (emails unchanged); new
+  fixture-mocked `niceboard.apply.spec.ts` covers apply_email-only (emails carries
+  it, `applyUrl` == on-board `jobUrl`, no mailto), apply_email + description union
+  (de-duped, apply_email first), and a real apply_url (kept; apply_email still on
+  emails). 27 focused tests green; per-package `tsc` clean (baseline TS6059 only).
+
+---
+
 ## 2026-07-15 — Spec 5066 — source-company-vight (hand-coded static two-step /join-us listing + /join-us/{slug} detail; stated SF Bay Area + Full time; apply -> Cloudflare-obfuscated join@ email)
 
 **Change:** New single-company `source-company-vight` plugin for Vight

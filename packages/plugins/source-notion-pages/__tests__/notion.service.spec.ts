@@ -153,9 +153,9 @@ describe('NotionService', () => {
     expect(head.description).toContain('### About Stone Power');
     expect(head.description).toContain('- Own rotating machinery');
     expect(head.description).not.toContain('## Head of Turbomachinery');
-    // email apply
+    // email apply: the address lives in `emails`; `applyUrl` is left unset
     expect(head.emails).toEqual(['careers@stonepower.us']);
-    expect(head.applyUrl).toBe('mailto:careers@stonepower.us');
+    expect(head.applyUrl == null).toBe(true);
     expect(head.datePosted).toBe('2026-06-06');
   });
 

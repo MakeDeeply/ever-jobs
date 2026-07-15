@@ -73,7 +73,8 @@ describe('DesktopmetalService', () => {
     expect(mech.location?.displayLocation()).toContain('Burlington');
     expect(mech.isRemote).toBe(false);
     expect(mech.emails).toEqual(['jobs@desktopmetal.com']);
-    expect(mech.applyUrl).toBe('mailto:jobs@desktopmetal.com');
+    // the address lives in `emails`; `applyUrl` is left unset (mailto: is not a URL)
+    expect(mech.applyUrl == null).toBe(true);
     expect(mech.datePosted).toBeNull();
 
     const it = jobs.find((j) => j.title === 'Sr. IT Systems Engineer')!;

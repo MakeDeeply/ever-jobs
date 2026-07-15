@@ -86,9 +86,10 @@ describe('BuildcoverService', () => {
     expect(foreman.id).toBe('buildcover-foreman');
     expect(foreman.companyName).toBe('Cover');
     expect(foreman.jobUrl).toBe('https://buildcover.com/careers/foreman/');
-    // apply email comes from the global careersPage.contactEmail
+    // apply email comes from the global careersPage.contactEmail; it lives in
+    // `emails`, and `applyUrl` is left unset (a mailto: is not a web URL)
     expect(foreman.emails).toEqual(['join@buildcover.com']);
-    expect(foreman.applyUrl).toBe('mailto:join@buildcover.com');
+    expect(foreman.applyUrl == null).toBe(true);
     expect(foreman.datePosted).toBe('2025-02-01');
   });
 

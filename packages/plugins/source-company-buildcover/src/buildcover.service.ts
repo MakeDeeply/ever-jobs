@@ -140,8 +140,9 @@ export class BuildcoverService implements IScraper {
       ...(jobType ? { jobType: [jobType] } : {}),
       ...(compensation ? { compensation } : {}),
       datePosted: posted ? toDateOnly(posted) : null,
+      // Apply is by email; the address lives in `emails`. `applyUrl` is left
+      // unset (a mailto: is not a web URL, and there is no on-site apply page).
       emails,
-      applyUrl: emails[0] ? `mailto:${emails[0]}` : null,
     });
   }
 

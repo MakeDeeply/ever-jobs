@@ -228,7 +228,7 @@ export class NiceboardService implements IScraper {
       description,
       datePosted: this.parseDate(job.published_at ?? job.publishedAt ?? job.created_at),
       isRemote: this.detectRemote(job),
-      emails: extractEmails(description),
+      emails: this.buildEmails(job, description),
       site: Site.NICEBOARD,
       atsId,
       atsType: 'niceboard',
@@ -277,8 +277,22 @@ export class NiceboardService implements IScraper {
   /** External apply URL when the role routes off-board; null otherwise. */
   private buildApplyUrl(job: NiceboardJob): string | null {
     if (job.apply_url && job.apply_url.trim()) return job.apply_url.trim();
-    if (job.apply_email && job.apply_email.trim()) return `mailto:${job.apply_email.trim()}`;
     return null;
+  }
+
+  /**
+   * Application emails: the tenant's `apply_email` (when the role applies by
+   * email rather than an off-board URL) unioned with any addresses found in the
+   * description. The address is carried here, not as a `mailto:` `applyUrl`.
+   */
+  private buildEmails(job: NiceboardJob, description: string | null): string[] | null {
+    const bodyEmails = extractEmails(description) ?? [];
+    const applyEmail = job.apply_email?.trim();
+    const merged =
+      applyEmail && !bodyEmails.includes(applyEmail)
+        ? [applyEmail, ...bodyEmails]
+        : bodyEmails;
+    return merged.length > 0 ? merged : null;
   }
 
   private deriveCompanyName(board: string): string {
