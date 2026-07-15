@@ -15,6 +15,60 @@
 
 ---
 
+## 2026-07-15 — Spec 5066 — source-company-vight (hand-coded static two-step /join-us listing + /join-us/{slug} detail; stated SF Bay Area + Full time; apply -> Cloudflare-obfuscated join@ email)
+
+**Change:** New single-company `source-company-vight` plugin for Vight
+(`vightaero.com`, two-seat VTOL aircraft for point-to-point flight), a
+**hand-coded static site** (no CMS/framework/ATS).
+
+- **Why plain HTTP, two steps.** The full JD lives on the employer's own domain
+  (like Hylio 5061 / Framework 5063), so this is a two-step plain-HTTP + Cheerio
+  scraper — no headless browser. Both fetched pages are on `vightaero.com`.
+- **Listing.** GET `/join-us/` enumerates each `<article class="role">` card:
+  the stable `id` slug, `.role-title`, `.role-copy`, `.role-meta span` chips, and
+  the apply link. A card whose apply link is an on-domain path links to a
+  `/join-us/{slug}/` detail page; the "Exceptional Generalist" card's apply link
+  is a Cloudflare email anchor, so it is emitted from the card alone.
+- **Detail (real roles only, bounded `Promise.allSettled`).** GET each
+  `/join-us/{slug}/` parses the `<h1>` title (which can differ from the card —
+  GNC card `Founding GNC Engineer` → detail `Founding GNC and Flight Software
+  Engineer`; the detail title wins), the `.meta` line
+  (`SF Bay Area, CA · Full time · On site`, split on `·`), every `<section>`
+  (About Vight / Role / What You Will Do / You Might Be A Fit If You / Nice To
+  Have / What We Offer) → markdown, and the apply email.
+- **Apply email.** Every apply link (cards + detail) is a Cloudflare
+  email-protected `/cdn-cgi/l/email-protection#<hex>` anchor decoded (first byte
+  = XOR key, `?subject=` stripped) to `join@vightaero.com` — never plaintext.
+- **Meta classification by shape.** A `City, ST` chip → location; a job-type chip
+  → employment type; other chips (`On site`, `Exceptional fit`,
+  `Conversation first`) are ignored — so the generalist yields neither.
+- **Field mapping.** `id` = `vight-<card-id>` (`vight-gnc`, `vight-propulsion`,
+  `vight-chief-engineer`, `vight-exceptional-generalist`); `companyName` =
+  `Vight`; `companyUrl` = `/join-us/`; `jobUrl` = the on-domain
+  `/join-us/{slug}/` detail page (generalist falls back to `/join-us/`);
+  `location` = `SF Bay Area, CA` → city `SF Bay Area` / state `CA` via shared
+  `parseLocationList` (real roles only); `employmentType` = `Full time` and
+  `jobType` = `FULL_TIME` via `getJobTypeFromString` (real roles); `description`
+  = the detail JD sections incl. the `About Vight` boilerplate → markdown
+  (generalist uses its card copy); `isRemote` = false (stated `On site`);
+  `emails` = `[join@vightaero.com]`; `applyUrl` = unset;
+  `compensation` / `datePosted` = empty (none stated).
+- **Non-goals.** Applying is by email; the address is carried on `emails` and
+  `applyUrl` is left unset (a `mailto:` is not a web URL). No off-domain fetch
+  (no ATS/Indeed/board); no fabricated fields (the generalist keeps null
+  location/employment type); no headless browser.
+- **Registration + tests.** Registered in all four places (Site enum,
+  `ALL_SOURCE_MODULES`, tsconfig paths, jest moduleNameMapper). No new
+  dependency. 9 fixture-based unit tests over the captured `/join-us/` + three
+  `/join-us/{slug}/` pages (the detail fetch seam throws on any
+  non-`vightaero.com` URL): DI + Site enum, 3-roles-plus-generalist enumeration
+  with unset applyUrl / `join@vightaero.com` emails / no Indeed-LinkedIn / no
+  compensation, detail-wins title+location+type+jobUrl, all JD sections (incl.
+  About Vight) as markdown, generalist-from-card-alone, detail-failure
+  degradation to card fields, input filters, empty listing.
+
+---
+
 ## 2026-07-14 — Spec 5065 — source-company-mara (Webflow SSR single-page /career cards; stated San Francisco + Full Time; apply -> LinkedIn, link-only)
 
 **Change:** New single-company `source-company-mara` plugin for Mara Defense

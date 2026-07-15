@@ -2124,6 +2124,8 @@ export enum Site {
   TERMINUSINDUSTRIALS = 'terminusindustrials',
   // Phase 992: Spec 5065 — Mara Defense (mara.inc) company careers plugin (Webflow SSR; single-page /career cards; stated location + employment type; apply -> LinkedIn, link-only)
   MARA = 'mara',
+  // Phase 993: Spec 5066 — Vight (vightaero.com) company careers plugin (hand-coded static HTML; two-step /join-us -> /join-us/{slug}; stated location + employment type; apply -> Cloudflare-obfuscated join@ email)
+  VIGHT = 'vight',
   // Phase 970: Spec 976 — Source Company Plugin: Airwallex
   AIRWALLEX = 'airwallex',
   // Phase 971: Spec 977 — Source Company Plugin: Renuity

@@ -1139,6 +1139,7 @@ import { TrueMetalSupplyModule } from './source-company-truemetalsupply';
 import { FrameworkModule } from './source-company-framework';
 import { TerminusIndustrialsModule } from './source-company-terminusindustrials';
 import { MaraModule } from './source-company-mara';
+import { VightModule } from './source-company-vight';
 import { AirwallexModule } from './source-company-airwallex';
 import { RenuityModule } from './source-company-renuity';
 import { EnpalModule } from './source-company-enpal';
@@ -2969,6 +2970,7 @@ export const ALL_SOURCE_MODULES = [
   FrameworkModule,
   TerminusIndustrialsModule,
   MaraModule,
+  VightModule,
   AirwallexModule,
   RenuityModule,
   EnpalModule,
