@@ -15,6 +15,17 @@
 
 ---
 
+## 2026-07-26 — Spec 5069 — company-plugin domain-derived `Site` token rename
+
+**Change:** renamed 6 authored company plugins so their `Site` value equals the token a downstream harvester derives from the domain (strip trailing `.com`, remaining dots→`_`). Fixes live 400s (`flymotionus.com`→`flymotionus`, `hyl.io`→`hyl_io`) and removes brand-vs-domain squatting so a future same-name `.com` company can register.
+
+- Renames: `flymotion`→`flymotionus`, `vight`→`vightaero`, `hylio`→`hyl_io`, `galadyne`→`galadyne_io`, `framework`→`framework_co`, `mara`→`mara_inc`.
+- Each rename covers the dir, package name, class/type names, `UPPER_` constant prefix, `Site` key+value, job-id prefix, token-prefixed fixtures, and all four registrations (site.enum, `ALL_SOURCE_MODULES`, tsconfig paths, jest moduleNameMapper). Real domain string literals and human display names (`FLYMOTION`, `Vight`, `Framework Automation`, `Mara Defense`, …) are unchanged.
+- Upstream `divergent.us` / `nuro.ai` plugins are **not** renamed (they resolve under the old strip-any-TLD behaviour; editing upstream code risks merge conflicts). The harvester keeps them working via a hardcoded exception map (`divergent.us`→`divergent`, `nuro.ai`→`nuro`), not a general fallback. The harvester change ships in its own repo.
+- Validation: focused `jest` for the 6 packages (50 tests green), `nx build api --skip-nx-cache` compiles the full registration.
+
+---
+
 ## 2026-07-15 — Spec 5068 — drop `@upwork/node-upwork-oauth2` (kills the unpatchable `request` stack)
 
 **Change:** removed `@upwork/node-upwork-oauth2` from root `package.json`. It was the

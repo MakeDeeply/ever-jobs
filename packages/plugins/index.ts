@@ -1129,17 +1129,17 @@ import { SpikeaerospaceModule } from './source-company-spikeaerospace';
 import { CanekastModule } from './source-company-canekast';
 import { VelontraModule } from './source-company-velontra';
 import { SolideonModule } from './source-company-solideon';
-import { GaladyneModule } from './source-company-galadyne';
+import { GaladyneIoModule } from './source-company-galadyne_io';
 import { GustoHostedModule } from './source-ats-gusto-hosted';
 import { ReelementtechModule } from './source-company-reelementtech';
-import { FlymotionModule } from './source-company-flymotion';
+import { FlymotionusModule } from './source-company-flymotionus';
 import { IperionxModule } from './source-company-iperionx';
-import { HylioModule } from './source-company-hylio';
+import { HylIoModule } from './source-company-hyl_io';
 import { TrueMetalSupplyModule } from './source-company-truemetalsupply';
-import { FrameworkModule } from './source-company-framework';
+import { FrameworkCoModule } from './source-company-framework_co';
 import { TerminusIndustrialsModule } from './source-company-terminusindustrials';
-import { MaraModule } from './source-company-mara';
-import { VightModule } from './source-company-vight';
+import { MaraIncModule } from './source-company-mara_inc';
+import { VightaeroModule } from './source-company-vightaero';
 import { AirwallexModule } from './source-company-airwallex';
 import { RenuityModule } from './source-company-renuity';
 import { EnpalModule } from './source-company-enpal';
@@ -2960,17 +2960,17 @@ export const ALL_SOURCE_MODULES = [
   CanekastModule,
   VelontraModule,
   SolideonModule,
-  GaladyneModule,
+  GaladyneIoModule,
   GustoHostedModule,
   ReelementtechModule,
-  FlymotionModule,
+  FlymotionusModule,
   IperionxModule,
-  HylioModule,
+  HylIoModule,
   TrueMetalSupplyModule,
-  FrameworkModule,
+  FrameworkCoModule,
   TerminusIndustrialsModule,
-  MaraModule,
-  VightModule,
+  MaraIncModule,
+  VightaeroModule,
   AirwallexModule,
   RenuityModule,
   EnpalModule,

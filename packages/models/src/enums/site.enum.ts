@@ -2105,27 +2105,27 @@ export enum Site {
   // Phase 982: Spec 5052 — Solideon (solideon.com) company careers plugin (WordPress/Elementor listing + per-role detail pages)
   SOLIDEON = 'solideon',
   // Phase 983: Spec 5053 — Galadyne (galadyne.io) company careers plugin (Next.js listing HTML + client-chunk job descriptions)
-  GALADYNE = 'galadyne',
+  GALADYNE_IO = 'galadyne_io',
   // Phase 984: Spec 5054 — Gusto-hosted multi-tenant job boards (jobs.gusto.com/boards/<slug>); distinct from GUSTO (Gusto, Inc.'s own careers)
   GUSTO_HOSTED = 'gusto_hosted',
   // Phase 985: Spec 5056 — ReElement Technologies (reelementtech.com) company careers plugin (Webflow CMS listing + /jobs/<slug> detail)
   REELEMENTTECH = 'reelementtech',
   // Phase 986: Spec 5057 — FLYMOTION (flymotionus.com) company careers plugin (Webflow CMS listing + /jobs/<slug> detail; HubSpot apply form)
-  FLYMOTION = 'flymotion',
+  FLYMOTIONUS = 'flymotionus',
   // Phase 987: Spec 5059 — IperionX (iperionx.com) company careers plugin (WordPress summary-only board; apply links out to Indeed, not scraped)
   IPERIONX = 'iperionx',
   // Phase 988: Spec 5061 — Hylio (hyl.io) company careers plugin (Webflow CMS listing + /hiring/<slug> detail; apply links out to Indeed, not scraped)
-  HYLIO = 'hylio',
+  HYL_IO = 'hyl_io',
   // Phase 989: Spec 5062 — True Metal Supply (truemetalsupply.com) company careers plugin (Wix popup/lightbox JDs; headless BrowserPool; title-only location)
   TRUEMETALSUPPLY = 'truemetalsupply',
   // Phase 990: Spec 5063 — Framework Automation (framework.co) company careers plugin (Framer SSG; two-step /hiring -> /jobs/{slug}; stated location + salary; apply -> shared /apply form)
-  FRAMEWORK = 'framework',
+  FRAMEWORK_CO = 'framework_co',
   // Phase 991: Spec 5064 — Terminus Industrials (terminusindustrials.com) company careers plugin (Next.js SSR; single-page /careers with inline JD; stated location + employment type; apply -> on-page modal form)
   TERMINUSINDUSTRIALS = 'terminusindustrials',
   // Phase 992: Spec 5065 — Mara Defense (mara.inc) company careers plugin (Webflow SSR; single-page /career cards; stated location + employment type; apply -> LinkedIn, link-only)
-  MARA = 'mara',
+  MARA_INC = 'mara_inc',
   // Phase 993: Spec 5066 — Vight (vightaero.com) company careers plugin (hand-coded static HTML; two-step /join-us -> /join-us/{slug}; stated location + employment type; apply -> Cloudflare-obfuscated join@ email)
-  VIGHT = 'vight',
+  VIGHTAERO = 'vightaero',
   // Phase 970: Spec 976 — Source Company Plugin: Airwallex
   AIRWALLEX = 'airwallex',
   // Phase 971: Spec 977 — Source Company Plugin: Renuity
