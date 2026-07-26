@@ -46,7 +46,6 @@
     "@nestjs/throttler": "^6.5.0",
     "@prisma/client": "^6.5.0",
     "@scalar/nestjs-api-reference": "^1.0.23",
-    "@upwork/node-upwork-oauth2": "^2.3.0",
     "axios": "^1.16.0",
     "better-sqlite3": "^12.9.0",
     "cache-manager": "^7.2.8",
