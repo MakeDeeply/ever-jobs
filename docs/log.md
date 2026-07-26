@@ -15,6 +15,32 @@
 
 ---
 
+## 2026-07-15 — Spec 5068 — drop `@upwork/node-upwork-oauth2` (kills the unpatchable `request` stack)
+
+**Change:** removed `@upwork/node-upwork-oauth2` from root `package.json`. It was the
+sole source of the deprecated `request` HTTP stack, which carries advisories with **no
+upstream fix**: `request` SSRF (GHSA-p8p7-x288-28g6), `tough-cookie` prototype
+pollution (GHSA-72xf-g2v4-qvf3), `uuid`<11.1.1 buffer bounds (GHSA-w5hq-g745-h8pq).
+This fork does not use the Upwork source.
+
+- **Plugin kept, SDK lazy-loaded.** `source-upwork` stays registered (`Site.UPWORK`).
+  The two top-level `require('@upwork/...')` calls are replaced by a guarded
+  `loadUpworkSdk()` invoked only inside `createApiClient` / GraphQL execution — so the
+  vulnerable tree is no longer installed, but the plugin still builds and can be
+  re-enabled by reinstalling the package.
+- **Graceful degradation.** Unconfigured Upwork already returns `[]`; the constructor
+  now wraps `createApiClient` in try/catch (warn + stay unconfigured) so an
+  env-configured-but-SDK-absent setup does not crash DI startup, and a live
+  configured call throws a descriptive "disabled in this fork" error.
+- **Lockfile:** 47 entries pruned (`request`, `tough-cookie`, `uuid`, `aws-sign2`,
+  `caseless`, `forever-agent`, `har-*`, `oauth-sign`, …), **0 added**.
+- **Validation:** `jest source-upwork` 3/3 green; `npm run build` (mcp+api+cli) green;
+  `npm ls request tough-cookie @upwork/node-upwork-oauth2` → absent.
+- **Out of scope:** the remaining audit items are dev/build-tooling DoS advisories
+  (`brace-expansion`, `fast-uri`, `protobufjs` via `npm audit fix`; `express`/
+  `body-parser`/`@hono/node-server`/`js-yaml` only via `--force` breaking bumps of
+  `@modelcontextprotocol/sdk`/`nest-commander`) — not touched here.
+
 ## 2026-07-15 — Spec 5067 — stop putting `mailto:` in `applyUrl` (carry the address in `emails`)
 
 **Change:** `applyUrl` is for a navigable web URL; an email apply address belongs
