@@ -19,4 +19,4 @@
 
 ## Out of scope
 
-- Harvester `company_plugin_site_type` change (separate repo) + its hardcoded `divergent`/`nuro` exceptions.
+- Keeping any external domain-deriving consumer in sync with the rule + its hardcoded `divergent`/`nuro` exceptions (lives with that consumer, not this repo).

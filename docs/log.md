@@ -17,11 +17,11 @@
 
 ## 2026-07-26 — Spec 5069 — company-plugin domain-derived `Site` token rename
 
-**Change:** renamed 6 authored company plugins so their `Site` value equals the token a downstream harvester derives from the domain (strip trailing `.com`, remaining dots→`_`). Fixes live 400s (`flymotionus.com`→`flymotionus`, `hyl.io`→`hyl_io`) and removes brand-vs-domain squatting so a future same-name `.com` company can register.
+**Change:** established a deterministic, collision-proof convention for naming a company plugin from its (unique) domain, and renamed the 6 authored plugins that predated it. Rule: `.com` domains drop the TLD for a short name (`buildcover.com`→`buildcover`); any other TLD replaces `.` with `_` for a readable name (`hyl.io`→`hyl_io`, `mara.inc`→`mara_inc`). Brand-named tokens are the anti-pattern removed here — they aren't reproducible from the domain and they squat the generic name (`Site='flymotion'` for flymotionus.com would block a future flymotion.com; `framework`/`mara`/`galadyne` would block their `.com` namesakes). This is intrinsic to how Ever Jobs names plugins, independent of any downstream consumer.
 
 - Renames: `flymotion`→`flymotionus`, `vight`→`vightaero`, `hylio`→`hyl_io`, `galadyne`→`galadyne_io`, `framework`→`framework_co`, `mara`→`mara_inc`.
 - Each rename covers the dir, package name, class/type names, `UPPER_` constant prefix, `Site` key+value, job-id prefix, token-prefixed fixtures, and all four registrations (site.enum, `ALL_SOURCE_MODULES`, tsconfig paths, jest moduleNameMapper). Real domain string literals and human display names (`FLYMOTION`, `Vight`, `Framework Automation`, `Mara Defense`, …) are unchanged.
-- Upstream `divergent.us` / `nuro.ai` plugins are **not** renamed (they resolve under the old strip-any-TLD behaviour; editing upstream code risks merge conflicts). The harvester keeps them working via a hardcoded exception map (`divergent.us`→`divergent`, `nuro.ai`→`nuro`), not a general fallback. The harvester change ships in its own repo.
+- Upstream `divergent.us` / `nuro.ai` plugins are **not** renamed (editing upstream-authored code risks merge conflicts); any domain-deriving consumer special-cases those two via a hardcoded exception map (`divergent.us`→`divergent`, `nuro.ai`→`nuro`).
 - Validation: focused `jest` for the 6 packages (50 tests green), `nx build api --skip-nx-cache` compiles the full registration.
 
 ---

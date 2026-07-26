@@ -13,29 +13,30 @@
 
 ## 1. Problem Statement
 
-A downstream harvester derives a company plugin's `siteType` **from the domain** (strip a trailing `.com`, leave everything else), then POSTs it to this service. Several company plugins were named after the **brand** rather than the domain, so the derived token does not equal the plugin's `Site` value and the request 400s.
+Ever Jobs needs an **unambiguous, deterministic way to name a new company plugin** — one that requires no judgment and cannot collide. A company's **domain is unique**, so the plugin's identity should derive directly from it:
 
-Concrete failures:
+- for a `.com` domain, drop the TLD for a simple short name (`buildcover.com` → `buildcover`);
+- for any other TLD, replace the `.` with `_` for a readable identifier (`hyl.io` → `hyl_io`, `mara.inc` → `mara_inc`).
 
-- `flymotionus.com` → derived `flymotionus`, but `Site` value was `flymotion` → 400.
-- `hyl.io` → derived `hyl_io`, but `Site` value was `hylio` → 400.
+Several existing company plugins predate this convention and were named after the **brand** instead of the domain. That is the anti-pattern this spec removes, because it causes two problems:
 
-Two distinct issues motivated this:
+- **Not reproducible from the domain.** Given `flymotionus.com` there is no way to know the plugin was registered as `flymotion` — the identifier can't be regenerated, only looked up.
+- **Squats the generic name.** A brand-named token takes a name that rightfully belongs to a different domain: `Site = 'flymotion'` (for `flymotionus.com`) blocks a future `flymotion.com` company; `'framework'` / `'mara'` / `'galadyne'` (for `.co` / `.inc` / `.io` domains) block their `.com` namesakes.
 
-- **Correctness now** — the derived token must resolve to a registered `Site`.
-- **Future collision** — a brand-named token squats the generic name: `Site = 'flymotion'` (for `flymotionus.com`) would block a future `flymotion.com` company, and `'framework'`/`'mara'`/`'galadyne'` (for `.co`/`.inc`/`.io` domains) would block their `.com` namesakes.
+This is intrinsic to how Ever Jobs names plugins; it is independent of any particular downstream consumer.
 
 ## 2. Goals
 
-- Make each affected company plugin's `Site` value equal to the **domain-derived token** so the harvester resolves it deterministically.
+- Establish a deterministic, collision-proof rule for deriving a company plugin's identity from its (unique) domain.
+- Make each affected company plugin's `Site` value equal to that domain-derived token.
 - Remove brand-vs-domain collisions by carrying the non-`.com` TLD into the token.
 - Align dir/package id + class/constants with the new token so the id level is collision-free too.
 
 ## 3. Non-Goals
 
-- Changing the harvester itself (separate repo; the matching `company_plugin_site_type` change is delivered there).
 - Renaming plugins already correct under the rule (all existing `.com` company plugins).
-- Renaming upstream (non-authored) plugins — see Decisions; they are handled by a hardcoded exception on the harvester side.
+- Renaming upstream (non-authored) plugins — see Decisions.
+- Any consumer that derives a token from the domain (e.g. an external harvester) must apply the same rule; keeping such consumers in sync is out of scope here (any exception mapping for un-renamed upstream plugins lives with that consumer).
 - Any data migration of previously-persisted jobs keyed on the old `Site` values (fresh/personal use).
 
 ## 4. Token Rule
@@ -98,10 +99,10 @@ The `Site` enum string values change for the 6 plugins above (display names, scr
 
 ## 10. Decisions
 
-- **Domain-derived tokens (option A), not an authoritative token column (option B).** B creates a second source of truth that drifts from the enum and silently 400s; A makes the token a pure function of the domain — a one-time rename, then correct by construction.
+- **Domain-derived tokens (option A), not an authoritative token column (option B).** B creates a second source of truth that drifts from the enum; A makes the token a pure function of the domain — a one-time rename, then correct by construction for every future plugin.
 - **Underscore for internal dots, keep the non-`.com` TLD.** Keeps tokens as clean identifiers while preserving the TLD as a disambiguator against future same-name `.com` companies.
 - **Align dir/package id in addition to the `Site` value**, so the collision is removed at the id level too (a future `mara.com` can take `source-company-mara`).
-- **Upstream `divergent.us` / `nuro.ai` are not renamed.** They currently resolve under the old strip-any-TLD behaviour; editing upstream-authored plugins risks merge conflicts. The harvester keeps them working via a small hardcoded exception map (`divergent.us`→`divergent`, `nuro.ai`→`nuro`) rather than a general fallback.
+- **Upstream `divergent.us` / `nuro.ai` are not renamed.** They keep their original tokens because editing upstream-authored plugins risks merge conflicts. Any domain-deriving consumer must special-case these two (a small hardcoded exception map `divergent.us`→`divergent`, `nuro.ai`→`nuro`), rather than expecting the general rule to produce them.
 
 ## 11. References
 
