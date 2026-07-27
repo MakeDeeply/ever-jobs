@@ -15,6 +15,19 @@
 
 ---
 
+## 2026-07-27 — Spec 5073 — sync upstream `ever-jobs/ever-jobs:develop`
+
+**Change:** cherry-picked 12 upstream `develop` commits into the fork, preserving the fork's security overrides and `@upwork` removal.
+
+- Cherry-picked: Node-24 runner action versions, grouped Dependabot config, `source-internshala` registration/detail fetch, `source-simplyhired` detail fetch, ARC runner routing, and per-branch Docker tags.
+- Applied upstream minor/patch `package.json` bumps while dropping the reintroduced `@upwork/node-upwork-oauth2` line.
+- Skipped upstream `package-lock.json` regeneration commits; regenerated `package-lock.json` locally from the fork's `package.json` so overrides stay in effect.
+- Created `.specify/specs/5073-upstream-develop-sync/`.
+
+Validation: `npx jest` 46/46 green across `site-from-domain`, `jobs.service`, `jobs.controller`, `source-internshala`, and `source-simplyhired`; `tsc --noEmit` clean for `packages/common`, `packages/models`, and `apps/api`; `npm run build` (mcp+api+cli) green; `npm audit --audit-level=high` unchanged at 4 high findings, all from the `fork-ts-checker-webpack-plugin` → `minimatch@3` → `brace-expansion@1.1.16` chain.
+
+---
+
 ## 2026-07-27 — Spec 5072 — partial migration of `minimatch`/`glob` chains for `brace-expansion`
 
 **Change:** upgraded transitive `minimatch`/`glob`/testcontainers/jest chains so they no longer depend on vulnerable `brace-expansion` versions.

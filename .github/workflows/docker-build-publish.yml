@@ -5,7 +5,7 @@ name: Build and Publish Ever Jobs Image
 # pulls this image for the INTERNAL (ClusterIP-only) Ever Jobs deployment.
 on:
   push:
-    branches: [main, develop]
+    branches: [main, stage, develop]
     paths:
       - "apps/**"
       - "packages/**"
@@ -26,23 +26,33 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LINUX_X64_8 || 'ubuntu-latest' }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Log in to GHCR
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Compute env tag from branch
+        id: envtag
+        run: |
+          case "${GITHUB_REF_NAME}" in
+            main) echo "tag=prod" >> "$GITHUB_OUTPUT" ;;
+            stage) echo "tag=stage" >> "$GITHUB_OUTPUT" ;;
+            develop) echo "tag=dev" >> "$GITHUB_OUTPUT" ;;
+            *) echo "tag=dev" >> "$GITHUB_OUTPUT" ;;
+          esac
+
       - name: Build and push (GHCR)
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: ./Dockerfile
@@ -50,25 +60,36 @@ jobs:
           platforms: linux/amd64
           tags: |
             ghcr.io/ever-jobs/ever-jobs:latest
+            ghcr.io/ever-jobs/ever-jobs:${{ steps.envtag.outputs.tag }}
             ghcr.io/ever-jobs/ever-jobs:${{ github.sha }}
           cache-from: type=registry,ref=ghcr.io/ever-jobs/ever-jobs:latest
           cache-to: type=inline
 
   build-mcp:
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LINUX_X64_8 || 'ubuntu-latest' }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
       - name: Log in to GHCR
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Compute env tag from branch
+        id: envtag
+        run: |
+          case "${GITHUB_REF_NAME}" in
+            main) echo "tag=prod" >> "$GITHUB_OUTPUT" ;;
+            stage) echo "tag=stage" >> "$GITHUB_OUTPUT" ;;
+            develop) echo "tag=dev" >> "$GITHUB_OUTPUT" ;;
+            *) echo "tag=dev" >> "$GITHUB_OUTPUT" ;;
+          esac
+
       - name: Build and push MCP (GHCR)
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: ./.deploy/mcp/Dockerfile
@@ -76,6 +97,7 @@ jobs:
           platforms: linux/amd64
           tags: |
             ghcr.io/ever-jobs/ever-jobs-mcp:latest
+            ghcr.io/ever-jobs/ever-jobs-mcp:${{ steps.envtag.outputs.tag }}
             ghcr.io/ever-jobs/ever-jobs-mcp:${{ github.sha }}
           cache-from: type=registry,ref=ghcr.io/ever-jobs/ever-jobs-mcp:latest
           cache-to: type=inline
