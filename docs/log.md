@@ -15,6 +15,39 @@
 
 ---
 
+## 2026-07-27 — Spec 5072 — partial migration of `minimatch`/`glob` chains for `brace-expansion`
+
+**Change:** upgraded transitive `minimatch`/`glob`/testcontainers/jest chains so they no longer depend on vulnerable `brace-expansion` versions.
+
+- `eslint` → `^10.8.0` and `@typescript-eslint/*` → `^8.65.0` so `eslint` uses `minimatch@^10.2.5`.
+- `testcontainers` → `^12.0.4` with `archiver` → `^8.0.0` so `readdir-glob` uses `minimatch@10.2.5`.
+- `babel-plugin-istanbul` → `^8.0.0` and `test-exclude` → `^8.0.0` so the Jest coverage path uses `glob@13`/`minimatch@10.2.5`.
+- `glob` → `^13.0.6` override so `jest-config`/`@jest/reporters`/`jest-runtime` use `minimatch@10.2.5`.
+- `nx` `minimatch` override → `10.2.5`.
+- `minimatch@^10.0.0` `brace-expansion` override → `^5.0.8`.
+- Removed the `@nestjs/cli` `glob: 10.5.0` and `archiver-utils` `glob` overrides; `@nestjs/cli` now uses its own `glob@13`.
+
+`fork-ts-checker-webpack-plugin` (used by `@nestjs/cli` webpack builds) remains the only unresolved high-severity chain because it is pinned to `minimatch@3` and there is no newer release.
+
+Validation: targeted `jest` 43/43 green; `tsc --noEmit` clean for `packages/common`, `packages/models`, and `apps/api`; `npm run build` (mcp+api+cli) green; `npm audit --audit-level=high` now shows 4 high findings, all from the `fork-ts-checker-webpack-plugin` → `minimatch@3` → `brace-expansion@1.1.16` chain.
+
+---
+
+## 2026-07-27 — Spec 5071 — patch `js-yaml` and `fast-uri` high-severity advisories
+
+**Change:** patched transitive `js-yaml` and `fast-uri` vulnerabilities via `package.json` `overrides`.
+
+- `fast-uri` → `^3.1.4` (host confusion advisories).
+- `js-yaml` 4.x consumers (`@eslint/eslintrc`, `@nestjs/swagger`, `cosmiconfig`, `eslint`) → `^4.3.0`.
+- `js-yaml` 3.x consumers (`@istanbuljs/load-nyc-config`, `front-matter`, `@yarnpkg/parsers@3.0.0-rc.46`) → `^3.15.0`.
+- `package-lock.json` regenerated.
+
+`brace-expansion` remains the only high-severity finding because its advisory range is `<=5.0.7`, which permanently includes the `1.x`/`2.x` copies used by `minimatch@3/5/9.0.9`. Patching it without `npm audit fix --force` requires a larger transitive upgrade (eslint, rimraf, fork-ts-checker-webpack-plugin, testcontainers, etc.) and is out of scope for this spec.
+
+Validation: targeted `jest` 43/43 green; `tsc --noEmit` clean for `packages/common`, `packages/models`, and `apps/api`; `npm audit --audit-level=high` shows only `brace-expansion`.
+
+---
+
 ## 2026-07-27 — Spec 5070 — accept `companyDomain` and resolve to `Site` token
 
 **Change:** `ScraperInputDto` now accepts `companyDomain?: string[]` (parallel to `siteType`). Each domain is resolved to a registered `Site` token via the Spec 5069 rule with hardcoded exceptions for upstream `divergent.us` → `divergent` and `nuro.ai` → `nuro`. Resolved tokens are unioned with any explicit `siteType` values; unresolved domains produce a hard 400 naming the domain and the derived token that was tried. The `ScraperInputDto` constructor no longer defaults `siteType` to all sites, so `companyDomain`-only requests resolve to the intended plugin rather than being unioned with every source.
