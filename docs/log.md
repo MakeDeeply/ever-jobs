@@ -15,6 +15,21 @@
 
 ---
 
+## 2026-07-27 — Spec 5071 — patch `js-yaml` and `fast-uri` high-severity advisories
+
+**Change:** patched transitive `js-yaml` and `fast-uri` vulnerabilities via `package.json` `overrides`.
+
+- `fast-uri` → `^3.1.4` (host confusion advisories).
+- `js-yaml` 4.x consumers (`@eslint/eslintrc`, `@nestjs/swagger`, `cosmiconfig`, `eslint`) → `^4.3.0`.
+- `js-yaml` 3.x consumers (`@istanbuljs/load-nyc-config`, `front-matter`, `@yarnpkg/parsers@3.0.0-rc.46`) → `^3.15.0`.
+- `package-lock.json` regenerated.
+
+`brace-expansion` remains the only high-severity finding because its advisory range is `<=5.0.7`, which permanently includes the `1.x`/`2.x` copies used by `minimatch@3/5/9.0.9`. Patching it without `npm audit fix --force` requires a larger transitive upgrade (eslint, rimraf, fork-ts-checker-webpack-plugin, testcontainers, etc.) and is out of scope for this spec.
+
+Validation: targeted `jest` 43/43 green; `tsc --noEmit` clean for `packages/common`, `packages/models`, and `apps/api`; `npm audit --audit-level=high` shows only `brace-expansion`.
+
+---
+
 ## 2026-07-27 — Spec 5070 — accept `companyDomain` and resolve to `Site` token
 
 **Change:** `ScraperInputDto` now accepts `companyDomain?: string[]` (parallel to `siteType`). Each domain is resolved to a registered `Site` token via the Spec 5069 rule with hardcoded exceptions for upstream `divergent.us` → `divergent` and `nuro.ai` → `nuro`. Resolved tokens are unioned with any explicit `siteType` values; unresolved domains produce a hard 400 naming the domain and the derived token that was tried. The `ScraperInputDto` constructor no longer defaults `siteType` to all sites, so `companyDomain`-only requests resolve to the intended plugin rather than being unioned with every source.
