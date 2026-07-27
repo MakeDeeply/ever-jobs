@@ -209,6 +209,8 @@ describe('JobsController', () => {
         undefined,
         undefined,
         undefined,    // dedup
+        undefined,    // liveness
+        undefined,    // legitimacy
         mockRes as any,
       );
 

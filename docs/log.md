@@ -15,6 +15,16 @@
 
 ---
 
+## 2026-07-27 — Spec 5070 — accept `companyDomain` and resolve to `Site` token
+
+**Change:** `ScraperInputDto` now accepts `companyDomain?: string[]` (parallel to `siteType`). Each domain is resolved to a registered `Site` token via the Spec 5069 rule with hardcoded exceptions for upstream `divergent.us` → `divergent` and `nuro.ai` → `nuro`. Resolved tokens are unioned with any explicit `siteType` values; unresolved domains produce a hard 400 naming the domain and the derived token that was tried. The `ScraperInputDto` constructor no longer defaults `siteType` to all sites, so `companyDomain`-only requests resolve to the intended plugin rather than being unioned with every source.
+
+- New `packages/common/src/utils/site-from-domain.ts` exports `siteFromDomain` and `deriveSiteToken`.
+- `packages/models/src/dtos/scraper-input.dto.ts` gains the `companyDomain` field with `@IsOptional()`, `@IsArray()`, and `@IsString({ each: true })` validation.
+- `apps/api/src/jobs/jobs.service.ts` resolves domains before routing and throws `BadRequestException` for unregistered tokens.
+- Tests added in `packages/common/__tests__/site-from-domain.spec.ts` and `apps/api/src/jobs/__tests__/jobs.service.spec.ts`; the service test helper now builds a real `PluginRegistry` with metadata so `listAtsSites()` works.
+- `docs/index.md`, `docs/API_CHANGELOG.md`, and `tool_manifest.json` updated.
+
 ## 2026-07-26 — Spec 5069 — company-plugin domain-derived `Site` token rename
 
 **Change:** established a deterministic, collision-proof convention for naming a company plugin from its (unique) domain, and renamed the 6 authored plugins that predated it. Rule: `.com` domains drop the TLD for a short name (`buildcover.com`→`buildcover`); any other TLD replaces `.` with `_` for a readable name (`hyl.io`→`hyl_io`, `mara.inc`→`mara_inc`). Brand-named tokens are the anti-pattern removed here — they aren't reproducible from the domain and they squat the generic name (`Site='flymotion'` for flymotionus.com would block a future flymotion.com; `framework`/`mara`/`galadyne` would block their `.com` namesakes). This is intrinsic to how Ever Jobs names plugins, independent of any downstream consumer.

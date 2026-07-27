@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import { BadRequestException } from '@nestjs/common';
 import {
   ScraperInputDto,
   JobPostDto,
@@ -10,6 +11,7 @@ import {
   CompensationDto,
   CompensationInterval,
 } from '@ever-jobs/models';
+import { PluginRegistry } from '@ever-jobs/plugin';
 
 // ---------------------------------------------------------------------------
 // Mock ALL source packages before importing JobsService.
@@ -212,6 +214,11 @@ jest.mock('@ever-jobs/source-ecojobs', () => mockSourceFactory());
 
 import { JobsService } from '../jobs.service';
 
+const ATS_SITES = new Set<string>([
+  Site.GREENHOUSE,
+  Site.LEVER,
+]);
+
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
@@ -246,13 +253,33 @@ function failingScraper(error = 'Network timeout'): IScraper {
 }
 
 /**
- * Create a JobsService instance with a custom scraperMap.
- * Bypasses the 182-arg constructor by using Object.create.
+ * Create a JobsService instance with a custom PluginRegistry.
+ * Bypasses the real constructor by using Object.create.
  */
-function createService(scraperEntries: [Site, IScraper][]): JobsService {
+function createService(scraperEntries: [Site, IScraper, boolean?][]): JobsService {
   const service = Object.create(JobsService.prototype);
   service.logger = { log: jest.fn(), warn: jest.fn(), error: jest.fn() };
-  service.scraperMap = new Map<Site, IScraper>(scraperEntries);
+  service.configService = {
+    get: jest.fn().mockReturnValue({
+      defaultRetries: 0,
+      defaultDelayMs: 0,
+      defaultBackoff: 'exponential',
+      perSource: {},
+    }),
+  };
+  service.metrics = {
+    scraperDuration: { startTimer: jest.fn().mockReturnValue(jest.fn()) },
+    scraperRequestsTotal: { inc: jest.fn() },
+  };
+
+  const registry = new PluginRegistry();
+  for (const [site, scraper, isAts] of scraperEntries) {
+    registry.register(
+      { site, name: site, category: isAts ? 'ats' : 'job-board', isAts: !!isAts },
+      scraper,
+    );
+  }
+  service.registry = registry;
   return service;
 }
 
@@ -283,7 +310,7 @@ describe('JobsService', () => {
       const greenhouse = makeScraper([{ title: 'GH job' }]);
       const linkedin = makeScraper([{ title: 'LI job' }]);
       const service = createService([
-        [Site.GREENHOUSE, greenhouse],
+        [Site.GREENHOUSE, greenhouse, true],
         [Site.LINKEDIN, linkedin],
       ]);
 
@@ -306,7 +333,7 @@ describe('JobsService', () => {
       const amazon = makeScraper([{ title: 'Amazon job' }]);
       const service = createService([
         [Site.LINKEDIN, linkedin],
-        [Site.LEVER, lever],
+        [Site.LEVER, lever, true],
         [Site.AMAZON, amazon],
       ]);
 
@@ -328,7 +355,7 @@ describe('JobsService', () => {
 
     it('should allow ATS scrapers via explicit siteType even without companySlug', async () => {
       const lever = makeScraper([{ title: 'Lever job' }]);
-      const service = createService([[Site.LEVER, lever]]);
+      const service = createService([[Site.LEVER, lever, true]]);
 
       const input = new ScraperInputDto({
         searchTerm: 'node',
@@ -337,6 +364,90 @@ describe('JobsService', () => {
       const result = await service.searchJobs(input);
 
       expect(lever.scrape).toHaveBeenCalled();
+      expect(result.length).toBe(1);
+    });
+
+    it('should resolve companyDomain to a registered Site token', async () => {
+      const buildcover = makeScraper([{ title: 'Buildcover job' }]);
+      const linkedin = makeScraper([{ title: 'LI job' }]);
+      const service = createService([
+        [Site.BUILDCOVER, buildcover],
+        [Site.LINKEDIN, linkedin],
+      ]);
+
+      const input = new ScraperInputDto({
+        searchTerm: 'engineer',
+        companyDomain: ['buildcover.com'],
+      });
+      const result = await service.searchJobs(input);
+
+      expect(buildcover.scrape).toHaveBeenCalled();
+      expect(linkedin.scrape).not.toHaveBeenCalled();
+      expect(result.length).toBe(1);
+      expect(result[0].title).toBe('Buildcover job');
+    });
+
+    it('should union companyDomain with explicit siteType', async () => {
+      const buildcover = makeScraper([{ title: 'Buildcover job' }]);
+      const linkedin = makeScraper([{ title: 'LI job' }]);
+      const service = createService([
+        [Site.BUILDCOVER, buildcover],
+        [Site.LINKEDIN, linkedin],
+      ]);
+
+      const input = new ScraperInputDto({
+        searchTerm: 'engineer',
+        siteType: [Site.LINKEDIN],
+        companyDomain: ['buildcover.com'],
+      });
+      const result = await service.searchJobs(input);
+
+      expect(linkedin.scrape).toHaveBeenCalled();
+      expect(buildcover.scrape).toHaveBeenCalled();
+      expect(result.length).toBe(2);
+    });
+
+    it('should throw BadRequestException for an unresolved companyDomain', async () => {
+      const linkedin = makeScraper([{ title: 'LI job' }]);
+      const service = createService([[Site.LINKEDIN, linkedin]]);
+
+      const input = new ScraperInputDto({
+        searchTerm: 'engineer',
+        companyDomain: ['not-a-real-company.io'],
+      });
+
+      await expect(service.searchJobs(input)).rejects.toThrow(BadRequestException);
+      await expect(service.searchJobs(input)).rejects.toThrow(
+        /domain `not-a-real-company\.io` → token `not-a-real-company_io` is not a registered plugin/,
+      );
+      expect(linkedin.scrape).not.toHaveBeenCalled();
+    });
+
+    it('should resolve a full URL or www-prefixed domain', async () => {
+      const hyl = makeScraper([{ title: 'Hylio job' }]);
+      const service = createService([[Site.HYL_IO, hyl]]);
+
+      const input = new ScraperInputDto({
+        searchTerm: 'drone',
+        companyDomain: ['https://www.hyl.io/careers'],
+      });
+      const result = await service.searchJobs(input);
+
+      expect(hyl.scrape).toHaveBeenCalled();
+      expect(result.length).toBe(1);
+    });
+
+    it('should ignore empty or whitespace-only companyDomain entries', async () => {
+      const buildcover = makeScraper([{ title: 'Buildcover job' }]);
+      const service = createService([[Site.BUILDCOVER, buildcover]]);
+
+      const input = new ScraperInputDto({
+        searchTerm: 'engineer',
+        companyDomain: ['', '  ', 'buildcover.com'],
+      });
+      const result = await service.searchJobs(input);
+
+      expect(buildcover.scrape).toHaveBeenCalled();
       expect(result.length).toBe(1);
     });
   });
