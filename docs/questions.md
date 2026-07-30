@@ -39,13 +39,48 @@ callers get back, so it is **not** a safe unilateral change.
 - **C. Keep the wide default but exclude ATS sources from it.** Middle ground: drops ~176
   guaranteed-empty dispatches without changing which *search* sources are consulted.
 
-**Default (proceeding):** **A** — shipped in Spec 5026. B is the real fix but needs confirmation
-from the Hust side that it does not depend on the implicit all-sources behaviour, so it is left as
-task T10 rather than taken unilaterally (AGENTS.md rule 9 / workspace rule 9: never remove
-behaviour without an explicit yes).
+**Default (proceeding):** **A** — shipped in Spec 5026.
 
-**Resolution:** _pending — human owner to confirm whether any caller relies on the implicit
-all-sources default._
+**Resolution (2026-07-31): A stands. Reject B, and C is not safe either. Closing.**
+
+Audited the caller side directly rather than guessing:
+
+- `siteType` appears in `ever-hust` **only** at `packages/jobs-api/src/types.ts:30`
+  (`z.array(SiteEnum).optional()`) and in its own `types.test.ts`. **No caller anywhere in Hust
+  sets it.** There is no code dependency to break — but every Hust request rides on whatever the
+  server default is.
+- The **only** consumer of `everJobsClient.searchJobs` is
+  `ever-hust/apps/web/app/api/jobs/sync/route.ts:58` — a **background corpus sync**, not an
+  interactive user path. Driven by a Trigger.dev schedule (with `.deploy/k8s/sync-cronjob.yaml` as
+  a suspended `SCHEDULER=cron` fallback) every 15 minutes, rotating one of 40 search terms per tick
+  (`packages/triggers/src/map-job.ts:117`) — a 10-hour full cycle.
+
+That inverts the trade-off. **A corpus builder wants breadth.** Narrowing the default to the
+11-site `defaults.siteNames` allowlist would silently shrink Hust's corpus by ~2 orders of
+magnitude, with no error and no signal. The wide fan-out was never the defect; the defect was that
+it had unbounded concurrency, no deadline, and enriched the whole corpus instead of the returned
+page. Specs 5025/5026 fix precisely those and preserve coverage. **Reject B.**
+
+**Option C (exclude ATS from the default) was also investigated and rejected.** The premise — "ATS
+sources can only return empty without a `companySlug`" — is *mostly* true but not universally:
+
+- 146 / 176 ATS plugins provably early-return an empty `JobResponseDto` when `companySlug` is
+  absent.
+- 3 never reference `companySlug` at all (`source-ats-deel`, `source-ats-fountain`,
+  `source-ats-hiringthing`).
+- `source-ats-deel` is a genuine **slug-less, org-wide** source: it fetches every posting for the
+  account via `DEEL_API_TOKEN` and needs no slug. It returns empty in the current deployment only
+  because no token is configured — which makes C a *deployment-dependent* behaviour cut, exactly
+  the kind of silent regression rule 9 exists to prevent.
+- The remaining ~27 are unverified.
+
+Since Spec 5026's concurrency bound already removes the *memory* harm of the wide fan-out, the only
+residual cost of dispatching mostly-inert ATS sources is CPU and socket churn — which 5026 also
+bounds. C would trade a real (if small) coverage risk for no meaningful memory gain. Not worth it.
+
+If ATS-exclusion is ever revisited, the right shape is a per-plugin `requiresCompanySlug` flag on
+the plugin metadata so the registry can filter on fact rather than on the `source-ats-*` naming
+convention.
 
 ---
 
