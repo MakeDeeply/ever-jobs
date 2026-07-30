@@ -246,14 +246,81 @@ function failingScraper(error = 'Network timeout'): IScraper {
 }
 
 /**
- * Create a JobsService instance with a custom scraperMap.
- * Bypasses the 182-arg constructor by using Object.create.
+ * Sites the stub registry reports as ATS (they require a `companySlug`).
+ * Mirrors the real `PluginRegistry.listAtsSites()` for the subset these
+ * tests exercise.
  */
-function createService(scraperEntries: [Site, IScraper][]): JobsService {
-  const service = Object.create(JobsService.prototype);
-  service.logger = { log: jest.fn(), warn: jest.fn(), error: jest.fn() };
-  service.scraperMap = new Map<Site, IScraper>(scraperEntries);
-  return service;
+const STUB_ATS_SITES: Site[] = [
+  Site.GREENHOUSE,
+  Site.LEVER,
+  Site.ASHBY,
+  Site.WORKABLE,
+  Site.SMARTRECRUITERS,
+  Site.WORKDAY,
+  Site.RIPPLING,
+];
+
+/**
+ * Create a JobsService instance over a stub PluginRegistry.
+ *
+ * Bypasses DI with `Object.create`. This harness previously set a
+ * `service.scraperMap` field that the service stopped using when it migrated
+ * to `PluginRegistry`, so every routing/tagging case in this file had been
+ * failing on `develop`; Spec 5026 repairs it (the service is being changed
+ * here anyway and the new fan-out cases need a working harness).
+ *
+ * `deadlineMs` defaults to `0` (disabled) so pre-existing cases are unaffected
+ * by the Spec 5026 deadline; the fan-out cases opt in explicitly.
+ */
+function createService(
+  scraperEntries: [Site, IScraper][],
+  overrides: { concurrency?: number; deadlineMs?: number } = {},
+): JobsService {
+  const scraperMap = new Map<Site, IScraper>(scraperEntries);
+  const service: any = Object.create(JobsService.prototype);
+
+  service.logger = {
+    log: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    debug: jest.fn(),
+  };
+
+  service.registry = {
+    size: scraperMap.size,
+    getScraper: (site: Site) => scraperMap.get(site),
+    listSiteKeys: () => [...scraperMap.keys()],
+    listAtsSites: () => STUB_ATS_SITES.filter((s) => scraperMap.has(s)),
+    listSources: () =>
+      [...scraperMap.keys()].map((site) => ({
+        site,
+        name: String(site),
+        category: 'job-board',
+      })),
+  };
+
+  service.configService = {
+    get: (key: string, def?: unknown) => {
+      if (key === 'retry') {
+        return {
+          defaultRetries: 0,
+          defaultDelayMs: 0,
+          defaultBackoff: 'linear',
+          perSource: {},
+        };
+      }
+      if (key === 'search.concurrency') return overrides.concurrency ?? 64;
+      if (key === 'search.deadlineMs') return overrides.deadlineMs ?? 0;
+      return def;
+    },
+  };
+
+  service.metrics = {
+    scraperDuration: { startTimer: () => () => undefined },
+    scraperRequestsTotal: { inc: jest.fn() },
+  };
+
+  return service as JobsService;
 }
 
 // ---------------------------------------------------------------------------
@@ -338,6 +405,132 @@ describe('JobsService', () => {
 
       expect(lever.scrape).toHaveBeenCalled();
       expect(result.length).toBe(1);
+    });
+  });
+
+  describe('searchJobs — bounded fan-out (Spec 5026)', () => {
+    interface Tracker {
+      inFlight: number;
+      peak: number;
+      started: number;
+    }
+
+    /** Scraper that records simultaneous in-flight calls. */
+    function trackingScraper(tracker: Tracker, delayMs: number): IScraper {
+      return {
+        scrape: jest.fn(async () => {
+          tracker.started++;
+          tracker.inFlight++;
+          tracker.peak = Math.max(tracker.peak, tracker.inFlight);
+          await new Promise((resolve) => setTimeout(resolve, delayMs));
+          tracker.inFlight--;
+          return new JobResponseDto([
+            new JobPostDto({
+              id: `job-${tracker.started}`,
+              title: 'Engineer',
+              companyName: 'Acme',
+              jobUrl: 'https://example.com/job',
+              isRemote: false,
+            }),
+          ]);
+        }),
+      };
+    }
+
+    function nSites(n: number): Site[] {
+      return (Object.values(Site) as Site[]).slice(0, n);
+    }
+
+    it('never exceeds the configured concurrency', async () => {
+      const tracker: Tracker = { inFlight: 0, peak: 0, started: 0 };
+      const sites = nSites(20);
+      const service = createService(
+        sites.map((s) => [s, trackingScraper(tracker, 10)] as [Site, IScraper]),
+        { concurrency: 4 },
+      );
+
+      const result = await service.searchJobs(
+        new ScraperInputDto({ searchTerm: 'node', siteType: sites }),
+      );
+
+      expect(tracker.peak).toBeLessThanOrEqual(4);
+      // Sanity: the pool really is parallel, not accidentally serialised.
+      expect(tracker.peak).toBeGreaterThan(1);
+      // Every source still ran and every result is still collected.
+      expect(tracker.started).toBe(20);
+      expect(result).toHaveLength(20);
+    });
+
+    it('a concurrency of 1 serialises the fan-out', async () => {
+      const tracker: Tracker = { inFlight: 0, peak: 0, started: 0 };
+      const sites = nSites(5);
+      const service = createService(
+        sites.map((s) => [s, trackingScraper(tracker, 2)] as [Site, IScraper]),
+        { concurrency: 1 },
+      );
+
+      await service.searchJobs(
+        new ScraperInputDto({ searchTerm: 'node', siteType: sites }),
+      );
+
+      expect(tracker.peak).toBe(1);
+      expect(tracker.started).toBe(5);
+    });
+
+    it('stops starting new sources once the deadline is exceeded', async () => {
+      const tracker: Tracker = { inFlight: 0, peak: 0, started: 0 };
+      const sites = nSites(12);
+      const service = createService(
+        sites.map((s) => [s, trackingScraper(tracker, 30)] as [Site, IScraper]),
+        { concurrency: 1, deadlineMs: 60 },
+      );
+
+      const result = await service.searchJobs(
+        new ScraperInputDto({ searchTerm: 'node', siteType: sites }),
+      );
+
+      // Serialised at 30ms each with a 60ms budget: a couple run, the rest are
+      // drained as skipped rather than dispatched.
+      expect(tracker.started).toBeGreaterThan(0);
+      expect(tracker.started).toBeLessThan(12);
+      // Whatever DID complete is still returned — the deadline sheds work, it
+      // does not fail the request.
+      expect(result).toHaveLength(tracker.started);
+    });
+
+    it('deadlineMs=0 disables the deadline (every source runs)', async () => {
+      const tracker: Tracker = { inFlight: 0, peak: 0, started: 0 };
+      const sites = nSites(8);
+      const service = createService(
+        sites.map((s) => [s, trackingScraper(tracker, 5)] as [Site, IScraper]),
+        { concurrency: 2, deadlineMs: 0 },
+      );
+
+      await service.searchJobs(
+        new ScraperInputDto({ searchTerm: 'node', siteType: sites }),
+      );
+
+      expect(tracker.started).toBe(8);
+    });
+
+    it('a failing source does not stall the pool or drop its peers', async () => {
+      const tracker: Tracker = { inFlight: 0, peak: 0, started: 0 };
+      const sites = nSites(6);
+      const entries = sites.map(
+        (s, i) =>
+          [s, i === 2 ? failingScraper('boom') : trackingScraper(tracker, 2)] as [
+            Site,
+            IScraper,
+          ],
+      );
+      const service = createService(entries, { concurrency: 2 });
+
+      const result = await service.searchJobs(
+        new ScraperInputDto({ searchTerm: 'node', siteType: sites }),
+      );
+
+      expect(tracker.started).toBe(5);
+      expect(result).toHaveLength(5);
     });
   });
 

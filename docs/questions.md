@@ -10,6 +10,45 @@
 
 ---
 
+## Q-OOM-1 — Should the default search fan out to the ENTIRE source catalogue?
+
+**Context:** Spec 5026, production OOMKill triage. `ScraperInputDto`'s constructor sets
+`this.siteType = Object.values(Site)`, and `main.ts` runs `ValidationPipe({ transform: true })`,
+which constructs the DTO. So `input.siteType` is **never** empty, `JobsService.searchJobs` always
+takes the *explicit* branch, and the ATS-exclusion fallback at `jobs.service.ts:73-77` is
+unreachable in practice. Every default search therefore dispatches ~1 800 sources — including ATS
+sources that cannot return anything without a `companySlug`.
+
+Meanwhile `defaults.siteNames` (`configuration.ts`, 11 sites, env `DEFAULT_SITE_NAMES`) exists,
+is documented in the Dockerfile and compose files as the search default, and has **no consumers** —
+`rg "siteNames"` matches only its own definition.
+
+Narrowing the default is the single largest available reduction in raw job volume, cache entry
+size, socket count and peak memory (~1 800 → 11 sources, roughly 150×). But it changes what results
+callers get back, so it is **not** a safe unilateral change.
+
+**Options:**
+
+- **A. Leave the constructor default; bound concurrency and add a fan-out deadline only.**
+  Peak memory becomes O(concurrency) instead of O(sources), but a catalogue-wide search still
+  serialises into ~28 waves and a default search still touches every ATS plugin for nothing.
+- **B. Drop `this.siteType = Object.values(Site)` and fall back to `defaults.siteNames`
+  (minus ATS) when no sites are requested.** Restores the routing the code was clearly written to
+  express, and makes the Dockerfile/compose `DEFAULT_SITE_NAMES` documentation true. Changes
+  observable results for any caller relying on the implicit all-sources behaviour.
+- **C. Keep the wide default but exclude ATS sources from it.** Middle ground: drops ~176
+  guaranteed-empty dispatches without changing which *search* sources are consulted.
+
+**Default (proceeding):** **A** — shipped in Spec 5026. B is the real fix but needs confirmation
+from the Hust side that it does not depend on the implicit all-sources behaviour, so it is left as
+task T10 rather than taken unilaterally (AGENTS.md rule 9 / workspace rule 9: never remove
+behaviour without an explicit yes).
+
+**Resolution:** _pending — human owner to confirm whether any caller relies on the implicit
+all-sources default._
+
+---
+
 ## Q-WORKABLE-1 — Workable board-name anchor + empty-but-real accounts
 
 **Context:** Spec 1677. The public Workable widget API

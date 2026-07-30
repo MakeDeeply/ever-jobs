@@ -10,6 +10,37 @@ import { PluginRegistry, CircuitBreakerInterceptor } from '@ever-jobs/plugin';
 import { MetricsService } from '../metrics/metrics.service';
 
 /**
+ * Default ceiling on simultaneously-dispatched sources (Spec 5026).
+ *
+ * Chosen to bound peak memory without materially regressing latency for the
+ * *narrow* selections that dominate real traffic. Peak in-flight state becomes
+ * `concurrency × (response body + parsed DOM + result array)` instead of
+ * `sources × (…)` — with the catalogue at ~1.8k sources that is roughly a
+ * 28× reduction in worst-case simultaneous allocation.
+ *
+ * Note the trade-off: for a genuinely catalogue-wide search this serialises
+ * work into ~28 waves, so wall-clock goes up. The real fix for width is to
+ * stop defaulting `siteType` to the entire catalogue (see the spec's
+ * follow-up) — this constant is the safety net, not the cure.
+ *
+ * Override with `EVER_JOBS_SEARCH_CONCURRENCY`.
+ */
+export const DEFAULT_SEARCH_CONCURRENCY = 64;
+
+/**
+ * Default wall-clock budget for one fan-out, milliseconds (Spec 5026).
+ *
+ * Matches the Hust client's own abort (`DEFAULT_FETCH_TIMEOUT_MS = 120_000`):
+ * past this point nobody is waiting for the answer, so continuing to schedule
+ * sources only burns memory in a handler whose response will be discarded.
+ * Sources already in flight are allowed to finish.
+ *
+ * `0` (or negative) disables the deadline. Override with
+ * `EVER_JOBS_SEARCH_DEADLINE_MS`.
+ */
+export const DEFAULT_SEARCH_DEADLINE_MS = 120_000;
+
+/**
  * Central orchestration service for job searching.
  *
  * All individual scraper injections have been replaced by a single
@@ -93,67 +124,91 @@ export class JobsService implements OnModuleInit {
       return [];
     }
 
-    this.logger.log(`Running ${selectedScrapers.length} scrapers concurrently: ${selectedScrapers.map((s) => s.site).join(', ')}`);
+    // Spec 5026 — bounded fan-out. Previously this was a bare
+    // `Promise.allSettled(selectedScrapers.map(...))`, i.e. every selected
+    // source dispatched at once. Because `ScraperInputDto`'s constructor
+    // defaults `siteType` to `Object.values(Site)` and `ValidationPipe({
+    // transform: true })` runs that constructor, the default selection is the
+    // ENTIRE catalogue — so a single request opened ~1.8k concurrent HTTP
+    // conversations and held every response body, parsed DOM and result array
+    // in memory simultaneously. Peak memory is now O(concurrency), not
+    // O(sources).
+    const concurrency = Math.max(
+      1,
+      this.configService.get<number>('search.concurrency', DEFAULT_SEARCH_CONCURRENCY),
+    );
+    const deadlineMs = this.configService.get<number>(
+      'search.deadlineMs',
+      DEFAULT_SEARCH_DEADLINE_MS,
+    );
+    const deadlineAt =
+      deadlineMs > 0 ? Date.now() + deadlineMs : Number.POSITIVE_INFINITY;
 
-    // Run all scrapers concurrently using Promise.allSettled
-    const results = await Promise.allSettled(
-      selectedScrapers.map(async ({ site, scraper }) => {
-        // Resolve retry policy for this source
-        const globalRetry = this.configService.get('retry');
-        const perSourceRetry = globalRetry.perSource?.[site] || {};
-        
-        const scraperInput = new ScraperInputDto({
-          ...input,
-          retries: input.retries ?? perSourceRetry.retries ?? globalRetry.defaultRetries,
-          retryDelay: input.retryDelay ?? perSourceRetry.delayMs ?? globalRetry.defaultDelayMs,
-          retryBackoff: input.retryBackoff ?? perSourceRetry.backoff ?? globalRetry.defaultBackoff,
-          retryMaxDelay: input.retryMaxDelay ?? perSourceRetry.maxDelayMs ?? 30000,
-        });
-
-        this.logger.log(`Starting search for ${site} (retries=${scraperInput.retries}, backoff=${scraperInput.retryBackoff})`);
-        const scraperStop = this.metrics.scraperDuration.startTimer({ site });
-        try {
-          // Spec 005 / T04 — wrap the per-source dispatch in the circuit
-          // breaker when bound. The interceptor short-circuits with
-          // `ERR_SOURCE_CIRCUIT_OPEN` once the breaker has tripped, which
-          // we surface as a `circuit_open` metric status (not `error`) so
-          // operators can distinguish "source down" from "we stopped
-          // calling source" on the dashboard.
-          const response = this.circuitBreaker
-            ? await this.circuitBreaker.wrap(site, () => scraper.scrape(scraperInput))
-            : await scraper.scrape(scraperInput);
-          scraperStop();
-          this.metrics.scraperRequestsTotal.inc({ site, status: 'success' });
-          // Tag each job with the site it came from
-          for (const job of response.jobs) {
-            job.site = site;
-          }
-          this.logger.log(`${site}: found ${response.jobs.length} jobs`);
-          return response;
-        } catch (err: any) {
-          scraperStop();
-          const isCircuitOpen = err?.code === ERR_SOURCE_CIRCUIT_OPEN;
-          this.metrics.scraperRequestsTotal.inc({
-            site,
-            status: isCircuitOpen ? 'circuit_open' : 'error',
-          });
-          if (isCircuitOpen) {
-            // Breaker short-circuits are an *expected* fan-out outcome
-            // for a degraded source — log at warn, not error, and keep
-            // the message terse so logs stay readable.
-            this.logger.warn(`${site}: skipped (circuit open)`);
-          } else {
-            this.logger.error(`${site} search failed: ${err.message}`);
-          }
-          throw err;
-        }
-      }),
+    this.logger.log(
+      `Running ${selectedScrapers.length} scrapers (concurrency ${concurrency}, ` +
+        `deadline ${deadlineMs > 0 ? `${deadlineMs}ms` : 'none'}): ` +
+        `${selectedScrapers.map((s) => s.site).join(', ')}`,
     );
 
+    const results: PromiseSettledResult<JobResponseDto>[] = new Array(
+      selectedScrapers.length,
+    );
+    let cursor = 0;
+    let skipped = 0;
+
+    // Shared-cursor worker pool — same shape as
+    // `LivenessHttpService.checkBatch` (Spec 721), which is the established
+    // in-repo pattern for bounded fan-out.
+    const worker = async (): Promise<void> => {
+      for (;;) {
+        const index = cursor++;
+        if (index >= selectedScrapers.length) return;
+
+        const { site, scraper } = selectedScrapers[index];
+
+        // Past the deadline we stop STARTING work and drain the remaining
+        // queue as skipped. Already-running scrapers are left to finish (they
+        // carry their own per-source timeouts and retry budgets); the point is
+        // to bound how long the handler can live, not to abandon in-flight
+        // sockets mid-read.
+        if (Date.now() >= deadlineAt) {
+          skipped++;
+          this.metrics.scraperRequestsTotal.inc({ site, status: 'deadline_skipped' });
+          results[index] = {
+            status: 'rejected',
+            reason: new Error(`${site}: skipped (search deadline exceeded)`),
+          };
+          continue;
+        }
+
+        try {
+          results[index] = {
+            status: 'fulfilled',
+            value: await this.scrapeOne(site, scraper, input),
+          };
+        } catch (err) {
+          results[index] = { status: 'rejected', reason: err };
+        }
+      }
+    };
+
+    await Promise.allSettled(
+      Array.from({ length: Math.min(concurrency, selectedScrapers.length) }, () =>
+        worker(),
+      ),
+    );
+
+    if (skipped > 0) {
+      this.logger.warn(
+        `Search deadline (${deadlineMs}ms) exceeded — skipped ${skipped} of ` +
+          `${selectedScrapers.length} sources. Raise EVER_JOBS_SEARCH_DEADLINE_MS ` +
+          `or narrow siteType to cover more of the catalogue.`,
+      );
+    }
     // Aggregate results from fulfilled searches
     const allJobs: JobPostDto[] = [];
     for (const result of results) {
-      if (result.status === 'fulfilled') {
+      if (result?.status === 'fulfilled') {
         allJobs.push(...result.value.jobs);
       }
     }
@@ -175,6 +230,67 @@ export class JobsService implements OnModuleInit {
 
     this.logger.log(`Total aggregated jobs: ${allJobs.length}`);
     return allJobs;
+  }
+
+  /**
+   * Dispatch a single source. Extracted from the fan-out loop by Spec 5026 so
+   * the worker pool has a plain unit of work to schedule; the body is
+   * unchanged from the prior inline closure.
+   */
+  private async scrapeOne(
+    site: Site,
+    scraper: IScraper,
+    input: ScraperInputDto,
+  ): Promise<JobResponseDto> {
+    // Resolve retry policy for this source
+    const globalRetry = this.configService.get('retry');
+    const perSourceRetry = globalRetry.perSource?.[site] || {};
+
+    const scraperInput = new ScraperInputDto({
+      ...input,
+      retries: input.retries ?? perSourceRetry.retries ?? globalRetry.defaultRetries,
+      retryDelay: input.retryDelay ?? perSourceRetry.delayMs ?? globalRetry.defaultDelayMs,
+      retryBackoff: input.retryBackoff ?? perSourceRetry.backoff ?? globalRetry.defaultBackoff,
+      retryMaxDelay: input.retryMaxDelay ?? perSourceRetry.maxDelayMs ?? 30000,
+    });
+
+    this.logger.log(`Starting search for ${site} (retries=${scraperInput.retries}, backoff=${scraperInput.retryBackoff})`);
+    const scraperStop = this.metrics.scraperDuration.startTimer({ site });
+    try {
+      // Spec 005 / T04 — wrap the per-source dispatch in the circuit
+      // breaker when bound. The interceptor short-circuits with
+      // `ERR_SOURCE_CIRCUIT_OPEN` once the breaker has tripped, which
+      // we surface as a `circuit_open` metric status (not `error`) so
+      // operators can distinguish "source down" from "we stopped
+      // calling source" on the dashboard.
+      const response = this.circuitBreaker
+        ? await this.circuitBreaker.wrap(site, () => scraper.scrape(scraperInput))
+        : await scraper.scrape(scraperInput);
+      scraperStop();
+      this.metrics.scraperRequestsTotal.inc({ site, status: 'success' });
+      // Tag each job with the site it came from
+      for (const job of response.jobs) {
+        job.site = site;
+      }
+      this.logger.log(`${site}: found ${response.jobs.length} jobs`);
+      return response;
+    } catch (err: any) {
+      scraperStop();
+      const isCircuitOpen = err?.code === ERR_SOURCE_CIRCUIT_OPEN;
+      this.metrics.scraperRequestsTotal.inc({
+        site,
+        status: isCircuitOpen ? 'circuit_open' : 'error',
+      });
+      if (isCircuitOpen) {
+        // Breaker short-circuits are an *expected* fan-out outcome
+        // for a degraded source — log at warn, not error, and keep
+        // the message terse so logs stay readable.
+        this.logger.warn(`${site}: skipped (circuit open)`);
+      } else {
+        this.logger.error(`${site} search failed: ${err.message}`);
+      }
+      throw err;
+    }
   }
 
   /**

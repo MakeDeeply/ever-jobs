@@ -62,6 +62,21 @@ export default () => {
       maxItems: parseInt(process.env.CACHE_MAX_ITEMS, 500),
     },
 
+    // Search fan-out bounds (Spec 5026)
+    search: {
+      /**
+       * Max sources dispatched simultaneously by `JobsService.searchJobs`.
+       * Peak memory is O(concurrency), not O(selected sources).
+       */
+      concurrency: parseInt(process.env.EVER_JOBS_SEARCH_CONCURRENCY, 64),
+      /**
+       * Wall-clock budget for one fan-out, ms. Once exceeded, no further
+       * sources are STARTED (in-flight ones finish). `0` disables.
+       * Defaults to the Hust client's own 120 s abort.
+       */
+      deadlineMs: parseInt(process.env.EVER_JOBS_SEARCH_DEADLINE_MS, 120_000),
+    },
+
     // Retry policies
     retry: {
       defaultRetries: parseInt(process.env.RETRY_DEFAULT_RETRIES, 3),
