@@ -318,6 +318,20 @@ export class InMemoryJobStore
       this.canonicals.delete(oldest);
       this.observations.delete(oldest);
     }
+
+    // `observations` must ALSO be bounded on its own, not only via the
+    // cascade above. `JobsAggregator.maybePersist` calls `upsertMany(batch)`
+    // and then `putAll(id, …)` for **every** id in that batch — so when a
+    // batch is larger than the cap, the ids `upsertMany` just evicted get
+    // their observations written straight back by the following `putAll`
+    // loop. Those orphans have no canonical to cascade from, so a
+    // cascade-only trim would let `observations` grow without limit and
+    // simply relocate the leak this cap exists to close.
+    while (this.observations.size > this.rowCap) {
+      const oldest = this.observations.keys().next().value;
+      if (oldest === undefined) break;
+      this.observations.delete(oldest);
+    }
   }
 
   async getById(id: string): Promise<CanonicalJob | null> {
@@ -395,6 +409,10 @@ export class InMemoryJobStore
     // (and vice-versa). The dedup engine is the single writer per
     // Spec 003 / FR-1, but defensive copy is cheap (~N pointers).
     this.observations.set(canonicalJobId, observations.slice());
+    // Spec 5024 — `putAll` is a write path into an unbounded Map, so it has to
+    // respect the cap too. See `trimRows()` for why the cascade alone is not
+    // enough when a persisted batch exceeds the cap.
+    this.trimRows();
   }
 
   async listByCanonicalId(
@@ -563,6 +581,16 @@ export class InMemoryJobStore
    */
   get rowCapacity(): number {
     return this.rowCap;
+  }
+
+  /**
+   * Number of canonical ids currently holding an observation array.
+   * Diagnostic-only seam — `observations` is bounded independently of
+   * `canonicals` (see {@link trimRows}), so it needs its own counter to be
+   * observable.
+   */
+  get observationCount(): number {
+    return this.observations.size;
   }
 
   /**

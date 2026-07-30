@@ -318,6 +318,36 @@ describe('store-memory plugin (Spec 004 / T06)', () => {
       expect(() => store.setRowCap(Number.NaN)).toThrow(RangeError);
     });
 
+    it('observations stay bounded when a batch exceeds the cap (orphan write-back)', async () => {
+      // Regression guard for the exact JobsAggregator.maybePersist sequence:
+      //   upsertMany(batch)  → evicts the oldest ids in the batch
+      //   putAll(id, …) for EVERY id in the batch → writes the evicted ids
+      //                                             straight back
+      // A cascade-only trim would let `observations` grow without limit and
+      // just relocate the leak the cap exists to close.
+      const store = new InMemoryJobStore();
+      store.setRowCap(10);
+
+      const observation = (id: string) => ({
+        site: Site.LINKEDIN,
+        sourceJobId: `s-${id}`,
+        url: `https://example.com/${id}`,
+        observedAt: '2026-01-01T00:00:00.000Z',
+      });
+
+      for (let round = 0; round < 5; round++) {
+        const batch = Array.from({ length: 100 }, (_, i) => job(`r${round}-j${i}`));
+        await store.upsertMany(batch);
+        // The aggregator does not filter by what survived the upsert.
+        for (const c of batch) {
+          await store.putAll(c.canonicalJobId, [observation(c.canonicalJobId)]);
+        }
+      }
+
+      expect(store.size).toBeLessThanOrEqual(10);
+      expect(store.observationCount).toBeLessThanOrEqual(10);
+    });
+
     it('re-upserting an existing id does not grow the map past the cap', async () => {
       const store = new InMemoryJobStore();
       store.setRowCap(2);

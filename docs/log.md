@@ -58,6 +58,16 @@ positionally into the `livenessRaw` slot because Spec 740 added two params and t
 updated, so `parseBool` threw `v.toLowerCase is not a function`. Verified broken on a clean
 `origin/develop` before touching it.
 
+**Follow-up commit (Greptile P1, confirmed).** The first cut trimmed `observations` only via the
+cascade from an evicted canonical. That is not enough: `JobsAggregator.maybePersist` runs
+`upsertMany(batch)` and then calls `putAll(id, …)` for **every** id in that batch, so when a batch
+exceeds the cap the ids `upsertMany` just evicted get their observations written straight back, with
+no canonical left to cascade from. `observations` would have grown without limit — relocating the
+very leak the cap exists to close. Fixed by bounding `observations` independently inside
+`trimRows()` and calling `trimRows()` from `putAll()`. Measured: 5 rounds of a 100-job batch against
+a cap of 10 leaves **460** observation entries before the fix and ≤ 10 after; the new regression
+test was verified to fail without it.
+
 **Known-unrelated failure left alone:** `apps/api/src/cache/__tests__/cache.service.spec.ts` →
 "should clear all entries" fails on clean `origin/develop` too (`cacheManager.clear()` does not
 evict under cache-manager v7 / Keyv). Out of scope here; filed as a follow-up because it also means

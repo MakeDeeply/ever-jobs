@@ -72,6 +72,20 @@ same treatment.
 | `InMemoryJobStore.setRowCap(n)` | Throws `RangeError` on non-positive / non-finite. Trims immediately. |
 | `InMemoryJobStore.rowCapacity` | Resolved cap, diagnostics only. |
 | Eviction order | **First-insert-first-out, not LRU.** `Map.set` on an existing key does not move it in iteration order. Documented as a safety valve, not a cache policy. |
+| `observations` bound | Enforced **independently** of `canonicals`, not only by cascade — see below. |
+
+### Why `observations` needs its own bound
+
+`JobsAggregator.maybePersist` runs `upsertMany(batch)` and then calls
+`putAll(id, …)` for **every** id in that batch. When a batch exceeds the cap,
+`upsertMany` evicts some of the ids it just inserted — and the following
+`putAll` loop writes their observations straight back. Those orphans have no
+canonical left to cascade from, so a cascade-only trim would let `observations`
+grow without limit and merely relocate the leak this cap exists to close.
+
+Measured: 5 rounds of a 100-job batch against a cap of 10 leaves **460**
+observation entries with a cascade-only trim, and ≤ 10 with the independent
+bound. `putAll` therefore calls `trimRows()` as well.
 
 ## Test plan
 
@@ -83,6 +97,10 @@ Unit (`packages/plugins/store-memory/__tests__/store-memory.spec.ts`):
   using `if` instead of `while` (one search can upsert tens of thousands).
 - Trim cascades into `observations` (dropping a canonical alone frees nothing,
   because `putAll` stores a shallow `.slice()`).
+- **Orphan write-back guard** — replays the exact `maybePersist` sequence
+  (`upsertMany(100)` then `putAll` for all 100) five times against a cap of 10
+  and asserts both maps stay bounded. Verified to fail (460 observations) with
+  the independent `observations` bound removed.
 - `setRowCap` trims immediately; rejects `0` / negative / `NaN`.
 - Re-upserting an existing id does not grow past the cap.
 
