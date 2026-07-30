@@ -15,6 +15,47 @@
 
 ---
 
+## 2026-07-31 — Incident response (**prod deploy config** — heap headroom + QoS + Spec 5024 store env)
+
+**Scope:** Human-directed incident work. Deployment configuration only — no application code. Lands
+the operator-side half of the OOMKill fix that Specs 5024–5026 cover in code.
+
+**`NODE_OPTIONS` 3584 → 2560 MiB (+ `--heapsnapshot-near-heap-limit=1`).** The old value was 87.5%
+of the 4096 MiB cgroup limit, leaving ~512 MiB for everything V8's old space does not account for:
+the young generation, code/metadata space, and — dominant here — **external** memory, since the HTTP
+response Buffers held by a wide scraper fan-out are off-heap. So RSS crossed 4096 MiB while old
+space was still under 3584 MiB and the kernel SIGKILLed the container (exit 137) before V8 ever felt
+enough pressure to run an emergency full GC. That is why the OOM presented as a silent restart with
+no `JavaScript heap out of memory` stack. At 2560 MiB, heap + young gen + ~400 MiB external ≈ 3.1
+GiB, so V8 now hits *its* ceiling first and fails diagnosably, writing one heap snapshot on the way
+down. **Note this makes a genuine leak surface sooner, not later** — it is diagnostics, and is only
+safe shipped alongside 5024–5026.
+
+**`requests.memory` 1Gi → 2Gi.** A 1Gi request against a 4Gi limit puts the pod deep in Burstable
+QoS, making it an early eviction candidate under node memory pressure — a second, differently-shaped
+restart path that muddies triage. The steady-state floor (1 816 plugin modules + Nest DI +
+prom-client) is ~300–400 MiB before a single request, so 1Gi was under-requesting anyway.
+
+**`EVER_JOBS_PERSIST_SEARCH=false` + `EVER_JOBS_STORE_MAX_ROWS=50000`.** The deployment decision
+Spec 5024 deliberately left to the operator. Both are no-ops until 5024 ships (unknown env vars are
+ignored), so the manifest is safe to apply in either order.
+
+**Deliberately NOT changed, after auditing the actual caller:**
+
+- **`CACHE_MAX_ITEMS`.** Earlier triage suggested dropping it 500 → 20. Auditing the workload shows
+  that is inert: the only consumer is Hust's 15-minute corpus sync, which rotates one search term
+  per tick through a list of 40, so the cache accumulates ~4 new keys/hour against a 1-hour TTL —
+  a steady state of ~4–8 entries. A cap of 20 would never bind. The cache's cost here is entry
+  **size**, not count, and Spec 5026's fan-out bound is what reduces that.
+- **`EVER_JOBS_REQUEST_SIGNALS=false` on Hust.** Earlier triage called this the biggest immediate
+  win. Withdrawn: `packages/triggers/src/map-job.ts:42-44` persists `liveness`, `legitimacy` and
+  `legitimacyReasons` into Hust's `jobs` table, and `apps/web/lib/freshness.ts` /
+  `legitimacy.ts` treat the corpus signal as authoritative over their date heuristics. Disabling it
+  would null out real product data. Spec 5025 removes the waste *without* the data loss — the sync
+  requests `pageSize` 80–200 and now only that page is probed instead of the whole corpus.
+
+---
+
 ## 2026-07-06 — Scheduled run #445 (**Workable company-source pipeline foundation** — Spec 1677; first batch deferred to next run by an external rate-limit)
 
 **Scope:** Opened a **sixth**, deterministic **Workable-backed** company-source pipeline — the
