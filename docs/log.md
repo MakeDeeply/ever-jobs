@@ -15,7 +15,7 @@
 
 ---
 
-## 2026-07-31 — Incident response (**prod deploy config** — heap headroom + QoS + Spec 5024 store env)
+### Prod deploy config — heap headroom, QoS, store env, deploy workflow
 
 **Scope:** Human-directed incident work. Deployment configuration only — no application code. Lands
 the operator-side half of the OOMKill fix that Specs 5024–5026 cover in code.
@@ -77,6 +77,162 @@ generate the secret; it has to come from a current `doctl kubernetes cluster kub
   `legitimacy.ts` treat the corpus signal as authoritative over their date heuristics. Disabling it
   would null out real product data. Spec 5025 removes the waste *without* the data loss — the sync
   requests `pageSize` 80–200 and now only that page is probed instead of the whole corpus.
+### Spec 5026 — bounded fan-out
+
+**Scope:** Human-directed incident work, not a scheduled run. Third of three contributors to the
+production 4Gi OOMKill (Specs 5024 and 5025 cover the first two).
+
+**Root cause (Spec 5026).** `JobsService.searchJobs` dispatched every selected source at once —
+a bare `Promise.allSettled(selectedScrapers.map(...))` with no concurrency limiter and no time
+budget. Two things make that severe. First, the default selection is the **entire catalogue**:
+`ScraperInputDto`'s constructor sets `this.siteType = Object.values(Site)` and `main.ts` runs
+`ValidationPipe({ transform: true })`, which constructs the DTO, so `input.siteType` is never empty,
+`searchJobs` always takes the *explicit* branch, and the ATS-exclusion fallback at
+`jobs.service.ts:73-77` is unreachable in practice — ~1 800 concurrent HTTP conversations per
+request, each holding a response body, a parsed DOM and a result array. Second, nothing bounds
+handler lifetime: the Hust client aborts at 120 s and retries twice, but Node does not cancel a Nest
+handler on client disconnect, so abandoned handlers keep running and keep holding their full object
+graph. AGENTS.md §6 already mandates bounded concurrency; the fan-out simply predates it.
+(`ScraperInputDto.maxConcurrentCompanies` exists but has zero consumers.)
+
+**Change.** Extracted the per-source closure into `scrapeOne(site, scraper, input)` with its body
+copied verbatim — retry-policy resolution, circuit-breaker wrap, duration timer, metric increments,
+site tagging, error branch — so the reviewable diff is scheduling only. Replaced the fan-out with a
+shared-cursor worker pool of width `search.concurrency`, the same shape as
+`LivenessHttpService.checkBatch` (Spec 721), writing results **by input index** so ordering and the
+downstream site/date sort are unchanged. Added a wall-clock budget `search.deadlineMs`: each worker
+checks it before *starting* an item and drains the remainder as skipped rather than dispatching
+them. In-flight sources are deliberately left to finish — they carry their own timeouts and retry
+budgets, and aborting a socket mid-read gains little. Skipped sources increment
+`ever_jobs_scraper_requests_total{status="deadline_skipped"}` and produce one `warn` with the count;
+whatever completed is still returned, so the deadline sheds work rather than failing the request.
+
+Defaults: `EVER_JOBS_SEARCH_CONCURRENCY=64`, `EVER_JOBS_SEARCH_DEADLINE_MS=120000` (matching the
+Hust client's own abort; `0` disables). Peak memory becomes O(concurrency), not O(sources).
+
+**Explicit trade-off.** For a genuinely catalogue-wide search, capping at 64 serialises the work
+into ~28 waves, so wall-clock rises. That is the intended exchange. **`server.requestTimeout` was
+considered and rejected**: it caps how long the server waits to *receive* a request, not how long a
+handler may run, so it would not have stopped a 20-minute fan-out.
+
+**Harness repair.** `jobs.service.spec.ts`'s `createService` set `service.scraperMap`, a field the
+service stopped reading when it migrated to `PluginRegistry` — all 9 routing / tagging / error
+cases had been failing on clean `origin/develop`. Replaced with stub `registry` / `configService` /
+`metrics`; `deadlineMs` defaults to `0` in the harness so pre-existing cases are unaffected. Suite
+goes 69/78 → 83/83 (5 new fan-out cases: concurrency ceiling, serialisation at 1, deadline sheds
+work, `deadlineMs=0` disables, a failing source does not stall its peers).
+
+**Deliberately NOT done — Q-OOM-1.** Narrowing the default `siteType` from the whole catalogue to
+the existing 11-site `defaults.siteNames` allowlist is the single largest available reduction
+(~150× in raw job volume, cache entry size, socket count and peak memory) and would make the
+Dockerfile/compose `DEFAULT_SITE_NAMES` documentation true — `defaults.siteNames` currently has no
+consumers at all. But it changes what results callers get back, so per AGENTS.md rule 9 it needs
+Hust-side confirmation first. Logged as Q-OOM-1 with options A/B/C, default A proceeding, and as
+task T10.
+## 2026-07-30 — Incident response (**production OOMKill triage** — Specs 5024–5026)
+
+One incident, tracked as a single dated entry; each contributing cause has its own spec and PR.
+
+### Spec 5024 — bounded store retention
+
+**Scope:** Human-directed incident work, not a scheduled run. The production API
+(`.deploy/k8s/k8s-manifest.prod.yaml`, `limits.memory: 4Gi`, `replicas: 1`) is being OOMKilled on
+a repeating cycle. A code audit identified the dominant *monotone* retainer and this spec fixes it.
+
+**Root cause (Spec 5024).** `EVER_JOBS_STORE` is not set in the Dockerfile, either compose file, or
+the k8s manifest, so `resolveStoreBootstrap()` falls through to `DEFAULT_STORE_ID = 'memory'` and
+`app.module.ts` binds `InMemoryJobStore` under `JOB_STORE_TOKEN`, `JOB_OBSERVATION_STORE_TOKEN`
+and `HEALTH_SNAPSHOT_STORE_TOKEN`. `JobsController.searchJobs` calls `aggregateRaw(rawJobs,
+{ dedup })` without a `persist` key and `JobsAggregator.maybePersist` reads `options.persist ??
+true`, so **every** search — including cache hits, since the call sits outside the cache
+`if/else` — upserts its whole post-dedup corpus. `InMemoryJobStore.canonicals` and `.observations`
+are plain `Map`s with no cap, no TTL, no LRU and no sweep; the only `delete`/`clear` call sites in
+the repo are tests. A `CanonicalJob` holds its winning source job's `description` **by reference**,
+so each retained row pins a full markdown description. Nothing in `apps/api` reads the corpus back
+(`listByQuery` / `getById` / `findByCanonicalId` have zero non-test callers) — it is a pure
+write-only sink that grows for the process lifetime. The same class has capped its `snapshots` ring
+since Spec 005 / T09; the job maps were simply never given the same treatment.
+
+**Changes.** (1) `packages/plugins/store-memory` gains `DEFAULT_ROW_CAP` (50 000, overridable via
+`EVER_JOBS_STORE_MAX_ROWS`), `resolveRowCap()`, a `rowCapacity` getter, a `setRowCap()` seam, and
+`trimRows()` — a `while` loop (not `if`: one `upsertMany` can overshoot by tens of thousands) that
+evicts first-insert-first-out and **cascades into `observations`**, since `putAll` stores a shallow
+`.slice()` and dropping a canonical alone would free almost nothing. Trim runs once per batch, not
+per row, to avoid O(n²) against the Map iterator. Eviction is FIFO, **not LRU** — documented
+explicitly, it is a safety valve rather than a cache policy. (2) `apps/api` gains
+`store.persistSearch` (`EVER_JOBS_PERSIST_SEARCH`, **default `true`**) and `store.maxRows`, threaded
+through `JobsController` and `JobsResolver` (both gain a `ConfigService` dep). (3)
+`resolveStoreBootstrap()` emits a startup `WARN` when `NODE_ENV=production` resolves the `memory`
+backend — reaching a "dev / tests" backend by *omission* should not first surface in a post-mortem.
+
+Additive per AGENTS.md rule 9: no default changes. Growth becomes *bounded*; flipping
+`EVER_JOBS_PERSIST_SEARCH=false` in the manifest is a deployment decision recorded in the PR.
+
+**Tests.** 9 new unit cases (cap default/override/junk matrix, oldest-first trim, over-cap batch
+regression guard, observation cascade, `setRowCap` validation, idempotent re-upsert, persist-flag
+pass-through both ways). Also repaired a **pre-existing** failure in
+`apps/api/src/jobs/__tests__/jobs.controller.spec.ts`: the CSV-export case passed `mockRes`
+positionally into the `livenessRaw` slot because Spec 740 added two params and the call was never
+updated, so `parseBool` threw `v.toLowerCase is not a function`. Verified broken on a clean
+`origin/develop` before touching it.
+
+**Follow-up commit (Greptile P1, confirmed).** The first cut trimmed `observations` only via the
+cascade from an evicted canonical. That is not enough: `JobsAggregator.maybePersist` runs
+`upsertMany(batch)` and then calls `putAll(id, …)` for **every** id in that batch, so when a batch
+exceeds the cap the ids `upsertMany` just evicted get their observations written straight back, with
+no canonical left to cascade from. `observations` would have grown without limit — relocating the
+very leak the cap exists to close. Fixed by bounding `observations` independently inside
+`trimRows()` and calling `trimRows()` from `putAll()`. Measured: 5 rounds of a 100-job batch against
+a cap of 10 leaves **460** observation entries before the fix and ≤ 10 after; the new regression
+test was verified to fail without it.
+
+**Known-unrelated failure left alone:** `apps/api/src/cache/__tests__/cache.service.spec.ts` →
+"should clear all entries" fails on clean `origin/develop` too (`cacheManager.clear()` does not
+evict under cache-manager v7 / Keyv). Out of scope here; filed as a follow-up because it also means
+`CacheService.clear()` is not a usable operational escape hatch.
+
+**Follow-ups:** Specs 5025 (enrichment scope) and 5026 (request-lifecycle bounds) carry the other
+two OOM contributors. A durable store backend remains unwired — `EVER_JOBS_STORE=postgres` fails
+fast without `STORE_POSTGRES_PRISMA_CONFIG`, which nothing in `apps/api` binds.
+### Spec 5025 — enrichment scope
+
+**Scope:** Human-directed incident work, not a scheduled run. Second of three contributors to the
+production 4Gi OOMKill (Spec 5024 covers the first, Spec 5026 the third).
+
+**Root cause (Spec 5025).** `JobsController.searchJobs` ran `enrichLiveness` / `enrichLegitimacy`
+over the **full deduped corpus** and only afterwards applied the pagination slice. A
+`?paginate=true&page_size=25` request over a 16 000-job corpus therefore issued **16 000 outbound
+liveness probes** and threw 15 975 verdicts away. `LivenessHttpService` uses a worker pool of
+concurrency 5 with a 15 s per-URL timeout, so the handler stays alive for tens of minutes with the
+entire corpus pinned in memory.
+
+Spec 740 described these signals as "opt-in; zero work on the default path". That is true of the
+code and false of the deployment: the only production caller,
+`ever-hust/packages/jobs-api/src/index.ts`, sets `liveness=true&legitimacy=true` on **every**
+request unless `EVER_JOBS_REQUEST_SIGNALS=false`. Combined with Spec 5026 (no server-side request
+deadline; the client aborts at 120 s and retries twice) abandoned handlers accumulate, each holding
+a full corpus — the amplitude of the sawtooth.
+
+**Change.** Hoist window resolution above the enrichment block: `isCsv`, `paginate`, `page`,
+`pageSize`, `totalPages` and a single `outputJobs` binding are computed first, enrichment runs on
+`outputJobs`, and every exit path returns it. `paginate` is computed as `!isCsv &&
+parseBool(paginateRaw)`, preserving the prior precedence in which the CSV branch ran before the
+pagination branch and so exported the full set regardless of `paginate`. Liveness still runs before
+legitimacy, which folds in `job.liveness?.state === 'expired'` as its `redirectsOffPlatform` input.
+`count` / `total_pages` / `next_page` continue to describe the full corpus.
+
+**Not a behaviour change.** On the paginated path the extra verdicts were computed and then dropped
+by `jobs.slice(...)` — they never reached a client. The observable differences are that the request
+finishes in seconds rather than minutes, and that far fewer outbound probes hit job boards.
+
+**Tests.** 4 new cases driven by a liveness stub that records every URL it is asked about: 500-job
+corpus paginated at 25/page → exactly 25 probes (pre-5025: 500) with `count` still 500; page 2 of
+10 → probed set is exactly jobs 10–19 and both signals land on every returned job; unpaginated →
+full set still enriched; `format=csv` with `paginate=true` → full set enriched, since CSV returns
+everything. Existing Spec 740 cases stay green.
+
+Also carries the same repair as Spec 5024 for the pre-existing stale positional-arg call in the CSV
+export test — both branches contain the identical edit, so either merge order resolves cleanly.
 
 ---
 
