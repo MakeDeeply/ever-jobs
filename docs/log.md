@@ -15,6 +15,58 @@
 
 ---
 
+### Spec 5026 — bounded fan-out
+
+**Scope:** Human-directed incident work, not a scheduled run. Third of three contributors to the
+production 4Gi OOMKill (Specs 5024 and 5025 cover the first two).
+
+**Root cause (Spec 5026).** `JobsService.searchJobs` dispatched every selected source at once —
+a bare `Promise.allSettled(selectedScrapers.map(...))` with no concurrency limiter and no time
+budget. Two things make that severe. First, the default selection is the **entire catalogue**:
+`ScraperInputDto`'s constructor sets `this.siteType = Object.values(Site)` and `main.ts` runs
+`ValidationPipe({ transform: true })`, which constructs the DTO, so `input.siteType` is never empty,
+`searchJobs` always takes the *explicit* branch, and the ATS-exclusion fallback at
+`jobs.service.ts:73-77` is unreachable in practice — ~1 800 concurrent HTTP conversations per
+request, each holding a response body, a parsed DOM and a result array. Second, nothing bounds
+handler lifetime: the Hust client aborts at 120 s and retries twice, but Node does not cancel a Nest
+handler on client disconnect, so abandoned handlers keep running and keep holding their full object
+graph. AGENTS.md §6 already mandates bounded concurrency; the fan-out simply predates it.
+(`ScraperInputDto.maxConcurrentCompanies` exists but has zero consumers.)
+
+**Change.** Extracted the per-source closure into `scrapeOne(site, scraper, input)` with its body
+copied verbatim — retry-policy resolution, circuit-breaker wrap, duration timer, metric increments,
+site tagging, error branch — so the reviewable diff is scheduling only. Replaced the fan-out with a
+shared-cursor worker pool of width `search.concurrency`, the same shape as
+`LivenessHttpService.checkBatch` (Spec 721), writing results **by input index** so ordering and the
+downstream site/date sort are unchanged. Added a wall-clock budget `search.deadlineMs`: each worker
+checks it before *starting* an item and drains the remainder as skipped rather than dispatching
+them. In-flight sources are deliberately left to finish — they carry their own timeouts and retry
+budgets, and aborting a socket mid-read gains little. Skipped sources increment
+`ever_jobs_scraper_requests_total{status="deadline_skipped"}` and produce one `warn` with the count;
+whatever completed is still returned, so the deadline sheds work rather than failing the request.
+
+Defaults: `EVER_JOBS_SEARCH_CONCURRENCY=64`, `EVER_JOBS_SEARCH_DEADLINE_MS=120000` (matching the
+Hust client's own abort; `0` disables). Peak memory becomes O(concurrency), not O(sources).
+
+**Explicit trade-off.** For a genuinely catalogue-wide search, capping at 64 serialises the work
+into ~28 waves, so wall-clock rises. That is the intended exchange. **`server.requestTimeout` was
+considered and rejected**: it caps how long the server waits to *receive* a request, not how long a
+handler may run, so it would not have stopped a 20-minute fan-out.
+
+**Harness repair.** `jobs.service.spec.ts`'s `createService` set `service.scraperMap`, a field the
+service stopped reading when it migrated to `PluginRegistry` — all 9 routing / tagging / error
+cases had been failing on clean `origin/develop`. Replaced with stub `registry` / `configService` /
+`metrics`; `deadlineMs` defaults to `0` in the harness so pre-existing cases are unaffected. Suite
+goes 69/78 → 83/83 (5 new fan-out cases: concurrency ceiling, serialisation at 1, deadline sheds
+work, `deadlineMs=0` disables, a failing source does not stall its peers).
+
+**Deliberately NOT done — Q-OOM-1.** Narrowing the default `siteType` from the whole catalogue to
+the existing 11-site `defaults.siteNames` allowlist is the single largest available reduction
+(~150× in raw job volume, cache entry size, socket count and peak memory) and would make the
+Dockerfile/compose `DEFAULT_SITE_NAMES` documentation true — `defaults.siteNames` currently has no
+consumers at all. But it changes what results callers get back, so per AGENTS.md rule 9 it needs
+Hust-side confirmation first. Logged as Q-OOM-1 with options A/B/C, default A proceeding, and as
+task T10.
 ## 2026-07-30 — Incident response (**production OOMKill triage** — Specs 5024–5026)
 
 One incident, tracked as a single dated entry; each contributing cause has its own spec and PR.
