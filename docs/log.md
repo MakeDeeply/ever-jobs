@@ -15,6 +15,70 @@
 
 ---
 
+## 2026-07-30 — Incident response (**production OOMKill triage** — Spec 5024, bounded store retention)
+
+**Scope:** Human-directed incident work, not a scheduled run. The production API
+(`.deploy/k8s/k8s-manifest.prod.yaml`, `limits.memory: 4Gi`, `replicas: 1`) is being OOMKilled on
+a repeating cycle. A code audit identified the dominant *monotone* retainer and this spec fixes it.
+
+**Root cause (Spec 5024).** `EVER_JOBS_STORE` is not set in the Dockerfile, either compose file, or
+the k8s manifest, so `resolveStoreBootstrap()` falls through to `DEFAULT_STORE_ID = 'memory'` and
+`app.module.ts` binds `InMemoryJobStore` under `JOB_STORE_TOKEN`, `JOB_OBSERVATION_STORE_TOKEN`
+and `HEALTH_SNAPSHOT_STORE_TOKEN`. `JobsController.searchJobs` calls `aggregateRaw(rawJobs,
+{ dedup })` without a `persist` key and `JobsAggregator.maybePersist` reads `options.persist ??
+true`, so **every** search — including cache hits, since the call sits outside the cache
+`if/else` — upserts its whole post-dedup corpus. `InMemoryJobStore.canonicals` and `.observations`
+are plain `Map`s with no cap, no TTL, no LRU and no sweep; the only `delete`/`clear` call sites in
+the repo are tests. A `CanonicalJob` holds its winning source job's `description` **by reference**,
+so each retained row pins a full markdown description. Nothing in `apps/api` reads the corpus back
+(`listByQuery` / `getById` / `findByCanonicalId` have zero non-test callers) — it is a pure
+write-only sink that grows for the process lifetime. The same class has capped its `snapshots` ring
+since Spec 005 / T09; the job maps were simply never given the same treatment.
+
+**Changes.** (1) `packages/plugins/store-memory` gains `DEFAULT_ROW_CAP` (50 000, overridable via
+`EVER_JOBS_STORE_MAX_ROWS`), `resolveRowCap()`, a `rowCapacity` getter, a `setRowCap()` seam, and
+`trimRows()` — a `while` loop (not `if`: one `upsertMany` can overshoot by tens of thousands) that
+evicts first-insert-first-out and **cascades into `observations`**, since `putAll` stores a shallow
+`.slice()` and dropping a canonical alone would free almost nothing. Trim runs once per batch, not
+per row, to avoid O(n²) against the Map iterator. Eviction is FIFO, **not LRU** — documented
+explicitly, it is a safety valve rather than a cache policy. (2) `apps/api` gains
+`store.persistSearch` (`EVER_JOBS_PERSIST_SEARCH`, **default `true`**) and `store.maxRows`, threaded
+through `JobsController` and `JobsResolver` (both gain a `ConfigService` dep). (3)
+`resolveStoreBootstrap()` emits a startup `WARN` when `NODE_ENV=production` resolves the `memory`
+backend — reaching a "dev / tests" backend by *omission* should not first surface in a post-mortem.
+
+Additive per AGENTS.md rule 9: no default changes. Growth becomes *bounded*; flipping
+`EVER_JOBS_PERSIST_SEARCH=false` in the manifest is a deployment decision recorded in the PR.
+
+**Tests.** 9 new unit cases (cap default/override/junk matrix, oldest-first trim, over-cap batch
+regression guard, observation cascade, `setRowCap` validation, idempotent re-upsert, persist-flag
+pass-through both ways). Also repaired a **pre-existing** failure in
+`apps/api/src/jobs/__tests__/jobs.controller.spec.ts`: the CSV-export case passed `mockRes`
+positionally into the `livenessRaw` slot because Spec 740 added two params and the call was never
+updated, so `parseBool` threw `v.toLowerCase is not a function`. Verified broken on a clean
+`origin/develop` before touching it.
+
+**Follow-up commit (Greptile P1, confirmed).** The first cut trimmed `observations` only via the
+cascade from an evicted canonical. That is not enough: `JobsAggregator.maybePersist` runs
+`upsertMany(batch)` and then calls `putAll(id, …)` for **every** id in that batch, so when a batch
+exceeds the cap the ids `upsertMany` just evicted get their observations written straight back, with
+no canonical left to cascade from. `observations` would have grown without limit — relocating the
+very leak the cap exists to close. Fixed by bounding `observations` independently inside
+`trimRows()` and calling `trimRows()` from `putAll()`. Measured: 5 rounds of a 100-job batch against
+a cap of 10 leaves **460** observation entries before the fix and ≤ 10 after; the new regression
+test was verified to fail without it.
+
+**Known-unrelated failure left alone:** `apps/api/src/cache/__tests__/cache.service.spec.ts` →
+"should clear all entries" fails on clean `origin/develop` too (`cacheManager.clear()` does not
+evict under cache-manager v7 / Keyv). Out of scope here; filed as a follow-up because it also means
+`CacheService.clear()` is not a usable operational escape hatch.
+
+**Follow-ups:** Specs 5025 (enrichment scope) and 5026 (request-lifecycle bounds) carry the other
+two OOM contributors. A durable store backend remains unwired — `EVER_JOBS_STORE=postgres` fails
+fast without `STORE_POSTGRES_PRISMA_CONFIG`, which nothing in `apps/api` binds.
+
+---
+
 ## 2026-07-06 — Scheduled run #445 (**Workable company-source pipeline foundation** — Spec 1677; first batch deferred to next run by an external rate-limit)
 
 **Scope:** Opened a **sixth**, deterministic **Workable-backed** company-source pipeline — the
