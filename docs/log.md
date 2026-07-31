@@ -20,16 +20,23 @@
 **Scope:** Human-directed incident work. Deployment configuration only — no application code. Lands
 the operator-side half of the OOMKill fix that Specs 5024–5026 cover in code.
 
-**`NODE_OPTIONS` 3584 → 2560 MiB (+ `--heapsnapshot-near-heap-limit=1`).** The old value was 87.5%
+**`NODE_OPTIONS` 3584 → 2560 MiB.** The old value was 87.5%
 of the 4096 MiB cgroup limit, leaving ~512 MiB for everything V8's old space does not account for:
 the young generation, code/metadata space, and — dominant here — **external** memory, since the HTTP
 response Buffers held by a wide scraper fan-out are off-heap. So RSS crossed 4096 MiB while old
 space was still under 3584 MiB and the kernel SIGKILLed the container (exit 137) before V8 ever felt
 enough pressure to run an emergency full GC. That is why the OOM presented as a silent restart with
 no `JavaScript heap out of memory` stack. At 2560 MiB, heap + young gen + ~400 MiB external ≈ 3.1
-GiB, so V8 now hits *its* ceiling first and fails diagnosably, writing one heap snapshot on the way
-down. **Note this makes a genuine leak surface sooner, not later** — it is diagnostics, and is only
-safe shipped alongside 5024–5026.
+GiB, so V8 now hits *its* ceiling first and an OOM produces a real `FATAL ERROR: JavaScript heap out
+of memory` in the logs instead of a silent exit-137 SIGKILL. **Note this makes a genuine leak
+surface sooner, not later** — it is diagnostics, and is only safe shipped alongside 5024–5026.
+
+`--heapsnapshot-near-heap-limit=1` was considered and **deliberately not enabled** (Greptile P1 on
+the PR, upheld): it writes a multi-hundred-MB snapshot into the container's writable layer at the
+exact moment of memory pressure. That layer has no `ephemeral-storage` request or limit and no
+volume, so the write counts against node disk, can trigger disk-pressure eviction, and is destroyed
+on restart anyway — a diagnostic that worsens the failure and then loses its own output. If a
+snapshot is ever wanted, it needs an `emptyDir` mount plus `ephemeral-storage` bounds first.
 
 **`requests.memory` 1Gi → 2Gi.** A 1Gi request against a 4Gi limit puts the pod deep in Burstable
 QoS, making it an early eviction candidate under node memory pressure — a second, differently-shaped

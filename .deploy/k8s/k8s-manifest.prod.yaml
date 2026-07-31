@@ -66,10 +66,21 @@ spec:
             # `JavaScript heap out of memory` stack in the logs.
             #
             # 2560 MiB + young gen + ~400 MiB external ≈ 3.1 GiB, comfortably under
-            # 4 GiB → V8 now hits ITS limit first and fails diagnosably.
-            # `--heapsnapshot-near-heap-limit=1` writes one snapshot on the way down.
+            # 4 GiB → V8 now hits ITS limit first, so an OOM produces a real
+            # `FATAL ERROR: JavaScript heap out of memory` in the logs instead of a
+            # silent exit-137 SIGKILL.
+            #
+            # `--heapsnapshot-near-heap-limit=1` was considered and deliberately
+            # NOT enabled: it writes a multi-hundred-MB snapshot into the
+            # container's writable layer at the exact moment of memory pressure.
+            # That layer has no `ephemeral-storage` request/limit and no volume,
+            # so the write counts against the node's disk, can trigger
+            # disk-pressure eviction, and is destroyed on restart anyway — a
+            # diagnostic that makes the failure worse and then loses its own
+            # output. If a snapshot is ever needed, add an emptyDir mount plus
+            # ephemeral-storage bounds and point the flag at it deliberately.
             - name: NODE_OPTIONS
-              value: "--max-old-space-size=2560 --heapsnapshot-near-heap-limit=1"
+              value: "--max-old-space-size=2560"
             # Cluster-internal only (ClusterIP, no ingress) → no API-key auth / rate limit needed.
             - name: ENABLE_API_KEY_AUTH
               value: "false"
