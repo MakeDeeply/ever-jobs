@@ -26,6 +26,7 @@ import {
   type ILegitimacyChecker,
   type LegitimacyInput,
 } from '@ever-jobs/models';
+import { ConfigService } from '@nestjs/config';
 import { JobsService } from './jobs.service';
 import { JobsAggregator } from './jobs.aggregator';
 import { AnalyticsService } from '@ever-jobs/analytics';
@@ -41,6 +42,7 @@ export class JobsController {
     private readonly aggregator: JobsAggregator,
     private readonly analyticsService: AnalyticsService,
     private readonly cacheService: CacheService,
+    private readonly configService: ConfigService,
     // Spec 740 — opt-in corpus signals. Optional so the controller boots even if a checker
     // module isn't wired; enrichment is simply skipped when the binding is absent.
     @Optional()
@@ -129,7 +131,12 @@ export class JobsController {
 
     // ── Dedup (Spec 003 / FR-1) ───────────
     const dedup = parseBoolWithDefault(dedupRaw, true);
-    const aggregated = await this.aggregator.aggregateRaw(rawJobs, { dedup });
+    // Spec 5024 — persistence on the interactive path is opt-out via
+    // `EVER_JOBS_PERSIST_SEARCH`. Default stays `true` (historical
+    // behaviour); deployments on the in-process `memory` backend should
+    // disable it, since nothing in `apps/api` reads the corpus back.
+    const persist = this.configService.get<boolean>('store.persistSearch', true);
+    const aggregated = await this.aggregator.aggregateRaw(rawJobs, { dedup, persist });
     const jobs = aggregated.jobs;
 
     this.logger.log(

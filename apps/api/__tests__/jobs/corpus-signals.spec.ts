@@ -38,7 +38,18 @@ function makeController(): JobsController {
       urls.map((url) => ({ url, result: 'active' as const, code: 'apply_control_visible' as const, checkedAt: '2026-06-15T00:00:00Z' })),
   } as never;
   const legitimacy = new LegitimacyDetectorService();
-  return new JobsController(jobsService, aggregator, analytics, cache, liveness, legitimacy);
+  // Spec 5024 — ConfigService seam; returning the caller's default keeps the
+  // historical `persist: true` behaviour these cases were written against.
+  const config = { get: (_key: string, def?: unknown) => def } as never;
+  return new JobsController(
+    jobsService,
+    aggregator,
+    analytics,
+    cache,
+    config,
+    liveness,
+    legitimacy,
+  );
 }
 
 const INPUT = { searchTerm: 'engineer' } as ScraperInputDto;
@@ -133,11 +144,15 @@ describe('JobsController — corpus signals (Spec 740)', () => {
         },
       } as never;
       const legitimacy = new LegitimacyDetectorService();
+      // Spec 5024 ConfigService seam — returning the caller's default keeps
+      // `store.persistSearch` at `true`, which is what these cases assume.
+      const config = { get: (_key: string, def?: unknown) => def } as never;
       const controller = new JobsController(
         jobsService,
         aggregator,
         analytics,
         cache,
+        config,
         liveness,
         legitimacy,
       );
