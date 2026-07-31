@@ -210,7 +210,12 @@ jest.mock('@ever-jobs/source-clojurejobs', () => mockSourceFactory());
 // Phase 26: Sustainability & niche expansion
 jest.mock('@ever-jobs/source-ecojobs', () => mockSourceFactory());
 
-import { JobsService } from '../jobs.service';
+import {
+  JobsService,
+  clampConcurrency,
+  DEFAULT_SEARCH_CONCURRENCY,
+  MAX_SEARCH_CONCURRENCY,
+} from '../jobs.service';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -493,9 +498,13 @@ describe('JobsService', () => {
       // drained as skipped rather than dispatched.
       expect(tracker.started).toBeGreaterThan(0);
       expect(tracker.started).toBeLessThan(12);
-      // Whatever DID complete is still returned — the deadline sheds work, it
-      // does not fail the request.
-      expect(result).toHaveLength(tracker.started);
+      // Whatever COMPLETED before the deadline is still returned — the deadline
+      // sheds work, it does not fail the request. Note this is `<=` and not
+      // `=== tracker.started`: a source that had already begun when the
+      // deadline passed is abandoned mid-flight by the `withDeadline` race, so
+      // it counts as started but contributes no jobs.
+      expect(result.length).toBeGreaterThan(0);
+      expect(result.length).toBeLessThanOrEqual(tracker.started);
     });
 
     it('deadlineMs=0 disables the deadline (every source runs)', async () => {
@@ -511,6 +520,53 @@ describe('JobsService', () => {
       );
 
       expect(tracker.started).toBe(8);
+    });
+
+    it('a source that never settles cannot pin the handler past the deadline', async () => {
+      // Greptile P1 on #29: the pre-start deadline check alone left an
+      // in-flight hung scraper holding its worker forever, so
+      // Promise.allSettled never resolved and searchJobs never returned.
+      const sites = nSites(3);
+      const hung: IScraper = { scrape: jest.fn(() => new Promise<never>(() => {})) };
+      const tracker: Tracker = { inFlight: 0, peak: 0, started: 0 };
+      const entries = sites.map(
+        (s, i) => [s, i === 0 ? hung : trackingScraper(tracker, 2)] as [Site, IScraper],
+      );
+      const service = createService(entries, { concurrency: 3, deadlineMs: 120 });
+
+      const started = Date.now();
+      const result = await service.searchJobs(
+        new ScraperInputDto({ searchTerm: 'node', siteType: sites }),
+      );
+      const elapsed = Date.now() - started;
+
+      // Returns shortly after the deadline rather than hanging forever.
+      expect(elapsed).toBeLessThan(3000);
+      // The two healthy sources still contribute.
+      expect(result).toHaveLength(2);
+    });
+
+    it('clamps a hostile concurrency setting instead of honouring it', async () => {
+      expect(clampConcurrency(Number.POSITIVE_INFINITY)).toBe(DEFAULT_SEARCH_CONCURRENCY);
+      expect(clampConcurrency(Number.NaN)).toBe(DEFAULT_SEARCH_CONCURRENCY);
+      expect(clampConcurrency(1_000_000_000)).toBe(DEFAULT_SEARCH_CONCURRENCY);
+      expect(clampConcurrency(0)).toBe(DEFAULT_SEARCH_CONCURRENCY);
+      expect(clampConcurrency(-5)).toBe(DEFAULT_SEARCH_CONCURRENCY);
+      expect(clampConcurrency(MAX_SEARCH_CONCURRENCY)).toBe(MAX_SEARCH_CONCURRENCY);
+      expect(clampConcurrency(8)).toBe(8);
+      expect(clampConcurrency('16')).toBe(16);
+
+      // And end-to-end: Infinity must not restore a worker-per-source pool.
+      const tracker: Tracker = { inFlight: 0, peak: 0, started: 0 };
+      const sites = nSites(20);
+      const service = createService(
+        sites.map((s) => [s, trackingScraper(tracker, 5)] as [Site, IScraper]),
+        { concurrency: Number.POSITIVE_INFINITY },
+      );
+      await service.searchJobs(
+        new ScraperInputDto({ searchTerm: 'node', siteType: sites }),
+      );
+      expect(tracker.peak).toBeLessThanOrEqual(DEFAULT_SEARCH_CONCURRENCY);
     });
 
     it('a failing source does not stall the pool or drop its peers', async () => {

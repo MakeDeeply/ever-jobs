@@ -41,6 +41,67 @@ export const DEFAULT_SEARCH_CONCURRENCY = 64;
 export const DEFAULT_SEARCH_DEADLINE_MS = 120_000;
 
 /**
+ * Upper bound accepted for `search.concurrency` (Spec 5026).
+ *
+ * A misconfigured `EVER_JOBS_SEARCH_CONCURRENCY` must not be able to restore
+ * the unbounded fan-out. `Infinity`, `NaN`, and values above this ceiling all
+ * fall back to {@link DEFAULT_SEARCH_CONCURRENCY} rather than being honoured.
+ */
+export const MAX_SEARCH_CONCURRENCY = 512;
+
+/**
+ * Normalise a configured concurrency into `[1, MAX_SEARCH_CONCURRENCY]`.
+ * Non-finite or out-of-range input resolves to
+ * {@link DEFAULT_SEARCH_CONCURRENCY} — silently honouring `Infinity` would
+ * spawn one worker per source and defeat the whole bound.
+ */
+export function clampConcurrency(raw: unknown): number {
+  const n = typeof raw === 'number' ? raw : Number(raw);
+  if (!Number.isFinite(n) || n < 1 || n > MAX_SEARCH_CONCURRENCY) {
+    return DEFAULT_SEARCH_CONCURRENCY;
+  }
+  return Math.floor(n);
+}
+
+/**
+ * Reject `promise` once `deadlineAt` passes (Spec 5026).
+ *
+ * The deadline check in the worker loop only stops us *starting* new sources.
+ * Without this race, a single source whose socket never settles keeps its
+ * worker pending forever, `Promise.allSettled` never resolves, and the whole
+ * `searchJobs` handler is pinned — exactly the zombie-handler failure mode the
+ * deadline was added to prevent.
+ *
+ * The underlying `scrapeOne` promise cannot be cancelled (no AbortSignal in
+ * the plugin contract yet — see spec task T11), so it keeps running detached
+ * until it settles or its own HTTP timeout fires. What this guarantees is that
+ * the *handler* returns and the response is sent, rather than the request
+ * living as long as the slowest hung socket.
+ *
+ * The timer is always cleared, so a fast source leaves nothing behind.
+ */
+function withDeadline<T>(
+  promise: Promise<T>,
+  deadlineAt: number,
+  site: Site,
+): Promise<T> {
+  const remaining = deadlineAt - Date.now();
+  if (!Number.isFinite(remaining)) return promise;
+
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const expiry = new Promise<never>((_resolve, reject) => {
+    timer = setTimeout(
+      () => reject(new Error(`${site}: abandoned (search deadline exceeded mid-flight)`)),
+      Math.max(0, remaining),
+    );
+  });
+
+  return Promise.race([promise, expiry]).finally(() => {
+    if (timer !== undefined) clearTimeout(timer);
+  }) as Promise<T>;
+}
+
+/**
  * Central orchestration service for job searching.
  *
  * All individual scraper injections have been replaced by a single
@@ -133,8 +194,13 @@ export class JobsService implements OnModuleInit {
     // conversations and held every response body, parsed DOM and result array
     // in memory simultaneously. Peak memory is now O(concurrency), not
     // O(sources).
-    const concurrency = Math.max(
-      1,
+    // Clamped, not just floored. `Math.max(1, x)` alone would happily accept
+    // `Infinity` or `1e9` — and since the pool spawns
+    // `Math.min(concurrency, sources)` workers, either value silently restores
+    // the unbounded fan-out this spec exists to prevent. A non-finite or
+    // out-of-range setting falls back to the default rather than being
+    // honoured.
+    const concurrency = clampConcurrency(
       this.configService.get<number>('search.concurrency', DEFAULT_SEARCH_CONCURRENCY),
     );
     const deadlineMs = this.configService.get<number>(
@@ -182,9 +248,16 @@ export class JobsService implements OnModuleInit {
         }
 
         try {
+          // Race against the deadline as well as checking it before starting:
+          // a source that never settles would otherwise keep this worker (and
+          // therefore the whole handler) pending indefinitely.
           results[index] = {
             status: 'fulfilled',
-            value: await this.scrapeOne(site, scraper, input),
+            value: await withDeadline(
+              this.scrapeOne(site, scraper, input),
+              deadlineAt,
+              site,
+            ),
           };
         } catch (err) {
           results[index] = { status: 'rejected', reason: err };

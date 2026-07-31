@@ -69,7 +69,7 @@ No concurrency limiter, no time budget. Two things make that severe here:
 
 | Setting | Env | Default | Meaning |
 | --- | --- | --- | --- |
-| `search.concurrency` | `EVER_JOBS_SEARCH_CONCURRENCY` | 64 | Max sources dispatched simultaneously. Clamped to ≥ 1. |
+| `search.concurrency` | `EVER_JOBS_SEARCH_CONCURRENCY` | 64 | Max sources dispatched simultaneously. Clamped to `[1, 512]`; non-finite / out-of-range falls back to the default. |
 | `search.deadlineMs` | `EVER_JOBS_SEARCH_DEADLINE_MS` | 120 000 | Fan-out wall-clock budget. `0` or negative disables. |
 
 Behaviour:
@@ -84,6 +84,20 @@ Behaviour:
   label value alongside `success` / `error` / `circuit_open`.
 - Whatever completed before the deadline is still returned. The deadline sheds
   work; it never fails the request.
+- The deadline is enforced **twice**: before starting an item, and as a race
+  against the in-flight `scrapeOne`. The pre-start check alone was insufficient
+  — a source whose socket never settles would keep its worker pending, so
+  `Promise.allSettled` never resolved and the handler was pinned forever, which
+  is precisely the zombie-handler failure this spec exists to stop. The
+  underlying promise cannot be cancelled (no `AbortSignal` in the plugin
+  contract — task T11), so it runs on detached until its own HTTP timeout
+  fires; what is guaranteed is that the *handler* returns and the response is
+  sent.
+- `search.concurrency` is **clamped**, not merely floored. `Math.max(1, x)`
+  would accept `Infinity` or `1e9`, and since the pool spawns
+  `min(concurrency, sources)` workers either value silently restores the
+  unbounded fan-out. Out-of-range and non-finite values fall back to the
+  default.
 
 ## Trade-off
 
