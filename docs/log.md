@@ -15,6 +15,68 @@
 
 ---
 
+### Prod deploy config — heap headroom, QoS, store env, deploy workflow
+
+**Scope:** Human-directed incident work. Deployment configuration only — no application code. Lands
+the operator-side half of the OOMKill fix that Specs 5024–5026 cover in code.
+
+**`NODE_OPTIONS` 3584 → 2560 MiB.** The old value was 87.5%
+of the 4096 MiB cgroup limit, leaving ~512 MiB for everything V8's old space does not account for:
+the young generation, code/metadata space, and — dominant here — **external** memory, since the HTTP
+response Buffers held by a wide scraper fan-out are off-heap. So RSS crossed 4096 MiB while old
+space was still under 3584 MiB and the kernel SIGKILLed the container (exit 137) before V8 ever felt
+enough pressure to run an emergency full GC. That is why the OOM presented as a silent restart with
+no `JavaScript heap out of memory` stack. At 2560 MiB, heap + young gen + ~400 MiB external ≈ 3.1
+GiB, so V8 now hits *its* ceiling first and an OOM produces a real `FATAL ERROR: JavaScript heap out
+of memory` in the logs instead of a silent exit-137 SIGKILL. **Note this makes a genuine leak
+surface sooner, not later** — it is diagnostics, and is only safe shipped alongside 5024–5026.
+
+`--heapsnapshot-near-heap-limit=1` was considered and **deliberately not enabled** (Greptile P1 on
+the PR, upheld): it writes a multi-hundred-MB snapshot into the container's writable layer at the
+exact moment of memory pressure. That layer has no `ephemeral-storage` request or limit and no
+volume, so the write counts against node disk, can trigger disk-pressure eviction, and is destroyed
+on restart anyway — a diagnostic that worsens the failure and then loses its own output. If a
+snapshot is ever wanted, it needs an `emptyDir` mount plus `ephemeral-storage` bounds first.
+
+**`requests.memory` 1Gi → 2Gi.** A 1Gi request against a 4Gi limit puts the pod deep in Burstable
+QoS, making it an early eviction candidate under node memory pressure — a second, differently-shaped
+restart path that muddies triage. The steady-state floor (1 816 plugin modules + Nest DI +
+prom-client) is ~300–400 MiB before a single request, so 1Gi was under-requesting anyway.
+
+**`EVER_JOBS_PERSIST_SEARCH=false` + `EVER_JOBS_STORE_MAX_ROWS=50000`.** The deployment decision
+Spec 5024 deliberately left to the operator. Both are no-ops until 5024 ships (unknown env vars are
+ignored), so the manifest is safe to apply in either order.
+
+**New: `deploy-do-prod.yml` — ever-jobs had no deploy workflow at all.** `docker-build-publish.yml`
+only pushed the image to GHCR; nothing ever applied the manifest or restarted the pods. Since the
+Deployment pins `image: …:latest` with `imagePullPolicy: Always`, a freshly-built image reached
+production only when the pod happened to restart — **in practice, when it was OOMKilled**. So
+manifest changes (env vars, resource limits, `NODE_OPTIONS`) never applied without someone running
+`kubectl` by hand, and code fixes shipped on a schedule driven by crashes. The new workflow mirrors
+ever-hust's, minus Ingress/TLS and DB migrations: apply manifest → `rollout restart` (required —
+`apply` alone won't repull an unchanged `:latest` tag) → `rollout status` → verify `/health` and
+print the resolved memory config and restart history.
+
+**Requires a new repo secret: `EVER_JOBS_KUBECONFIG`** (kubeconfig for `do-sfo2-k8s-gauzy`, the same
+cluster `ever-hust` reaches via its own `HUST_KUBECONFIG`). `ever-jobs/ever-jobs` currently has **no
+secrets at all**, so until an operator adds it the job exits 0 with a notice rather than failing.
+Note both kubeconfigs in `workspace/.config/` are **stale** — neither cluster hostname resolves
+(`24ade94c-…` and `47bfa4a3-….k8s.ondigitalocean.com` are NXDOMAIN), so they cannot be used to
+generate the secret; it has to come from a current `doctl kubernetes cluster kubeconfig show`.
+
+**Deliberately NOT changed, after auditing the actual caller:**
+
+- **`CACHE_MAX_ITEMS`.** Earlier triage suggested dropping it 500 → 20. Auditing the workload shows
+  that is inert: the only consumer is Hust's 15-minute corpus sync, which rotates one search term
+  per tick through a list of 40, so the cache accumulates ~4 new keys/hour against a 1-hour TTL —
+  a steady state of ~4–8 entries. A cap of 20 would never bind. The cache's cost here is entry
+  **size**, not count, and Spec 5026's fan-out bound is what reduces that.
+- **`EVER_JOBS_REQUEST_SIGNALS=false` on Hust.** Earlier triage called this the biggest immediate
+  win. Withdrawn: `packages/triggers/src/map-job.ts:42-44` persists `liveness`, `legitimacy` and
+  `legitimacyReasons` into Hust's `jobs` table, and `apps/web/lib/freshness.ts` /
+  `legitimacy.ts` treat the corpus signal as authoritative over their date heuristics. Disabling it
+  would null out real product data. Spec 5025 removes the waste *without* the data loss — the sync
+  requests `pageSize` 80–200 and now only that page is probed instead of the whole corpus.
 ### Spec 5026 — bounded fan-out
 
 **Scope:** Human-directed incident work, not a scheduled run. Third of three contributors to the
