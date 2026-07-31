@@ -47,6 +47,23 @@ prom-client) is ~300–400 MiB before a single request, so 1Gi was under-request
 Spec 5024 deliberately left to the operator. Both are no-ops until 5024 ships (unknown env vars are
 ignored), so the manifest is safe to apply in either order.
 
+**New: `deploy-do-prod.yml` — ever-jobs had no deploy workflow at all.** `docker-build-publish.yml`
+only pushed the image to GHCR; nothing ever applied the manifest or restarted the pods. Since the
+Deployment pins `image: …:latest` with `imagePullPolicy: Always`, a freshly-built image reached
+production only when the pod happened to restart — **in practice, when it was OOMKilled**. So
+manifest changes (env vars, resource limits, `NODE_OPTIONS`) never applied without someone running
+`kubectl` by hand, and code fixes shipped on a schedule driven by crashes. The new workflow mirrors
+ever-hust's, minus Ingress/TLS and DB migrations: apply manifest → `rollout restart` (required —
+`apply` alone won't repull an unchanged `:latest` tag) → `rollout status` → verify `/health` and
+print the resolved memory config and restart history.
+
+**Requires a new repo secret: `EVER_JOBS_KUBECONFIG`** (kubeconfig for `do-sfo2-k8s-gauzy`, the same
+cluster `ever-hust` reaches via its own `HUST_KUBECONFIG`). `ever-jobs/ever-jobs` currently has **no
+secrets at all**, so until an operator adds it the job exits 0 with a notice rather than failing.
+Note both kubeconfigs in `workspace/.config/` are **stale** — neither cluster hostname resolves
+(`24ade94c-…` and `47bfa4a3-….k8s.ondigitalocean.com` are NXDOMAIN), so they cannot be used to
+generate the secret; it has to come from a current `doctl kubernetes cluster kubeconfig show`.
+
 **Deliberately NOT changed, after auditing the actual caller:**
 
 - **`CACHE_MAX_ITEMS`.** Earlier triage suggested dropping it 500 → 20. Auditing the workload shows
