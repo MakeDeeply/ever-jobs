@@ -20,8 +20,22 @@ name: Deploy Ever Jobs to DigitalOcean (Prod)
 # ---------------
 #   EVER_JOBS_KUBECONFIG — full kubeconfig for the do-sfo2-k8s-gauzy cluster,
 #   the same cluster ever-hust reaches via its own HUST_KUBECONFIG secret.
+#   Repo-level OR `prod`-environment-level both resolve here, e.g.:
+#     doctl kubernetes cluster kubeconfig show do-sfo2-k8s-gauzy \
+#       | gh secret set EVER_JOBS_KUBECONFIG -R ever-jobs/ever-jobs
 # When the secret is absent the job exits 0 with a clear notice instead of
 # failing, so the pipeline stays green until an operator provisions it.
+#
+# TWO SEMANTICS WORTH KNOWING
+# ---------------------------
+# 1. `workflow_run` reads its definition from the DEFAULT branch (`develop`),
+#    not from the branch being built. This file therefore only becomes active
+#    once it is merged to `develop` — merging it to `main` alone would do
+#    nothing.
+# 2. `environment: prod` does not exist on this repo yet (ever-hust has one,
+#    ever-jobs does not). GitHub auto-creates it on first run with no
+#    protection rules; add reviewers there later if prod deploys should gate on
+#    a human.
 
 on:
   workflow_run:
