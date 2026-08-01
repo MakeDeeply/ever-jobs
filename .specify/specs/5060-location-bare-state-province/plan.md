@@ -1,5 +1,17 @@
 # Plan: 5060 — Opt-in bare state/province classification
 
+| Field | Value |
+| --- | --- |
+| Spec ID | 5060 |
+| Slug | location-bare-state-province |
+| Status | done |
+| Owner | agent |
+| Created | 2026-07-14 |
+| Last updated | 2026-07-14 |
+| Supersedes | (none) |
+| Related specs | (none) |
+
+
 ## Phases
 
 1. **Options type.** Add exported `ParseLocationOptions { allowBareStateProvince?:

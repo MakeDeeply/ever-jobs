@@ -1,5 +1,17 @@
 # Plan: 5058 — Single-bound salary parsing
 
+| Field | Value |
+| --- | --- |
+| Spec ID | 5058 |
+| Slug | salary-single-bound |
+| Status | done |
+| Owner | agent |
+| Created | 2026-07-14 |
+| Last updated | 2026-07-14 |
+| Supersedes | (none) |
+| Related specs | (none) |
+
+
 ## Phases
 
 1. **Matcher.** Add module-private `matchSingleBoundSalary(salaryStr, symbolAlt,

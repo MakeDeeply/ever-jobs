@@ -1,5 +1,17 @@
 # Plan: 5071 — Patch high-severity `js-yaml` and `fast-uri`
 
+| Field | Value |
+| --- | --- |
+| Spec ID | 5071 |
+| Slug | fix-npm-audit-highs |
+| Status | done |
+| Owner | agent |
+| Created | 2026-07-27 |
+| Last updated | 2026-07-27 |
+| Supersedes | (none) |
+| Related specs | (none) |
+
+
 ## Phase 1 — Add overrides
 
 - In root `package.json` `overrides`:

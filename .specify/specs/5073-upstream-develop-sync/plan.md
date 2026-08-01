@@ -1,5 +1,17 @@
 # Plan: 5073 — Sync upstream `ever-jobs/ever-jobs:develop`
 
+| Field | Value |
+| --- | --- |
+| Spec ID | 5073 |
+| Slug | upstream-develop-sync |
+| Status | done |
+| Owner | agent |
+| Created | 2026-07-27 |
+| Last updated | 2026-07-27 |
+| Supersedes | (none) |
+| Related specs | (none) |
+
+
 ## Phase 1 — Inspect upstream divergence
 
 - List commits behind `origin/develop` vs `ever-jobs/ever-jobs:develop`.

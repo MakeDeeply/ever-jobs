@@ -1,5 +1,17 @@
 # Plan: 5065 — source-company-mara
 
+| Field | Value |
+| --- | --- |
+| Spec ID | 5065 |
+| Slug | source-company-mara |
+| Status | done |
+| Owner | agent |
+| Created | 2026-07-14 |
+| Last updated | 2026-07-14 |
+| Supersedes | (none) |
+| Related specs | (none) |
+
+
 ## Phases
 
 1. **Scaffold plugin package** `packages/plugins/source-company-mara`

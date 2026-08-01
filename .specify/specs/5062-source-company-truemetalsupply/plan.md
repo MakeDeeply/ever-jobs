@@ -1,5 +1,17 @@
 # Plan: 5062 — source-company-truemetalsupply
 
+| Field | Value |
+| --- | --- |
+| Spec ID | 5062 |
+| Slug | source-company-truemetalsupply |
+| Status | done |
+| Owner | agent |
+| Created | 2026-07-14 |
+| Last updated | 2026-07-14 |
+| Supersedes | (none) |
+| Related specs | (none) |
+
+
 ## Phases
 
 1. **Scaffold** the plugin package `packages/plugins/source-company-truemetalsupply`:
