@@ -4,7 +4,7 @@
 
 ## Phase 1 — Shared parser extensions
 
-- [ ] T01 — Extend `JobPostingLd` and `mapJobPosting` in `@ever-jobs/common`
+- [x] T01 — Extend `JobPostingLd` and `mapJobPosting` in `@ever-jobs/common`
   - **Files:** `packages/common/src/utils/jsonld.ts`, `packages/common/__tests__/jsonld.spec.ts`
   - **Acceptance:**
     - `atsId` read from `identifier.value` (any `name`) and `additionalProperty` `jobId`/`reqId`/`atsId`/`id`
@@ -18,7 +18,7 @@
 
 ## Phase 2 — `source-jsonld` plugin mapping
 
-- [ ] T02 — Map new `JobPostingLd` fields to `JobPostDto`
+- [x] T02 — Map new `JobPostingLd` fields to `JobPostDto`
   - **Files:** `packages/plugins/source-jsonld/src/jsonld.service.ts`, `packages/plugins/source-jsonld/__tests__/jsonld.service.spec.ts`
   - **Acceptance:**
     - `processPosting` sets `atsId`, `skills`, `department`, `team`, `experienceRange`, `workFromHomeType`, `isRemote`, `applyUrl`
@@ -27,7 +27,7 @@
 
 ## Phase 3 — Docs and cross-references
 
-- [ ] T03 — Update `docs/index.md` and `docs/log.md`
+- [x] T03 — Update `docs/index.md` and `docs/log.md`
   - **Files:** `docs/index.md`, `docs/log.md`
   - **Acceptance:** index lists Spec 5074; log describes the parser/plugin changes
   - **Estimate:** 0.25 day
