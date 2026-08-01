@@ -55,8 +55,15 @@ export interface JobPostingLd {
   applyUrl: string | null;
   /** `true` when `jobLocationType === 'TELECOMMUTE'`. */
   remote: boolean;
+  /** Normalised `REMOTE`/`HYBRID`/`ONSITE` from `additionalProperty`. */
+  workFromHomeType: string | null;
   locations: JobPostingLdLocation[];
   baseSalary: JobPostingLdSalary | null;
+  atsId: string | null;
+  department: string | null;
+  team: string | null;
+  experienceRange: string | null;
+  skills: string[] | null;
 }
 
 const SCRIPT_BLOCK_RE =
@@ -175,6 +182,13 @@ function collectJobPostings(
 }
 
 function mapJobPosting(node: Record<string, unknown>): JobPostingLd {
+  const wfh = mapWorkFromHomeType(node);
+  const telecommute =
+    firstString(node.jobLocationType)?.toUpperCase() === 'TELECOMMUTE';
+  let remote = telecommute;
+  if (wfh === 'Remote') remote = true;
+  if (wfh === 'Hybrid' || wfh === 'Onsite') remote = false;
+
   return {
     title: firstString(node.title) ?? firstString(node.name),
     description: firstString(node.description),
@@ -184,10 +198,16 @@ function mapJobPosting(node: Record<string, unknown>): JobPostingLd {
     hiringOrganizationName: orgName(node.hiringOrganization),
     hiringOrganizationUrl: orgUrl(node.hiringOrganization),
     url: firstString(node.url),
-    applyUrl: applyUrl(node.potentialAction),
-    remote: firstString(node.jobLocationType)?.toUpperCase() === 'TELECOMMUTE',
+    applyUrl: resolveApplyUrl(node),
+    remote,
+    workFromHomeType: wfh,
     locations: mapLocations(node.jobLocation),
     baseSalary: mapSalary(node.baseSalary),
+    atsId: mapAtsId(node),
+    department: additionalPropertyValue(node, ['department']),
+    team: additionalPropertyValue(node, ['team']),
+    experienceRange: mapExperienceRange(node),
+    skills: mapSkills(node.skills),
   };
 }
 
@@ -260,7 +280,7 @@ function orgUrl(org: unknown): string | null {
   return firstString(org.sameAs) ?? firstString(org.url);
 }
 
-function applyUrl(action: unknown): string | null {
+function applyUrlFromAction(action: unknown): string | null {
   for (const act of asArray(action)) {
     if (!isObject(act)) continue;
     if (!typeHas(act['@type'], 'ApplyAction')) continue;
@@ -270,6 +290,89 @@ function applyUrl(action: unknown): string | null {
       return firstString(target.url) ?? firstString(target.urlTemplate);
     }
   }
+  return null;
+}
+
+function resolveApplyUrl(node: Record<string, unknown>): string | null {
+  const fromAction = applyUrlFromAction(node.potentialAction);
+  if (fromAction) return fromAction;
+
+  const contact = node.applicationContact;
+  if (isObject(contact)) {
+    const url = firstString(contact.url);
+    if (url) return url;
+  }
+
+  return additionalPropertyValue(node, ['applyUrl']);
+}
+
+function scalarString(value: unknown): string | null {
+  if (typeof value === 'string' && value.trim()) return value.trim();
+  if (typeof value === 'number' && Number.isFinite(value)) return String(value);
+  return null;
+}
+
+function firstScalarString(value: unknown): string | null {
+  for (const item of asArray(value)) {
+    const s = scalarString(item);
+    if (s) return s;
+  }
+  return null;
+}
+
+function additionalPropertyValue(
+  node: Record<string, unknown>,
+  names: string[],
+): string | null {
+  for (const prop of asArray(node.additionalProperty)) {
+    if (!isObject(prop)) continue;
+    if (prop['@type'] && !typeHas(prop['@type'], 'PropertyValue')) continue;
+    const propName = firstString(prop.name)?.toLowerCase();
+    if (!propName) continue;
+    if (names.some((name) => name.toLowerCase() === propName)) {
+      return firstScalarString(prop.value);
+    }
+  }
+  return null;
+}
+
+function mapAtsId(node: Record<string, unknown>): string | null {
+  const identifier = node.identifier;
+  if (isObject(identifier)) {
+    const value = firstScalarString(identifier.value);
+    if (value) return value;
+  }
+  return additionalPropertyValue(node, ['jobId', 'reqId', 'atsId', 'id']);
+}
+
+function mapExperienceRange(node: Record<string, unknown>): string | null {
+  const fromProperty = additionalPropertyValue(node, ['experienceRange']);
+  if (fromProperty) return fromProperty;
+  return firstScalarString(node.experienceRequirements) ?? null;
+}
+
+function mapSkills(value: unknown): string[] | null {
+  if (value == null) return null;
+  if (typeof value === 'string') {
+    const parts = value
+      .split(',')
+      .map((p) => p.trim())
+      .filter(Boolean);
+    return parts.length > 0 ? parts : null;
+  }
+  const parts = asArray(value)
+    .filter((v): v is string => typeof v === 'string' && v.trim().length > 0)
+    .map((v) => v.trim());
+  return parts.length > 0 ? parts : null;
+}
+
+function mapWorkFromHomeType(node: Record<string, unknown>): string | null {
+  const raw = additionalPropertyValue(node, ['workFromHomeType']);
+  if (!raw) return null;
+  const normalized = raw.toUpperCase();
+  if (normalized === 'REMOTE') return 'Remote';
+  if (normalized === 'HYBRID') return 'Hybrid';
+  if (normalized === 'ONSITE') return 'Onsite';
   return null;
 }
 
