@@ -1,5 +1,17 @@
 # Plan: 5072 — Migrate transitive `minimatch`/`brace-expansion`
 
+| Field | Value |
+| --- | --- |
+| Spec ID | 5072 |
+| Slug | brace-expansion-transitive-migration |
+| Status | done |
+| Owner | agent |
+| Created | 2026-07-27 |
+| Last updated | 2026-07-27 |
+| Supersedes | (none) |
+| Related specs | (none) |
+
+
 ## Phase 1 — Discover target versions
 
 - Run `npm ls brace-expansion -a` and `npm ls minimatch -a` to enumerate all consumers.

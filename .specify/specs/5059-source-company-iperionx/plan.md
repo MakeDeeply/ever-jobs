@@ -1,5 +1,17 @@
 # Plan: 5059 — source-company-iperionx
 
+| Field | Value |
+| --- | --- |
+| Spec ID | 5059 |
+| Slug | source-company-iperionx |
+| Status | done |
+| Owner | agent |
+| Created | 2026-07-14 |
+| Last updated | 2026-07-14 |
+| Supersedes | (none) |
+| Related specs | (none) |
+
+
 ## Phases
 
 1. **Scaffold plugin package** `packages/plugins/source-company-iperionx`

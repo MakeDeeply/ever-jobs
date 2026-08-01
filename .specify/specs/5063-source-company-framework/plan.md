@@ -1,5 +1,17 @@
 # Plan: 5063 — source-company-framework
 
+| Field | Value |
+| --- | --- |
+| Spec ID | 5063 |
+| Slug | source-company-framework |
+| Status | done |
+| Owner | agent |
+| Created | 2026-07-14 |
+| Last updated | 2026-07-14 |
+| Supersedes | (none) |
+| Related specs | (none) |
+
+
 ## Phases
 
 1. **Scaffold plugin package** `packages/plugins/source-company-framework`

@@ -1,5 +1,17 @@
 # Plan 5067 — Stop putting `mailto:` in `applyUrl`
 
+| Field | Value |
+| --- | --- |
+| Spec ID | 5067 |
+| Slug | fix-mailto-applyurl |
+| Status | done |
+| Owner | agent |
+| Created | 2026-07-15 |
+| Last updated | 2026-07-15 |
+| Supersedes | (none) |
+| Related specs | (none) |
+
+
 ## Phases
 
 1. Company plugins — drop the `applyUrl: mailto:...` line; keep `emails`.

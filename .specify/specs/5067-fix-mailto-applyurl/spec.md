@@ -1,5 +1,17 @@
 # Spec 5067 — Stop putting `mailto:` in `applyUrl` (carry the address in `emails`)
 
+| Field | Value |
+| --- | --- |
+| Spec ID | 5067 |
+| Slug | fix-mailto-applyurl |
+| Status | done |
+| Owner | agent |
+| Created | 2026-07-15 |
+| Last updated | 2026-07-15 |
+| Supersedes | (none) |
+| Related specs | (none) |
+
+
 ## Problem
 
 Several plugins synthesize `applyUrl = mailto:<address>` for email-apply roles.

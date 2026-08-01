@@ -1,5 +1,17 @@
 # Plan: 5055 — source-ats-successfactors Career Site Builder reader
 
+| Field | Value |
+| --- | --- |
+| Spec ID | 5055 |
+| Slug | source-ats-successfactors-csb |
+| Status | done |
+| Owner | agent |
+| Created | 2026-07-14 |
+| Last updated | 2026-07-14 |
+| Supersedes | (none) |
+| Related specs | (none) |
+
+
 ## Approach
 
 Extend the existing `source-ats-successfactors` plugin in place (no new package —

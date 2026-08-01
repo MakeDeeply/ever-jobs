@@ -1,5 +1,17 @@
 # Plan: 5066 — source-company-vight
 
+| Field | Value |
+| --- | --- |
+| Spec ID | 5066 |
+| Slug | source-company-vight |
+| Status | done |
+| Owner | agent |
+| Created | 2026-07-15 |
+| Last updated | 2026-07-15 |
+| Supersedes | (none) |
+| Related specs | (none) |
+
+
 ## Phases
 
 1. **Scaffold plugin package** `packages/plugins/source-company-vight`

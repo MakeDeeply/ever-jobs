@@ -1,5 +1,17 @@
 # Plan — Spec 5068
 
+| Field | Value |
+| --- | --- |
+| Spec ID | 5068 |
+| Slug | drop-upwork-sdk-dependency |
+| Status | done |
+| Owner | agent |
+| Created | 2026-07-15 |
+| Last updated | 2026-07-15 |
+| Supersedes | (none) |
+| Related specs | (none) |
+
+
 1. `package.json`: remove `"@upwork/node-upwork-oauth2"` from `dependencies`.
 2. `packages/plugins/source-upwork/src/upwork.service.ts`:
    - Replace the two top-level `require('@upwork/...')` calls with a `loadUpworkSdk()`
