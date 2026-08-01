@@ -1,5 +1,17 @@
 # Spec 5068 — Drop the `@upwork/node-upwork-oauth2` dependency (fork does not use Upwork)
 
+| Field | Value |
+| --- | --- |
+| Spec ID | 5068 |
+| Slug | drop-upwork-sdk-dependency |
+| Status | done |
+| Owner | agent |
+| Created | 2026-07-15 |
+| Last updated | 2026-07-15 |
+| Supersedes | (none) |
+| Related specs | (none) |
+
+
 ## Problem
 
 `npm audit` reports several advisories with **no upstream fix**, all rooted in the

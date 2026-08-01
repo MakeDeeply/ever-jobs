@@ -1,5 +1,17 @@
 # Plan: 5057 — source-company-flymotion
 
+| Field | Value |
+| --- | --- |
+| Spec ID | 5057 |
+| Slug | source-company-flymotion |
+| Status | done |
+| Owner | agent |
+| Created | 2026-07-14 |
+| Last updated | 2026-07-14 |
+| Supersedes | (none) |
+| Related specs | (none) |
+
+
 ## Phases
 
 1. **Scaffold plugin package** `packages/plugins/source-company-flymotion`

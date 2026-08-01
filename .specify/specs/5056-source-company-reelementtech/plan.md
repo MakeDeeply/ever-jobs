@@ -1,5 +1,17 @@
 # Plan: 5056 — source-company-reelementtech
 
+| Field | Value |
+| --- | --- |
+| Spec ID | 5056 |
+| Slug | source-company-reelementtech |
+| Status | done |
+| Owner | agent |
+| Created | 2026-07-14 |
+| Last updated | 2026-07-14 |
+| Supersedes | (none) |
+| Related specs | (none) |
+
+
 ## Phases
 
 1. **Scaffold plugin package** `packages/plugins/source-company-reelementtech`

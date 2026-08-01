@@ -1,5 +1,17 @@
 # Plan: 5069 — Company-plugin domain-derived `Site` token rename
 
+| Field | Value |
+| --- | --- |
+| Spec ID | 5069 |
+| Slug | company-plugin-domain-token-rename |
+| Status | done |
+| Owner | agent |
+| Created | 2026-07-26 |
+| Last updated | 2026-07-26 |
+| Supersedes | (none) |
+| Related specs | (none) |
+
+
 ## Phases
 
 1. **Rename plugin packages** (6): `git mv` dir + `src/*.ts` + `__tests__/*.spec.ts` + token-prefixed fixtures to the new token.
