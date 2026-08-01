@@ -124,11 +124,21 @@ export class JsonLdService implements IScraper {
       companyName: posting.hiringOrganizationName ?? null,
       companyUrl: posting.hiringOrganizationUrl ?? null,
       jobUrl,
+      ...(posting.atsId ? { atsId: posting.atsId } : {}),
       ...(posting.applyUrl ? { applyUrl: posting.applyUrl } : {}),
       location,
       description,
       datePosted,
       isRemote: posting.remote,
+      ...(posting.workFromHomeType
+        ? { workFromHomeType: posting.workFromHomeType }
+        : {}),
+      ...(posting.department ? { department: posting.department } : {}),
+      ...(posting.team ? { team: posting.team } : {}),
+      ...(posting.experienceRange
+        ? { experienceRange: posting.experienceRange }
+        : {}),
+      ...(posting.skills ? { skills: posting.skills } : {}),
       ...(jobTypes.length > 0 ? { jobType: jobTypes } : {}),
       ...(posting.employmentType
         ? { employmentType: posting.employmentType }

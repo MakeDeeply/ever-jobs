@@ -157,4 +157,89 @@ describe('JsonLdService', () => {
     const res = await service.scrape(input());
     expect(res.jobs[0].jobUrl).toBe('https://acme.example/careers');
   });
+
+  it('maps additional JSON-LD fields into JobPostDto', async () => {
+    mockGet.mockResolvedValue({
+      data: page({
+        ...fullJob,
+        identifier: {
+          '@type': 'PropertyValue',
+          name: 'jobId',
+          value: 'senior-platform-2026',
+        },
+        skills: ['C++', 'ROS'],
+        experienceRequirements: '5+ years',
+        additionalProperty: [
+          {
+            '@type': 'PropertyValue',
+            name: 'workFromHomeType',
+            value: 'HYBRID',
+          },
+          {
+            '@type': 'PropertyValue',
+            name: 'department',
+            value: 'Engineering',
+          },
+          {
+            '@type': 'PropertyValue',
+            name: 'team',
+            value: 'Flight Software',
+          },
+          {
+            '@type': 'PropertyValue',
+            name: 'experienceRange',
+            value: '3-5 years',
+          },
+        ],
+      }),
+    });
+
+    const res = await service.scrape(input());
+    const job = res.jobs[0];
+    expect(job.atsId).toBe('senior-platform-2026');
+    expect(job.skills).toEqual(['C++', 'ROS']);
+    expect(job.experienceRange).toBe('3-5 years');
+    expect(job.department).toBe('Engineering');
+    expect(job.team).toBe('Flight Software');
+    expect(job.workFromHomeType).toBe('Hybrid');
+    expect(job.isRemote).toBe(false);
+  });
+
+  it('treats workFromHomeType: HYBRID as not remote even when jobLocationType is TELECOMMUTE', async () => {
+    mockGet.mockResolvedValue({
+      data: page({
+        ...fullJob,
+        jobLocation: undefined,
+        jobLocationType: 'TELECOMMUTE',
+        additionalProperty: [
+          {
+            '@type': 'PropertyValue',
+            name: 'workFromHomeType',
+            value: 'HYBRID',
+          },
+        ],
+      }),
+    });
+
+    const res = await service.scrape(input());
+    const job = res.jobs[0];
+    expect(job.workFromHomeType).toBe('Hybrid');
+    expect(job.isRemote).toBe(false);
+  });
+
+  it('falls back applyUrl to applicationContact.url', async () => {
+    mockGet.mockResolvedValue({
+      data: page({
+        ...fullJob,
+        url: 'https://acme.example/jobs/1',
+        applicationContact: {
+          '@type': 'ContactPoint',
+          url: 'https://apply.example/1',
+        },
+      }),
+    });
+
+    const res = await service.scrape(input());
+    expect(res.jobs[0].applyUrl).toBe('https://apply.example/1');
+  });
 });
