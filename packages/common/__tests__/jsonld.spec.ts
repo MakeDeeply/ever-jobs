@@ -217,6 +217,223 @@ describe('parseJobPostingLd', () => {
   });
 });
 
+describe('JSON-LD field extensions', () => {
+  it('reads atsId from identifier PropertyValue with any name', () => {
+    const [job] = parseJobPostingLd(
+      page({
+        ...baseJob,
+        identifier: {
+          '@type': 'PropertyValue',
+          name: 'jobId',
+          value: 'abc-123',
+        },
+      }),
+    );
+    expect(job.atsId).toBe('abc-123');
+  });
+
+  it('falls back atsId to additionalProperty jobId/reqId/atsId/id', () => {
+    const [job] = parseJobPostingLd(
+      page({
+        ...baseJob,
+        additionalProperty: [
+          { '@type': 'PropertyValue', name: 'reqId', value: 'req-42' },
+        ],
+      }),
+    );
+    expect(job.atsId).toBe('req-42');
+  });
+
+  it('prefers identifier over additionalProperty for atsId', () => {
+    const [job] = parseJobPostingLd(
+      page({
+        ...baseJob,
+        identifier: {
+          '@type': 'PropertyValue',
+          name: 'jobId',
+          value: 'id-from-identifier',
+        },
+        additionalProperty: [
+          {
+            '@type': 'PropertyValue',
+            name: 'jobId',
+            value: 'id-from-prop',
+          },
+        ],
+      }),
+    );
+    expect(job.atsId).toBe('id-from-identifier');
+  });
+
+  it('resolves applyUrl from applicationContact.url when potentialAction is absent', () => {
+    const [job] = parseJobPostingLd(
+      page({
+        ...baseJob,
+        url: 'https://acme.example/jobs/1',
+        applicationContact: {
+          '@type': 'ContactPoint',
+          url: 'https://apply.example/1',
+        },
+      }),
+    );
+    expect(job.applyUrl).toBe('https://apply.example/1');
+  });
+
+  it('falls back applyUrl to additionalProperty applyUrl', () => {
+    const [job] = parseJobPostingLd(
+      page({
+        ...baseJob,
+        url: 'https://acme.example/jobs/1',
+        additionalProperty: [
+          {
+            '@type': 'PropertyValue',
+            name: 'applyUrl',
+            value: 'https://apply.example/2',
+          },
+        ],
+      }),
+    );
+    expect(job.applyUrl).toBe('https://apply.example/2');
+  });
+
+  it('reads skills as an array', () => {
+    const [job] = parseJobPostingLd(
+      page({ ...baseJob, skills: ['C++', 'ROS', 'ArduPilot'] }),
+    );
+    expect(job.skills).toEqual(['C++', 'ROS', 'ArduPilot']);
+  });
+
+  it('reads skills as a comma-separated string', () => {
+    const [job] = parseJobPostingLd(
+      page({ ...baseJob, skills: 'C++, ROS, ArduPilot' }),
+    );
+    expect(job.skills).toEqual(['C++', 'ROS', 'ArduPilot']);
+  });
+
+  it('reads experienceRange from additionalProperty', () => {
+    const [job] = parseJobPostingLd(
+      page({
+        ...baseJob,
+        additionalProperty: [
+          {
+            '@type': 'PropertyValue',
+            name: 'experienceRange',
+            value: '3-5 years',
+          },
+        ],
+      }),
+    );
+    expect(job.experienceRange).toBe('3-5 years');
+  });
+
+  it('reads experienceRange from experienceRequirements when it is a plain string', () => {
+    const [job] = parseJobPostingLd(
+      page({ ...baseJob, experienceRequirements: '5+ years' }),
+    );
+    expect(job.experienceRange).toBe('5+ years');
+  });
+
+  it('prefers additionalProperty experienceRange over experienceRequirements', () => {
+    const [job] = parseJobPostingLd(
+      page({
+        ...baseJob,
+        experienceRequirements: '5+ years',
+        additionalProperty: [
+          {
+            '@type': 'PropertyValue',
+            name: 'experienceRange',
+            value: '3-5 years',
+          },
+        ],
+      }),
+    );
+    expect(job.experienceRange).toBe('3-5 years');
+  });
+
+  it('reads department and team from additionalProperty', () => {
+    const [job] = parseJobPostingLd(
+      page({
+        ...baseJob,
+        additionalProperty: [
+          {
+            '@type': 'PropertyValue',
+            name: 'department',
+            value: 'Engineering',
+          },
+          {
+            '@type': 'PropertyValue',
+            name: 'team',
+            value: 'Flight Software',
+          },
+        ],
+      }),
+    );
+    expect(job.department).toBe('Engineering');
+    expect(job.team).toBe('Flight Software');
+  });
+
+  it('normalises workFromHomeType and lets it override remote inference', () => {
+    const [job] = parseJobPostingLd(
+      page({
+        ...baseJob,
+        jobLocationType: 'TELECOMMUTE',
+        additionalProperty: [
+          {
+            '@type': 'PropertyValue',
+            name: 'workFromHomeType',
+            value: 'HYBRID',
+          },
+        ],
+      }),
+    );
+    expect(job.workFromHomeType).toBe('Hybrid');
+    expect(job.remote).toBe(false);
+  });
+
+  it('sets remote true when workFromHomeType is Remote', () => {
+    const [job] = parseJobPostingLd(
+      page({
+        ...baseJob,
+        additionalProperty: [
+          {
+            '@type': 'PropertyValue',
+            name: 'workFromHomeType',
+            value: 'REMOTE',
+          },
+        ],
+      }),
+    );
+    expect(job.workFromHomeType).toBe('Remote');
+    expect(job.remote).toBe(true);
+  });
+
+  it('leaves workFromHomeType null and remote false for onsite roles', () => {
+    const [job] = parseJobPostingLd(
+      page({
+        ...baseJob,
+        jobLocation: {
+          '@type': 'Place',
+          address: {
+            '@type': 'PostalAddress',
+            addressLocality: 'San Diego',
+            addressRegion: 'CA',
+            addressCountry: 'US',
+          },
+        },
+        additionalProperty: [
+          {
+            '@type': 'PropertyValue',
+            name: 'workFromHomeType',
+            value: 'ONSITE',
+          },
+        ],
+      }),
+    );
+    expect(job.workFromHomeType).toBe('Onsite');
+    expect(job.remote).toBe(false);
+  });
+});
+
 describe('jobPostingLdToCompensation', () => {
   it('maps a salary range to a CompensationDto', () => {
     const comp = jobPostingLdToCompensation({

@@ -5,6 +5,22 @@
 
 ---
 
+## 2026-07-30 — Spec 5074 — JSON-LD `JobPosting` additional fields
+
+**Change:** extend the shared `parseJobPostingLd` helper and `source-jsonld` plugin to consume richer schema.org `JobPosting` JSON-LD.
+
+- Read `atsId` from `identifier.value` (any `name`) and `additionalProperty` `jobId`/`reqId`/`atsId`/`id` fallback.
+- Resolve `applyUrl` from `potentialAction.target.url`/`urlTemplate`, `applicationContact.url`, and `additionalProperty.applyUrl`.
+- Read `skills` from array or comma-separated string; `experienceRange` from `additionalProperty` or plain-string `experienceRequirements`.
+- Read `department`, `team`, and `workFromHomeType` from `additionalProperty`; normalize `workFromHomeType` to `Remote`/`Hybrid`/`Onsite`.
+- Let explicit `workFromHomeType: Hybrid`/`Onsite` override `jobLocationType: TELECOMMUTE` so `isRemote` stays `false`.
+- Map all of the above into existing `JobPostDto` fields in the generic `source-jsonld` plugin.
+- Created `.specify/specs/5074-jsonld-additional-fields/` (spec, plan, tasks).
+
+Validation: `npx jest packages/common packages/plugins/source-jsonld` green; `tsc --noEmit` clean for touched packages.
+
+---
+
 > **Run #100 reminder — Q-042 has been pending review since run #84 (~119 runs / ~119 hours of agent wall-clock). Default C continues; user owner please review at convenience.**
 
 > **Run #150 reminder — Q-042 has been pending review for ~119 runs since run #84. Default C continues; user owner please review at convenience.** (Second-reminder threshold per the run #100 reminder convention; next reminder window opens at run #200.)
