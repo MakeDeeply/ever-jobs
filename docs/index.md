@@ -1812,6 +1812,8 @@
 || 5072 | [brace-expansion-transitive-migration](../.specify/specs/5072-brace-expansion-transitive-migration/spec.md) — [plan](../.specify/specs/5072-brace-expansion-transitive-migration/plan.md) — [tasks](../.specify/specs/5072-brace-expansion-transitive-migration/tasks.md) | Partial migration of `minimatch`/`glob`/testcontainers/jest chains to versions using `brace-expansion >=5.0.8` or `@isaacs/brace-expansion`. `fork-ts-checker-webpack-plugin` (used by `@nestjs/cli` webpack builds) remains the only unresolved high-severity chain because it is pinned to `minimatch@3`. |
 || 5073 | [upstream-develop-sync](../.specify/specs/5073-upstream-develop-sync/spec.md) — [plan](../.specify/specs/5073-upstream-develop-sync/plan.md) — [tasks](../.specify/specs/5073-upstream-develop-sync/tasks.md) | Cherry-picks 12 upstream `develop` commits into the fork, preserving security overrides (`@upwork` removal) and regenerating `package-lock.json`. Brings in `source-internshala`/`source-simplyhired` fixes and CI workflow updates. |
 
+|| 5076 | [BrowserPool headful / persistent-context opt-in](../.specify/specs/5076-browserpool-headful-persistent-context/spec.md) — [plan](../.specify/specs/5076-browserpool-headful-persistent-context/plan.md) — [tasks](../.specify/specs/5076-browserpool-headful-persistent-context/tasks.md) | In progress. Adds `headful?: boolean` and `userDataDir?: string` to `BrowserPageOptions` so `BrowserPool` can launch a persistent, headful Chromium context for Cloudflare-protected sites while keeping the default ephemeral headless path unchanged. |
+
 ## 8. Templates
 
 | File                                                           | Purpose             |
@@ -1822,4 +1824,4 @@
 
 ---
 
-_Last revised: 2026-07-06 (scheduled run #445 — Spec 1677: Workable company-source pipeline foundation (probe + scaffolder + assembler + 382-company seed corpus, reusing backend-agnostic wiring); probe hardened against Cloudflare-1015 rate-limiting; first Workable company batch deferred to next run by the live-gate rate-limit — Specs 1678+)._
+_Last revised: 2026-08-04 (Spec 5076: BrowserPool headful / persistent-context opt-in added)._
