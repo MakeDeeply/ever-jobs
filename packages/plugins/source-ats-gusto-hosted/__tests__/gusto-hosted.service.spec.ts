@@ -10,10 +10,15 @@ const SLUG = 'material-hybrid-manufacturing-inc-ed3a1ae2-cd0f-4b68-b4bb-e8b4e52a
 
 /** Access the protected fetch seams without loosening them to `any`. */
 interface Seams {
-  fetchBoardHtml: (slug: string, input: ScraperInputDto) => Promise<string>;
+  fetchBoardHtml: (
+    slug: string,
+    input: ScraperInputDto,
+    boardUrl?: string,
+  ) => Promise<string>;
   fetchPostingHtml: (
     postingSlug: string,
     input: ScraperInputDto,
+    boardUrl?: string,
   ) => Promise<string>;
 }
 
@@ -112,6 +117,10 @@ function input(over: Partial<ScraperInputDto> = {}): ScraperInputDto {
     resultsWanted: 1000,
     ...over,
   });
+}
+
+function fixtureUrl(name: string): string {
+  return new URL(`fixtures/${name}`, `file://${__dirname}/`).toString();
 }
 
 describe('GustoHostedService', () => {
@@ -309,5 +318,21 @@ describe('GustoHostedService', () => {
     const asPlain = await make(DescriptionFormat.PLAIN);
     expect(asPlain.jobs[0].description).toContain('Hello');
     expect(asPlain.jobs[0].description).not.toContain('<strong>');
+  });
+
+  it('reads a board from a file:// companyUrl and falls back to board-only jobs', async () => {
+    const service = new GustoHostedService();
+    const res = await service.scrape(
+      input({
+        companySlug: SLUG,
+        companyUrl: fixtureUrl('material-board.html'),
+        resultsWanted: 1000,
+      }),
+    );
+    expect(res.jobs).toHaveLength(3);
+    expect(res.jobs[0].title).toBe('General Application');
+    expect(res.jobs[1].title).toBe('Additive Manufacturing Engineer (Lab)');
+    expect(res.jobs[2].title).toBe('Staff Battery Applications Engineer');
+    expect(res.jobs[0].companyName).toBe('Material Hybrid Manufacturing Inc');
   });
 });

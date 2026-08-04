@@ -1,5 +1,7 @@
 import { Injectable, Logger, OnModuleDestroy } from '@nestjs/common';
 import * as cheerio from 'cheerio';
+import { readFile } from 'fs/promises';
+import { fileURLToPath, pathToFileURL } from 'url';
 import { SourcePlugin } from '@ever-jobs/plugin';
 import {
   DescriptionFormat,
@@ -81,11 +83,12 @@ export class GustoHostedService implements IScraper, OnModuleDestroy {
     }
 
     const resultsWanted = input.resultsWanted ?? GUSTO_HOSTED_DEFAULT_RESULTS;
+    const boardUrl = this.resolveBoardUrl(slug, input);
 
     try {
-      this.logger.log(`Fetching Gusto-hosted board for tenant: ${slug}`);
+      this.logger.log(`Fetching Gusto-hosted board for tenant: ${slug} (${boardUrl})`);
 
-      const boardHtml = await this.fetchBoardHtml(slug, input);
+      const boardHtml = await this.fetchBoardHtml(slug, input, boardUrl);
       const items = this.parseBoard(boardHtml);
       if (items.length === 0) {
         this.logger.log(`Gusto-hosted board "${slug}" has no postings`);
@@ -95,7 +98,7 @@ export class GustoHostedService implements IScraper, OnModuleDestroy {
       const wanted = Math.min(resultsWanted, GUSTO_HOSTED_MAX_DETAIL_FETCHES);
       const selected = items.slice(0, wanted);
 
-      const detailMap = await this.fetchDetails(selected, input);
+      const detailMap = await this.fetchDetails(selected, input, boardUrl);
 
       const companyFallback = this.deriveCompanyName(slug);
       const jobPosts: JobPostDto[] = [];
@@ -140,10 +143,13 @@ export class GustoHostedService implements IScraper, OnModuleDestroy {
   protected async fetchBoardHtml(
     slug: string,
     input: ScraperInputDto,
+    boardUrl?: string,
   ): Promise<string> {
-    return this.fetchRenderedHtml(gustoHostedBoardUrl(slug), input, {
-      waitForSelector: GUSTO_HOSTED_BOARD_READY_SELECTOR,
-    });
+    return this.fetchRenderedHtml(
+      boardUrl ?? this.resolveBoardUrl(slug, input),
+      input,
+      { waitForSelector: GUSTO_HOSTED_BOARD_READY_SELECTOR },
+    );
   }
 
   /**
@@ -153,8 +159,13 @@ export class GustoHostedService implements IScraper, OnModuleDestroy {
   protected async fetchPostingHtml(
     postingSlug: string,
     input: ScraperInputDto,
+    boardUrl?: string,
   ): Promise<string> {
-    return this.fetchRenderedHtml(gustoHostedPostingUrl(postingSlug), input, {
+    const url =
+      boardUrl && boardUrl.startsWith('file:')
+        ? this.derivePostingFileUrl(boardUrl, postingSlug)
+        : gustoHostedPostingUrl(postingSlug);
+    return this.fetchRenderedHtml(url, input, {
       waitForSelector: 'script[type="application/ld+json"]',
     });
   }
@@ -165,6 +176,14 @@ export class GustoHostedService implements IScraper, OnModuleDestroy {
     input: ScraperInputDto,
     opts: { waitForSelector?: string },
   ): Promise<string> {
+    if (url.startsWith('file:')) {
+      try {
+        return await readFile(fileURLToPath(url), 'utf8');
+      } catch {
+        return '';
+      }
+    }
+
     const proxy = input.proxies?.[0];
     const timeoutMs =
       (input.requestTimeout ?? GUSTO_HOSTED_DEFAULT_TIMEOUT_SECONDS) * 1000;
@@ -180,6 +199,25 @@ export class GustoHostedService implements IScraper, OnModuleDestroy {
     } finally {
       await page.close().catch(() => undefined);
     }
+  }
+
+  /**
+   * Compute the board URL to fetch. If `companyUrl` is supplied (e.g. a local
+   * `file://` cache or a proxy/board mirror), use it directly; otherwise fall
+   * back to the canonical `https://jobs.gusto.com/boards/{slug}` URL.
+   */
+  private resolveBoardUrl(slug: string, input: ScraperInputDto): string {
+    return input.companyUrl?.trim() || gustoHostedBoardUrl(slug);
+  }
+
+  /** Map a `file://` board path to a sibling `postings/{postingSlug}.html` file. */
+  private derivePostingFileUrl(boardUrl: string, postingSlug: string): string {
+    const boardPath = fileURLToPath(boardUrl);
+    const postingPath = boardPath.replace(
+      /[/\\]boards[/\\][^/\\]+?\.html$/i,
+      `/postings/${postingSlug}.html`,
+    );
+    return pathToFileURL(postingPath).toString();
   }
 
   /**
@@ -201,10 +239,13 @@ export class GustoHostedService implements IScraper, OnModuleDestroy {
       if (!postingSlug || seen.has(postingSlug)) return;
       seen.add(postingSlug);
 
-      const anchorText = this.cleanText($(el).text());
+      const heading = $(el).find('h1, h2, h3, h4, h5, h6').first();
+      const titleText = heading.length
+        ? this.cleanText(heading.text() ?? '')
+        : this.cleanText($(el).text());
       items.push({
         postingSlug,
-        title: anchorText ?? this.deriveTitle(postingSlug),
+        title: titleText ?? this.deriveTitle(postingSlug),
         jobUrl: gustoHostedPostingUrl(postingSlug),
       });
     });
@@ -219,6 +260,7 @@ export class GustoHostedService implements IScraper, OnModuleDestroy {
   private async fetchDetails(
     items: GustoHostedListItem[],
     input: ScraperInputDto,
+    boardUrl: string,
   ): Promise<Map<string, GustoHostedDetailData>> {
     const result = new Map<string, GustoHostedDetailData>();
 
@@ -226,7 +268,7 @@ export class GustoHostedService implements IScraper, OnModuleDestroy {
       const batch = items.slice(i, i + GUSTO_HOSTED_DETAIL_CONCURRENCY);
       const settled = await Promise.allSettled(
         batch.map(async (item) => {
-          const html = await this.fetchPostingHtml(item.postingSlug, input);
+          const html = await this.fetchPostingHtml(item.postingSlug, input, boardUrl);
           return {
             postingSlug: item.postingSlug,
             data: html ? this.parseDetail(html) : null,
@@ -339,7 +381,11 @@ export class GustoHostedService implements IScraper, OnModuleDestroy {
   ): string {
     const slug = companySlug?.trim();
     if (slug) {
-      if (/^https?:\/\//i.test(slug) || slug.includes('gusto.com')) {
+      if (
+        /^https?:\/\//i.test(slug) ||
+        slug.startsWith('file:') ||
+        slug.includes('gusto.com')
+      ) {
         const fromUrl = this.slugFromUrl(slug);
         if (fromUrl) return fromUrl;
       }
@@ -354,16 +400,25 @@ export class GustoHostedService implements IScraper, OnModuleDestroy {
 
   /** Extract the board slug from a `jobs.gusto.com/boards/{slug}` URL. */
   private slugFromUrl(value: string): string {
-    const raw = /^https?:\/\//i.test(value) ? value : `https://${value}`;
+    const raw =
+      /^https?:\/\//i.test(value) || value.startsWith('file:')
+        ? value
+        : `https://${value}`;
     try {
       const u = new URL(raw);
-      if (!/(^|\.)gusto\.com$/i.test(u.hostname)) return '';
+      if (u.protocol !== 'file:' && !/(^|\.)gusto\.com$/i.test(u.hostname))
+        return '';
       const parts = u.pathname.split('/').filter(Boolean);
       const anchor = parts.indexOf('boards');
       if (anchor !== -1 && parts[anchor + 1]) {
-        return decodeURIComponent(parts[anchor + 1]);
+        return decodeURIComponent(parts[anchor + 1]).replace(/\.html$/i, '');
       }
       // a /postings/{slug} URL cannot name a board — ignore.
+      // Allow a bare `file://` cache path whose filename is `{slug}.html`.
+      const last = parts[parts.length - 1];
+      if (u.protocol === 'file:' && last) {
+        return decodeURIComponent(last).replace(/\.html$/i, '');
+      }
       return '';
     } catch {
       return '';

@@ -5,6 +5,23 @@
 
 ---
 
+## 2026-08-04 — Spec 5075 — Gusto-hosted rendered-cache support
+
+**Change:** let `source-ats-gusto-hosted` scrape from a `file://` rendered board cache supplied via `companyUrl`, and fix board title extraction for nested posting links.
+
+- `GustoHostedService` resolves `boardUrl` from `companyUrl` (including `file://`) before falling back to `https://jobs.gusto.com/boards/{slug}`.
+- `fetchRenderedHtml` reads `file://` URLs from disk.
+- `fetchPostingHtml` derives sibling `postings/{slug}.html` paths when the board is a local file.
+- `resolveTenant`/`slugFromUrl` accept `file://` URLs and strip `.html` suffixes.
+- `parseBoard` now uses the first `h1`–`h6` inside a posting link for the title, falling back to the anchor text.
+- Added a cached Material board fixture and unit test asserting 3 board-only jobs.
+- Updated `fetch-app/node/wrap-ever-jobs.js` to register `gusto_hosted` and pass `companyUrl`.
+- Updated `fetch1/scripts_fetch1/OBSOLETE-get-from-ever-jobs.py` to feed the `by_domain_rendered_fetch1` board file as `companyUrl` for `gusto_hosted`.
+
+Validation: `npx jest --testPathPatterns=source-ats-gusto-hosted` green (14 tests); `npx tsc --noEmit -p packages/plugins/source-ats-gusto-hosted/tsconfig.json` clean.
+
+---
+
 ## 2026-07-30 — Spec 5074 — JSON-LD `JobPosting` additional fields
 
 **Change:** extend the shared `parseJobPostingLd` helper and `source-jsonld` plugin to consume richer schema.org `JobPosting` JSON-LD.
