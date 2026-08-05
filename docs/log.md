@@ -15,6 +15,14 @@
 
 ---
 
+## 2026-08-05 — Spec 5078 — Restrict Docker publish workflow to the canonical repository
+
+**Change:** `.github/workflows/docker-build-publish.yml` — added `if: ${{ github.repository == 'ever-jobs/ever-jobs' }}` to both the `build` and `build-mcp` jobs.
+
+**Why:** the workflow pushes to `ghcr.io/ever-jobs/*` with the built-in `GITHUB_TOKEN`. Only the canonical repo's token can write to that namespace, so on any fork both jobs build the image and then fail the push with `denied: permission_denied: The requested installation does not exist` — a guaranteed-red workflow and wasted runner minutes on every push to `main`/`stage`/`develop`. The job-level guard makes forks skip the jobs entirely (0 runner minutes) instead of running red; the canonical repo is unaffected (tags, cache, runners, triggers unchanged). Chose the guard over templating the namespace off `github.repository_owner` (which would let forks publish to their own GHCR) as the minimal, presumption-free fix. Spec 5078.
+
+---
+
 ## 2026-08-04 — Spec 5077 — Gusto-hosted headful browser + HTML parser fixes
 
 **Change:** `packages/plugins/source-ats-gusto-hosted` now uses the `BrowserPool` headful/persistent-context opt-in and parses rendered Gusto board/detail pages more robustly.
