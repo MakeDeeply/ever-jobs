@@ -15,6 +15,18 @@
 
 ---
 
+## 2026-08-04 — Spec 5076 — BrowserPool headful / persistent-context opt-in
+
+**Change:** `packages/common/src/browser/browser-pool.ts` now supports a headful, persistent-context browser mode so source plugins can opt out of the default ephemeral headless Chromium for Cloudflare-protected sites.
+
+- `BrowserPageOptions` gains `headful?: boolean` and `userDataDir?: string`.
+- `BrowserPool.getPage()` uses `chromium.launchPersistentContext()` when either flag is requested, preserving cookies/local storage between runs.
+- Default path is `$PLAYWRIGHT_USER_DATA_DIR` or `~/.cache/ever-jobs/chromium-profile`; callers can override with `userDataDir`.
+- Existing default behavior (ephemeral headless) is unchanged.
+- Unit tests added in `packages/common/src/browser/__tests__/browser-pool.spec.ts`.
+
+Validation: `npx jest packages/common` 218/218 green; `npx tsc --noEmit -p packages/common/tsconfig.json` clean.
+
 ## 2026-07-27 — Spec 5073 — sync upstream `ever-jobs/ever-jobs:develop`
 
 **Change:** cherry-picked 12 upstream `develop` commits into the fork, preserving the fork's security overrides and `@upwork` removal.
