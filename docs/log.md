@@ -20,7 +20,7 @@
 **Change:** added Spec 5081 and applied the Spec 5076 `BrowserPool` headful opt-in to `source-company-desktopmetal` and `source-company-truemetalsupply`.
 
 - `packages/plugins/source-company-desktopmetal/src/desktopmetal.service.ts` — `fetchListingHtml` now calls `BrowserPool.getPage({ proxy, stealth: true, headful: true })`.
-- `packages/plugins/source-company-truemetalsupply/src/truemetalsupply.service.ts` — `fetchOpenings` now calls `BrowserPool.getPage({ proxy, stealth: true, headful: true })`.
+- `packages/plugins/source-company-truemetalsupply/src/truemetalsupply.service.ts` — `fetchOpenings` now calls `BrowserPool.getPage({ proxy, stealth: true, headful: true })` and `collectDialogs` skips hidden Wix triggers and reads each popup by the trigger's `data-popupid`/`id`.
 - Both plugins' unit tests now assert the headful/stealth `BrowserPool.getPage` call.
 - Added `.specify/specs/5081-headful-company-plugins-zero-jobs/{spec,plan,tasks}.md` and updated `docs/index.md`.
 

@@ -20,8 +20,8 @@ Apply the Spec 5076 `BrowserPool` `headful` opt-in to the two company-page plugi
 
 ### Phase 2 — True Metal Supply
 
-- Goal: `TrueMetalSupplyService.fetchOpenings` requests `BrowserPool.getPage({ proxy, stealth: true, headful: true })`.
-- Deliverables: updated `truemetalsupply.service.ts`, JSDoc fix, and a new unit test asserting the call options.
+- Goal: `TrueMetalSupplyService.fetchOpenings` requests `BrowserPool.getPage({ proxy, stealth: true, headful: true })` and `collectDialogs` reads each Wix popup by `data-popupid`/`id`.
+- Deliverables: updated `truemetalsupply.service.ts` (headful opt-in + popup selector + skip hidden triggers), JSDoc updates, and a new unit test asserting the `BrowserPool.getPage` call options.
 - Exit criteria: `npx jest --testPathPatterns=source-company-truemetalsupply` passes.
 
 ### Phase 3 — Typecheck and docs

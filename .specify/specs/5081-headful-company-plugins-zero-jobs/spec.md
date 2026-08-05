@@ -18,7 +18,7 @@ Two company-page sources return 0 jobs even though their career pages are live a
 - `source-company-desktopmetal` (`desktopmetal.com`) — `/careers` lists role PDFs behind a Cloudflare managed challenge. The current `BrowserPool.getPage({ stealth: true })` launches an ephemeral headless Chromium context, which Cloudflare blocks.
 - `source-company-truemetalsupply` (`truemetalsupply.com`) — a Wix page with popup/lightbox dialogs. The current `BrowserPool.getPage({ stealth: true })` also uses a fresh headless context and is blocked, so no dialog triggers are found.
 
-Both sources worked under `BrowserPool` before Cloudflare/Wix tightened detection, and both are fixed by the same one-line change enabled by Spec 5076: opt-in to a persistent, headful Chromium context.
+Both sources need the persistent, headful Chromium context added in Spec 5076. True Metal Supply also needs a popup-reading fix: the generic `[role="dialog"]` selector matched a hidden container, and the first Wix dialog trigger is hidden; the scraper now skips zero-size triggers and reads each popup by its Wix `data-popupid`/`id`.
 
 ## 2. Goals
 
@@ -39,7 +39,12 @@ Both sources worked under `BrowserPool` before Cloudflare/Wix tightened detectio
 
 1. `DesktopmetalService.fetchListingHtml` passes `headful: true` to `BrowserPool.getPage` and updates its JSDoc to say "headful" instead of "headless".
 2. `TrueMetalSupplyService.fetchOpenings` passes `headful: true` to `BrowserPool.getPage` and updates its JSDoc accordingly.
-3. Add a focused unit test in each plugin's `__tests__/*.service.spec.ts` that mocks `BrowserPool.getPage` and asserts it is called with `expect.objectContaining({ stealth: true, headful: true })`.
+3. `TrueMetalSupplyService.collectDialogs` now:
+   - skips triggers with a zero-size bounding box (the first Wix trigger is a hidden non-job popup),
+   - reads the popup via the trigger's `data-popupid` mapped to the popup `div[id="..."]` instead of the ambiguous `[role="dialog"]` selector,
+   - waits for the popup to become visible before extracting text/html.
+4. Update the `source-company-truemetalsupply` `fakePage` test helper to expose `boundingBox`, `getAttribute('data-popupid')`, and `waitFor` so the new `collectDialogs` loop is exercised in unit tests.
+5. Add a focused unit test in each plugin's `__tests__/*.service.spec.ts` that mocks `BrowserPool.getPage` and asserts it is called with `expect.objectContaining({ stealth: true, headful: true }).`
 
 ## 5. Test Plan
 

@@ -48,6 +48,9 @@ function fakePage(
   const triggerLocator = {
     count: async () => dialogs.length,
     nth: (i: number) => ({
+      boundingBox: async () => ({ x: 0, y: 0, width: 100, height: 50 }),
+      getAttribute: async (name: string) =>
+        name === 'data-popupid' ? `popup-${i}` : null,
       scrollIntoViewIfNeeded: async () => undefined,
       click: async () => {
         open = i;
@@ -56,6 +59,7 @@ function fakePage(
   };
   const dialogLocator = {
     first: () => ({
+      waitFor: async () => undefined,
       count: async () => (open >= 0 && dialogs[open] ? 1 : 0),
       innerText: async () => dialogs[open]?.text ?? '',
       innerHTML: async () => dialogs[open]?.html ?? null,
@@ -63,7 +67,9 @@ function fakePage(
   };
   return {
     locator: (sel: string) =>
-      sel === '[role="dialog"]' ? dialogLocator : triggerLocator,
+      sel === TRUEMETALSUPPLY_DIALOG_TRIGGER_SELECTOR
+        ? triggerLocator
+        : dialogLocator,
     keyboard: {
       press: async () => {
         open = -1;
@@ -177,9 +183,9 @@ describe('TrueMetalSupplyService (Spec 5062 — Wix popup careers, headful)', ()
 
     const openings = await (
       service as unknown as {
-        collectDialogs: (p: unknown) => Promise<TrueMetalSupplyOpening[]>;
+        collectDialogs: (p: unknown, timeoutMs: number) => Promise<TrueMetalSupplyOpening[]>;
       }
-    ).collectDialogs(page);
+    ).collectDialogs(page, 30000);
 
     expect(openings.map((o) => o.title)).toEqual([
       'Project Estimator',
