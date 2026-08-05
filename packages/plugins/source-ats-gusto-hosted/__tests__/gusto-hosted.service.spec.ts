@@ -371,4 +371,43 @@ describe('GustoHostedService', () => {
       expect(job.description).toContain('Role Authority');
     });
   });
+
+  describe('diagnostics (Spec 5082)', () => {
+    it('reports browser_unavailable when the board fetch throws a launch error', async () => {
+      const service = new GustoHostedService();
+      jest
+        .spyOn(service as unknown as Seams, 'fetchBoardHtml')
+        .mockRejectedValue(
+          new Error(
+            "browserType.launchPersistentContext: Executable doesn't exist; run npx playwright install",
+          ),
+        );
+      const res = await service.scrape(input());
+      expect(res.jobs).toHaveLength(0);
+      expect(res.diagnostics?.reason).toBe('browser_unavailable');
+    });
+
+    it('reports blocked when the board serves a bot challenge', async () => {
+      const service = serviceWith(
+        { [SLUG]: '<html><title>Just a moment...</title><div id="cf-challenge"></div></html>' },
+        {},
+      );
+      const res = await service.scrape(input());
+      expect(res.jobs).toHaveLength(0);
+      expect(res.diagnostics?.reason).toBe('blocked');
+    });
+
+    it('reports empty when the board genuinely has no postings', async () => {
+      const service = serviceWith({ [SLUG]: '<html><body><main></main></body></html>' }, {});
+      const res = await service.scrape(input());
+      expect(res.jobs).toHaveLength(0);
+      expect(res.diagnostics?.reason).toBe('empty');
+    });
+
+    it('reports bad_input when neither slug nor url is provided', async () => {
+      const service = new GustoHostedService();
+      const res = await service.scrape(input({ companySlug: undefined }));
+      expect(res.diagnostics?.reason).toBe('bad_input');
+    });
+  });
 });

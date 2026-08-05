@@ -15,6 +15,19 @@
 
 ---
 
+## 2026-08-05 — Spec 5082 — Per-source zero-job diagnostics (reason + `per_source`)
+
+**Change:** every zero-job outcome used to collapse to a bare `new JobResponseDto([])`, so a blocked board, a browser that failed to launch, and a genuinely empty board were indistinguishable — the only breadcrumb was a generic `... scrape failed (Error)` line in server stdout. Spec 5082 makes the reason a structured field that travels back to the caller.
+
+- `packages/models/src/dtos/scrape-diagnostics.dto.ts` (new) — `ScrapeReason` union (`ok | empty | blocked | browser_unavailable | fetch_error | timeout | bad_input | unknown`), `ScrapeDiagnostics`, `SourceDiagnosticDto`, plus `classifyScrapeError(err)` (maps a thrown error's message to a reason, keeping the real message in `detail`, truncated to 300 chars) and `looksLikeChallenge(html)` (Cloudflare/PerimeterX interstitial detector). Barrelled from `packages/models/src/dtos/index.ts`.
+- `packages/models/src/dtos/job-response.dto.ts` — optional `diagnostics?: ScrapeDiagnostics` (additive; `new JobResponseDto(jobs)` still valid).
+- Plugins `source-ats-gusto-hosted`, `source-company-desktopmetal`, `source-company-truemetalsupply` — outer catch now `classifyScrapeError(err)` and returns `new JobResponseDto([], diagnostics)` while logging `[reason]: detail`; zero-posting paths distinguish `blocked` (challenge HTML) from `empty`; gusto missing/unresolvable input → `bad_input`.
+- `apps/api/src/jobs/jobs.service.ts` — new `searchJobsWithDiagnostics()` returns `{ jobs, perSource }`; one `SourceDiagnosticDto` per settled source (jobs → `ok`, empty → plugin reason or `empty`, rejected → `classifyScrapeError`). `searchJobs()` is now a thin wrapper (six existing callers unchanged).
+- `apps/api/src/jobs/jobs.controller.ts` — `/api/jobs/search` gains additive `per_source` (standard + paginated JSON); `[]` on cache hits (no fan-out ran).
+- Tests: `packages/models/__tests__/scrape-diagnostics.spec.ts`, gusto-hosted diagnostics cases, and `searchJobsWithDiagnostics` cases in `jobs.service.spec.ts`.
+
+---
+
 ## 2026-08-05 — Spec 5081 — Headful browser for company plugins blocked on Cloudflare/Wix
 
 **Change:** added Spec 5081 and applied the Spec 5076 `BrowserPool` headful opt-in to `source-company-desktopmetal` and `source-company-truemetalsupply`.
