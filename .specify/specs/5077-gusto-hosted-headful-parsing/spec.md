@@ -9,7 +9,7 @@
 | Created        | 2026-08-04                         |
 | Last updated   | 2026-08-04                         |
 | Supersedes     | (none)                             |
-| Related specs  | 5076, 5054, 5074                   |
+| Related specs  | 5076, 5054                         |
 
 ## 1. Problem Statement
 

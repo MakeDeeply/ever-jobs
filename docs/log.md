@@ -15,6 +15,20 @@
 
 ---
 
+## 2026-08-05 — Spec 5080 — Reserve-overlaps minting policy + duplicate-number lint
+
+**Change:** extended the Spec 787 fork range tooling.
+
+- `scripts/spec-ranges.ts` — added an optional `SpecRange.policy` field, an `Allocation { mint, reserved }` type, `reserveOverlapsAllocation()` (band-local: COUNT = Σ(dirs_at_number − 1); reserve the COUNT lowest-available numbers, gaps first; mint the next available), and an `allocateInRange()` dispatcher that keeps the default `max-in-band + 1` (empty reservations) unless a band opts into `reserve-overlaps`.
+- `scripts/next-spec-number.ts` — `computeNextSpecAllocation()` returns `{ mint, reserved }`; `computeNextSpecNumber()` returns the mint. The CLI prints only the mint on stdout and reports reserved slots on stderr.
+- `.specify/ranges.json` — the `MakeDeeply/ever-jobs` row gains `"policy": "reserve-overlaps"` and its start moves `5000 → 5001` (band `5001–5999`) so the never-used `5000` slot isn't surfaced as available; `ever-jobs/ever-jobs` is unchanged.
+- `scripts/docs-lint.ts` — new check #7: two spec directories sharing a leading number fail the lint, except the inherited cross-fork duplicates `{5024, 5025, 5026}` (allow-list doubles as the renumber ledger).
+- `.specify/specs/5076-*` / `5077-*` — dropped stale `Related specs` references to `5075` / `5074` (neither number has a directory on `develop`).
+
+**Why:** the default allocator held no clean renumber targets for numbers duplicated by a cross-fork merge, and `docs-lint` never checked number uniqueness — which is why the upstream OOM specs' `5024/5025/5026` merged in alongside the fork's own `5024/5025/5026` with a green lint. The reserve policy (opt-in, band-local, no global max) fills gaps and holds the COUNT lowest-available numbers open as renumber targets; the duplicate-number lint fails any *new* collision at PR/push time. Both are additive so `ever-jobs/ever-jobs` behavior is byte-for-byte unchanged and the change is upstream-contributable. On the current fork tree the policy reserves `5074/5075/5079` and mints this spec at `5080`. Spec 5080.
+
+---
+
 ## 2026-08-05 — Spec 5078 — Restrict Docker publish workflow to the canonical repository
 
 **Change:** `.github/workflows/docker-build-publish.yml` — added `if: ${{ github.repository == 'ever-jobs/ever-jobs' }}` to both the `build` and `build-mcp` jobs.
