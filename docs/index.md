@@ -1813,6 +1813,7 @@
 || 5073 | [upstream-develop-sync](../.specify/specs/5073-upstream-develop-sync/spec.md) — [plan](../.specify/specs/5073-upstream-develop-sync/plan.md) — [tasks](../.specify/specs/5073-upstream-develop-sync/tasks.md) | Cherry-picks 12 upstream `develop` commits into the fork, preserving security overrides (`@upwork` removal) and regenerating `package-lock.json`. Brings in `source-internshala`/`source-simplyhired` fixes and CI workflow updates. |
 
 || 5076 | [BrowserPool headful / persistent-context opt-in](../.specify/specs/5076-browserpool-headful-persistent-context/spec.md) — [plan](../.specify/specs/5076-browserpool-headful-persistent-context/plan.md) — [tasks](../.specify/specs/5076-browserpool-headful-persistent-context/tasks.md) | In progress. Adds `headful?: boolean` and `userDataDir?: string` to `BrowserPageOptions` so `BrowserPool` can launch a persistent, headful Chromium context for Cloudflare-protected sites while keeping the default ephemeral headless path unchanged. |
+|| 5077 | [Gusto-hosted headful browser + HTML parser fixes](../.specify/specs/5077-gusto-hosted-headful-parsing/spec.md) — [plan](../.specify/specs/5077-gusto-hosted-headful-parsing/plan.md) — [tasks](../.specify/specs/5077-gusto-hosted-headful-parsing/tasks.md) | In progress. Uses the `BrowserPool` headful opt-in for `source-ats-gusto-hosted` and fixes board/detail parsing so `material.inc` and `naturaresources.com` boards return jobs. |
 
 ## 8. Templates
 
@@ -1824,4 +1825,4 @@
 
 ---
 
-_Last revised: 2026-08-04 (Spec 5076: BrowserPool headful / persistent-context opt-in added)._
+_Last revised: 2026-08-04 (Spec 5077: Gusto-hosted headful browser + HTML parser fixes added)._

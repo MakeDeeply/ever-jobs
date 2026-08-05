@@ -19,6 +19,7 @@ import {
   jobPostingLdToCompensation,
   markdownConverter,
   parseJobPostingLd,
+  parseLocationList,
   toDateOnly,
 } from '@ever-jobs/common';
 import {
@@ -168,7 +169,7 @@ export class GustoHostedService implements IScraper, OnModuleDestroy {
     const proxy = input.proxies?.[0];
     const timeoutMs =
       (input.requestTimeout ?? GUSTO_HOSTED_DEFAULT_TIMEOUT_SECONDS) * 1000;
-    const page = await BrowserPool.getPage({ proxy, stealth: true });
+    const page = await BrowserPool.getPage({ proxy, stealth: true, headful: true });
     try {
       await page.goto(url, { waitUntil: 'domcontentloaded', timeout: timeoutMs });
       if (opts.waitForSelector) {
@@ -201,10 +202,16 @@ export class GustoHostedService implements IScraper, OnModuleDestroy {
       if (!postingSlug || seen.has(postingSlug)) return;
       seen.add(postingSlug);
 
+      const headingText = this.cleanText(
+        $(el).find('h1, h2, h3, h4, h5, h6').first().text(),
+      );
       const anchorText = this.cleanText($(el).text());
       items.push({
         postingSlug,
-        title: anchorText ?? this.deriveTitle(postingSlug),
+        title:
+          headingText ??
+          anchorText ??
+          this.deriveTitle(postingSlug),
         jobUrl: gustoHostedPostingUrl(postingSlug),
       });
     });
@@ -243,24 +250,104 @@ export class GustoHostedService implements IScraper, OnModuleDestroy {
     return result;
   }
 
-  /** Extract the JSON-LD `JobPosting` fields from a posting detail page. */
+  /** Extract posting details from JSON-LD, falling back to rendered HTML. */
   private parseDetail(html: string): GustoHostedDetailData | null {
     const posting = parseJobPostingLd(html)[0];
-    if (!posting) return null;
+    if (posting) {
+      const loc = posting.locations[0] ?? null;
+      return {
+        title: posting.title,
+        descriptionHtml: posting.description,
+        datePosted: posting.datePosted,
+        employmentType: posting.employmentType,
+        hiringOrganizationName: posting.hiringOrganizationName,
+        isRemote: posting.remote,
+        city: loc?.city ?? null,
+        state: loc?.region ?? null,
+        country: loc?.country ?? null,
+        compensation: jobPostingLdToCompensation(posting.baseSalary),
+        workFromHomeType: null,
+      };
+    }
+    return this.parseDetailFromHtml(html);
+  }
 
-    const loc = posting.locations[0] ?? null;
+  /** Parse a rendered Gusto posting page when JSON-LD is absent. */
+  private parseDetailFromHtml(html: string): GustoHostedDetailData | null {
+    const $ = cheerio.load(html);
+    const h1 = $('h1').first();
+    if (!h1.length) return null;
+
+    const companyName = this.cleanText(
+      h1.find('[class*="text-indigo-600"]').first().text(),
+    );
+    const title =
+      this.cleanText(h1.find('[class*="text-3xl"]').first().text()) ??
+      this.cleanText($('title').text()?.split(' at ')[0]);
+
+    const metaSpan = h1
+      .find('span')
+      .filter((_, el) => $(el).text().includes('·'))
+      .first();
+
+    let employmentType: string | null = null;
+    const locationTexts: string[] = [];
+    const metaHtml = metaSpan.html();
+    if (metaHtml) {
+      const [locationHtml, employmentHtml] = metaHtml.split('·');
+      if (employmentHtml) {
+        employmentType = this.cleanText(
+          employmentHtml.replace(/<[^>]+>/g, ' '),
+        );
+      }
+      if (locationHtml) {
+        const parts = locationHtml
+          .split(/<br\s*\/?>/i)
+          .map((part) => this.cleanText(part.replace(/<[^>]+>/g, ' ')))
+          .filter((part): part is string => !!part);
+        locationTexts.push(...parts);
+      }
+    }
+
+    const parsedLocations = parseLocationList(locationTexts);
+    const location = parsedLocations.location;
+
+    const descriptionHtml = this.extractDescriptionHtml($);
+
+    const isRemote =
+      parsedLocations.remoteMentioned ||
+      GUSTO_HOSTED_REMOTE_REGEX.test(title ?? '') ||
+      GUSTO_HOSTED_REMOTE_REGEX.test(descriptionHtml ?? '');
+
     return {
-      title: posting.title,
-      descriptionHtml: posting.description,
-      datePosted: posting.datePosted,
-      employmentType: posting.employmentType,
-      hiringOrganizationName: posting.hiringOrganizationName,
-      isRemote: posting.remote,
-      city: loc?.city ?? null,
-      state: loc?.region ?? null,
-      country: loc?.country ?? null,
-      compensation: jobPostingLdToCompensation(posting.baseSalary),
+      title,
+      descriptionHtml,
+      datePosted: null,
+      employmentType,
+      hiringOrganizationName: companyName,
+      isRemote,
+      city: location?.city ?? null,
+      state: location?.state ?? null,
+      country: location?.country ?? null,
+      compensation: null,
+      workFromHomeType: parsedLocations.workFromHomeType ?? null,
     };
+  }
+
+  /** Find the job-description rich-text container on a Gusto posting page. */
+  private extractDescriptionHtml($: cheerio.CheerioAPI): string | null {
+    const headingEl = $('h1, h2, h3, h4, h5, h6')
+      .toArray()
+      .find((el) => /Description|About the Role|Role overview/i.test($(el).text().trim()));
+    if (headingEl) {
+      const container = $(headingEl)
+        .next('[data-controller="rich-text"]')
+        .find('.rich-text-container')
+        .first();
+      if (container.length) return container.html() ?? null;
+    }
+    const fallback = $('.rich-text-container').first();
+    return fallback.length ? (fallback.html() ?? null) : null;
   }
 
   /** Map a board item + detail data → JobPostDto. */
@@ -300,6 +387,7 @@ export class GustoHostedService implements IScraper, OnModuleDestroy {
       ...(jobType ? { jobType: [jobType] } : {}),
       compensation: detail?.compensation ?? null,
       applyUrl: item.jobUrl,
+      workFromHomeType: detail?.workFromHomeType ?? null,
     });
   }
 

@@ -1,4 +1,6 @@
 import 'reflect-metadata';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 import {
   DescriptionFormat,
   ScraperInputDto,
@@ -90,7 +92,7 @@ function detail(o: DetailOpts): string {
 /** Wire a service whose fetch seams serve a board + a per-posting detail map. */
 function serviceWith(
   boardBySlug: Record<string, string>,
-  detailBySlug: Record<string, DetailOpts | null>,
+  detailBySlug: Record<string, DetailOpts | string | null>,
 ): GustoHostedService {
   const service = new GustoHostedService();
   const seams = service as unknown as Seams;
@@ -101,7 +103,9 @@ function serviceWith(
     .spyOn(seams, 'fetchPostingHtml')
     .mockImplementation(async (postingSlug) => {
       const opts = detailBySlug[postingSlug];
-      return opts ? detail(opts) : '';
+      if (opts === null) return '';
+      if (typeof opts === 'string') return opts;
+      return detail(opts);
     });
   return service;
 }
@@ -309,5 +313,62 @@ describe('GustoHostedService', () => {
     const asPlain = await make(DescriptionFormat.PLAIN);
     expect(asPlain.jobs[0].description).toContain('Hello');
     expect(asPlain.jobs[0].description).not.toContain('<strong>');
+  });
+
+  describe('fixture-based regression tests', () => {
+    const fixture = (name: string): string =>
+      readFileSync(join(__dirname, 'fixtures', name), 'utf8');
+
+    it('parses the material.inc Gusto board and detail HTML', async () => {
+      const materialSlug = 'material-hybrid-manufacturing-inc-ed3a1ae2-cd0f-4b68-b4bb-e8b4e52a3f73';
+      const materialDetail = fixture('material-detail.html');
+      const service = serviceWith(
+        { [materialSlug]: fixture('material-board.html') },
+        {
+          'material-hybrid-manufacturing-inc-staff-battery-applications-engineer-d421d87b-e050-454b-95b8-395b7ec46c9a': materialDetail,
+        },
+      );
+
+      const res = await service.scrape(
+        input({ companySlug: materialSlug }),
+      );
+
+      expect(res.jobs).toHaveLength(3);
+      const job = res.jobs.find((j) =>
+        j.title.includes('Staff Battery Applications Engineer'),
+      )!;
+      expect(job.title).toBe('Staff Battery Applications Engineer');
+      expect(job.companyName).toBe('Material Hybrid Manufacturing Inc');
+      expect(job.location?.city).toBe('Miami');
+      expect(job.location?.state).toBe('FL');
+      expect(job.employmentType).toBe('Full time');
+      expect(job.description).toBeTruthy();
+      expect(job.description).toContain('What You');
+    });
+
+    it('parses the naturaresources.com Gusto board and detail HTML', async () => {
+      const naturaSlug = 'natura-resources-llc-629e09d9-d8bf-4616-94a7-b744e4a77616';
+      const naturaDetail = fixture('natura-detail.html');
+      const service = serviceWith(
+        { [naturaSlug]: fixture('natura-board.html') },
+        {
+          'natura-resources-llc-sr-mechnical-engineer-nuclear-5bb2a78d-445e-4c93-aab3-b264a4630a98': naturaDetail,
+        },
+      );
+
+      const res = await service.scrape(input({ companySlug: naturaSlug }));
+
+      expect(res.jobs).toHaveLength(6);
+      const job = res.jobs.find((j) =>
+        j.title.includes('Sr. Mechnical Engineer'),
+      )!;
+      expect(job.title).toBe('Sr. Mechnical Engineer, Nuclear');
+      expect(job.companyName).toBe('Natura Resources LLC');
+      expect(job.location?.city).toBe('Abilene');
+      expect(job.location?.state).toBe('TX');
+      expect(job.employmentType).toBe('Full time');
+      expect(job.description).toBeTruthy();
+      expect(job.description).toContain('Role Authority');
+    });
   });
 });

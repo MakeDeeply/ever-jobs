@@ -15,6 +15,17 @@
 
 ---
 
+## 2026-08-04 — Spec 5077 — Gusto-hosted headful browser + HTML parser fixes
+
+**Change:** `packages/plugins/source-ats-gusto-hosted` now uses the `BrowserPool` headful/persistent-context opt-in and parses rendered Gusto board/detail pages more robustly.
+
+- `GustoHostedService.fetchRenderedHtml` requests `BrowserPool.getPage({ ..., headful: true })` to avoid Cloudflare's ephemeral-headless challenge.
+- `parseBoard` extracts posting titles from the first `h1`–`h6` inside the `/postings/` anchor instead of the concatenated anchor text.
+- `parseDetail` falls back to HTML extraction (company, title, location, employment type, description) when the posting page no longer embeds JSON-LD.
+- Added `material.inc` and `naturaresources.com` board/detail fixtures and two new test cases.
+
+Validation: `npx jest --testPathPatterns=source-ats-gusto-hosted` green; `npx tsc --noEmit -p packages/plugins/source-ats-gusto-hosted/tsconfig.json` clean.
+
 ## 2026-08-04 — Spec 5076 — BrowserPool headful / persistent-context opt-in
 
 **Change:** `packages/common/src/browser/browser-pool.ts` now supports a headful, persistent-context browser mode so source plugins can opt out of the default ephemeral headless Chromium for Cloudflare-protected sites.
