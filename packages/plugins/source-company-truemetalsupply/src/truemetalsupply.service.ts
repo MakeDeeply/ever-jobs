@@ -71,10 +71,10 @@ export class TrueMetalSupplyService implements IScraper, OnModuleDestroy {
   }
 
   /**
-   * Drive a stealth headless browser: open `/careers`, click every dialog
-   * trigger, and capture the rendered popup for each real opening. Isolated so
-   * tests can substitute captured dialogs without a browser. The page is always
-   * closed in `finally`.
+   * Drive a stealth headful browser: open `/careers`, click every visible
+   * dialog trigger, and capture the rendered popup for each real opening.
+   * Isolated so tests can substitute captured dialogs without a browser. The
+   * page is always closed in `finally`.
    */
   protected async fetchOpenings(
     input: ScraperInputDto,
@@ -83,7 +83,7 @@ export class TrueMetalSupplyService implements IScraper, OnModuleDestroy {
     const timeoutMs =
       (input.requestTimeout ?? TRUEMETALSUPPLY_DEFAULT_TIMEOUT_SECONDS) * 1000;
 
-    const page = await BrowserPool.getPage({ proxy, stealth: true });
+    const page = await BrowserPool.getPage({ proxy, stealth: true, headful: true });
     try {
       await page.goto(TRUEMETALSUPPLY_CAREERS_URL, {
         waitUntil: 'domcontentloaded',
@@ -95,18 +95,20 @@ export class TrueMetalSupplyService implements IScraper, OnModuleDestroy {
         })
         .catch(() => undefined);
 
-      return await this.collectDialogs(page);
+      return await this.collectDialogs(page, timeoutMs);
     } finally {
       await page.close().catch(() => undefined);
     }
   }
 
   /**
-   * Click each dialog trigger in turn, read the opened popup, and keep the ones
-   * whose body looks like a job description. Deduped by title.
+   * Click each visible dialog trigger in turn, read the opened popup by its
+   * Wix popup id, and keep the ones whose body looks like a job description.
+   * Deduped by title.
    */
   private async collectDialogs(
     page: Page,
+    timeoutMs: number,
   ): Promise<TrueMetalSupplyOpening[]> {
     const triggers = page.locator(TRUEMETALSUPPLY_DIALOG_TRIGGER_SELECTOR);
     const count = await triggers.count();
@@ -117,11 +119,21 @@ export class TrueMetalSupplyService implements IScraper, OnModuleDestroy {
     for (let i = 0; i < count; i++) {
       const trigger = triggers.nth(i);
       try {
+        const box = await trigger.boundingBox();
+        if (!box || box.width === 0 || box.height === 0) continue;
+
         await trigger.scrollIntoViewIfNeeded({ timeout: 5000 });
         await trigger.click({ timeout: 8000 });
         await this.sleep(TRUEMETALSUPPLY_DIALOG_SETTLE_MS);
 
-        const dialog = page.locator(TRUEMETALSUPPLY_DIALOG_SELECTOR).first();
+        const popupId = await trigger.getAttribute('data-popupid');
+        const dialog = popupId
+          ? page.locator(`[id="${popupId}"]`).first()
+          : page.locator(TRUEMETALSUPPLY_DIALOG_SELECTOR).first();
+
+        await dialog
+          .waitFor({ state: 'visible', timeout: timeoutMs })
+          .catch(() => undefined);
         if ((await dialog.count()) === 0) continue;
 
         const descriptionText = await dialog.innerText().catch(() => '');
