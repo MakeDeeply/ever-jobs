@@ -3,9 +3,12 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { Test } from '@nestjs/testing';
 import { JobResponseDto, ScraperInputDto, Site } from '@ever-jobs/models';
+import { BrowserPool } from '@ever-jobs/common';
 import {
   TRUEMETALSUPPLY_CAREERS_URL,
   TRUEMETALSUPPLY_COMPANY_NAME,
+  TRUEMETALSUPPLY_DIALOG_TRIGGER_SELECTOR,
+  TRUEMETALSUPPLY_DIALOG_SELECTOR,
 } from '../src/truemetalsupply.constants';
 import { TrueMetalSupplyOpening } from '../src/truemetalsupply.types';
 import { TrueMetalSupplyModule, TrueMetalSupplyService } from '../src';
@@ -69,7 +72,7 @@ function fakePage(
   };
 }
 
-describe('TrueMetalSupplyService (Spec 5062 — Wix popup careers, headless)', () => {
+describe('TrueMetalSupplyService (Spec 5062 — Wix popup careers, headful)', () => {
   it('resolves through TrueMetalSupplyModule via NestJS DI', async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [TrueMetalSupplyModule],
@@ -220,5 +223,33 @@ describe('TrueMetalSupplyService (Spec 5062 — Wix popup careers, headless)', (
     const result = await service.scrape({} as ScraperInputDto);
     expect(result).toBeInstanceOf(JobResponseDto);
     expect(result.jobs).toEqual([]);
+  });
+
+  it('requests a headful stealth browser when collecting openings', async () => {
+    const getPageSpy = jest.spyOn(BrowserPool, 'getPage').mockResolvedValue({
+      ...(fakePage([
+        {
+          text: 'Project Estimator\nPosition Overview\nKey Responsibilities\nRequirements',
+          html: '<div><h2>Project Estimator</h2><p>Position Overview</p><p>Key Responsibilities</p><p>Requirements</p></div>',
+        },
+      ]) as any),
+      goto: jest.fn().mockResolvedValue(undefined),
+      waitForSelector: jest.fn().mockResolvedValue(null),
+      close: jest.fn().mockResolvedValue(undefined),
+    } as any);
+    const service = new TrueMetalSupplyService();
+    jest
+      .spyOn(service as unknown as { sleep: () => Promise<void> }, 'sleep')
+      .mockResolvedValue(undefined);
+
+    const result = await service.scrape({} as ScraperInputDto);
+
+    expect(getPageSpy).toHaveBeenCalledWith(
+      expect.objectContaining({ stealth: true, headful: true }),
+    );
+    expect(result.jobs).toHaveLength(1);
+    expect(result.jobs[0].title).toBe('Project Estimator');
+
+    getPageSpy.mockRestore();
   });
 });

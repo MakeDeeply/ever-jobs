@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import { CompensationInterval, ScraperInputDto, Site } from '@ever-jobs/models';
+import { BrowserPool } from '@ever-jobs/common';
 import { DesktopmetalService } from '../src/desktopmetal.service';
 
 const FIXTURES = join(__dirname, 'fixtures');
@@ -164,6 +165,28 @@ describe('DesktopmetalService', () => {
       inputFrom(),
     );
     expect(jobs).toHaveLength(0);
+  });
+
+  it('requests a headful stealth browser when fetching the listing', async () => {
+    const page = {
+      goto: jest.fn().mockResolvedValue(undefined),
+      waitForSelector: jest.fn().mockResolvedValue(null),
+      content: jest.fn().mockResolvedValue('<html></html>'),
+      close: jest.fn().mockResolvedValue(undefined),
+    };
+    const getPageSpy = jest
+      .spyOn(BrowserPool, 'getPage')
+      .mockResolvedValue(page as any);
+
+    const service = new DesktopmetalService();
+    await (service as any).fetchListingHtml(new ScraperInputDto());
+
+    expect(getPageSpy).toHaveBeenCalledWith(
+      expect.objectContaining({ stealth: true, headful: true }),
+    );
+    expect(page.close).toHaveBeenCalled();
+
+    getPageSpy.mockRestore();
   });
 });
 

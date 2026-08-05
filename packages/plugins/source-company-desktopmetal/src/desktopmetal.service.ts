@@ -116,15 +116,16 @@ export class DesktopmetalService implements IScraper, OnModuleDestroy {
 
   /**
    * Fetch the careers listing HTML. The page is client-rendered and sits behind
-   * a Cloudflare managed challenge, so it is loaded with a stealth headless
-   * browser (a real browser clears the challenge automatically). A proxy is
-   * used when supplied. Isolated so tests can substitute captured HTML.
+   * a Cloudflare managed challenge, so it is loaded with a stealth headful
+   * browser (persistent Chromium context; a real browser clears the challenge
+   * automatically). A proxy is used when supplied. Isolated so tests can
+   * substitute captured HTML.
    */
   protected async fetchListingHtml(input: ScraperInputDto): Promise<string> {
     const proxy = input.proxies?.[0];
     const timeoutMs =
       (input.requestTimeout ?? DESKTOPMETAL_DEFAULT_TIMEOUT_SECONDS) * 1000;
-    const page = await BrowserPool.getPage({ proxy, stealth: true });
+    const page = await BrowserPool.getPage({ proxy, stealth: true, headful: true });
     try {
       await page.goto(DESKTOPMETAL_CAREERS_URL, {
         waitUntil: 'domcontentloaded',

@@ -71,7 +71,7 @@ export class TrueMetalSupplyService implements IScraper, OnModuleDestroy {
   }
 
   /**
-   * Drive a stealth headless browser: open `/careers`, click every dialog
+   * Drive a stealth headful browser: open `/careers`, click every dialog
    * trigger, and capture the rendered popup for each real opening. Isolated so
    * tests can substitute captured dialogs without a browser. The page is always
    * closed in `finally`.
@@ -83,7 +83,7 @@ export class TrueMetalSupplyService implements IScraper, OnModuleDestroy {
     const timeoutMs =
       (input.requestTimeout ?? TRUEMETALSUPPLY_DEFAULT_TIMEOUT_SECONDS) * 1000;
 
-    const page = await BrowserPool.getPage({ proxy, stealth: true });
+    const page = await BrowserPool.getPage({ proxy, stealth: true, headful: true });
     try {
       await page.goto(TRUEMETALSUPPLY_CAREERS_URL, {
         waitUntil: 'domcontentloaded',
