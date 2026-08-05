@@ -10,6 +10,8 @@ import {
   CompensationDto,
   Site,
   DescriptionFormat,
+  classifyScrapeError,
+  ScrapeDiagnostics,
 } from '@ever-jobs/models';
 import {
   createHttpClient,
@@ -66,6 +68,7 @@ export class WorkdayService implements IScraper {
     const resultsWanted = input.resultsWanted ?? 100;
     const listingsToEnrich: WorkdayJobListItem[] = [];
     let offset = 0;
+    let diagnostics: ScrapeDiagnostics | undefined;
 
     try {
       this.logger.log(`Fetching Workday jobs for ${company} (wd${wdNumber}/${site})`);
@@ -105,9 +108,10 @@ export class WorkdayService implements IScraper {
 
     } catch (err: any) {
       this.logger.error(`Workday scrape error for ${company}: ${err.message}`);
+      diagnostics = classifyScrapeError(err);
     }
 
-    return this.buildResponse(
+    const response = await this.buildResponse(
       client,
       listingsToEnrich,
       company,
@@ -115,6 +119,10 @@ export class WorkdayService implements IScraper {
       site,
       input.descriptionFormat,
     );
+    if (response.jobs.length === 0 && diagnostics) {
+      response.diagnostics = diagnostics;
+    }
+    return response;
   }
 
   private async buildResponse(

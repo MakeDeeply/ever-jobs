@@ -52,8 +52,24 @@ const MAX_DETAIL = 300;
  * checked before the generic network rules because Playwright launch errors can
  * mention both.
  */
+function messageOf(err: unknown): string {
+  if (err instanceof Error) {
+    const code = (err as { code?: unknown }).code;
+    return [err.message, typeof code === 'string' ? code : '']
+      .filter(Boolean)
+      .join(' ');
+  }
+  if (err && typeof err === 'object') {
+    const o = err as { message?: unknown; name?: unknown; code?: unknown };
+    return [o.message, o.name, o.code]
+      .filter((v): v is string => typeof v === 'string')
+      .join(' ');
+  }
+  return String(err ?? '');
+}
+
 export function classifyScrapeError(err: unknown): ScrapeDiagnostics {
-  const message = err instanceof Error ? err.message : String(err ?? '');
+  const message = messageOf(err);
   const detail = message.trim().slice(0, MAX_DETAIL) || undefined;
   const m = message.toLowerCase();
 

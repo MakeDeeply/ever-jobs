@@ -26,6 +26,13 @@
 - `apps/api/src/jobs/jobs.controller.ts` — `/api/jobs/search` gains additive `per_source` (standard + paginated JSON); `[]` on cache hits (no fan-out ran).
 - Tests: `packages/models/__tests__/scrape-diagnostics.spec.ts`, gusto-hosted diagnostics cases, and `searchJobsWithDiagnostics` cases in `jobs.service.spec.ts`.
 
+**Expanded scope (same spec):** the swallow-into-`[]` pattern was not limited to the three domains observed failing — it existed in every MakeDeeply-authored/reworked plugin (Specs 5001+). Extended breaker-neutral diagnostics to all of them (18 `source-company-*`, 22 `source-ats-*`, and `source-notion-pages`; the ~1,500 upstream-inherited plugins are intentionally left alone).
+
+- Simple/fetch catches now return `new JobResponseDto([], classifyScrapeError(err))` instead of a bare empty (the log line and genuine-`empty` zero-board paths are preserved). Partial-result ATS (`paycom`, `dover`, `icims`) attach the diagnostic only when the result is empty.
+- Control-flow plugins that fall through to a final return (`workday`, `breezyhr`, `rippling`, `oracle`, `successfactors`) capture the classified diagnostic into a scoped variable and attach it only when empty; `adp` emits `bad_input`/`fetch_error` on its guard returns.
+- **Breaker-neutral by design:** plugins return a diagnostic-bearing empty rather than throwing. The Spec 005 circuit breaker keys on the `site` token, which for shared ATS covers many tenants — throwing would let a handful of bad tenants open the circuit and skip healthy co-tenants in the same bulk run.
+- `classifyScrapeError` now folds in `Error.code` and non-`Error` `name`/`code` fields so axios-style `ETIMEDOUT`/`ENOTFOUND` rejections classify as `timeout`/`fetch_error`.
+
 ---
 
 ## 2026-08-05 — Spec 5081 — Headful browser for company plugins blocked on Cloudflare/Wix

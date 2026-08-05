@@ -50,6 +50,15 @@ describe('classifyScrapeError (Spec 5082)', () => {
     expect(classifyScrapeError(undefined).reason).toBe('unknown');
     expect(classifyScrapeError('plain string blocked').reason).toBe('blocked');
   });
+
+  it('folds in Error.code and non-Error name/code fields', () => {
+    const axiosLike = Object.assign(new Error('connect failed'), {
+      code: 'ETIMEDOUT',
+    });
+    expect(classifyScrapeError(axiosLike).reason).toBe('timeout');
+    expect(classifyScrapeError({ name: 'TimeoutError' }).reason).toBe('timeout');
+    expect(classifyScrapeError({ code: 'ENOTFOUND' }).reason).toBe('fetch_error');
+  });
 });
 
 describe('looksLikeChallenge (Spec 5082)', () => {
