@@ -6,7 +6,9 @@ import {
   ScraperInputDto,
   Site,
 } from '@ever-jobs/models';
+import { BrowserPool } from '@ever-jobs/common';
 import { GustoHostedService } from '../src/gusto-hosted.service';
+import { GUSTO_HOSTED_READY_TIMEOUT_SECONDS } from '../src/gusto-hosted.constants';
 
 const SLUG = 'material-hybrid-manufacturing-inc-ed3a1ae2-cd0f-4b68-b4bb-e8b4e52a3f73';
 
@@ -408,6 +410,45 @@ describe('GustoHostedService', () => {
       const service = new GustoHostedService();
       const res = await service.scrape(input({ companySlug: undefined }));
       expect(res.diagnostics?.reason).toBe('bad_input');
+    });
+  });
+
+  describe('detail readiness gate (Spec 5083)', () => {
+    /** Access the protected posting fetch without loosening it to `any`. */
+    interface PostingSeam {
+      fetchPostingHtml: (
+        postingSlug: string,
+        input: ScraperInputDto,
+      ) => Promise<string>;
+    }
+
+    it('gates the detail page on `h1` with the bounded readiness timeout, not the absent JSON-LD', async () => {
+      // Gusto posting pages carry no `application/ld+json`; waiting for it burned
+      // the full navigation timeout on every detail fetch. Assert readiness now
+      // waits for `h1` with the short readiness timeout.
+      const waitForSelector = jest.fn().mockResolvedValue(null);
+      const getPageSpy = jest.spyOn(BrowserPool, 'getPage').mockResolvedValue({
+        goto: jest.fn().mockResolvedValue(undefined),
+        waitForSelector,
+        content: jest.fn().mockResolvedValue('<html><body><h1>Role</h1></body></html>'),
+        close: jest.fn().mockResolvedValue(undefined),
+      } as any);
+
+      const service = new GustoHostedService();
+      await (service as unknown as PostingSeam).fetchPostingHtml('some-posting-slug', input());
+
+      expect(waitForSelector).toHaveBeenCalledWith(
+        'h1',
+        expect.objectContaining({
+          timeout: GUSTO_HOSTED_READY_TIMEOUT_SECONDS * 1000,
+        }),
+      );
+      expect(waitForSelector).not.toHaveBeenCalledWith(
+        'script[type="application/ld+json"]',
+        expect.anything(),
+      );
+
+      getPageSpy.mockRestore();
     });
   });
 });

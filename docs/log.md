@@ -15,6 +15,25 @@
 
 ---
 
+## 2026-08-06 — Spec 5083 (follow-up) — truemetalsupply: retry a first click that opens no popup
+
+**Change:** on the live truemetalsupply Wix board the **first** popup click of a page sometimes lands before Thunderbolt has wired the popup handler, so it opens nothing; `collectDialogs` then skipped that trigger and the first real role (Estimator) was silently dropped — the board renders **7** roles but the scrape returned **6**. Reproduced live: clicking Estimator in isolation opens its popup fine, but as the first click in the sequential enumeration its `[role="dialog"]` never appears.
+
+- `source-company-truemetalsupply` — add `TRUEMETALSUPPLY_DIALOG_OPEN_ATTEMPTS = 2`; the click→open step is extracted into `openTriggerDialog`, which re-clicks (after Escape + settle) up to that many times until the popup is visible. Each attempt's visibility wait stays bounded by `TRUEMETALSUPPLY_DIALOG_VISIBLE_TIMEOUT_MS`, so a genuinely non-opening trigger still can't serialize into the navigation timeout.
+- Test: `fakePage` gains an `opensAfter` knob (a popup that only opens on its Nth click); a new case asserts a trigger whose first click opens nothing still yields its role (no first-role drop). 12/12 in the suite; `tsc --noEmit` clean.
+- Live check (production service, real site): `jobs=7 reason=ok elapsed=18.0s` — all seven roles (Project Estimator, True Service Rep, Customer Relationship Manager, Delivery Driver, CDL-A Driver, Warehouse Assoc., Asheville Facility Manager), within the 30 s caller budget.
+
+## 2026-08-05 — Spec 5083 — Headful readiness waits no longer hang the whole request
+
+**Change:** the three headful plugins each gated readiness on a `page.waitForSelector(selector, { timeout: navTimeoutMs })` where `navTimeoutMs` was the full 30 s navigation budget. When the gated element was absent (or attached but never `visible`), the wait burned the entire 30 s even though the page's content was present within ~1 s — so a downstream caller with a 30 s HTTP read timeout reported a client-side `timeout` while the operator could see the page loaded. Root cause (reproduced locally with the plugin stealth init script): gusto-hosted detail pages carry **no** `<script type="application/ld+json">` (waited 30 s; `h1` present at ~0.02 s); truemetalsupply's 8 Wix dialog triggers are attached at ~0.05 s but never Playwright-`visible` (default-state wait burned 30 s, pointlessly — `collectDialogs` enumerates via `locator.count()` regardless); desktopmetal happens to resolve its PDF anchors in ~1.7 s but shares the same fragile pattern.
+
+- `source-ats-gusto-hosted` — add `GUSTO_HOSTED_READY_TIMEOUT_SECONDS = 15`; `fetchRenderedHtml` uses it for the readiness `waitForSelector` (the `goto` keeps the 30 s nav timeout); the posting readiness selector changes from `script[type="application/ld+json"]` to `h1`. `parseDetail` still tries JSON-LD first, then the existing HTML fallback — output unchanged.
+- `source-company-truemetalsupply` — add `TRUEMETALSUPPLY_READY_TIMEOUT_SECONDS = 12` and `TRUEMETALSUPPLY_DIALOG_VISIBLE_TIMEOUT_MS = 6000`; the trigger wait becomes `{ state: 'attached', timeout: readyMs }`; the per-dialog `waitFor({ state: 'visible' })` is bounded by the dialog-visible timeout so one non-opening dialog cannot serialize into 30 s+.
+- `source-company-desktopmetal` — add `DESKTOPMETAL_READY_TIMEOUT_SECONDS = 15`; the listing readiness `waitForSelector` uses it.
+- Tests: +3 (gusto-hosted asserts the detail gate is `h1` with the ready timeout and never the JSON-LD selector; truemetalsupply asserts the trigger wait is `state:'attached'` + bounded timeout; desktopmetal asserts the listing wait uses the ready timeout). 41/41 across the three suites; `tsc --noEmit` + `lint:docs` clean.
+- Breaker-neutral and Spec 5082-compatible: plugins still return `JobResponseDto([], { reason: ... })`, never throw for a slow gate.
+- Downstream: an external caller's `timeout` is its own client-side HTTP read timeout, not a scraper reason; with the server now answering in seconds it stops firing. No code in this repo depends on any external caller.
+
 ## 2026-08-05 — Spec 5082 — Per-source zero-job diagnostics (reason + `per_source`)
 
 **Change:** every zero-job outcome used to collapse to a bare `new JobResponseDto([])`, so a blocked board, a browser that failed to launch, and a genuinely empty board were indistinguishable — the only breadcrumb was a generic `... scrape failed (Error)` line in server stdout. Spec 5082 makes the reason a structured field that travels back to the caller.
