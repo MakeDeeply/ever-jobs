@@ -11,6 +11,8 @@ import {
   LocationDto,
   ScraperInputDto,
   Site,
+  classifyScrapeError,
+  looksLikeChallenge,
 } from '@ever-jobs/models';
 import {
   BrowserPool,
@@ -72,13 +74,19 @@ export class GustoHostedService implements IScraper, OnModuleDestroy {
       this.logger.warn(
         'No companySlug or companyUrl provided for Gusto-hosted scraper',
       );
-      return new JobResponseDto([]);
+      return new JobResponseDto([], {
+        reason: 'bad_input',
+        detail: 'no companySlug or companyUrl provided',
+      });
     }
 
     const slug = this.resolveTenant(input.companySlug, input.companyUrl);
     if (!slug) {
       this.logger.warn('Could not resolve a Gusto-hosted board slug from input');
-      return new JobResponseDto([]);
+      return new JobResponseDto([], {
+        reason: 'bad_input',
+        detail: 'could not resolve a board slug from companySlug/companyUrl',
+      });
     }
 
     const resultsWanted = input.resultsWanted ?? GUSTO_HOSTED_DEFAULT_RESULTS;
@@ -89,8 +97,15 @@ export class GustoHostedService implements IScraper, OnModuleDestroy {
       const boardHtml = await this.fetchBoardHtml(slug, input);
       const items = this.parseBoard(boardHtml);
       if (items.length === 0) {
+        if (looksLikeChallenge(boardHtml)) {
+          this.logger.warn(`Gusto-hosted board "${slug}" served a bot challenge`);
+          return new JobResponseDto([], {
+            reason: 'blocked',
+            detail: 'board response looks like a bot challenge',
+          });
+        }
         this.logger.log(`Gusto-hosted board "${slug}" has no postings`);
-        return new JobResponseDto([]);
+        return new JobResponseDto([], { reason: 'empty' });
       }
 
       const wanted = Math.min(resultsWanted, GUSTO_HOSTED_MAX_DETAIL_FETCHES);
@@ -123,10 +138,11 @@ export class GustoHostedService implements IScraper, OnModuleDestroy {
       this.logger.log(`Gusto-hosted total: ${jobPosts.length} jobs for ${slug}`);
       return new JobResponseDto(jobPosts);
     } catch (err: unknown) {
+      const diagnostics = classifyScrapeError(err);
       this.logger.error(
-        `Gusto-hosted scrape failed for ${slug} (${this.errorLabel(err)})`,
+        `Gusto-hosted scrape failed for ${slug} [${diagnostics.reason}]: ${diagnostics.detail ?? this.errorLabel(err)}`,
       );
-      return new JobResponseDto([]);
+      return new JobResponseDto([], diagnostics);
     }
   }
 

@@ -8,6 +8,7 @@ import {
   LocationDto,
   ScraperInputDto,
   Site,
+  classifyScrapeError,
 } from '@ever-jobs/models';
 import { BrowserPool, markdownConverter, parseLocationList } from '@ever-jobs/common';
 import type { Page } from 'playwright';
@@ -51,7 +52,7 @@ export class TrueMetalSupplyService implements IScraper, OnModuleDestroy {
         this.logger.warn(
           'True Metal Supply: no openings found on the careers page',
         );
-        return new JobResponseDto([]);
+        return new JobResponseDto([], { reason: 'empty' });
       }
 
       const jobs = openings.map((opening) => this.toJobPost(opening));
@@ -59,10 +60,11 @@ export class TrueMetalSupplyService implements IScraper, OnModuleDestroy {
       this.logger.log(`True Metal Supply: scraped ${out.length} jobs`);
       return new JobResponseDto(out);
     } catch (error: unknown) {
+      const diagnostics = classifyScrapeError(error);
       this.logger.error(
-        `True Metal Supply scrape failed (${this.errorLabel(error)})`,
+        `True Metal Supply scrape failed [${diagnostics.reason}]: ${diagnostics.detail ?? this.errorLabel(error)}`,
       );
-      return new JobResponseDto([]);
+      return new JobResponseDto([], diagnostics);
     }
   }
 

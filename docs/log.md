@@ -15,6 +15,26 @@
 
 ---
 
+## 2026-08-05 — Spec 5082 — Per-source zero-job diagnostics (reason + `per_source`)
+
+**Change:** every zero-job outcome used to collapse to a bare `new JobResponseDto([])`, so a blocked board, a browser that failed to launch, and a genuinely empty board were indistinguishable — the only breadcrumb was a generic `... scrape failed (Error)` line in server stdout. Spec 5082 makes the reason a structured field that travels back to the caller.
+
+- `packages/models/src/dtos/scrape-diagnostics.dto.ts` (new) — `ScrapeReason` union (`ok | empty | blocked | browser_unavailable | fetch_error | timeout | bad_input | unknown`), `ScrapeDiagnostics`, `SourceDiagnosticDto`, plus `classifyScrapeError(err)` (maps a thrown error's message to a reason, keeping the real message in `detail`, truncated to 300 chars) and `looksLikeChallenge(html)` (Cloudflare/PerimeterX interstitial detector). Barrelled from `packages/models/src/dtos/index.ts`.
+- `packages/models/src/dtos/job-response.dto.ts` — optional `diagnostics?: ScrapeDiagnostics` (additive; `new JobResponseDto(jobs)` still valid).
+- Plugins `source-ats-gusto-hosted`, `source-company-desktopmetal`, `source-company-truemetalsupply` — outer catch now `classifyScrapeError(err)` and returns `new JobResponseDto([], diagnostics)` while logging `[reason]: detail`; zero-posting paths distinguish `blocked` (challenge HTML) from `empty`; gusto missing/unresolvable input → `bad_input`.
+- `apps/api/src/jobs/jobs.service.ts` — new `searchJobsWithDiagnostics()` returns `{ jobs, perSource }`; one `SourceDiagnosticDto` per settled source (jobs → `ok`, empty → plugin reason or `empty`, rejected → `classifyScrapeError`). `searchJobs()` is now a thin wrapper (six existing callers unchanged).
+- `apps/api/src/jobs/jobs.controller.ts` — `/api/jobs/search` gains additive `per_source` (standard + paginated JSON); `[]` on cache hits (no fan-out ran).
+- Tests: `packages/models/__tests__/scrape-diagnostics.spec.ts`, gusto-hosted diagnostics cases, and `searchJobsWithDiagnostics` cases in `jobs.service.spec.ts`.
+
+**Expanded scope (same spec):** the swallow-into-`[]` pattern was not limited to the three domains observed failing — it existed in every MakeDeeply-authored/reworked plugin (Specs 5001+). Extended breaker-neutral diagnostics to all of them (18 `source-company-*`, 22 `source-ats-*`, and `source-notion-pages`; the ~1,500 upstream-inherited plugins are intentionally left alone).
+
+- Simple/fetch catches now return `new JobResponseDto([], classifyScrapeError(err))` instead of a bare empty (the log line and genuine-`empty` zero-board paths are preserved). Partial-result ATS (`paycom`, `dover`, `icims`) attach the diagnostic only when the result is empty.
+- Control-flow plugins that fall through to a final return (`workday`, `breezyhr`, `rippling`, `oracle`, `successfactors`) capture the classified diagnostic into a scoped variable and attach it only when empty; `adp` emits `bad_input`/`fetch_error` on its guard returns.
+- **Breaker-neutral by design:** plugins return a diagnostic-bearing empty rather than throwing. The Spec 005 circuit breaker keys on the `site` token, which for shared ATS covers many tenants — throwing would let a handful of bad tenants open the circuit and skip healthy co-tenants in the same bulk run.
+- `classifyScrapeError` now folds in `Error.code` and non-`Error` `name`/`code` fields so axios-style `ETIMEDOUT`/`ENOTFOUND` rejections classify as `timeout`/`fetch_error`.
+
+---
+
 ## 2026-08-05 — Spec 5081 — Headful browser for company plugins blocked on Cloudflare/Wix
 
 **Change:** added Spec 5081 and applied the Spec 5076 `BrowserPool` headful opt-in to `source-company-desktopmetal` and `source-company-truemetalsupply`.

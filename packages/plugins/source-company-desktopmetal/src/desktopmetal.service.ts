@@ -12,6 +12,8 @@ import {
   LocationDto,
   ScraperInputDto,
   Site,
+  classifyScrapeError,
+  looksLikeChallenge,
 } from '@ever-jobs/models';
 import {
   BrowserPool,
@@ -47,8 +49,15 @@ export class DesktopmetalService implements IScraper, OnModuleDestroy {
       const html = await this.fetchListingHtml(input);
       const { openings, applyEmail } = this.parseListing(html);
       if (openings.length === 0) {
+        if (looksLikeChallenge(html)) {
+          this.logger.warn('Desktop Metal: careers page served a bot challenge');
+          return new JobResponseDto([], {
+            reason: 'blocked',
+            detail: 'careers page response looks like a bot challenge',
+          });
+        }
         this.logger.warn('Desktop Metal: no openings found on the careers page');
-        return new JobResponseDto([]);
+        return new JobResponseDto([], { reason: 'empty' });
       }
 
       const client = createHttpClient({
@@ -103,10 +112,11 @@ export class DesktopmetalService implements IScraper, OnModuleDestroy {
       this.logger.log(`Desktop Metal: scraped ${out.length} jobs`);
       return new JobResponseDto(out);
     } catch (error: unknown) {
+      const diagnostics = classifyScrapeError(error);
       this.logger.error(
-        `Desktop Metal scrape failed (${this.errorLabel(error)})`,
+        `Desktop Metal scrape failed [${diagnostics.reason}]: ${diagnostics.detail ?? this.errorLabel(error)}`,
       );
-      return new JobResponseDto([]);
+      return new JobResponseDto([], diagnostics);
     }
   }
 
