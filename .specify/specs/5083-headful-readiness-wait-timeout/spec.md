@@ -108,3 +108,16 @@ Selector/state corrections:
 A downstream caller's `timeout` message is its own client-side HTTP read timeout, not an ever-jobs
 scraper reason. With this fix the server answers in seconds, so that timeout stops firing. No code
 in this repo depends on any external caller.
+
+## 8. Follow-up (T6) — truemetalsupply first-click retry
+
+While validating the timeout fix live, truemetalsupply returned **6** roles though the board renders
+**7**. Root cause (separate from the readiness wait): the **first** Wix popup click of a page can
+land before Thunderbolt has wired the popup handler, so it opens nothing and the trigger is skipped —
+dropping the first role (Estimator). Reproduced live: Estimator's popup opens fine in isolation but
+not as the first click in the sequential enumeration.
+
+Fix: `TRUEMETALSUPPLY_DIALOG_OPEN_ATTEMPTS = 2`; the click→open step becomes `openTriggerDialog`,
+which re-clicks (Escape + settle) until the popup is `visible`, each attempt still bounded by
+`TRUEMETALSUPPLY_DIALOG_VISIBLE_TIMEOUT_MS`. Test: a `fakePage` `opensAfter` knob + a case asserting a
+first-click-opens-nothing trigger still yields its role. Live-verified: `jobs=7 reason=ok elapsed=18.0s`.

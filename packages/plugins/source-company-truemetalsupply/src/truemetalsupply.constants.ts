@@ -96,3 +96,11 @@ export const TRUEMETALSUPPLY_DIALOG_VISIBLE_TIMEOUT_MS = 6000;
 
 /** Milliseconds to wait after opening/closing a dialog for it to settle. */
 export const TRUEMETALSUPPLY_DIALOG_SETTLE_MS = 600;
+
+/**
+ * How many times to click a trigger while trying to open its popup. The very
+ * first Wix popup click of a page can land before Thunderbolt has wired the
+ * popup handler, so it opens nothing; a second click (after re-settling) then
+ * succeeds. Without this the first real role on the board is silently dropped.
+ */
+export const TRUEMETALSUPPLY_DIALOG_OPEN_ATTEMPTS = 2;

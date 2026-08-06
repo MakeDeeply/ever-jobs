@@ -37,15 +37,23 @@ function serviceWithOpenings(openings: TrueMetalSupplyOpening[]): TrueMetalSuppl
   return service;
 }
 
+type FakeDialog = {
+  text: string;
+  html: string | null;
+  /** Clicks required before the popup actually opens (default 1). */
+  opensAfter?: number;
+};
+
 /**
  * Build a fake Playwright `Page` for `collectDialogs`: each entry is the dialog
  * revealed by clicking trigger `i`. `null` entries simulate a trigger that opens
- * no dialog. Exercises the real click/read/filter/dedup loop without a browser.
+ * no dialog. `opensAfter` models a Wix popup whose first click(s) don't open it
+ * (the first-click-not-wired case). Exercises the real click/read/filter/dedup
+ * loop — including the open-retry — without a browser.
  */
-function fakePage(
-  dialogs: Array<{ text: string; html: string | null } | null>,
-): unknown {
+function fakePage(dialogs: Array<FakeDialog | null>): unknown {
   let open = -1;
+  const clicks: Record<number, number> = {};
   const triggerLocator = {
     count: async () => dialogs.length,
     nth: (i: number) => ({
@@ -54,13 +62,16 @@ function fakePage(
         name === 'data-popupid' ? `popup-${i}` : null,
       scrollIntoViewIfNeeded: async () => undefined,
       click: async () => {
-        open = i;
+        clicks[i] = (clicks[i] ?? 0) + 1;
+        const spec = dialogs[i];
+        if (spec && clicks[i] >= (spec.opensAfter ?? 1)) open = i;
       },
     }),
   };
   const dialogLocator = {
     first: () => ({
       waitFor: async () => undefined,
+      isVisible: async () => open >= 0 && !!dialogs[open],
       count: async () => (open >= 0 && dialogs[open] ? 1 : 0),
       innerText: async () => dialogs[open]?.text ?? '',
       innerHTML: async () => dialogs[open]?.html ?? null,
@@ -188,6 +199,34 @@ describe('TrueMetalSupplyService (Spec 5062 — Wix popup careers, headful)', ()
       }
     ).collectDialogs(page, 30000);
 
+    expect(openings.map((o) => o.title)).toEqual([
+      'Project Estimator',
+      'Delivery Driver',
+    ]);
+  });
+
+  it('retries a trigger whose first click opens nothing (first-click-not-wired) so the first role is not dropped', async () => {
+    const service = serviceWithOpenings([]);
+    jest
+      .spyOn(service as unknown as { sleep: () => Promise<void> }, 'sleep')
+      .mockResolvedValue(undefined);
+
+    const est = DIALOGS[0];
+    const del = DIALOGS[3];
+    // The first trigger only opens on its SECOND click — mirrors the live Wix
+    // board where the first popup click lands before the handler is wired.
+    const page = fakePage([
+      { text: est.descriptionText, html: est.descriptionHtml, opensAfter: 2 },
+      { text: del.descriptionText, html: del.descriptionHtml },
+    ]);
+
+    const openings = await (
+      service as unknown as {
+        collectDialogs: (p: unknown, timeoutMs: number) => Promise<TrueMetalSupplyOpening[]>;
+      }
+    ).collectDialogs(page, 30000);
+
+    // Without the retry the first role (Project Estimator) would be missing.
     expect(openings.map((o) => o.title)).toEqual([
       'Project Estimator',
       'Delivery Driver',
