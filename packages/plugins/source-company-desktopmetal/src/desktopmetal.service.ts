@@ -27,6 +27,7 @@ import {
   DESKTOPMETAL_COMPANY_NAME,
   DESKTOPMETAL_DEFAULT_RESULTS,
   DESKTOPMETAL_DEFAULT_TIMEOUT_SECONDS,
+  DESKTOPMETAL_READY_TIMEOUT_SECONDS,
   DESKTOPMETAL_PDF_MAX_BYTES,
   DESKTOPMETAL_PDF_CONCURRENCY,
   DESKTOPMETAL_ORIGIN,
@@ -135,6 +136,7 @@ export class DesktopmetalService implements IScraper, OnModuleDestroy {
     const proxy = input.proxies?.[0];
     const timeoutMs =
       (input.requestTimeout ?? DESKTOPMETAL_DEFAULT_TIMEOUT_SECONDS) * 1000;
+    const readyMs = DESKTOPMETAL_READY_TIMEOUT_SECONDS * 1000;
     const page = await BrowserPool.getPage({ proxy, stealth: true, headful: true });
     try {
       await page.goto(DESKTOPMETAL_CAREERS_URL, {
@@ -143,7 +145,7 @@ export class DesktopmetalService implements IScraper, OnModuleDestroy {
       });
       await page
         .waitForSelector('a[href*="/uploads/"][href$=".pdf"]', {
-          timeout: timeoutMs,
+          timeout: readyMs,
         })
         .catch(() => undefined);
       return await page.content();

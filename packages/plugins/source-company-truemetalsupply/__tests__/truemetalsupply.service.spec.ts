@@ -9,6 +9,7 @@ import {
   TRUEMETALSUPPLY_COMPANY_NAME,
   TRUEMETALSUPPLY_DIALOG_TRIGGER_SELECTOR,
   TRUEMETALSUPPLY_DIALOG_SELECTOR,
+  TRUEMETALSUPPLY_READY_TIMEOUT_SECONDS,
 } from '../src/truemetalsupply.constants';
 import { TrueMetalSupplyOpening } from '../src/truemetalsupply.types';
 import { TrueMetalSupplyModule, TrueMetalSupplyService } from '../src';
@@ -255,6 +256,36 @@ describe('TrueMetalSupplyService (Spec 5062 — Wix popup careers, headful)', ()
     );
     expect(result.jobs).toHaveLength(1);
     expect(result.jobs[0].title).toBe('Project Estimator');
+
+    getPageSpy.mockRestore();
+  });
+
+  it('waits for the dialog triggers as ATTACHED with a bounded readiness timeout (Spec 5083)', async () => {
+    // The Wix triggers are attached immediately but never Playwright-`visible`,
+    // so gating on the default (visible) state burned the whole navigation
+    // timeout. Assert we wait for `attached` with the short readiness timeout,
+    // not the 30 s navigation budget.
+    const waitForSelector = jest.fn().mockResolvedValue(null);
+    const getPageSpy = jest.spyOn(BrowserPool, 'getPage').mockResolvedValue({
+      ...(fakePage([]) as any),
+      goto: jest.fn().mockResolvedValue(undefined),
+      waitForSelector,
+      close: jest.fn().mockResolvedValue(undefined),
+    } as any);
+    const service = new TrueMetalSupplyService();
+    jest
+      .spyOn(service as unknown as { sleep: () => Promise<void> }, 'sleep')
+      .mockResolvedValue(undefined);
+
+    await service.scrape({} as ScraperInputDto);
+
+    expect(waitForSelector).toHaveBeenCalledWith(
+      TRUEMETALSUPPLY_DIALOG_TRIGGER_SELECTOR,
+      expect.objectContaining({
+        state: 'attached',
+        timeout: TRUEMETALSUPPLY_READY_TIMEOUT_SECONDS * 1000,
+      }),
+    );
 
     getPageSpy.mockRestore();
   });

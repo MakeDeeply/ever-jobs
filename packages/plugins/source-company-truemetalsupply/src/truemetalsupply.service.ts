@@ -17,8 +17,10 @@ import {
   TRUEMETALSUPPLY_COMPANY_NAME,
   TRUEMETALSUPPLY_DEFAULT_RESULTS,
   TRUEMETALSUPPLY_DEFAULT_TIMEOUT_SECONDS,
+  TRUEMETALSUPPLY_READY_TIMEOUT_SECONDS,
   TRUEMETALSUPPLY_DIALOG_SELECTOR,
   TRUEMETALSUPPLY_DIALOG_SETTLE_MS,
+  TRUEMETALSUPPLY_DIALOG_VISIBLE_TIMEOUT_MS,
   TRUEMETALSUPPLY_DIALOG_TRIGGER_SELECTOR,
   TRUEMETALSUPPLY_FACILITY_CITIES,
   TRUEMETALSUPPLY_JD_MARKER_MIN,
@@ -84,6 +86,7 @@ export class TrueMetalSupplyService implements IScraper, OnModuleDestroy {
     const proxy = input.proxies?.[0];
     const timeoutMs =
       (input.requestTimeout ?? TRUEMETALSUPPLY_DEFAULT_TIMEOUT_SECONDS) * 1000;
+    const readyMs = TRUEMETALSUPPLY_READY_TIMEOUT_SECONDS * 1000;
 
     const page = await BrowserPool.getPage({ proxy, stealth: true, headful: true });
     try {
@@ -91,13 +94,18 @@ export class TrueMetalSupplyService implements IScraper, OnModuleDestroy {
         waitUntil: 'domcontentloaded',
         timeout: timeoutMs,
       });
+      // The Wix triggers are ATTACHED almost immediately but never become
+      // Playwright-`visible`, so the default (visible) wait burned the whole
+      // navigation timeout. Gate on `attached` with a bounded readiness timeout;
+      // `collectDialogs` enumerates them via `locator.count()` regardless.
       await page
         .waitForSelector(TRUEMETALSUPPLY_DIALOG_TRIGGER_SELECTOR, {
-          timeout: timeoutMs,
+          state: 'attached',
+          timeout: readyMs,
         })
         .catch(() => undefined);
 
-      return await this.collectDialogs(page, timeoutMs);
+      return await this.collectDialogs(page);
     } finally {
       await page.close().catch(() => undefined);
     }
@@ -110,7 +118,6 @@ export class TrueMetalSupplyService implements IScraper, OnModuleDestroy {
    */
   private async collectDialogs(
     page: Page,
-    timeoutMs: number,
   ): Promise<TrueMetalSupplyOpening[]> {
     const triggers = page.locator(TRUEMETALSUPPLY_DIALOG_TRIGGER_SELECTOR);
     const count = await triggers.count();
@@ -134,7 +141,10 @@ export class TrueMetalSupplyService implements IScraper, OnModuleDestroy {
           : page.locator(TRUEMETALSUPPLY_DIALOG_SELECTOR).first();
 
         await dialog
-          .waitFor({ state: 'visible', timeout: timeoutMs })
+          .waitFor({
+            state: 'visible',
+            timeout: TRUEMETALSUPPLY_DIALOG_VISIBLE_TIMEOUT_MS,
+          })
           .catch(() => undefined);
         if ((await dialog.count()) === 0) continue;
 

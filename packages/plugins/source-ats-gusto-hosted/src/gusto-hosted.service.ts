@@ -28,6 +28,7 @@ import {
   GUSTO_HOSTED_BOARD_READY_SELECTOR,
   GUSTO_HOSTED_DEFAULT_RESULTS,
   GUSTO_HOSTED_DEFAULT_TIMEOUT_SECONDS,
+  GUSTO_HOSTED_READY_TIMEOUT_SECONDS,
   GUSTO_HOSTED_DETAIL_CONCURRENCY,
   GUSTO_HOSTED_MAX_DETAIL_FETCHES,
   GUSTO_HOSTED_ORIGIN,
@@ -171,8 +172,12 @@ export class GustoHostedService implements IScraper, OnModuleDestroy {
     postingSlug: string,
     input: ScraperInputDto,
   ): Promise<string> {
+    // Gate on `h1` (present immediately), NOT the JSON-LD block — Gusto posting
+    // pages carry no `application/ld+json`, so waiting for it burned the full
+    // navigation timeout on every detail fetch. `parseDetail` still tries JSON-LD
+    // first and falls back to the rendered HTML, so output is unchanged.
     return this.fetchRenderedHtml(gustoHostedPostingUrl(postingSlug), input, {
-      waitForSelector: 'script[type="application/ld+json"]',
+      waitForSelector: 'h1',
     });
   }
 
@@ -185,12 +190,13 @@ export class GustoHostedService implements IScraper, OnModuleDestroy {
     const proxy = input.proxies?.[0];
     const timeoutMs =
       (input.requestTimeout ?? GUSTO_HOSTED_DEFAULT_TIMEOUT_SECONDS) * 1000;
+    const readyMs = GUSTO_HOSTED_READY_TIMEOUT_SECONDS * 1000;
     const page = await BrowserPool.getPage({ proxy, stealth: true, headful: true });
     try {
       await page.goto(url, { waitUntil: 'domcontentloaded', timeout: timeoutMs });
       if (opts.waitForSelector) {
         await page
-          .waitForSelector(opts.waitForSelector, { timeout: timeoutMs })
+          .waitForSelector(opts.waitForSelector, { timeout: readyMs })
           .catch(() => undefined);
       }
       return await page.content();
