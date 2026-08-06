@@ -18,7 +18,7 @@ The three headful (`BrowserPool.getPage({ headful: true })`) scrapers each gate 
 full navigation budget (**30 s**). When the gated selector is absent — or attached but never
 "visible" — the wait consumes the **entire 30 s**, even though the page's content was already
 present within ~1 s. The scrape then finishes just past 30 s and a downstream caller with a 30 s
-HTTP read timeout (fetch1) reports `timeout after 30s` — while the operator can plainly see the
+HTTP read timeout reports a client-side `timeout` — while the operator can plainly see the
 page loaded in the visible browser.
 
 Reproduced locally (headful + the plugin stealth init script), timing from `goto` resolution:
@@ -54,7 +54,7 @@ in the state being awaited.**
 
 ## 3. Non-Goals
 
-- No change to the caller's HTTP timeout (that lives in fetch1); this fixes the server so it answers
+- No change to any external caller's HTTP timeout; this fixes the server so it answers
   well under any reasonable client timeout.
 - No change to what is scraped, parsed, or mapped, nor to any response shape.
 - No change to the `goto` navigation timeout (network-level) or to `BrowserPool`.
@@ -103,8 +103,8 @@ Selector/state corrections:
 - `npx tsc --noEmit --project tsconfig.base.json` clean; `npm run lint:docs` clean; touched plugin
   jest suites green.
 
-## 7. Downstream (fetch1, out of this repo)
+## 7. Downstream (external caller, out of this repo)
 
-fetch1's `timeout after 30s` message is a client-side HTTP read timeout, not an ever-jobs scraper
-reason. With this fix the server answers in seconds, so the message stops firing; the message wording
-is clarified separately in fetch1 (`devin/branch3`). No code here depends on it.
+A downstream caller's `timeout` message is its own client-side HTTP read timeout, not an ever-jobs
+scraper reason. With this fix the server answers in seconds, so that timeout stops firing. No code
+in this repo depends on any external caller.
