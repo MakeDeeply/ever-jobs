@@ -15,6 +15,20 @@
 
 ---
 
+## 2026-08-14 — Spec 5085 — retry logs name their request; `Retry-After` honored
+
+**Change:** the shared `HttpClient` — `createHttpClient` is called from **1,127** plugin packages — logged retries as `Request failed with 429, retrying (1/3) in 1000ms...`: no method, no URL, no host, no plugin. `JobsService` fans scrapers out at concurrency 64 and plugins fan their own detail requests out inside that, so hundreds of these interleave from unrelated requests and none is attributable; the repeated `(1/3)` is many different requests each making a first retry, not one escalating. Now:
+
+```
+[3a4e54f2-…] GET https://acme.wd108.myworkdayjobs.com/wday/cxs/acme/Careers/job/R-1 failed 429, retry 1/3 in 5000ms
+```
+
+- New `AsyncLocalStorage` request context in `@ever-jobs/common` (`runWithRequestId` / `getRequestId`), established by `requestContextMiddleware` in `apps/api` (an inbound `X-Request-Id` is honored, otherwise a uuid is minted). `LoggingInterceptor` reuses that id instead of minting a second unrelated one, so `X-Request-Id`, the `→`/`←` access log and the outbound retry lines carry one id. Outside a request (CLI, MCP, tests) `getRequestId()` is `undefined` and the prefix is omitted.
+- `Retry-After` (delta-seconds or HTTP-date) is honored on retryable statuses, clamped to `retryMaxDelay`, falling back to the computed backoff when absent or unparseable. Previously `429` was retried exactly like a `500` on the configured backoff (linear 1 s × attempt), i.e. hammering a host that had just stated how long to wait. This is a live behavior change for every HTTP plugin, bounded by the existing `retryMaxDelay` ceiling; retry counts, backoff curve and the retryable status set are unchanged.
+- **No repeat suppression.** An earlier proposal to collapse identical consecutive lines (`… x137`) was dropped: with concurrent fan-out, adjacency is an accident of interleaving, not a grouping, so collapsing destroys attribution rather than compressing it. Volume belongs in per-scrape summaries at the caller.
+- Out of scope: Playwright/`BrowserPool` requests do not pass through `HttpClient`; `apps/cli` and `apps/mcp` establish no context.
+- Tests: 5 new `HttpClient` cases (method+URL attribution, correlation-id prefix, `Retry-After` honored, `Retry-After` clamped to `retryMaxDelay`, backoff fallback) against a mocked axios instance with fake timers. `tsc --noEmit` and `lint:docs` clean.
+
 ## 2026-08-14 — Spec 5084 — Workday pagination stops on distinct-posting progress, not on server page shape
 
 **Change:** `source-ats-workday` paged until the server returned an empty or short page — both exits are properties of the response. Some tenants answer an **out-of-range offset by re-serving page 1**, so a board whose job count is an exact multiple of `WORKDAY_PAGE_SIZE` (20) never sees a short page and pages forever; `listingsToEnrich.length` counted pushes rather than distinct postings, so re-serving the same page looked like progress and `resultsWanted` became the only reachable exit. Observed on a live tenant with `resultsWanted: 9999`: ~500 list requests, ~20 minutes, then a successful response of ~9999 copies of ~20 jobs, plus one detail request per duplicate entry — hundreds of `429`s from the tenant. Measured, same page size: the wrapping tenant returned `total=20, n=20` byte-identical at offsets 0/20/40/500 (and its *real* second page, reached with `limit=10, offset=10`, reports `total: 0` with 10 genuine new postings); a 24-job tenant returned `n=4` on page 2 then `n=0`, and was never affected. Verified on 2 tenants only.
