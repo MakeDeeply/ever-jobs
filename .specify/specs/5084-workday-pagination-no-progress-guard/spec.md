@@ -9,7 +9,7 @@
 | Created        | 2026-06-28                                 |
 | Last updated   | 2026-06-28                                 |
 | Supersedes     | (none)                                     |
-| Related specs  | 5025, 5037, 5082, 5083                     |
+| Related specs  | 5025, 5037, 5082, 5083, 5085                |
 
 ## 1. Problem Statement
 
@@ -60,16 +60,13 @@ Two consequences, the second worse than the first:
 - **A self-inflicted 429 storm.** `buildResponse` → `fetchDetails` issues one detail request per
   entry of `listingsToEnrich` (5 at a time), with no de-dup: the same ~20 detail URLs are requested
   ~500 times each. Observed: hundreds of
-  `WARN [HttpClient] Request failed with 429, retrying (1/3) in 1000ms...` lines. Two aggravators —
+  `WARN [HttpClient] Request failed with 429, retrying (1/3) in 1000ms...` lines. Aggravated by
+  `workday.service.ts` catching a pagination failure, logging it, and then **enriching the accumulated
+  listings anyway** — spending hundreds of requests on a listing set it just declared untrustworthy.
 
-  - `workday.service.ts` catches a pagination failure, logs it, and then **enriches the accumulated
-    listings anyway**, spending hundreds of requests on a listing set it just declared untrustworthy;
-  - `HttpClient` treats 429 exactly like 500 (linear 1 s × attempt, max 3) and **never reads
-    `Retry-After`**, so it hammers a host that just asked for a pause.
-
-And the diagnosis itself was needlessly hard: `Request failed with 429, retrying (1/3) in 1000ms...`
-names no method, no URL, no host, no plugin. With scrapers fanned out at concurrency 64 and detail
-requests 5-at-a-time, hundreds of such lines interleave and none is attributable to anything.
+The shared-client shortcomings that storm exposed — retry lines that name no request, and 429 handled
+without reading `Retry-After` — are **Spec 5085**, since they affect every HTTP plugin rather than
+Workday.
 
 ## 2. Goals
 
@@ -77,9 +74,7 @@ requests 5-at-a-time, hundreds of such lines interleave and none is attributable
 - No response can contain more listings than the board has distinct postings.
 - Detail enrichment issues at most one request per distinct posting.
 - A pagination failure does not fund hundreds of detail requests.
-- Every retry log line names the request it is about, and carries the API request id when the call
-  originated in an HTTP request.
-- 429 responses honor `Retry-After` when the server supplies it.
+- Detail-failure volume is summarized per scrape rather than left as an unbounded stream of lines.
 
 ## 3. Non-Goals
 
@@ -96,7 +91,8 @@ requests 5-at-a-time, hundreds of such lines interleave and none is attributable
   ids, no count text, no embedded JSON or JSON-LD) rendered from the same CXS endpoint.
 - No change to `WORKDAY_PAGE_SIZE`; `limit: 21` on the wrapping tenant returns `total: null` and 0
   postings, so 20 is the ceiling it honors.
-- No retry-count/backoff policy change beyond `Retry-After`.
+- No change to `packages/common` or the shared HTTP client: retry-log attribution and `Retry-After`
+  are Spec 5085, independent of this fix and applicable to every plugin.
 
 ## 4. Design
 
@@ -123,33 +119,15 @@ path, so a pathless listing is not silently dropped):
 - On a pagination failure (`diagnostics` set), **skip enrichment**: return the diagnostics-carrying
   empty response rather than spending hundreds of requests on an untrustworthy listing set.
 
-### 4.3 Every log line names its request
+### 4.3 Failure volume is summarized
 
-- `HttpClient` retry warning becomes `${method} ${url} failed ${status}, retry ${n}/${max} in ${delay}ms`,
-  prefixed with `[${requestId}]` when one is in scope. No collapsing of repeated lines: with
-  concurrent fan-out, "identical consecutive lines" is not a real grouping and suppression would
-  destroy attribution rather than compress it.
-- Request-id propagation: a new `AsyncLocalStorage`-based request context in `@ever-jobs/common`
-  (`runWithRequestId` / `getRequestId`), set once by an API middleware and read by `HttpClient`. The
-  API already mints an id per request for `X-Request-Id` and the `→/←` access log; this is what makes
-  it reach the outbound calls that request caused.
-- Workday logs a per-scrape detail summary (`N of M detail requests failed`) so volume is handled by
-  adding a summary, not by dropping lines.
-
-### 4.4 `Retry-After` is honored
-
-On a retryable status, if `Retry-After` is present (delta-seconds or HTTP-date), wait that long,
-clamped to `retryMaxDelay`, instead of the computed backoff.
+Detail failures name the tenant, and each scrape logs one `N of M detail requests failed` line, so a
+caller reading the log sees the scale of a failure without counting lines.
 
 ## 5. Changes
 
-1. `packages/common/src/context/request-context.ts` (new) — `runWithRequestId`, `getRequestId`.
-2. `packages/common/src/http/http-client.ts` — attributed retry warning; `Retry-After` support.
-3. `apps/api/src/middleware/request-context.middleware.ts` (new) + `main.ts` — establish the context.
-4. `apps/api/src/interceptors/logging.interceptor.ts` — reuse the context id instead of minting a
-   second, unrelated one.
-5. `packages/plugins/source-ats-workday/src/workday.constants.ts` — `workdayListingKey` helper.
-6. `packages/plugins/source-ats-workday/src/workday.service.ts` — distinct-progress pagination,
+1. `packages/plugins/source-ats-workday/src/workday.constants.ts` — `workdayListingKey` helper.
+2. `packages/plugins/source-ats-workday/src/workday.service.ts` — distinct-progress pagination,
    `total` fast path, de-dupe before enrichment, no enrichment after a pagination failure, detail
    failure summary.
 
@@ -162,6 +140,4 @@ clamped to `retryMaxDelay`, instead of the computed backoff.
 - Workday, real second page reporting `total: 0`: still paged (zero/absent `total` ignored).
 - Workday, `resultsWanted` smaller than the board: bounds distinct postings.
 - Workday, pagination throws: no detail requests, diagnostics preserved.
-- `HttpClient`: retry warning contains method + URL (+ id when in a context); `Retry-After: 2` waits
-  ~2 s; an over-large `Retry-After` clamps to `retryMaxDelay`.
 - `npx tsc --noEmit` clean; `npm run lint:docs` clean; touched suites green.

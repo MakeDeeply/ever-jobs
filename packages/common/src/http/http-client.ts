@@ -3,10 +3,6 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { SocksProxyAgent } from 'socks-proxy-agent';
 
-import { getRequestId } from '../context';
-
-const RETRYABLE_STATUSES = [429, 500, 502, 503, 504];
-
 export interface HttpClientOptions {
   proxies?: string[];
   caCert?: string;
@@ -130,18 +126,12 @@ export class HttpClient {
       } catch (error: any) {
         lastError = error;
         const status = error.response?.status;
-        if (status && RETRYABLE_STATUSES.includes(status) && attempt < this.maxRetries) {
-          const backoff = this.retryBackoff === 'exponential'
-            ? this.retryDelay * Math.pow(2, attempt)
-            : this.retryDelay * (attempt + 1);
-          // A server that sent Retry-After has stated its own terms; retrying sooner
-          // (429 especially) only extends the block.
-          const delay = Math.min(
-            this.retryMaxDelay,
-            this.retryAfterMs(error.response?.headers) ?? backoff,
-          );
+        if (status && [500, 502, 503, 504, 429].includes(status) && attempt < this.maxRetries) {
+          const delay = this.retryBackoff === 'exponential'
+            ? Math.min(this.retryMaxDelay, this.retryDelay * Math.pow(2, attempt))
+            : Math.min(this.retryMaxDelay, this.retryDelay * (attempt + 1));
 
-          this.logger.warn(`${this.describeRequest(config)} failed ${status}, retry ${attempt + 1}/${this.maxRetries} in ${delay}ms`);
+          this.logger.warn(`Request failed with ${status}, retrying (${attempt + 1}/${this.maxRetries}) in ${delay}ms...`);
           await this.sleep(delay);
           continue;
         }
@@ -159,33 +149,6 @@ export class HttpClient {
   /** Get the underlying Axios instance for low-level access */
   getAxiosInstance(): AxiosInstance {
     return this.client;
-  }
-
-  /**
-   * Identify the request a log line is about. Scrapers fan out concurrently, so a
-   * message without its own target cannot be attributed to anything.
-   */
-  private describeRequest(config: AxiosRequestConfig): string {
-    const method = (config.method ?? 'GET').toUpperCase();
-    const url = config.url ?? '(no url)';
-    const requestId = getRequestId();
-    return requestId ? `[${requestId}] ${method} ${url}` : `${method} ${url}`;
-  }
-
-  /** `Retry-After` as milliseconds: delta-seconds or an HTTP-date. Null when absent/unparseable. */
-  private retryAfterMs(headers: unknown): number | null {
-    const raw = (headers as Record<string, unknown> | undefined)?.['retry-after'];
-    const value = Array.isArray(raw) ? raw[0] : raw;
-    if (typeof value !== 'string' && typeof value !== 'number') return null;
-
-    const text = String(value).trim();
-    if (!text) return null;
-
-    if (/^\d+$/.test(text)) return Number(text) * 1000;
-
-    const date = Date.parse(text);
-    if (Number.isNaN(date)) return null;
-    return Math.max(0, date - Date.now());
   }
 
   private sleep(ms: number): Promise<void> {
