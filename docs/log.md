@@ -15,6 +15,206 @@
 
 ---
 
+## 2026-08-20 — Spec 1686 — the last 33, finished by reading them
+
+**Change:** finishes the sequence. Spec 1685 left 33 services labelled "hand review" — correct about the technique, wrong about the implication. It only ever meant "needs per-file judgement rather than a pattern", not that a different pair of hands was required.
+
+These are the services whose `scrape()` catch has **no return**: it logs and falls through to a later `return new JobResponseDto(...)`, so the reason has to be carried in a variable — declare, assign, use. Spec 1685's automatic attempt guessed the declaration point from "the first top-level try" and `tsc` rejected half its output with `Cannot find name 'diagnostics'`.
+
+**The guess is the only part that cannot be automated.** So `apply-fallthrough-diagnostics.ts` takes the judgement per file — the exact line to declare after, the exact accumulator expression, which catch carries the reason, all read from the file — and automates everything else: brace-matching the catch, rewriting the return, adding imports, preserving CRLF/BOM, and re-deriving from the *output* that the assignment landed inside an `err` catch. Those are precisely the things hand-editing 33 files gets wrong.
+
+28 went through that path. **Five were edited directly**, because their shape is genuinely singular:
+
+- **`source-ats-avature`** — accumulator is `collected: AvatureParsedJob[]`, mapped to `jobs` only at the return, and the catch sits inside the pagination loop where it `break`s, discarding the reason.
+- **`source-ats-loxo`** — two surfaces (public, then authenticated). Whichever was tried **last** owns the reason; an earlier failure is a routing signal, not the outcome.
+- **`source-ats-personio`** — two domains (`.de` then `.com`) plus an XML parse stage: three distinct failure points, each meaning something different.
+- **`source-builtin`, `source-dice`** — multi-strategy (API → HTML → Playwright). The API failure is a routing signal, so it is reported **only if every fallback also comes back empty** (`length ? undefined : apiFailure`), mirroring the SuccessFactors fix in Spec 1680.
+- **`source-company-tiktok`** — nested try/finally, and returning a bare `{ jobs }` object rather than a DTO. The last of the canonical bucket.
+
+Guard clauses found while reading were upgraded too — a missing `companySlug`, an uninitialised Exa client, neither Personio domain answering — from a bare empty result to `bad_input`/`empty` with a detail. Those are inputs and configuration failing, not boards with no postings.
+
+**The five with no catch stay untouched.** `source-ats-joincom`, `source-careerbuilder`, `source-monster`, `source-simplyhired` and `source-tesla` let the error propagate, and `JobsService`'s `rejected` branch already classifies it. Changing them would be a regression.
+
+**Final census: 1,827 of 1,832 services report a real reason, 5 delegate to the fan-out by design, 0 unmigrated.** 33 files, `tsc --noEmit` 0 errors, no EOL churn, targeted suites green.
+
+One defect caught mid-flight: the applier's first version indented the assignment to the wrong column — cosmetic, but it would have landed in 15 files, so it was fixed and re-verified before continuing.
+
+---
+
+
+## 2026-08-19 — Spec 1685 — the last mechanical diagnostics pass, and where the line was drawn
+
+**Change:** the final mechanical pass. Everything after this is hand work, so the job was to draw that line honestly rather than push a codemod past the point where it earns its keep.
+
+**Re-clustering the 164 remaining services changed the picture.** By what the last catch of the brace-matched `scrape()` body actually does: **D=126** (returns the accumulator, no reason), **B=30** (falls through to a later return), **A=5** (no catch at all), **C/F=3** (ambiguous).
+
+**Cluster A was never broken.** Those five let the error propagate, and `JobsService`'s `rejected` branch already calls `classifyScrapeError` — they are the one population where the fan-out's error path works as designed. Counting them as "unmigrated" would have been wrong, and changing them would be a regression.
+
+**Cluster D** is the shape `source-ats-smartrecruiters` had before Spec 1680 fixed it by hand: `return new JobResponseDto(jobPosts); // partial results` — partial results with **no signal at all**, so a page-2 failure was indistinguishable from a complete board. With Spec 1680's `partial` inference, a non-zero count plus a diagnostic now reports `partial` rather than `ok`.
+
+Two anchor lessons, both from a failed first attempt: the common shape carries a **trailing comment**, so an anchor requiring `;$` matched only **2 of 126**; and 47 files return `jobPosts.slice(0, resultsWanted)`, so the argument is captured whole and then verified to have balanced parens and no top-level comma, ensuring an existing second argument can never be mangled.
+
+**Result:** 126 files uniformly `+5/-1`, zero outliers, no EOL churn, `tsc --noEmit` 0 errors, targeted suites green, and an independent re-check (not reusing the codemod's logic) confirming every inserted call's nearest enclosing catch binds `err`.
+
+**Cluster B was attempted and deliberately abandoned.** Its catch has no return, so the reason must reach the terminal return through a variable — a three-point edit: declare, assign, use. The codemod's own gate rejected 31 of 37 candidates as ambiguous (more than one `err` catch, so which should carry the reason is undecidable), and of the 6 it accepted **`tsc` rejected 3** with `Cannot find name 'diagnostics'` — the declaration did not land in the right scope. Six files, half of them wrong, from a transform unlike any of the others. Reverted in full (`tsc` back to 0) and the tool **deleted** rather than left in `scripts/codemod/` for someone to trust later. These want hand edits.
+
+**Final state of the sequence, stated plainly:** **1,801 of 1,839 services report a real reason, 5 are correct by design, and 33 are documented for hand review** — 30 in cluster B and 3 ambiguous. Not "done", but done to the point where a codemod stops being the right tool.
+
+---
+
+
+## 2026-08-19 — Spec 1684 — the tail cluster whose catch returns a bare empty result
+
+**Change:** PR 5 of 5, the awkward remainder by design. The first four passes were uniform; this one is not, so the work was to find the largest cluster that is genuinely mechanical and stop there rather than force the rest through a regex.
+
+**Re-scoping corrected two of my own earlier claims.** The "last catch in the file" classifier conflates the outer `scrape()` catch with per-item catches inside loops and helper-method catches — brace-matching the actual `scrape()` body resolves the 264 remaining services into 68 clusters, most of the large ones being inner catches that are none of this spec's business. And the "~128 accumulator hoists" estimate described a *different, optional* goal: hoisting is only needed to preserve partial results, not to report a reason.
+
+The largest genuinely mechanical cluster — exactly one catch binding `err` whose own block returns `new JobResponseDto([])` — is **100 services**, needing no restructuring at all:
+
+```ts
+      return new JobResponseDto([], classifyScrapeError(err));
+```
+
+**A real bug in the first version, caught only by `tsc`.** It anchored with a regex running from `catch (…) {` to the return, which **silently crossed the catch's closing brace** and rewrote a method-level return in `source-ats-loxo` where `err` is out of scope. That parsed cleanly, so `parseDiagnostics` passed; the count gate passed; the line-delta gate passed; and the catch-variable guard allowed enough slack to span the brace. Only the type-check caught it. The transform now brace-matches each catch block and requires the return to lie strictly inside it, and a postcondition **re-derives that from the output** rather than trusting the input match — precisely the check the first version lacked. `source-ats-loxo` is now correctly skipped.
+
+Catches binding `error`/`e` are skipped rather than renaming someone's variable.
+
+**Result:** 100 files uniformly `+2/-1`, zero outliers; both diff forms report 100 (no EOL churn); `tsc --noEmit` **0 errors**; targeted suites green. Plus an independent re-check, written deliberately *not* to reuse the codemod's own logic so it cannot share a blind spot, confirming every inserted call's nearest enclosing catch binds `err` — 0 violations.
+
+**What remains, stated plainly:** 164 services still report `empty` for real failures — 162 whose `scrape()` has no bare-empty catch return (their catches sit inside loops or helpers, or they rethrow) and 2 with several such returns, flagged for hand review. They are enumerated rather than dropped. The honest end state of this five-PR sequence is **1,721 of 1,839 migrated, 164 documented** — not "done".
+
+**Partial results are untouched.** Plugins in this cluster discard whatever they accumulated when they fail, because the accumulator is declared inside the `try` and is out of scope in the catch. Recovering it needs a per-file hoist and its own review; this spec only makes the failure legible.
+
+---
+
+
+## 2026-08-19 — Spec 1683 — 822 services stop swallowing their errors
+
+**Change:** PR 4 of 5 and the payload of the sequence — **1,628 files** (822 services + 806 specs).
+
+822 plugin services ended `scrape()` by logging the error and then discarding it (`catch` → log → `return { jobs };`). A 403, a DNS failure, a Cloudflare challenge, a dead slug and a genuinely empty board therefore all reached the API as `reason: 'empty'`, since `JobsService` can only infer `empty` when a plugin returns zero jobs with no diagnostics. That is the root cause behind the ≥98% `ok`/`empty` noise measured in Spec 1679, and why the per-source diagnostics were far less informative than they looked.
+
+`return { jobs }` also type-checks against `Promise<JobResponseDto>` — both DTO members are public and `diagnostics` is optional, so structural typing accepts a bare object literal. That is precisely why 822 files drifted without the compiler ever noticing.
+
+Now `return new JobResponseDto(jobs, classifyScrapeError(err))`, with `return new JobResponseDto(jobs)` on the success path.
+
+**`jobs` is passed, never `[]`.** The accumulator is declared before the `try` and filled inside it, and the catch sits outside the loop — so a board that parsed 30 postings before failing returns those 30 *today*. Emitting `JobResponseDto([], …)` would have bundled silent data loss into a diagnostics fix. A precondition enforces `decl < try < catch` and the presence of `jobs.push(` per file rather than trusting the census; all 822 passed independently.
+
+**Plugins keep resolving, never throwing.** `CircuitBreakerService` counts failures only on rejection, so this cannot trip a breaker. Making 822 plugins throw would trip breakers on any merely-403ing source within five fan-outs and overflow `MAX_SITES = 250` against 1,832 registered sites.
+
+**Every file in this population is CRLF** (822/822, 16 also with a BOM), so byte-level handling is the only thing that works here rather than a precaution: read bytes, normalise in memory only, restore EOL and BOM on write.
+
+**The spec pass is gated on its sibling service.** 809 specs match the failure-test anchor but only **806** belong to services in the canonical bucket — the surplus are tail-bucket plugins sharing the generated shape. Asserting `fetch_error` against a service that still swallows would produce a red test that looks like a real regression, so 52 were skipped as `SERVICE_NOT_MIGRATED`.
+
+**Result:** 822 services uniformly `+7/-1`, 806 specs uniformly `+3/0`, zero outliers; both diff forms report 1,628 (no EOL churn); `tsc --noEmit` clean.
+
+**Verified by sabotage:** reverting one migrated service to the swallow makes its spec fail (`Expected: "fetch_error", Received: undefined`). Restored, and the diff distribution re-checked afterwards to prove no residue. That check matters because 1,505 generated specs assert `result.jobs` alone and stay green whatever a plugin reports.
+
+**Operationally visible:** sources that were failing silently will now report `blocked`, `bad_input`, `fetch_error` and friends instead of `empty`, and the Spec 1680 metric labels move with them. That step change is the fix landing, not a regression — but expect it rather than discover it.
+
+**Next:** PR 5, the 268-file tail plus `source-company-tiktok` by hand — clustered by exact catch-tail with a dry run per cluster. Roughly 128 of those return `[]` from the catch and need the accumulator hoisted out of the `try` before the rewrite, and `source-ats-rippling` carries the one spec assertion in the repo that will actually break.
+
+---
+
+
+## 2026-08-19 — Spec 1682 — 699 delegating plugins report a registry miss as `not_registered`
+
+**Change:** PR 3 of 5, and the first at real scale — **1,398 files**.
+
+The 699 delegating `source-company-*` plugins carry no scraping logic: they resolve a backend ATS scraper from the registry and return its result verbatim. Spec 1680 fixed the two silent backends, so these wrappers already inherit a real reason for every *scrape* failure. What remained was their one **independent** failure path — the registry miss — which emitted a bare `new JobResponseDto([])`. Upstream that is indistinguishable from a board with no postings, though it is a wiring fault where no request was ever made. Now `not_registered`, the reason Spec 1680 added and Spec 1681 taught the generators to emit.
+
+Their generated specs were no better: the registry-miss test asserted only `expect(result.jobs).toHaveLength(0)`, true whatever the plugin reports, so it passed before this change and would have passed after a botched one. It now asserts the reason and the backend label.
+
+**Delivered by two validating transforms, not a regex sweep** (`scripts/codemod/delegating-diagnostics.ts` and `-specs.ts`). Mis-transforming a subset of 699 files silently is far worse than transforming none, so each file passes a precondition gate before editing and a postcondition gate before writing — TypeScript's parser used as a *verifier* (`createSourceFile` + `parseDiagnostics`), never as a printer, since `ts-morph` would reprint whole files and bury two real edits in thousands of cosmetic lines. `--expect` is mandatory and the run exits non-zero on any mismatch; anything not understood is skipped and reported rather than partially edited.
+
+**Line endings were treated as load-bearing.** The tree is mixed — 293 CRLF files, 154 with a BOM, no `.gitattributes` — and Git Bash strips CR in text mode, which is how that went unnoticed. Files are read as bytes, normalised in memory only, and written back with their original EOL and BOM. Verified: `git diff --numstat` and `git diff --ignore-all-space --numstat` both report 1,398 files.
+
+**The backend label is derived**, not hard-coded, from the adjacent logger line — so a new backend needs no codemod change, and the seven company names containing an escaped apostrophe (`Raising Cane's`) are handled because the capture ends before the company name. The spec pass reads its label from the sibling service migrated in pass 1, so the two passes cannot disagree.
+
+**Result:** 699 services uniformly `+7/-1`, 699 specs uniformly `+4/0`, zero outliers, no EOL churn, `tsc --noEmit` clean across the monorepo. Backend split matches the census exactly: Ashby 219, SmartRecruiters 217, Lever 180, Recruitee 83.
+
+**Verified by sabotage.** Flipping `not_registered` to `empty` in one migrated service makes its spec fail (`Expected: "not_registered", Received: "empty"`). That check matters because 1,505 generated specs in this tree assert `result.jobs` alone and stay green whatever a plugin reports — a passing suite is not evidence on its own.
+
+**No bot review on this PR:** 1,398 files exceeds Greptile's 100-file limit, so it posts "Too many files changed" and leaves no findings. That is why the mechanical gates carry the weight, and why the diff is exactly two shapes — reviewable by shape rather than by reading 1,398 hunks.
+
+**Next:** PR 4 the 822 canonical-swallow services + 806 specs, PR 5 the 268-file tail.
+
+---
+
+
+## 2026-08-19 — Spec 1681 — the generators stop minting the swallowed-error shape
+
+**Change:** PR 2 of 5, deliberately ahead of the codemods. Fixing 1,521 generated files while the generators still emit the defect would leave the tree correct only until the next scaffolded batch.
+
+Six scaffolders build the company-source catalogue and share **no template module** — each carries its own copy of the emitted code.
+
+- **`scaffold-company-source.ts`** emitted the canonical swallow verbatim (`catch` → log → `return { jobs };`) plus a bare object literal instead of a `JobResponseDto`. That type-checks — both DTO members are public and `diagnostics` is optional, so structural typing accepts it — which is precisely why 822 services drifted without the compiler noticing. Now emits `classifyScrapeError` and returns `new JobResponseDto(jobs, classifyScrapeError(err))`. It passes `jobs`, not `[]`: the catch sits outside the accumulation loop, so a board that parsed 30 postings before failing already returns those 30, and preserving that is a non-regression requirement rather than an improvement.
+- **The five delegating scaffolders** (ashby, lever, recruitee, smartrecruiters, workable — between them the 699 wrappers) emitted `return new JobResponseDto([]);` for a registry miss. A delegating plugin has exactly one independent failure path, and that was it: a wiring fault where no request was ever made, reported upstream as an empty board. They now report `not_registered`, the reason Spec 1680 added for this case.
+- **The generated failure test** asserted `expect(result.jobs).toEqual([])`, which stays true whatever the plugin reports — it passed before this change and would have passed after a botched one. It now also asserts `result.diagnostics?.reason === 'fetch_error'`, matching the 500 its own mock throws.
+- **Five of the six scaffolders had no tests at all.** `scaffoldOne` was module-private, which is the mechanical reason why. Exported, and covered by one parameterised spec across all five backends rather than five near-identical files, so drift between them is obvious.
+
+**Verified end to end, not by substring.** Scaffolded a throwaway plugin, ran `wire-company-source.ts` to add its enum entry, path alias and jest mapper, then ran the *generated plugin's own* suite: **11/11 pass**, including the new diagnostics assertion. Artifacts reverted, leaving only the intended `scripts/` changes. `scripts/__tests__` is **182/182 across 11 suites**, up from 166.
+
+**Gotcha worth recording:** emitted comments must contain no backticks. The templates are TypeScript template literals, so a backtick inside an emitted comment terminates the enclosing string. This bit twice while writing this PR — surfacing as `Cannot find name 'jobs'` and `Cannot find name 'not_registered'` — caught by the compiler through the scaffolders' own suite rather than by review.
+
+**Next:** PR 3 the 699 delegating services + specs, PR 4 the 822 canonical services + 806 specs, PR 5 the 268-file tail.
+
+---
+
+
+## 2026-08-18 — Spec 1680 — diagnostics semantics; the two backends that gated 300 wrappers
+
+**Change:** first of a five-PR sequence to make source plugins report a real reason instead of collapsing every outcome to `empty`. A census of all **1,839** plugin services found only **45** ever construct a `ScrapeDiagnostics` — 822 use the canonical swallow (`catch` → log → `return { jobs };`), 699 delegate to a backend ATS plugin, and 268 are a tail of other shapes. This PR touches none of them: it fixes the four things every later PR would otherwise hard-code the wrong answers to.
+
+- **`classifyScrapeError` had no 4xx rule.** Only `\b5\d\d\b`/`\b429\b` mapped to `fetch_error` and `403` to `blocked`; everything else 4xx — **including 404** — fell through to `unknown`. A 404 is what a slug that no longer resolves returns, making it the single most likely failure across ~1,540 scaffolded company boards; reporting the most common and most actionable failure in the tree as "unknown" is the classifier's worst case. Now `bad_input`, with `401`/`407`/`unauthorized` newly matched as `blocked` so auth refusals are not swept into it. Rule order preserved, with explicit non-regression tests pinning 403 → `blocked` and 429 → `fetch_error`.
+- **A partial scrape was reported as a complete one.** `jobs.length > 0 ? 'ok' : …` meant a source that returned 30 postings and *then* hit a 403 was reported `ok` — a partial outage hidden behind a non-zero count, with the error string still passed through in `detail`. New `partial` reason.
+- **Prometheus counted a failed scrape as a success.** `scraperRequestsTotal.inc({ site, status: 'success' })` fired on any resolved promise, and a swallowing plugin resolves normally. The label now derives from `response.diagnostics?.reason`. Without this the whole migration would improve the `per_source` JSON field and nowhere else, leaving every dashboard wrong.
+- **Two backends gated ~295 wrappers.** The 699 delegating `source-company-*` plugins carry no scraping logic and return their backend's result verbatim, so their reported reason is whatever the backend reports: Ashby (218) and Lever (179) reported one, **SmartRecruiters (213) and Recruitee (82) did not**. `smartrecruiters.service.ts:116` was the worst single defect found — `return new JobResponseDto(jobPosts); // Return what we have so far`, i.e. partial results with **no signal at all**, so a page-2 failure was indistinguishable from a complete board. Fixing two files fixes ~295 wrappers with no edits to them. Both `if (!companySlug)` guards now report `bad_input` rather than a bare empty result.
+
+**Plugins deliberately keep resolving, never throwing.** The obvious alternative — let errors propagate so the fan-out's `rejected` branch classifies them — was checked and is disqualifying. `CircuitBreakerService` accounts failures only on rejection, so this change cannot produce a single new `circuit_open` row; but making ~822 plugins throw would trip breakers on any merely-403ing source within five fan-outs (`failureThreshold: 5`), overflow `MAX_SITES = 250` against **1,832** registered sites (leaving ~1,580 sources with an ephemeral breaker entry that accumulates no state and logs an error on every call), and — since the 699 wrappers share four backend hosts — let one 429 trip up to 218 breakers at once.
+
+**Testing note:** 1,505 generated specs assert `result.jobs` only, so they stay green whatever a plugin reports — a green suite is not evidence any of this works. The 15 tests added here are the only ones in the repo that would fail if the contract regressed.
+
+**Editing note:** the tree is mixed-EOL (**293 CRLF files, 154 with a BOM**, no `.gitattributes`). Git Bash strips CR in text mode, which is how that went unnoticed and why a naive LF-anchored regex matches only 805 of the 822 canonical files. Every edit was applied byte-safely and verified with `git diff --numstat` against `--ignore-all-space --numstat`.
+
+**Next:** PR 2 the six scaffolders, PR 3 the 699 delegating specs, PR 4 the 822 canonical services, PR 5 the 268-file tail.
+
+---
+
+
+## 2026-08-17 — Spec 1679 — opt-in per-source diagnostics; a source-test suite that can finish
+
+**Change:** two problems found while reviewing the Spec 5076–5085 release, both cheap now and awkward later.
+
+**`per_source` shipped ~78 KiB of mostly-noise on every search response.** Spec 5082's per-source breakdown is emitted unconditionally, one row per fanned-out source, on **both** response branches (`jobs.controller.ts:207` and `:224`) — so the existing pagination window never touched it. The default selection is every registered source minus ATS: 1,831 − 180 = **1,651 rows ≈ 78 KiB**, uncompressed (no compression middleware is registered), rising to ~604 KiB if every row carries a 300-char `detail`. The signal is worse than the size suggests: only 45 plugins in the tree ever construct diagnostics and 24 of those are `source-ats-*` (excluded from the default fan-out), while the ~1,540 scaffolded `source-company-*` plugins swallow errors and return a bare `{ jobs: [] }` — so a 403, a DNS failure or a Cloudflare challenge all surface as `empty`, which is precisely what Spec 5082 set out to eliminate. In practice **≥98% of the payload is `ok`/`empty`** and the handful of actionable rows are buried in it.
+
+Adds the pure `summarizeSourceDiagnostics` to `@ever-jobs/models`: filter to `ACTIONABLE_SCRAPE_REASONS`, cap at `DEFAULT_DIAGNOSTICS_LIMIT` (200), and a `per_source_summary` of `{total, actionable, returned, truncated, by_reason}` computed over the **full** fan-out — so a caller gets complete totals without pulling 1,651 rows, even in the default mode that returns none. Exposed as `?diagnostics=true` (actionable only) / `?diagnostics=all` (everything) / `?diagnostics_limit=N`, off by default. A non-positive or non-finite limit means *no cap* rather than *no rows*: silently emptying a diagnostics payload is the worse failure. `per_source` keeps its name and shape; `per_source_summary` is additive. Verified non-breaking: `ever-hust` — the only consumer — never references the field, does not declare it on `JobSearchResponse`, and casts rather than parses the response, so absent fields are inert.
+
+**`Test (Source Scrapers)` could never finish.** `jest --listTests` reports **1,815 suites** under `packages/plugins/source-`; at ~17 s each that is ~8.5 h against GitHub's 360-minute job ceiling, and the job set no `timeout-minutes`. It was **not** hanging — the last unsharded run logged `PASS` lines continuously from 11:32:21 to 17:25:39 and was killed mid-flight having completed **1,221 of 1,815**, so roughly 590 suites never ran, the job could never report a result, and it held a runner slot for six hours on a pool whose contention had already delayed a production deploy. Now six shards via `jest --shard=N/6` (~300 suites each), `fail-fast: false`, `continue-on-error` retained, `timeout-minutes: 180`; the partition was verified exact (303+303+303+302+302+302 = 1,815, nothing dropped or duplicated). The ceiling comes from observation rather than estimate: two runs of the identical split came in at 1h23m–1h43m across all six when the pool was quiet, but 2h+ for three of them when it was busy — same shard count, so that spread is runner contention, and a first attempt at 120 min cancelled those three, killing the very suites the change exists to run. Every other job in the file gains a `timeout-minutes` at roughly 3× its observed duration, so nothing can run to the platform ceiling again.
+
+**Considered and rejected:** moving the image-publish jobs to the `_4` runner pool. The 429 `actions/checkout` download failures hit `ever-jobs-linux-x64-4` and `ever-jobs-linux-x64-8` with the *same* action SHA inside the same three-minute window, so relabelling does not address the failure that actually occurred, and it would put the entire production shipping path in the same pool as all of CI. The real fixes are ARC-side (bake or cache the actions; raise `minRunners` on `_8`) and infra-owned.
+
+---
+
+## 2026-08-16 — Spec 1678 — persistent-context identity; correlation-id and `Retry-After` hardening
+
+**Change:** six defects found reviewing PR #53 (Specs 5076–5085) before promoting it to production, all in code that shipped in that PR. They share a cause: the new tests mocked every collaborator and asserted only that Playwright/axios had been called, so none of these behaviours was pinned.
+
+- **`BrowserPool` cached persistent contexts on `userDataDir` alone.** All three headful callers omit `userDataDir`, so all three shared one cached context — and `ctxOpts` (proxy, User-Agent, viewport) only applies at launch, so the first caller's options were imposed on every later one. A source configured to egress through a proxy reused a context launched without one and went out direct. Contexts are now keyed on a `PersistentIdentity` (`headful`, `stealth`, `proxy`), each identity getting its own profile directory under the configured root — Chromium locks a profile to one process, so distinct identities need distinct directories for the proxy to be honourable at all.
+- **Liveness was `context.pages().length >= 0`** — true for every array, and `pages()` on a closed context returns `[]` without throwing, so one crash poisoned every later headful call until the pod restarted. Replaced with a `close`-event subscription that evicts the context; the in-flight launch guard is now cleared in a `.finally()`, so a failed launch is retryable.
+- **The stealth init script was re-registered on every `getPage()`** against a reused context, and Playwright replays every registered script into every new page — after N scrapes each page ran N copies. Now once per context. The blank page `launchPersistentContext` opens is disposed once the caller's first real page exists.
+- **`headful` had no kill switch.** `EVER_JOBS_BROWSER_HEADFUL=false` now downgrades to headless with one warning; default unchanged. (Moot in production today, where the runtime image ships no Chromium at all and every browser source reports `browser_unavailable` — but the switch is what keeps headful off until that changes.)
+- **The inbound `X-Request-Id` was adopted verbatim**, then reflected into a response header and interpolated into every outbound retry log line, unbounded. Now ≤128 chars of `[A-Za-z0-9._:-]`, else a minted UUID.
+- **A malformed `Retry-After` discarded the backoff.** `retryAfterMs()` maps an unparseable or past value to `0`, and `?? backoff` only falls back on `null` — so `Retry-After: -30` turned a 429 into an immediate re-request. Now `min(retryMaxDelay, max(backoff, retryAfter ?? 0))`: it may only ever push a retry later.
+
+Also: SuccessFactors reported the step-1 OData error — a routing signal, by its own comment — instead of the careersection failure that actually decided the outcome; the fallback now owns its diagnostic. Gusto-hosted's description fallback took `$('.rich-text-container').first()`, which is the company `About <Company>` blurb (it precedes Description and shares the class), so a missing or relabelled Description heading yielded company boilerplate as the job description. Breaker short-circuits are now a distinct `circuit_open` reason rather than `unknown`. `scripts/__tests__` ran in CI only for `docs-lint`, leaving the Spec 5080 allocator tests executing in no job — `npm run test:scripts` now runs the directory.
+
+**Deferred:** bounding `per_source` (~1650 rows, ~100–200 KB on every fresh response). Real, but response bloat rather than a memory driver, and every fix changes an API contract that shipped days ago — left for a decision.
+
+**Docs:** the `docs/index.md` footer read `2026-06-28`, ~6 weeks before the change it described; corrected.
+
+---
+
 ## 2026-08-15 — Spec 5086 — company plugins declare the domains they serve
 
 **Change:** addressing a company plugin by `companyDomain` (Spec 5070) resolved the plugin token by string math on the domain (Spec 5069): strip `www.`, strip a trailing `.com`, dots to underscores. That only works when the plugin's `Site` token happens to equal the token derived from the company's domain, and many company plugins are named after the ATS board slug visible in the source they scrape. `stokespace.com` derives `stokespace` while the registered plugin is `stokespacetechnologies`, so the request was rejected — `400 domain stokespace.com → token stokespace is not a registered plugin` — before any scrape, while the same board answers when addressed by `siteType`. Same for `varda.com` / `vardaspace`. Those are 2 of the 28 company-plugin domains checked; with 808 of the 1,540 `source-company-*` plugins Greenhouse-backed and many named by board slug, that is a floor rather than a total.
