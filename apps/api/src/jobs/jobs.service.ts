@@ -3,7 +3,7 @@ import {
   Site, ScraperInputDto, JobPostDto, JobResponseDto, IScraper,
   Country, SalarySource, CompensationDto,
   ERR_SOURCE_CIRCUIT_OPEN,
-  SourceDiagnosticDto, ScrapeReason, classifyScrapeError,
+  SourceDiagnosticDto, ScrapeReason, ScrapeDiagnostics, classifyScrapeError,
 } from '@ever-jobs/models';
 import { extractSalary, convertToAnnual, siteFromDomain, deriveSiteToken } from '@ever-jobs/common';
 import { ConfigService } from '@nestjs/config';
@@ -305,13 +305,24 @@ export class JobsService implements OnModuleInit {
         const jobs = result.value.jobs;
         allJobs.push(...jobs);
         const diag = result.value.diagnostics;
+        // A source that returned jobs AND reported a diagnostic is `partial`:
+        // it got some of the board before something failed. Calling that `ok`
+        // hid a partial outage behind a non-zero count, and left an `ok` row
+        // carrying an error string in `detail`.
         const reason: ScrapeReason =
-          jobs.length > 0 ? 'ok' : (diag?.reason ?? 'empty');
+          jobs.length > 0 ? (diag ? 'partial' : 'ok') : (diag?.reason ?? 'empty');
         perSource.push(
           new SourceDiagnosticDto(site, jobs.length, reason, diag?.detail),
         );
       } else {
-        const diag = classifyScrapeError(result?.reason);
+        // "We deliberately stopped calling this source" is its own operational
+        // state, not an unclassifiable error — the breaker is already tracked
+        // for metrics and logs, so don't collapse it to `unknown` here.
+        const err = result?.reason as { code?: unknown } | undefined;
+        const diag =
+          err?.code === ERR_SOURCE_CIRCUIT_OPEN
+            ? new ScrapeDiagnostics('circuit_open', `circuit open for ${site}`)
+            : classifyScrapeError(result?.reason);
         perSource.push(new SourceDiagnosticDto(site, 0, diag.reason, diag.detail));
       }
     });
@@ -370,7 +381,15 @@ export class JobsService implements OnModuleInit {
         ? await this.circuitBreaker.wrap(site, () => scraper.scrape(scraperInput))
         : await scraper.scrape(scraperInput);
       scraperStop();
-      this.metrics.scraperRequestsTotal.inc({ site, status: 'success' });
+      // Derive the metric from the diagnostic rather than from the promise
+      // settling. A plugin that swallows its error resolves normally, so a
+      // flat 'success' here reported a fully-failed scrape as a success and
+      // every dashboard built on this counter was wrong.
+      const outcome = response.diagnostics?.reason;
+      this.metrics.scraperRequestsTotal.inc({
+        site,
+        status: !outcome ? 'success' : response.jobs.length > 0 ? 'partial' : outcome,
+      });
       // Tag each job with the site it came from
       for (const job of response.jobs) {
         job.site = site;

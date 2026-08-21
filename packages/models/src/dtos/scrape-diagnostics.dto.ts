@@ -15,6 +15,20 @@ export type ScrapeReason =
   | 'fetch_error'
   | 'timeout'
   | 'bad_input'
+  /** The breaker was open, so the source was deliberately not called at all. */
+  | 'circuit_open'
+  /**
+   * Jobs were returned AND something failed - a board that produced 30
+   * postings before a 403 is neither `ok` nor a failure, and calling it `ok`
+   * hides a partial outage behind a non-zero count.
+   */
+  | 'partial'
+  /**
+   * A delegating plugin could not resolve its backend scraper from the
+   * registry. A wiring problem rather than a board problem, and distinct from
+   * `empty` because no request was ever made.
+   */
+  | 'not_registered'
   | 'unknown';
 
 /** Reason a single scrape produced the result it did. Optional on a response. */
@@ -42,6 +56,104 @@ export class SourceDiagnosticDto {
     this.reason = reason;
     if (detail) this.detail = detail;
   }
+}
+
+/**
+ * Reasons an operator can act on. `ok` and `empty` are the overwhelming majority
+ * of a full fan-out (~1 800 sources) and say only "this worked" or "this board
+ * had nothing" — carrying them on every response is noise measured in hundreds
+ * of kilobytes.
+ */
+export const ACTIONABLE_SCRAPE_REASONS: readonly ScrapeReason[] = [
+  'blocked',
+  'browser_unavailable',
+  'fetch_error',
+  'timeout',
+  'bad_input',
+  'circuit_open',
+  'partial',
+  'not_registered',
+  'unknown',
+];
+
+/** How much of the per-source breakdown a caller asked for. */
+export type DiagnosticsMode = 'off' | 'actionable' | 'all';
+
+/** Default cap on returned rows. Generous — the filter does the real work. */
+export const DEFAULT_DIAGNOSTICS_LIMIT = 200;
+
+/**
+ * Counts that survive filtering and truncation, so a caller can always tell how
+ * much it is NOT seeing.
+ */
+export class ScrapeDiagnosticsSummaryDto {
+  /** Sources in the fan-out, before any filtering. */
+  total: number;
+  /** Rows matching {@link ACTIONABLE_SCRAPE_REASONS}. */
+  actionable: number;
+  /** Rows actually present in `per_source`. */
+  returned: number;
+  /** Rows dropped by the cap (not by the filter). */
+  truncated: number;
+  /** Count of every reason across the full fan-out, including filtered-out rows. */
+  by_reason: Partial<Record<ScrapeReason, number>>;
+
+  constructor(
+    total: number,
+    actionable: number,
+    returned: number,
+    truncated: number,
+    by_reason: Partial<Record<ScrapeReason, number>>,
+  ) {
+    this.total = total;
+    this.actionable = actionable;
+    this.returned = returned;
+    this.truncated = truncated;
+    this.by_reason = by_reason;
+  }
+}
+
+/**
+ * Reduce a full per-source breakdown to what a caller asked for.
+ *
+ * `mode: 'off'` returns nothing but still counts everything, so the summary
+ * remains a cheap, complete picture — a caller that wants totals need not pull
+ * ~1 800 rows to get them.
+ */
+export function summarizeSourceDiagnostics(
+  rows: SourceDiagnosticDto[],
+  mode: DiagnosticsMode = 'off',
+  limit: number = DEFAULT_DIAGNOSTICS_LIMIT,
+): { rows: SourceDiagnosticDto[]; summary: ScrapeDiagnosticsSummaryDto } {
+  const by_reason: Partial<Record<ScrapeReason, number>> = {};
+  for (const row of rows) {
+    by_reason[row.reason] = (by_reason[row.reason] ?? 0) + 1;
+  }
+
+  const actionableRows = rows.filter((r) => ACTIONABLE_SCRAPE_REASONS.includes(r.reason));
+
+  if (mode === 'off') {
+    return {
+      rows: [],
+      summary: new ScrapeDiagnosticsSummaryDto(rows.length, actionableRows.length, 0, 0, by_reason),
+    };
+  }
+
+  const selected = mode === 'all' ? rows : actionableRows;
+  // A non-positive or non-finite limit means "no cap" rather than "return nothing":
+  // silently emptying the payload is the worse failure for a diagnostics channel.
+  const capped = Number.isFinite(limit) && limit > 0 ? selected.slice(0, limit) : selected;
+
+  return {
+    rows: capped,
+    summary: new ScrapeDiagnosticsSummaryDto(
+      rows.length,
+      actionableRows.length,
+      capped.length,
+      selected.length - capped.length,
+      by_reason,
+    ),
+  };
 }
 
 const MAX_DETAIL = 300;
@@ -84,7 +196,7 @@ export function classifyScrapeError(err: unknown): ScrapeDiagnostics {
     return new ScrapeDiagnostics('timeout', detail);
   }
   if (
-    /\b403\b|forbidden|cloudflare|just a moment|captcha|access denied|blocked|challenge/.test(
+    /\b403\b|\b401\b|\b407\b|unauthorized|forbidden|cloudflare|just a moment|captcha|access denied|blocked|challenge/.test(
       m,
     )
   ) {
@@ -96,6 +208,14 @@ export function classifyScrapeError(err: unknown): ScrapeDiagnostics {
     )
   ) {
     return new ScrapeDiagnostics('fetch_error', detail);
+  }
+  // Any remaining 4xx. 403/401/407 are `blocked` and 429 is `fetch_error`
+  // above, so this is 404/410/400/422 and friends: the request was wrong for
+  // this board, almost always a slug that no longer resolves. Without this a
+  // 404 fell through to `unknown` - and a dead board is the single most likely
+  // failure across the scaffolded company catalogue.
+  if (/\b4\d\d\b|not found/.test(m)) {
+    return new ScrapeDiagnostics('bad_input', detail);
   }
   return new ScrapeDiagnostics('unknown', detail);
 }

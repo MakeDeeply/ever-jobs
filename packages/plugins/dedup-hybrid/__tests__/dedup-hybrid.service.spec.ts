@@ -1,6 +1,23 @@
 import { JobPostDto, LocationDto, Site } from '@ever-jobs/models';
 import { DedupHybridService } from '../src/dedup-hybrid.service';
 
+/**
+ * Budget for the COLD NFR-1 check below, and deliberately its own knob.
+ *
+ * This assertion times a single, unwarmed `dedup()` — the first in the worker
+ * process — so it measures JIT compilation of the whole pipeline as much as it
+ * measures throughput. Measured on the same CI runner: 1 251–1 451 ms cold here
+ * versus 20–40 ms in `dedup-perf.spec.ts`, which builds its batch once and takes
+ * the max over 5 warmed runs. A ~40x gap between the two is warm-up, not a
+ * regression.
+ *
+ * It therefore must NOT share `DEDUP_PERF_NFR1_MS` with that suite: a ceiling
+ * loose enough for a cold run (seconds) would render the warmed gate — the
+ * authoritative NFR-1 check, at 250 ms — meaningless. Spec 1678 wired both to
+ * one knob; this splits them again.
+ */
+const NFR1_COLD_BUDGET_MS = Number(process.env.DEDUP_COLD_NFR1_MS ?? 250);
+
 function job(partial: Partial<JobPostDto>): JobPostDto {
   return new JobPostDto({
     title: 'Senior Software Engineer',
@@ -161,7 +178,7 @@ describe('DedupHybridService', () => {
     expect(out.metrics.mergedPairs).toBe(0);
   });
 
-  it('meets NFR-1 — 1 000 mostly-unique jobs dedup in under 250 ms', async () => {
+  it(`meets NFR-1 cold — 1 000 mostly-unique jobs dedup in under ${NFR1_COLD_BUDGET_MS} ms`, async () => {
     const inputs: JobPostDto[] = [];
     for (let i = 0; i < 1000; i++) {
       // Force a 5x duplication factor — 200 distinct logical jobs.
@@ -182,6 +199,6 @@ describe('DedupHybridService', () => {
 
     expect(out.metrics.outputCount).toBe(200);
     expect(out.metrics.mergedPairs).toBe(800);
-    expect(elapsed).toBeLessThan(250);
+    expect(elapsed).toBeLessThan(NFR1_COLD_BUDGET_MS);
   });
 });
