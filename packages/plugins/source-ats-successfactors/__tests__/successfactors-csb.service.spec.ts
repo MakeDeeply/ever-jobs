@@ -4,6 +4,7 @@ import {
   htmlLooksLikeCsb,
   resolveCsbBaseUrl,
   buildSfCsbTileUrl,
+  buildSfCsbDefaultOrigin,
   SF_CSB_JOB_LINK_RE,
 } from '../src/successfactors.constants';
 
@@ -69,6 +70,7 @@ class TestSuccessFactorsService extends SuccessFactorsService {
   constructor(
     private readonly pages: Map<number, string>,
     private readonly details: Map<string, string>,
+    private readonly probes: Map<string, string> = new Map(),
   ) {
     super();
   }
@@ -89,6 +91,10 @@ class TestSuccessFactorsService extends SuccessFactorsService {
       if (url.includes(`/${jobId}/`)) return html;
     }
     return '';
+  }
+
+  protected async fetchCsbProbeHtml(base: string): Promise<string> {
+    return this.probes.get(base) ?? '';
   }
 }
 
@@ -132,6 +138,13 @@ describe('SuccessFactors constants (CSB helpers)', () => {
     expect(htmlLooksLikeCsb('<html><body>marketing site</body></html>')).toBe(
       false,
     );
+  });
+
+  it('builds a default CSB origin from a bare companyId', () => {
+    expect(buildSfCsbDefaultOrigin('acme')).toBe(
+      'https://acme.jobs.hr.cloud.sap',
+    );
+    expect(buildSfCsbDefaultOrigin('')).toBeNull();
   });
 });
 
@@ -229,6 +242,67 @@ describe('SuccessFactorsService — Career Site Builder reader', () => {
     const res = await svc.scrape(input);
     expect(res.jobs).toHaveLength(1);
     expect(res.jobs[0].title).toBe('Solo Role');
+  });
+
+  it('falls back to a default SAP CSB origin for a bare slug with no companyUrl', async () => {
+    const probeBase = 'https://acme.jobs.hr.cloud.sap';
+    const pages = new Map<number, string>([
+      [
+        0,
+        tilePage([
+          tile(
+            '1408182200',
+            'Springfield-Quality-Assurance-Engineer-IL-62704',
+            'Quality Assurance Engineer',
+          ),
+        ]),
+      ],
+    ]);
+    const details = new Map<string, string>([['1408182200', DETAIL]]);
+    const probes = new Map<string, string>([[probeBase, pages.get(0)!]]);
+
+    const svc = new TestSuccessFactorsService(pages, details, probes);
+
+    const input = new ScraperInputDto();
+    input.companySlug = 'acme';
+    input.resultsWanted = 10;
+
+    const res = await svc.scrape(input);
+    expect(res.jobs).toHaveLength(1);
+    expect(res.jobs[0].title).toBe('Quality Assurance Engineer');
+  });
+
+  it('returns a diagnostic when a bare slug has no verifiable default CSB origin', async () => {
+    const svc = new TestSuccessFactorsService(
+      new Map(),
+      new Map(),
+      new Map([['https://acme.jobs.hr.cloud.sap', '<html><body>marketing site</body></html>']]),
+    );
+
+    const input = new ScraperInputDto();
+    input.companySlug = 'acme';
+
+    const res = await svc.scrape(input);
+    expect(res.jobs).toHaveLength(0);
+    expect(res.diagnostics).toBeDefined();
+    expect(res.diagnostics?.reason).toBe('bad_input');
+    expect(res.diagnostics?.detail).toMatch(/missing companyUrl/);
+  });
+
+  it('still honours a colon slug paired with an explicit companyUrl', async () => {
+    const pages = new Map<number, string>([
+      [0, tilePage([tile('1408182200', 'A-OH', 'Alpha')])],
+    ]);
+    const svc = new TestSuccessFactorsService(pages, new Map());
+
+    const input = new ScraperInputDto();
+    input.companySlug = 'sap:ACME';
+    input.companyUrl = 'https://careers.example.com';
+    input.resultsWanted = 10;
+
+    const res = await svc.scrape(input);
+    expect(res.jobs).toHaveLength(1);
+    expect(res.jobs[0].title).toBe('Alpha');
   });
 
   it('returns empty when neither companySlug nor companyUrl is provided', async () => {
