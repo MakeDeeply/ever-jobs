@@ -15,6 +15,14 @@
 
 ---
 
+## 2026-08-30 — Spec 5087 — SuccessFactors bare-slug CSB fallback
+
+**Change:** Add a default CSB origin fallback for SuccessFactors when a bare `companySlug` (no colon) is supplied without an explicit `companyUrl`. The plugin now derives `https://<companyId>.jobs.hr.cloud.sap/`, verifies it with the existing `htmlLooksLikeCsb` check, and uses it as the CSB base. If the origin does not look like a CSB portal, it returns a `bad_input` diagnostic instead of a DNS error.
+
+**Files:** `packages/plugins/source-ats-successfactors/src/successfactors.constants.ts`, `successfactors.service.ts`, `__tests__/successfactors-csb.service.spec.ts`.
+
+**Validation:** Plugin Jest suite 14/14 passing; `tsc --noEmit` clean for the package.
+
 ## 2026-08-20 — Spec 1686 — the last 33, finished by reading them
 
 **Change:** finishes the sequence. Spec 1685 left 33 services labelled "hand review" — correct about the technique, wrong about the implication. It only ever meant "needs per-file judgement rather than a pattern", not that a different pair of hands was required.

@@ -32,11 +32,14 @@ import {
   SF_CSB_MAX_PAGES,
   SF_CSB_DETAIL_CONCURRENCY,
   SF_CSB_JOB_LINK_RE,
+  SF_CSB_DEFAULT_ORIGIN_TEMPLATES,
   parseSfSlug,
   buildSfODataUrl,
   buildSfCareerUrl,
   buildSfCsbTileUrl,
+  buildSfCsbDefaultOrigin,
   resolveCsbBaseUrl,
+  htmlLooksLikeCsb,
 } from './successfactors.constants';
 import {
   SfCsbDetail,
@@ -66,9 +69,15 @@ export class SuccessFactorsService implements IScraper {
       return new JobResponseDto([]);
     }
 
-    const { instance, companyId } = companySlug
-      ? parseSfSlug(companySlug)
-      : { instance: '', companyId: '' };
+    const slugHasColon = (companySlug ?? '').includes(':');
+    const parsed = companySlug ? parseSfSlug(companySlug) : { instance: '', companyId: '' };
+    let { instance, companyId } = parsed;
+    const isBareSlug = !!companySlug && !slugHasColon;
+    // A bare token is a companyId, not a SuccessFactors instance.
+    if (isBareSlug) {
+      instance = '';
+    }
+
     const resultsWanted = input.resultsWanted ?? 100;
     const diags: ScrapeDiagnostics[] = [];
 
@@ -93,14 +102,28 @@ export class SuccessFactorsService implements IScraper {
 
     // 2. Career Site Builder (CSB) portal — the public surface for tenants
     //    without open OData, typically on a custom domain.
-    if (csbBase) {
-      this.logger.log(
-        `SuccessFactors: reading Career Site Builder portal at ${csbBase}`,
+    let effectiveCsbBase = csbBase;
+    if (!effectiveCsbBase && isBareSlug && companyId) {
+      effectiveCsbBase = await this.resolveDefaultCsbBase(
+        input,
+        companyId,
+        diags,
       );
-      const csbJobs = await this.scrapeCsb(input, csbBase, companyId, resultsWanted);
+    }
+
+    if (effectiveCsbBase) {
+      this.logger.log(
+        `SuccessFactors: reading Career Site Builder portal at ${effectiveCsbBase}`,
+      );
+      const csbJobs = await this.scrapeCsb(
+        input,
+        effectiveCsbBase,
+        companyId,
+        resultsWanted,
+      );
       if (csbJobs.length > 0) {
         this.logger.log(
-          `SuccessFactors CSB returned ${csbJobs.length} jobs for ${csbBase}`,
+          `SuccessFactors CSB returned ${csbJobs.length} jobs for ${effectiveCsbBase}`,
         );
         return new JobResponseDto(csbJobs);
       }
@@ -129,7 +152,62 @@ export class SuccessFactorsService implements IScraper {
       );
     }
 
+    // Bare slug with no verifiable CSB portal: return the diagnostic we
+    // collected while probing default origins, or a generic bad_input one.
+    if (isBareSlug) {
+      return new JobResponseDto(
+        [],
+        diags[0] ??
+          new ScrapeDiagnostics(
+            'bad_input',
+            `missing companyUrl: could not derive SuccessFactors CSB portal for ${companyId}`,
+          ),
+      );
+    }
+
     return new JobResponseDto([], diags[0]);
+  }
+
+  /**
+   * Probe the default SAP CSB origins for a bare companyId and return the first
+   * origin whose root page passes the CSB fingerprint check.
+   */
+  private async resolveDefaultCsbBase(
+    input: ScraperInputDto,
+    companyId: string,
+    diags: ScrapeDiagnostics[],
+  ): Promise<string | null> {
+    for (let i = 0; i < SF_CSB_DEFAULT_ORIGIN_TEMPLATES.length; i++) {
+      const origin = buildSfCsbDefaultOrigin(companyId, i);
+      if (!origin) continue;
+
+      try {
+        const html = await this.fetchCsbProbeHtml(origin, input);
+        if (htmlLooksLikeCsb(html)) {
+          return origin;
+        }
+      } catch (err: any) {
+        this.logger.warn(
+          `SuccessFactors default CSB probe failed for ${origin}: ${err.message}`,
+        );
+      }
+    }
+
+    const message = `missing companyUrl: could not derive SuccessFactors CSB portal for ${companyId}`;
+    this.logger.warn(message);
+    diags.push(new ScrapeDiagnostics('bad_input', message));
+    return null;
+  }
+
+  /**
+   * Fetch the root page of a candidate default CSB origin for verification.
+   * Protected so tests can substitute captured HTML without network I/O.
+   */
+  protected async fetchCsbProbeHtml(
+    base: string,
+    input: ScraperInputDto,
+  ): Promise<string> {
+    return this.fetchCsbHtml(`${base.replace(/\/$/, '')}/`, input);
   }
 
   protected async scrapeOData(
