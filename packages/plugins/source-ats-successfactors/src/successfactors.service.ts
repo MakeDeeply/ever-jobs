@@ -30,6 +30,7 @@ import {
   SF_DELAY_MAX,
   SF_CSB_PAGE_SIZE,
   SF_CSB_MAX_PAGES,
+  SF_CSB_PAGE_CONCURRENCY,
   SF_CSB_DETAIL_CONCURRENCY,
   SF_CSB_JOB_LINK_RE,
   SF_CSB_DEFAULT_ORIGIN_TEMPLATES,
@@ -369,7 +370,10 @@ export class SuccessFactorsService implements IScraper {
     return jobs;
   }
 
-  /** Walk CSB tile pages (startrow += page size) until empty, cap, or wanted. */
+  /** Walk CSB tile pages (startrow += page size) until empty, cap, or wanted.
+   *  Pages are fetched in bounded concurrent batches to avoid the serial
+   *  1.5–3 s `randomSleep` between each page.
+   */
   private async collectCsbTiles(
     input: ScraperInputDto,
     base: string,
@@ -377,40 +381,66 @@ export class SuccessFactorsService implements IScraper {
   ): Promise<SfCsbListItem[]> {
     const items: SfCsbListItem[] = [];
     const seen = new Set<string>();
+    let stop = false;
+    let pageIndex = 0;
 
-    for (let page = 0; page < SF_CSB_MAX_PAGES; page++) {
-      if (items.length >= resultsWanted) break;
+    while (!stop && pageIndex < SF_CSB_MAX_PAGES && items.length < resultsWanted) {
+      const batchSize = Math.min(
+        SF_CSB_PAGE_CONCURRENCY,
+        SF_CSB_MAX_PAGES - pageIndex,
+      );
+      const startrows = Array.from(
+        { length: batchSize },
+        (_, i) => (pageIndex + i) * SF_CSB_PAGE_SIZE,
+      );
 
-      const startrow = page * SF_CSB_PAGE_SIZE;
-      let html: string;
-      try {
-        html = await this.fetchCsbTileHtml(base, startrow, input);
-      } catch (err: any) {
-        this.logger.warn(
-          `SuccessFactors CSB: tile fetch failed at startrow ${startrow}: ${err.message}`,
-        );
-        break;
+      const settled = await Promise.allSettled(
+        startrows.map((s) => this.fetchCsbTileHtml(base, s, input)),
+      );
+
+      for (let i = 0; i < settled.length; i++) {
+        if (items.length >= resultsWanted) {
+          stop = true;
+          break;
+        }
+
+        const startrow = startrows[i];
+        const res = settled[i];
+
+        if (res.status === 'rejected') {
+          this.logger.warn(
+            `SuccessFactors CSB: tile fetch failed at startrow ${startrow}: ${res.reason?.message ?? res.reason}`,
+          );
+          stop = true;
+          break;
+        }
+
+        const pageItems = this.parseCsbTiles(res.value, base);
+        if (pageItems.length === 0) {
+          stop = true;
+          break;
+        }
+
+        let added = 0;
+        for (const item of pageItems) {
+          if (seen.has(item.jobId)) continue;
+          seen.add(item.jobId);
+          items.push(item);
+          added += 1;
+        }
+
+        // No new ids on this page → end of list (guards against a portal that
+        // clamps startrow and re-serves the first page).
+        if (added === 0) {
+          stop = true;
+          break;
+        }
       }
 
-      const pageItems = this.parseCsbTiles(html, base);
-      if (pageItems.length === 0) break;
-
-      let added = 0;
-      for (const item of pageItems) {
-        if (seen.has(item.jobId)) continue;
-        seen.add(item.jobId);
-        items.push(item);
-        added += 1;
-      }
-
-      // No new ids on this page → end of list (guards against a portal that
-      // clamps startrow and re-serves the first page).
-      if (added === 0) break;
-
-      await randomSleep(SF_DELAY_MIN, SF_DELAY_MAX);
+      pageIndex += batchSize;
     }
 
-    return items;
+    return items.slice(0, resultsWanted);
   }
 
   /**

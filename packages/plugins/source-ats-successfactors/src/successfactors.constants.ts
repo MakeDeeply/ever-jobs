@@ -90,8 +90,11 @@ export const SF_CSB_PAGE_SIZE = 25;
 /** Hard cap on CSB tile pages walked per scrape (safety bound). */
 export const SF_CSB_MAX_PAGES = 40;
 
+/** Bounded concurrency for CSB tile-page fetches. */
+export const SF_CSB_PAGE_CONCURRENCY = 4;
+
 /** Bounded concurrency for CSB detail-page fan-out. */
-export const SF_CSB_DETAIL_CONCURRENCY = 5;
+export const SF_CSB_DETAIL_CONCURRENCY = 10;
 
 /**
  * Content fingerprints that identify a Career Site Builder page even when the

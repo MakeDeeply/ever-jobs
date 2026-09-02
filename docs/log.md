@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-08-30 — Spec 5088 — SuccessFactors CSB concurrency
+
+**Change:** Improve `SuccessFactorsService.scrapeCsb()` harvest speed by fetching CSB `tile-search-results` pages in bounded concurrent batches (`SF_CSB_PAGE_CONCURRENCY = 4`) instead of serially with a 1.5–3 s `randomSleep` between pages. Raise `SF_CSB_DETAIL_CONCURRENCY` from `5` to `10`. The page-walk still stops on the first empty, duplicate-only, or failed page, and de-duplicates by `jobId`.
+
+**Files:** `packages/plugins/source-ats-successfactors/src/successfactors.constants.ts`, `successfactors.service.ts`, `__tests__/successfactors-csb.service.spec.ts`.
+
+**Validation:** Plugin Jest suite passes; `tsc --noEmit` clean for the package.
+
+---
+
 > **Run #100 reminder — Q-042 has been pending review since run #84 (~119 runs / ~119 hours of agent wall-clock). Default C continues; user owner please review at convenience.**
 
 > **Run #150 reminder — Q-042 has been pending review for ~119 runs since run #84. Default C continues; user owner please review at convenience.** (Second-reminder threshold per the run #100 reminder convention; next reminder window opens at run #200.)
