@@ -7,4 +7,4 @@
 - [x] Write unit tests with fixture HTML
 - [x] Run `npx tsc --noEmit` and `npx jest --testPathPatterns source-company-rdw`
 - [x] Update `docs/index.md` and `docs/log.md`
-- [ ] Commit, push, and open ever-jobs PR
+- [x] Commit, push, and open ever-jobs PR
