@@ -166,6 +166,7 @@
       "@ever-jobs/source-company-structube": ["packages/plugins/source-company-structube/src/index.ts"],
       "@ever-jobs/source-company-strategicstaffingsolutionss3": ["packages/plugins/source-company-strategicstaffingsolutionss3/src/index.ts"],
       "@ever-jobs/source-company-stratasfoods": ["packages/plugins/source-company-stratasfoods/src/index.ts"],
+      "@ever-jobs/source-company-stratolaunch": ["packages/plugins/source-company-stratolaunch/src/index.ts"],
       "@ever-jobs/source-company-stemxpert": ["packages/plugins/source-company-stemxpert/src/index.ts"],
       "@ever-jobs/source-company-statkraft": ["packages/plugins/source-company-statkraft/src/index.ts"],
       "@ever-jobs/source-company-stanfordmedicinechildrenshealth": ["packages/plugins/source-company-stanfordmedicinechildrenshealth/src/index.ts"],

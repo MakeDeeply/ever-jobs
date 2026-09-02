@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-08-30 — Spec 5089 — Source Company Plugin: Stratolaunch
+
+**Change:** Add a `source-company-stratolaunch` plugin backed by the Greenhouse Job Board API (`https://api.greenhouse.io/v1/boards/stratolaunch/jobs?content=true`). Registers `Site.STRATOLAUNCH = 'stratolaunch'`, declares `companyDomains: ['stratolaunch.com']`, and maps title, location, department, description, apply URL, and `first_published` date to `JobPostDto`. Supports `resultsWanted`, `searchTerm`, and `location` filters and handles fetch failures by returning an empty `JobResponseDto` with a diagnostic.
+
+**Files:** `packages/plugins/source-company-stratolaunch/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`.
+
+**Validation:** Plugin Jest suite passes; `tsc --noEmit` clean for the package.
+
+---
+
 ## 2026-08-30 — Spec 5088 — SuccessFactors CSB concurrency
 
 **Change:** Improve `SuccessFactorsService.scrapeCsb()` harvest speed by fetching CSB `tile-search-results` pages in bounded concurrent batches (`SF_CSB_PAGE_CONCURRENCY = 4`) instead of serially with a 1.5–3 s `randomSleep` between pages. Raise `SF_CSB_DETAIL_CONCURRENCY` from `5` to `10`. The page-walk still stops on the first empty, duplicate-only, or failed page, and de-duplicates by `jobId`.
