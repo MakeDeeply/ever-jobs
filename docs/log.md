@@ -4,6 +4,16 @@
 > human-readable audit trail; for source-code history, see `git log`.
 
 ---
+## 2026-08-30 — Spec 5090 — Pinpoint location object fix
+
+**Change:** Update `source-ats-pinpoint` to accept `location` as either a string or an object (`{ name, city, province }`) and derive `isRemote` from `workplace_type` (`remote`/`hybrid`/`onsite`) or an explicit `remote` boolean, falling back to the string location name. Adds unit tests for object location, remote `workplace_type`, string location with boolean `remote`, `resultsWanted`, missing `companySlug`, and missing `url`.
+
+**Files:** `packages/plugins/source-ats-pinpoint/src/pinpoint.service.ts`, `packages/plugins/source-ats-pinpoint/__tests__/pinpoint.service.spec.ts`, `packages/plugins/source-ats-pinpoint/tsconfig.json`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-ats-pinpoint/tsconfig.json` clean; `npx jest --testPathPatterns source-ats-pinpoint` passes (6/6).
+
+---
+
 
 ## 2026-08-30 — Spec 5089 — Source Company Plugin: Stratolaunch
 
