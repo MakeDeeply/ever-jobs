@@ -3522,6 +3522,8 @@ export enum Site {
   WEEZTIX = 'weeztix',
   // Phase 1676: Spec 1676 — Source Company Plugin: XSARUS
   XSARUS = 'xsarus',
+  // Phase 1677: Spec 5089 — Source Company Plugin: Stratolaunch
+  STRATOLAUNCH = 'stratolaunch',
 }
 
 /**

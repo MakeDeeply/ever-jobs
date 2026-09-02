@@ -1722,6 +1722,7 @@ import { StatkraftModule } from './source-company-statkraft';
 import { StemXpertModule } from './source-company-stemxpert';
 import { StratasFoodsModule } from './source-company-stratasfoods';
 import { StrategicStaffingSolutionsS3Module } from './source-company-strategicstaffingsolutionss3';
+import { StratolaunchModule } from './source-company-stratolaunch';
 import { StructubeModule } from './source-company-structube';
 import { SuntivaModule } from './source-company-suntiva';
 import { SwissHospitalityModule } from './source-company-swisshospitality';
@@ -3554,6 +3555,7 @@ export const ALL_SOURCE_MODULES = [
   StemXpertModule,
   StratasFoodsModule,
   StrategicStaffingSolutionsS3Module,
+  StratolaunchModule,
   StructubeModule,
   SuntivaModule,
   SwissHospitalityModule,

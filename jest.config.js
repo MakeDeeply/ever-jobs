@@ -152,6 +152,7 @@ module.exports = {
     '^@ever-jobs/source-company-structube$': '<rootDir>/packages/plugins/source-company-structube/src/index.ts',
     '^@ever-jobs/source-company-strategicstaffingsolutionss3$': '<rootDir>/packages/plugins/source-company-strategicstaffingsolutionss3/src/index.ts',
     '^@ever-jobs/source-company-stratasfoods$': '<rootDir>/packages/plugins/source-company-stratasfoods/src/index.ts',
+    '^@ever-jobs/source-company-stratolaunch$': '<rootDir>/packages/plugins/source-company-stratolaunch/src/index.ts',
     '^@ever-jobs/source-company-stemxpert$': '<rootDir>/packages/plugins/source-company-stemxpert/src/index.ts',
     '^@ever-jobs/source-company-statkraft$': '<rootDir>/packages/plugins/source-company-statkraft/src/index.ts',
     '^@ever-jobs/source-company-stanfordmedicinechildrenshealth$': '<rootDir>/packages/plugins/source-company-stanfordmedicinechildrenshealth/src/index.ts',
