@@ -27,7 +27,7 @@ Add `source-company-rdw` to ingest Redwire jobs via `BrowserPool` and map them t
 
 - `ScraperInputDto` support:
   - `companyDomain: ['rdw.com']` or `['redwirespace.com']` resolves to `Site.RDW`.
-  - `companyUrl` or `url` can override the start URL.
+  - `companyUrl` can override the start URL.
   - `resultsWanted`, `offset`, `searchTerm`, `location`, `isRemote`, `jobType` filters apply post-scrape using existing helpers.
 - Output: `JobResponseDto` with `jobs`, `total` count, and standard diagnostics on errors.
 - `id` stable: `rdw-<requisitionId>` or `rdw-<clinchUuid>` fallback.

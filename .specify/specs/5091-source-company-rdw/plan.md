@@ -1,5 +1,11 @@
 # Plan: 5091 — Source Company Plugin: RDW (Redwire Corporation)
 
+| Field        | Value        |
+| ------------ | ------------ |
+| Spec         | spec.md      |
+| Created      | 2026-08-30   |
+| Last updated | 2026-08-30   |
+
 ## Packages touched
 
 - `packages/plugins/source-company-rdw` (new)
