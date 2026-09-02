@@ -4,6 +4,15 @@
 > human-readable audit trail; for source-code history, see `git log`.
 
 ---
+## 2026-08-30 — Spec 5091 — Source Company Plugin: Redwire (rdw.com)
+
+**Change:** Add `source-company-rdw` for Redwire Corporation. Uses `BrowserPool` headful fetch for `https://careers.rdw.com/jobs/search` (Clinch Talent on Rails + Stimulus), parses job cards with Cheerio, follows detail URLs, and extracts JSON-LD `JobPosting` metadata. Registers `Site.RDW = 'rdw'` and declares `companyDomains: ['rdw.com', 'redwirespace.com']` so the legacy redirect domain resolves. Maps title prefixes (`Contract`, `Contractor`, `Temporary`, `Intern`, `Hybrid`, `Remote`, `On Site`) into `JobType`/`workFromHomeType`, and parses `jobLocation[].address` into `LocationDto` (US full-state names → 2-letter codes, 2-letter `addressCountry` for non-US, `addressRegion: 'Remote'` for remote roles).
+
+**Files:** `packages/plugins/source-company-rdw/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-company-rdw/tsconfig.json` clean; `npx jest --testPathPatterns source-company-rdw` passes (3/3).
+
+---
 ## 2026-08-30 — Spec 5090 — Pinpoint location object fix
 
 **Change:** Update `source-ats-pinpoint` to accept `location` as either a string or an object (`{ name, city, province }`) and derive `isRemote` from `workplace_type` (`remote`/`hybrid`/`onsite`) or an explicit `remote` boolean, falling back to the string location name. Adds unit tests for object location, remote `workplace_type`, string location with boolean `remote`, `resultsWanted`, missing `companySlug`, and missing `url`.

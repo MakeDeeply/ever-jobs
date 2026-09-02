@@ -183,6 +183,7 @@ module.exports = {
     '^@ever-jobs/source-company-relaischteaux$': '<rootDir>/packages/plugins/source-company-relaischteaux/src/index.ts',
     '^@ever-jobs/source-company-redbull$': '<rootDir>/packages/plugins/source-company-redbull/src/index.ts',
     '^@ever-jobs/source-company-ramboll$': '<rootDir>/packages/plugins/source-company-ramboll/src/index.ts',
+    '^@ever-jobs/source-company-rdw$': '<rootDir>/packages/plugins/source-company-rdw/src/index.ts',
     '^@ever-jobs/source-company-raisingcanes$': '<rootDir>/packages/plugins/source-company-raisingcanes/src/index.ts',
     '^@ever-jobs/source-company-questdiagnostics$': '<rootDir>/packages/plugins/source-company-questdiagnostics/src/index.ts',
     '^@ever-jobs/source-company-qantasgroup$': '<rootDir>/packages/plugins/source-company-qantasgroup/src/index.ts',

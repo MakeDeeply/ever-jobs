@@ -3524,6 +3524,8 @@ export enum Site {
   XSARUS = 'xsarus',
   // Phase 1677: Spec 5089 — Source Company Plugin: Stratolaunch
   STRATOLAUNCH = 'stratolaunch',
+  // Phase 1678: Spec 5091 — Source Company Plugin: Redwire (rdw.com)
+  RDW = 'rdw',
 }
 
 /**

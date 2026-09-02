@@ -1691,6 +1691,7 @@ import { QantasGroupModule } from './source-company-qantasgroup';
 import { QuestDiagnosticsModule } from './source-company-questdiagnostics';
 import { RaisingCaneSModule } from './source-company-raisingcanes';
 import { RambollModule } from './source-company-ramboll';
+import { RdwModule } from './source-company-rdw';
 import { RedBullModule } from './source-company-redbull';
 import { RelaisChTeauxModule } from './source-company-relaischteaux';
 import { ReliefInternationalModule } from './source-company-reliefinternational';
@@ -3524,6 +3525,7 @@ export const ALL_SOURCE_MODULES = [
   QuestDiagnosticsModule,
   RaisingCaneSModule,
   RambollModule,
+  RdwModule,
   RedBullModule,
   RelaisChTeauxModule,
   ReliefInternationalModule,
