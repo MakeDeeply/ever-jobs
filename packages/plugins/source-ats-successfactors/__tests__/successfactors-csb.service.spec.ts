@@ -318,4 +318,73 @@ describe('SuccessFactorsService — Career Site Builder reader', () => {
     const res = await svc.scrape(input);
     expect(res.jobs).toHaveLength(0);
   });
+
+  it('fetches tile pages in concurrent batches and stops on the first empty page', async () => {
+    const pages = new Map<number, string>([
+      [0, tilePage([tile('100', 'A-OH', 'Alpha'), tile('101', 'B-OH', 'Beta')])],
+      [25, tilePage([tile('102', 'C-OH', 'Gamma')])],
+      [50, tilePage([])],
+    ]);
+    const svc = new TestSuccessFactorsService(pages, new Map());
+
+    const input = new ScraperInputDto();
+    input.companyUrl = 'https://careers.example.com';
+    input.resultsWanted = 50;
+
+    const res = await svc.scrape(input);
+    expect(res.jobs.map((j) => j.atsId).sort()).toEqual(['100', '101', '102']);
+  });
+
+  it('stops when a concurrent batch contains a duplicate-only page', async () => {
+    const pages = new Map<number, string>([
+      [0, tilePage([tile('100', 'A-OH', 'Alpha')])],
+      [25, tilePage([tile('100', 'A-OH', 'Alpha')])],
+      [50, tilePage([tile('101', 'B-OH', 'Beta')])],
+    ]);
+    const svc = new TestSuccessFactorsService(pages, new Map());
+
+    const input = new ScraperInputDto();
+    input.companyUrl = 'https://careers.example.com';
+    input.resultsWanted = 50;
+
+    const res = await svc.scrape(input);
+    expect(res.jobs.map((j) => j.atsId).sort()).toEqual(['100']);
+  });
+
+  it('fetches CSB detail pages with bounded concurrency', async () => {
+    const tiles = Array.from({ length: 20 }, (_, i) =>
+      tile(String(i + 1), `role-${i + 1}-OH`, `Role ${i + 1}`),
+    );
+    const pages = new Map<number, string>([[0, tilePage(tiles)]]);
+    const details = new Map<string, string>();
+    for (let i = 1; i <= 20; i++) {
+      details.set(String(i), DETAIL);
+    }
+
+    let active = 0;
+    let maxActive = 0;
+
+    class ConcurrencyService extends TestSuccessFactorsService {
+      protected async fetchCsbDetailHtml(url: string): Promise<string> {
+        active += 1;
+        maxActive = Math.max(maxActive, active);
+        try {
+          await new Promise((resolve) => setTimeout(resolve, 10));
+          return super.fetchCsbDetailHtml(url);
+        } finally {
+          active -= 1;
+        }
+      }
+    }
+
+    const svc = new ConcurrencyService(pages, details);
+    const input = new ScraperInputDto();
+    input.companyUrl = 'https://careers.example.com';
+    input.resultsWanted = 20;
+
+    const res = await svc.scrape(input);
+    expect(res.jobs).toHaveLength(20);
+    expect(maxActive).toBeGreaterThan(1);
+    expect(maxActive).toBeLessThanOrEqual(10);
+  });
 });
