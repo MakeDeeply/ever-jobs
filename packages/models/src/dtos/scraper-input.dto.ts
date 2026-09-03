@@ -141,7 +141,7 @@ export class ScraperInputDto {
 
   @ApiPropertyOptional({
     description:
-      'Custom-domain career portal URL (e.g., "https://careers.ibm.com" or "https://bloomberg.avature.net"). When set, ATS scrapers prefer this over `companySlug`-derived subdomain construction. Used by the Avature plugin (Spec 006 / Q-022).',
+      'Custom-domain career portal URL (e.g., "https://careers.ibm.com" or "https://bloomberg.avature.net"). When set, ATS scrapers prefer this over `companySlug`-derived subdomain construction. If `companyDomain` does not map to a registered `Site` token, a canonical ATS board URL (e.g., "https://boards.greenhouse.io/<slug>" or "https://jobs.ashbyhq.com/<slug>") is also used as a fallback selector and to populate `companySlug`. Used by the Avature plugin (Spec 006 / Q-022).',
   })
   @IsOptional()
   @IsString()

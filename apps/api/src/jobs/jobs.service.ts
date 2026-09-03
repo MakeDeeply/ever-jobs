@@ -5,7 +5,9 @@ import {
   ERR_SOURCE_CIRCUIT_OPEN,
   SourceDiagnosticDto, ScrapeReason, ScrapeDiagnostics, classifyScrapeError,
 } from '@ever-jobs/models';
-import { extractSalary, convertToAnnual, siteFromDomain, deriveSiteToken } from '@ever-jobs/common';
+import {
+  extractSalary, convertToAnnual, siteFromDomain, deriveSiteToken, resolveCompanyUrl,
+} from '@ever-jobs/common';
 import { ConfigService } from '@nestjs/config';
 import { PluginRegistry, CircuitBreakerInterceptor } from '@ever-jobs/plugin';
 import { MetricsService } from '../metrics/metrics.service';
@@ -169,7 +171,23 @@ export class JobsService implements OnModuleInit {
     const atsSites = new Set<Site>(this.registry.listAtsSites());
     const { resolved: resolvedSites, unresolved: unresolvedDomains } =
       this.resolveCompanyDomains(input.companyDomain);
-    const effectiveSites = this.buildEffectiveSites(input.siteType, resolvedSites);
+    let effectiveSites = this.buildEffectiveSites(input.siteType, resolvedSites);
+
+    // If no explicit site is selected, fall back to an unambiguous canonical
+    // ATS board URL in `companyUrl`. The host selects the plugin and the first
+    // path segment provides `companySlug` when it is not already set.
+    const companyUrlFallback = resolveCompanyUrl(input.companyUrl);
+    if (effectiveSites.length === 0 && companyUrlFallback.site) {
+      effectiveSites = [companyUrlFallback.site];
+    }
+    if (
+      companyUrlFallback.site &&
+      !input.companySlug &&
+      companyUrlFallback.slug &&
+      effectiveSites.includes(companyUrlFallback.site)
+    ) {
+      input.companySlug = companyUrlFallback.slug;
+    }
 
     if (effectiveSites.length === 0 && unresolvedDomains.length > 0) {
       const messages = unresolvedDomains.map(

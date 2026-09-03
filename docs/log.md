@@ -4,6 +4,14 @@
 > human-readable audit trail; for source-code history, see `git log`.
 
 ---
+## 2026-09-03 — Spec 5096 — JobsService `companyUrl` Routing Fallback
+
+**Change:** Allow `JobsService` to fall back to an unambiguous canonical ATS board URL in `companyUrl` when `companyDomain` does not map to a registered `Site` token. New `resolveCompanyUrl` utility in `@ever-jobs/common` maps known ATS board hosts (`boards.greenhouse.io`, `job-boards.greenhouse.io`, `jobs.ashbyhq.com`, `jobs.lever.co`) to their `Site` token and returns the first path segment as `companySlug`. `searchJobsWithDiagnostics` invokes this fallback only when `effectiveSites` would otherwise be empty because of unresolved `companyDomain` values, or when an explicit `siteType` matches the URL's ATS. `companySlug` is populated from the URL only when it is not already set. The service still throws `BadRequestException` when no explicit selector resolves, and `companyDomain` values that did not map are still surfaced as `bad_input` diagnostics when the request proceeds.
+
+**Files:** `packages/common/src/utils/site-from-url.ts`, `packages/common/__tests__/site-from-url.spec.ts`, `apps/api/src/jobs/jobs.service.ts`, `apps/api/src/jobs/__tests__/jobs.service.spec.ts`, `packages/models/src/dtos/scraper-input.dto.ts`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p apps/api/tsconfig.json`; `npx jest --testPathPatterns jobs.service`; `npx jest --testPathPatterns site-from-url`.
+
 ## 2026-09-03 — Spec 5095 — JobsService `companyDomain`/`siteType` Routing
 
 **Change:** Allow a `companyDomain` value that does not map to a registered `Site` token to coexist with a valid `siteType`. `JobsService.resolveCompanyDomains` now returns both resolved `Site` tokens and domain strings that did not map to a registered `Site` token. `searchJobsWithDiagnostics` throws `BadRequestException` only when `effectiveSites` is empty (no `companyDomain` maps to a registered `Site` token and no valid `siteType`); when at least one explicit selector resolves, it continues scraping and appends a `bad_input` `SourceDiagnosticDto` row for each `companyDomain` that did not map, naming the derived token so the mismatch is visible. Existing behavior for requests that only pass `companyDomain` values with no registered `Site` token is unchanged.
