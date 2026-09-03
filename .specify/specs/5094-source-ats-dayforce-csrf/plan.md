@@ -1,5 +1,11 @@
 # Plan: 5094 — Dayforce CSRF Handshake
 
+| Field        | Value                                      |
+| ------------ | ------------------------------------------ |
+| Spec         | spec.md                                    |
+| Created      | 2026-09-03                                 |
+| Last updated | 2026-09-03                                 |
+
 ## Phase 1 — Bootstrap
 
 1. Update `dayforce.constants.ts` comment that claims the geo search is reachable without auth.
