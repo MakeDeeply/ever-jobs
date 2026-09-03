@@ -650,6 +650,92 @@ describe('JobsService', () => {
       );
       expect(linkedin.scrape).not.toHaveBeenCalled();
     });
+
+    it('should fall back to companyUrl when companyDomain has no matching Site token and derive companySlug (Spec 5096)', async () => {
+      const greenhouse = makeScraper([{ title: 'Greenhouse job' }]);
+      const service = createService([[Site.GREENHOUSE, greenhouse]]);
+
+      const input = new ScraperInputDto({
+        searchTerm: 'engineer',
+        companyDomain: ['vastspace.com'],
+        companyUrl: 'https://boards.greenhouse.io/vast',
+      });
+      const { jobs, perSource } = await service.searchJobsWithDiagnostics(input);
+
+      expect(greenhouse.scrape).toHaveBeenCalled();
+      expect((greenhouse.scrape as jest.Mock).mock.calls[0][0].companySlug).toBe('vast');
+      expect(jobs.length).toBe(1);
+      expect(perSource).toContainEqual(
+        new SourceDiagnosticDto(
+          'companyDomain:vastspace.com',
+          0,
+          'bad_input',
+          'domain `vastspace.com` → token `vastspace` is not a registered plugin',
+        ),
+      );
+    });
+
+    it('should fall back to companyUrl for an Ashby board (Spec 5096)', async () => {
+      const ashby = makeScraper([{ title: 'Ashby job' }]);
+      const service = createService([[Site.ASHBY, ashby]]);
+
+      const input = new ScraperInputDto({
+        searchTerm: 'engineer',
+        companyDomain: ['northwoodspace.io'],
+        companyUrl: 'https://jobs.ashbyhq.com/northwoodspace',
+      });
+      const { jobs } = await service.searchJobsWithDiagnostics(input);
+
+      expect(ashby.scrape).toHaveBeenCalled();
+      expect((ashby.scrape as jest.Mock).mock.calls[0][0].companySlug).toBe('northwoodspace');
+      expect(jobs.length).toBe(1);
+    });
+
+    it('should not override an explicit companySlug with the companyUrl-derived slug (Spec 5096)', async () => {
+      const greenhouse = makeScraper([{ title: 'Greenhouse job' }]);
+      const service = createService([[Site.GREENHOUSE, greenhouse]]);
+
+      const input = new ScraperInputDto({
+        searchTerm: 'engineer',
+        companyDomain: ['vastspace.com'],
+        companyUrl: 'https://boards.greenhouse.io/vast',
+        companySlug: 'explicit-slug',
+      });
+      await service.searchJobsWithDiagnostics(input);
+
+      expect((greenhouse.scrape as jest.Mock).mock.calls[0][0].companySlug).toBe('explicit-slug');
+    });
+
+    it('should derive companySlug from companyUrl when an explicit siteType matches the URL ATS (Spec 5096)', async () => {
+      const greenhouse = makeScraper([{ title: 'Greenhouse job' }]);
+      const service = createService([[Site.GREENHOUSE, greenhouse]]);
+
+      const input = new ScraperInputDto({
+        searchTerm: 'engineer',
+        siteType: [Site.GREENHOUSE],
+        companyUrl: 'https://boards.greenhouse.io/trueanomalyinc/jobs/123',
+      });
+      await service.searchJobsWithDiagnostics(input);
+
+      expect((greenhouse.scrape as jest.Mock).mock.calls[0][0].companySlug).toBe('trueanomalyinc');
+    });
+
+    it('should still throw when companyDomain and companyUrl both fail to resolve (Spec 5096)', async () => {
+      const greenhouse = makeScraper([{ title: 'Greenhouse job' }]);
+      const service = createService([[Site.GREENHOUSE, greenhouse]]);
+
+      const input = new ScraperInputDto({
+        searchTerm: 'engineer',
+        companyDomain: ['unknown-company.io'],
+        companyUrl: 'https://example.com/careers',
+      });
+
+      await expect(service.searchJobs(input)).rejects.toThrow(BadRequestException);
+      await expect(service.searchJobs(input)).rejects.toThrow(
+        /domain `unknown-company\.io` → token `unknown-company_io` is not a registered plugin/,
+      );
+      expect(greenhouse.scrape).not.toHaveBeenCalled();
+    });
   });
 
   describe('searchJobs — bounded fan-out (Spec 5026)', () => {
