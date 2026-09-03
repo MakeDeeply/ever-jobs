@@ -1,0 +1,21 @@
+# Tasks: 5093 — Opt-in Cookie Jar for `@ever-jobs/common HttpClient`
+
+- [ ] T01 — Write Spec Kit 5093 (`spec.md`, `plan.md`, `tasks.md`) under `.specify/specs/5093-common-http-cookie-jar/`
+- [ ] T02 — Add `tough-cookie@^6.0.2` to root `package.json` and run `npm install`
+- [ ] T03 — Implement opt-in `CookieJar` support in `packages/common/src/http/http-client.ts`
+  - [ ] T03a — Add `cookies?: boolean | CookieJar` to `HttpClientOptions`
+  - [ ] T03b — Create/accept `CookieJar` and attach request/response interceptors
+  - [ ] T03c — Apply jar cookies to outgoing `Cookie` header, merging with caller-supplied header
+  - [ ] T03d — Store response `Set-Cookie` headers into the jar
+  - [ ] T03e — Forward `cookies` through `createHttpClient()`
+- [ ] T04 — Add `packages/common/__tests__/http-client-cookies.spec.ts`
+  - [ ] T04a — Test `Set-Cookie` -> `Cookie` replay
+  - [ ] T04b — Test manual + jar `Cookie` header merge
+  - [ ] T04c — Test default (no cookies) behavior unchanged
+  - [ ] T04d — Test shared `CookieJar` instance
+  - [ ] T04e — Test malformed `Set-Cookie` is ignored
+- [ ] T05 — Update `docs/index.md` and `docs/log.md`
+- [ ] T06 — Run `npx tsc --noEmit -p packages/common/tsconfig.json`
+- [ ] T07 — Run `npx jest --testPathPatterns http-client`
+- [ ] T08 — Commit and push `devin/5093-common-http-cookie-jar`
+- [ ] T09 — Open ever-jobs PR and wait on `git_pr_checks`

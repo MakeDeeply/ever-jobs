@@ -4,6 +4,15 @@
 > human-readable audit trail; for source-code history, see `git log`.
 
 ---
+## 2026-09-03 — Spec 5093 — Opt-in Cookie Jar for `@ever-jobs/common HttpClient`
+
+**Change:** Add an opt-in `CookieJar` to the shared `HttpClient` (`packages/common/src/http/http-client.ts`) backed by `tough-cookie`. `HttpClientOptions` now accepts `cookies?: boolean | CookieJar`. When enabled, the client reads matching cookies from the jar into the outgoing `Cookie` header before each request and stores all `Set-Cookie` response headers into the jar after each response. The jar cookies are appended to any caller-supplied `Cookie` header. `createHttpClient()` forwards the option. Existing clients that do not set `cookies` see no behavior change.
+
+**Files:** `packages/common/src/http/http-client.ts`, `packages/common/__tests__/http-client-cookies.spec.ts`, `package.json`, `package-lock.json`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/common/tsconfig.json` clean; `npx jest --testPathPatterns http-client` passes (30/30).
+
+---
 ## 2026-08-30 — Spec 5092 — Source Company Plugin: Trossen Robotics
 
 **Change:** Add `source-company-trossenrobotics` for Trossen Robotics. Uses `BrowserPool` headful browser fetch for `https://www.trossenrobotics.com/careers`, parses rendered Wix job cards with Cheerio, follows detail URLs, and extracts the title, metadata, date, and full description from each `/careers/<slug>` page. Registers `Site.TROSSENROBOTICS = 'trossenrobotics'` and declares `companyDomains: ['trossenrobotics.com', 'www.trossenrobotics.com']`. Maps employment-type tokens (`Full Time`, `Part Time`, etc.), workplace type (`Onsite`/`Remote`/`Hybrid`), and title-based internship detection into `JobType`/`workFromHomeType`.
