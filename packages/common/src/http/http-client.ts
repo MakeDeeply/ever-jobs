@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { CookieJar } from 'tough-cookie';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { SocksProxyAgent } from 'socks-proxy-agent';
 
@@ -46,6 +47,11 @@ export interface HttpClientOptions {
   rateDelayMin?: number;
   /** Maximum delay between requests in seconds (rate limiting) */
   rateDelayMax?: number;
+  /**
+   * Enable cookie handling. When `true`, an isolated `CookieJar` is created for
+   * this client. Pass a `CookieJar` instance to share state across requests.
+   */
+  cookies?: boolean | CookieJar;
 }
 
 /**
@@ -65,6 +71,7 @@ export class HttpClient {
   private readonly rateDelayMin: number;
   private readonly rateDelayMax: number;
   private lastRequestTime = 0;
+  private readonly cookieJar?: CookieJar;
 
   constructor(options: HttpClientOptions = {}) {
     this.proxies = options.proxies ?? [];
@@ -87,6 +94,74 @@ export class HttpClient {
         ? { httpsAgent: new (require('https').Agent)({ rejectUnauthorized: false }) }
         : {}),
     });
+
+    if (options.cookies) {
+      this.cookieJar = options.cookies === true ? new CookieJar() : options.cookies;
+      this.attachCookieInterceptors();
+    }
+  }
+
+  private attachCookieInterceptors(): void {
+    if (!this.cookieJar) return;
+
+    this.client.interceptors.request.use(async (config) => {
+      this.applyRequestCookies(config);
+      return config;
+    });
+
+    this.client.interceptors.response.use(
+      (response) => {
+        this.storeResponseCookies(response);
+        return response;
+      },
+      (error) => {
+        if (error.response) {
+          this.storeResponseCookies(error.response);
+        }
+        return Promise.reject(error);
+      },
+    );
+  }
+
+  private applyRequestCookies(config: AxiosRequestConfig): void {
+    if (!this.cookieJar || !config.url) return;
+
+    const cookieString = this.cookieJar.getCookieStringSync(config.url);
+    if (!cookieString) return;
+
+    const headers = config.headers ?? (config.headers = {});
+    if (
+      typeof (headers as { get?: unknown }).get === 'function' &&
+      typeof (headers as { set?: unknown }).set === 'function'
+    ) {
+      const axiosHeaders = headers as { get: (key: string) => string | undefined; set: (key: string, value: string) => void };
+      const existing = axiosHeaders.get('Cookie') ?? '';
+      axiosHeaders.set('Cookie', existing ? `${existing}; ${cookieString}` : cookieString);
+    } else {
+      const existing = (headers as Record<string, unknown>)['Cookie'] ?? '';
+      (headers as Record<string, string>)['Cookie'] = existing
+        ? `${existing}; ${cookieString}`
+        : cookieString;
+    }
+  }
+
+  private storeResponseCookies(response: AxiosResponse): void {
+    if (!this.cookieJar) return;
+
+    const setCookie = response.headers?.['set-cookie'];
+    if (!setCookie) return;
+
+    const url = response.config?.url;
+    if (!url) return;
+
+    const cookies = Array.isArray(setCookie) ? setCookie : [setCookie];
+    for (const cookie of cookies) {
+      try {
+        this.cookieJar.setCookieSync(cookie, url);
+      } catch (err) {
+        this.logger.debug(`Ignoring malformed Set-Cookie: ${err}`);
+      }
+    }
   }
 
   private getNextProxy(): string | null {
@@ -304,6 +379,7 @@ export function createHttpClient(options?: HttpClientOptions | any): HttpClient 
       retryMaxDelay: options.retryMaxDelay,
       rateDelayMin: options.rateDelayMin,
       rateDelayMax: options.rateDelayMax,
+      cookies: options.cookies,
     });
   }
   return new HttpClient(options as HttpClientOptions);
