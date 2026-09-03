@@ -12,6 +12,7 @@ import {
   CompensationInterval,
   ERR_SOURCE_CIRCUIT_OPEN,
   ScrapeDiagnostics,
+  SourceDiagnosticDto,
 } from '@ever-jobs/models';
 import { PluginRegistry } from '@ever-jobs/plugin';
 import { normalizeCompanyHost } from '@ever-jobs/common';
@@ -581,6 +582,73 @@ describe('JobsService', () => {
 
       expect(buildcover.scrape).toHaveBeenCalled();
       expect(result.length).toBe(1);
+    });
+
+    it('should proceed when companyDomain is unresolved but siteType is valid and report a bad_input diagnostic (Spec 5095)', async () => {
+      const linkedin = makeScraper([{ title: 'LI job' }]);
+      const service = createService([[Site.LINKEDIN, linkedin]]);
+
+      const input = new ScraperInputDto({
+        searchTerm: 'engineer',
+        siteType: [Site.LINKEDIN],
+        companyDomain: ['not-a-real-company.io'],
+      });
+      const { jobs, perSource } = await service.searchJobsWithDiagnostics(input);
+
+      expect(linkedin.scrape).toHaveBeenCalled();
+      expect(jobs.length).toBe(1);
+      expect(perSource).toContainEqual(
+        new SourceDiagnosticDto(
+          'companyDomain:not-a-real-company.io',
+          0,
+          'bad_input',
+          'domain `not-a-real-company.io` → token `not-a-real-company_io` is not a registered plugin',
+        ),
+      );
+    });
+
+    it('should union resolved companyDomain with siteType and report unresolved diagnostics (Spec 5095)', async () => {
+      const buildcover = makeScraper([{ title: 'Buildcover job' }]);
+      const linkedin = makeScraper([{ title: 'LI job' }]);
+      const service = createService([
+        [Site.BUILDCOVER, buildcover],
+        [Site.LINKEDIN, linkedin],
+      ]);
+
+      const input = new ScraperInputDto({
+        searchTerm: 'engineer',
+        siteType: [Site.LINKEDIN],
+        companyDomain: ['buildcover.com', 'unknown-company.io'],
+      });
+      const { jobs, perSource } = await service.searchJobsWithDiagnostics(input);
+
+      expect(buildcover.scrape).toHaveBeenCalled();
+      expect(linkedin.scrape).toHaveBeenCalled();
+      expect(jobs.length).toBe(2);
+      expect(perSource).toContainEqual(
+        new SourceDiagnosticDto(
+          'companyDomain:unknown-company.io',
+          0,
+          'bad_input',
+          'domain `unknown-company.io` → token `unknown-company_io` is not a registered plugin',
+        ),
+      );
+    });
+
+    it('should still throw BadRequestException when all explicit selectors are unresolved (Spec 5095)', async () => {
+      const linkedin = makeScraper([{ title: 'LI job' }]);
+      const service = createService([[Site.LINKEDIN, linkedin]]);
+
+      const input = new ScraperInputDto({
+        searchTerm: 'engineer',
+        companyDomain: ['not-a-real-company.io'],
+      });
+
+      await expect(service.searchJobs(input)).rejects.toThrow(BadRequestException);
+      await expect(service.searchJobs(input)).rejects.toThrow(
+        /domain `not-a-real-company\.io` → token `not-a-real-company_io` is not a registered plugin/,
+      );
+      expect(linkedin.scrape).not.toHaveBeenCalled();
     });
   });
 

@@ -15,7 +15,7 @@ export class ScraperInputDto {
   siteType?: Site[];
 
   @ApiPropertyOptional({
-    description: 'Company domains to resolve to registered Site tokens. Each domain is mapped via the Spec 5069 rule (e.g. boomsupersonic.com → boomsupersonic, hyl.io → hyl_io). Resolved tokens are unioned with siteType. Unresolved domains produce a 400.',
+    description: 'Company domains to resolve to registered Site tokens. Each domain is mapped via the Spec 5069 rule (e.g. boomsupersonic.com → boomsupersonic, hyl.io → hyl_io). Resolved tokens are unioned with siteType. Unresolved domains produce a 400 only when no valid siteType or resolvable domain remains; otherwise they are returned as per-source diagnostics.',
     isArray: true,
     type: String,
   })

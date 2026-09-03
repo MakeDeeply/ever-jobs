@@ -4,6 +4,15 @@
 > human-readable audit trail; for source-code history, see `git log`.
 
 ---
+## 2026-09-03 — Spec 5095 — JobsService `companyDomain`/`siteType` Routing
+
+**Change:** Allow an unresolved `companyDomain` hint to coexist with a valid `siteType`. `JobsService.resolveCompanyDomains` now returns both resolved `Site` tokens and unresolved domain strings. `searchJobsWithDiagnostics` throws `BadRequestException` only when `effectiveSites` is empty (no resolvable `companyDomain` and no valid `siteType`); when at least one explicit selector resolves, it continues scraping and appends a `bad_input` `SourceDiagnosticDto` row for each unresolved `companyDomain`, naming the derived token so the mismatch is visible. Existing behavior for requests that only pass unresolvable `companyDomain` values is unchanged.
+
+**Files:** `apps/api/src/jobs/jobs.service.ts`, `apps/api/src/jobs/__tests__/jobs.service.spec.ts`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns jobs.service` passes (126/126).
+
+---
 ## 2026-09-03 — Spec 5094 — Dayforce CSRF Handshake
 
 **Change:** Update `source-ats-dayforce` to bootstrap a session before the geo search endpoint. `DayforceService` now creates its `HttpClient` with `cookies: true`, calls `GET /api/auth/csrf` with the candidate-portal page as the `Referer`, stores the returned `csrfToken` as `X-CSRF-TOKEN`, and relies on the cookie jar to replay the `__Host-next-auth.csrf-token` cookie on every subsequent `POST /api/geo/{client}/jobposting/search`. If the handshake fails (e.g. `403`) or returns no token, `scrape` catches the error and returns `classifyScrapeError(err)` as the response diagnostic. The module comment in `dayforce.constants.ts` is updated to reflect that the geo search is no longer unauthenticated.
