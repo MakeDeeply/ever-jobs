@@ -1,5 +1,11 @@
 # Plan: 5096 — Use unambiguous `companyUrl` as a routing fallback in `JobsService`
 
+| Field | Value |
+|-------|-------|
+| Plan ID | 5096 |
+| Spec | [spec.md](spec.md) |
+| Status | in-progress |
+
 ## Phases
 
 1. **Add `resolveCompanyUrl` helper**
