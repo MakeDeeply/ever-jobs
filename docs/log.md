@@ -6,7 +6,7 @@
 ---
 ## 2026-09-03 — Spec 5095 — JobsService `companyDomain`/`siteType` Routing
 
-**Change:** Allow an unresolved `companyDomain` hint to coexist with a valid `siteType`. `JobsService.resolveCompanyDomains` now returns both resolved `Site` tokens and unresolved domain strings. `searchJobsWithDiagnostics` throws `BadRequestException` only when `effectiveSites` is empty (no resolvable `companyDomain` and no valid `siteType`); when at least one explicit selector resolves, it continues scraping and appends a `bad_input` `SourceDiagnosticDto` row for each unresolved `companyDomain`, naming the derived token so the mismatch is visible. Existing behavior for requests that only pass unresolvable `companyDomain` values is unchanged.
+**Change:** Allow a `companyDomain` value that does not map to a registered `Site` token to coexist with a valid `siteType`. `JobsService.resolveCompanyDomains` now returns both resolved `Site` tokens and domain strings that did not map to a registered `Site` token. `searchJobsWithDiagnostics` throws `BadRequestException` only when `effectiveSites` is empty (no `companyDomain` maps to a registered `Site` token and no valid `siteType`); when at least one explicit selector resolves, it continues scraping and appends a `bad_input` `SourceDiagnosticDto` row for each `companyDomain` that did not map, naming the derived token so the mismatch is visible. Existing behavior for requests that only pass `companyDomain` values with no registered `Site` token is unchanged.
 
 **Files:** `apps/api/src/jobs/jobs.service.ts`, `apps/api/src/jobs/__tests__/jobs.service.spec.ts`, `docs/index.md`.
 

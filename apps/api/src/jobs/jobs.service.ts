@@ -352,8 +352,8 @@ export class JobsService implements OnModuleInit {
       return dateB - dateA;
     });
 
-    // Surface unresolved `companyDomain` hints as diagnostics when the request
-    // still had at least one valid explicit selector (Spec 5095).
+    // Surface `companyDomain` values that did not map to a registered Site token as
+    // diagnostics when the request still had at least one valid explicit selector (Spec 5095).
     for (const domain of unresolvedDomains) {
       perSource.push(
         new SourceDiagnosticDto(
@@ -443,8 +443,8 @@ export class JobsService implements OnModuleInit {
    *
    * A plugin that declares the domain wins (`companyDomains`, Spec 5086);
    * otherwise the token is derived from the domain (Spec 5069). Returns both
-   * the resolved set and the list of unresolved domains; callers decide whether
-   * to fail or to surface them as diagnostics (Spec 5095).
+   * the resolved set and the list of domains that did not map to a registered
+   * Site token; callers decide whether to fail or to surface them as diagnostics (Spec 5095).
    */
   private resolveCompanyDomains(domains: string[] | undefined): {
     resolved: Set<Site>;

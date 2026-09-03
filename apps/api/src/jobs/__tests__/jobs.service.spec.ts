@@ -584,7 +584,7 @@ describe('JobsService', () => {
       expect(result.length).toBe(1);
     });
 
-    it('should proceed when companyDomain is unresolved but siteType is valid and report a bad_input diagnostic (Spec 5095)', async () => {
+    it('should proceed when companyDomain has no matching Site token but siteType is valid and report a bad_input diagnostic (Spec 5095)', async () => {
       const linkedin = makeScraper([{ title: 'LI job' }]);
       const service = createService([[Site.LINKEDIN, linkedin]]);
 
@@ -607,7 +607,7 @@ describe('JobsService', () => {
       );
     });
 
-    it('should union resolved companyDomain with siteType and report unresolved diagnostics (Spec 5095)', async () => {
+    it('should union resolved companyDomain with siteType and report diagnostics for companyDomain values with no matching Site token (Spec 5095)', async () => {
       const buildcover = makeScraper([{ title: 'Buildcover job' }]);
       const linkedin = makeScraper([{ title: 'LI job' }]);
       const service = createService([
@@ -635,7 +635,7 @@ describe('JobsService', () => {
       );
     });
 
-    it('should still throw BadRequestException when all explicit selectors are unresolved (Spec 5095)', async () => {
+    it('should still throw BadRequestException when no explicit selector maps to a registered Site token (Spec 5095)', async () => {
       const linkedin = makeScraper([{ title: 'LI job' }]);
       const service = createService([[Site.LINKEDIN, linkedin]]);
 

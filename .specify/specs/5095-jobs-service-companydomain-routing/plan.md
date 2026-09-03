@@ -9,14 +9,14 @@
 - Update `apps/api/src/jobs/jobs.service.ts`:
   - Refactor `resolveCompanyDomains` to return `{ resolved: Set<Site>, unresolved: string[] }`.
   - Move the `BadRequestException` logic into `searchJobsWithDiagnostics`, throwing only when `effectiveSites` is empty.
-  - Append unresolved-domain `SourceDiagnosticDto` rows to `perSource` when the request proceeds.
+  - Append `SourceDiagnosticDto` rows for `companyDomain` values that did not map to a registered `Site` token to `perSource` when the request proceeds.
 
 ### Phase 3 — Tests
 - Extend `apps/api/src/jobs/__tests__/jobs.service.spec.ts`:
-  - Mixed `siteType` + unresolved `companyDomain` proceeds with a diagnostic.
-  - Unresolved `companyDomain` alone still throws `BadRequestException`.
-  - Mixed `siteType` + invalid `companyDomain` + empty entries.
-  - `companyDomain` mixed (valid + unresolved) + valid `siteType`.
+  - Mixed `siteType` + `companyDomain` with no matching `Site` token proceeds with a diagnostic.
+  - `companyDomain` with no matching `Site` token alone still throws `BadRequestException`.
+  - Mixed `siteType` + `companyDomain` with no matching `Site` token + empty entries.
+  - `companyDomain` mixed (valid + no matching `Site` token) + valid `siteType`.
 
 ### Phase 4 — Docs & hygiene
 - Update `docs/index.md` with spec 5095 row.
