@@ -4,6 +4,15 @@
 > human-readable audit trail; for source-code history, see `git log`.
 
 ---
+## 2026-09-03 — Spec 5094 — Dayforce CSRF Handshake
+
+**Change:** Update `source-ats-dayforce` to bootstrap a session before the geo search endpoint. `DayforceService` now creates its `HttpClient` with `cookies: true`, calls `GET /api/auth/csrf` with the candidate-portal page as the `Referer`, stores the returned `csrfToken` as `X-CSRF-TOKEN`, and relies on the cookie jar to replay the `__Host-next-auth.csrf-token` cookie on every subsequent `POST /api/geo/{client}/jobposting/search`. If the handshake fails (e.g. `403`) or returns no token, `scrape` catches the error and returns `classifyScrapeError(err)` as the response diagnostic. The module comment in `dayforce.constants.ts` is updated to reflect that the geo search is no longer unauthenticated.
+
+**Files:** `packages/plugins/source-ats-dayforce/src/dayforce.service.ts`, `packages/plugins/source-ats-dayforce/src/dayforce.constants.ts`, `packages/plugins/source-ats-dayforce/__tests__/dayforce.service.spec.ts`, `packages/plugins/source-ats-dayforce/__tests__/dayforce.e2e-spec.ts`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-ats-dayforce/tsconfig.json` clean; `npx jest --testPathPatterns source-ats-dayforce` passes (11/11).
+
+---
 ## 2026-09-03 — Spec 5093 — Opt-in Cookie Jar for `@ever-jobs/common HttpClient`
 
 **Change:** Add an opt-in `CookieJar` to the shared `HttpClient` (`packages/common/src/http/http-client.ts`) backed by `tough-cookie`. `HttpClientOptions` now accepts `cookies?: boolean | CookieJar`. When enabled, the client reads matching cookies from the jar into the outgoing `Cookie` header before each request and stores all `Set-Cookie` response headers into the jar after each response. The jar cookies are appended to any caller-supplied `Cookie` header. `createHttpClient()` forwards the option. Existing clients that do not set `cookies` see no behavior change.
