@@ -19,6 +19,7 @@ export interface RecruiteeOffer {
   description: string;
   created_at: string;
   careers_url: string;
+  company_name?: string;
   min_hours: number | null;
   max_hours: number | null;
   salary_min: number | null;
