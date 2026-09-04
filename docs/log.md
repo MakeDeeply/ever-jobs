@@ -4,6 +4,14 @@
 > human-readable audit trail; for source-code history, see `git log`.
 
 ---
+## 2026-09-03 — Spec 5100 — `source-ats-recruitee` Custom-Domain Support
+
+**Change:** Update `source-ats-recruitee` to resolve the board base URL from an explicit `companyUrl` origin or from a `companySlug` that is a full custom-domain host (e.g. `careers.morpheus.space`). Public listings use `${baseUrl}/api/offers` and `jobUrl` fallbacks use `${baseUrl}/o/${slug}` when `offer.careers_url` is absent. The authenticated `api.recruitee.com/c/{id}/offers` path is skipped for custom-domain hosts because that endpoint expects a Recruitee account id, not a hostname. `companyName` prefers `offer.company_name` when the API returns it. Adds `__tests__/recruitee.service.spec.ts` with mocked HTTP client covering standard slug, custom-domain host, `companyUrl` override, `*.recruitee.com` host, auth-token and fallback paths, `bad_input` diagnostics, and `resultsWanted` capping.
+
+**Files:** `packages/plugins/source-ats-recruitee/src/recruitee.service.ts`, `packages/plugins/source-ats-recruitee/src/recruitee.types.ts`, `packages/plugins/source-ats-recruitee/__tests__/recruitee.service.spec.ts`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-ats-recruitee/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns source-ats-recruitee` passes.
+
 ## 2026-09-03 — Spec 5099 — Source Company Plugin: Launchpad Build AI
 
 **Change:** Add `source-company-launchpadbuild_ai` plugin for Launchpad Build AI (`launchpadbuild.ai`). It scrapes the WordPress/WP Job Openings careers page at `https://www.launchpadbuild.ai/careers/`, parsing `div.awsm-job-listing-item` entries for detail-page URLs and titles. Optional inline specification terms (`Employment Types`, `Locations`, `Schedule`) are read from the list item when present. For each detail page it extracts the `h1.elementor-heading-title` title, builds a markdown description from `h3.wp-block-heading` sections plus following `p`/`ul` blocks, and sets `applyUrl` to the detail page URL because the `form#awsm-application-form` posts to the current page. Location is derived from the `Locations` specification term (e.g. `El Segundo CA`) when available; otherwise the `Why Launchpad` section is scanned for `UK based` and, if found, emits a `LocationDto` with `country: Country.UK`. `workFromHomeType` is derived from the `Schedule` specification term (`On-site`) or from the `Why Launchpad` phrase `hybrid option(s)`, which maps to `Hybrid`. `isRemote` is only set to `true` when the description explicitly says remote. Compensation is parsed from the `Compensation & Benefits` section; when both hourly and yearly ranges appear, the `YEARLY` interval is preferred because the role is described as salaried. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
