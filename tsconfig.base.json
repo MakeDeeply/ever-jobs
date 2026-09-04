@@ -1868,6 +1868,7 @@
       "@ever-jobs/source-company-trossenrobotics": ["packages/plugins/source-company-trossenrobotics/src/index.ts"],
       "@ever-jobs/source-company-syncere": ["packages/plugins/source-company-syncere/src/index.ts"],
       "@ever-jobs/source-company-launchpadbuild_ai": ["packages/plugins/source-company-launchpadbuild_ai/src/index.ts"],
+      "@ever-jobs/source-company-thespaceportcompany": ["packages/plugins/source-company-thespaceportcompany/src/index.ts"],
       "@ever-jobs/source-tesla": ["packages/plugins/source-tesla/src/index.ts"],
       "@ever-jobs/source-tesla-playwright": ["packages/plugins/source-tesla-playwright/src/index.ts"]
     }

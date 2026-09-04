@@ -1852,6 +1852,7 @@ module.exports = {
     '^@ever-jobs/source-company-trossenrobotics$': '<rootDir>/packages/plugins/source-company-trossenrobotics/src/index.ts',
     '^@ever-jobs/source-company-syncere$': '<rootDir>/packages/plugins/source-company-syncere/src/index.ts',
     '^@ever-jobs/source-company-launchpadbuild_ai$': '<rootDir>/packages/plugins/source-company-launchpadbuild_ai/src/index.ts',
+    '^@ever-jobs/source-company-thespaceportcompany$': '<rootDir>/packages/plugins/source-company-thespaceportcompany/src/index.ts',
     '^@ever-jobs/source-tesla$': '<rootDir>/packages/plugins/source-tesla/src/index.ts',
     '^@ever-jobs/source-tesla-playwright$': '<rootDir>/packages/plugins/source-tesla-playwright/src/index.ts',
   },

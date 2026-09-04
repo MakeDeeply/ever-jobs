@@ -3534,6 +3534,8 @@ export enum Site {
   ATLAS = 'atlasspace',
   // Phase 1682: Spec 5099 — Source Company Plugin: Launchpad Build AI
   LAUNCHPADBUILD_AI = 'launchpadbuild_ai',
+  // Phase 1683: Spec 5101 — Source Company Plugin: The Spaceport Company
+  THE_SPACEPORT_COMPANY = 'thespaceportcompany',
 }
 
 /**
