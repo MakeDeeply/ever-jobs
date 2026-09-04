@@ -8,4 +8,4 @@
 - [x] T6 — Update `docs/index.md` and `docs/log.md` with Spec 5100. Acceptance: no broken links.
 - [x] T7 — Run `npx tsc --noEmit` for `packages/plugins/source-ats-recruitee` and `apps/api`. Acceptance: clean.
 - [x] T8 — Run `npx jest --testPathPatterns source-ats-recruitee`. Acceptance: all tests pass.
-- [ ] T9 — Commit, push, and open PR. Acceptance: PR description follows the concise external-audience format.
+- [x] T9 — Commit, push, and open PR. Acceptance: PR description follows the concise external-audience format.
