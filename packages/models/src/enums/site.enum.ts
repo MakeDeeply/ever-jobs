@@ -1711,7 +1711,8 @@ export enum Site {
   // Phase 784: Spec 789 — Source Company Plugin: Arbor Energy
   ARBOR_ENERGY = 'arborenergy',
   // Phase 785: Spec 790 — Source Company Plugin: Aurora Innovation
-  AURORA_INNOVATION = 'aurorainnovation',
+  // Phase 5102: renamed to AURORA_TECH and backed by Ashby
+  AURORA_TECH = 'aurora_tech',
   // Phase 786: Spec 791 — Source Company Plugin: EarnIn
   EARNIN = 'earnin',
   // Phase 787: Spec 792 — Source Company Plugin: Faraday Future
