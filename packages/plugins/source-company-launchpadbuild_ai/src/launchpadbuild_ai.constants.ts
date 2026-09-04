@@ -1,0 +1,5 @@
+export const LAUNCHPADBUILD_AI_COMPANY_NAME = 'Launchpad Build AI';
+export const LAUNCHPADBUILD_AI_ORIGIN = 'https://www.launchpadbuild.ai';
+export const LAUNCHPADBUILD_AI_CAREERS_URL = `${LAUNCHPADBUILD_AI_ORIGIN}/careers/`;
+export const LAUNCHPADBUILD_AI_DEFAULT_RESULTS = 50;
+export const LAUNCHPADBUILD_AI_DEFAULT_TIMEOUT_SECONDS = 30;

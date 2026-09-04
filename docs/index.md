@@ -1852,6 +1852,8 @@
 
 || 5098 | [source-company-atlasspace](../.specify/specs/5098-source-company-atlasspace/spec.md) -- [plan](../.specify/specs/5098-source-company-atlasspace/plan.md) -- [tasks](../.specify/specs/5098-source-company-atlasspace/tasks.md) | Done. Adds `source-company-atlasspace` plugin for ATLAS Space Operations (`atlasspace.com`). Scrapes the WordPress/Elementor careers page and detail pages, builds markdown descriptions from section headings, parses location and annual salary, and sets on-site metadata. |
 
+||| 5099 | [source-company-launchpadbuild_ai](../.specify/specs/5099-source-company-launchpadbuild_ai/spec.md) -- [plan](../.specify/specs/5099-source-company-launchpadbuild_ai/plan.md) -- [tasks](../.specify/specs/5099-source-company-launchpadbuild_ai/tasks.md) | Done. Adds `source-company-launchpadbuild_ai` plugin for Launchpad Build AI (`launchpadbuild.ai`). Scrapes the WP Job Openings SSR careers list and detail pages, builds markdown descriptions from `h3` sections, parses `Employment Types`/`Locations`/`Schedule` specifications, extracts `UK` from `Why Launchpad` "UK based", extracts `Hybrid` from "hybrid option(s)", and prefers annual compensation when both hourly and yearly figures are present. |
+
 ## 8. Templates
 
 | File                                                           | Purpose             |

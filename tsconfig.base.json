@@ -912,6 +912,7 @@
       "@ever-jobs/source-company-augury": ["packages/plugins/source-company-augury/src/index.ts"],
       "@ever-jobs/source-company-atomicmachines": ["packages/plugins/source-company-atomicmachines/src/index.ts"],
       "@ever-jobs/source-company-atlasspace": ["packages/plugins/source-company-atlasspace/src/index.ts"],
+      "@ever-jobs/source-company-launchpadbuild_ai": ["packages/plugins/source-company-launchpadbuild_ai/src/index.ts"],
       "@ever-jobs/source-company-atbayjobs": ["packages/plugins/source-company-atbayjobs/src/index.ts"],
       "@ever-jobs/source-company-armissecurity": ["packages/plugins/source-company-armissecurity/src/index.ts"],
       "@ever-jobs/source-company-andurilindustries": ["packages/plugins/source-company-andurilindustries/src/index.ts"],
@@ -1866,6 +1867,7 @@
       "@ever-jobs/source-company-vightaero": ["packages/plugins/source-company-vightaero/src/index.ts"],
       "@ever-jobs/source-company-trossenrobotics": ["packages/plugins/source-company-trossenrobotics/src/index.ts"],
       "@ever-jobs/source-company-syncere": ["packages/plugins/source-company-syncere/src/index.ts"],
+      "@ever-jobs/source-company-launchpadbuild_ai": ["packages/plugins/source-company-launchpadbuild_ai/src/index.ts"],
       "@ever-jobs/source-tesla": ["packages/plugins/source-tesla/src/index.ts"],
       "@ever-jobs/source-tesla-playwright": ["packages/plugins/source-tesla-playwright/src/index.ts"]
     }
