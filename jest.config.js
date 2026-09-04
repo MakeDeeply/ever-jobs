@@ -1848,6 +1848,7 @@ module.exports = {
     '^@ever-jobs/source-company-mara_inc$': '<rootDir>/packages/plugins/source-company-mara_inc/src/index.ts',
     '^@ever-jobs/source-company-vightaero$': '<rootDir>/packages/plugins/source-company-vightaero/src/index.ts',
     '^@ever-jobs/source-company-trossenrobotics$': '<rootDir>/packages/plugins/source-company-trossenrobotics/src/index.ts',
+    '^@ever-jobs/source-company-syncere$': '<rootDir>/packages/plugins/source-company-syncere/src/index.ts',
     '^@ever-jobs/source-tesla$': '<rootDir>/packages/plugins/source-tesla/src/index.ts',
     '^@ever-jobs/source-tesla-playwright$': '<rootDir>/packages/plugins/source-tesla-playwright/src/index.ts',
   },
