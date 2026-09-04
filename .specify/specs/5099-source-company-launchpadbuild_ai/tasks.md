@@ -8,4 +8,4 @@
 | 4 | Write unit tests with mocked HTML fixtures | completed |
 | 5 | Run `npx tsc --noEmit -p apps/api/tsconfig.json` and `npx jest --testPathPatterns launchpadbuild` | completed |
 | 6 | Update `docs/index.md` and `docs/log.md` | completed |
-| 7 | Commit, push, and open ever-jobs PR | in-progress |
+| 7 | Commit, push, and open ever-jobs PR | completed |

@@ -10,7 +10,7 @@
 
 **Files:** `packages/plugins/source-company-launchpadbuild_ai/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`.
 
-**Validation:** `npx tsc --noEmit -p apps/api/tsconfig.json`; `npx jest --testPathPatterns launchpadbuild`.
+**Validation:** `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns launchpadbuild` passes (14/14).
 
 ---
 ## 2026-09-03 — Spec 5098 — Source Company Plugin: ATLAS Space Operations
