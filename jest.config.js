@@ -897,6 +897,7 @@ module.exports = {
     '^@ever-jobs/source-company-aura$': '<rootDir>/packages/plugins/source-company-aura/src/index.ts',
     '^@ever-jobs/source-company-augury$': '<rootDir>/packages/plugins/source-company-augury/src/index.ts',
     '^@ever-jobs/source-company-atomicmachines$': '<rootDir>/packages/plugins/source-company-atomicmachines/src/index.ts',
+    '^@ever-jobs/source-company-atlasspace$': '<rootDir>/packages/plugins/source-company-atlasspace/src/index.ts',
     '^@ever-jobs/source-company-atbayjobs$': '<rootDir>/packages/plugins/source-company-atbayjobs/src/index.ts',
     '^@ever-jobs/source-company-armissecurity$': '<rootDir>/packages/plugins/source-company-armissecurity/src/index.ts',
     '^@ever-jobs/source-company-andurilindustries$': '<rootDir>/packages/plugins/source-company-andurilindustries/src/index.ts',
