@@ -4,6 +4,15 @@
 > human-readable audit trail; for source-code history, see `git log`.
 
 ---
+## 2026-09-03 — Spec 5099 — Source Company Plugin: Launchpad Build AI
+
+**Change:** Add `source-company-launchpadbuild_ai` plugin for Launchpad Build AI (`launchpadbuild.ai`). It scrapes the WordPress/WP Job Openings careers page at `https://www.launchpadbuild.ai/careers/`, parsing `div.awsm-job-listing-item` entries for detail-page URLs and titles. Optional inline specification terms (`Employment Types`, `Locations`, `Schedule`) are read from the list item when present. For each detail page it extracts the `h1.elementor-heading-title` title, builds a markdown description from `h3.wp-block-heading` sections plus following `p`/`ul` blocks, and sets `applyUrl` to the detail page URL because the `form#awsm-application-form` posts to the current page. Location is derived from the `Locations` specification term (e.g. `El Segundo CA`) when available; otherwise the `Why Launchpad` section is scanned for `UK based` and, if found, emits a `LocationDto` with `country: Country.UK`. `workFromHomeType` is derived from the `Schedule` specification term (`On-site`) or from the `Why Launchpad` phrase `hybrid option(s)`, which maps to `Hybrid`. `isRemote` is only set to `true` when the description explicitly says remote. Compensation is parsed from the `Compensation & Benefits` section; when both hourly and yearly ranges appear, the `YEARLY` interval is preferred because the role is described as salaried. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
+
+**Files:** `packages/plugins/source-company-launchpadbuild_ai/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns launchpadbuild` passes (14/14).
+
+---
 ## 2026-09-03 — Spec 5098 — Source Company Plugin: ATLAS Space Operations
 
 **Change:** Add `source-company-atlasspace` plugin for ATLAS Space Operations (`atlasspace.com`). It scrapes the WordPress/Elementor careers page at `https://atlasspace.com/careers/`, parses the `Current Openings` icon list for detail-page links and titles, and for each job page extracts the `h2` title, the generic `Apply for this Job` apply URL (`https://atlasspace.com/apply/`), markdown descriptions built from `h4` section headings (`Job Description`, `Essential Duties`, `Required Qualifications`, `Desired Qualifications`, `Location`, `Salary`/`Salary Range`, `Benefits`, `Additional Information`), the `Location` city/state, and the annual salary range. Sets `companyName` to `ATLAS Space Operations`, `companyUrl` to `https://atlasspace.com/careers/`, `isRemote` to `false`, and `workFromHomeType` to `On Site`. When no explicit `Details`/`Employment Type` section is present, the presence of an annual salary range implies `FULL_TIME`. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
