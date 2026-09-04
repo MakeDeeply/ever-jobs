@@ -959,6 +959,7 @@ import { ArmisModule } from './source-company-armissecurity';
 import { AtBayModule } from './source-company-atbayjobs';
 import { AtlasspaceModule } from './source-company-atlasspace';
 import { LaunchpadbuildAiModule } from './source-company-launchpadbuild_ai';
+import { TheSpaceportcompanyModule } from './source-company-thespaceportcompany';
 import { AtomicMachinesModule } from './source-company-atomicmachines';
 import { AuguryModule } from './source-company-augury';
 import { AuraModule } from './source-company-aura';
@@ -2797,6 +2798,7 @@ export const ALL_SOURCE_MODULES = [
   AtBayModule,
   AtlasspaceModule,
   LaunchpadbuildAiModule,
+  TheSpaceportcompanyModule,
   AtomicMachinesModule,
   AuguryModule,
   AuraModule,

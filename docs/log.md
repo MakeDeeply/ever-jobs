@@ -4,6 +4,14 @@
 > human-readable audit trail; for source-code history, see `git log`.
 
 ---
+## 2026-09-03 — Spec 5101 — Source Company Plugin: The Spaceport Company
+
+**Change:** Add `source-company-thespaceportcompany` plugin for The Spaceport Company (`thespaceportcompany.com`). It scrapes the WordPress/Elementor careers page at `https://thespaceportcompany.com/careers/`, locates the "Open Positions" section, and iterates the following `section.elementor-top-section` blocks. Sections whose class list contains all three `elementor-hidden-desktop`, `elementor-hidden-tablet`, and `elementor-hidden-mobile` tokens are skipped, so only the currently visible roles are emitted. For each visible job it extracts the title from the first paragraph of the metadata widget, the location from the first list item (`This role will be in the <city> location` or `headquartered in <city>, <state>`), a markdown description built from the overview paragraphs plus each `elementor-accordion-item` heading and content, and the shared `mailto:info@thespaceportcompany.com` apply URL. `jobType` is `[JobType.FULL_TIME]`, `employmentType` is `"Full time"`, `isRemote` is `false`, and `workFromHomeType` is `"On Site"`. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
+
+**Files:** `packages/plugins/source-company-thespaceportcompany/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-company-thespaceportcompany/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns thespaceportcompany` passes (9/9).
+
 ## 2026-09-03 — Spec 5100 — `source-ats-recruitee` Custom-Domain Support
 
 **Change:** Update `source-ats-recruitee` to resolve the board base URL from an explicit `companyUrl` origin or from a `companySlug` that is a full custom-domain host (e.g. `careers.morpheus.space`). Public listings use `${baseUrl}/api/offers` and `jobUrl` fallbacks use `${baseUrl}/o/${slug}` when `offer.careers_url` is absent. The authenticated `api.recruitee.com/c/{id}/offers` path is skipped for custom-domain hosts because that endpoint expects a Recruitee account id, not a hostname. `companyName` prefers `offer.company_name` when the API returns it. Adds `__tests__/recruitee.service.spec.ts` with mocked HTTP client covering standard slug, custom-domain host, `companyUrl` override, `*.recruitee.com` host, auth-token and fallback paths, `bad_input` diagnostics, and `resultsWanted` capping.
