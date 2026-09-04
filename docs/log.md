@@ -4,6 +4,15 @@
 > human-readable audit trail; for source-code history, see `git log`.
 
 ---
+## 2026-09-03 — Spec 5097 — Source Company Plugin: Syncere
+
+**Change:** Add `source-company-syncere` plugin for Syncere (`syncere.com`). It scrapes the Framer-generated careers page at `https://syncere.com/story#jobs`, extracts the `framer-search-index` meta tag, fetches the JSON index, and parses the four job pages (`/hard-engineer`, `/elec-engineer`, `/research-scientist`, `/you-tell-us`) into `JobPostDto`. It builds markdown descriptions from section headers (`About the Role`, `What You'll Do`, `What We're Looking For`, `Nice to Have`, `Details`, `How to Apply`), splits `•` bullets into list items, extracts `jobs@syncereai.com` as a `mailto` apply URL, sets `Palo Alto, CA` with `workFromHomeType: 'On Site'`, and maps `Details` text into `FULL_TIME`/`INTERNSHIP`/`CONTRACT` job types. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
+
+**Files:** `packages/plugins/source-company-syncere/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns syncere` passes (12/12).
+
+---
 ## 2026-09-03 — Spec 5096 — JobsService `companyUrl` Routing Fallback
 
 **Change:** Allow `JobsService` to fall back to an unambiguous canonical ATS board URL in `companyUrl` when `companyDomain` does not map to a registered `Site` token. New `resolveCompanyUrl` utility in `@ever-jobs/common` maps known ATS board hosts (`boards.greenhouse.io`, `job-boards.greenhouse.io`, `jobs.ashbyhq.com`, `jobs.lever.co`) to their `Site` token and returns the first path segment as `companySlug`. `searchJobsWithDiagnostics` invokes this fallback only when `effectiveSites` would otherwise be empty because of unresolved `companyDomain` values, or when an explicit `siteType` matches the URL's ATS. `companySlug` is populated from the URL only when it is not already set. The service still throws `BadRequestException` when no explicit selector resolves, and `companyDomain` values that did not map are still surfaced as `bad_input` diagnostics when the request proceeds.

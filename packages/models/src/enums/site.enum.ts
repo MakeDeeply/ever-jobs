@@ -3528,6 +3528,8 @@ export enum Site {
   RDW = 'rdw',
   // Phase 1679: Spec 5092 — Source Company Plugin: Trossen Robotics
   TROSSENROBOTICS = 'trossenrobotics',
+  // Phase 1680: Spec 5097 — Source Company Plugin: Syncere
+  SYNCERE = 'syncere',
 }
 
 /**

@@ -946,6 +946,7 @@ import { SolarisModule } from './source-company-solarisbank';
 import { StackAVModule } from './source-company-stackav';
 import { TastytradeModule } from './source-company-tastytrade';
 import { TorcRoboticsModule } from './source-company-torcrobotics';
+import { SyncereModule } from './source-company-syncere';
 import { TrossenroboticsModule } from './source-company-trossenrobotics';
 import { UrsaMajorModule } from './source-company-ursamajor';
 import { ViaModule } from './source-company-via';
@@ -2781,6 +2782,7 @@ export const ALL_SOURCE_MODULES = [
   StackAVModule,
   TastytradeModule,
   TorcRoboticsModule,
+  SyncereModule,
   TrossenroboticsModule,
   UrsaMajorModule,
   ViaModule,
