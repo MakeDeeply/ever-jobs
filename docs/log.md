@@ -4,6 +4,15 @@
 > human-readable audit trail; for source-code history, see `git log`.
 
 ---
+## 2026-09-04 — Spec 5102 — Source Company Plugin: Aurora (rename and Ashby migration)
+
+**Change:** Rename `source-company-aurorainnovation` to `source-company-aurora_tech` and rewire it to the Ashby public job-board API. The rename follows the Spec 5069 domain-to-token rule so `aurora.tech` maps to `Site.AURORA_TECH`, while freeing the `aurorainnovation` token for the unrelated `aurorainnovation.com` domain should it ever be added. The old Greenhouse board slug `aurorainnovation` now returns 404, so `AuroraTechService` calls `https://api.ashbyhq.com/posting-api/job-board/aurora-operations-inc?includeCompensation=true` and maps the response to `JobPostDto` with `site: Site.AURORA_TECH`, `companyName: 'Aurora'`, `companyUrl: 'https://aurora.tech/'`, `atsType: 'ashby'`, and `companyDomains: ['aurora.tech', 'www.aurora.tech']`. It supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters. The spec supersedes Spec 790.
+
+**Files:** `packages/plugins/source-company-aurora_tech/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-company-aurora_tech/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns aurora_tech` passes (16/16).
+
+---
 ## 2026-09-03 — Spec 5101 — Source Company Plugin: The Spaceport Company
 
 **Change:** Add `source-company-thespaceportcompany` plugin for The Spaceport Company (`thespaceportcompany.com`). It scrapes the WordPress/Elementor careers page at `https://thespaceportcompany.com/careers/`, locates the "Open Positions" section, and iterates the following `section.elementor-top-section` blocks. Sections whose class list contains all three `elementor-hidden-desktop`, `elementor-hidden-tablet`, and `elementor-hidden-mobile` tokens are skipped, so only the currently visible roles are emitted. For each visible job it extracts the title from the first paragraph of the metadata widget, the location from the first list item (`This role will be in the <city> location` or `headquartered in <city>, <state>`), a markdown description built from the overview paragraphs plus each `elementor-accordion-item` heading and content, and the shared `mailto:info@thespaceportcompany.com` apply URL. `jobType` is `[JobType.FULL_TIME]`, `employmentType` is `"Full time"`, `isRemote` is `false`, and `workFromHomeType` is `"On Site"`. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.

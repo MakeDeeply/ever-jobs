@@ -935,7 +935,7 @@ import { SlingshotAerospaceModule } from './source-company-slingshotaerospace';
 import { SoundAgricultureModule } from './source-company-soundagriculture';
 import { AIRCOMPANYModule } from './source-company-aircompany';
 import { ArborEnergyModule } from './source-company-arborenergy';
-import { AuroraInnovationModule } from './source-company-aurorainnovation';
+import { AuroraTechModule } from './source-company-aurora_tech';
 import { EarnInModule } from './source-company-earnin';
 import { FaradayFutureModule } from './source-company-faradayfuture';
 import { FastSpringModule } from './source-company-fastspring';
@@ -2774,7 +2774,7 @@ export const ALL_SOURCE_MODULES = [
   SoundAgricultureModule,
   AIRCOMPANYModule,
   ArborEnergyModule,
-  AuroraInnovationModule,
+  AuroraTechModule,
   EarnInModule,
   FaradayFutureModule,
   FastSpringModule,

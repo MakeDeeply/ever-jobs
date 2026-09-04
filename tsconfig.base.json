@@ -932,7 +932,7 @@
       "@ever-jobs/source-company-fastspring": ["packages/plugins/source-company-fastspring/src/index.ts"],
       "@ever-jobs/source-company-faradayfuture": ["packages/plugins/source-company-faradayfuture/src/index.ts"],
       "@ever-jobs/source-company-earnin": ["packages/plugins/source-company-earnin/src/index.ts"],
-      "@ever-jobs/source-company-aurorainnovation": ["packages/plugins/source-company-aurorainnovation/src/index.ts"],
+      "@ever-jobs/source-company-aurora_tech": ["packages/plugins/source-company-aurora_tech/src/index.ts"],
       "@ever-jobs/source-company-arborenergy": ["packages/plugins/source-company-arborenergy/src/index.ts"],
       "@ever-jobs/source-company-aircompany": ["packages/plugins/source-company-aircompany/src/index.ts"],
       "@ever-jobs/source-company-soundagriculture": ["packages/plugins/source-company-soundagriculture/src/index.ts"],

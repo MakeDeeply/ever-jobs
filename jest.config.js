@@ -918,7 +918,7 @@ module.exports = {
     '^@ever-jobs/source-company-fastspring$': '<rootDir>/packages/plugins/source-company-fastspring/src/index.ts',
     '^@ever-jobs/source-company-faradayfuture$': '<rootDir>/packages/plugins/source-company-faradayfuture/src/index.ts',
     '^@ever-jobs/source-company-earnin$': '<rootDir>/packages/plugins/source-company-earnin/src/index.ts',
-    '^@ever-jobs/source-company-aurorainnovation$': '<rootDir>/packages/plugins/source-company-aurorainnovation/src/index.ts',
+    '^@ever-jobs/source-company-aurora_tech$': '<rootDir>/packages/plugins/source-company-aurora_tech/src/index.ts',
     '^@ever-jobs/source-company-arborenergy$': '<rootDir>/packages/plugins/source-company-arborenergy/src/index.ts',
     '^@ever-jobs/source-company-aircompany$': '<rootDir>/packages/plugins/source-company-aircompany/src/index.ts',
     '^@ever-jobs/source-company-soundagriculture$': '<rootDir>/packages/plugins/source-company-soundagriculture/src/index.ts',
