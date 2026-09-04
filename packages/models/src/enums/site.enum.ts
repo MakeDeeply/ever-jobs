@@ -3530,6 +3530,8 @@ export enum Site {
   TROSSENROBOTICS = 'trossenrobotics',
   // Phase 1680: Spec 5097 — Source Company Plugin: Syncere
   SYNCERE = 'syncere',
+  // Phase 1681: Spec 5098 — Source Company Plugin: ATLAS Space Operations
+  ATLAS = 'atlasspace',
 }
 
 /**

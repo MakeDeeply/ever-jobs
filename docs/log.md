@@ -4,6 +4,15 @@
 > human-readable audit trail; for source-code history, see `git log`.
 
 ---
+## 2026-09-03 — Spec 5098 — Source Company Plugin: ATLAS Space Operations
+
+**Change:** Add `source-company-atlasspace` plugin for ATLAS Space Operations (`atlasspace.com`). It scrapes the WordPress/Elementor careers page at `https://atlasspace.com/careers/`, parses the `Current Openings` icon list for detail-page links and titles, and for each job page extracts the `h2` title, the generic `Apply for this Job` apply URL (`https://atlasspace.com/apply/`), markdown descriptions built from `h4` section headings (`Job Description`, `Essential Duties`, `Required Qualifications`, `Desired Qualifications`, `Location`, `Salary`/`Salary Range`, `Benefits`, `Additional Information`), the `Location` city/state, and the annual salary range. Sets `companyName` to `ATLAS Space Operations`, `companyUrl` to `https://atlasspace.com/careers/`, `isRemote` to `false`, and `workFromHomeType` to `On Site`. When no explicit `Details`/`Employment Type` section is present, the presence of an annual salary range implies `FULL_TIME`. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
+
+**Files:** `packages/plugins/source-company-atlasspace/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns atlasspace` passes (13/13).
+
+---
 ## 2026-09-03 — Spec 5097 — Source Company Plugin: Syncere
 
 **Change:** Add `source-company-syncere` plugin for Syncere (`syncere.com`). It scrapes the Framer-generated careers page at `https://syncere.com/story#jobs`, extracts the `framer-search-index` meta tag, fetches the JSON index, and parses the four job pages (`/hard-engineer`, `/elec-engineer`, `/research-scientist`, `/you-tell-us`) into `JobPostDto`. It builds markdown descriptions from section headers (`About the Role`, `What You'll Do`, `What We're Looking For`, `Nice to Have`, `Details`, `How to Apply`), splits `•` bullets into list items, extracts `jobs@syncereai.com` as a `mailto` apply URL, sets `Palo Alto, CA` with `workFromHomeType: 'On Site'`, and maps `Details` text into `FULL_TIME`/`INTERNSHIP`/`CONTRACT` job types. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
