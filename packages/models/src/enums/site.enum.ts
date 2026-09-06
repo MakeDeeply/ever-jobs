@@ -3537,6 +3537,8 @@ export enum Site {
   LAUNCHPADBUILD_AI = 'launchpadbuild_ai',
   // Phase 1683: Spec 5101 — Source Company Plugin: The Spaceport Company
   THE_SPACEPORT_COMPANY = 'thespaceportcompany',
+  // Phase 1684: Spec 5103 — Source Company Plugin: ThinkOrbital
+  THINKORBITAL = 'thinkorbital',
 }
 
 /**
