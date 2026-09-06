@@ -1,4 +1,12 @@
-# Plan: Spec 5105 — source-company-argospace
+# Plan: Spec 5105 — Source Company Plugin: Argo Space (argospace.com)
+
+| Field | Value |
+|---|---|
+| Spec | 5105 |
+| Slug | source-company-argospace |
+| Site | `argospace` |
+| Company | Argo Space |
+| Domain | `argospace.com` |
 
 1. Scaffold `packages/plugins/source-company-argospace/`
    - `package.json` with `@ever-jobs/source-company-argospace`
