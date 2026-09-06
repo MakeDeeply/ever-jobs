@@ -3533,6 +3533,8 @@ export enum Site {
   SYNCERE = 'syncere',
   // Phase 1681: Spec 5098 — Source Company Plugin: ATLAS Space Operations
   ATLAS = 'atlasspace',
+  // Phase 1686: Spec 5105 — Source Company Plugin: Argo Space
+  ARGOSPACE = 'argospace',
   // Phase 1682: Spec 5099 — Source Company Plugin: Launchpad Build AI
   LAUNCHPADBUILD_AI = 'launchpadbuild_ai',
   // Phase 1683: Spec 5101 — Source Company Plugin: The Spaceport Company

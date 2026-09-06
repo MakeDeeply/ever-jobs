@@ -957,6 +957,7 @@ import { AkayshaEnergyModule } from './source-company-akayshaenergy';
 import { AndurilIndustriesModule } from './source-company-andurilindustries';
 import { ArmisModule } from './source-company-armissecurity';
 import { AtBayModule } from './source-company-atbayjobs';
+import { ArgospaceModule } from './source-company-argospace';
 import { AtlasspaceModule } from './source-company-atlasspace';
 import { LaunchpadbuildAiModule } from './source-company-launchpadbuild_ai';
 import { TheSpaceportcompanyModule } from './source-company-thespaceportcompany';
@@ -2798,6 +2799,7 @@ export const ALL_SOURCE_MODULES = [
   AndurilIndustriesModule,
   ArmisModule,
   AtBayModule,
+  ArgospaceModule,
   AtlasspaceModule,
   LaunchpadbuildAiModule,
   TheSpaceportcompanyModule,

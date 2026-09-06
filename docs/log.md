@@ -4,6 +4,15 @@
 > human-readable audit trail; for source-code history, see `git log`.
 
 ---
+## 2026-09-06 — Spec 5105 — Source Company Plugin: Argo Space (argospace.com)
+
+**Change:** Add `source-company-argospace` plugin for Argo Space (`argospace.com`). It scrapes the Webflow careers page at `https://argospace.com/careers`, selects the visible department-grouped `careers-list-2` list and ignores the hidden flat `careers-list` of LinkedIn anchors, then follows each `/careers/{slug}` detail page. It extracts the title from `h1.heading-6`, location, employment type, and salary range from `div.spec_div > div.spec_txt`, description from `div.w-richtext` via the shared `markdownConverter`, and the first `APPLY NOW` button href. `companyName` is `'Argo Space'`, `companyUrl` is `'https://argospace.com'`, `site` is `Site.ARGOSPACE` (Spec 5069 token `argospace`), `companyDomains` are `['argospace.com', 'www.argospace.com']`, `jobType` is `[JobType.FULL_TIME]` for full-time roles or `[JobType.INTERNSHIP]` for the intern, `isRemote` is `false`, and `workFromHomeType` is `'On Site'`. `applyUrl` uses whatever apply URL exists for the role (LinkedIn company jobs page, detail-page fragment, or blank). Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
+
+**Files:** `packages/plugins/source-company-argospace/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-company-argospace/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns argospace` passes (16/16).
+
+---
 ## 2026-09-04 — Spec 5104 — Source Company Plugin: Deft Robotics (deftai.co)
 
 **Change:** Add `source-company-deftai_co` plugin for Deft Robotics (`deftai.co`). It scrapes the Framer careers page at `https://www.deftai.co/careers`, selects `div[data-framer-name="Variant 1"]` cards that contain a `tally.so` application link, and extracts title and location from leaf text nodes while ignoring noise tokens (`Apply now`, `$`, `/$`). The page uses per-role Tally forms (`tally.so/r/{id}` and `tally.so/embed/{id}`); the plugin normalizes both to `https://tally.so/r/{id}` for `applyUrl`, `jobUrl`, and `jobUrlDirect`. The first `Variant 1` card (`CASE STUDIES`) and the referral form (`5B1Myd`) are excluded because they do not represent open roles. `companyName` is `'Deft Robotics'`, `companyUrl` is `'https://www.deftai.co'`, `site` is `Site.DEFTAI_CO` (Spec 5069 token `deftai_co`), `jobType` is `[JobType.FULL_TIME]`, `employmentType` is `'FULL_TIME'`, `isRemote` is `false`, and `workFromHomeType` is `'On Site'`. Locations are parsed as `San Francisco, CA, USA` (with `SF` normalized to `San Francisco`). Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
