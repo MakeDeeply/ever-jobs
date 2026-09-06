@@ -4,6 +4,15 @@
 > human-readable audit trail; for source-code history, see `git log`.
 
 ---
+## 2026-09-04 — Spec 5103 — Source Company Plugin: ThinkOrbital
+
+**Change:** Add `source-company-thinkorbital` plugin for ThinkOrbital (`thinkorbital.com`). It scrapes the WordPress/Elementor careers page at `https://thinkorbital.com/careers/`, selects the first visible `elementor-widget-accordion`, and skips any accordion whose class list contains all three `elementor-hidden-desktop`, `elementor-hidden-tablet`, and `elementor-hidden-mobile` tokens. For each visible role it extracts the title from `.elementor-accordion-title` (falling back to the `Job Title:` body paragraph), the location from the `Location:` body paragraph, the employment type from `Employment Type:`, and the salary range from `Salary Range:`. It builds a markdown description from the remaining labeled body paragraphs (`About ThinkOrbital:`, `Position Summary:`, `Key Responsibilities:`, `Mandatory Qualifications:`, `Desired Qualifications:`, `What We Offer:`, and `Job Description:`). `companyName` is `'ThinkOrbital'`, `companyUrl`/`jobUrl`/`jobUrlDirect` point to the careers page, and `applyUrl` is left unset because the page has no per-job application destination. `jobType` is `[JobType.FULL_TIME]`, `employmentType` is `'Full-time'`, `isRemote` is `false`, and `workFromHomeType` is `'On Site'`. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
+
+**Files:** `packages/plugins/source-company-thinkorbital/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-company-thinkorbital/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns thinkorbital` passes (9/9).
+
+---
 ## 2026-09-04 — Spec 5102 — Source Company Plugin: Aurora (rename and Ashby migration)
 
 **Change:** Rename `source-company-aurorainnovation` to `source-company-aurora_tech` and rewire it to the Ashby public job-board API. The rename follows the Spec 5069 domain-to-token rule so `aurora.tech` maps to `Site.AURORA_TECH`, while freeing the `aurorainnovation` token for the unrelated `aurorainnovation.com` domain should it ever be added. The old Greenhouse board slug `aurorainnovation` now returns 404, so `AuroraTechService` calls `https://api.ashbyhq.com/posting-api/job-board/aurora-operations-inc?includeCompensation=true` and maps the response to `JobPostDto` with `site: Site.AURORA_TECH`, `companyName: 'Aurora'`, `companyUrl: 'https://aurora.tech/'`, `atsType: 'ashby'`, and `companyDomains: ['aurora.tech', 'www.aurora.tech']`. It supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters. The spec supersedes Spec 790.
