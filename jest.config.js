@@ -1854,6 +1854,7 @@ module.exports = {
     '^@ever-jobs/source-company-launchpadbuild_ai$': '<rootDir>/packages/plugins/source-company-launchpadbuild_ai/src/index.ts',
     '^@ever-jobs/source-company-thespaceportcompany$': '<rootDir>/packages/plugins/source-company-thespaceportcompany/src/index.ts',
     '^@ever-jobs/source-company-thinkorbital$': '<rootDir>/packages/plugins/source-company-thinkorbital/src/index.ts',
+    '^@ever-jobs/source-company-deftai_co$': '<rootDir>/packages/plugins/source-company-deftai_co/src/index.ts',
     '^@ever-jobs/source-tesla$': '<rootDir>/packages/plugins/source-tesla/src/index.ts',
     '^@ever-jobs/source-tesla-playwright$': '<rootDir>/packages/plugins/source-tesla-playwright/src/index.ts',
   },

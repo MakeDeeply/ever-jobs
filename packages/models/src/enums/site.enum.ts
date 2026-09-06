@@ -3539,6 +3539,8 @@ export enum Site {
   THE_SPACEPORT_COMPANY = 'thespaceportcompany',
   // Phase 1684: Spec 5103 — Source Company Plugin: ThinkOrbital
   THINKORBITAL = 'thinkorbital',
+  // Phase 1685: Spec 5104 — Source Company Plugin: Deft Robotics (deftai.co)
+  DEFTAI_CO = 'deftai_co',
 }
 
 /**

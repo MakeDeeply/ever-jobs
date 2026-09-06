@@ -961,6 +961,7 @@ import { AtlasspaceModule } from './source-company-atlasspace';
 import { LaunchpadbuildAiModule } from './source-company-launchpadbuild_ai';
 import { TheSpaceportcompanyModule } from './source-company-thespaceportcompany';
 import { ThinkorbitalModule } from './source-company-thinkorbital';
+import { DeftaiCoModule } from './source-company-deftai_co';
 import { AtomicMachinesModule } from './source-company-atomicmachines';
 import { AuguryModule } from './source-company-augury';
 import { AuraModule } from './source-company-aura';
@@ -2801,6 +2802,7 @@ export const ALL_SOURCE_MODULES = [
   LaunchpadbuildAiModule,
   TheSpaceportcompanyModule,
   ThinkorbitalModule,
+  DeftaiCoModule,
   AtomicMachinesModule,
   AuguryModule,
   AuraModule,

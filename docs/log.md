@@ -4,6 +4,15 @@
 > human-readable audit trail; for source-code history, see `git log`.
 
 ---
+## 2026-09-04 — Spec 5104 — Source Company Plugin: Deft Robotics (deftai.co)
+
+**Change:** Add `source-company-deftai_co` plugin for Deft Robotics (`deftai.co`). It scrapes the Framer careers page at `https://www.deftai.co/careers`, selects `div[data-framer-name="Variant 1"]` cards that contain a `tally.so` application link, and extracts title and location from leaf text nodes while ignoring noise tokens (`Apply now`, `$`, `/$`). The page uses per-role Tally forms (`tally.so/r/{id}` and `tally.so/embed/{id}`); the plugin normalizes both to `https://tally.so/r/{id}` for `applyUrl`, `jobUrl`, and `jobUrlDirect`. The first `Variant 1` card (`CASE STUDIES`) and the referral form (`5B1Myd`) are excluded because they do not represent open roles. `companyName` is `'Deft Robotics'`, `companyUrl` is `'https://www.deftai.co'`, `site` is `Site.DEFTAI_CO` (Spec 5069 token `deftai_co`), `jobType` is `[JobType.FULL_TIME]`, `employmentType` is `'FULL_TIME'`, `isRemote` is `false`, and `workFromHomeType` is `'On Site'`. Locations are parsed as `San Francisco, CA, USA` (with `SF` normalized to `San Francisco`). Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
+
+**Files:** `packages/plugins/source-company-deftai_co/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-company-deftai_co/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns deftai_co` passes (10/10).
+
+---
 ## 2026-09-04 — Spec 5103 — Source Company Plugin: ThinkOrbital
 
 **Change:** Add `source-company-thinkorbital` plugin for ThinkOrbital (`thinkorbital.com`). It scrapes the WordPress/Elementor careers page at `https://thinkorbital.com/careers/`, selects the first visible `elementor-widget-accordion`, and skips any accordion whose class list contains all three `elementor-hidden-desktop`, `elementor-hidden-tablet`, and `elementor-hidden-mobile` tokens. For each visible role it extracts the title from `.elementor-accordion-title` (falling back to the `Job Title:` body paragraph), the location from the `Location:` body paragraph, the employment type from `Employment Type:`, and the salary range from `Salary Range:`. It builds a markdown description from the remaining labeled body paragraphs (`About ThinkOrbital:`, `Position Summary:`, `Key Responsibilities:`, `Mandatory Qualifications:`, `Desired Qualifications:`, `What We Offer:`, and `Job Description:`). `companyName` is `'ThinkOrbital'`, `companyUrl`/`jobUrl`/`jobUrlDirect` point to the careers page, and `applyUrl` is left unset because the page has no per-job application destination. `jobType` is `[JobType.FULL_TIME]`, `employmentType` is `'Full-time'`, `isRemote` is `false`, and `workFromHomeType` is `'On Site'`. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
