@@ -5,6 +5,14 @@
 
 ---
 
+## 2026-09-07 — Spec 5110 — Source Company Plugin: Kyber Labs (`source-company-kyberlabs_ai`)
+
+**Change:** Add `source-company-kyberlabs_ai` plugin for Kyber Labs (`kyberlabs.ai`). The GoDaddy Website Builder careers page at `https://kyberlabs.ai/jobs` is static, so `KyberlabsAiService` uses `createHttpClient` + Cheerio. It selects `h2[data-aid="FLEX_HEADING"]` job titles inside `section[data-ux="Section"]` blocks, the matching `div[data-aid="FLEX_RICHTEXT"]` line (`Brooklyn, NY | Full time, in person`), and the `a[data-aid="FLEX_CTA_BTN"]` apply href (`/mech`). Extracted fields are mapped to `JobPostDto` with `id = kyberlabs_ai-${slugify(title)}`, `site = Site.KYBERLABS_AI`, `companyName = 'Kyber Labs'`, `companyUrl`/`jobUrl` = `https://kyberlabs.ai/jobs` (or `input.companyUrl`), `applyUrl` resolved absolute, `location` parsed from the city/state tokens, `jobType = [JobType.FULL_TIME]` (or derived from employment tokens), `employmentType` as human-readable text, and `workFromHomeType` from `in person`/`remote`/`hybrid` tokens. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
+
+**Files:** `packages/plugins/source-company-kyberlabs_ai/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-company-kyberlabs_ai/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns kyberlabs_ai` passes; `npm run lint:docs` clean.
+
 ## 2026-09-07 — Spec 5108 — `companyDomains` Inline-Array Lint & Checklist
 
 **Change:** Add `scripts/__tests__/company-domains-inline.spec.ts`, which scans every `source-company-*/src/*.service.ts` and fails when `companyDomains` is declared but is not an inline array of quoted string literals. Also rejects `www.` prefixes, which `normalizeCompanyHost` already strips. Fix `source-company-shinkei_systems` to use inline `companyDomains: ['shinkei.systems', 'shinkeisystems.com']` and remove the unused `SHINKEI_SYSTEMS_DOMAINS` constant from `shinkei_systems.constants.ts`. Update `.specify/templates/tasks.template.md` with a checklist reminder that `companyDomains` must be inline and must not include `www.`.
