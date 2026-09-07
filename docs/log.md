@@ -5,6 +5,14 @@
 
 ---
 
+## 2026-09-07 — Spec 5112 — Source Company Plugin: General Galactic (`source-company-gengalactic`)
+
+**Change:** Add `source-company-gengalactic` plugin for General Galactic (`gengalactic.com`). The Webflow careers page at `https://gengalactic.com/careers.html` is static, so `GengalacticService` uses `createHttpClient` + Cheerio. It selects each `<a href="/careers/<slug>">` job card with `.career-link-title`, `.career-link-meta` containing `.career-location` and a second employment `.badge-text`, then follows each detail page with bounded `Promise.allSettled` concurrency (`GENGALACTIC_DETAIL_CONCURRENCY = 3`) to extract the `<h1>` title, `<h2>` location, and `div.article.w-richtext` description. Fields are mapped to `JobPostDto` with `id = gengalactic-${slugify(title)}`, `site = Site.GENGALACTIC`, `companyName = 'General Galactic'`, `companyUrl`/`jobUrl`/`jobUrlDirect` resolved absolute, `applyUrl = 'mailto:careers@gengalactic.com'`, `emails = ['careers@gengalactic.com']`, `jobType` derived from the employment token and title, `employmentType` as a human-readable label, `location` parsed from the `city, state` token, and `workFromHomeType` from `remote`/`hybrid`/`on-site`/`in person` tokens. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
+
+**Files:** `packages/plugins/source-company-gengalactic/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-company-gengalactic/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns gengalactic` passes; `npm run lint:docs` clean.
+
 ## 2026-09-07 — Spec 5110 — Source Company Plugin: Kyber Labs (`source-company-kyberlabs_ai`)
 
 **Change:** Add `source-company-kyberlabs_ai` plugin for Kyber Labs (`kyberlabs.ai`). The GoDaddy Website Builder careers page at `https://kyberlabs.ai/jobs` is static, so `KyberlabsAiService` uses `createHttpClient` + Cheerio. It selects `h2[data-aid="FLEX_HEADING"]` job titles inside `section[data-ux="Section"]` blocks, the matching `div[data-aid="FLEX_RICHTEXT"]` line (`Brooklyn, NY | Full time, in person`), and the `a[data-aid="FLEX_CTA_BTN"]` apply href (`/mech`). Extracted fields are mapped to `JobPostDto` with `id = kyberlabs_ai-${slugify(title)}`, `site = Site.KYBERLABS_AI`, `companyName = 'Kyber Labs'`, `companyUrl`/`jobUrl` = `https://kyberlabs.ai/jobs` (or `input.companyUrl`), `applyUrl` resolved absolute, `location` parsed from the city/state tokens, `jobType = [JobType.FULL_TIME]` (or derived from employment tokens), `employmentType` as human-readable text, and `workFromHomeType` from `in person`/`remote`/`hybrid` tokens. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
