@@ -3554,6 +3554,8 @@ export enum Site {
   CASCADE_SPACE = 'cascade_space',
   // Phase 1691: Spec 5112 — Source Company Plugin: General Galactic (gengalactic.com)
   GENGALACTIC = 'gengalactic',
+  // Phase 1692: Spec 5113 — Source Company Plugin: HLabs (hlaboratories.com)
+  HLABORATORIES = 'hlaboratories',
 }
 
 /**

@@ -1,0 +1,50 @@
+[
+  {
+    "id": 2,
+    "title": "General Application",
+    "department": null,
+    "location": "Austin, TX",
+    "employment_type": "full_time",
+    "remote": false,
+    "description": "We're always looking for exceptional people. Tell us what you do best and how you'd like to contribute.",
+    "requirements": "Passion for robotics and hardware. Strong written communication. US work authorization.",
+    "salary_min": null,
+    "salary_max": null,
+    "is_open": true,
+    "created_at": "2026-04-27T01:15:26.815398",
+    "closed_at": null,
+    "application_count": 13
+  },
+  {
+    "id": 1,
+    "title": "Robotics Engineer",
+    "department": "Engineering",
+    "location": "Austin, TX",
+    "employment_type": "full_time",
+    "remote": false,
+    "description": "Design and build electromechanical systems for next-generation robotics and automation products.",
+    "requirements": "BS or MS in Mechanical, Electrical, or Robotics Engineering. SolidWorks or Fusion 360. Python or C++.",
+    "salary_min": null,
+    "salary_max": null,
+    "is_open": true,
+    "created_at": "2026-04-24T16:42:22.972784",
+    "closed_at": null,
+    "application_count": 6
+  },
+  {
+    "id": 3,
+    "title": "Closed Role",
+    "department": "Operations",
+    "location": "Austin, TX",
+    "employment_type": "full_time",
+    "remote": false,
+    "description": "This role is closed and should be skipped.",
+    "requirements": "N/A",
+    "salary_min": null,
+    "salary_max": null,
+    "is_open": false,
+    "created_at": "2026-04-24T16:42:22.972784",
+    "closed_at": null,
+    "application_count": 0
+  }
+]
