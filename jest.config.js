@@ -169,6 +169,7 @@ module.exports = {
     '^@ever-jobs/source-company-silfabsolar$': '<rootDir>/packages/plugins/source-company-silfabsolar/src/index.ts',
     '^@ever-jobs/source-company-sika$': '<rootDir>/packages/plugins/source-company-sika/src/index.ts',
     '^@ever-jobs/source-company-shaws$': '<rootDir>/packages/plugins/source-company-shaws/src/index.ts',
+    '^@ever-jobs/source-company-shinkei_systems$': '<rootDir>/packages/plugins/source-company-shinkei_systems/src/index.ts',
     '^@ever-jobs/source-company-servicenow$': '<rootDir>/packages/plugins/source-company-servicenow/src/index.ts',
     '^@ever-jobs/source-company-seniorplc$': '<rootDir>/packages/plugins/source-company-seniorplc/src/index.ts',
     '^@ever-jobs/source-company-securitas$': '<rootDir>/packages/plugins/source-company-securitas/src/index.ts',

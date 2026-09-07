@@ -3544,6 +3544,8 @@ export enum Site {
   THINKORBITAL = 'thinkorbital',
   // Phase 1685: Spec 5104 — Source Company Plugin: Deft Robotics (deftai.co)
   DEFTAI_CO = 'deftai_co',
+  // Phase 1687: Spec 5107 — Source Company Plugin: Shinkei (shinkei.systems)
+  SHINKEI_SYSTEMS = 'shinkei_systems',
 }
 
 /**
