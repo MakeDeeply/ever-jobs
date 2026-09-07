@@ -3552,6 +3552,8 @@ export enum Site {
   KYBERLABS_AI = 'kyberlabs_ai',
   // Phase 1690: Spec 5111 — Source Company Plugin: Cascade Space (cascade.space)
   CASCADE_SPACE = 'cascade_space',
+  // Phase 1691: Spec 5112 — Source Company Plugin: General Galactic (gengalactic.com)
+  GENGALACTIC = 'gengalactic',
 }
 
 /**
