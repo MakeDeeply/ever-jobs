@@ -1715,6 +1715,7 @@ import { SecuritasModule } from './source-company-securitas';
 import { SeniorPlcModule } from './source-company-seniorplc';
 import { ServiceNowModule } from './source-company-servicenow';
 import { ShawSModule } from './source-company-shaws';
+import { ShinkeiSystemsModule } from './source-company-shinkei_systems';
 import { SikaModule } from './source-company-sika';
 import { SilfabSolarModule } from './source-company-silfabsolar';
 import { SimplisolarModule } from './source-company-simplisolar';
@@ -3558,6 +3559,7 @@ export const ALL_SOURCE_MODULES = [
   SeniorPlcModule,
   ServiceNowModule,
   ShawSModule,
+  ShinkeiSystemsModule,
   SikaModule,
   SilfabSolarModule,
   SimplisolarModule,

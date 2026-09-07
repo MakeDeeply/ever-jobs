@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-09-07 — Spec 5107 — Source Company Plugin: Shinkei (`source-company-shinkei_systems`)
+
+**Change:** Add `source-company-shinkei_systems` wrapper plugin for Shinkei (`shinkei.systems`, alias `shinkeisystems.com`). The plugin delegates to `source-ats-kula_ai` with `companySlug: 'shinkei'` and re-stamps `site` to `Site.SHINKEI_SYSTEMS`, `companyName` to `'Shinkei'`, and rewrites `kula_ai-` id prefixes to `shinkei_systems-`. The token is derived from the canonical domain `shinkei.systems` per Spec 5069; `companyDomains` lists both `shinkei.systems` and `shinkeisystems.com` so the alias resolves to the same plugin. No feed/render/detail logic is duplicated.
+
+**Files:** `packages/plugins/source-company-shinkei_systems/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-company-shinkei_systems/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns shinkei_systems` passes.
+
+---
+
 ## 2026-09-07 — Spec 5106 — Source ATS Plugin: Kula AI (`source-ats-kula_ai`)
 
 **Change:** Add `source-ats-kula_ai` plugin for Kula-hosted job boards (`careers.kula.ai/<account>`). It harvests the public XML feed (`/<account>/feed`) as canonical for the first 25 jobs, renders the list page with Playwright to discover all job IDs (including jobs beyond the feed), fetches each `/account/{id}/` detail page, and parses its `application/ld+json` `JobPosting` block. XML and JSON-LD are merged per field: XML is canonical for `employmentType`, `workplace`, location office/remote flags, and salary type/interval; JSON-LD is canonical for `description` and `baseSalary` min/max. The plugin uses `Site.KULA_AI` (`'kula_ai'`) and `atsType: 'kula_ai'`. Tested with the `shinkei` fixture (25 XML feed jobs plus one HTML-only `Marketing Intern`, id `54329`). Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, `resultsWanted`, and `descriptionFormat` filters.
