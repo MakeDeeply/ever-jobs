@@ -1591,6 +1591,7 @@ module.exports = {
     '^@ever-jobs/source-ats-namely$': '<rootDir>/packages/plugins/source-ats-namely/src/index.ts',
     '^@ever-jobs/source-ats-tempworks$': '<rootDir>/packages/plugins/source-ats-tempworks/src/index.ts',
     '^@ever-jobs/source-ats-keka$': '<rootDir>/packages/plugins/source-ats-keka/src/index.ts',
+    '^@ever-jobs/source-ats-kula_ai$': '<rootDir>/packages/plugins/source-ats-kula_ai/src/index.ts',
     '^@ever-jobs/source-ats-snaphunt$': '<rootDir>/packages/plugins/source-ats-snaphunt/src/index.ts',
     '^@ever-jobs/source-ats-dover$': '<rootDir>/packages/plugins/source-ats-dover/src/index.ts',
     '^@ever-jobs/source-ats-paychex$': '<rootDir>/packages/plugins/source-ats-paychex/src/index.ts',

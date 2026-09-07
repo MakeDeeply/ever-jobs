@@ -111,6 +111,7 @@ import { BrassRingModule } from './source-ats-brassring';
 import { NamelyModule } from './source-ats-namely';
 import { TempWorksModule } from './source-ats-tempworks';
 import { KekaModule } from './source-ats-keka';
+import { KulaAiModule } from './source-ats-kula_ai';
 import { SnaphuntModule } from './source-ats-snaphunt';
 import { DoverModule } from './source-ats-dover';
 import { PaychexModule } from './source-ats-paychex';
@@ -1955,6 +1956,7 @@ export const ALL_SOURCE_MODULES = [
   NamelyModule,
   TempWorksModule,
   KekaModule,
+  KulaAiModule,
   SnaphuntModule,
   DoverModule,
   PaychexModule,

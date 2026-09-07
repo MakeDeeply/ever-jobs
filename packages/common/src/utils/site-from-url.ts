@@ -14,6 +14,7 @@ const COMPANY_URL_HOST_SITE_MAP: Record<string, Site> = {
   'job-boards.greenhouse.io': Site.GREENHOUSE,
   'jobs.ashbyhq.com': Site.ASHBY,
   'jobs.lever.co': Site.LEVER,
+  'careers.kula.ai': Site.KULA_AI,
 };
 
 /**
