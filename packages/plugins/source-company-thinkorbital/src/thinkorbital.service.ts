@@ -36,7 +36,7 @@ interface ParsedBody {
   site: Site.THINKORBITAL,
   name: 'ThinkOrbital',
   category: 'company',
-  companyDomains: ['thinkorbital.com', 'www.thinkorbital.com'],
+  companyDomains: ['thinkorbital.com'],
 })
 @Injectable()
 export class ThinkorbitalService implements IScraper {

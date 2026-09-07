@@ -4,6 +4,7 @@
 > human-readable audit trail; for source-code history, see `git log`.
 
 ---
+
 ## 2026-09-07 — Spec 5106 — Source ATS Plugin: Kula AI (`source-ats-kula_ai`)
 
 **Change:** Add `source-ats-kula_ai` plugin for Kula-hosted job boards (`careers.kula.ai/<account>`). It harvests the public XML feed (`/<account>/feed`) as canonical for the first 25 jobs, renders the list page with Playwright to discover all job IDs (including jobs beyond the feed), fetches each `/account/{id}/` detail page, and parses its `application/ld+json` `JobPosting` block. XML and JSON-LD are merged per field: XML is canonical for `employmentType`, `workplace`, location office/remote flags, and salary type/interval; JSON-LD is canonical for `description` and `baseSalary` min/max. The plugin uses `Site.KULA_AI` (`'kula_ai'`) and `atsType: 'kula_ai'`. Tested with the `shinkei` fixture (25 XML feed jobs plus one HTML-only `Marketing Intern`, id `54329`). Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, `resultsWanted`, and `descriptionFormat` filters.
@@ -49,6 +50,17 @@
 **Validation:** `npx tsc --noEmit -p packages/plugins/source-company-aurora_tech/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns aurora_tech` passes (16/16).
 
 ---
+
+## 2026-09-03 — Cleanup — Remove `www.` prefix from `companyDomains` declarations
+
+**Change:** Remove redundant `www.*` entries from the `companyDomains` arrays in the `@SourcePlugin()` metadata of `source-company-argospace`, `source-company-atlasspace`, `source-company-deftai_co`, `source-company-launchpadbuild_ai`, `source-company-syncere`, `source-company-thespaceportcompany`, `source-company-thinkorbital`, `source-company-trossenrobotics`, and `source-company-aurora_tech`. Also inline `companyDomains` in `auroratech.service.ts` and remove the now-unused `AURORA_COMPANY_DOMAINS` constant so all company plugins use the same inline style. `normalizeCompanyHost` already strips a leading `www.` before matching against `companyDomains`, so the `www.*` duplicates were URL fragments rather than distinct domains and served no purpose.
+
+**Files:** `packages/plugins/source-company-*/src/*.service.ts`, `packages/plugins/source-company-aurora_tech/src/auroratech.constants.ts`.
+
+**Validation:** `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns plugin-registry-domains` passes; `npx jest --testPathPatterns site-from-domain` passes.
+
+---
+
 ## 2026-09-03 — Spec 5101 — Source Company Plugin: The Spaceport Company
 
 **Change:** Add `source-company-thespaceportcompany` plugin for The Spaceport Company (`thespaceportcompany.com`). It scrapes the WordPress/Elementor careers page at `https://thespaceportcompany.com/careers/`, locates the "Open Positions" section, and iterates the following `section.elementor-top-section` blocks. Sections whose class list contains all three `elementor-hidden-desktop`, `elementor-hidden-tablet`, and `elementor-hidden-mobile` tokens are skipped, so only the currently visible roles are emitted. For each visible job it extracts the title from the first paragraph of the metadata widget, the location from the first list item (`This role will be in the <city> location` or `headquartered in <city>, <state>`), a markdown description built from the overview paragraphs plus each `elementor-accordion-item` heading and content, and the shared `mailto:info@thespaceportcompany.com` apply URL. `jobType` is `[JobType.FULL_TIME]`, `employmentType` is `"Full time"`, `isRemote` is `false`, and `workFromHomeType` is `"On Site"`. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.

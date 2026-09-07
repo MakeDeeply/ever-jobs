@@ -24,7 +24,7 @@ import {
   site: Site.THE_SPACEPORT_COMPANY,
   name: 'The Spaceport Company',
   category: 'company',
-  companyDomains: ['thespaceportcompany.com', 'www.thespaceportcompany.com'],
+  companyDomains: ['thespaceportcompany.com'],
 })
 @Injectable()
 export class TheSpaceportcompanyService implements IScraper {

@@ -43,7 +43,7 @@ interface ParsedSections {
   site: Site.ATLAS,
   name: 'ATLAS Space Operations',
   category: 'company',
-  companyDomains: ['atlasspace.com', 'www.atlasspace.com'],
+  companyDomains: ['atlasspace.com'],
 })
 @Injectable()
 export class AtlasspaceService implements IScraper {
