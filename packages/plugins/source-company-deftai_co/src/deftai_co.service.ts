@@ -25,7 +25,7 @@ import {
   site: Site.DEFTAI_CO,
   name: 'Deft Robotics',
   category: 'company',
-  companyDomains: ['deftai.co', 'www.deftai.co'],
+  companyDomains: ['deftai.co'],
 })
 @Injectable()
 export class DeftaiCoService implements IScraper {

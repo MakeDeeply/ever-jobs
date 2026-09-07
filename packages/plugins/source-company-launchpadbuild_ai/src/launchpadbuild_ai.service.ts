@@ -51,7 +51,7 @@ interface ParsedSections {
   site: Site.LAUNCHPADBUILD_AI,
   name: 'Launchpad Build AI',
   category: 'company',
-  companyDomains: ['launchpadbuild.ai', 'www.launchpadbuild.ai'],
+  companyDomains: ['launchpadbuild.ai'],
 })
 @Injectable()
 export class LaunchpadbuildAiService implements IScraper {

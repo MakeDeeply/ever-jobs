@@ -35,7 +35,7 @@ const SECTION_HEADERS = [
   site: Site.SYNCERE,
   name: 'Syncere',
   category: 'company',
-  companyDomains: ['syncere.com', 'www.syncere.com'],
+  companyDomains: ['syncere.com'],
 })
 @Injectable()
 export class SyncereService implements IScraper {

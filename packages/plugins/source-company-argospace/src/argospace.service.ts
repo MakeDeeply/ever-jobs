@@ -39,7 +39,7 @@ interface ParsedSpecs {
   site: Site.ARGOSPACE,
   name: 'Argo Space',
   category: 'company',
-  companyDomains: ['argospace.com', 'www.argospace.com'],
+  companyDomains: ['argospace.com'],
 })
 @Injectable()
 export class ArgospaceService implements IScraper {
