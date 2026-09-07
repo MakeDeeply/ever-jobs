@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-09-07 — Spec 5108 — `companyDomains` Inline-Array Lint & Checklist
+
+**Change:** Add `scripts/__tests__/company-domains-inline.spec.ts`, which scans every `source-company-*/src/*.service.ts` and fails when `companyDomains` is declared but is not an inline array of quoted string literals. Also rejects `www.` prefixes, which `normalizeCompanyHost` already strips. Fix `source-company-shinkei_systems` to use inline `companyDomains: ['shinkei.systems', 'shinkeisystems.com']` and remove the unused `SHINKEI_SYSTEMS_DOMAINS` constant from `shinkei_systems.constants.ts`. Update `.specify/templates/tasks.template.md` with a checklist reminder that `companyDomains` must be inline and must not include `www.`.
+
+**Files:** `scripts/__tests__/company-domains-inline.spec.ts`, `packages/plugins/source-company-shinkei_systems/src/shinkei_systems.service.ts`, `packages/plugins/source-company-shinkei_systems/src/shinkei_systems.constants.ts`, `.specify/templates/tasks.template.md`, `docs/index.md`.
+
+**Validation:** `npx jest --testPathPatterns company-domains-inline` passes; `npx jest --testPathPatterns shinkei_systems` passes; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npm run lint:docs` clean.
+
+---
+
 ## 2026-09-07 — Spec 5107 — Source Company Plugin: Shinkei (`source-company-shinkei_systems`)
 
 **Change:** Add `source-company-shinkei_systems` wrapper plugin for Shinkei (`shinkei.systems`, alias `shinkeisystems.com`). The plugin delegates to `source-ats-kula_ai` with `companySlug: 'shinkei'` and re-stamps `site` to `Site.SHINKEI_SYSTEMS`, `companyName` to `'Shinkei'`, and rewrites `kula_ai-` id prefixes to `shinkei_systems-`. The token is derived from the canonical domain `shinkei.systems` per Spec 5069; `companyDomains` lists both `shinkei.systems` and `shinkeisystems.com` so the alias resolves to the same plugin. No feed/render/detail logic is duplicated.
