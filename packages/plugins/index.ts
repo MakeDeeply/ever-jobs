@@ -27,6 +27,7 @@ import { FountainModule } from './source-ats-fountain';
 import { FreshteamModule } from './source-ats-freshteam';
 import { GemModule } from './source-ats-gem';
 import { GengalacticModule } from './source-company-gengalactic';
+import { HlaboratoriesModule } from './source-company-hlaboratories';
 import { GreenhouseModule } from './source-ats-greenhouse';
 import { HiringThingModule } from './source-ats-hiringthing';
 import { HomerunModule } from './source-ats-homerun';
@@ -1877,6 +1878,7 @@ export const ALL_SOURCE_MODULES = [
   FreshteamModule,
   GemModule,
   GengalacticModule,
+  HlaboratoriesModule,
   GreenhouseModule,
   HiringThingModule,
   HomerunModule,

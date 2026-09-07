@@ -5,6 +5,14 @@
 
 ---
 
+## 2026-09-07 — Spec 5113 — Source Company Plugin: HLabs (`source-company-hlaboratories`)
+
+**Change:** Add `source-company-hlaboratories` plugin for HLabs (`hlaboratories.com`). The React careers site at `https://hlaboratories.com/jobs` exposes a public same-origin JSON API at `/api/recruitment/roles?open_only=true`, so `HlaboratoriesService` uses `createHttpClient` (no `BrowserPool`). Each role object is mapped to `JobPostDto` with `id = hlaboratories-${role.id}`, `site = Site.HLABORATORIES` (`'hlaboratories'`), `companyName = 'HLabs'`, `companyUrl`/`jobUrl`/`jobUrlDirect`/`applyUrl` pointing to the resolved `/jobs` page, `companyDomains` inline as `['hlaboratories.com']`, `location` parsed from the `Austin, TX` token, `jobType`/`employmentType` derived from `employment_type` (`full_time` → `FULL_TIME`), `isRemote`/`workFromHomeType` from the `remote` boolean, `datePosted` from `created_at`, and `department` from `department`. Roles with `is_open === false` or missing `title` are skipped.
+
+**Files:** `packages/plugins/source-company-hlaboratories/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-company-hlaboratories/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns hlaboratories` passes; `npm run lint:docs` clean.
+
 ## 2026-09-07 — Spec 5112 — Source Company Plugin: General Galactic (`source-company-gengalactic`)
 
 **Change:** Add `source-company-gengalactic` plugin for General Galactic (`gengalactic.com`). The Webflow careers page at `https://gengalactic.com/careers.html` is static, so `GengalacticService` uses `createHttpClient` + Cheerio. It selects each `<a href="/careers/<slug>">` job card with `.career-link-title`, `.career-link-meta` containing `.career-location` and a second employment `.badge-text`, then follows each detail page with bounded `Promise.allSettled` concurrency (`GENGALACTIC_DETAIL_CONCURRENCY = 3`) to extract the `<h1>` title, `<h2>` location, and `div.article.w-richtext` description. Fields are mapped to `JobPostDto` with `id = gengalactic-${slugify(title)}`, `site = Site.GENGALACTIC`, `companyName = 'General Galactic'`, `companyUrl`/`jobUrl`/`jobUrlDirect` resolved absolute, `applyUrl = 'mailto:careers@gengalactic.com'`, `emails = ['careers@gengalactic.com']`, `jobType` derived from the employment token and title, `employmentType` as a human-readable label, `location` parsed from the `city, state` token, and `workFromHomeType` from `remote`/`hybrid`/`on-site`/`in person` tokens. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
