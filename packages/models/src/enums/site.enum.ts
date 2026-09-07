@@ -3556,6 +3556,9 @@ export enum Site {
   GENGALACTIC = 'gengalactic',
   // Phase 1692: Spec 5113 — Source Company Plugin: HLabs (hlaboratories.com)
   HLABORATORIES = 'hlaboratories',
+
+  // Phase 1693: Spec 5114 — Source Company Plugin: Pulse Space (pulsespace.com)
+  PULSESPACE = 'pulsespace',
 }
 
 /**
