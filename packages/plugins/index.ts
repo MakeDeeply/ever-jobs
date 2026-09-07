@@ -252,6 +252,7 @@ import { CartaModule } from './source-company-carta';
 import { CelonisModule } from './source-company-celonis';
 import { CerebralModule } from './source-company-cerebral';
 import { ChainguardModule } from './source-company-chainguard';
+import { ChangroboticsAiModule } from './source-company-changrobotics_ai';
 import { CheckrModule } from './source-company-checkr';
 import { ChimeModule } from './source-company-chime';
 import { CircleCIModule } from './source-company-circleci';
@@ -2098,6 +2099,7 @@ export const ALL_SOURCE_MODULES = [
   CelonisModule,
   CerebralModule,
   ChainguardModule,
+  ChangroboticsAiModule,
   CheckrModule,
   ChimeModule,
   CircleCIModule,

@@ -15,6 +15,16 @@
 
 ---
 
+## 2026-09-07 — Spec 5109 — Source Company Plugin: Chang Robotics (`source-company-changrobotics_ai`)
+
+**Change:** Add `source-company-changrobotics_ai` plugin for Chang Robotics (`changrobotics.ai`). The Wix careers page at `https://www.changrobotics.ai/careers` renders a JavaScript-hydrated accordion with two roles: `Factory Automation Expert` (apply link to a Microsoft Form) and `Growth Marketing Specialist` (apply link to Indeed). The plugin uses `BrowserPool` to render the page, then parses `.wixui-accordion__item` panels with Cheerio to extract the title from `.wixui-accordion__title`, the markdown description from `div[data-testid="richTextElement"]`, the `applyUrl` from `a[aria-label="Apply Now"]`, and the location from `Must live in {city}, {state}` text. `companyName` is `'Chang Robotics'`, `companyUrl`/`jobUrl` point to the careers page, `site` is `Site.CHANGROBOTICS_AI` (`'changrobotics_ai'`), `companyDomains` is `['changrobotics.ai']`, `jobType` defaults to `[JobType.FULL_TIME]`, `employmentType` is `'Full time'`, and `workFromHomeType` is derived from any `remote`/`hybrid`/`on site` tokens. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
+
+**Files:** `packages/plugins/source-company-changrobotics_ai/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-company-changrobotics_ai/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns changrobotics_ai` passes (12/12).
+
+---
+
 ## 2026-09-07 — Spec 5107 — Source Company Plugin: Shinkei (`source-company-shinkei_systems`)
 
 **Change:** Add `source-company-shinkei_systems` wrapper plugin for Shinkei (`shinkei.systems`, alias `shinkeisystems.com`). The plugin delegates to `source-ats-kula_ai` with `companySlug: 'shinkei'` and re-stamps `site` to `Site.SHINKEI_SYSTEMS`, `companyName` to `'Shinkei'`, and rewrites `kula_ai-` id prefixes to `shinkei_systems-`. The token is derived from the canonical domain `shinkei.systems` per Spec 5069; `companyDomains` lists both `shinkei.systems` and `shinkeisystems.com` so the alias resolves to the same plugin. No feed/render/detail logic is duplicated.

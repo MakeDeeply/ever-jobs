@@ -3546,6 +3546,8 @@ export enum Site {
   DEFTAI_CO = 'deftai_co',
   // Phase 1687: Spec 5107 — Source Company Plugin: Shinkei (shinkei.systems)
   SHINKEI_SYSTEMS = 'shinkei_systems',
+  // Phase 1688: Spec 5109 — Source Company Plugin: Chang Robotics (changrobotics.ai)
+  CHANGROBOTICS_AI = 'changrobotics_ai',
 }
 
 /**
