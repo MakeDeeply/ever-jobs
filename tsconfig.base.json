@@ -1606,6 +1606,7 @@
       "@ever-jobs/source-ats-namely": ["packages/plugins/source-ats-namely/src/index.ts"],
       "@ever-jobs/source-ats-tempworks": ["packages/plugins/source-ats-tempworks/src/index.ts"],
       "@ever-jobs/source-ats-keka": ["packages/plugins/source-ats-keka/src/index.ts"],
+      "@ever-jobs/source-ats-kula_ai": ["packages/plugins/source-ats-kula_ai/src/index.ts"],
       "@ever-jobs/source-ats-snaphunt": ["packages/plugins/source-ats-snaphunt/src/index.ts"],
       "@ever-jobs/source-ats-dover": ["packages/plugins/source-ats-dover/src/index.ts"],
       "@ever-jobs/source-ats-paychex": ["packages/plugins/source-ats-paychex/src/index.ts"],

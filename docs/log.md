@@ -4,6 +4,15 @@
 > human-readable audit trail; for source-code history, see `git log`.
 
 ---
+## 2026-09-07 — Spec 5106 — Source ATS Plugin: Kula AI (`source-ats-kula_ai`)
+
+**Change:** Add `source-ats-kula_ai` plugin for Kula-hosted job boards (`careers.kula.ai/<account>`). It harvests the public XML feed (`/<account>/feed`) as canonical for the first 25 jobs, renders the list page with Playwright to discover all job IDs (including jobs beyond the feed), fetches each `/account/{id}/` detail page, and parses its `application/ld+json` `JobPosting` block. XML and JSON-LD are merged per field: XML is canonical for `employmentType`, `workplace`, location office/remote flags, and salary type/interval; JSON-LD is canonical for `description` and `baseSalary` min/max. The plugin uses `Site.KULA_AI` (`'kula_ai'`) and `atsType: 'kula_ai'`. Tested with the `shinkei` fixture (25 XML feed jobs plus one HTML-only `Marketing Intern`, id `54329`). Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, `resultsWanted`, and `descriptionFormat` filters.
+
+**Files:** `packages/plugins/source-ats-kula_ai/*`, `packages/models/src/enums/site.enum.ts`, `packages/common/src/utils/site-from-url.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-ats-kula_ai/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns kula_ai` passes (8/8).
+
+---
 ## 2026-09-06 — Spec 5105 — Source Company Plugin: Argo Space (argospace.com)
 
 **Change:** Add `source-company-argospace` plugin for Argo Space (`argospace.com`). It scrapes the Webflow careers page at `https://argospace.com/careers`, selects the visible department-grouped `careers-list-2` list and ignores the hidden flat `careers-list` of LinkedIn anchors, then follows each `/careers/{slug}` detail page. It extracts the title from `h1.heading-6`, location, employment type, and salary range from `div.spec_div > div.spec_txt`, description from `div.w-richtext` via the shared `markdownConverter`, and the first `APPLY NOW` button href. `companyName` is `'Argo Space'`, `companyUrl` is `'https://argospace.com'`, `site` is `Site.ARGOSPACE` (Spec 5069 token `argospace`), `companyDomains` are `['argospace.com', 'www.argospace.com']`, `jobType` is `[JobType.FULL_TIME]` for full-time roles or `[JobType.INTERNSHIP]` for the intern, `isRemote` is `false`, and `workFromHomeType` is `'On Site'`. `applyUrl` uses whatever apply URL exists for the role (LinkedIn company jobs page, detail-page fragment, or blank). Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.

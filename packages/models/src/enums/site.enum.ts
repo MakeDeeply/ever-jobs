@@ -110,6 +110,7 @@ export enum Site {
   AUTHENTICJOBS = 'authenticjobs',
   JOBSCORE = 'jobscore',
   TALENTLYFT = 'talentlyft',
+  KULA_AI = 'kula_ai',
   // Phase 13: RSS niche board expansion
   CRYPTOJOBSLIST = 'cryptojobslist',
   JOBSPRESSO = 'jobspresso',
