@@ -11,7 +11,6 @@ import {
 
 import {
   SHINKEI_SYSTEMS_COMPANY_NAME,
-  SHINKEI_SYSTEMS_DOMAINS,
   SHINKEI_SYSTEMS_KULA_AI_SLUG,
 } from './shinkei_systems.constants';
 
@@ -29,7 +28,7 @@ import {
   site: Site.SHINKEI_SYSTEMS,
   name: SHINKEI_SYSTEMS_COMPANY_NAME,
   category: 'company',
-  companyDomains: SHINKEI_SYSTEMS_DOMAINS,
+  companyDomains: ['shinkei.systems', 'shinkeisystems.com'],
 })
 @Injectable()
 export class ShinkeiSystemsService implements IScraper {
