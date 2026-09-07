@@ -12,6 +12,16 @@
 **Files:** `packages/plugins/source-company-kyberlabs_ai/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`.
 
 **Validation:** `npx tsc --noEmit -p packages/plugins/source-company-kyberlabs_ai/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns kyberlabs_ai` passes; `npm run lint:docs` clean.
+## 2026-09-07 — Spec 5111 — Source Company Plugin: Cascade Space (`source-company-cascade_space`)
+
+**Change:** Add `source-company-cascade_space` plugin for Cascade Space (`cascade.space`, alias `cascadespace.com`). The careers page at `https://cascade.space/careers/` is a static/SSR Next.js page. `CascadeSpaceService` uses `createHttpClient` + Cheerio to parse each job card (`h3` title, sibling tagline spans, and a `/careers/<slug>/` detail link), then fetches each detail page with bounded `Promise.allSettled` concurrency (`CASCADE_SPACE_DETAIL_CONCURRENCY = 3`) to extract the `<article>` description and `mailto:careers@cascade.space` apply link. Fields are mapped to `JobPostDto` with `id = cascade_space-${slugify(title)}`, `site = Site.CASCADE_SPACE`, `companyName = 'Cascade Space'`, `companyUrl`/`jobUrl`/`jobUrlDirect` resolved absolute, `applyUrl = 'mailto:careers@cascade.space'`, `emails = ['careers@cascade.space']`, `jobType` derived from tagline tokens, `employmentType` as human-readable text, `location` parsed from the `city, state` token, and `workFromHomeType` from `on-site`/`remote`/`hybrid` tokens. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
+
+**Files:** `packages/plugins/source-company-cascade_space/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-company-cascade_space/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns cascade_space` passes; `npm run lint:docs` clean.
+
+---
+
 
 ## 2026-09-07 — Spec 5108 — `companyDomains` Inline-Array Lint & Checklist
 

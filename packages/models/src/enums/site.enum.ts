@@ -3550,6 +3550,8 @@ export enum Site {
   CHANGROBOTICS_AI = 'changrobotics_ai',
   // Phase 1689: Spec 5110 — Source Company Plugin: Kyber Labs (kyberlabs.ai)
   KYBERLABS_AI = 'kyberlabs_ai',
+  // Phase 1690: Spec 5111 — Source Company Plugin: Cascade Space (cascade.space)
+  CASCADE_SPACE = 'cascade_space',
 }
 
 /**

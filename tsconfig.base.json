@@ -1876,6 +1876,7 @@
       "@ever-jobs/source-company-deftai_co": ["packages/plugins/source-company-deftai_co/src/index.ts"],
       "@ever-jobs/source-company-changrobotics_ai": ["packages/plugins/source-company-changrobotics_ai/src/index.ts"],
       "@ever-jobs/source-company-kyberlabs_ai": ["packages/plugins/source-company-kyberlabs_ai/src/index.ts"],
+      "@ever-jobs/source-company-cascade_space": ["packages/plugins/source-company-cascade_space/src/index.ts"],
       "@ever-jobs/source-tesla": ["packages/plugins/source-tesla/src/index.ts"],
       "@ever-jobs/source-tesla-playwright": ["packages/plugins/source-tesla-playwright/src/index.ts"]
     }
