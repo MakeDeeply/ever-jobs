@@ -28,7 +28,6 @@ import {
   ASHBY_API_URL,
   ASHBY_INCLUDE_COMPENSATION_QUERY,
   AURORA_BOARD_SLUG,
-  AURORA_COMPANY_DOMAINS,
   AURORA_COMPANY_NAME,
   AURORA_COMPANY_URL,
 } from './auroratech.constants';
@@ -52,7 +51,7 @@ import {
   site: Site.AURORA_TECH,
   name: 'Aurora',
   category: 'company',
-  companyDomains: AURORA_COMPANY_DOMAINS,
+  companyDomains: ['aurora.tech'],
 })
 @Injectable()
 export class AuroraTechService implements IScraper {

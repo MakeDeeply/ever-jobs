@@ -15,6 +15,3 @@ export const AURORA_COMPANY_URL = 'https://aurora.tech/';
 
 /** Default Ashby board slug for Aurora. */
 export const AURORA_BOARD_SLUG = 'aurora-operations-inc';
-
-/** Domains that should resolve to this plugin via Spec 5069/5086. */
-export const AURORA_COMPANY_DOMAINS = ['aurora.tech'];

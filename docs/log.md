@@ -53,7 +53,7 @@
 
 ## 2026-09-03 — Cleanup — Remove `www.` prefix from `companyDomains` declarations
 
-**Change:** Remove redundant `www.*` entries from the `companyDomains` arrays in the `@SourcePlugin()` metadata of `source-company-argospace`, `source-company-atlasspace`, `source-company-deftai_co`, `source-company-launchpadbuild_ai`, `source-company-syncere`, `source-company-thespaceportcompany`, `source-company-thinkorbital`, `source-company-trossenrobotics`, and `source-company-aurora_tech` (via `AURORA_COMPANY_DOMAINS`). `normalizeCompanyHost` already strips a leading `www.` before matching against `companyDomains`, so the `www.*` duplicates were URL fragments rather than distinct domains and served no purpose.
+**Change:** Remove redundant `www.*` entries from the `companyDomains` arrays in the `@SourcePlugin()` metadata of `source-company-argospace`, `source-company-atlasspace`, `source-company-deftai_co`, `source-company-launchpadbuild_ai`, `source-company-syncere`, `source-company-thespaceportcompany`, `source-company-thinkorbital`, `source-company-trossenrobotics`, and `source-company-aurora_tech`. Also inline `companyDomains` in `auroratech.service.ts` and remove the now-unused `AURORA_COMPANY_DOMAINS` constant so all company plugins use the same inline style. `normalizeCompanyHost` already strips a leading `www.` before matching against `companyDomains`, so the `www.*` duplicates were URL fragments rather than distinct domains and served no purpose.
 
 **Files:** `packages/plugins/source-company-*/src/*.service.ts`, `packages/plugins/source-company-aurora_tech/src/auroratech.constants.ts`.
 
