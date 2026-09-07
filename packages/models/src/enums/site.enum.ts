@@ -3548,6 +3548,8 @@ export enum Site {
   SHINKEI_SYSTEMS = 'shinkei_systems',
   // Phase 1688: Spec 5109 — Source Company Plugin: Chang Robotics (changrobotics.ai)
   CHANGROBOTICS_AI = 'changrobotics_ai',
+  // Phase 1689: Spec 5110 — Source Company Plugin: Kyber Labs (kyberlabs.ai)
+  KYBERLABS_AI = 'kyberlabs_ai',
 }
 
 /**

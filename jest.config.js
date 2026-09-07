@@ -1859,6 +1859,7 @@ module.exports = {
     '^@ever-jobs/source-company-thinkorbital$': '<rootDir>/packages/plugins/source-company-thinkorbital/src/index.ts',
     '^@ever-jobs/source-company-deftai_co$': '<rootDir>/packages/plugins/source-company-deftai_co/src/index.ts',
     '^@ever-jobs/source-company-changrobotics_ai$': '<rootDir>/packages/plugins/source-company-changrobotics_ai/src/index.ts',
+    '^@ever-jobs/source-company-kyberlabs_ai$': '<rootDir>/packages/plugins/source-company-kyberlabs_ai/src/index.ts',
     '^@ever-jobs/source-tesla$': '<rootDir>/packages/plugins/source-tesla/src/index.ts',
     '^@ever-jobs/source-tesla-playwright$': '<rootDir>/packages/plugins/source-tesla-playwright/src/index.ts',
   },
