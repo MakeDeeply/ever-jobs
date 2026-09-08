@@ -37,7 +37,7 @@ describe('GengalacticService', () => {
 
   function mockBothFixtures(): void {
     getMock.mockImplementation((url: string) => {
-      if (url === 'https://gengalactic.com/careers.html' || url.includes('/careers.html')) {
+      if (url === 'https://gengalactic.com/careers') {
         return Promise.resolve({ data: careersFixture });
       }
       if (url.includes('/careers/')) {
@@ -66,7 +66,7 @@ describe('GengalacticService', () => {
     const job = response.jobs[0];
     expect(job.site).toBe(Site.GENGALACTIC);
     expect(job.companyName).toBe('General Galactic');
-    expect(job.companyUrl).toBe('https://gengalactic.com/careers.html');
+    expect(job.companyUrl).toBe('https://gengalactic.com/careers');
     expect(job.jobUrl).toBe('https://gengalactic.com/careers/electric-propulsion-test-engineer');
     expect(job.jobUrlDirect).toBe('https://gengalactic.com/careers/electric-propulsion-test-engineer');
     expect(job.id).toBe('gengalactic-electric-propulsion-test-engineer');
