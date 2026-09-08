@@ -360,6 +360,7 @@ import { QuanataModule } from './source-company-quanata';
 import { RampNetworkModule } from './source-company-rampnetwork';
 import { RechargeModule } from './source-company-recharge';
 import { RedditModule } from './source-company-reddit';
+import { RenewmfgsolModule } from './source-company-renewmfgsol';
 import { RobinhoodModule } from './source-company-robinhood';
 import { RobloxModule } from './source-company-roblox';
 import { SamsaraModule } from './source-company-samsara';
@@ -2212,6 +2213,7 @@ export const ALL_SOURCE_MODULES = [
   RampNetworkModule,
   RechargeModule,
   RedditModule,
+  RenewmfgsolModule,
   RobinhoodModule,
   RobloxModule,
   SamsaraModule,
