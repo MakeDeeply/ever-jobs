@@ -355,6 +355,7 @@ import { PlaidModule } from './source-company-plaid';
 import { PlanetScaleModule } from './source-company-planetscale';
 import { PostmanModule } from './source-company-postman';
 import { PostscriptModule } from './source-company-postscript';
+import { PulsespaceModule } from './source-company-pulsespace';
 import { QuanataModule } from './source-company-quanata';
 import { RampNetworkModule } from './source-company-rampnetwork';
 import { RechargeModule } from './source-company-recharge';
@@ -2206,6 +2207,7 @@ export const ALL_SOURCE_MODULES = [
   PlanetScaleModule,
   PostmanModule,
   PostscriptModule,
+  PulsespaceModule,
   QuanataModule,
   RampNetworkModule,
   RechargeModule,
