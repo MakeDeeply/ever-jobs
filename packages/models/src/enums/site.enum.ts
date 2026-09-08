@@ -3559,6 +3559,8 @@ export enum Site {
 
   // Phase 1693: Spec 5114 — Source Company Plugin: Pulse Space (pulsespace.com)
   PULSESPACE = 'pulsespace',
+  // Phase 1694: Spec 5115 — Source Company Plugin: ReNEW Manufacturing Solutions (renewmfgsol.com)
+  RENEWMFGSOL = 'renewmfgsol',
 }
 
 /**
