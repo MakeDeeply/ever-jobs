@@ -4,10 +4,10 @@
 |---|---|
 | Spec | 5117 |
 | Slug | `source-company-pulsespace-json` |
-| Status | in progress |
+| Status | done |
 | Owner | devin |
 | Created | 2026-09-08 |
-| Last updated | 2026-09-08 |
+| Last updated | 2026-09-08 (merged in PR #123) |
 | Related specs | 5114 (`source-company-pulsespace`) |
 
 ## Problem
