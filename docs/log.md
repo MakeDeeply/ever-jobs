@@ -13,6 +13,14 @@
 
 **Validation:** `npx tsc --noEmit -p packages/plugins/source-company-pulsespace/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns pulsespace` passes; `npx jest --testPathPatterns company-domains-inline` passes; `npm run lint:docs` clean.
 
+## 2026-09-07 — Spec 5116 — Fix General Galactic Careers URL (`source-company-gengalactic`)
+
+**Change:** Correct `source-company-gengalactic` default `companyUrl` from `https://gengalactic.com/careers.html` to `https://gengalactic.com/careers` because the `.html` path returns 404; update `GENGALACTIC_CAREERS_URL` and the unit-test mock/assertion so callers that rely on the default receive the canonical listing page.
+
+**Files:** `packages/plugins/source-company-gengalactic/src/gengalactic.constants.ts`, `packages/plugins/source-company-gengalactic/__tests__/gengalactic.service.spec.ts`, `.specify/specs/5116-fix-gengalactic-careers-url/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-company-gengalactic/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns gengalactic` passes; `npm run lint:docs` clean.
+
 ## 2026-09-07 — Spec 5115 — Source Company Plugin: ReNEW Manufacturing Solutions (`source-company-renewmfgsol`)
 
 **Change:** Add `source-company-renewmfgsol` plugin for ReNEW Manufacturing Solutions (`renewmfgsol.com`). The HubSpot careers page at `https://www.renewmfgsol.com/about/work-with-us` is static and lists two roles (`Welder` and `CNC Machinist`) inside `div.atmc-career-01` cards. `RenewmfgsolService` uses `createHttpClient` + Cheerio to parse the listing, extract `h4` title, `p.atmc-cap` location, and the card's `a.atmc-btn` apply URL. Internal apply links (`/hiring-welders-ga`) are followed for a description parsed from `meta[property="og:description"]` or `meta[name="description"]`; external Adzuna URLs are stored as `applyUrl` only. Each role is mapped to `JobPostDto` with `id = renewmfgsol-${slugify(title)}`, `site = Site.RENEWMFGSOL` (`'renewmfgsol'`), `companyName = 'ReNEW Manufacturing Solutions'`, `companyUrl = https://www.renewmfgsol.com`, `jobUrl`/`jobUrlDirect` resolving to the internal landing page or the listing page, `companyDomains` inline as `['renewmfgsol.com']`, `jobType` defaulting to `[JobType.FULL_TIME]`, `employmentType = 'Full time'`, `isRemote = false`, and `workFromHomeType` derived from `remote`/`hybrid`/`on-site`/`in person` tokens. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
