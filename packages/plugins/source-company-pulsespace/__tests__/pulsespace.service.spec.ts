@@ -16,8 +16,8 @@ const careersFixture = fs.readFileSync(
   path.join(__dirname, 'fixtures', 'careers.html'),
   'utf8',
 );
-const detailFixture = fs.readFileSync(
-  path.join(__dirname, 'fixtures', 'principal-avionics-architect.html'),
+const bundleFixture = fs.readFileSync(
+  path.join(__dirname, 'fixtures', 'bundle.js'),
   'utf8',
 );
 
@@ -37,16 +37,17 @@ describe('PulsespaceService', () => {
 
   function mockBothFixtures(): void {
     getMock.mockImplementation((url: string) => {
-      if (url === 'https://pulsespace.com/careers' || url.includes('/careers/')) {
-        return Promise.resolve({
-          data: url.includes('/careers/') ? detailFixture : careersFixture,
-        });
+      if (url === 'https://pulsespace.com/careers') {
+        return Promise.resolve({ data: careersFixture });
+      }
+      if (url.includes('/assets/index-')) {
+        return Promise.resolve({ data: bundleFixture });
       }
       return Promise.resolve({ data: '' });
     });
   }
 
-  it('returns the open roles from the listing and detail pages', async () => {
+  it('returns the open roles from the careers page JS bundle', async () => {
     mockBothFixtures();
 
     const response = await service.scrape(new ScraperInputDto({ resultsWanted: 999 }));
@@ -117,7 +118,7 @@ describe('PulsespaceService', () => {
     expect(response.jobs.length).toBeGreaterThan(0);
 
     const empty = await service.scrape(
-      new ScraperInputDto({ searchTerm: 'Mechanical', resultsWanted: 999 }),
+      new ScraperInputDto({ searchTerm: 'xyznope', resultsWanted: 999 }),
     );
     expect(empty.jobs).toHaveLength(0);
   });
@@ -156,21 +157,21 @@ describe('PulsespaceService', () => {
     mockBothFixtures();
 
     const response = await service.scrape(
-      new ScraperInputDto({ offset: 2, resultsWanted: 2 }),
+      new ScraperInputDto({ offset: 3, resultsWanted: 1 }),
     );
 
-    expect(response.jobs).toHaveLength(2);
+    expect(response.jobs).toHaveLength(1);
     expect(response.jobs[0].id).toBe('pulsespace-principal-mechanical-architect');
   });
 
-  it('uses the provided companyUrl for the initial request and resolves detail links against it', async () => {
+  it('uses the provided companyUrl for the initial request and resolves bundle links against it', async () => {
     const customUrl = 'https://example.com/careers';
     getMock.mockImplementation((url: string) => {
       if (url === customUrl) {
         return Promise.resolve({ data: careersFixture });
       }
-      if (url.includes('/careers/')) {
-        return Promise.resolve({ data: detailFixture });
+      if (url.includes('/assets/index-')) {
+        return Promise.resolve({ data: bundleFixture });
       }
       return Promise.resolve({ data: '' });
     });
@@ -186,7 +187,7 @@ describe('PulsespaceService', () => {
     );
   });
 
-  it('returns an empty list when the careers page has no open roles', async () => {
+  it('returns an empty list when the careers page has no JS bundle', async () => {
     getMock.mockResolvedValueOnce({
       data: '<html><head></head><body><h1>Open Positions</h1></body></html>',
     });

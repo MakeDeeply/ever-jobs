@@ -13,26 +13,26 @@ import {
   ScraperInputDto,
   Site,
 } from '@ever-jobs/models';
-import { createHttpClient, HttpClient } from '@ever-jobs/common';
+import { createHttpClient } from '@ever-jobs/common';
 import {
   PULSESPACE_CAREERS_URL,
   PULSESPACE_COMPANY_NAME,
   PULSESPACE_DEFAULT_RESULTS,
   PULSESPACE_DEFAULT_TIMEOUT_SECONDS,
-  PULSESPACE_DETAIL_CONCURRENCY,
   PULSESPACE_ORIGIN,
 } from './pulsespace.constants';
 
-interface ListingRecord {
+interface PulsespaceJobRecord {
   title: string;
-  href: string;
-  slug: string;
-}
-
-interface MetadataParts {
-  locationText: string | null;
-  employmentText: string | null;
-  departmentText: string | null;
+  location: string;
+  jobType: string;
+  department: string;
+  summary?: string | string[];
+  responsibilities?: string | string[];
+  basicQualifications?: string | string[];
+  preferredQualifications?: string | string[];
+  competencies?: string | string[];
+  closing?: string | string[];
 }
 
 @SourcePlugin({
@@ -70,143 +70,229 @@ export class PulsespaceService implements IScraper {
     const fetchUrl = input.companyUrl || PULSESPACE_CAREERS_URL;
     const companyUrl = input.companyUrl || PULSESPACE_ORIGIN;
     const origin = new URL(fetchUrl).origin;
+
     const listingRes = await client.get<string>(fetchUrl);
     const $ = cheerio.load(listingRes.data);
-    const listings = this.parseListings($);
-
-    const jobs: JobPostDto[] = [];
-    for (let i = 0; i < listings.length; i += PULSESPACE_DETAIL_CONCURRENCY) {
-      const batch = listings.slice(i, i + PULSESPACE_DETAIL_CONCURRENCY);
-      const settled = await Promise.allSettled(
-        batch.map((record) => this.fetchDetail(client, record, origin, companyUrl)),
-      );
-      for (const result of settled) {
-        if (result.status === 'fulfilled' && result.value) {
-          jobs.push(result.value);
-        } else if (result.status === 'rejected') {
-          this.logger.warn(`Pulsespace detail fetch failed: ${this.errorLabel(result.reason)}`);
-        }
-      }
+    const bundleUrl = this.resolveBundleUrl($, origin);
+    if (!bundleUrl) {
+      this.logger.warn('Pulsespace: no main JS bundle found in careers page');
+      return [];
     }
 
-    return jobs;
+    const bundleRes = await client.get<string>(bundleUrl);
+    const wve = this.parseWveObject(bundleRes.data);
+    if (!wve || typeof wve !== 'object' || Array.isArray(wve)) {
+      this.logger.warn('Pulsespace: could not parse careers data from bundle');
+      return [];
+    }
+
+    const records = Object.entries(wve).sort(([a], [b]) => a.localeCompare(b));
+    return records
+      .map(([slug, record]) => this.buildJob(slug, record, origin, companyUrl))
+      .filter((job): job is JobPostDto => Boolean(job));
   }
 
-  private parseListings($: cheerio.CheerioAPI): ListingRecord[] {
-    const listings: ListingRecord[] = [];
-    const seen = new Set<string>();
-
-    $('a[href^="/careers/"]').each((_: number, el: any) => {
-      const $a = $(el);
-      const href = this.normalize($a.attr('href') ?? '');
-      if (!/^\/careers\/[^/]+$/.test(href)) {
-        return;
-      }
-
-      const slug = href.split('/').pop() ?? '';
-      if (!slug) {
-        return;
-      }
-
-      const title = this.normalize($a.text());
-      if (!title) {
-        return;
-      }
-
-      const id = `pulsespace-${slug}`;
-      if (seen.has(id)) {
-        return;
-      }
-      seen.add(id);
-
-      listings.push({
-        title,
-        href,
-        slug,
-      });
-    });
-
-    return listings;
+  private resolveBundleUrl($: cheerio.CheerioAPI, origin: string): string | null {
+    const src = $('script[src*="/assets/index-"][src$=".js"]')
+      .first()
+      .attr('src');
+    if (!src) {
+      return null;
+    }
+    return this.resolveUrl(src, origin);
   }
 
-  private async fetchDetail(
-    client: HttpClient,
-    record: ListingRecord,
-    origin: string,
-    companyUrl: string,
-  ): Promise<JobPostDto | null> {
-    const detailUrl = this.resolveUrl(record.href, origin);
-    if (!detailUrl) {
+  private parseWveObject(source: string): unknown {
+    const markers = ['const wve=', 'var wve=', 'let wve=', 'wve='];
+    for (const marker of markers) {
+      const parsed = this.parseJsObjectLiteral(source, marker);
+      if (parsed) {
+        return parsed;
+      }
+    }
+    return null;
+  }
+
+  private parseJsObjectLiteral(source: string, marker: string): unknown {
+    const markerIndex = source.indexOf(marker);
+    if (markerIndex === -1) {
+      return null;
+    }
+    const start = source.indexOf('{', markerIndex);
+    if (start === -1) {
       return null;
     }
 
-    const res = await client.get<string>(detailUrl);
-    const $ = cheerio.load(res.data);
+    let depth = 0;
+    let inString = false;
+    let escape = false;
+    let end = -1;
+    for (let i = start; i < source.length; i++) {
+      const c = source[i];
+      if (inString) {
+        if (escape) {
+          escape = false;
+        } else if (c === '\\') {
+          escape = true;
+        } else if (c === '"') {
+          inString = false;
+        }
+      } else {
+        if (c === '"') {
+          inString = true;
+        } else if (c === '{') {
+          depth++;
+        } else if (c === '}') {
+          depth--;
+          if (depth === 0) {
+            end = i;
+            break;
+          }
+        }
+      }
+    }
+    if (end === -1) {
+      return null;
+    }
 
-    const $h1 = $('main h1, h1').first();
-    const title = this.normalize($h1.text()) || record.title;
+    const objectString = source.slice(start, end + 1);
+    try {
+      const json = this.quoteUnquotedKeys(objectString);
+      return JSON.parse(json);
+    } catch {
+      return null;
+    }
+  }
 
-    const $container = $('main').first().children('div').first();
-    const metadata = this.parseMetadata($, $container);
+  private quoteUnquotedKeys(jsObject: string): string {
+    let out = '';
+    let inString = false;
+    let escape = false;
+    let i = 0;
+    while (i < jsObject.length) {
+      const c = jsObject[i];
+      if (inString) {
+        out += c;
+        if (escape) {
+          escape = false;
+        } else if (c === '\\') {
+          escape = true;
+        } else if (c === '"') {
+          inString = false;
+        }
+        i++;
+        continue;
+      }
+      if (c === '"') {
+        inString = true;
+        out += c;
+        i++;
+        continue;
+      }
+      if (/[A-Za-z_$]/.test(c)) {
+        let j = i + 1;
+        while (j < jsObject.length && /[A-Za-z0-9_$]/.test(jsObject[j])) {
+          j++;
+        }
+        const ident = jsObject.slice(i, j);
+        let k = j;
+        while (k < jsObject.length && /\s/.test(jsObject[k])) {
+          k++;
+        }
+        if (jsObject[k] === ':') {
+          out += `"${ident}":`;
+          i = k + 1;
+          continue;
+        }
+        out += ident;
+        i = j;
+        continue;
+      }
+      out += c;
+      i++;
+    }
+    return out;
+  }
 
-    const description = this.extractDescription($, $container);
+  private buildJob(
+    slug: string,
+    record: unknown,
+    origin: string,
+    companyUrl: string,
+  ): JobPostDto | null {
+    if (!this.isJobRecord(record)) {
+      return null;
+    }
 
-    const jobTypes = this.buildJobTypes(metadata.employmentText, title);
+    const title = this.normalize(record.title);
+    if (!title) {
+      return null;
+    }
+
+    const jobUrl = this.resolveUrl(`/careers/${slug}`, origin);
+    if (!jobUrl) {
+      return null;
+    }
+
+    const jobTypes = this.buildJobTypes(record.jobType, title);
     const employmentType = this.buildEmploymentType(jobTypes);
+    const description = this.buildDescription(record);
     const { isRemote, workFromHomeType } = this.parseWorkFromHomeType(
-      [metadata.locationText, metadata.employmentText, description].filter((t): t is string => Boolean(t)),
+      [record.location, record.jobType, description].filter((t): t is string => Boolean(t)),
     );
-    const location = this.parseLocation(metadata.locationText);
-
-    const id = `pulsespace-${record.slug}`;
+    const location = this.parseLocation(record.location);
 
     return new JobPostDto({
-      id,
+      id: `pulsespace-${slug}`,
       site: Site.PULSESPACE,
       title,
       companyName: PULSESPACE_COMPANY_NAME,
       companyUrl,
-      jobUrl: detailUrl,
-      jobUrlDirect: detailUrl,
+      jobUrl,
+      jobUrlDirect: jobUrl,
       location,
       isRemote,
       workFromHomeType: workFromHomeType ?? undefined,
       jobType: jobTypes,
       employmentType,
-      department: metadata.departmentText ?? undefined,
+      department: this.normalize(record.department) || undefined,
       description,
     });
   }
 
-  private parseMetadata($: cheerio.CheerioAPI, $container: cheerio.Cheerio<any>): MetadataParts {
-    const result: MetadataParts = {
-      locationText: null,
-      employmentText: null,
-      departmentText: null,
+  private isJobRecord(value: unknown): value is PulsespaceJobRecord {
+    return (
+      typeof value === 'object' &&
+      value !== null &&
+      typeof (value as PulsespaceJobRecord).title === 'string' &&
+      typeof (value as PulsespaceJobRecord).location === 'string'
+    );
+  }
+
+  private buildDescription(record: PulsespaceJobRecord): string {
+    const sections: string[] = [];
+    const add = (heading: string, body?: string | string[]) => {
+      if (body === undefined || body === null) {
+        return;
+      }
+      const parts = Array.isArray(body) ? body : [body];
+      const lines = parts.map((p) => `- ${this.normalize(p)}`).filter(Boolean);
+      if (lines.length === 0) {
+        return;
+      }
+      sections.push(`## ${heading}\n\n${lines.join('\n\n')}`);
     };
 
-    const $h1 = $container.find('h1').first();
-    const $metaDiv = $h1.next('div');
-    const spans = $metaDiv
-      .find('span')
-      .map((_: number, el: any) => this.normalize($(el).text()))
-      .get()
-      .filter(Boolean);
-
-    for (const text of spans) {
-      const lower = text.toLowerCase();
-      if (getJobTypeFromString(lower)) {
-        result.employmentText = text;
-        continue;
-      }
-      if (/,\s*[A-Za-z]{2}\b/.test(text) || /\b[A-Za-z]+,\s*[A-Za-z]{2}\b/.test(text)) {
-        result.locationText = text;
-        continue;
-      }
-      result.departmentText = text;
+    add('Position Summary', record.summary);
+    add('Key Responsibilities', record.responsibilities);
+    add('Basic Qualifications', record.basicQualifications);
+    add('Preferred Qualifications', record.preferredQualifications);
+    add('Competencies', record.competencies);
+    if (typeof record.closing === 'string' && record.closing.trim()) {
+      sections.push(`## Closing\n\n${this.normalize(record.closing)}`);
     }
 
-    return result;
+    return this.normalize(sections.join('\n\n'));
   }
 
   private parseWorkFromHomeType(texts: string[]): {
@@ -313,46 +399,6 @@ export class PulsespaceService implements IScraper {
       });
     }
     return new LocationDto({ city: normalized, country: Country.USA });
-  }
-
-  private extractDescription($: cheerio.CheerioAPI, $container: cheerio.Cheerio<any>): string {
-    const parts: string[] = [];
-
-    $container.children('div').each((_: number, el: any) => {
-      const $section = $(el);
-      const $h2 = $section.find('h2').first();
-      if ($h2.length) {
-        const heading = this.normalize($h2.text());
-        const bodyHtml = $h2
-          .nextAll()
-          .toArray()
-          .map((node) => $.html(node))
-          .join('');
-        const body = this.htmlToText(bodyHtml);
-        if (heading || body) {
-          parts.push(`## ${heading}\n\n${body}`);
-        }
-      }
-    });
-
-    $container.children('p').each((_: number, el: any) => {
-      const text = this.normalize($(el).text());
-      if (text) {
-        parts.push(text);
-      }
-    });
-
-    return this.normalize(parts.join('\n\n'));
-  }
-
-  private htmlToText(html: string): string {
-    let text = html.replace(/<(a|span|strong|em|b|i|u|small|sub|sup|label|time)(?:\s[^>]*)?>/gi, ' ');
-    text = text.replace(/<\/(a|span|strong|em|b|i|u|small|sub|sup|label|time)>/gi, ' ');
-    text = text.replace(/<br\s*\/?>/gi, '\n');
-    text = text.replace(/<\/li>/gi, '\n');
-    text = text.replace(/<li[^>]*>/gi, '- ');
-    text = text.replace(/<[^>]*>/g, ' ');
-    return this.normalize(text);
   }
 
   private resolveUrl(href: string, origin: string): string | null {
