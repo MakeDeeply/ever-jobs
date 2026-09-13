@@ -54,6 +54,31 @@ describe('isPubliclyRoutableBoardHost', () => {
     });
   });
 
+  // Raised by Greptile on PR #87: the first cut returned `true` for anything
+  // containing a colon that was not ::1/fc00::/fe80::, so an IPv4-mapped
+  // literal walked straight through to loopback.
+  describe('refuses IPv4 smuggled inside an IPv6 literal', () => {
+    it.each([
+      ['::ffff:127.0.0.1', 'mapped loopback, dotted'],
+      ['[::ffff:127.0.0.1]', 'mapped loopback, bracketed'],
+      ['::ffff:7f00:1', 'mapped loopback, hex'],
+      ['0:0:0:0:0:ffff:127.0.0.1', 'mapped loopback, expanded'],
+      ['0:0:0:0:0:ffff:7f00:1', 'mapped loopback, expanded hex'],
+      ['::ffff:169.254.169.254', 'mapped cloud metadata'],
+      ['::ffff:a9fe:a9fe', 'mapped cloud metadata, hex'],
+      ['::ffff:10.0.0.1', 'mapped private'],
+      ['::ffff:192.168.1.1', 'mapped private'],
+      ['::127.0.0.1', 'IPv4-compatible loopback'],
+    ])('%s (%s)', (host) => {
+      expect(isPubliclyRoutableBoardHost(host)).toBe(false);
+    });
+
+    it('still accepts a mapped *public* IPv4 address', () => {
+      expect(isPubliclyRoutableBoardHost('::ffff:93.184.216.34')).toBe(true);
+      expect(isPubliclyRoutableBoardHost('::ffff:5db8:d822')).toBe(true);
+    });
+  });
+
   it('keeps public hosts that merely resemble a private range', () => {
     // 172.32 is outside 172.16/12, and 100.128 is outside the CGNAT block.
     expect(isPubliclyRoutableBoardHost('172.32.0.1')).toBe(true);

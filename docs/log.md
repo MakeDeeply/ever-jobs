@@ -45,8 +45,23 @@ Recorded as **Q-092**, where option B (guard in the shared HTTP client) is the o
 `packages/plugins/source-ats-recruitee/__tests__/recruitee.board-host.spec.ts`,
 `.specify/specs/1688-recruitee-public-board-host/*`.
 
-**Validation:** `source-ats-recruitee` 43/43 (their 20 plus 23 new guard cases); `tsc --noEmit`
-clean for the package and for `tsconfig.base.json`; `lint:docs` clean.
+**Review follow-ups (Greptile, PR #87) — both fixed in the same PR:**
+
+- **An IPv6 literal can still be an IPv4 address.** The first cut treated any colon-bearing host
+  as public unless it was `::1`, `fc00::/7` or `fe80::/10`, so `[::ffff:127.0.0.1]` and its hex
+  spelling `::ffff:7f00:1` reached loopback. Greptile verified the bypass end to end. Embedded
+  IPv4 — mapped and the deprecated compatible form, dotted or hex, compressed or expanded — is
+  now extracted and re-checked as IPv4; a mapped *public* address still resolves.
+- **A URL-derived slug belongs to one provider.** Their Spec 5096 writes the slug parsed from
+  `companyUrl` into `input.companySlug`, which the whole fan-out shares, whenever that provider
+  merely appeared among the selected sites. `siteType: [greenhouse, ashby]` with a Greenhouse
+  board URL therefore handed the Greenhouse tenant to Ashby. The write now requires that
+  provider to be the sole selection — the case Spec 5096 was written for.
+
+**Validation:** `source-ats-recruitee` 54/54 (their 20 plus 34 guard cases, 12 of them the
+IPv6-mapped bypass); `apps/api/src/jobs` 175/175 including their five Spec 5096 tests and a new
+cross-provider regression; `tsc --noEmit` clean for the package and for `tsconfig.base.json`;
+`lint:docs` clean.
 
 ---
 

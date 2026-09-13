@@ -180,11 +180,16 @@ export class JobsService implements OnModuleInit {
     if (effectiveSites.length === 0 && companyUrlFallback.site) {
       effectiveSites = [companyUrlFallback.site];
     }
+    // Only when that provider is the *sole* selection. `companySlug` is shared
+    // by every scraper in the fan-out, so writing a Greenhouse tenant into it
+    // while Ashby is also selected sends Ashby to a board that is not its own
+    // (raised by Greptile on PR #87).
     if (
       companyUrlFallback.site &&
       !input.companySlug &&
       companyUrlFallback.slug &&
-      effectiveSites.includes(companyUrlFallback.site)
+      effectiveSites.length === 1 &&
+      effectiveSites[0] === companyUrlFallback.site
     ) {
       input.companySlug = companyUrlFallback.slug;
     }

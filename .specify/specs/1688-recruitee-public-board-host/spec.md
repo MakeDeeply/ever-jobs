@@ -66,6 +66,19 @@ Recruitee simply did not get the same check.
   in `recruitee.constants.ts` beside `isAllowedSubmit4jobsApiHost`'s precedent. If a third
   plugin needs it, promote it to `@ever-jobs/common` then — `source-ats-avature` already honours
   `companyUrl` verbatim and is the likely second caller.
+- **D-06 — An IPv6 literal can still be an IPv4 address.** The first cut treated any host
+  containing a colon as public unless it was `::1`, `fc00::/7` or `fe80::/10`, so
+  `[::ffff:127.0.0.1]` — and its hex spelling `::ffff:7f00:1` — walked through to loopback.
+  Embedded IPv4 is now extracted (mapped and the deprecated compatible form, dotted or hex,
+  compressed or expanded) and re-checked as IPv4. Raised by Greptile on PR #87, which verified
+  the bypass reached the downstream origin.
+- **D-07 — A URL-derived slug belongs to one provider.** Spec 5096 writes the slug parsed out of
+  `companyUrl` into `input.companySlug`, which every scraper in the fan-out shares. It did so
+  whenever the URL's provider merely *appeared* among the selected sites, so
+  `siteType: [greenhouse, ashby]` with a Greenhouse board URL handed the Greenhouse tenant to
+  Ashby, which then queried a board that is not its own. The assignment now requires that
+  provider to be the sole selection — which is exactly the case Spec 5096 was written for. Also
+  raised by Greptile on PR #87.
 
 ## 3. Non-goals
 
@@ -86,3 +99,8 @@ Recruitee simply did not get the same check.
   literals still resolve.
 - `172.32.0.1`, `100.128.0.1` and `11.0.0.1` — just outside the private blocks — still resolve.
 - A refused host returns the Spec 5100 `bad_input` diagnostic; no request is made.
+- `::ffff:127.0.0.1`, `::ffff:7f00:1`, `0:0:0:0:0:ffff:127.0.0.1`, `::ffff:169.254.169.254`,
+  `::ffff:a9fe:a9fe`, `::ffff:10.0.0.1` and `::127.0.0.1` are refused; `::ffff:93.184.216.34`
+  still resolves.
+- With `siteType: [greenhouse, ashby]` and a Greenhouse board URL, neither scraper receives a
+  `companySlug`; with `siteType: [greenhouse]` alone, Greenhouse still receives `trueanomalyinc`.
