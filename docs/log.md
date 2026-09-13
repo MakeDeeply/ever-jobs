@@ -5,6 +5,51 @@
 
 ---
 
+## 2026-09-13 — Spec 1688 — a Recruitee board is on the public internet, or it is not a board
+
+**Change:** Spec 5100 taught `source-ats-recruitee` to serve customers whose board sits on their
+own domain instead of `<slug>.recruitee.com`. Necessary feature; it also removed the only thing
+bounding where the plugin fetches. Three caller-controlled inputs now become the origin —
+`companyUrl`, a `companySlug` that starts with `http(s)://`, and any `companySlug` containing a
+dot — and `ScraperInputDto` validates `companyUrl` with `@IsString()` and nothing else while
+`POST /api/jobs/search` runs with `auth.enabled` false by default. So
+`{"siteType":["recruitee"],"companyUrl":"http://169.254.169.254"}` fetched
+`http://169.254.169.254/api/offers`.
+
+**This one is live, unlike Spec 1687's.** Those plugins drive `BrowserPool`, and the runtime
+image ships no browser, so they cannot launch in a deployed environment. This path is `axios`.
+
+- `isPubliclyRoutableBoardHost` asserts the weaker property that actually holds for a career
+  board. A fixed allowlist cannot work here the way #47's `submit4jobs.com` one could, because a
+  custom domain is by definition the customer's own — but nobody serves a board from loopback,
+  RFC1918, cloud link-local, CGNAT, benchmarking or multicast space, from IPv6 `::1`,
+  `fd00::/8` or `fe80::/10`, or from a name with no public suffix (`localhost`, `*.local`,
+  `*.internal`, or any dotless name the resolver would complete with a search domain).
+- `publicOrigin` gates the scheme first, so `file:` and friends cannot survive `new URL()`.
+- A refusal returns Spec 5100's existing `bad_input` diagnostic instead of substituting another
+  board. Spec 1687 could fall back to the plugin's own board because a *company* plugin has one;
+  an *ATS* plugin serving many tenants does not.
+- Every public custom domain still resolves, including public IP literals, and the near-misses
+  just outside the private blocks (`172.32.0.1`, `100.128.0.1`, `11.0.0.1`). The fork's own
+  `acme.recruitee.com` and `recruitee` inputs are untouched.
+
+The fork already had the pattern — its own `source-ats-dayforce` (Spec 5094, authored the same
+week) pins `jobs.dayforcehcm.com` before honouring `companyUrl`. Recruitee simply did not get the
+check, which is why this reads as an oversight rather than a design stance.
+
+**Deliberately not fixed:** `source-ats-avature`, which has honoured a verbatim `companyUrl`
+since Spec 006 / Q-022 — pre-existing, identical shape, and outside the scope of a fork-sync PR.
+Recorded as **Q-092**, where option B (guard in the shared HTTP client) is the one that scales.
+
+**Files:** `packages/plugins/source-ats-recruitee/src/{recruitee.constants.ts,recruitee.service.ts}`,
+`packages/plugins/source-ats-recruitee/__tests__/recruitee.board-host.spec.ts`,
+`.specify/specs/1688-recruitee-public-board-host/*`.
+
+**Validation:** `source-ats-recruitee` 43/43 (their 20 plus 23 new guard cases); `tsc --noEmit`
+clean for the package and for `tsconfig.base.json`; `lint:docs` clean.
+
+---
+
 ## 2026-09-08 — Spec 5117 — Refactor Pulse Space to extract jobs from the React JS bundle (`source-company-pulsespace-json`)
 
 **Change:** Refactor the existing `source-company-pulsespace` plugin to extract all open roles from the React main JS bundle (`/assets/index-*.js`) instead of the empty SSR `<div id="root"></div>` shell. `PulsespaceService` fetches `https://pulsespace.com/careers` (or `input.companyUrl`), locates the `<script src="/assets/index-*.js">` tag, downloads the bundle, finds `const wve = { ... }`, extracts and quotes the unquoted-key object literal, and parses it as JSON. The five slugs (`principal-avionics-architect`, `principal-controls-engineering-architect`, `principal-gnc-controls-architect`, `principal-mechanical-architect`, `principal-opto-mechanical-architect`) are sorted and mapped to `JobPostDto` records with `id = pulsespace-<slug>`, `site = Site.PULSESPACE`, `companyName = 'Pulse Space'`, `companyUrl`/`jobUrl`/`jobUrlDirect` resolved against the origin, `location` parsed from `record.location`, `jobType`/`employmentType` derived from `record.jobType`, `department` from `record.department`, and a description built from `summary` (`Position Summary`), `responsibilities` (`Key Responsibilities`), `basicQualifications` (`Basic Qualifications`), `preferredQualifications` (`Preferred Qualifications`), `competencies` (`Competencies`), and `closing` (`Closing`). `applyUrl` remains intentionally blank because the site exposes no application path. The per-detail HTTP fetch loop and `PULSESPACE_DETAIL_CONCURRENCY` are removed.

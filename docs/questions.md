@@ -10,6 +10,39 @@
 
 ---
 
+## Q-092 — `source-ats-avature` honours a verbatim `companyUrl` (pre-existing)
+
+**Context:** Spec 1688 closed the same shape in `source-ats-recruitee`, where Spec 5100 had let
+a caller name any origin that the plugin then fetched over `axios`. `source-ats-avature` has
+done this since Spec 006 / Q-022, long before the fork existed:
+
+> 'Custom-domain career portal URL (e.g., "https://careers.ibm.com" or
+> "https://bloomberg.avature.net"). When set, ATS scrapers prefer this over
+> `companySlug`-derived subdomain construction.'
+
+That is the documented feature, and Avature tenants genuinely do live on their own domains, so
+the fix cannot be a fixed host allowlist any more than it could for Recruitee.
+
+**Options:**
+
+- **A. Apply Spec 1688's `isPubliclyRoutableBoardHost` to Avature too**, promoting the predicate
+  to `@ever-jobs/common` now that a second caller exists (Spec 1688 D-05 anticipated this).
+- **B. Check at the HTTP client instead.** One guard in `createHttpClient` covers every plugin
+  present and future, including ones the fork has not written yet — but it is a shared-package
+  change that the fork also edits, and it would need an opt-out for any legitimately internal
+  caller.
+- **C. Resolution-time checks.** Only B or C closes DNS rebinding, where a public name resolves
+  to a private address; A and B-by-hostname do not.
+- **D. Leave it.** The API is cluster-internal with auth off by default, so the blast radius is
+  whoever can already reach the pod.
+
+**Default (proceeding):** **D for now** — Spec 1688 deliberately scoped itself to the plugin the
+fork had just widened, rather than expanding a fork-sync PR into a codebase-wide audit.
+
+**Resolution:** _pending review._ A is cheap and obvious; B is the one that actually scales.
+
+---
+
 ## Q-091 — title-prefix stripping: does it require an explicit separator? (Specs 5091, 5092)
 
 **Context:** `source-company-rdw` and `source-company-trossenrobotics` share
