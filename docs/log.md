@@ -5,6 +5,234 @@
 
 ---
 
+## 2026-09-08 — Spec 5117 — Refactor Pulse Space to extract jobs from the React JS bundle (`source-company-pulsespace-json`)
+
+**Change:** Refactor the existing `source-company-pulsespace` plugin to extract all open roles from the React main JS bundle (`/assets/index-*.js`) instead of the empty SSR `<div id="root"></div>` shell. `PulsespaceService` fetches `https://pulsespace.com/careers` (or `input.companyUrl`), locates the `<script src="/assets/index-*.js">` tag, downloads the bundle, finds `const wve = { ... }`, extracts and quotes the unquoted-key object literal, and parses it as JSON. The five slugs (`principal-avionics-architect`, `principal-controls-engineering-architect`, `principal-gnc-controls-architect`, `principal-mechanical-architect`, `principal-opto-mechanical-architect`) are sorted and mapped to `JobPostDto` records with `id = pulsespace-<slug>`, `site = Site.PULSESPACE`, `companyName = 'Pulse Space'`, `companyUrl`/`jobUrl`/`jobUrlDirect` resolved against the origin, `location` parsed from `record.location`, `jobType`/`employmentType` derived from `record.jobType`, `department` from `record.department`, and a description built from `summary` (`Position Summary`), `responsibilities` (`Key Responsibilities`), `basicQualifications` (`Basic Qualifications`), `preferredQualifications` (`Preferred Qualifications`), `competencies` (`Competencies`), and `closing` (`Closing`). `applyUrl` remains intentionally blank because the site exposes no application path. The per-detail HTTP fetch loop and `PULSESPACE_DETAIL_CONCURRENCY` are removed.
+
+**Files:** `packages/plugins/source-company-pulsespace/src/pulsespace.service.ts`, `packages/plugins/source-company-pulsespace/src/pulsespace.constants.ts`, `packages/plugins/source-company-pulsespace/__tests__/pulsespace.service.spec.ts`, `packages/plugins/source-company-pulsespace/__tests__/fixtures/careers.html`, `packages/plugins/source-company-pulsespace/__tests__/fixtures/bundle.js`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-company-pulsespace/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns pulsespace` passes; `npx jest --testPathPatterns company-domains-inline` passes; `npm run lint:docs` clean.
+
+## 2026-09-07 — Spec 5116 — Fix General Galactic Careers URL (`source-company-gengalactic`)
+
+**Change:** Correct `source-company-gengalactic` default `companyUrl` from `https://gengalactic.com/careers.html` to `https://gengalactic.com/careers` because the `.html` path returns 404; update `GENGALACTIC_CAREERS_URL` and the unit-test mock/assertion so callers that rely on the default receive the canonical listing page.
+
+**Files:** `packages/plugins/source-company-gengalactic/src/gengalactic.constants.ts`, `packages/plugins/source-company-gengalactic/__tests__/gengalactic.service.spec.ts`, `.specify/specs/5116-fix-gengalactic-careers-url/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-company-gengalactic/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns gengalactic` passes; `npm run lint:docs` clean.
+
+## 2026-09-07 — Spec 5115 — Source Company Plugin: ReNEW Manufacturing Solutions (`source-company-renewmfgsol`)
+
+**Change:** Add `source-company-renewmfgsol` plugin for ReNEW Manufacturing Solutions (`renewmfgsol.com`). The HubSpot careers page at `https://www.renewmfgsol.com/about/work-with-us` is static and lists two roles (`Welder` and `CNC Machinist`) inside `div.atmc-career-01` cards. `RenewmfgsolService` uses `createHttpClient` + Cheerio to parse the listing, extract `h4` title, `p.atmc-cap` location, and the card's `a.atmc-btn` apply URL. Internal apply links (`/hiring-welders-ga`) are followed for a description parsed from `meta[property="og:description"]` or `meta[name="description"]`; external Adzuna URLs are stored as `applyUrl` only. Each role is mapped to `JobPostDto` with `id = renewmfgsol-${slugify(title)}`, `site = Site.RENEWMFGSOL` (`'renewmfgsol'`), `companyName = 'ReNEW Manufacturing Solutions'`, `companyUrl = https://www.renewmfgsol.com`, `jobUrl`/`jobUrlDirect` resolving to the internal landing page or the listing page, `companyDomains` inline as `['renewmfgsol.com']`, `jobType` defaulting to `[JobType.FULL_TIME]`, `employmentType = 'Full time'`, `isRemote = false`, and `workFromHomeType` derived from `remote`/`hybrid`/`on-site`/`in person` tokens. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
+
+**Files:** `packages/plugins/source-company-renewmfgsol/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-company-renewmfgsol/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns renewmfgsol` passes; `npm run lint:docs` clean.
+
+## 2026-09-07 — Spec 5114 — Source Company Plugin: Pulse Space (`source-company-pulsespace`)
+
+**Change:** Add `source-company-pulsespace` plugin for Pulse Space (`pulsespace.com`). The SSR Next.js careers site has a listing page at `https://pulsespace.com/careers` with 5 detail links (`/careers/<slug>`). `PulsespaceService` fetches the listing, parses each `<a href="/careers/<slug>">` link, then follows each detail page with bounded `Promise.allSettled` concurrency (`PULSESPACE_DETAIL_CONCURRENCY = 3`). For each detail page it extracts the `<h1>` title, three metadata `<span>`s (location, employment type, department), and a description by concatenating the `<h2>` sections (`Position Summary`, `Key Responsibilities`, `Basic Qualifications`, `Preferred Qualifications`, `Competencies`). Fields are mapped to `JobPostDto` with `id = pulsespace-<slug>`, `site = Site.PULSESPACE` (`'pulsespace'`), `companyName = 'Pulse Space'`, `companyUrl = https://pulsespace.com`, `jobUrl`/`jobUrlDirect` pointing to the detail page, `applyUrl` intentionally omitted/blank because the site has no visible application path, `companyDomains` inline as `['pulsespace.com']`, `location` parsed from the `City, ST` token, `jobType`/`employmentType` derived from the employment-type span and title, `isRemote`/`workFromHomeType` from the location/employment text, and `department` from the remaining metadata span. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
+
+**Files:** `packages/plugins/source-company-pulsespace/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-company-pulsespace/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns pulsespace` passes; `npx jest --testPathPatterns company-domains-inline` passes; `npm run lint:docs` clean.
+
+## 2026-09-07 — Spec 5113 — Source Company Plugin: HLabs (`source-company-hlaboratories`)
+
+**Change:** Add `source-company-hlaboratories` plugin for HLabs (`hlaboratories.com`). The React careers site at `https://hlaboratories.com/jobs` exposes a public same-origin JSON API at `/api/recruitment/roles?open_only=true`, so `HlaboratoriesService` uses `createHttpClient` (no `BrowserPool`). Each role object is mapped to `JobPostDto` with `id = hlaboratories-${role.id}`, `site = Site.HLABORATORIES` (`'hlaboratories'`), `companyName = 'HLabs'`, `companyUrl`/`jobUrl`/`jobUrlDirect`/`applyUrl` pointing to the resolved `/jobs` page, `companyDomains` inline as `['hlaboratories.com']`, `location` parsed from the `Austin, TX` token, `jobType`/`employmentType` derived from `employment_type` (`full_time` → `FULL_TIME`), `isRemote`/`workFromHomeType` from the `remote` boolean, `datePosted` from `created_at`, and `department` from `department`. Roles with `is_open === false` or missing `title` are skipped.
+
+**Files:** `packages/plugins/source-company-hlaboratories/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-company-hlaboratories/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns hlaboratories` passes; `npm run lint:docs` clean.
+
+## 2026-09-07 — Spec 5112 — Source Company Plugin: General Galactic (`source-company-gengalactic`)
+
+**Change:** Add `source-company-gengalactic` plugin for General Galactic (`gengalactic.com`). The Webflow careers page at `https://gengalactic.com/careers.html` is static, so `GengalacticService` uses `createHttpClient` + Cheerio. It selects each `<a href="/careers/<slug>">` job card with `.career-link-title`, `.career-link-meta` containing `.career-location` and a second employment `.badge-text`, then follows each detail page with bounded `Promise.allSettled` concurrency (`GENGALACTIC_DETAIL_CONCURRENCY = 3`) to extract the `<h1>` title, `<h2>` location, and `div.article.w-richtext` description. Fields are mapped to `JobPostDto` with `id = gengalactic-${slugify(title)}`, `site = Site.GENGALACTIC`, `companyName = 'General Galactic'`, `companyUrl`/`jobUrl`/`jobUrlDirect` resolved absolute, `applyUrl = 'mailto:careers@gengalactic.com'`, `emails = ['careers@gengalactic.com']`, `jobType` derived from the employment token and title, `employmentType` as a human-readable label, `location` parsed from the `city, state` token, and `workFromHomeType` from `remote`/`hybrid`/`on-site`/`in person` tokens. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
+
+**Files:** `packages/plugins/source-company-gengalactic/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-company-gengalactic/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns gengalactic` passes; `npm run lint:docs` clean.
+
+## 2026-09-07 — Spec 5110 — Source Company Plugin: Kyber Labs (`source-company-kyberlabs_ai`)
+
+**Change:** Add `source-company-kyberlabs_ai` plugin for Kyber Labs (`kyberlabs.ai`). The GoDaddy Website Builder careers page at `https://kyberlabs.ai/jobs` is static, so `KyberlabsAiService` uses `createHttpClient` + Cheerio. It selects `h2[data-aid="FLEX_HEADING"]` job titles inside `section[data-ux="Section"]` blocks, the matching `div[data-aid="FLEX_RICHTEXT"]` line (`Brooklyn, NY | Full time, in person`), and the `a[data-aid="FLEX_CTA_BTN"]` apply href (`/mech`). Extracted fields are mapped to `JobPostDto` with `id = kyberlabs_ai-${slugify(title)}`, `site = Site.KYBERLABS_AI`, `companyName = 'Kyber Labs'`, `companyUrl`/`jobUrl` = `https://kyberlabs.ai/jobs` (or `input.companyUrl`), `applyUrl` resolved absolute, `location` parsed from the city/state tokens, `jobType = [JobType.FULL_TIME]` (or derived from employment tokens), `employmentType` as human-readable text, and `workFromHomeType` from `in person`/`remote`/`hybrid` tokens. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
+
+**Files:** `packages/plugins/source-company-kyberlabs_ai/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-company-kyberlabs_ai/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns kyberlabs_ai` passes; `npm run lint:docs` clean.
+## 2026-09-07 — Spec 5111 — Source Company Plugin: Cascade Space (`source-company-cascade_space`)
+
+**Change:** Add `source-company-cascade_space` plugin for Cascade Space (`cascade.space`, alias `cascadespace.com`). The careers page at `https://cascade.space/careers/` is a static/SSR Next.js page. `CascadeSpaceService` uses `createHttpClient` + Cheerio to parse each job card (`h3` title, sibling tagline spans, and a `/careers/<slug>/` detail link), then fetches each detail page with bounded `Promise.allSettled` concurrency (`CASCADE_SPACE_DETAIL_CONCURRENCY = 3`) to extract the `<article>` description and `mailto:careers@cascade.space` apply link. Fields are mapped to `JobPostDto` with `id = cascade_space-${slugify(title)}`, `site = Site.CASCADE_SPACE`, `companyName = 'Cascade Space'`, `companyUrl`/`jobUrl`/`jobUrlDirect` resolved absolute, `applyUrl = 'mailto:careers@cascade.space'`, `emails = ['careers@cascade.space']`, `jobType` derived from tagline tokens, `employmentType` as human-readable text, `location` parsed from the `city, state` token, and `workFromHomeType` from `on-site`/`remote`/`hybrid` tokens. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
+
+**Files:** `packages/plugins/source-company-cascade_space/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-company-cascade_space/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns cascade_space` passes; `npm run lint:docs` clean.
+
+---
+
+
+## 2026-09-07 — Spec 5108 — `companyDomains` Inline-Array Lint & Checklist
+
+**Change:** Add `scripts/__tests__/company-domains-inline.spec.ts`, which scans every `source-company-*/src/*.service.ts` and fails when `companyDomains` is declared but is not an inline array of quoted string literals. Also rejects `www.` prefixes, which `normalizeCompanyHost` already strips. Fix `source-company-shinkei_systems` to use inline `companyDomains: ['shinkei.systems', 'shinkeisystems.com']` and remove the unused `SHINKEI_SYSTEMS_DOMAINS` constant from `shinkei_systems.constants.ts`. Update `.specify/templates/tasks.template.md` with a checklist reminder that `companyDomains` must be inline and must not include `www.`.
+
+**Files:** `scripts/__tests__/company-domains-inline.spec.ts`, `packages/plugins/source-company-shinkei_systems/src/shinkei_systems.service.ts`, `packages/plugins/source-company-shinkei_systems/src/shinkei_systems.constants.ts`, `.specify/templates/tasks.template.md`, `docs/index.md`.
+
+**Validation:** `npx jest --testPathPatterns company-domains-inline` passes; `npx jest --testPathPatterns shinkei_systems` passes; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npm run lint:docs` clean.
+
+---
+
+## 2026-09-07 — Spec 5109 — Source Company Plugin: Chang Robotics (`source-company-changrobotics_ai`)
+
+**Change:** Add `source-company-changrobotics_ai` plugin for Chang Robotics (`changrobotics.ai`). The Wix careers page at `https://www.changrobotics.ai/careers` renders a JavaScript-hydrated accordion with two roles: `Factory Automation Expert` (apply link to a Microsoft Form) and `Growth Marketing Specialist` (apply link to Indeed). The plugin uses `BrowserPool` to render the page, then parses `.wixui-accordion__item` panels with Cheerio to extract the title from `.wixui-accordion__title`, the markdown description from `div[data-testid="richTextElement"]`, the `applyUrl` from `a[aria-label="Apply Now"]`, and the location from `Must live in {city}, {state}` text. `companyName` is `'Chang Robotics'`, `companyUrl`/`jobUrl` point to the careers page, `site` is `Site.CHANGROBOTICS_AI` (`'changrobotics_ai'`), `companyDomains` is `['changrobotics.ai']`, `jobType` defaults to `[JobType.FULL_TIME]`, `employmentType` is `'Full time'`, and `workFromHomeType` is derived from any `remote`/`hybrid`/`on site` tokens. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
+
+**Files:** `packages/plugins/source-company-changrobotics_ai/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-company-changrobotics_ai/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns changrobotics_ai` passes (12/12).
+
+---
+
+## 2026-09-07 — Spec 5107 — Source Company Plugin: Shinkei (`source-company-shinkei_systems`)
+
+**Change:** Add `source-company-shinkei_systems` wrapper plugin for Shinkei (`shinkei.systems`, alias `shinkeisystems.com`). The plugin delegates to `source-ats-kula_ai` with `companySlug: 'shinkei'` and re-stamps `site` to `Site.SHINKEI_SYSTEMS`, `companyName` to `'Shinkei'`, and rewrites `kula_ai-` id prefixes to `shinkei_systems-`. The token is derived from the canonical domain `shinkei.systems` per Spec 5069; `companyDomains` lists both `shinkei.systems` and `shinkeisystems.com` so the alias resolves to the same plugin. No feed/render/detail logic is duplicated.
+
+**Files:** `packages/plugins/source-company-shinkei_systems/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-company-shinkei_systems/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns shinkei_systems` passes.
+
+---
+
+## 2026-09-07 — Spec 5106 — Source ATS Plugin: Kula AI (`source-ats-kula_ai`)
+
+**Change:** Add `source-ats-kula_ai` plugin for Kula-hosted job boards (`careers.kula.ai/<account>`). It harvests the public XML feed (`/<account>/feed`) as canonical for the first 25 jobs, renders the list page with Playwright to discover all job IDs (including jobs beyond the feed), fetches each `/account/{id}/` detail page, and parses its `application/ld+json` `JobPosting` block. XML and JSON-LD are merged per field: XML is canonical for `employmentType`, `workplace`, location office/remote flags, and salary type/interval; JSON-LD is canonical for `description` and `baseSalary` min/max. The plugin uses `Site.KULA_AI` (`'kula_ai'`) and `atsType: 'kula_ai'`. Tested with the `shinkei` fixture (25 XML feed jobs plus one HTML-only `Marketing Intern`, id `54329`). Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, `resultsWanted`, and `descriptionFormat` filters.
+
+**Files:** `packages/plugins/source-ats-kula_ai/*`, `packages/models/src/enums/site.enum.ts`, `packages/common/src/utils/site-from-url.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-ats-kula_ai/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns kula_ai` passes (8/8).
+
+---
+## 2026-09-06 — Spec 5105 — Source Company Plugin: Argo Space (argospace.com)
+
+**Change:** Add `source-company-argospace` plugin for Argo Space (`argospace.com`). It scrapes the Webflow careers page at `https://argospace.com/careers`, selects the visible department-grouped `careers-list-2` list and ignores the hidden flat `careers-list` of LinkedIn anchors, then follows each `/careers/{slug}` detail page. It extracts the title from `h1.heading-6`, location, employment type, and salary range from `div.spec_div > div.spec_txt`, description from `div.w-richtext` via the shared `markdownConverter`, and the first `APPLY NOW` button href. `companyName` is `'Argo Space'`, `companyUrl` is `'https://argospace.com'`, `site` is `Site.ARGOSPACE` (Spec 5069 token `argospace`), `companyDomains` are `['argospace.com', 'www.argospace.com']`, `jobType` is `[JobType.FULL_TIME]` for full-time roles or `[JobType.INTERNSHIP]` for the intern, `isRemote` is `false`, and `workFromHomeType` is `'On Site'`. `applyUrl` uses whatever apply URL exists for the role (LinkedIn company jobs page, detail-page fragment, or blank). Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
+
+**Files:** `packages/plugins/source-company-argospace/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-company-argospace/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns argospace` passes (16/16).
+
+---
+## 2026-09-04 — Spec 5104 — Source Company Plugin: Deft Robotics (deftai.co)
+
+**Change:** Add `source-company-deftai_co` plugin for Deft Robotics (`deftai.co`). It scrapes the Framer careers page at `https://www.deftai.co/careers`, selects `div[data-framer-name="Variant 1"]` cards that contain a `tally.so` application link, and extracts title and location from leaf text nodes while ignoring noise tokens (`Apply now`, `$`, `/$`). The page uses per-role Tally forms (`tally.so/r/{id}` and `tally.so/embed/{id}`); the plugin normalizes both to `https://tally.so/r/{id}` for `applyUrl`, `jobUrl`, and `jobUrlDirect`. The first `Variant 1` card (`CASE STUDIES`) and the referral form (`5B1Myd`) are excluded because they do not represent open roles. `companyName` is `'Deft Robotics'`, `companyUrl` is `'https://www.deftai.co'`, `site` is `Site.DEFTAI_CO` (Spec 5069 token `deftai_co`), `jobType` is `[JobType.FULL_TIME]`, `employmentType` is `'FULL_TIME'`, `isRemote` is `false`, and `workFromHomeType` is `'On Site'`. Locations are parsed as `San Francisco, CA, USA` (with `SF` normalized to `San Francisco`). Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
+
+**Files:** `packages/plugins/source-company-deftai_co/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-company-deftai_co/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns deftai_co` passes (10/10).
+
+---
+## 2026-09-04 — Spec 5103 — Source Company Plugin: ThinkOrbital
+
+**Change:** Add `source-company-thinkorbital` plugin for ThinkOrbital (`thinkorbital.com`). It scrapes the WordPress/Elementor careers page at `https://thinkorbital.com/careers/`, selects the first visible `elementor-widget-accordion`, and skips any accordion whose class list contains all three `elementor-hidden-desktop`, `elementor-hidden-tablet`, and `elementor-hidden-mobile` tokens. For each visible role it extracts the title from `.elementor-accordion-title` (falling back to the `Job Title:` body paragraph), the location from the `Location:` body paragraph, the employment type from `Employment Type:`, and the salary range from `Salary Range:`. It builds a markdown description from the remaining labeled body paragraphs (`About ThinkOrbital:`, `Position Summary:`, `Key Responsibilities:`, `Mandatory Qualifications:`, `Desired Qualifications:`, `What We Offer:`, and `Job Description:`). `companyName` is `'ThinkOrbital'`, `companyUrl`/`jobUrl`/`jobUrlDirect` point to the careers page, and `applyUrl` is left unset because the page has no per-job application destination. `jobType` is `[JobType.FULL_TIME]`, `employmentType` is `'Full-time'`, `isRemote` is `false`, and `workFromHomeType` is `'On Site'`. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
+
+**Files:** `packages/plugins/source-company-thinkorbital/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-company-thinkorbital/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns thinkorbital` passes (9/9).
+
+---
+## 2026-09-04 — Spec 5102 — Source Company Plugin: Aurora (rename and Ashby migration)
+
+**Change:** Rename `source-company-aurorainnovation` to `source-company-aurora_tech` and rewire it to the Ashby public job-board API. The rename follows the Spec 5069 domain-to-token rule so `aurora.tech` maps to `Site.AURORA_TECH`, while freeing the `aurorainnovation` token for the unrelated `aurorainnovation.com` domain should it ever be added. The old Greenhouse board slug `aurorainnovation` now returns 404, so `AuroraTechService` calls `https://api.ashbyhq.com/posting-api/job-board/aurora-operations-inc?includeCompensation=true` and maps the response to `JobPostDto` with `site: Site.AURORA_TECH`, `companyName: 'Aurora'`, `companyUrl: 'https://aurora.tech/'`, `atsType: 'ashby'`, and `companyDomains: ['aurora.tech', 'www.aurora.tech']`. It supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters. The spec supersedes Spec 790.
+
+**Files:** `packages/plugins/source-company-aurora_tech/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-company-aurora_tech/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns aurora_tech` passes (16/16).
+
+---
+
+## 2026-09-03 — Cleanup — Remove `www.` prefix from `companyDomains` declarations
+
+**Change:** Remove redundant `www.*` entries from the `companyDomains` arrays in the `@SourcePlugin()` metadata of `source-company-argospace`, `source-company-atlasspace`, `source-company-deftai_co`, `source-company-launchpadbuild_ai`, `source-company-syncere`, `source-company-thespaceportcompany`, `source-company-thinkorbital`, `source-company-trossenrobotics`, and `source-company-aurora_tech`. Also inline `companyDomains` in `auroratech.service.ts` and remove the now-unused `AURORA_COMPANY_DOMAINS` constant so all company plugins use the same inline style. `normalizeCompanyHost` already strips a leading `www.` before matching against `companyDomains`, so the `www.*` duplicates were URL fragments rather than distinct domains and served no purpose.
+
+**Files:** `packages/plugins/source-company-*/src/*.service.ts`, `packages/plugins/source-company-aurora_tech/src/auroratech.constants.ts`.
+
+**Validation:** `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns plugin-registry-domains` passes; `npx jest --testPathPatterns site-from-domain` passes.
+
+---
+
+## 2026-09-03 — Spec 5101 — Source Company Plugin: The Spaceport Company
+
+**Change:** Add `source-company-thespaceportcompany` plugin for The Spaceport Company (`thespaceportcompany.com`). It scrapes the WordPress/Elementor careers page at `https://thespaceportcompany.com/careers/`, locates the "Open Positions" section, and iterates the following `section.elementor-top-section` blocks. Sections whose class list contains all three `elementor-hidden-desktop`, `elementor-hidden-tablet`, and `elementor-hidden-mobile` tokens are skipped, so only the currently visible roles are emitted. For each visible job it extracts the title from the first paragraph of the metadata widget, the location from the first list item (`This role will be in the <city> location` or `headquartered in <city>, <state>`), a markdown description built from the overview paragraphs plus each `elementor-accordion-item` heading and content, and the shared `mailto:info@thespaceportcompany.com` apply URL. `jobType` is `[JobType.FULL_TIME]`, `employmentType` is `"Full time"`, `isRemote` is `false`, and `workFromHomeType` is `"On Site"`. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
+
+**Files:** `packages/plugins/source-company-thespaceportcompany/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-company-thespaceportcompany/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns thespaceportcompany` passes (9/9).
+
+## 2026-09-03 — Spec 5100 — `source-ats-recruitee` Custom-Domain Support
+
+**Change:** Update `source-ats-recruitee` to resolve the board base URL from an explicit `companyUrl` origin or from a `companySlug` that is a full custom-domain host (e.g. `careers.morpheus.space`). Public listings use `${baseUrl}/api/offers` and `jobUrl` fallbacks use `${baseUrl}/o/${slug}` when `offer.careers_url` is absent. The authenticated `api.recruitee.com/c/{id}/offers` path is skipped for custom-domain hosts because that endpoint expects a Recruitee account id, not a hostname. `companyName` prefers `offer.company_name` when the API returns it. Adds `__tests__/recruitee.service.spec.ts` with mocked HTTP client covering standard slug, custom-domain host, `companyUrl` override, `*.recruitee.com` host, auth-token and fallback paths, `bad_input` diagnostics, and `resultsWanted` capping.
+
+**Files:** `packages/plugins/source-ats-recruitee/src/recruitee.service.ts`, `packages/plugins/source-ats-recruitee/src/recruitee.types.ts`, `packages/plugins/source-ats-recruitee/__tests__/recruitee.service.spec.ts`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-ats-recruitee/tsconfig.json` clean; `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns source-ats-recruitee` passes.
+
+## 2026-09-03 — Spec 5099 — Source Company Plugin: Launchpad Build AI
+
+**Change:** Add `source-company-launchpadbuild_ai` plugin for Launchpad Build AI (`launchpadbuild.ai`). It scrapes the WordPress/WP Job Openings careers page at `https://www.launchpadbuild.ai/careers/`, parsing `div.awsm-job-listing-item` entries for detail-page URLs and titles. Optional inline specification terms (`Employment Types`, `Locations`, `Schedule`) are read from the list item when present. For each detail page it extracts the `h1.elementor-heading-title` title, builds a markdown description from `h3.wp-block-heading` sections plus following `p`/`ul` blocks, and sets `applyUrl` to the detail page URL because the `form#awsm-application-form` posts to the current page. Location is derived from the `Locations` specification term (e.g. `El Segundo CA`) when available; otherwise the `Why Launchpad` section is scanned for `UK based` and, if found, emits a `LocationDto` with `country: Country.UK`. `workFromHomeType` is derived from the `Schedule` specification term (`On-site`) or from the `Why Launchpad` phrase `hybrid option(s)`, which maps to `Hybrid`. `isRemote` is only set to `true` when the description explicitly says remote. Compensation is parsed from the `Compensation & Benefits` section; when both hourly and yearly ranges appear, the `YEARLY` interval is preferred because the role is described as salaried. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
+
+**Files:** `packages/plugins/source-company-launchpadbuild_ai/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns launchpadbuild` passes (14/14).
+
+---
+## 2026-09-03 — Spec 5098 — Source Company Plugin: ATLAS Space Operations
+
+**Change:** Add `source-company-atlasspace` plugin for ATLAS Space Operations (`atlasspace.com`). It scrapes the WordPress/Elementor careers page at `https://atlasspace.com/careers/`, parses the `Current Openings` icon list for detail-page links and titles, and for each job page extracts the `h2` title, the generic `Apply for this Job` apply URL (`https://atlasspace.com/apply/`), markdown descriptions built from `h4` section headings (`Job Description`, `Essential Duties`, `Required Qualifications`, `Desired Qualifications`, `Location`, `Salary`/`Salary Range`, `Benefits`, `Additional Information`), the `Location` city/state, and the annual salary range. Sets `companyName` to `ATLAS Space Operations`, `companyUrl` to `https://atlasspace.com/careers/`, `isRemote` to `false`, and `workFromHomeType` to `On Site`. When no explicit `Details`/`Employment Type` section is present, the presence of an annual salary range implies `FULL_TIME`. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
+
+**Files:** `packages/plugins/source-company-atlasspace/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns atlasspace` passes (13/13).
+
+---
+## 2026-09-03 — Spec 5097 — Source Company Plugin: Syncere
+
+**Change:** Add `source-company-syncere` plugin for Syncere (`syncere.com`). It scrapes the Framer-generated careers page at `https://syncere.com/story#jobs`, extracts the `framer-search-index` meta tag, fetches the JSON index, and parses the four job pages (`/hard-engineer`, `/elec-engineer`, `/research-scientist`, `/you-tell-us`) into `JobPostDto`. It builds markdown descriptions from section headers (`About the Role`, `What You'll Do`, `What We're Looking For`, `Nice to Have`, `Details`, `How to Apply`), splits `•` bullets into list items, extracts `jobs@syncereai.com` as a `mailto` apply URL, sets `Palo Alto, CA` with `workFromHomeType: 'On Site'`, and maps `Details` text into `FULL_TIME`/`INTERNSHIP`/`CONTRACT` job types. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters.
+
+**Files:** `packages/plugins/source-company-syncere/*`, `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns syncere` passes (12/12).
+
+---
+## 2026-09-03 — Spec 5096 — JobsService `companyUrl` Routing Fallback
+
+**Change:** Allow `JobsService` to fall back to an unambiguous canonical ATS board URL in `companyUrl` when `companyDomain` does not map to a registered `Site` token. New `resolveCompanyUrl` utility in `@ever-jobs/common` maps known ATS board hosts (`boards.greenhouse.io`, `job-boards.greenhouse.io`, `jobs.ashbyhq.com`, `jobs.lever.co`) to their `Site` token and returns the first path segment as `companySlug`. `searchJobsWithDiagnostics` invokes this fallback only when `effectiveSites` would otherwise be empty because of unresolved `companyDomain` values, or when an explicit `siteType` matches the URL's ATS. `companySlug` is populated from the URL only when it is not already set. The service still throws `BadRequestException` when no explicit selector resolves, and `companyDomain` values that did not map are still surfaced as `bad_input` diagnostics when the request proceeds.
+
+**Files:** `packages/common/src/utils/site-from-url.ts`, `packages/common/__tests__/site-from-url.spec.ts`, `apps/api/src/jobs/jobs.service.ts`, `apps/api/src/jobs/__tests__/jobs.service.spec.ts`, `packages/models/src/dtos/scraper-input.dto.ts`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p apps/api/tsconfig.json`; `npx jest --testPathPatterns jobs.service`; `npx jest --testPathPatterns site-from-url`.
+
+## 2026-09-03 — Spec 5095 — JobsService `companyDomain`/`siteType` Routing
+
+**Change:** Allow a `companyDomain` value that does not map to a registered `Site` token to coexist with a valid `siteType`. `JobsService.resolveCompanyDomains` now returns both resolved `Site` tokens and domain strings that did not map to a registered `Site` token. `searchJobsWithDiagnostics` throws `BadRequestException` only when `effectiveSites` is empty (no `companyDomain` maps to a registered `Site` token and no valid `siteType`); when at least one explicit selector resolves, it continues scraping and appends a `bad_input` `SourceDiagnosticDto` row for each `companyDomain` that did not map, naming the derived token so the mismatch is visible. Existing behavior for requests that only pass `companyDomain` values with no registered `Site` token is unchanged.
+
+**Files:** `apps/api/src/jobs/jobs.service.ts`, `apps/api/src/jobs/__tests__/jobs.service.spec.ts`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p apps/api/tsconfig.json` clean; `npx jest --testPathPatterns jobs.service` passes (126/126).
+
+---
+## 2026-09-03 — Spec 5094 — Dayforce CSRF Handshake
+
+**Change:** Update `source-ats-dayforce` to bootstrap a session before the geo search endpoint. `DayforceService` now creates its `HttpClient` with `cookies: true`, calls `GET /api/auth/csrf` with the candidate-portal page as the `Referer`, stores the returned `csrfToken` as `X-CSRF-TOKEN`, and relies on the cookie jar to replay the `__Host-next-auth.csrf-token` cookie on every subsequent `POST /api/geo/{client}/jobposting/search`. If the handshake fails (e.g. `403`) or returns no token, `scrape` catches the error and returns `classifyScrapeError(err)` as the response diagnostic. The module comment in `dayforce.constants.ts` is updated to reflect that the geo search is no longer unauthenticated.
+
+**Files:** `packages/plugins/source-ats-dayforce/src/dayforce.service.ts`, `packages/plugins/source-ats-dayforce/src/dayforce.constants.ts`, `packages/plugins/source-ats-dayforce/__tests__/dayforce.service.spec.ts`, `packages/plugins/source-ats-dayforce/__tests__/dayforce.e2e-spec.ts`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/plugins/source-ats-dayforce/tsconfig.json` clean; `npx jest --testPathPatterns source-ats-dayforce` passes (11/11).
+
+---
+## 2026-09-03 — Spec 5093 — Opt-in Cookie Jar for `@ever-jobs/common HttpClient`
+
+**Change:** Add an opt-in `CookieJar` to the shared `HttpClient` (`packages/common/src/http/http-client.ts`) backed by `tough-cookie`. `HttpClientOptions` now accepts `cookies?: boolean | CookieJar`. When enabled, the client reads matching cookies from the jar into the outgoing `Cookie` header before each request and stores all `Set-Cookie` response headers into the jar after each response. The jar cookies are appended to any caller-supplied `Cookie` header. `createHttpClient()` forwards the option. Existing clients that do not set `cookies` see no behavior change.
+
+**Files:** `packages/common/src/http/http-client.ts`, `packages/common/__tests__/http-client-cookies.spec.ts`, `package.json`, `package-lock.json`, `docs/index.md`.
+
+**Validation:** `npx tsc --noEmit -p packages/common/tsconfig.json` clean; `npx jest --testPathPatterns http-client` passes (30/30).
 ## 2026-09-03 — Spec 1687 — the browser goes where the plugin says, not where the caller says
 
 **Change:** the two headful company plugins merged from the fork in #83 — `source-company-rdw`
