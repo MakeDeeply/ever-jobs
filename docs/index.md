@@ -1876,6 +1876,7 @@
 | 5116 | [fix-gengalactic-careers-url](../.specify/specs/5116-fix-gengalactic-careers-url/spec.md) -- [plan](../.specify/specs/5116-fix-gengalactic-careers-url/plan.md) -- [tasks](../.specify/specs/5116-fix-gengalactic-careers-url/tasks.md) | In progress. Corrects `source-company-gengalactic` default `companyUrl` from `https://gengalactic.com/careers.html` to `https://gengalactic.com/careers` because the `.html` path returns 404; updates the unit-test mock and the `companyUrl` assertion to match the canonical URL. |
 | 5117 | [source-company-pulsespace-json](../.specify/specs/5117-source-company-pulsespace-json/spec.md) -- [plan](../.specify/specs/5117-source-company-pulsespace-json/plan.md) -- [tasks](../.specify/specs/5117-source-company-pulsespace-json/tasks.md) | Done (PR #123). Refactors `source-company-pulsespace` to extract open roles from the React main bundle (`/assets/index-*.js`) instead of the empty SSR shell. Parses `const wve = { ... }` into `JobPostDto` records, removes per-detail HTTP fetches, and keeps `applyUrl` blank. Supports `searchTerm`, `location`, `isRemote`, `jobType`, `offset`, and `resultsWanted` filters. |
 | 5118 | [ats-posting-country-code](../.specify/specs/5118-ats-posting-country-code/spec.md) -- [plan](../.specify/specs/5118-ats-posting-country-code/plan.md) -- [tasks](../.specify/specs/5118-ats-posting-country-code/tasks.md) | Done. Adds optional `countryCode` to `JobPostDto` (ATS-declared posting-level ISO alpha-2, verbatim) and removes the `applyCountry` overlays from `source-ats-lever` and `source-ats-workday`, which stamped a per-posting country onto the merged parsed `location` — misattributing multi-site postings and fabricating a location claim when no site parsed. |
+| 5119 | [rippling-structured-locations](../.specify/specs/5119-rippling-structured-locations/spec.md) -- [plan](../.specify/specs/5119-rippling-structured-locations/plan.md) -- [tasks](../.specify/specs/5119-rippling-structured-locations/tasks.md) | Done. Replaces `source-ats-rippling`'s comma-join-then-reparse location pipeline with structural per-entry `LocationDto` mapping from the wire's own `locations[]` fields. Adds `JobPostDto.locations` (per-site list) and `LocationDto.name` (site/entity label); merged `location` is built from structured fields with `country` omitted on disagreement and entity names excluded; `workLocations`/state-bearing pay-band labels are a parser-only fallback. |
 
 ## 8. Templates
 
@@ -1887,5 +1888,5 @@
 
 ---
 
-_Last revised: 2026-09-14 (Spec 5118: posting-level `countryCode`; Lever/Workday overlay removal)._
+_Last revised: 2026-09-14 (Spec 5119: Rippling structured per-site locations; `JobPostDto.locations`/`LocationDto.name`)._
 
