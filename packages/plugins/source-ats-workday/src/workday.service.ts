@@ -277,6 +277,7 @@ export class WorkdayService implements IScraper {
     ].map((label) => label?.replace(/_/g, ' ').replace(/\s+/g, ' ').trim() || null);
     const parsedLocations = parseLocationList(locationLabels);
     const location = parsedLocations.location;
+    const locations = parsedLocations.locations;
 
     // Remote detection: Workday's remoteType enum, plus the parsed labels.
     const remoteType = [info?.remoteType, listing.remoteType]
@@ -316,6 +317,7 @@ export class WorkdayService implements IScraper {
       companyName,
       jobUrl,
       location,
+      ...(locations.length > 0 ? { locations } : {}),
       description,
       compensation,
       datePosted,
