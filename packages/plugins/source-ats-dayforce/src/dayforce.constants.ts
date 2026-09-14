@@ -2,8 +2,8 @@
  * Constants for the Ceridian Dayforce HCM candidate career portal platform.
  *
  * Dayforce hosts the public careers sites of many mid-to-large enterprises.
- * The modern candidate portal exposes a public, unauthenticated "geo search"
- * JSON endpoint shared across every tenant:
+ * The modern candidate portal exposes a "geo search" JSON endpoint shared across
+ * every tenant:
  *
  *   POST https://jobs.dayforcehcm.com/api/geo/{client}/jobposting/search
  *     body → { clientNamespace, jobBoardCode, cultureCode, distanceUnit, paginationStart }
@@ -13,9 +13,10 @@
  * with job detail views at `/CandidatePortal/en-US/{client}/Posting/View/{id}`; we keep
  * the detail-URL shape here so we can synthesize a viewable link when the feed omits one.
  *
- * Both surfaces are reachable without auth. We target the shared geo search feed as the
- * primary endpoint because it returns full HTML descriptions and a true total count in a
- * single response, and works uniformly across tenants.
+ * The geo search endpoint now requires a CSRF token and session cookie. `DayforceService`
+ * bootstraps a session by first calling `GET /api/auth/csrf` with the candidate-portal
+ * page as the `Referer`; the response sets `__Host-next-auth.csrf-token` and returns the
+ * token to send as `X-CSRF-TOKEN` on every search POST.
  */
 
 /**
@@ -29,6 +30,12 @@ export const DAYFORCE_TENANT_HOST_TEMPLATE = 'https://{client}.dayforcehcm.com';
 
 /** Public geo job-posting search endpoint path; `{client}` is substituted at runtime. */
 export const DAYFORCE_SEARCH_PATH = '/api/geo/{client}/jobposting/search';
+
+/** CSRF token endpoint. Called before the first search to obtain `X-CSRF-TOKEN`. */
+export const DAYFORCE_CSRF_PATH = '/api/auth/csrf';
+
+/** Candidate portal page path template; used as the `Referer` for the CSRF handshake. */
+export const DAYFORCE_PORTAL_PATH_TEMPLATE = '/en-US/{client}/CANDIDATEPORTAL';
 
 /** Default candidate job-board code. CANDIDATEPORTAL is the standard public board. */
 export const DAYFORCE_JOB_BOARD_CODE = 'CANDIDATEPORTAL';
