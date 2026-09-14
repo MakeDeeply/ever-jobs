@@ -10,6 +10,10 @@ export class JobPostDto {
   jobUrlDirect?: string | null;
   location?: LocationDto | null;
 
+  /** ISO-3166 alpha-2 country the ATS declared for the posting (e.g. "NL").
+   *  Posting-level metadata — not the parsed country of `location`. */
+  countryCode?: string | null;
+
   description?: string | null;
   companyUrl?: string | null;
   companyUrlDirect?: string | null;

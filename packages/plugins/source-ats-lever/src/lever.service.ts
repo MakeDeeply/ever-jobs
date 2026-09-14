@@ -6,7 +6,6 @@ import { classifyScrapeError,
   ScraperInputDto,
   JobResponseDto,
   JobPostDto,
-  LocationDto,
   CompensationDto,
   CompensationInterval,
   Site,
@@ -17,7 +16,6 @@ import {
   htmlToPlainText,
   extractEmails,
   parseLocationList,
-  regionNameFromCode,
   randomSleep,
   resolveCompensation,
   toDateOnly,
@@ -190,7 +188,7 @@ export class LeverService implements IScraper {
     // `categories.location`, and normalize through the shared parser (handles
     // `City, ST` splitting, multi-site `; `-joining, and remote/hybrid hints).
     const parsedLocations = parseLocationList(this.locationLabels(job));
-    const location = this.applyCountry(parsedLocations.location, job.country);
+    const location = parsedLocations.location;
 
     // Remote status: trust the explicit workplaceType flag, otherwise fall back
     // to text mentioned in the location labels.
@@ -225,6 +223,7 @@ export class LeverService implements IScraper {
       emails: extractEmails(description),
       site: Site.LEVER,
       // ATS-specific fields
+      countryCode: job.country ?? null,
       atsId: job.id ?? null,
       atsType: 'lever',
       department: job.categories?.department ?? null,
@@ -248,22 +247,6 @@ export class LeverService implements IScraper {
     }
     const single = job.categories?.location;
     return single ? [single] : [];
-  }
-
-  /**
-   * Fold Lever's ISO-2 `country` code into the parsed location when the parser
-   * did not already derive a country (e.g. non-US sites the US-only parser
-   * leaves bare). Uses the runtime CLDR table via `regionNameFromCode`.
-   */
-  private applyCountry(
-    location: LocationDto | null,
-    countryCode: string | null | undefined,
-  ): LocationDto | null {
-    const country = regionNameFromCode(countryCode);
-    if (!country) return location;
-    if (!location) return new LocationDto({ country });
-    if (location.country) return location;
-    return new LocationDto({ ...location, country });
   }
 
   private extractCompensation(job: LeverJob): CompensationDto | null {
