@@ -41,7 +41,7 @@ interface TrossenroboticsCrawl {
   site: Site.TROSSENROBOTICS,
   name: 'Trossen Robotics',
   category: 'company',
-  companyDomains: ['trossenrobotics.com', 'www.trossenrobotics.com'],
+  companyDomains: ['trossenrobotics.com'],
 })
 @Injectable()
 export class TrossenroboticsService

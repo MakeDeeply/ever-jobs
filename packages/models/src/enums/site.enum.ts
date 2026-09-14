@@ -110,6 +110,7 @@ export enum Site {
   AUTHENTICJOBS = 'authenticjobs',
   JOBSCORE = 'jobscore',
   TALENTLYFT = 'talentlyft',
+  KULA_AI = 'kula_ai',
   // Phase 13: RSS niche board expansion
   CRYPTOJOBSLIST = 'cryptojobslist',
   JOBSPRESSO = 'jobspresso',
@@ -1711,7 +1712,8 @@ export enum Site {
   // Phase 784: Spec 789 — Source Company Plugin: Arbor Energy
   ARBOR_ENERGY = 'arborenergy',
   // Phase 785: Spec 790 — Source Company Plugin: Aurora Innovation
-  AURORA_INNOVATION = 'aurorainnovation',
+  // Phase 5102: renamed to AURORA_TECH and backed by Ashby
+  AURORA_TECH = 'aurora_tech',
   // Phase 786: Spec 791 — Source Company Plugin: EarnIn
   EARNIN = 'earnin',
   // Phase 787: Spec 792 — Source Company Plugin: Faraday Future
@@ -3528,6 +3530,37 @@ export enum Site {
   RDW = 'rdw',
   // Phase 1679: Spec 5092 — Source Company Plugin: Trossen Robotics
   TROSSENROBOTICS = 'trossenrobotics',
+  // Phase 1680: Spec 5097 — Source Company Plugin: Syncere
+  SYNCERE = 'syncere',
+  // Phase 1681: Spec 5098 — Source Company Plugin: ATLAS Space Operations
+  ATLAS = 'atlasspace',
+  // Phase 1686: Spec 5105 — Source Company Plugin: Argo Space
+  ARGOSPACE = 'argospace',
+  // Phase 1682: Spec 5099 — Source Company Plugin: Launchpad Build AI
+  LAUNCHPADBUILD_AI = 'launchpadbuild_ai',
+  // Phase 1683: Spec 5101 — Source Company Plugin: The Spaceport Company
+  THE_SPACEPORT_COMPANY = 'thespaceportcompany',
+  // Phase 1684: Spec 5103 — Source Company Plugin: ThinkOrbital
+  THINKORBITAL = 'thinkorbital',
+  // Phase 1685: Spec 5104 — Source Company Plugin: Deft Robotics (deftai.co)
+  DEFTAI_CO = 'deftai_co',
+  // Phase 1687: Spec 5107 — Source Company Plugin: Shinkei (shinkei.systems)
+  SHINKEI_SYSTEMS = 'shinkei_systems',
+  // Phase 1688: Spec 5109 — Source Company Plugin: Chang Robotics (changrobotics.ai)
+  CHANGROBOTICS_AI = 'changrobotics_ai',
+  // Phase 1689: Spec 5110 — Source Company Plugin: Kyber Labs (kyberlabs.ai)
+  KYBERLABS_AI = 'kyberlabs_ai',
+  // Phase 1690: Spec 5111 — Source Company Plugin: Cascade Space (cascade.space)
+  CASCADE_SPACE = 'cascade_space',
+  // Phase 1691: Spec 5112 — Source Company Plugin: General Galactic (gengalactic.com)
+  GENGALACTIC = 'gengalactic',
+  // Phase 1692: Spec 5113 — Source Company Plugin: HLabs (hlaboratories.com)
+  HLABORATORIES = 'hlaboratories',
+
+  // Phase 1693: Spec 5114 — Source Company Plugin: Pulse Space (pulsespace.com)
+  PULSESPACE = 'pulsespace',
+  // Phase 1694: Spec 5115 — Source Company Plugin: ReNEW Manufacturing Solutions (renewmfgsol.com)
+  RENEWMFGSOL = 'renewmfgsol',
 }
 
 /**

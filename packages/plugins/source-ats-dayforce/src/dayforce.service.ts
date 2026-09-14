@@ -23,6 +23,8 @@ import {
   DAYFORCE_HOST,
   DAYFORCE_TENANT_HOST_TEMPLATE,
   DAYFORCE_SEARCH_PATH,
+  DAYFORCE_CSRF_PATH,
+  DAYFORCE_PORTAL_PATH_TEMPLATE,
   DAYFORCE_JOB_BOARD_CODE,
   DAYFORCE_CULTURE_CODE,
   DAYFORCE_PAGE_SIZE,
@@ -71,6 +73,7 @@ export class DayforceService implements IScraper {
       proxies: input.proxies,
       caCert: input.caCert,
       timeout: input.requestTimeout,
+      cookies: true,
     });
     http.setHeaders(DAYFORCE_HEADERS);
 
@@ -80,6 +83,8 @@ export class DayforceService implements IScraper {
 
     try {
       this.logger.log(`Fetching Dayforce jobs for tenant: ${client}`);
+
+      await this.initSession(http, client, input.companyUrl);
 
       // First page → postings + true total count.
       const first = await this.fetchPage(http, client, cultureCode, 0);
@@ -152,6 +157,50 @@ export class DayforceService implements IScraper {
     const postings = data.jobPostings ?? data.JobPostings ?? [];
     const total = data.maxCount ?? data.MaxCount ?? data.count ?? data.Count ?? 0;
     return { postings, count: total };
+  }
+
+  /**
+   * Bootstrap a Dayforce session. The geo search endpoint requires both an
+   * `X-CSRF-TOKEN` header and the `__Host-next-auth.csrf-token` cookie. The
+   * `/api/auth/csrf` endpoint returns the token and sets that cookie; the cookie
+   * jar replays it on every subsequent request.
+   */
+  private async initSession(
+    http: ReturnType<typeof createHttpClient>,
+    client: string,
+    companyUrl: string | undefined,
+  ): Promise<void> {
+    const portalUrl = this.buildPortalUrl(client, companyUrl);
+    const csrfUrl = `${DAYFORCE_HOST}${DAYFORCE_CSRF_PATH}`;
+
+    const response = await http.get(csrfUrl, { headers: { Referer: portalUrl } });
+    const token = (response.data as { csrfToken?: string }).csrfToken;
+    if (!token) {
+      throw new Error(`Dayforce CSRF token missing for ${client}`);
+    }
+
+    http.setHeaders({
+      'X-CSRF-TOKEN': token,
+      Referer: portalUrl,
+    });
+  }
+
+  /** Build the candidate-portal page URL used as the `Referer` for CSRF + search. */
+  private buildPortalUrl(client: string, companyUrl: string | undefined): string {
+    if (companyUrl) {
+      try {
+        const u = new URL(companyUrl);
+        if (u.host.toLowerCase() === 'jobs.dayforcehcm.com') {
+          const path = u.pathname.replace(/\/+$/, '');
+          if (path) {
+            return `${u.origin}${path}`;
+          }
+        }
+      } catch {
+        // Fall through to the default portal URL.
+      }
+    }
+    return `${DAYFORCE_HOST}${DAYFORCE_PORTAL_PATH_TEMPLATE.replace('{client}', encodeURIComponent(client))}`;
   }
 
   /** Map raw postings → JobPostDto, de-duplicating by ATS id within this run. */

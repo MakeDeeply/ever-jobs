@@ -1,8 +1,8 @@
 /**
  * E2E test for the Ceridian Dayforce HCM scraper.
  *
- * No authentication required — Dayforce candidate portals expose a public geo
- * job-posting search feed. Tests run against a known Dayforce-powered tenant but
+ * Dayforce candidate portals now require a CSRF handshake before the geo search
+ * endpoint returns results. Tests run against a known Dayforce-powered tenant but
  * tolerate upstream changes / WAF gating by treating zero results as acceptable;
  * the shape assertions only run when jobs are actually returned.
  */
