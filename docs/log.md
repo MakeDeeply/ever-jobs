@@ -11,7 +11,7 @@
 
 **Files:** `packages/models/src/dtos/location.dto.ts`, `packages/common/src/utils/location-parser.ts`, `packages/common/__tests__/location-parser.spec.ts`, `packages/plugins/source-ats-lever/src/lever.service.ts` (+ spec), `packages/plugins/source-ats-workday/src/workday.service.ts` (+ spec), `packages/plugins/source-ats-breezyhr/src/breezyhr.service.ts` (+ spec), `packages/plugins/source-ats-gusto-hosted/src/gusto-hosted.service.ts`, `packages/plugins/source-ats-gusto-hosted/src/gusto-hosted.types.ts` (+ spec), `packages/plugins/source-ats-workatastartup/src/workatastartup.service.ts` (+ spec), `packages/plugins/source-company-aurora_tech/src/auroratech.service.ts` (+ spec), `.specify/specs/5120-location-text-and-per-site-locations/*`, `docs/index.md`, `docs/log.md`.
 
-**Validation:** `npx jest` focused run across the 8 touched packages: 136/137 pass (one expectation fix in `source-ats-workatastartup` — the JSON-LD `countryName` leaves `CA`/`US` codes as-is); `tsc --noEmit` clean on `packages/models`, `packages/common`, and the six plugin packages (`source-ats-breezyhr` shows a pre-existing `TS6059` rootDir complaint unrelated to this change); `npm run lint:docs` clean.
+**Validation:** `npx jest` across the 8 touched packages: 137/137 pass; `tsc --noEmit` clean on `packages/models`, `packages/common`, and the six plugin packages (`source-ats-breezyhr` shows a pre-existing `TS6059` rootDir complaint unrelated to this change); `npm run lint:docs` clean.
 
 ## 2026-09-14 — Spec 5119 — Rippling: structured per-site locations (`rippling-structured-locations`)
 
