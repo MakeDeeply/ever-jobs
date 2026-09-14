@@ -132,7 +132,7 @@ Greenhouse slugs are the subdomain used in `boards.greenhouse.io/{slug}`.
 | Papa | `papa` | Health-tech / Care |
 | AIR COMPANY | `aircompany` | Climate Tech / Carbon Conversion & Synthetic Fuels |
 | Arbor Energy | `arborenergy` | Climate Tech / Carbon-Negative Power (BECCS) |
-| Aurora Innovation | `aurorainnovation` | Autonomous Vehicles / Self-Driving Trucking |
+| Aurora | `aurora_tech` | Autonomous Vehicles / Self-Driving Trucking |
 | EarnIn | `earnin` | Fintech / Earned-Wage Access |
 | Faraday Future | `faradayfuture` | Automotive / Electric Vehicles |
 | FastSpring | `fastspring` | Fintech / Merchant-of-Record Commerce & Subscription Billing |

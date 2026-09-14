@@ -1,0 +1,66 @@
+{
+  "jobs": [
+    {
+      "id": "job-001",
+      "title": "Senior Software Engineer ",
+      "descriptionHtml": "<p>Build the Aurora Driver.</p>",
+      "descriptionPlain": "Build the Aurora Driver.",
+      "location": "Pittsburgh, PA",
+      "workplaceType": "Hybrid",
+      "publishedAt": "2026-08-28T10:00:00-04:00",
+      "jobUrl": "https://jobs.ashbyhq.com/aurora-operations-inc/job-001",
+      "applyUrl": "https://jobs.ashbyhq.com/aurora-operations-inc/job-001/apply",
+      "department": "Engineering",
+      "team": "Perception",
+      "employmentType": "Full-time",
+      "compensation": {
+        "summaryComponents": [
+          {
+            "compensationType": "Salary",
+            "minValue": 180000,
+            "maxValue": 220000,
+            "currencyCode": "USD",
+            "interval": "YEAR"
+          }
+        ]
+      }
+    },
+    {
+      "id": "job-002",
+      "title": "Applied Researcher",
+      "descriptionHtml": "<p>Research autonomy algorithms.</p>",
+      "descriptionPlain": "Research autonomy algorithms.",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "San Francisco",
+          "addressRegion": "CA",
+          "addressCountry": "US"
+        }
+      },
+      "workplaceType": "Remote",
+      "publishedAt": "2026-08-27",
+      "department": "Research",
+      "employmentType": "Full-time",
+      "isListed": true
+    },
+    {
+      "id": "job-003",
+      "title": "Mechanical Engineer",
+      "descriptionHtml": "<p>Design autonomous truck hardware.</p>",
+      "descriptionPlain": "Design autonomous truck hardware.",
+      "location": "Seattle, WA",
+      "workplaceType": "OnSite",
+      "publishedAt": "2026-08-26T14:30:00-07:00",
+      "department": "Hardware",
+      "employmentType": "Full-time",
+      "isListed": true
+    },
+    {
+      "id": "job-004",
+      "title": "",
+      "descriptionPlain": "No title — should be skipped.",
+      "location": "Dallas, TX",
+      "isListed": true
+    }
+  ]
+}

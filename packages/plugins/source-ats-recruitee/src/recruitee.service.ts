@@ -21,7 +21,11 @@ import {
   extractEmails,
   toDateOnly,
 } from '@ever-jobs/common';
-import { RECRUITEE_HEADERS, RECRUITEE_OFFICIAL_API_BASE } from './recruitee.constants';
+import {
+  RECRUITEE_HEADERS,
+  RECRUITEE_OFFICIAL_API_BASE,
+  isPubliclyRoutableBoardHost,
+} from './recruitee.constants';
 import { RecruiteeOffer, RecruiteeResponse } from './recruitee.types';
 
 @SourcePlugin({
@@ -35,7 +39,7 @@ export class RecruiteeService implements IScraper {
   private readonly logger = new Logger(RecruiteeService.name);
 
   async scrape(input: ScraperInputDto): Promise<JobResponseDto> {
-    const companySlug = input.companySlug;
+    const companySlug = input.companySlug?.trim();
     if (!companySlug) {
       this.logger.warn('No companySlug provided for Recruitee scraper');
       return new JobResponseDto(
@@ -44,9 +48,23 @@ export class RecruiteeService implements IScraper {
       );
     }
 
+    const baseUrl = this.getBoardBaseUrl(input);
+    if (!baseUrl) {
+      return new JobResponseDto(
+        [],
+        new ScrapeDiagnostics('bad_input', `invalid Recruitee board address: ${input.companyUrl || companySlug}`),
+      );
+    }
+
+    // A dotted slug that is not a *.recruitee.com subdomain is a custom-domain
+    // host, which the official api.recruitee.com/c/{id}/offers endpoint does not
+    // accept as an account id.
+    const isCustomDomainHost =
+      companySlug.includes('.') && !companySlug.toLowerCase().endsWith('.recruitee.com');
+
     // Check for API token: per-request auth overrides env var
     const apiToken = input.auth?.recruitee?.apiToken ?? process.env.RECRUITEE_API_TOKEN;
-    if (apiToken) {
+    if (apiToken && !isCustomDomainHost) {
       try {
         const result = await this.scrapeWithApi(apiToken, companySlug, input);
         return result;
@@ -64,7 +82,7 @@ export class RecruiteeService implements IScraper {
     });
     client.setHeaders(RECRUITEE_HEADERS);
 
-    const url = `https://${encodeURIComponent(companySlug)}.recruitee.com/api/offers`;
+    const url = `${baseUrl}/api/offers`;
 
     try {
       this.logger.log(`Fetching Recruitee jobs for company: ${companySlug}`);
@@ -81,7 +99,7 @@ export class RecruiteeService implements IScraper {
         if (jobPosts.length >= resultsWanted) break;
 
         try {
-          const post = this.processOffer(offer, companySlug, input.descriptionFormat);
+          const post = this.processOffer(offer, baseUrl, companySlug, input.descriptionFormat);
           if (post) {
             jobPosts.push(post);
           }
@@ -98,7 +116,78 @@ export class RecruiteeService implements IScraper {
   }
 
   /**
-   * Fetch jobs using the official Recruitee API with Bearer token authentication.
+   * Resolve the canonical board origin from `companyUrl` or `companySlug`.
+   *
+   * - `companyUrl` is normalized to its origin if provided.
+   * - A `companySlug` that already starts with `http(s)://` is parsed as a URL.
+   * - A `companySlug` that contains a dot and is not a `*.recruitee.com`
+   *   subdomain is treated as a custom-domain host and prefixed with `https://`.
+   * - Everything else is treated as a standard Recruitee account slug.
+   */
+  private getBoardBaseUrl(input: ScraperInputDto): string | null {
+    const rawUrl = input.companyUrl?.trim();
+    if (rawUrl) {
+      try {
+        const url = new URL(rawUrl.startsWith('http') ? rawUrl : `https://${rawUrl}`);
+        return this.publicOrigin(url, `companyUrl \`${rawUrl}\``);
+      } catch {
+        this.logger.warn(`Invalid companyUrl for Recruitee: ${rawUrl}`);
+        return null;
+      }
+    }
+
+    const slug = input.companySlug?.trim() ?? '';
+    if (!slug) {
+      return null;
+    }
+
+    if (/^https?:\/\//i.test(slug)) {
+      try {
+        const url = new URL(slug);
+        return this.publicOrigin(url, `companySlug \`${slug}\``);
+      } catch {
+        this.logger.warn(`Invalid Recruitee companySlug as URL: ${slug}`);
+        return null;
+      }
+    }
+
+    const lowerSlug = slug.toLowerCase();
+    if (lowerSlug.endsWith('.recruitee.com')) {
+      return `https://${slug}`;
+    }
+
+    if (slug.includes('.')) {
+      return isPubliclyRoutableBoardHost(slug)
+        ? `https://${slug}`
+        : this.refuseHost(slug, `companySlug \`${slug}\``);
+    }
+
+    return `https://${encodeURIComponent(slug)}.recruitee.com`;
+  }
+
+  /**
+   * The origin of a caller-supplied board URL, or `null` when it is not a
+   * public http(s) host. A board on loopback or a private range is not a
+   * Recruitee board; it is our HTTP client being aimed somewhere internal.
+   */
+  private publicOrigin(url: URL, label: string): string | null {
+    if (url.protocol !== 'https:' && url.protocol !== 'http:') {
+      return this.refuseHost(url.protocol, label);
+    }
+    if (!isPubliclyRoutableBoardHost(url.hostname)) {
+      return this.refuseHost(url.hostname, label);
+    }
+    return `${url.protocol}//${url.host}`;
+  }
+
+  private refuseHost(host: string, label: string): null {
+    this.logger.warn(
+      `Recruitee: refusing ${label} — \`${host}\` is not a public board host`,
+    );
+    return null;
+  }
+
+  /**
    * Provides access to full offer details including pipeline stages,
    * custom fields, and non-published offers.
    *
@@ -112,6 +201,14 @@ export class RecruiteeService implements IScraper {
     this.logger.log(
       `Recruitee: using authenticated API for company: ${companySlug}`,
     );
+
+    const baseUrl = this.getBoardBaseUrl(input);
+    if (!baseUrl) {
+      return new JobResponseDto(
+        [],
+        new ScrapeDiagnostics('bad_input', `invalid Recruitee board address: ${input.companyUrl || companySlug}`),
+      );
+    }
 
     const client = createHttpClient({
       proxies: input.proxies,
@@ -142,7 +239,7 @@ export class RecruiteeService implements IScraper {
       if (jobPosts.length >= resultsWanted) break;
 
       try {
-        const post = this.processOffer(offer, companySlug, input.descriptionFormat);
+        const post = this.processOffer(offer, baseUrl, companySlug, input.descriptionFormat);
         if (post) {
           jobPosts.push(post);
         }
@@ -158,6 +255,7 @@ export class RecruiteeService implements IScraper {
 
   private processOffer(
     offer: RecruiteeOffer,
+    baseUrl: string,
     companySlug: string,
     format?: DescriptionFormat,
   ): JobPostDto | null {
@@ -186,10 +284,10 @@ export class RecruiteeService implements IScraper {
     // Compensation from salary_min/salary_max
     const compensation = this.extractCompensation(offer);
 
-    // Job URL from careers_url + slug
+    // Job URL from careers_url + slug, or from the resolved board base URL
     const jobUrl = offer.careers_url && offer.slug
       ? `${offer.careers_url}/${offer.slug}`
-      : `https://${companySlug}.recruitee.com/o/${offer.slug ?? offer.id}`;
+      : `${baseUrl}/o/${offer.slug ?? offer.id}`;
 
     // Date posted
     const datePosted = offer.created_at
@@ -199,7 +297,7 @@ export class RecruiteeService implements IScraper {
     return new JobPostDto({
       id: `recruitee-${offer.id}`,
       title,
-      companyName: companySlug,
+      companyName: offer.company_name ?? companySlug,
       jobUrl,
       location,
       description,

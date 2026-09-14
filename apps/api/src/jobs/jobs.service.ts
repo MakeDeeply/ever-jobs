@@ -5,7 +5,9 @@ import {
   ERR_SOURCE_CIRCUIT_OPEN,
   SourceDiagnosticDto, ScrapeReason, ScrapeDiagnostics, classifyScrapeError,
 } from '@ever-jobs/models';
-import { extractSalary, convertToAnnual, siteFromDomain, deriveSiteToken } from '@ever-jobs/common';
+import {
+  extractSalary, convertToAnnual, siteFromDomain, deriveSiteToken, resolveCompanyUrl,
+} from '@ever-jobs/common';
 import { ConfigService } from '@nestjs/config';
 import { PluginRegistry, CircuitBreakerInterceptor } from '@ever-jobs/plugin';
 import { MetricsService } from '../metrics/metrics.service';
@@ -167,8 +169,39 @@ export class JobsService implements OnModuleInit {
     input: ScraperInputDto,
   ): Promise<{ jobs: JobPostDto[]; perSource: SourceDiagnosticDto[] }> {
     const atsSites = new Set<Site>(this.registry.listAtsSites());
-    const resolvedSites = this.resolveCompanyDomains(input.companyDomain);
-    const effectiveSites = this.buildEffectiveSites(input.siteType, resolvedSites);
+    const { resolved: resolvedSites, unresolved: unresolvedDomains } =
+      this.resolveCompanyDomains(input.companyDomain);
+    let effectiveSites = this.buildEffectiveSites(input.siteType, resolvedSites);
+
+    // If no explicit site is selected, fall back to an unambiguous canonical
+    // ATS board URL in `companyUrl`. The host selects the plugin and the first
+    // path segment provides `companySlug` when it is not already set.
+    const companyUrlFallback = resolveCompanyUrl(input.companyUrl);
+    if (effectiveSites.length === 0 && companyUrlFallback.site) {
+      effectiveSites = [companyUrlFallback.site];
+    }
+    // Only when that provider is the *sole* selection. `companySlug` is shared
+    // by every scraper in the fan-out, so writing a Greenhouse tenant into it
+    // while Ashby is also selected sends Ashby to a board that is not its own
+    // (raised by Greptile on PR #87).
+    if (
+      companyUrlFallback.site &&
+      !input.companySlug &&
+      companyUrlFallback.slug &&
+      effectiveSites.length === 1 &&
+      effectiveSites[0] === companyUrlFallback.site
+    ) {
+      input.companySlug = companyUrlFallback.slug;
+    }
+
+    if (effectiveSites.length === 0 && unresolvedDomains.length > 0) {
+      const messages = unresolvedDomains.map(
+        (domain) =>
+          `domain \`${domain}\` → token \`${deriveSiteToken(domain)}\` is not a registered plugin`,
+      );
+      throw new BadRequestException(messages.join('; '));
+    }
+
     let sites: Site[];
 
     if (effectiveSites.length) {
@@ -342,6 +375,19 @@ export class JobsService implements OnModuleInit {
       return dateB - dateA;
     });
 
+    // Surface `companyDomain` values that did not map to a registered Site token as
+    // diagnostics when the request still had at least one valid explicit selector (Spec 5095).
+    for (const domain of unresolvedDomains) {
+      perSource.push(
+        new SourceDiagnosticDto(
+          `companyDomain:${domain}`,
+          0,
+          'bad_input',
+          `domain \`${domain}\` → token \`${deriveSiteToken(domain)}\` is not a registered plugin`,
+        ),
+      );
+    }
+
     this.logger.log(`Total aggregated jobs: ${allJobs.length}`);
     return { jobs: allJobs, perSource };
   }
@@ -419,17 +465,20 @@ export class JobsService implements OnModuleInit {
    * Resolves `companyDomain` values to registered `Site` tokens.
    *
    * A plugin that declares the domain wins (`companyDomains`, Spec 5086);
-   * otherwise the token is derived from the domain (Spec 5069). Throws
-   * `BadRequestException` for any domain that neither path resolves, naming the
-   * domain and the derived token so the fix is obvious.
+   * otherwise the token is derived from the domain (Spec 5069). Returns both
+   * the resolved set and the list of domains that did not map to a registered
+   * Site token; callers decide whether to fail or to surface them as diagnostics (Spec 5095).
    */
-  private resolveCompanyDomains(domains: string[] | undefined): Set<Site> {
+  private resolveCompanyDomains(domains: string[] | undefined): {
+    resolved: Set<Site>;
+    unresolved: string[];
+  } {
     const resolved = new Set<Site>();
     if (!domains?.length) {
-      return resolved;
+      return { resolved, unresolved: [] };
     }
 
-    const unresolved: { domain: string; token: string }[] = [];
+    const unresolved: string[] = [];
     for (const raw of domains) {
       const trimmed = raw?.trim();
       if (!trimmed) {
@@ -439,18 +488,11 @@ export class JobsService implements OnModuleInit {
       if (site) {
         resolved.add(site);
       } else {
-        unresolved.push({ domain: trimmed, token: deriveSiteToken(trimmed) });
+        unresolved.push(trimmed);
       }
     }
 
-    if (unresolved.length) {
-      const messages = unresolved.map(
-        (u) => `domain \`${u.domain}\` → token \`${u.token}\` is not a registered plugin`,
-      );
-      throw new BadRequestException(messages.join('; '));
-    }
-
-    return resolved;
+    return { resolved, unresolved };
   }
 
   /**

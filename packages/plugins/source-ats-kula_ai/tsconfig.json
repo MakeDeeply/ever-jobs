@@ -1,0 +1,8 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../../../dist/packages/source-ats-kula_ai",
+    "declaration": true
+  },
+  "include": ["src/**/*"]
+}
