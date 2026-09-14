@@ -440,17 +440,20 @@ describe('WorkdayService — Spec 720 / T05', () => {
       expect(job.location?.city).not.toContain('2 Locations');
     });
 
-    it('folds the ISO-2 country code into the location via regionNameFromCode', async () => {
+    it('surfaces the requisition alpha-2 code as posting-level countryCode', async () => {
       const job = await scrapeWith(
         detail({ location: 'Rockville, MD', additionalLocations: [] }),
       );
-      expect(job.location?.country).toBe('United States');
+      // Posting-level field, verbatim — never folded into the parsed location.
+      expect(job.countryCode).toBe('US');
+      expect(job.location?.country == null).toBe(true);
     });
 
-    it('leaves country unset when no alpha2Code is present', async () => {
+    it('leaves countryCode unset when no alpha2Code is present', async () => {
       const job = await scrapeWith(
         detail({ location: 'Rockville, MD', additionalLocations: [], jobRequisitionLocation: null }),
       );
+      expect(job.countryCode == null).toBe(true);
       expect(job.location?.country == null).toBe(true);
     });
 

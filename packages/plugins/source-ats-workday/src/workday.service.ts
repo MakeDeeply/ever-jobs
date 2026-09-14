@@ -6,7 +6,6 @@ import {
   ScraperInputDto,
   JobResponseDto,
   JobPostDto,
-  LocationDto,
   CompensationDto,
   Site,
   DescriptionFormat,
@@ -18,7 +17,6 @@ import {
   markdownConverter,
   extractEmails,
   parseLocationList,
-  regionNameFromCode,
   randomSleep,
   salaryToCompensation,
 } from '@ever-jobs/common';
@@ -278,10 +276,7 @@ export class WorkdayService implements IScraper {
       summaryText && !/^\d+\s+locations?$/i.test(summaryText) ? summaryText : null,
     ].map((label) => label?.replace(/_/g, ' ').replace(/\s+/g, ' ').trim() || null);
     const parsedLocations = parseLocationList(locationLabels);
-    const location = this.applyCountry(
-      parsedLocations.location,
-      info?.jobRequisitionLocation?.country?.alpha2Code,
-    );
+    const location = parsedLocations.location;
 
     // Remote detection: Workday's remoteType enum, plus the parsed labels.
     const remoteType = [info?.remoteType, listing.remoteType]
@@ -329,6 +324,7 @@ export class WorkdayService implements IScraper {
       ...(workFromHomeType ? { workFromHomeType } : {}),
       site: Site.WORKDAY,
       // ATS-specific fields
+      countryCode: info?.jobRequisitionLocation?.country?.alpha2Code ?? null,
       atsId,
       atsType: 'workday',
       department: info?.jobFamily?.[0]?.name ?? subtitleTexts[0] ?? null,
@@ -344,22 +340,6 @@ export class WorkdayService implements IScraper {
     if (format === DescriptionFormat.HTML) return html;
     if (format === DescriptionFormat.MARKDOWN) return markdownConverter(html);
     return htmlToPlainText(html);
-  }
-
-  /**
-   * Fold the requisition's ISO-2 country code into the parsed location when the
-   * (US-only) parser did not already derive a country. Uses the runtime CLDR
-   * table via `regionNameFromCode`, mirroring the Lever/Greenhouse passes.
-   */
-  private applyCountry(
-    location: LocationDto | null,
-    countryCode: string | null | undefined,
-  ): LocationDto | null {
-    const country = regionNameFromCode(countryCode);
-    if (!country) return location;
-    if (!location) return new LocationDto({ country });
-    if (location.country) return location;
-    return new LocationDto({ ...location, country });
   }
 
   /**

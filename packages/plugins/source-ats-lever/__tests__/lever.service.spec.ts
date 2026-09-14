@@ -167,23 +167,27 @@ describe('LeverService field mappings (spec 752)', () => {
     expect(job.isRemote).toBe(true);
   });
 
-  it('should fold a non-US ISO-2 country code into the location', async () => {
+  it('should surface the ISO-2 country code as posting-level countryCode', async () => {
     const job = await scrapeOne({
       id: 'country',
       text: 'Operator',
       categories: { location: 'Amsterdam' },
       country: 'NL',
     });
-    expect(job.location?.country).toBe('Netherlands');
+    // Posting-level field, verbatim — never folded into the parsed location.
+    expect(job.countryCode).toBe('NL');
+    expect(job.location?.city).toBe('Amsterdam');
+    expect(job.location?.country).toBeFalsy();
   });
 
-  it('should ignore an unresolvable country code', async () => {
+  it('should pass an unresolvable country code through verbatim', async () => {
     const job = await scrapeOne({
       id: 'bad-country',
       text: 'Operator',
       categories: { location: 'Nashua, NH' },
       country: 'QZ',
     });
+    expect(job.countryCode).toBe('QZ');
     expect(job.location?.city).toBe('Nashua');
     expect(job.location?.state).toBe('NH');
     expect(job.location?.country).toBeFalsy();
