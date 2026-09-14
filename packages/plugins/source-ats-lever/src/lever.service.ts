@@ -189,6 +189,7 @@ export class LeverService implements IScraper {
     // `City, ST` splitting, multi-site `; `-joining, and remote/hybrid hints).
     const parsedLocations = parseLocationList(this.locationLabels(job));
     const location = parsedLocations.location;
+    const locations = parsedLocations.locations;
 
     // Remote status: trust the explicit workplaceType flag, otherwise fall back
     // to text mentioned in the location labels.
@@ -210,6 +211,7 @@ export class LeverService implements IScraper {
       companyName: companySlug,
       jobUrl: job.hostedUrl ?? `https://jobs.lever.co/${companySlug}/${job.id}`,
       location,
+      ...(locations.length > 0 ? { locations } : {}),
       description,
       compensation: resolveCompensation({
         structured: this.extractCompensation(job),

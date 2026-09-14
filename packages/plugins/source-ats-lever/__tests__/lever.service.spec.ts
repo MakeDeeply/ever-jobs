@@ -143,6 +143,26 @@ describe('LeverService field mappings (spec 752)', () => {
       },
     });
     expect(job.location?.city).toBe('Nashua, NH; Brooklyn Park, MN');
+    expect(job.locations).toMatchObject([
+      { city: 'Nashua', state: 'NH', text: 'Nashua, NH' },
+      { city: 'Brooklyn Park', state: 'MN', text: 'Brooklyn Park, MN' },
+    ]);
+  });
+
+  it('should emit a per-site locations[] even when a label does not parse', async () => {
+    const job = await scrapeOne({
+      id: 'multi-unparsed',
+      text: 'Technician',
+      categories: {
+        allLocations: ['Berlin, Germany', 'Austin, TX'],
+      },
+    });
+    // 'Berlin, Germany' does not split, but the site boundary survives in
+    // locations[] with the raw label preserved in `text`.
+    expect(job.locations).toMatchObject([
+      { city: 'Berlin, Germany', text: 'Berlin, Germany' },
+      { city: 'Austin', state: 'TX', text: 'Austin, TX' },
+    ]);
   });
 
   it('should set workFromHomeType Hybrid without marking the job remote', async () => {

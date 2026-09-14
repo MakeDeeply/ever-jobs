@@ -4,6 +4,10 @@ export class LocationDto {
   /** The source's own label for the site (e.g. "Downtown Office", a hiring-entity name).
    *  Not geography — `city`/`state`/`country` carry that. */
   name?: string | null;
+  /** The source's raw location label, recorded verbatim before parsing.
+   *  `city`/`state`/`country` hold whatever could be derived from it; this
+   *  field lets callers apply their own parsing to the original text. */
+  text?: string | null;
   country?: Country | string | null;
   city?: string | null;
   state?: string | null;

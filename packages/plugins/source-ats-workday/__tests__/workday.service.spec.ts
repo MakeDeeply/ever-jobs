@@ -438,6 +438,10 @@ describe('WorkdayService — Spec 720 / T05', () => {
       const job = await scrapeWith(detail());
       expect(job.location?.city).toBe('Rockville, MD; Oak Ridge, TN');
       expect(job.location?.city).not.toContain('2 Locations');
+      expect(job.locations).toMatchObject([
+        { city: 'Rockville', state: 'MD', text: 'Rockville, MD' },
+        { city: 'Oak Ridge', state: 'TN', text: 'Oak Ridge, TN' },
+      ]);
     });
 
     it('surfaces the requisition alpha-2 code as posting-level countryCode', async () => {

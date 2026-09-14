@@ -158,6 +158,51 @@ describe('parseLocationList', () => {
   });
 });
 
+describe('LocationDto.text (Spec 5120)', () => {
+  it('records the raw label on every concrete location, parsed or not', () => {
+    const parsed = parseLocationList([
+      'Seattle, WA',
+      'Berlin, Germany',
+      ' Bengaluru  ',
+    ]);
+
+    expect(parsed.locations.map((loc) => loc.text)).toEqual([
+      'Seattle, WA',
+      'Berlin, Germany',
+      'Bengaluru',
+    ]);
+    // The parsed fields stay exactly as before; `text` is additive.
+    expect(parsed.locations[0]).toMatchObject({ city: 'Seattle', state: 'WA' });
+    expect(parsed.locations[1]).toMatchObject({ city: 'Berlin, Germany' });
+    expect(parsed.locations[2]).toMatchObject({ city: 'Bengaluru' });
+  });
+
+  it('carries the raw label on the singular location for a single-site posting', () => {
+    const parsed = parseLocationList(['Austin, TX']);
+
+    expect(parsed.location).toMatchObject({
+      city: 'Austin',
+      state: 'TX',
+      text: 'Austin, TX',
+    });
+    expect(parsed.locations).toHaveLength(1);
+  });
+
+  it('omits text on the merged multi-site location, which is synthesized not raw', () => {
+    const parsed = parseLocationList(['Seattle, WA', 'Austin, TX']);
+
+    expect(parsed.location).toMatchObject({
+      city: 'Seattle, WA; Austin, TX',
+    });
+    expect(parsed.location?.text).toBeUndefined();
+  });
+
+  it('omits text on a remote-only or country-only location, which has no site label', () => {
+    expect(parseLocationList(['Remote', 'United States']).location?.text).toBeUndefined();
+    expect(parseLocationList(['United States']).location?.text).toBeUndefined();
+  });
+});
+
 describe('allowBareStateProvince opt-in', () => {
   it('is OFF by default: a bare US state name/code stays in the city field', () => {
     expect(parseLocationText('Virginia').location).toMatchObject({ city: 'Virginia' });

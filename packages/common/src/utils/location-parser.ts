@@ -289,7 +289,11 @@ export function parseLocationList(
 
     if (!label || seen.has(key)) continue;
     seen.add(key);
-    concrete.push({ location, label, key });
+    concrete.push({
+      location: new LocationDto({ ...location, text: normalized }),
+      label,
+      key,
+    });
   }
 
   const filteredConcrete = concrete.filter(
