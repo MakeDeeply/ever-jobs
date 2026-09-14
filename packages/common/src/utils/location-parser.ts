@@ -376,7 +376,7 @@ function canonicalUsLocation(
   };
 }
 
-function normalizeUsState(value: string): string | null {
+export function normalizeUsState(value: string): string | null {
   const code = value.trim().toUpperCase();
   if (US_STATE_AND_TERRITORY_CODES.has(code)) return code;
   return US_STATE_NAME_TO_CODE[value.trim().toLowerCase()] ?? null;

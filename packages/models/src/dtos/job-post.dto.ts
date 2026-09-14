@@ -10,6 +10,10 @@ export class JobPostDto {
   jobUrlDirect?: string | null;
   location?: LocationDto | null;
 
+  /** Per-site locations when the source carries them (e.g. an ATS `locations[]`
+   *  array). `location` remains the merged single-site view for compatibility. */
+  locations?: LocationDto[] | null;
+
   /** ISO-3166 alpha-2 country the ATS declared for the posting (e.g. "NL").
    *  Posting-level metadata — not the parsed country of `location`. */
   countryCode?: string | null;

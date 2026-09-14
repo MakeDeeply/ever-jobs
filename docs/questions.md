@@ -10,6 +10,38 @@
 
 ---
 
+## Q-091 — Rippling: `ScraperInputDto` filters are ignored (known gap, needs a spec)
+
+**Context:** `source-ats-rippling` never reads `input.searchTerm`,
+`input.location`, `input.isRemote`, `input.jobType`, or `input.offset` — it
+returns the first `resultsWanted` jobs on the board unfiltered while peer
+plugins (e.g. `source-company-pulsespace.applyInput`, `source-ats-taleo`)
+filter client-side after building `JobPostDto`s. This is parked here as a
+**known defect awaiting an implementation spec**, not a decided ambiguity:
+the outcome is obvious (implement the filters); what needs writing is the
+spec + code. One Rippling-specific wrinkle: the pagination loop stops at
+`resultsWanted` before enrichment, so filtering must happen on the fully
+crawled/enriched list (or the loop must keep paging until
+`filtered.length >= offset + resultsWanted`) — filtering the truncated list
+would silently under-return.
+
+**Options:**
+
+- **A. Client-side `applyInput()` post-enrichment (suggested).** Match the
+  peer-plugin convention: filter title/description by `searchTerm`,
+  `displayLocation()` by `location`, `isRemote === true`, `jobType`
+  membership; then `slice(offset, offset + resultsWanted)`. Requires paging
+  until the filtered count is satisfied.
+- **B. Server-side params.** Probe whether the Rippling board endpoint accepts
+  keyword/location params; unverified today.
+
+**Default:** **A** — no ambiguity was decided; the entry exists so the gap is
+tracked until someone writes the spec.
+
+**Resolution:** _open — awaiting spec + implementation._
+
+---
+
 ## Q-090 — single-bound salary: scope of the shared parser extension (Spec 5058)
 
 **Context:** Spec 5058 teaches `extractSalary` to accept a single stated bound
