@@ -509,8 +509,8 @@ describe("RipplingService structured locations (Spec 5119)", () => {
     const post = await scrapeOne(listed);
 
     expect(post.locations).toEqual([
-      { city: "Austin", state: "TX" },
-      { city: "Sandy", state: "UT" },
+      expect.objectContaining({ city: "Austin", state: "TX", text: "Austin, TX" }),
+      expect.objectContaining({ city: "Sandy", state: "UT", text: "Sandy, UT" }),
     ]);
     expect(post.location?.city).toBe("Austin, TX; Sandy, UT");
   });
