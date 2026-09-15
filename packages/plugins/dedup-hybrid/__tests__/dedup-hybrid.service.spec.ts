@@ -1,4 +1,4 @@
-import { JobPostDto, LocationDto, Site } from '@ever-jobs/models';
+import { JobPostDto, LocationDto, OfficeDto, Site } from '@ever-jobs/models';
 import { DedupHybridService } from '../src/dedup-hybrid.service';
 
 /**
@@ -200,5 +200,88 @@ describe('DedupHybridService', () => {
     expect(out.metrics.outputCount).toBe(200);
     expect(out.metrics.mergedPairs).toBe(800);
     expect(elapsed).toBeLessThan(NFR1_COLD_BUDGET_MS);
+  });
+});
+
+describe('per-site locations[] and offices[] on CanonicalJob (Spec 5123)', () => {
+  let service: DedupHybridService;
+
+  beforeEach(() => {
+    service = new DedupHybridService();
+  });
+
+  it('copies a singleton cluster\'s locations[]/offices[] unchanged', async () => {
+    const locations = [
+      new LocationDto({ city: 'Amsterdam', country: 'NL', text: 'Amsterdam' }),
+      new LocationDto({ city: 'Remote - EMEA', text: 'Remote - EMEA' }),
+    ];
+    const offices = [
+      new OfficeDto({ id: '42', name: 'US', city: 'Emeryville', state: 'CA', text: 'Emeryville, California, United States' }),
+    ];
+    const a = job({ id: '1', locations, offices });
+    const out = await service.dedup([a]);
+
+    expect(out.canonical).toHaveLength(1);
+    expect(out.canonical[0].locations).toEqual(locations);
+    expect(out.canonical[0].offices).toEqual(offices);
+  });
+
+  it('omits locations/offices when no observation carries them', async () => {
+    const out = await service.dedup([job({ id: '1' })]);
+    expect(out.canonical[0].locations).toBeUndefined();
+    expect(out.canonical[0].offices).toBeUndefined();
+  });
+
+  it('unions offices[] across a hash-merged cluster, deduped on id', async () => {
+    const shared = [new LocationDto({ city: 'Denver', state: 'CO', text: 'Denver, CO' })];
+    const a = job({
+      id: '1',
+      locations: shared,
+      offices: [
+        new OfficeDto({ id: '1', name: 'Acme - Denver, CO (HQ)', city: 'Denver', state: 'CO' }),
+        new OfficeDto({ id: '2', name: 'Acme - Oklahoma', state: 'OK' }),
+      ],
+    });
+    const b = job({
+      id: '2',
+      site: Site.LINKEDIN,
+      locations: shared.map((l) => new LocationDto({ ...l })),
+      offices: [
+        new OfficeDto({ id: '1', name: 'Acme - Denver, CO (HQ)', city: 'Denver', state: 'CO' }),
+        new OfficeDto({ id: '3', name: 'Acme - Tulsa, OK', city: 'Tulsa', state: 'OK' }),
+      ],
+    });
+    const out = await service.dedup([a, b]);
+
+    expect(out.canonical).toHaveLength(1);
+    expect(out.canonical[0].offices?.map((o) => o.id)).toEqual(['1', '2', '3']);
+  });
+
+  it('unions locations[] across a MinHash-welded cluster with differing site sets', async () => {
+    const description =
+      'We are hiring a senior engineer to own distributed systems design, ' +
+      'mentor a team of eight, and drive quarterly reliability targets. ' +
+      'Expect deep work in Go, Kubernetes, event sourcing, and large-scale data pipelines.';
+    const a = job({
+      id: '1',
+      description,
+      location: new LocationDto({ city: 'Amsterdam', country: 'NL' }),
+      locations: [new LocationDto({ city: 'Amsterdam', country: 'NL', text: 'Amsterdam' })],
+    });
+    const b = job({
+      id: '2',
+      site: Site.LINKEDIN,
+      description,
+      location: new LocationDto({ city: 'Austin', state: 'TX' }),
+      locations: [
+        new LocationDto({ city: 'Amsterdam', country: 'NL', text: 'Amsterdam' }),
+        new LocationDto({ city: 'Austin', state: 'TX', text: 'Austin, TX' }),
+      ],
+    });
+    const out = await service.dedup([a, b]);
+
+    expect(out.canonical).toHaveLength(1);
+    const sites = out.canonical[0].locations?.map((l) => `${l.city}|${l.state ?? ''}`);
+    expect(sites).toEqual(['Amsterdam|', 'Austin|TX']);
   });
 });

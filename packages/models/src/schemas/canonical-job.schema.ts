@@ -32,11 +32,29 @@ export type SourceObservationShape = z.infer<typeof SourceObservationSchema>;
  * `parse(...)` round-trips the production `CanonicalJob` shape; `safeParse`
  * is preferred at hot paths to avoid throws.
  */
+const LocationShapeSchema = z.object({
+  name: z.string().nullable().optional(),
+  text: z.string().nullable().optional(),
+  city: z.string().nullable().optional(),
+  state: z.string().nullable().optional(),
+  country: z.string().nullable().optional(),
+  streetAddress: z.string().nullable().optional(),
+  postalCode: z.string().nullable().optional(),
+});
+
 export const CanonicalJobSchema = z.object({
   canonicalJobId: z.string().regex(/^[a-f0-9]{64}$/, 'must be a sha-256 hex digest'),
   title: z.string().min(1),
   company: z.string().min(1),
   location: z.string(),
+  /** Union of observations' per-site locations (Spec 5123). */
+  locations: z.array(LocationShapeSchema).optional(),
+  /** Union of observations' tagged offices (Spec 5123). */
+  offices: z
+    .array(
+      LocationShapeSchema.extend({ id: z.string().nullable().optional() }),
+    )
+    .optional(),
   description: z.string().optional(),
   url: z.string().url(),
   sources: z.array(SourceObservationSchema).min(1),

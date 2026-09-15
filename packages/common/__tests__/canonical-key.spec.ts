@@ -72,3 +72,77 @@ describe('canonicalJobId (Spec 003 / T05)', () => {
     expect(id).toMatch(/^[a-f0-9]{64}$/);
   });
 });
+
+describe('canonicalKey — locations[] site set (Spec 5123)', () => {
+  it('derives the location component from locations[] triples, ignoring the flat string', () => {
+    const a = canonicalKey({
+      company: 'Acme',
+      title: 'Engineer',
+      location: 'Amsterdam; Austin, TX',
+      locations: [
+        { city: 'Amsterdam', country: 'NL' },
+        { city: 'Austin', state: 'TX' },
+      ],
+    });
+    const b = canonicalKey({
+      company: 'Acme',
+      title: 'Engineer',
+      location: 'something else entirely',
+      locations: [
+        { city: 'Austin', state: 'Texas' },
+        { city: 'Amsterdam', country: 'NL' },
+      ],
+    });
+    expect(a).toBe(b);
+  });
+
+  it('is order-insensitive across the site set', () => {
+    const forward = canonicalKey({
+      company: 'Acme',
+      title: 'Engineer',
+      location: 'x',
+      locations: [{ city: 'Denver', state: 'CO' }, { city: 'Tulsa', state: 'OK' }],
+    });
+    const reverse = canonicalKey({
+      company: 'Acme',
+      title: 'Engineer',
+      location: 'x',
+      locations: [{ city: 'Tulsa', state: 'OK' }, { city: 'Denver', state: 'CO' }],
+    });
+    expect(forward).toBe(reverse);
+  });
+
+  it('differs when the site set differs', () => {
+    const one = canonicalKey({
+      company: 'Acme',
+      title: 'Engineer',
+      location: 'x',
+      locations: [{ city: 'Amsterdam', country: 'NL' }],
+    });
+    const two = canonicalKey({
+      company: 'Acme',
+      title: 'Engineer',
+      location: 'x',
+      locations: [
+        { city: 'Amsterdam', country: 'NL' },
+        { city: 'Austin', state: 'TX' },
+      ],
+    });
+    expect(one).not.toBe(two);
+  });
+
+  it('falls back to the flat location string when locations[] yields no geography', () => {
+    const withTextOnly = canonicalKey({
+      company: 'Acme',
+      title: 'Engineer',
+      location: 'Remote',
+      locations: [{}],
+    });
+    const noLocations = canonicalKey({
+      company: 'Acme',
+      title: 'Engineer',
+      location: 'Remote',
+    });
+    expect(withTextOnly).toBe(noLocations);
+  });
+});
