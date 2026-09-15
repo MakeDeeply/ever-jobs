@@ -11,6 +11,11 @@ export class LocationDto {
   country?: Country | string | null;
   city?: string | null;
   state?: string | null;
+  /** The site's street address when the source carries one (e.g. an ATS
+   *  postalAddress.streetAddress). */
+  streetAddress?: string | null;
+  /** The site's postal/ZIP code when the source carries one. */
+  postalCode?: string | null;
 
   constructor(partial?: Partial<LocationDto>) {
     Object.assign(this, partial);
