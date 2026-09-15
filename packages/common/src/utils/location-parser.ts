@@ -386,7 +386,7 @@ export function normalizeUsState(value: string): string | null {
   return US_STATE_NAME_TO_CODE[value.trim().toLowerCase()] ?? null;
 }
 
-function normalizeCountryOnly(value: string): string | null {
+export function normalizeCountryOnly(value: string): string | null {
   const normalized = value.trim().toLowerCase().replace(/\./g, '');
   if (['united states', 'united states of america', 'usa', 'us'].includes(normalized)) {
     return 'United States';

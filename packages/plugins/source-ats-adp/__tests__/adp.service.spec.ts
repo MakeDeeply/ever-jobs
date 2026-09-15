@@ -171,6 +171,68 @@ describe('AdpService', () => {
     expect(res.jobs[0].description).toBeNull();
   });
 
+  // Spec 5121 — structured per-site locations with `text` verbatim.
+  it('emits per-site locations[] from structured requisitionLocations', async () => {
+    mockApi([
+      listing({
+        requisitionLocations: [
+          {
+            nameCode: { shortName: 'Washington, DC, US' },
+            address: {
+              cityName: 'Washington',
+              countrySubdivisionLevel1: { codeValue: 'DC' },
+              countryCode: 'US',
+            },
+          },
+          {
+            nameCode: { shortName: 'Arlington, VA, US' },
+            address: {
+              cityName: 'Arlington',
+              countrySubdivisionLevel1: { codeValue: 'VA' },
+              countryCode: 'US',
+            },
+          },
+        ],
+      }),
+    ]);
+
+    const res = await service.scrape(input());
+
+    expect(res.jobs[0].locations).toMatchObject([
+      {
+        city: 'Washington',
+        state: 'DC',
+        country: 'US',
+        text: 'Washington, DC, US',
+      },
+      {
+        city: 'Arlington',
+        state: 'VA',
+        country: 'US',
+        text: 'Arlington, VA, US',
+      },
+    ]);
+  });
+
+  it('keeps the shortName in text when a requisitionLocation has no address', async () => {
+    mockApi([
+      listing({
+        requisitionLocations: [
+          { nameCode: { shortName: 'Austin, TX' } },
+          { nameCode: { shortName: 'Remote, US' } },
+        ],
+      }),
+    ]);
+
+    const res = await service.scrape(input());
+
+    expect(res.jobs[0].locations).toMatchObject([
+      { city: 'Austin', state: 'TX', text: 'Austin, TX' },
+      { city: 'Remote, US', text: 'Remote, US' },
+    ]);
+    expect(res.jobs[0].isRemote).toBe(true);
+  });
+
   it('returns empty when no host resolves the company', async () => {
     mockGet.mockRejectedValue(new Error('404'));
 

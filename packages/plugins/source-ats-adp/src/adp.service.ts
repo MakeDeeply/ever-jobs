@@ -21,6 +21,7 @@ import {
   markdownConverter,
   extractEmails,
   parseLocationList,
+  parseLocationText,
   resolveCompensation,
   toDateOnly,
 } from '@ever-jobs/common';
@@ -202,6 +203,9 @@ export class AdpService implements IScraper {
       job.requisitionLocations ?? detail?.requisitionLocations,
     );
     const parsedLocation = parseLocationList(labels);
+    const locations = this.siteLocations(
+      job.requisitionLocations ?? detail?.requisitionLocations,
+    );
     const location = parsedLocation.location ?? new LocationDto({});
     const isRemote = parsedLocation.remoteMentioned;
     const workFromHomeType = parsedLocation.workFromHomeType;
@@ -226,6 +230,7 @@ export class AdpService implements IScraper {
       companyName: null,
       jobUrl: adpCareersUrl(host, cid, itemId),
       location,
+      ...(locations.length > 0 ? { locations } : {}),
       description,
       ...(compensation ? { compensation } : {}),
       datePosted: postDate ? toDateOnly(postDate) : null,
@@ -261,6 +266,47 @@ export class AdpService implements IScraper {
       if (composed) labels.push(composed);
     }
     return labels;
+  }
+
+  /**
+   * Per-site `locations[]` (Spec 5121): `requisitionLocations` entries carry
+   * a structured `address` (`cityName`, `countrySubdivisionLevel1.codeValue`,
+   * `countryCode`) plus a display `nameCode.shortName`. Map the structured
+   * fields directly instead of round-tripping a composed label through the
+   * parser; the display name is preserved verbatim in `text`. Entries
+   * without an address fall back to parsing the shortName.
+   */
+  private siteLocations(
+    locations: AdpJob['requisitionLocations'],
+  ): LocationDto[] {
+    const sites: LocationDto[] = [];
+    const seen = new Set<string>();
+    for (const loc of locations ?? []) {
+      const text = loc?.nameCode?.shortName?.trim() || null;
+      const city = loc?.address?.cityName?.trim() || null;
+      const state =
+        loc?.address?.countrySubdivisionLevel1?.codeValue?.trim() || null;
+      const country = loc?.address?.countryCode?.trim() || null;
+
+      let site: LocationDto | null = null;
+      if (city || state || country) {
+        site = new LocationDto({ city, state, country, text });
+      } else if (text) {
+        const parsed = parseLocationText(text);
+        if (parsed.location) {
+          site = new LocationDto({ ...parsed.location, text });
+        }
+      }
+      if (!site) continue;
+      const key = [site.city, site.state, site.country, site.text]
+        .filter((part): part is string => typeof part === 'string')
+        .join('|')
+        .toLowerCase();
+      if (!key || seen.has(key)) continue;
+      seen.add(key);
+      sites.push(site);
+    }
+    return sites;
   }
 
   /**

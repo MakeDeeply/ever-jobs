@@ -62,10 +62,29 @@ export const RawJobSchema = z.object({
   jobUrl: z.string().url(),
   location: z
     .object({
+      name: z.string().nullable().optional(),
+      text: z.string().nullable().optional(),
       city: z.string().nullable().optional(),
       state: z.string().nullable().optional(),
       country: z.string().nullable().optional(),
+      streetAddress: z.string().nullable().optional(),
+      postalCode: z.string().nullable().optional(),
     })
+    .nullable()
+    .optional(),
+  /** Per-site locations; `location` stays the merged compat view. */
+  locations: z
+    .array(
+      z.object({
+        name: z.string().nullable().optional(),
+        text: z.string().nullable().optional(),
+        city: z.string().nullable().optional(),
+        state: z.string().nullable().optional(),
+        country: z.string().nullable().optional(),
+        streetAddress: z.string().nullable().optional(),
+        postalCode: z.string().nullable().optional(),
+      }),
+    )
     .nullable()
     .optional(),
   description: z.string().nullable().optional(),
