@@ -87,6 +87,23 @@ export const RawJobSchema = z.object({
     )
     .nullable()
     .optional(),
+  /** Company offices tagged on the posting (e.g. Greenhouse `offices[]`) —
+   *  catalog entities, not necessarily role-sites. */
+  offices: z
+    .array(
+      z.object({
+        id: z.string().nullable().optional(),
+        name: z.string().nullable().optional(),
+        text: z.string().nullable().optional(),
+        city: z.string().nullable().optional(),
+        state: z.string().nullable().optional(),
+        country: z.string().nullable().optional(),
+        streetAddress: z.string().nullable().optional(),
+        postalCode: z.string().nullable().optional(),
+      }),
+    )
+    .nullable()
+    .optional(),
   description: z.string().nullable().optional(),
   observedAt: z.string().datetime({ offset: true }).optional(),
 });
