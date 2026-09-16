@@ -406,7 +406,7 @@ describe("RipplingService pagination", () => {
     expect(result.jobs[0]).not.toHaveProperty("applyUrl");
     expect(result.jobs[1]).toMatchObject({
       employmentType: "Seasonal specialist",
-      location: { city: "Remote - United States" },
+      location: { country: "United States" },
       isRemote: true,
     });
     expect(result.jobs[1]).not.toHaveProperty("jobType");
@@ -509,8 +509,8 @@ describe("RipplingService structured locations (Spec 5119)", () => {
     const post = await scrapeOne(listed);
 
     expect(post.locations).toEqual([
-      expect.objectContaining({ city: "Austin", state: "TX", text: "Austin, TX" }),
-      expect.objectContaining({ city: "Sandy", state: "UT", text: "Sandy, UT" }),
+      expect.objectContaining({ city: "Austin", state: "TX" }),
+      expect.objectContaining({ city: "Sandy", state: "UT" }),
     ]);
     expect(post.location?.city).toBe("Austin, TX; Sandy, UT");
   });

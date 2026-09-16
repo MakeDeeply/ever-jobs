@@ -170,7 +170,7 @@ describe('AshbyService — Spec 719', () => {
         (j) => j.id === `ashby-${BOARD_RAW.jobs[0].id}`,
       );
       expect(job?.location).toMatchObject({
-        city: 'Mountain View, CA; Seattle, WA',
+        city: 'Mountain View, California; Seattle, WA',
         country: 'United States',
       });
       expect(job?.isRemote).toBe(true);

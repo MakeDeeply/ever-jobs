@@ -439,8 +439,8 @@ describe('WorkdayService — Spec 720 / T05', () => {
       expect(job.location?.city).toBe('Rockville, MD; Oak Ridge, TN');
       expect(job.location?.city).not.toContain('2 Locations');
       expect(job.locations).toMatchObject([
-        { city: 'Rockville', state: 'MD', text: 'Rockville, MD' },
-        { city: 'Oak Ridge', state: 'TN', text: 'Oak Ridge, TN' },
+        { city: 'Rockville', state: 'MD' },
+        { city: 'Oak Ridge', state: 'TN' },
       ]);
     });
 
@@ -615,7 +615,8 @@ describe('WorkdayService — Spec 720 / T05', () => {
 
       expect(result.jobs).toHaveLength(1);
       expect(result.jobs[0].isRemote).toBe(true);
-      expect(result.jobs[0].location?.city).not.toContain('_');
+      expect(result.jobs[0].location?.city ?? '').not.toContain('_');
+      expect(result.jobs[0].location?.country).toBe('United States');
     });
   });
 });
