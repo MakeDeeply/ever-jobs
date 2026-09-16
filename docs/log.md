@@ -5,6 +5,14 @@
 
 ---
 
+## 2026-09-16 — Spec 5129 — Pinpoint nested department + SuccessFactors CSB department token (`pinpoint-and-successfactors-csb-department`)
+
+**Change:** Two adapters now emit `department` the feed already carries. `source-ats-pinpoint` resolves `department` from `job.department.name` (the nested `{ id, name }` object `postings.json` returns per posting — verified on 2 live boards: 191/191 and 36/36 postings) ahead of the legacy flat `department_name` / string-`department` keys. `source-ats-successfactors`' CSB reader also extracts the job-layout department token (`<span data-careersite-propertyid="dept">` — rendered on detail pages, absent from the schema.org microdata the parser was limited to) into `SfCsbDetail.department` and onto `JobPostDto.department`; tenants whose pages lack the token keep `department` unset. No OData-path, wire-shape, or URL changes.
+
+**Files:** `packages/plugins/source-ats-pinpoint/{src/pinpoint.service.ts,__tests__/pinpoint.service.spec.ts}`, `packages/plugins/source-ats-successfactors/{src/successfactors.types.ts,src/successfactors.service.ts,__tests__/successfactors-csb.service.spec.ts}`, `.specify/specs/5129-pinpoint-and-successfactors-csb-department/*`, `docs/index.md`, `docs/log.md`.
+
+---
+
 ## 2026-09-16 — Spec 5128 — Dover job-groups (department) + per-job apply links (`dover-job-groups-and-apply-links`)
 
 **Change:** `source-ats-dover` now calls `GET /api/v1/job-groups/{clientId}/job-groups` after the roles list and maps each role id to its group `name` onto `JobPostDto.department` (roles absent from every group stay unset; a 4xx/malformed feed degrades to an empty map, never a failure). `jobUrl`/`applyUrl` become the per-role apply form `https://app.dover.com/apply/{slug}/{jobId}` — the target each role links to on the board — replacing the whole-board `/jobs/{slug}` URL every job previously carried; careers pages resolved with no slug keep the `/careers/{clientId}` fallback. New surface: `DOVER_JOB_GROUPS_API_TEMPLATE`, `DOVER_APPLY_URL_TEMPLATE`, `DoverJobGroup`, `DoverJob.department`; `DOVER_BOARD_URL_TEMPLATE` removed.
