@@ -16,6 +16,7 @@ import {
   htmlToPlainText,
   markdownConverter,
   extractEmails,
+  parseLocationText,
   randomSleep,
   toDateOnly,
 } from '@ever-jobs/common';
@@ -214,12 +215,15 @@ export class EightfoldService implements IScraper {
     const department =
       position.department ?? position.team ?? position.businessUnit ?? position.business_unit ?? position.category ?? null;
 
+    const locations = this.extractLocations(position);
+
     return new JobPostDto({
       id: `eightfold-${atsId}`,
       title,
       companyName: position.companyName ?? companyName,
       jobUrl,
-      location: this.extractLocation(position),
+      location: locations[0] ?? null,
+      ...(locations.length > 0 ? { locations } : {}),
       description,
       datePosted: this.parseDate(
         position.postedTs ?? position.creationTs ?? position.t_create ?? position.t_update,
@@ -281,29 +285,30 @@ export class EightfoldService implements IScraper {
   }
 
   /** Eightfold returns locations as string lists (newer) or dicts (older). */
-  private extractLocation(position: EightfoldPosition): LocationDto | null {
+  private extractLocations(position: EightfoldPosition): LocationDto[] {
     for (const key of ['standardizedLocations', 'locations'] as const) {
       const locs = position[key];
       if (Array.isArray(locs) && locs.length > 0) {
-        const first = locs[0];
-        if (typeof first === 'string' && first.trim()) {
-          // Eightfold strings are "Country, State, City" — reverse into city/state/country.
-          const parts = first.split(',').map((p) => p.trim()).filter(Boolean);
-          const [country, state, city] = parts.length >= 3 ? parts : [parts[parts.length - 1], parts[1], parts[0]];
-          return new LocationDto({ city: city ?? null, state: state ?? null, country: country ?? null });
-        }
-        if (first && typeof first === 'object') {
-          return this.locationFromObject(first);
-        }
+        return locs
+          .filter((l): l is string | EightfoldLocationObject => !!l)
+          .map((l) => this.locationEntry(l));
       }
     }
     const primary = position.primaryLocation ?? position.primary_location;
-    if (primary && typeof primary === 'object') return this.locationFromObject(primary);
+    if (primary && typeof primary === 'object') return [this.locationFromObject(primary)];
     if (typeof primary === 'string' && primary.trim()) {
-      const parts = primary.split(',').map((p) => p.trim());
-      return new LocationDto({ city: parts[0] ?? null, state: parts[1] ?? null, country: parts[2] ?? null });
+      const parsed = parseLocationText(primary).location;
+      if (parsed) return [parsed];
     }
-    return null;
+    return [];
+  }
+
+  private locationEntry(entry: string | EightfoldLocationObject): LocationDto {
+    if (entry && typeof entry === 'object') return this.locationFromObject(entry);
+    // Eightfold strings are "Country, State, City" — reverse into city/state/country.
+    const parts = String(entry).split(',').map((p) => p.trim()).filter(Boolean);
+    const [country, state, city] = parts.length >= 3 ? parts : [parts[parts.length - 1], parts[1], parts[0]];
+    return new LocationDto({ city: city ?? null, state: state ?? null, country: country ?? null });
   }
 
   private locationFromObject(obj: EightfoldLocationObject): LocationDto {
