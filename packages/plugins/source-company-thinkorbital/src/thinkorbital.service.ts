@@ -3,7 +3,6 @@ import * as cheerio from 'cheerio';
 import { SourcePlugin } from '@ever-jobs/plugin';
 import {
   classifyScrapeError,
-  Country,
   getJobTypeFromString,
   IScraper,
   JobPostDto,
@@ -13,7 +12,7 @@ import {
   ScraperInputDto,
   Site,
 } from '@ever-jobs/models';
-import { createHttpClient, markdownConverter } from '@ever-jobs/common';
+import { createHttpClient, markdownConverter, parseLocationText } from '@ever-jobs/common';
 import {
   THINKORBITAL_CAREERS_URL,
   THINKORBITAL_COMPANY_NAME,
@@ -119,6 +118,7 @@ export class ThinkorbitalService implements IScraper {
     const isRemote = this.detectRemote(employmentType, locationText);
     const workFromHomeType = this.resolveWorkFromHomeType(employmentType, isRemote);
     const description = this.buildDescription(body);
+    const location = this.parseLocation(locationText);
 
     const id = `thinkorbital-${this.slugFromTitle(resolvedTitle)}`;
 
@@ -130,7 +130,8 @@ export class ThinkorbitalService implements IScraper {
       companyUrl,
       jobUrl: companyUrl,
       jobUrlDirect: companyUrl,
-      location: this.parseLocation(locationText),
+      location,
+      ...(location ? { locations: [location] } : {}),
       description,
       isRemote,
       workFromHomeType,
@@ -215,37 +216,7 @@ export class ThinkorbitalService implements IScraper {
   private parseLocation(raw: string): LocationDto | null {
     const text = this.normalize(raw);
     if (!text) return null;
-
-    const twoLetterMatch = text.match(/^([^,]+?)\s*,\s*([A-Za-z]{2})\b/);
-    if (twoLetterMatch) {
-      return new LocationDto({
-        city: this.normalize(twoLetterMatch[1]),
-        state: twoLetterMatch[2].toUpperCase(),
-        country: Country.USA,
-      });
-    }
-
-    const parts = text.split(',').map((part) => this.normalize(part)).filter(Boolean);
-    if (parts.length >= 2) {
-      const city = parts[0];
-      const rest = parts.slice(1).join(', ');
-      const state = this.resolveStateName(rest);
-      if (state) {
-        return new LocationDto({ city, state, country: Country.USA });
-      }
-      return new LocationDto({ city, country: Country.USA });
-    }
-
-    return new LocationDto({ city: text, country: Country.USA });
-  }
-
-  private resolveStateName(raw: string): string | null {
-    const segments = raw.split(/[,;]|\s+(?:or|and|&)\s+/).map((s) => this.normalize(s).toLowerCase());
-    for (const segment of segments) {
-      const abbrev = US_STATE_ABBREVIATIONS.get(segment);
-      if (abbrev) return abbrev;
-    }
-    return null;
+    return parseLocationText(text).location;
   }
 
   private resolveJobType(employmentType: string): JobType | null {
@@ -362,55 +333,3 @@ export class ThinkorbitalService implements IScraper {
   }
 }
 
-const US_STATE_ABBREVIATIONS: Map<string, string> = new Map([
-  ['alabama', 'AL'],
-  ['alaska', 'AK'],
-  ['arizona', 'AZ'],
-  ['arkansas', 'AR'],
-  ['california', 'CA'],
-  ['colorado', 'CO'],
-  ['connecticut', 'CT'],
-  ['delaware', 'DE'],
-  ['florida', 'FL'],
-  ['georgia', 'GA'],
-  ['hawaii', 'HI'],
-  ['idaho', 'ID'],
-  ['illinois', 'IL'],
-  ['indiana', 'IN'],
-  ['iowa', 'IA'],
-  ['kansas', 'KS'],
-  ['kentucky', 'KY'],
-  ['louisiana', 'LA'],
-  ['maine', 'ME'],
-  ['maryland', 'MD'],
-  ['massachusetts', 'MA'],
-  ['michigan', 'MI'],
-  ['minnesota', 'MN'],
-  ['mississippi', 'MS'],
-  ['missouri', 'MO'],
-  ['montana', 'MT'],
-  ['nebraska', 'NE'],
-  ['nevada', 'NV'],
-  ['new hampshire', 'NH'],
-  ['new jersey', 'NJ'],
-  ['new mexico', 'NM'],
-  ['new york', 'NY'],
-  ['north carolina', 'NC'],
-  ['north dakota', 'ND'],
-  ['ohio', 'OH'],
-  ['oklahoma', 'OK'],
-  ['oregon', 'OR'],
-  ['pennsylvania', 'PA'],
-  ['rhode island', 'RI'],
-  ['south carolina', 'SC'],
-  ['south dakota', 'SD'],
-  ['tennessee', 'TN'],
-  ['texas', 'TX'],
-  ['utah', 'UT'],
-  ['vermont', 'VT'],
-  ['virginia', 'VA'],
-  ['washington', 'WA'],
-  ['west virginia', 'WV'],
-  ['wisconsin', 'WI'],
-  ['wyoming', 'WY'],
-]);

@@ -15,6 +15,7 @@ import {
   htmlToPlainText,
   markdownConverter,
   extractEmails,
+  parseLocationText,
   toDateOnly,
 } from '@ever-jobs/common';
 import {
@@ -188,13 +189,15 @@ export class JobsoidService implements IScraper {
       null;
 
     const resolvedCompanyName = job.company?.trim() || companyName;
+    const location = this.extractLocation(job);
 
     return new JobPostDto({
       id: `jobsoid-${atsId}`,
       title,
       companyName: resolvedCompanyName,
       jobUrl,
-      location: this.extractLocation(job),
+      location,
+      ...(location ? { locations: [location] } : {}),
       description,
       datePosted: this.parseDate(job.postedDate),
       isRemote: this.detectRemote(job),
@@ -280,12 +283,7 @@ export class JobsoidService implements IScraper {
     // Fall back to the combined free-text label (e.g. "Milan - Milan").
     const label = loc.title?.trim();
     if (!label) return null;
-    const parts = label
-      .split(/[-,]/)
-      .map((p) => p.trim())
-      .filter(Boolean);
-    if (parts.length === 0) return null;
-    return new LocationDto({ city: parts[0] ?? null, state: parts[1] ?? null, country: null });
+    return parseLocationText(label).location;
   }
 
   /**
