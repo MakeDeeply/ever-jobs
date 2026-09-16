@@ -102,7 +102,7 @@ describe('PinpointService — Spec 5090', () => {
 
     expect(response.jobs).toHaveLength(1);
     expect(response.jobs[0].isRemote).toBe(true);
-    expect(response.jobs[0].location?.city).toBe('Remote - US');
+    expect(response.jobs[0].location?.city).toBeUndefined();
     expect(response.jobs[0].location?.state).toBeUndefined();
   });
 
@@ -119,7 +119,7 @@ describe('PinpointService — Spec 5090', () => {
 
     expect(response.jobs).toHaveLength(1);
     expect(response.jobs[0].isRemote).toBe(true);
-    expect(response.jobs[0].location?.city).toBe('Remote');
+    expect(response.jobs[0].location?.city).toBeUndefined();
   });
 
   it('honours resultsWanted', async () => {

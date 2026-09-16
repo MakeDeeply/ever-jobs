@@ -114,7 +114,7 @@ describe('MisfitsMarketService — Spec 098 / T04', () => {
       expect(dpm).toBeDefined();
       expect(dpm?.title).toBe('Director, Performance Marketing');
       expect(dpm?.companyName).toBe('Misfits Market');
-      expect(dpm?.location?.city).toBe('Remote');
+      expect(dpm?.location?.city).toBeUndefined();
       expect(dpm?.isRemote).toBe(true);
       expect(dpm?.department).toBe('Marketing');
       expect(dpm?.jobUrl).toBe(

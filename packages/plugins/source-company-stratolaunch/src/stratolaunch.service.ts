@@ -5,7 +5,7 @@ import {
   classifyScrapeError,
   IScraper, ScraperInputDto, JobResponseDto, JobPostDto, Site, LocationDto,
 } from '@ever-jobs/models';
-import { createHttpClient, decodeHtmlEntities, htmlToPlainText } from '@ever-jobs/common';
+import { createHttpClient, decodeHtmlEntities, htmlToPlainText, parseLocationList } from '@ever-jobs/common';
 
 function decodeFully(html: string): string {
   let prev: string;
@@ -89,9 +89,8 @@ export class StratolaunchService implements IScraper {
         const id = `stratolaunch-${jobId}`;
 
         const locationStr = listing.location?.name ?? null;
-        const location = locationStr
-          ? new LocationDto({ city: locationStr })
-          : null;
+        const locationParsed = parseLocationList([locationStr]);
+        const location = locationStr ? locationParsed.location : null;
 
         if (input.location && locationStr) {
           if (!locationStr.toLowerCase().includes(input.location.toLowerCase())) continue;
@@ -126,6 +125,7 @@ export class StratolaunchService implements IScraper {
             jobUrl: absoluteUrl,
             applyUrl: absoluteUrl,
             location,
+            ...(locationParsed.locations.length > 0 ? { locations: locationParsed.locations } : {}),
             description: listing.content
               ? htmlToPlainText(decodeFully(listing.content))
               : null,
