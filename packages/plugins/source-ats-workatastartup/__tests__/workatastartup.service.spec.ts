@@ -166,8 +166,18 @@ describe('WorkAtAStartupService', () => {
     expect(software?.location?.city).toContain('Austin');
     expect(software?.location?.city).toContain(';');
     expect(software?.locations).toMatchObject([
-      { city: 'Toronto, Ontario, CA', text: 'Toronto, Ontario, CA' },
-      { city: 'Austin', state: 'TX', text: 'Austin, Texas, US' },
+      {
+        city: 'Toronto',
+        state: 'Ontario',
+        country: 'Canada',
+        text: 'Toronto, Ontario, CA',
+      },
+      {
+        city: 'Austin',
+        state: 'TX',
+        country: 'United States',
+        text: 'Austin, Texas, US',
+      },
     ]);
   });
 
