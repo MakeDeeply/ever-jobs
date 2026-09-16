@@ -1,3 +1,21 @@
+/**
+ * PROTOTYPE — not wired into production. Mirrors parseLocationList/parseLocationText
+ * with the proposed rules so corpus diffs can be generated before any real change:
+ *
+ *  - country recognition: COUNTRY_CONFIG aliases + ISO alpha-2 + alpha-3 map
+ *  - bare country segments emit {country} entries (never {city})
+ *  - 'City, Subdivision' / 'City, Subdivision, Country' -> state verbatim
+ *  - trailing ' - <country>' suffix recognized; ' - <qualifier>' stripped
+ *  - '(N)' serial markers stripped
+ *  - separators: ';' '|' always; ' & ' ' and ' ' or ' ' / ' via try-split-validate
+ *  - comma-packed multi-site lists: triple (City,ST,Country) or pair (City,ST) groups
+ *  - 'Hybrid|Remote (geo...)' -> paren content is the geo, outside qualifier-only
+ *  - 'Remote in <country>' -> {country} + remote flag
+ *  - text stamped only when the label is not trivially regenerable
+ *  - merged location never carries a stamped country and never gets city:'Remote'
+ *  - precedence: subdivision slot checks US-state before country; a bare whole-label
+ *    2-letter code checks US-state before ISO alpha-2 ('GA' -> Georgia not Gabon)
+ */
 import { LocationDto } from '@ever-jobs/models';
 import {
   COUNTRY_CONFIG,
@@ -5,204 +23,60 @@ import {
   countryFromString,
   getIndeedDomain,
 } from '@ever-jobs/models';
-import { regionNameFromCode } from './country-name';
+import { regionNameFromCode } from '../../packages/common/src/utils/country-name';
+
+type WorkFromHomeType = 'Hybrid' | 'Remote' | 'Hybrid or Remote';
+
+export interface ParsedLocationTextV2 {
+  location: LocationDto | null;
+  remoteMentioned: boolean;
+  workFromHomeType: WorkFromHomeType | null;
+}
+
+export interface ParsedLocationListV2 {
+  location: LocationDto | null;
+  locations: LocationDto[];
+  labels: string[];
+  remoteMentioned: boolean;
+  workFromHomeType: WorkFromHomeType | null;
+}
+
+export interface ParseLocationOptionsV2 {
+  allowBareStateProvince?: boolean;
+}
 
 const US_STATE_AND_TERRITORY_CODES = new Set([
-  'AA',
-  'AE',
-  'AK',
-  'AL',
-  'AP',
-  'AR',
-  'AS',
-  'AZ',
-  'CA',
-  'CO',
-  'CT',
-  'DC',
-  'DE',
-  'FL',
-  'FM',
-  'GA',
-  'GU',
-  'HI',
-  'IA',
-  'ID',
-  'IL',
-  'IN',
-  'KS',
-  'KY',
-  'LA',
-  'MA',
-  'MD',
-  'ME',
-  'MH',
-  'MI',
-  'MN',
-  'MO',
-  'MP',
-  'MS',
-  'MT',
-  'NC',
-  'ND',
-  'NE',
-  'NH',
-  'NJ',
-  'NM',
-  'NV',
-  'NY',
-  'OH',
-  'OK',
-  'OR',
-  'PA',
-  'PR',
-  'PW',
-  'RI',
-  'SC',
-  'SD',
-  'TN',
-  'TX',
-  'UT',
-  'VA',
-  'VI',
-  'VT',
-  'WA',
-  'WI',
-  'WV',
-  'WY',
+  'AA','AE','AK','AL','AP','AR','AS','AZ','CA','CO','CT','DC','DE','FL','FM','GA','GU','HI','IA','ID',
+  'IL','IN','KS','KY','LA','MA','MD','ME','MH','MI','MN','MO','MP','MS','MT','NC','ND','NE','NH','NJ',
+  'NM','NV','NY','OH','OK','OR','PA','PR','PW','RI','SC','SD','TN','TX','UT','VA','VI','VT','WA','WI',
+  'WV','WY',
 ]);
 
 const US_STATE_NAME_TO_CODE: Record<string, string> = {
-  alabama: 'AL',
-  alaska: 'AK',
-  arizona: 'AZ',
-  arkansas: 'AR',
-  california: 'CA',
-  colorado: 'CO',
-  connecticut: 'CT',
-  delaware: 'DE',
-  florida: 'FL',
-  georgia: 'GA',
-  hawaii: 'HI',
-  idaho: 'ID',
-  illinois: 'IL',
-  indiana: 'IN',
-  iowa: 'IA',
-  kansas: 'KS',
-  kentucky: 'KY',
-  louisiana: 'LA',
-  maine: 'ME',
-  maryland: 'MD',
-  massachusetts: 'MA',
-  michigan: 'MI',
-  minnesota: 'MN',
-  mississippi: 'MS',
-  missouri: 'MO',
-  montana: 'MT',
-  nebraska: 'NE',
-  nevada: 'NV',
-  'new hampshire': 'NH',
-  'new jersey': 'NJ',
-  'new mexico': 'NM',
-  'new york': 'NY',
-  'north carolina': 'NC',
-  'north dakota': 'ND',
-  ohio: 'OH',
-  oklahoma: 'OK',
-  oregon: 'OR',
-  pennsylvania: 'PA',
-  'rhode island': 'RI',
-  'south carolina': 'SC',
-  'south dakota': 'SD',
-  tennessee: 'TN',
-  texas: 'TX',
-  utah: 'UT',
-  vermont: 'VT',
-  virginia: 'VA',
-  washington: 'WA',
-  'west virginia': 'WV',
-  wisconsin: 'WI',
-  wyoming: 'WY',
-  'district of columbia': 'DC',
+  alabama:'AL',alaska:'AK',arizona:'AZ',arkansas:'AR',california:'CA',colorado:'CO',connecticut:'CT',
+  delaware:'DE',florida:'FL',georgia:'GA',hawaii:'HI',idaho:'ID',illinois:'IL',indiana:'IN',iowa:'IA',
+  kansas:'KS',kentucky:'KY',louisiana:'LA',maine:'ME',maryland:'MD',massachusetts:'MA',michigan:'MI',
+  minnesota:'MN',mississippi:'MS',missouri:'MO',montana:'MT',nebraska:'NE',nevada:'NV',
+  'new hampshire':'NH','new jersey':'NJ','new mexico':'NM','new york':'NY','north carolina':'NC',
+  'north dakota':'ND',ohio:'OH',oklahoma:'OK',oregon:'OR',pennsylvania:'PA','rhode island':'RI',
+  'south carolina':'SC','south dakota':'SD',tennessee:'TN',texas:'TX',utah:'UT',vermont:'VT',
+  virginia:'VA',washington:'WA','west virginia':'WV',wisconsin:'WI',wyoming:'WY',
+  'district of columbia':'DC',
 };
 
-/**
- * ISO-3166-1 alpha-3 display names for every country in COUNTRY_CONFIG, plus
- * `UAE` as an alias for `ARE` (boards write "UAE" often). `Intl.DisplayNames`
- * only accepts alpha-2 codes, so alpha-3 needs this explicit map.
- */
 const COUNTRY_ALPHA3: Record<string, string> = {
-  ARE: 'United Arab Emirates',
-  ARG: 'Argentina',
-  AUS: 'Australia',
-  AUT: 'Austria',
-  BEL: 'Belgium',
-  BGR: 'Bulgaria',
-  BHR: 'Bahrain',
-  BRA: 'Brazil',
-  CAN: 'Canada',
-  CHE: 'Switzerland',
-  CHL: 'Chile',
-  CHN: 'China',
-  COL: 'Colombia',
-  CRI: 'Costa Rica',
-  CYP: 'Cyprus',
-  CZE: 'Czech Republic',
-  DEU: 'Germany',
-  DNK: 'Denmark',
-  ECU: 'Ecuador',
-  EGY: 'Egypt',
-  ESP: 'Spain',
-  EST: 'Estonia',
-  FIN: 'Finland',
-  FRA: 'France',
-  GBR: 'United Kingdom',
-  GRC: 'Greece',
-  HKG: 'Hong Kong',
-  HUN: 'Hungary',
-  IDN: 'Indonesia',
-  IND: 'India',
-  IRL: 'Ireland',
-  ISR: 'Israel',
-  ITA: 'Italy',
-  JPN: 'Japan',
-  KOR: 'South Korea',
-  KWT: 'Kuwait',
-  LTU: 'Lithuania',
-  LVA: 'Latvia',
-  LUX: 'Luxembourg',
-  MAR: 'Morocco',
-  MEX: 'Mexico',
-  MLT: 'Malta',
-  MYS: 'Malaysia',
-  NGA: 'Nigeria',
-  NLD: 'Netherlands',
-  NOR: 'Norway',
-  NZL: 'New Zealand',
-  OMN: 'Oman',
-  PAK: 'Pakistan',
-  PAN: 'Panama',
-  PER: 'Peru',
-  PHL: 'Philippines',
-  POL: 'Poland',
-  PRT: 'Portugal',
-  QAT: 'Qatar',
-  ROU: 'Romania',
-  SAU: 'Saudi Arabia',
-  SGP: 'Singapore',
-  SVK: 'Slovakia',
-  SVN: 'Slovenia',
-  SWE: 'Sweden',
-  THA: 'Thailand',
-  TUR: 'Turkey',
-  TWN: 'Taiwan',
-  UAE: 'United Arab Emirates',
-  UKR: 'Ukraine',
-  URY: 'Uruguay',
-  USA: 'United States',
-  VEN: 'Venezuela',
-  VNM: 'Vietnam',
-  ZAF: 'South Africa',
+  ARE:'United Arab Emirates',ARG:'Argentina',AUS:'Australia',AUT:'Austria',BEL:'Belgium',
+  BGR:'Bulgaria',BHR:'Bahrain',BRA:'Brazil',CAN:'Canada',CHE:'Switzerland',CHL:'Chile',
+  CHN:'China',COL:'Colombia',CRI:'Costa Rica',CYP:'Cyprus',CZE:'Czech Republic',DEU:'Germany',
+  DNK:'Denmark',ECU:'Ecuador',EGY:'Egypt',ESP:'Spain',EST:'Estonia',FIN:'Finland',FRA:'France',
+  GBR:'United Kingdom',GRC:'Greece',HKG:'Hong Kong',HUN:'Hungary',IDN:'Indonesia',IND:'India',
+  IRL:'Ireland',ISR:'Israel',ITA:'Italy',JPN:'Japan',KOR:'South Korea',KWT:'Kuwait',LTU:'Lithuania',
+  LVA:'Latvia',LUX:'Luxembourg',MAR:'Morocco',MEX:'Mexico',MLT:'Malta',MYS:'Malaysia',
+  NGA:'Nigeria',NLD:'Netherlands',NOR:'Norway',NZL:'New Zealand',OMN:'Oman',PAK:'Pakistan',
+  PAN:'Panama',PER:'Peru',PHL:'Philippines',POL:'Poland',PRT:'Portugal',QAT:'Qatar',ROU:'Romania',
+  SAU:'Saudi Arabia',SGP:'Singapore',SVK:'Slovakia',SVN:'Slovenia',SWE:'Sweden',THA:'Thailand',
+  TUR:'Turkey',TWN:'Taiwan',UAE:'United Arab Emirates',UKR:'Ukraine',URY:'Uruguay',
+  USA:'United States',VEN:'Venezuela',VNM:'Vietnam',ZAF:'South Africa',
 };
 
 /**
@@ -212,46 +86,10 @@ const COUNTRY_ALPHA3: Record<string, string> = {
  */
 const BARE_STATE_NAME_COLLISIONS = new Set(['washington', 'new york', 'georgia']);
 
-/** Qualifier-flavored text is never a site name ('Hybrid possible', 'On-site'). */
-const QUALIFIER_WORD_RE =
-  /\b(?:hybrid|remote|on-?site|offsite|telecommut\w*|work\s+from\s+home|wfh)\b/i;
+/** qualifier-flavored text is never a site name ('Hybrid possible', 'On-site') */
+const QUALIFIER_WORD_RE = /\b(?:hybrid|remote|on-?site|offsite|telecommut\w*|work\s+from\s+home|wfh)\b/i;
 const asSiteName = (v: string | null | undefined): string | undefined =>
   v && !QUALIFIER_WORD_RE.test(v) ? v : undefined;
-
-/**
- * Tail words that identify a site descriptor rather than a subdivision —
- * 'Mytra, Inc.', 'Chicago, IL - Atlas', 'Plant 4'.
- */
-const SITE_DESCRIPTOR_RE =
-  /\b(?:hq|hqtrs|headquarters|office|campus|corp(?:orate)?|site|plant|services|pvt|ltd|inc|factory|facility|works|on-?site|onsite|offsite)\b/i;
-
-type WorkFromHomeType = 'Hybrid' | 'Remote' | 'Hybrid or Remote';
-
-export interface ParsedLocationText {
-  location: LocationDto | null;
-  remoteMentioned: boolean;
-  workFromHomeType: WorkFromHomeType | null;
-}
-
-export interface ParsedLocationList {
-  location: LocationDto | null;
-  locations: LocationDto[];
-  labels: string[];
-  remoteMentioned: boolean;
-  workFromHomeType: WorkFromHomeType | null;
-}
-
-export interface ParseLocationOptions {
-  /**
-   * When false, a lone token that exactly matches a known US state/territory
-   * **name** or **2-letter code** stays in the `city` field. Defaults to true:
-   * a bare `"Virginia"` / `"VA"` resolves to `{ state: 'VA' }`. Names colliding
-   * with prominent cities ('Washington', 'New York', 'Georgia') are exempt and
-   * remain cities. Named generically (state/province) so the flag can later
-   * cover non-US subdivisions without another signature change.
-   */
-  allowBareStateProvince?: boolean;
-}
 
 function countryDisplay(country: Country): string | null {
   try {
@@ -266,14 +104,11 @@ function countryDisplay(country: Country): string | null {
   return first.charAt(0).toUpperCase() + first.slice(1);
 }
 
-/**
- * Recognize a country token in country-slot context: COUNTRY_CONFIG names and
- * aliases, ISO alpha-2, explicit alpha-3 map, and the pragmatic `'korea'` alias
- * (job boards mean South Korea).
- */
-export function normalizeCountryOnly(value: string): string | null {
+/** Recognize a country token in COUNTRY-slot context (full names + aliases + codes). */
+export function normalizeCountryOnlyV2(value: string): string | null {
   const normalized = value.trim().toLowerCase().replace(/\./g, '');
   if (!normalized) return null;
+  // pragmatic alias: 'Korea' on job boards means South Korea (KOR)
   if (normalized === 'korea') return 'South Korea';
   try {
     const country = countryFromString(normalized);
@@ -293,21 +128,17 @@ export function normalizeCountryOnly(value: string): string | null {
   return null;
 }
 
-export function normalizeUsState(value: string): string | null {
+export function normalizeUsStateV2(value: string): string | null {
   const code = value.trim().toUpperCase();
   if (US_STATE_AND_TERRITORY_CODES.has(code)) return code;
   return US_STATE_NAME_TO_CODE[value.trim().toLowerCase()] ?? null;
 }
 
-/**
- * True when a segment is workplace text only — 'Remote', 'Hybrid / Remote',
- * 'Remote and onsite'. 'and'/'or' are filler words but never an ALL-CAPS
- * 2-letter state code ('OR' is Oregon, not a connector).
- */
-function isWorkplaceQualifierOnly(value: string, allowSlash: boolean): boolean {
+function isWorkplaceQualifierOnlyV2(value: string, allowSlash: boolean): boolean {
   if (!/\b(?:hybrid|remote)\b/i.test(value)) return false;
   const withoutWords = value
     .replace(/\b(?:hybrid|remote)\b/gi, '')
+    // 'and'/'or' as filler words — but never an ALL-CAPS 2-letter state code
     .replace(/\b(?:and|or)\b/gi, (w) => (/^[A-Z]{2}$/.test(w) ? w : ' '));
   const allowedSeparators = allowSlash ? /^[\s/&,+-]*$/ : /^[\s&,+-]*$/;
   return allowedSeparators.test(withoutWords);
@@ -322,28 +153,9 @@ function remoteFlags(normalized: string): {
   return {
     remoteMentioned,
     workFromHomeType: hybridMentioned
-      ? remoteMentioned
-        ? 'Hybrid or Remote'
-        : 'Hybrid'
-      : remoteMentioned
-        ? 'Remote'
-        : null,
+      ? remoteMentioned ? 'Hybrid or Remote' : 'Hybrid'
+      : remoteMentioned ? 'Remote' : null,
   };
-}
-
-/** Qualifier affixes joined to geography without spaces ('Hybrid- Fremont'). */
-const QUALIFIER_PREFIX_RE =
-  /^(?:hybrid|remote|onsite|on-site|offsite|any office)\b\s*[-–—]\s*/i;
-const QUALIFIER_SUFFIX_RE =
-  /\s*[-–—]\s*(?:remote|hybrid|onsite|on-site|offsite)\b\s*$/i;
-
-function affixStrip(s: string): string {
-  return s
-    .replace(QUALIFIER_PREFIX_RE, '')
-    .replace(QUALIFIER_SUFFIX_RE, '')
-    .replace(/^[\s\/&|;,]+|[\s\/&|;,]+$/g, '')
-    .replace(/\s+/g, ' ')
-    .trim();
 }
 
 /**
@@ -353,101 +165,75 @@ function affixStrip(s: string): string {
  *    outside parens is workplace words, the paren content is the geo part
  *  - qualifier parens like '(Remote)' removed
  */
+const QUALIFIER_PREFIX_RE =
+  /^(?:hybrid|remote|onsite|on-site|offsite|any office)\b\s*[-–—]\s*/i;
+const QUALIFIER_SUFFIX_RE =
+  /\s*[-–—]\s*(?:remote|hybrid|onsite|on-site|offsite)\b\s*$/i;
+
+function affixStrip(s: string): string {
+  return s.replace(QUALIFIER_PREFIX_RE, '').replace(QUALIFIER_SUFFIX_RE, '').replace(/\s+/g, ' ').trim();
+}
+
 function extractGeo(normalized: string): string {
   const noSerial = normalized.replace(/\(\d+\)/g, ' ');
   const parens = [...noSerial.matchAll(/\(([^()]*)\)/g)];
   if (parens.length === 0) return affixStrip(noSerial);
 
-  const outside = noSerial
-    .replace(/\([^()]*\)/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-  const outsideQualifierish =
-    isWorkplaceQualifierOnly(outside, true) ||
-    /^(?:hybrid|remote|any|office|on-?site|offsite|onsite)[\s\-–—:]*$/i.test(
-      outside,
-    ) ||
+  const outside = noSerial.replace(/\([^()]*\)/g, ' ').replace(/\s+/g, ' ').trim();
+  const outsideQualifierish = isWorkplaceQualifierOnlyV2(outside, true) ||
+    /^(?:hybrid|remote|any|office|on-?site|offsite|onsite)[\s\-–—:]*$/i.test(outside) ||
     /^(?:hybrid|remote)[\s\-–—]+(?:any\s+)?office[\s\-–—:]*$/i.test(outside);
 
   const contents = parens.map((m) => m[1].trim()).filter(Boolean);
-  const geoContents = contents.filter(
-    (c) => !isWorkplaceQualifierOnly(c, true),
-  );
+  const geoContents = contents.filter((c) => !isWorkplaceQualifierOnlyV2(c, true));
   if (outsideQualifierish && geoContents.length) {
     return geoContents.join(', ');
   }
   // keep non-qualifier parens inline (they may carry part of the name)
   const kept = noSerial.replace(/\(([^()]*)\)/g, (whole, content: string) =>
-    isWorkplaceQualifierOnly(content, true) ? ' ' : content,
+    isWorkplaceQualifierOnlyV2(content, true) ? ' ' : content,
   );
-  // unspaced qualifier affixes: 'Hybrid- Fremont, CA', 'Texas-Remote'
+  // unspaced qualifier affixes: 'Hybrid- Fremont, CA', 'Texas-Remote', 'Onsite- Salem, OR'
   return affixStrip(kept);
 }
 
 interface SingleParse {
   location: LocationDto;
-  /** carries state or country — structural evidence the parse found geo */
-  firm: boolean;
-  /** merged-blob label: input minus any literal country segment */
+  firm: boolean; // carries state or country (structural evidence)
+  /** label for the merged-city blob: input minus any literal country segment */
   blob?: string;
 }
 
 /** Parse ONE clean label into a geographic entry. Right-to-left consumption. */
 function parseSingleLabel(
   cleaned: string,
-  options?: ParseLocationOptions,
+  options?: ParseLocationOptionsV2,
 ): SingleParse | null {
   if (!cleaned) return null;
 
   // 'Remote in <country>' / 'Remote - <country>'
-  const remoteIn = /^(?:remote|hybrid)\b(?:[\s-]*\w+)*?\s+in\s+(.+)$/i.exec(
-    cleaned,
-  );
+  const remoteIn = /^(?:remote|hybrid)\b(?:[\s-]*\w+)*?\s+in\s+(.+)$/i.exec(cleaned);
   if (remoteIn) {
-    const c = normalizeCountryOnly(remoteIn[1]);
+    const c = normalizeCountryOnlyV2(remoteIn[1]);
     if (c) return { location: new LocationDto({ country: c }), firm: true };
   }
   const remoteDash = /^(?:remote|hybrid)\s*[-–—]\s*(.+)$/i.exec(cleaned);
   if (remoteDash) {
-    const c = normalizeCountryOnly(remoteDash[1]);
+    const c = normalizeCountryOnlyV2(remoteDash[1]);
     if (c) return { location: new LocationDto({ country: c }), firm: true };
   }
 
-  // 'Remote United States' / 'Hybrid Austin' — qualifier word fused with a
-  // country or US state: drop the word, keep the geo
-  const fused = /^(?:remote|hybrid|onsite|on-site|offsite)\s+(.+)$/i.exec(
-    cleaned,
-  );
-  if (fused) {
-    const geo = fused[1].trim();
-    const c = normalizeCountryOnly(geo);
-    if (c) return { location: new LocationDto({ country: c }), firm: true };
-    const st = normalizeUsState(geo);
-    if (st) return { location: new LocationDto({ state: st }), firm: true };
-  }
-
-  // whole-label country (a bare 2-letter US-state code prefers the state read)
-  const wholeCountry = normalizeCountryOnly(cleaned);
+  // whole-label country (bare 'GA' resolves as US state first — see below)
+  const wholeCountry = normalizeCountryOnlyV2(cleaned);
   if (wholeCountry) {
-    const bareState = /^[A-Za-z]{2}$/.test(cleaned.trim())
-      ? normalizeUsState(cleaned)
-      : null;
-    if (bareState) {
-      if (options?.allowBareStateProvince === false) {
-        return { location: new LocationDto({ city: cleaned }), firm: false };
-      }
-      return {
-        location: new LocationDto({ state: bareState }),
-        firm: true,
-      };
+    // 2-letter code that is also a US state -> prefer US state reading
+    if (/^[A-Za-z]{2}$/.test(cleaned.trim()) && normalizeUsStateV2(cleaned)) {
+      return { location: new LocationDto({ state: normalizeUsStateV2(cleaned)! }), firm: true };
     }
     return { location: new LocationDto({ country: wholeCountry }), firm: true };
   }
 
-  const parts = cleaned
-    .split(',')
-    .map((p) => p.trim())
-    .filter(Boolean);
+  const parts = cleaned.split(',').map((p) => p.trim()).filter(Boolean);
   if (!parts.length) return null;
 
   if (parts.length === 1 && !cleaned.includes(' - ')) {
@@ -456,13 +242,8 @@ function parseSingleLabel(
       options?.allowBareStateProvince !== false &&
       !BARE_STATE_NAME_COLLISIONS.has(only.toLowerCase())
     ) {
-      const bareState = normalizeUsState(only);
-      if (bareState) {
-        return {
-          location: new LocationDto({ state: bareState }),
-          firm: true,
-        };
-      }
+      const bareState = normalizeUsStateV2(only);
+      if (bareState) return { location: new LocationDto({ state: bareState }), firm: true };
     }
     return { location: new LocationDto({ city: only }), firm: false };
   }
@@ -477,12 +258,12 @@ function parseSingleLabel(
  */
 function parseCommaParts(
   rawParts: string[],
-  options?: ParseLocationOptions,
+  options?: ParseLocationOptionsV2,
 ): SingleParse | null {
   const parts = [...rawParts];
 
   // 'Remote, Rockville, MD' — a leading qualifier part carries flags only
-  while (parts.length > 1 && isWorkplaceQualifierOnly(parts[0], true)) {
+  while (parts.length > 1 && isWorkplaceQualifierOnlyV2(parts[0], true)) {
     parts.shift();
   }
 
@@ -497,19 +278,15 @@ function parseCommaParts(
   for (let i = 0; i < parts.length; i++) {
     parts[i] = affixStrip(parts[i]); // 'Texas-Remote', 'Hybrid- Fremont'
     // 'Remote United States' — qualifier word fused inside a part
-    const qf = /^(?:remote|hybrid|onsite|on-site|offsite)\s+(.+)$/i.exec(
-      parts[i],
-    );
-    if (qf && (normalizeCountryOnly(qf[1]) || normalizeUsState(qf[1]))) {
+    const qf = /^(?:remote|hybrid|onsite|on-site|offsite)\s+(.+)$/i.exec(parts[i]);
+    if (qf && (normalizeCountryOnlyV2(qf[1]) || normalizeUsStateV2(qf[1]))) {
       parts[i] = qf[1].trim();
     }
     const d = /^(.*?)\s+-\s+(.+)$/.exec(parts[i]);
     if (!d) continue;
     let prefixCountry: string | null = null;
     try {
-      prefixCountry = countryDisplay(
-        countryFromString(d[1].trim().toLowerCase()),
-      );
+      prefixCountry = countryDisplay(countryFromString(d[1].trim().toLowerCase()));
     } catch {
       /* not a country-name prefix */
     }
@@ -519,14 +296,14 @@ function parseCommaParts(
       i--; // reprocess the rewritten part ('US - GA - Remote' -> 'GA')
       continue;
     }
-    const suffixCountry = normalizeCountryOnly(d[2]);
+    const suffixCountry = normalizeCountryOnlyV2(d[2]);
     if (suffixCountry) {
       country = country ?? suffixCountry;
       parts[i] = d[1].trim();
       i--;
       continue;
     }
-    if (isWorkplaceQualifierOnly(d[2], true)) {
+    if (isWorkplaceQualifierOnlyV2(d[2], true)) {
       parts[i] = d[1].trim();
       i--;
       continue;
@@ -544,21 +321,16 @@ function parseCommaParts(
   // comma labels (only as list rows handled by the separators).
   if (parts.length >= 3) {
     const tail = parts[parts.length - 1];
-    let c = country ?? normalizeCountryOnly(tail);
+    let c = country ?? normalizeCountryOnlyV2(tail);
     // a 2-letter tail that is BOTH a US state and an ISO country ('CA','GA','IL')
     // reads as the US state when the middle part itself contains a US-state code
-    // ('Pueblo, CO Penrose, CO'); otherwise the country wins.
+    // ('Pueblo, CO Penrose, CO'); otherwise the country wins
+    // ('Toronto, Ontario, CA' -> Canada).
     if (
       c &&
       /^[A-Za-z]{2}$/.test(tail) &&
       US_STATE_AND_TERRITORY_CODES.has(tail.toUpperCase()) &&
-      parts
-        .slice(0, -1)
-        .some(
-          (p) =>
-            /\b[A-Z]{2}\b/.test(p) &&
-            Boolean(normalizeUsState(p.split(' ')[0])),
-        )
+      parts.slice(0, -1).some((p) => /\b[A-Z]{2}\b/.test(p) && Boolean(normalizeUsStateV2(p.split(' ')[0])))
     ) {
       c = null;
     }
@@ -577,7 +349,7 @@ function parseCommaParts(
   let state: string | null = null;
   {
     const tail = parts[parts.length - 1];
-    const st = tail ? normalizeUsState(tail) : null;
+    const st = tail ? normalizeUsStateV2(tail) : null;
     if (st && parts.length >= 2) {
       state = st;
       parts.pop();
@@ -587,7 +359,7 @@ function parseCommaParts(
   // 'City, Subdivision' — verbatim subdivision when not US/country
   if (parts.length === 2 && !state) {
     const [city, sub] = parts;
-    const c = normalizeCountryOnly(sub);
+    const c = normalizeCountryOnlyV2(sub);
     if (c) {
       // 'NY, USA' — a US-state code in the city slot is a state, not a city
       if (US_STATE_AND_TERRITORY_CODES.has(city.toUpperCase())) {
@@ -602,22 +374,15 @@ function parseCommaParts(
         };
       }
       return {
-        location: new LocationDto({
-          city,
-          country: c,
-          name: asSiteName(siteName),
-        }),
+        location: new LocationDto({ city, country: c, name: asSiteName(siteName) }),
         firm: true,
         blob: city,
       };
     }
     // 'City, Remote' / 'City, Hybrid' — qualifier tail stays out of fields
-    if (isWorkplaceQualifierOnly(sub, true)) {
+    if (isWorkplaceQualifierOnlyV2(sub, true)) {
       return {
-        location: new LocationDto({
-          city,
-          country: country ?? undefined,
-        }),
+        location: new LocationDto({ city, country: country ?? undefined }),
         firm: Boolean(country),
         blob,
       };
@@ -629,9 +394,7 @@ function parseCommaParts(
         location: new LocationDto({
           city,
           state: codeTail[1],
-          name: asSiteName(
-            [codeTail[2], siteName].filter(Boolean).join(' - '),
-          ),
+          name: asSiteName([codeTail[2], siteName].filter(Boolean).join(' - ')),
           country: country ?? undefined,
         }),
         firm: true,
@@ -639,13 +402,14 @@ function parseCommaParts(
       };
     }
     // site-descriptor tails are names, not subdivisions
-    if (!QUALIFIER_WORD_RE.test(sub) && SITE_DESCRIPTOR_RE.test(sub)) {
+    if (
+      !QUALIFIER_WORD_RE.test(sub) &&
+      /\b(?:hq|hqtrs|headquarters|office|campus|corp(?:orate)?|site|plant|services|pvt|ltd|inc|factory|facility|works|on-?site|onsite|offsite)\b/i.test(sub)
+    ) {
       return {
         location: new LocationDto({
           city,
-          name: asSiteName(
-            [sub, siteName].filter(Boolean).join(' - '),
-          ),
+          name: asSiteName([sub, siteName].filter(Boolean).join(' - ')),
           country: country ?? undefined,
         }),
         firm: false,
@@ -668,11 +432,11 @@ function parseCommaParts(
   // or US state still resolves; a lone qualifier carries flags only
   if (parts.length === 1) {
     const only = parts[0];
-    if (isWorkplaceQualifierOnly(only, true)) {
+    if (isWorkplaceQualifierOnlyV2(only, true)) {
       if (!country) return null;
       return { location: new LocationDto({ country }), firm: true };
     }
-    const c = normalizeCountryOnly(only);
+    const c = normalizeCountryOnlyV2(only);
     if (c) {
       return {
         location: new LocationDto({
@@ -685,10 +449,8 @@ function parseCommaParts(
       };
     }
     const st =
-      !state &&
-      options?.allowBareStateProvince !== false &&
-      !BARE_STATE_NAME_COLLISIONS.has(only.toLowerCase())
-        ? normalizeUsState(only)
+      !state && !BARE_STATE_NAME_COLLISIONS.has(only.toLowerCase())
+        ? normalizeUsStateV2(only)
         : null;
     if (st) {
       return {
@@ -728,8 +490,7 @@ function parseCommaParts(
 function dedupeConsecutive(parts: string[]): string[] {
   const out: string[] = [];
   for (const p of parts) {
-    if (out.length && out[out.length - 1].toLowerCase() === p.toLowerCase())
-      continue;
+    if (out.length && out[out.length - 1].toLowerCase() === p.toLowerCase()) continue;
     out.push(p);
   }
   return out;
@@ -749,7 +510,7 @@ function isBareCityCandidate(value: string): boolean {
  */
 function tryWordSplit(
   cleaned: string,
-  options?: ParseLocationOptions,
+  options?: ParseLocationOptionsV2,
 ): string[] | null {
   // 'or'/'and' never split on an ALL-CAPS 2-letter token — 'Portland, OR / X'
   // must keep Oregon, not treat 'OR' as a connector
@@ -772,7 +533,7 @@ function tryWordSplit(
   for (let i = 0; i < parts.length; i++) {
     const part = parts[i];
     const prevConn = i > 0 ? conns[i - 1] : null;
-    if (isWorkplaceQualifierOnly(part, true)) {
+    if (isWorkplaceQualifierOnlyV2(part, true)) {
       firm = true;
       continue;
     }
@@ -781,11 +542,8 @@ function tryWordSplit(
       firm = true;
       continue;
     }
-    const adjConn = prevConn ?? conns[i] ?? null;
     const softOk =
-      parsed &&
-      isBareCityCandidate(part) &&
-      (adjConn === '&' || adjConn === '/');
+      parsed && isBareCityCandidate(part) && (prevConn === '&' || prevConn === '/');
     if (!softOk) {
       failed = true;
       break;
@@ -801,12 +559,9 @@ function tryWordSplit(
  */
 function tryCommaGroupSplit(
   cleaned: string,
-  options?: ParseLocationOptions,
+  options?: ParseLocationOptionsV2,
 ): string[] | null {
-  const parts = cleaned
-    .split(',')
-    .map((p) => p.trim())
-    .filter(Boolean);
+  const parts = cleaned.split(',').map((p) => p.trim()).filter(Boolean);
   if (parts.length < 4) return null;
 
   const width = parts.length % 3 === 0 ? 3 : parts.length % 2 === 0 ? 2 : 0;
@@ -816,15 +571,14 @@ function tryCommaGroupSplit(
     groups.push(parts.slice(i, i + width).join(', '));
   }
   const allFirm = groups.every((g) => {
-    if (isWorkplaceQualifierOnly(g, true)) return true;
+    if (isWorkplaceQualifierOnlyV2(g, true)) return true;
     const parsed = parseSingleLabel(g, options);
     if (!parsed?.firm) return false;
     // pair groups additionally need a *recognized* subdivision — a verbatim
     // 'City, Subdivision' is too weak ('BMS Test and Trials, Pascagoula')
     if (width === 2) {
       return Boolean(
-        (parsed.location.state &&
-          US_STATE_AND_TERRITORY_CODES.has(parsed.location.state)) ||
+        (parsed.location.state && US_STATE_AND_TERRITORY_CODES.has(parsed.location.state)) ||
           parsed.location.country,
       );
     }
@@ -833,25 +587,13 @@ function tryCommaGroupSplit(
   return allFirm ? groups : null;
 }
 
-/**
- * Normalize an ordered list of location labels into the merged singular DTO
- * plus per-site structured entries.
- *
- * `country` fields are literal: only country tokens actually present in labels
- * produce them. A US-state code implies 'United States' internally — that
- * implication can veto a conflicting literal stamp, but never creates one.
- */
-export function parseLocationList(
+export function parseLocationListV2(
   rawLocations: Array<string | null | undefined>,
-  options?: ParseLocationOptions,
-): ParsedLocationList {
-  const concrete: Array<{
-    location: LocationDto;
-    label: string;
-    key: string;
-    blob?: string;
-  }> = [];
+  options?: ParseLocationOptionsV2,
+): ParsedLocationListV2 {
+  const concrete: Array<{ location: LocationDto; label: string; key: string; blob?: string }> = [];
   const seen = new Set<string>();
+  const countries = new Set<string>();
   let remoteMentioned = false;
   let workFromHomeType: WorkFromHomeType | null = null;
 
@@ -896,17 +638,18 @@ export function parseLocationList(
   };
 
   const emit = (segment: string) => {
-    if (isWorkplaceQualifierOnly(segment, true)) return;
-    // word separators first ('Denver, CO & San Francisco, CA' etc.)
+    if (isWorkplaceQualifierOnlyV2(segment, true)) return;
+    // word separators first ('Denver, CO; San Francisco, CA' etc.)
     const wordParts = tryWordSplit(segment, options) ?? [segment];
     for (const wp of wordParts) {
-      if (isWorkplaceQualifierOnly(wp, true)) continue;
+      if (isWorkplaceQualifierOnlyV2(wp, true)) continue;
       // then comma-packed groups
       const groups = tryCommaGroupSplit(wp, options) ?? [wp];
       for (const g of groups) {
-        if (isWorkplaceQualifierOnly(g, true)) continue;
+        if (isWorkplaceQualifierOnlyV2(g, true)) continue;
         const parsed = parseSingleLabel(g, options);
         if (!parsed) continue;
+        if (parsed.location.country) countries.add(parsed.location.country);
         addEntry(g, parsed.location, parsed.blob);
       }
     }
@@ -918,12 +661,9 @@ export function parseLocationList(
 
     const flags = remoteFlags(normalized);
     remoteMentioned = remoteMentioned || flags.remoteMentioned;
-    workFromHomeType = mergeWorkFromHomeType(
-      workFromHomeType,
-      flags.workFromHomeType,
-    );
+    workFromHomeType = mergeWorkFromHomeTypeV2(workFromHomeType, flags.workFromHomeType);
 
-    if (isWorkplaceQualifierOnly(normalized, true)) continue;
+    if (isWorkplaceQualifierOnlyV2(normalized, true)) continue;
 
     // ';' and '|' are unambiguous list separators — split first, then extract
     for (const chunk of normalized.split(/\s*[;|]+\s*/)) {
@@ -934,7 +674,7 @@ export function parseLocationList(
 
   const filteredConcrete = concrete.filter(
     (item) =>
-      !isBareCityDuplicate(
+      !isBareCityDuplicateV2(
         item,
         concrete.map((candidate) => candidate.location),
       ),
@@ -989,13 +729,7 @@ export function parseLocationList(
       ...locations[0],
       country: locations[0].country ?? commonCountry ?? undefined,
     });
-    return {
-      location,
-      locations: [location],
-      labels,
-      remoteMentioned,
-      workFromHomeType,
-    };
+    return { location, locations: [location], labels, remoteMentioned, workFromHomeType };
   }
 
   const merged =
@@ -1008,25 +742,23 @@ export function parseLocationList(
   return { location: merged, locations, labels, remoteMentioned, workFromHomeType };
 }
 
-/**
- * Parse a single location label (or a small multi-site string) into the merged
- * geographic view plus workplace flags. Shares the list pipeline so separators
- * and qualifiers behave identically.
- */
-export function parseLocationText(
+export function parseLocationTextV2(
   raw: string | null | undefined,
-  options?: ParseLocationOptions,
-): ParsedLocationText {
+  options?: ParseLocationOptionsV2,
+): ParsedLocationTextV2 {
   const normalized = raw?.replace(/\s+/g, ' ').trim() ?? '';
   if (!normalized) {
     return { location: null, remoteMentioned: false, workFromHomeType: null };
   }
   const flags = remoteFlags(normalized);
-  const { location } = parseLocationList([normalized], options);
+  const cleaned = extractGeo(normalized);
+  const location = isWorkplaceQualifierOnlyV2(cleaned, true)
+    ? null
+    : parseSingleLabel(cleaned, options)?.location ?? null;
   return { location, ...flags };
 }
 
-function mergeWorkFromHomeType(
+function mergeWorkFromHomeTypeV2(
   current: WorkFromHomeType | null,
   next: WorkFromHomeType | null,
 ): WorkFromHomeType | null {
@@ -1035,17 +767,12 @@ function mergeWorkFromHomeType(
   return 'Hybrid or Remote';
 }
 
-function isBareCityDuplicate(
+function isBareCityDuplicateV2(
   item: { location: LocationDto; label: string },
   locations: LocationDto[],
 ): boolean {
   const city = item.location.city?.trim().toLowerCase();
-  if (
-    !city ||
-    item.location.state ||
-    item.location.country ||
-    item.label.includes(',')
-  ) {
+  if (!city || item.location.state || item.location.country || item.label.includes(',')) {
     return false;
   }
   return locations.some(

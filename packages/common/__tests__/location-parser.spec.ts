@@ -48,15 +48,14 @@ describe('parseLocationText', () => {
     },
   );
 
-  it('preserves unrecognized and unsafe labels without losing data', () => {
-    expect(parseLocationText('Atlanta, GA (Headquarters)').location).toMatchObject({
-      city: 'Atlanta, GA (Headquarters)',
-    });
+  it('maps unrecognized subdivisions verbatim into state and site descriptors into name', () => {
+    expect(
+      parseLocationText('Atlanta, GA (Headquarters)').location,
+    ).toMatchObject({ city: 'Atlanta', state: 'GA', name: 'Headquarters' });
+    // 'ON' is not a US state or ISO country -> verbatim subdivision
     expect(parseLocationText('Toronto, ON').location).toMatchObject({
-      city: 'Toronto, ON',
-    });
-    expect(parseLocationText('Atlanta / Savannah, GA').location).toMatchObject({
-      city: 'Atlanta / Savannah, GA',
+      city: 'Toronto',
+      state: 'ON',
     });
   });
 
@@ -93,31 +92,37 @@ describe('parseLocationList', () => {
       'United States',
     ]);
 
-    expect(parsed.labels).toEqual(['Mountain View, CA', 'Seattle, WA']);
-    expect(parsed.locations).toHaveLength(2);
+    expect(parsed.labels).toEqual([
+      'Mountain View, CA, United States',
+      'Seattle, WA, United States',
+      'United States',
+    ]);
+    expect(parsed.locations).toHaveLength(3);
     expect(parsed.locations[0]).toMatchObject({
       city: 'Mountain View',
       state: 'CA',
+      country: 'United States',
     });
     expect(parsed.locations[1]).toMatchObject({
       city: 'Seattle',
       state: 'WA',
+      country: 'United States',
     });
+    expect(parsed.locations[2]).toMatchObject({ country: 'United States' });
     expect(parsed.location).toMatchObject({
-      city: 'Mountain View, CA; Seattle, WA',
+      city: 'Mountain View, California; Seattle, WA',
       country: 'United States',
     });
     expect(parsed.remoteMentioned).toBe(true);
     expect(parsed.workFromHomeType).toBe('Remote');
   });
 
-  it('suppresses broad country-only labels when concrete locations exist', () => {
+  it('stamps the sole literal country on the merged view when nothing conflicts', () => {
     const parsed = parseLocationList(['United States', 'Austin, TX']);
 
-    expect(parsed.labels).toEqual(['Austin, TX']);
+    expect(parsed.labels).toEqual(['United States', 'Austin, TX']);
     expect(parsed.location).toMatchObject({
-      city: 'Austin',
-      state: 'TX',
+      city: 'Austin, TX',
       country: 'United States',
     });
   });
@@ -128,7 +133,7 @@ describe('parseLocationList', () => {
       'Los Angeles, California, USA',
     ]);
 
-    expect(parsed.labels).toEqual(['Los Angeles, CA']);
+    expect(parsed.labels).toEqual(['Los Angeles, CA, United States']);
     expect(parsed.location).toMatchObject({
       city: 'Los Angeles',
       state: 'CA',
@@ -136,30 +141,35 @@ describe('parseLocationList', () => {
     });
   });
 
-  it('keeps remote-only labels visible when there are no concrete locations', () => {
+  it('never mints a Remote city — qualifiers live in flags only', () => {
     const parsed = parseLocationList(['Remote', 'United States']);
 
-    expect(parsed.labels).toEqual([]);
-    expect(parsed.location).toMatchObject({
-      city: 'Remote',
-      country: 'United States',
-    });
+    expect(parsed.locations).toEqual([
+      expect.objectContaining({ country: 'United States' }),
+    ]);
+    expect(parsed.location).toMatchObject({ country: 'United States' });
+    expect(parsed.location?.city).toBeUndefined();
     expect(parsed.remoteMentioned).toBe(true);
     expect(parsed.workFromHomeType).toBe('Remote');
   });
 
-  it('preserves unsafe labels without losing source text', () => {
+  it('splits slash-separated multi-site strings into per-site entries', () => {
     const parsed = parseLocationList(['Toronto, ON', 'Atlanta / Savannah, GA']);
 
-    expect(parsed.labels).toEqual(['Toronto, ON', 'Atlanta / Savannah, GA']);
-    expect(parsed.location).toMatchObject({
-      city: 'Toronto, ON; Atlanta / Savannah, GA',
+    expect(parsed.labels).toEqual(['Toronto, ON', 'Atlanta', 'Savannah, GA']);
+    expect(parsed.locations[0]).toMatchObject({
+      city: 'Toronto',
+      state: 'ON',
+    });
+    expect(parsed.locations[2]).toMatchObject({
+      city: 'Savannah',
+      state: 'GA',
     });
   });
 });
 
-describe('LocationDto.text (Spec 5120)', () => {
-  it('records the raw label on every concrete location, parsed or not', () => {
+describe('LocationDto.text', () => {
+  it('omits text when the label is trivially regenerable from fields', () => {
     const parsed = parseLocationList([
       'Seattle, WA',
       'Berlin, Germany',
@@ -167,25 +177,34 @@ describe('LocationDto.text (Spec 5120)', () => {
     ]);
 
     expect(parsed.locations.map((loc) => loc.text)).toEqual([
-      'Seattle, WA',
-      'Berlin, Germany',
-      'Bengaluru',
+      undefined,
+      undefined,
+      undefined,
     ]);
-    // The parsed fields stay exactly as before; `text` is additive.
     expect(parsed.locations[0]).toMatchObject({ city: 'Seattle', state: 'WA' });
-    expect(parsed.locations[1]).toMatchObject({ city: 'Berlin, Germany' });
+    expect(parsed.locations[1]).toMatchObject({
+      city: 'Berlin',
+      country: 'Germany',
+    });
     expect(parsed.locations[2]).toMatchObject({ city: 'Bengaluru' });
   });
 
-  it('carries the raw label on the singular location for a single-site posting', () => {
-    const parsed = parseLocationList(['Austin, TX']);
+  it('records the verbatim label when fields cannot regenerate it', () => {
+    const parsed = parseLocationList([
+      'Austin, TX - Atlas',
+      'Remote United States',
+    ]);
 
-    expect(parsed.location).toMatchObject({
+    expect(parsed.locations[0]).toMatchObject({
       city: 'Austin',
       state: 'TX',
-      text: 'Austin, TX',
+      name: 'Atlas',
+      text: 'Austin, TX - Atlas',
     });
-    expect(parsed.locations).toHaveLength(1);
+    expect(parsed.locations[1]).toMatchObject({
+      country: 'United States',
+      text: 'Remote United States',
+    });
   });
 
   it('omits text on the merged multi-site location, which is synthesized not raw', () => {
@@ -198,59 +217,54 @@ describe('LocationDto.text (Spec 5120)', () => {
   });
 
   it('omits text on a remote-only or country-only location, which has no site label', () => {
-    expect(parseLocationList(['Remote', 'United States']).location?.text).toBeUndefined();
-    expect(parseLocationList(['United States']).location?.text).toBeUndefined();
+    expect(
+      parseLocationList(['Remote', 'United States']).location?.text,
+    ).toBeUndefined();
+    expect(
+      parseLocationList(['United States']).location?.text,
+    ).toBeUndefined();
   });
 });
 
-describe('allowBareStateProvince opt-in', () => {
-  it('is OFF by default: a bare US state name/code stays in the city field', () => {
-    expect(parseLocationText('Virginia').location).toMatchObject({ city: 'Virginia' });
-    expect(parseLocationText('Virginia').location?.state).toBeUndefined();
-    expect(parseLocationText('VA').location).toMatchObject({ city: 'VA' });
-    expect(parseLocationList(['Virginia']).location).toMatchObject({ city: 'Virginia' });
+describe('allowBareStateProvince (default on)', () => {
+  it('resolves a bare US state name/code to state by default', () => {
+    expect(parseLocationText('Virginia').location).toMatchObject({
+      state: 'VA',
+    });
+    expect(parseLocationText('VA').location).toMatchObject({ state: 'VA' });
+    expect(parseLocationList(['Virginia']).location).toMatchObject({
+      state: 'VA',
+    });
   });
 
-  it('classifies a bare US state name as a state-only location when enabled', () => {
-    const parsed = parseLocationText('Virginia', { allowBareStateProvince: true });
-    expect(parsed.location).toMatchObject({ state: 'VA' });
-    expect(parsed.location?.city).toBeUndefined();
-    expect(parsed.location?.displayLocation()).toBe('VA');
+  it('keeps a bare state name in city when a caller opts out', () => {
+    expect(
+      parseLocationText('Virginia', { allowBareStateProvince: false }).location,
+    ).toMatchObject({ city: 'Virginia' });
+    expect(
+      parseLocationText('VA', { allowBareStateProvince: false }).location?.state,
+    ).toBeUndefined();
   });
 
-  it('classifies a bare US state code (any case) as a state-only location when enabled', () => {
-    expect(
-      parseLocationText('va', { allowBareStateProvince: true }).location,
-    ).toMatchObject({ state: 'VA' });
-    expect(
-      parseLocationText('  Rhode Island  ', { allowBareStateProvince: true })
-        .location,
-    ).toMatchObject({ state: 'RI' });
-    expect(
-      parseLocationList(['Virginia'], { allowBareStateProvince: true }).location,
-    ).toMatchObject({ state: 'VA' });
+  it('never resolves collision names (Washington, New York, Georgia) to state', () => {
+    for (const name of ['Washington', 'New York', 'Georgia']) {
+      expect(parseLocationText(name).location).toMatchObject({ city: name });
+    }
   });
 
-  it('leaves a City, ST pair unchanged even when enabled (no regression)', () => {
-    expect(
-      parseLocationText('Richmond, VA', { allowBareStateProvince: true }).location,
-    ).toMatchObject({ city: 'Richmond', state: 'VA' });
+  it('leaves a City, ST pair unchanged (no regression)', () => {
+    expect(parseLocationText('Richmond, VA').location).toMatchObject({
+      city: 'Richmond',
+      state: 'VA',
+    });
   });
 
-  it('does not promote a non-state token or a comma-bearing label when enabled', () => {
-    // Not a US state → stays a city.
-    expect(
-      parseLocationText('Springfield', { allowBareStateProvince: true }).location,
-    ).toMatchObject({ city: 'Springfield' });
-    // Canadian province is out of scope for the US-only map → stays a city.
-    expect(
-      parseLocationText('Ontario', { allowBareStateProvince: true }).location,
-    ).toMatchObject({ city: 'Ontario' });
-    // A comma-bearing unsafe label is not a bare token → unchanged.
-    expect(
-      parseLocationText('Atlanta / Savannah, GA', {
-        allowBareStateProvince: true,
-      }).location,
-    ).toMatchObject({ city: 'Atlanta / Savannah, GA' });
+  it('does not promote a non-state token', () => {
+    expect(parseLocationText('Springfield').location).toMatchObject({
+      city: 'Springfield',
+    });
+    expect(parseLocationText('Ontario').location).toMatchObject({
+      city: 'Ontario',
+    });
   });
 });
