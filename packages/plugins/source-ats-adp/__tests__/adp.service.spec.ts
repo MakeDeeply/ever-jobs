@@ -228,7 +228,7 @@ describe('AdpService', () => {
 
     expect(res.jobs[0].locations).toMatchObject([
       { city: 'Austin', state: 'TX', text: 'Austin, TX' },
-      { city: 'Remote, US', text: 'Remote, US' },
+      { country: 'United States', text: 'Remote, US' },
     ]);
     expect(res.jobs[0].isRemote).toBe(true);
   });

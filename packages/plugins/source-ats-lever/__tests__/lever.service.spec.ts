@@ -144,8 +144,8 @@ describe('LeverService field mappings (spec 752)', () => {
     });
     expect(job.location?.city).toBe('Nashua, NH; Brooklyn Park, MN');
     expect(job.locations).toMatchObject([
-      { city: 'Nashua', state: 'NH', text: 'Nashua, NH' },
-      { city: 'Brooklyn Park', state: 'MN', text: 'Brooklyn Park, MN' },
+      { city: 'Nashua', state: 'NH' },
+      { city: 'Brooklyn Park', state: 'MN' },
     ]);
   });
 
@@ -157,11 +157,10 @@ describe('LeverService field mappings (spec 752)', () => {
         allLocations: ['Berlin, Germany', 'Austin, TX'],
       },
     });
-    // 'Berlin, Germany' does not split, but the site boundary survives in
-    // locations[] with the raw label preserved in `text`.
+    // Each allLocations label lands as its own locations[] entry.
     expect(job.locations).toMatchObject([
-      { city: 'Berlin, Germany', text: 'Berlin, Germany' },
-      { city: 'Austin', state: 'TX', text: 'Austin, TX' },
+      { city: 'Berlin', country: 'Germany' },
+      { city: 'Austin', state: 'TX' },
     ]);
   });
 

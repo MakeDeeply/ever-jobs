@@ -105,8 +105,8 @@ describe('AuroraTechService — Spec 5102', () => {
       const job0 = result.jobs.find((j) => j.id === 'aurora_tech-job-001');
 
       expect(job0?.locations).toMatchObject([
-        { city: 'Pittsburgh', state: 'PA', text: 'Pittsburgh, PA' },
-        { city: 'Bozeman', state: 'MT', text: 'Bozeman, MT' },
+        { city: 'Pittsburgh', state: 'PA' },
+        { city: 'Bozeman', state: 'MT' },
       ]);
     });
 

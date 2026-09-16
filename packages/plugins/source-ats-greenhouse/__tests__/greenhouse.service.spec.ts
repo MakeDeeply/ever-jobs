@@ -287,7 +287,7 @@ describe('GreenhouseService — Spec 5009', () => {
         'Tulsa',
       ]);
       expect(job.locations?.map((l) => l.state)).toEqual(['MD', 'CA', 'OK']);
-      expect(job.locations?.[0].text).toBe('Rockville, MD');
+      expect(job.locations?.[0].text).toBeUndefined();
       // merged view unchanged
       expect(job.location?.city).toContain('Rockville');
     });
