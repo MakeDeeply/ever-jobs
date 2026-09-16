@@ -16,6 +16,7 @@ import {
   htmlToPlainText,
   markdownConverter,
   extractEmails,
+  parseLocationText,
   toDateOnly,
 } from '@ever-jobs/common';
 import {
@@ -337,13 +338,15 @@ export class CleverConnectService implements IScraper {
 
     const companyName = job.companyName ?? this.deriveCompanyNameFromSlug(tenant);
     const description = this.formatDescription(job.descriptionHtml ?? null, format);
+    const location = this.extractLocation(job);
 
     return new JobPostDto({
       id: `cleverconnect-${atsId}`,
       title,
       companyName,
       jobUrl,
-      location: this.extractLocation(job),
+      location,
+      ...(location ? { locations: [location] } : {}),
       description,
       datePosted: job.datePosted ?? null,
       isRemote: job.isRemote ?? false,
@@ -523,24 +526,12 @@ export class CleverConnectService implements IScraper {
       return { city: null, state: null, country: null };
     }
 
-    let country: string | null = null;
-    let body = text;
-    // A trailing ", Country" token, when present.
-    const commaParts = body.split(',').map((p) => this.cleanText(p)).filter((p): p is string => !!p);
-    if (commaParts.length > 1) {
-      country = commaParts[commaParts.length - 1];
-      body = commaParts.slice(0, commaParts.length - 1).join(', ');
-    }
-
-    // Split city / state on the " - " separator.
-    const dashParts = body.split(/\s[-–]\s/).map((p) => this.cleanText(p)).filter((p): p is string => !!p);
-    let cityRaw = dashParts[0] ?? body;
-    const state = dashParts.length > 1 ? dashParts[dashParts.length - 1] : null;
-
-    // Strip a parenthesised département / postcode token from the city.
-    const city = this.cleanText(cityRaw.replace(/\s*\([^)]*\)\s*/g, ' '));
-
-    return { city: city || null, state: state || null, country: country || null };
+    const parsed = parseLocationText(text).location;
+    return {
+      city: parsed?.city ?? null,
+      state: parsed?.state ?? null,
+      country: parsed?.country ?? null,
+    };
   }
 
   /** Detect remote roles from the title, location, employment-type, or body text. */

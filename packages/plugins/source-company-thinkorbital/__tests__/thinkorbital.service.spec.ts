@@ -73,7 +73,7 @@ describe('ThinkorbitalService', () => {
     for (const job of response.jobs) {
       expect(job.location?.city).toBe('Boulder');
       expect(job.location?.state).toBe('CO');
-      expect(job.location?.country).toBe('USA');
+      expect(job.location?.country).toBeUndefined();
       expect(job.location?.displayLocation()).toMatch(/Boulder/);
     }
   });

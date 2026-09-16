@@ -5,7 +5,6 @@ import {
   classifyScrapeError,
   CompensationDto,
   CompensationInterval,
-  Country,
   getJobTypeFromString,
   IScraper,
   JobPostDto,
@@ -15,7 +14,7 @@ import {
   ScraperInputDto,
   Site,
 } from '@ever-jobs/models';
-import { createHttpClient, markdownConverter } from '@ever-jobs/common';
+import { createHttpClient, markdownConverter, parseLocationText } from '@ever-jobs/common';
 import {
   ARGOSPACE_CAREERS_URL,
   ARGOSPACE_COMPANY_NAME,
@@ -130,6 +129,7 @@ export class ArgospaceService implements IScraper {
       jobUrlDirect: ref.jobUrl,
       applyUrl,
       location,
+      ...(location ? { locations: [location] } : {}),
       description,
       compensation,
       isRemote: false,
@@ -201,28 +201,9 @@ export class ArgospaceService implements IScraper {
   }
 
   private parseLocation(raw: string): LocationDto | null {
-    const text = this.normalize(raw).replace(/\([^)]*\)/g, '').trim();
+    const text = this.normalize(raw);
     if (!text) return null;
-
-    const twoLetterMatch = text.match(/^([^,]+?)\s*,\s*([A-Za-z]{2})\b/);
-    if (twoLetterMatch) {
-      return new LocationDto({
-        city: this.normalize(twoLetterMatch[1]),
-        state: twoLetterMatch[2].toUpperCase(),
-        country: Country.USA,
-      });
-    }
-
-    const parts = text.split(',').map((part) => this.normalize(part)).filter(Boolean);
-    if (parts.length >= 2) {
-      return new LocationDto({
-        city: parts[0],
-        state: parts.slice(1).join(', '),
-        country: Country.USA,
-      });
-    }
-
-    return new LocationDto({ city: text, country: Country.USA });
+    return parseLocationText(text).location;
   }
 
   private parseCompensation(raw: string): CompensationDto | null {

@@ -16,6 +16,7 @@ import {
   htmlToPlainText,
   markdownConverter,
   extractEmails,
+  parseLocationText,
   randomSleep,
 } from '@ever-jobs/common';
 import {
@@ -336,6 +337,7 @@ export class WorkstreamService implements IScraper {
       companyName: detail?.companyName ?? fallbackCompanyName,
       jobUrl: listJob.jobUrl,
       location,
+      ...(location ? { locations: [location] } : {}),
       description,
       datePosted: null, // Not available in the public HTML surface.
       isRemote: detail?.isRemote ?? this.detectRemoteFromSlug(listJob.jobSlug),
@@ -477,15 +479,18 @@ export class WorkstreamService implements IScraper {
 
     // Look for a US-style address pattern: "City, ST ZIP" or "City, State ZIP".
     const addrRe =
-      /([A-Za-z\s]+),\s+([A-Z]{2})\s+\d{5}/;
+      /([A-Za-z\s]+,\s+[A-Z]{2}\s+\d{5})/;
     const addrMatch = addrRe.exec(html);
     if (addrMatch) {
-      return {
-        city: addrMatch[1].trim(),
-        state: addrMatch[2].trim(),
-        country: 'US',
-        raw: addrMatch[0],
-      };
+      const loc = parseLocationText(addrMatch[0]).location;
+      if (loc) {
+        return {
+          city: loc.city ?? null,
+          state: loc.state ?? null,
+          country: loc.country ?? null,
+          raw: addrMatch[0],
+        };
+      }
     }
 
     return { city: null, state: null, country: null, raw: null };
@@ -496,17 +501,14 @@ export class WorkstreamService implements IScraper {
     raw: string,
   ): { city: string | null; state: string | null; country: string | null } {
     // Matches patterns like "San Jose, CA 95130" or "1030 El Paseo, San Jose, CA 95130".
-    const re = /([A-Za-z][A-Za-z\s]+),\s+([A-Z]{2})(?:\s+\d{5})?/;
+    const re = /([A-Za-z][A-Za-z\s]+,\s+[A-Z]{2}(?:\s+\d{5})?)/;
     const m = re.exec(raw);
-    if (m) {
-      return { city: m[1].trim(), state: m[2].trim(), country: 'US' };
-    }
-    // Comma-split fallback.
-    const parts = raw.split(',').map((p) => p.trim()).filter(Boolean);
-    if (parts.length >= 2) {
-      return { city: parts[0], state: parts[1], country: null };
-    }
-    return { city: null, state: null, country: null };
+    const loc = parseLocationText(m ? m[0] : raw).location;
+    return {
+      city: loc?.city ?? null,
+      state: loc?.state ?? null,
+      country: loc?.country ?? null,
+    };
   }
 
   /** Build a LocationDto from detail data, falling back to the location slug. */

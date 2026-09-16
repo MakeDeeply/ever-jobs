@@ -6,7 +6,7 @@ import {
   IScraper, ScraperInputDto, JobResponseDto, JobPostDto, Site, LocationDto,
 } from '@ever-jobs/models';
 import { createHttpClient } from '@ever-jobs/common';
-import { stripHtmlTags } from '@ever-jobs/common';
+import { parseLocationText, stripHtmlTags } from '@ever-jobs/common';
 import {
   AMAZON_API_URL, AMAZON_HEADERS, AMAZON_PAGE_SIZE, AMAZON_REQUEST_DELAY_MS,
 } from './amazon.constants';
@@ -101,7 +101,7 @@ export class AmazonService implements IScraper {
     if (prefQuals) descParts.push(`\nPreferred Qualifications:\n${stripHtmlTags(prefQuals)}`);
 
     const locationStr = first(f.location);
-    const locationParts = locationStr?.split(',').map((s) => s.trim()) ?? [];
+    const location = locationStr ? parseLocationText(locationStr).location : null;
 
     return new JobPostDto({
       id: first(f.urlNextStep) ?? undefined,
@@ -109,11 +109,8 @@ export class AmazonService implements IScraper {
       title,
       companyName: 'Amazon',
       jobUrl: first(f.urlNextStep) ?? undefined,
-      location: new LocationDto({
-        city: locationParts[0] ?? null,
-        state: locationParts[1] ?? null,
-        country: locationParts[2] ?? 'US',
-      }),
+      location,
+      ...(location ? { locations: [location] } : {}),
       description: descParts.join('\n') || null,
       datePosted: first(f.createdDate) ?? undefined,
     });

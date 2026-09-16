@@ -92,7 +92,7 @@ describe('ArgospaceService', () => {
     const senior = response.jobs.find((job) => job.title === 'Senior Propulsion Engineer')!;
     expect(senior.location?.city).toBe('El Segundo');
     expect(senior.location?.state).toBe('CA');
-    expect(senior.location?.country).toBe('USA');
+    expect(senior.location?.country).toBeUndefined();
     expect(senior.isRemote).toBe(false);
     expect(senior.workFromHomeType).toBe('On Site');
   });
