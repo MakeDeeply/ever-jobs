@@ -5,6 +5,14 @@
 
 ---
 
+## 2026-09-16 — Spec 5127 — Verbatim-label plugins emit parsed `location` + `locations[]` (`verbatim-location-labels`)
+
+**Change:** 919 plugin services that emitted `location: new LocationDto({ city: <verbatim label> })` — no parse, no remote detection, no `locations[]` — now route the label through the shared Spec-5124 parser (`parseLocationList`/`parseLocationText`), emit `locations[]` when non-empty, and OR-merge `isRemote` with `remoteMentioned`. Two mechanical transforms (const-assigned label template; structured `{city,state,country}` helpers → `locations: [location]`) plus manual rewires for the ten files outside the template (`wellfound`, `dvinci`, `dice`, `dribbble`, `monster`, `techcareers`, `careerbuilder`, `coroflot`, `jobsdb`, `stepstone`) and seven label-fallback helpers (`beetween`, `talentsoft`, `zimyo`, `darwinbox`, `talentadore`, `talentreef`, `pinpoint`) → `parseLocationText`. `monster`'s `\`${city}, ${stateProvince}\`` composition is replaced by a direct structured emit. Left unchanged: empty `{}` placeholders, `city:'Remote'` fallbacks, structured city passthroughs (`varbi`, `webcruiter`, `oorwin`, `paylocity`). Generated spec expectations pinned to the parsed contract — a single label's merged `location` is now the parsed DTO (`'Oakland, CA'` → `city:'Oakland'`, `state:'CA'`), pure qualifiers land in `isRemote`/`workFromHomeType` instead of minting a `city`.
+
+**Files:** 919 `packages/plugins/*/src/*.service.ts`, ~808 `__tests__` spec files, `.specify/specs/5127-verbatim-location-labels/*`, `docs/index.md`, `docs/log.md`.
+
+---
+
 ## 2026-09-16 — Spec 5126 — Structured wire location entries emitted as per-site `locations[]` (`structured-location-entries`)
 
 **Change:** The 11 plugins deferred from Spec 5125 each read `[0]`/first from a structured multi-site wire field and dropped the rest; all now emit one `LocationDto` per wire entry into `locations[]` while `location` keeps its previous value. `bizneo`, `exacthire`, `hreasily`, `icims`, `inrecruiting`, and `pcrecruiter` thread `{city,state,country,streetAddress?,postalCode?}` `locationEntries` through their normalized-job types (JSON-LD `jobLocation` Places / iCIMS `|`/`;` cells all mapped); `cornerstone`, `eightfold`, `prescreen`, and `jsonld` map their wire arrays (`requisition.locations[]`, `standardizedLocations`, `jobLocation`, `posting.locations`) directly; `altamira` emits `locations: [location]` (singleton — the board gives one `locationText` per job). Free-text label fallbacks (card labels, display strings, listing locations) all delegate to `parseLocationText`; bespoke wire-order parsers stay where the order is the wire format — `altamira` slug-tail `Country-Region-City`, `icims` `CC-ST-City`, `eightfold` `"Country, State, City"`. `country` fields remain literal-only end to end.

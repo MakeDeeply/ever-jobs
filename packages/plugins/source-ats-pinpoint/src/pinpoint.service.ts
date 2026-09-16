@@ -5,7 +5,7 @@ import {
   classifyScrapeError,
   IScraper, ScraperInputDto, JobResponseDto, JobPostDto, Site, LocationDto,
 } from '@ever-jobs/models';
-import { createHttpClient, stripHtmlTags } from '@ever-jobs/common';
+import { createHttpClient, parseLocationText, stripHtmlTags } from '@ever-jobs/common';
 
 @SourcePlugin({
   site: Site.PINPOINT,
@@ -21,14 +21,17 @@ export class PinpointService implements IScraper {
     if (raw == null) return null;
 
     if (typeof raw === 'string') {
-      const city = raw.trim();
-      return city ? new LocationDto({ city }) : null;
+      return raw.trim() ? parseLocationText(raw).location : null;
     }
 
     if (typeof raw === 'object') {
-      const city = String(raw.name ?? raw.city ?? raw.province ?? '').trim();
       const state = String(raw.province ?? '').trim() || undefined;
-      return city ? new LocationDto({ city, ...(state ? { state } : {}) }) : null;
+      const label = String(raw.name ?? raw.city ?? '').trim();
+      const parsed = label ? parseLocationText(label).location : null;
+      if (!parsed && !state) return null;
+      const dto = parsed ?? new LocationDto({});
+      if (state && !dto.state) dto.state = state;
+      return dto;
     }
 
     return null;
@@ -89,6 +92,7 @@ export class PinpointService implements IScraper {
             companyName: attrs.company_name ?? company,
             jobUrl: attrs.url ?? `https://${company}.pinpointhq.com/postings/${jobId}`,
             location,
+            ...(location ? { locations: [location] } : {}),
             description: attrs.description
               ? stripHtmlTags(attrs.description)
               : null,

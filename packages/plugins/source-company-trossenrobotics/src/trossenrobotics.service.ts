@@ -323,6 +323,7 @@ export class TrossenroboticsService
       jobUrl: card.detailUrl,
       applyUrl: card.detailUrl,
       location,
+      ...(location ? { locations: [location] } : {}),
       description: this.extractDescription(detailHtml),
       isRemote,
       datePosted: this.parseDate(dateText),
