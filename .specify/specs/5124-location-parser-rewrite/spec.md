@@ -1,5 +1,15 @@
 # Spec 5124 — Location parser rewrite + join-then-reparse caller cleanup
 
+| Field | Value |
+|---|---|
+| Spec | 5124 |
+| Slug | `location-parser-rewrite` |
+| Status | in-progress |
+| Owner | devin |
+| Created | 2026-09-16 |
+| Last updated | 2026-09-16 |
+| Related specs | 5118–5123 (per-site `locations[]`/`offices[]`, `LocationDto.text`/`name`) |
+
 ## Problem statement
 
 `parseLocationText` / `parseLocationList` (packages/common) had grown piecemeal:

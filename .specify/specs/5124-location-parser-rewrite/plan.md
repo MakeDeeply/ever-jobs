@@ -1,5 +1,15 @@
 # Plan 5124 — Location parser rewrite + join-then-reparse caller cleanup
 
+| Field | Value |
+|---|---|
+| Spec | 5124 |
+| Slug | `location-parser-rewrite` |
+| Status | in-progress |
+| Owner | devin |
+| Created | 2026-09-16 |
+| Last updated | 2026-09-16 |
+| Related specs | 5118, 5119, 5120, 5121, 5122, 5123 |
+
 ## Phases
 
 ### P1 — Parser rewrite (packages/common)
