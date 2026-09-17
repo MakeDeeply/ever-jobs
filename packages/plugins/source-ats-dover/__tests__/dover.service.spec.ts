@@ -21,6 +21,7 @@ jest.mock('@ever-jobs/common', () => {
 import { DoverService } from '../src/dover.service';
 import {
   DoverJobDetail,
+  DoverJobGroup,
   DoverJobsResponse,
   DoverListJob,
 } from '../src/dover.types';
@@ -30,6 +31,7 @@ const CLIENT_ID = '08fa6161-f59a-43eb-8035-0b8acebac5af';
 const SLUG_RE = /\/api\/v1\/careers-page-slug\/([^/?]+)$/;
 const PAGE_RE = /\/api\/v1\/careers-page\/([^/?]+)$/;
 const JOBS_RE = /\/api\/v1\/careers-page\/[^/?]+\/jobs/;
+const JOB_GROUPS_RE = /\/api\/v1\/job-groups\/[^/?]+\/job-groups/;
 const DETAIL_RE = /\/api\/v1\/inbound\/application-portal-job\/([^/?]+)$/;
 
 function listJob(over: Partial<DoverListJob> = {}): DoverListJob {
@@ -76,6 +78,8 @@ function routeGet(opts: {
   pages?: Record<string, { id?: string; name?: string; slug?: string } | null>;
   jobs?: DoverJobsResponse | Record<string, DoverJobsResponse>;
   details?: Record<string, DoverJobDetail | null>;
+  /** undefined → empty feed; null → 404; array → feed. */
+  groups?: DoverJobGroup[] | null;
 }): void {
   mockGet.mockImplementation(async (url: string) => {
     const notFound = () => {
@@ -90,6 +94,11 @@ function routeGet(opts: {
       const page = opts.pages?.[key];
       if (!page) return notFound();
       return { data: page };
+    }
+
+    if (JOB_GROUPS_RE.test(url)) {
+      if (opts.groups === null) return notFound();
+      return { data: opts.groups ?? [] };
     }
 
     if (JOBS_RE.test(url)) {
@@ -150,7 +159,8 @@ describe('DoverService (unit)', () => {
     expect(job.atsType).toBe('dover');
     expect(job.atsId).toBe('job-1');
     expect(job.id).toBe('dover-job-1');
-    expect(job.jobUrl).toBe('https://app.dover.com/jobs/gradientrobotics');
+    expect(job.jobUrl).toBe('https://app.dover.com/apply/gradientrobotics/job-1');
+    expect(job.applyUrl).toBe('https://app.dover.com/apply/gradientrobotics/job-1');
     expect(job.description).toBe('Build robots.');
     expect(job.datePosted).toBe('2026-06-20');
     expect(job.isRemote).toBe(false);
@@ -262,6 +272,63 @@ describe('DoverService (unit)', () => {
     const res = await service.scrape(new ScraperInputDto({ siteType: [Site.DOVER] }));
     expect(res.jobs).toHaveLength(0);
     expect(mockGet).not.toHaveBeenCalled();
+  });
+
+  it('maps each role to its job-group name as department', async () => {
+    routeGet({
+      pages: { acme: { id: CLIENT_ID, name: 'Acme', slug: 'acme' } },
+      jobs: {
+        results: [listJob({ id: 'j1', title: 'Eng A' }), listJob({ id: 'j2', title: 'Eng B' })],
+        next: null,
+      },
+      details: {
+        j1: detail({ id: 'j1', title: 'Eng A', client_name: 'Acme' }),
+        j2: detail({ id: 'j2', title: 'Eng B', client_name: 'Acme' }),
+      },
+      groups: [
+        { id: 'g1', name: 'Hardware', jobs: [{ id: 'j1' }] },
+        { id: 'g2', name: 'Software', jobs: [{ id: 'other' }] },
+      ],
+    });
+
+    const res = await service.scrape(
+      new ScraperInputDto({ siteType: [Site.DOVER], companySlug: 'acme' }),
+    );
+
+    expect(res.jobs).toHaveLength(2);
+    expect(res.jobs[0].department).toBe('Hardware');
+    expect(res.jobs[1].department).toBeNull();   // absent from every group
+  });
+
+  it('still emits roles with department unset when the job-groups feed 404s', async () => {
+    routeGet({
+      pages: { acme: { id: CLIENT_ID, name: 'Acme', slug: 'acme' } },
+      jobs: { results: [listJob()], next: null },
+      details: { 'job-1': detail() },
+      groups: null,
+    });
+
+    const res = await service.scrape(
+      new ScraperInputDto({ siteType: [Site.DOVER], companySlug: 'acme' }),
+    );
+
+    expect(res.jobs).toHaveLength(1);
+    expect(res.jobs[0].department).toBeNull();
+  });
+
+  it('falls back to the careers URL when the careers page has no slug', async () => {
+    routeGet({
+      pages: { [CLIENT_ID]: { id: CLIENT_ID, name: 'Acme' } },
+      jobs: { results: [listJob()], next: null },
+      details: { 'job-1': detail() },
+    });
+
+    const res = await service.scrape(
+      new ScraperInputDto({ siteType: [Site.DOVER], companySlug: CLIENT_ID }),
+    );
+
+    expect(res.jobs).toHaveLength(1);
+    expect(res.jobs[0].jobUrl).toBe(`https://app.dover.com/careers/${CLIENT_ID}`);
   });
 
   it('parses the board slug out of a /jobs/{slug} companyUrl', async () => {

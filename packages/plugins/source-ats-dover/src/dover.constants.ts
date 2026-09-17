@@ -59,6 +59,13 @@ export const DOVER_JOBS_API_TEMPLATE =
   'https://app.dover.com/api/v1/careers-page/{id}/jobs';
 
 /**
+ * Job groups (departments) by careers-page client id — the feed the board SPA
+ * uses for its per-group sections: `[{ id, name, jobs: [{ id, ... }] }]`.
+ */
+export const DOVER_JOB_GROUPS_API_TEMPLATE =
+  'https://app.dover.com/api/v1/job-groups/{id}/job-groups';
+
+/**
  * Per-role detail overlay. `application-portal-job` is preferred over the
  * cross-tenant `job-board/jobs/{id}` surface because the latter 404s for roles
  * not published to Dover's shared board, while this one is reliable per-tenant.
@@ -66,8 +73,9 @@ export const DOVER_JOBS_API_TEMPLATE =
 export const DOVER_DETAIL_API_TEMPLATE =
   'https://app.dover.com/api/v1/inbound/application-portal-job/{id}';
 
-/** Short board URL template (`/jobs/{slug}`) — used to build a role's `jobUrl`. */
-export const DOVER_BOARD_URL_TEMPLATE = 'https://app.dover.com/jobs/{slug}';
+/** Per-role apply-form URL — the target each role links to on the board. */
+export const DOVER_APPLY_URL_TEMPLATE =
+  'https://app.dover.com/apply/{slug}/{jobId}';
 
 /** Careers-board URL by client id, when no slug is known. */
 export const DOVER_CAREERS_URL_TEMPLATE = 'https://app.dover.com/careers/{id}';

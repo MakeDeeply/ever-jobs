@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-09-16 — Spec 5128 — Dover job-groups (department) + per-job apply links (`dover-job-groups-and-apply-links`)
+
+**Change:** `source-ats-dover` now calls `GET /api/v1/job-groups/{clientId}/job-groups` after the roles list and maps each role id to its group `name` onto `JobPostDto.department` (roles absent from every group stay unset; a 4xx/malformed feed degrades to an empty map, never a failure). `jobUrl`/`applyUrl` become the per-role apply form `https://app.dover.com/apply/{slug}/{jobId}` — the target each role links to on the board — replacing the whole-board `/jobs/{slug}` URL every job previously carried; careers pages resolved with no slug keep the `/careers/{clientId}` fallback. New surface: `DOVER_JOB_GROUPS_API_TEMPLATE`, `DOVER_APPLY_URL_TEMPLATE`, `DoverJobGroup`, `DoverJob.department`; `DOVER_BOARD_URL_TEMPLATE` removed.
+
+**Files:** `packages/plugins/source-ats-dover/src/{dover.constants.ts,dover.types.ts,dover.service.ts}`, `packages/plugins/source-ats-dover/__tests__/dover.service.spec.ts`, `.specify/specs/5128-dover-job-groups-and-apply-links/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx jest` `source-ats-dover` — 12 tests green (3 new: department mapping, job-groups 404 degradation, no-slug careers fallback); `apps/api` `tsc --noEmit` clean.
+
+---
+
 ## 2026-09-16 — Spec 5127 — Verbatim-label plugins emit parsed `location` + `locations[]` (`verbatim-location-labels`)
 
 **Change:** 919 plugin services that emitted `location: new LocationDto({ city: <verbatim label> })` — no parse, no remote detection, no `locations[]` — now route the label through the shared Spec-5124 parser (`parseLocationList`/`parseLocationText`), emit `locations[]` when non-empty, and OR-merge `isRemote` with `remoteMentioned`. Two mechanical transforms (const-assigned label template; structured `{city,state,country}` helpers → `locations: [location]`) plus manual rewires for the ten files outside the template (`wellfound`, `dvinci`, `dice`, `dribbble`, `monster`, `techcareers`, `careerbuilder`, `coroflot`, `jobsdb`, `stepstone`) and seven label-fallback helpers (`beetween`, `talentsoft`, `zimyo`, `darwinbox`, `talentadore`, `talentreef`, `pinpoint`) → `parseLocationText`. `monster`'s `\`${city}, ${stateProvince}\`` composition is replaced by a direct structured emit. Left unchanged: empty `{}` placeholders, `city:'Remote'` fallbacks, structured city passthroughs (`varbi`, `webcruiter`, `oorwin`, `paylocity`). Generated spec expectations pinned to the parsed contract — a single label's merged `location` is now the parsed DTO (`'Oakland, CA'` → `city:'Oakland'`, `state:'CA'`), pure qualifiers land in `isRemote`/`workFromHomeType` instead of minting a `city`.

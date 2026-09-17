@@ -24,8 +24,9 @@ import {
   DOVER_SLUG_API_TEMPLATE,
   DOVER_CAREERS_PAGE_API_TEMPLATE,
   DOVER_JOBS_API_TEMPLATE,
+  DOVER_JOB_GROUPS_API_TEMPLATE,
   DOVER_DETAIL_API_TEMPLATE,
-  DOVER_BOARD_URL_TEMPLATE,
+  DOVER_APPLY_URL_TEMPLATE,
   DOVER_CAREERS_URL_TEMPLATE,
   DOVER_BOARD_PATH_REGEX,
   DOVER_UUID_REGEX,
@@ -40,6 +41,7 @@ import {
   DoverCompensation,
   DoverJob,
   DoverJobDetail,
+  DoverJobGroup,
   DoverJobsResponse,
   DoverListJob,
   DoverLocation,
@@ -57,7 +59,9 @@ import {
  *   1. Resolve the board slug → careers-page client id
  *      (`/api/v1/careers-page-slug/{slug}`, or `/api/v1/careers-page/{id}` when
  *      the identifier is already a careers-page UUID).
- *   2. List the tenant's open roles (`/api/v1/careers-page/{clientId}/jobs`).
+ *   2. List the tenant's open roles (`/api/v1/careers-page/{clientId}/jobs`),
+ *      and its job groups (`/api/v1/job-groups/{clientId}/job-groups`) for
+ *      department names.
  *   3. Overlay each role's rich detail
  *      (`/api/v1/inbound/application-portal-job/{jobId}`) for the body,
  *      structured compensation, posted date, and the company name.
@@ -114,8 +118,9 @@ export class DoverService implements IScraper {
       const slug = this.cleanText(page.slug);
       const pageName = this.cleanText(page.name);
 
-      // Step 2 — list the tenant's open roles.
+      // Step 2 — list the tenant's open roles, plus its job groups for department names.
       const listings = await this.fetchJobs(client, clientId, resultsWanted);
+      const departmentByJobId = await this.fetchJobGroups(client, clientId);
       const seen = new Set<string>();
       const wanted = listings
         .filter((j) => j.is_sample !== true)
@@ -128,7 +133,8 @@ export class DoverService implements IScraper {
       for (const { listing, jobId } of wanted) {
         try {
           const detail = await this.fetchDetail(client, jobId);
-          const job = this.assemble(listing, detail, jobId, clientId, slug, pageName);
+          const job = this.assemble(listing, detail, jobId, clientId, slug, pageName,
+            departmentByJobId.get(jobId) ?? null);
           const post = this.toJobPost(job, input.descriptionFormat);
           if (post) jobPosts.push(post);
         } catch (err: any) {
@@ -219,6 +225,37 @@ export class DoverService implements IScraper {
   }
 
   /**
+   * Map each role id to its job-group (department) name via the board's
+   * `job-groups` feed. A missing feed (HTTP 4xx) or malformed payload degrades
+   * to an empty map — departments are enrichment, never a failure.
+   */
+  private async fetchJobGroups(
+    client: ReturnType<typeof createHttpClient>,
+    clientId: string,
+  ): Promise<Map<string, string>> {
+    const byJobId = new Map<string, string>();
+    const url = DOVER_JOB_GROUPS_API_TEMPLATE.replace('{id}', encodeURIComponent(clientId));
+    let groups: DoverJobGroup[];
+    try {
+      const response = await client.get<DoverJobGroup[]>(url, { responseType: 'json' });
+      groups = Array.isArray(response.data) ? response.data : [];
+    } catch (err: any) {
+      const status = err?.response?.status;
+      if (status && status >= 400 && status < 500) return byJobId;
+      throw err;
+    }
+    for (const group of groups) {
+      const name = this.cleanText(group?.name);
+      if (!name) continue;
+      for (const job of group.jobs ?? []) {
+        const jobId = this.cleanText(job?.id);
+        if (jobId && !byJobId.has(jobId)) byJobId.set(jobId, name);
+      }
+    }
+    return byJobId;
+  }
+
+  /**
    * Fetch a role's detail overlay. A removed role (HTTP 4xx) degrades to null
    * without failing the batch.
    */
@@ -249,6 +286,7 @@ export class DoverService implements IScraper {
     clientId: string,
     slug: string | null,
     pageName: string | null,
+    department: string | null,
   ): DoverJob {
     const workplaceType = this.cleanText(detail?.workplace_type) ?? this.cleanText(listing.workplace_type);
     const locations = detail?.locations ?? listing.locations ?? [];
@@ -256,8 +294,10 @@ export class DoverService implements IScraper {
 
     return {
       jobId,
+      // the per-role page is the apply form — the target each role links to on the board
       url: slug
-        ? DOVER_BOARD_URL_TEMPLATE.replace('{slug}', encodeURIComponent(slug))
+        ? DOVER_APPLY_URL_TEMPLATE.replace('{slug}', encodeURIComponent(slug))
+            .replace('{jobId}', encodeURIComponent(jobId))
         : DOVER_CAREERS_URL_TEMPLATE.replace('{id}', encodeURIComponent(clientId)),
       title: this.cleanText(detail?.title) ?? this.cleanText(listing.title),
       // The company name is the careers-page / client name, never the slug.
@@ -269,6 +309,7 @@ export class DoverService implements IScraper {
       employmentType: this.normaliseEmploymentType(detail?.compensation?.employment_type),
       datePosted: this.parseDate(detail?.date_posted) ?? this.parseDate(detail?.created),
       isRemote: this.detectRemote(workplaceType, locations, this.cleanText(detail?.title) ?? this.cleanText(listing.title)),
+      department,
       structuredCompensation: this.buildCompensation(detail?.compensation),
     };
   }
@@ -298,6 +339,7 @@ export class DoverService implements IScraper {
       description,
       datePosted: job.datePosted,
       isRemote: job.isRemote,
+      department: job.department,
       ...(compensation ? { compensation, salarySource } : {}),
       emails: extractEmails(description),
       site: Site.DOVER,
