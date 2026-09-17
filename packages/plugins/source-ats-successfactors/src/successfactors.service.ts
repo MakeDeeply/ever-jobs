@@ -531,6 +531,13 @@ export class SuccessFactorsService implements IScraper {
     const descEl = $('[itemprop="description"]').first();
     const descriptionHtml = descEl.length ? (descEl.html() ?? null) : null;
 
+    // CSB renders the requisition's department as a job-layout token, not
+    // schema.org microdata: <span data-careersite-propertyid="dept">Name</span>
+    const deptEl = $('[data-careersite-propertyid="dept"]').first();
+    const department = deptEl.length
+      ? deptEl.text().replace(/\s+/g, ' ').trim() || null
+      : null;
+
     const detail: SfCsbDetail = {
       title: content('title'),
       descriptionHtml,
@@ -538,6 +545,7 @@ export class SuccessFactorsService implements IScraper {
       validThrough: content('validThrough'),
       hiringOrganization: content('hiringOrganization'),
       industry: content('industry'),
+      department,
       city: addr('addressLocality'),
       state: addr('addressRegion'),
       country: addr('addressCountry'),
@@ -601,6 +609,7 @@ export class SuccessFactorsService implements IScraper {
       isRemote,
       emails: emails && emails.length > 0 ? emails : null,
       jobFunction: detail?.industry ?? null,
+      department: detail?.department ?? null,
       site: Site.SUCCESSFACTORS,
       atsId: item.jobId,
       atsType: 'successfactors',

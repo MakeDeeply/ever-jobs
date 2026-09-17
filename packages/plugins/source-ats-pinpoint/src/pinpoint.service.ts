@@ -98,7 +98,11 @@ export class PinpointService implements IScraper {
               : null,
             datePosted: attrs.published_at ?? attrs.created_at ?? null,
             isRemote: this.deriveIsRemote(attrs, locationText),
-            department: attrs.department_name ?? attrs.department ?? null,
+            department:
+              attrs.job?.department?.name ??
+              listing.job?.department?.name ??
+              attrs.department_name ??
+              (typeof attrs.department === 'string' ? attrs.department : null),
             atsId: String(jobId),
             atsType: 'pinpoint',
           }),

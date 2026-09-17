@@ -146,4 +146,30 @@ describe('PinpointService — Spec 5090', () => {
       `https://${COMPANY}.pinpointhq.com/postings/290788`,
     );
   });
+
+  /**
+   * Spec 5129 — postings.json nests department under `job.department.name`;
+   * the adapter must emit the group name, not the object.
+   */
+  it('maps nested job.department.name to department', async () => {
+    const response = await scrape([
+      posting({
+        id: '290789',
+        title: 'Avionics Engineer',
+        job: { id: '306744', department: { id: '25601', name: 'Avionics' } },
+      }),
+    ]);
+
+    expect(response.jobs).toHaveLength(1);
+    expect(response.jobs[0].department).toBe('Avionics');
+  });
+
+  it('leaves department unset when the posting carries no job.department', async () => {
+    const response = await scrape([
+      posting({ id: '290790', title: 'No Department Job' }),
+    ]);
+
+    expect(response.jobs).toHaveLength(1);
+    expect(response.jobs[0].department).toBeNull();
+  });
 });
