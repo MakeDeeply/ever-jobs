@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-09-17 — Spec 5130 — Location parser: US state names, territories, and dotted codes (`location-parser-us-subdivision-recognition`)
+
+**Change:** `location-parser.ts` recognizes four more US-subdivision label shapes. The `'X, Country'` city slot now resolves state **names** and territory names, not just codes — `'Arizona, USA'` → `{state:'AZ', country:'United States'}`, `'Puerto Rico, USA'` → `{state:'Puerto Rico', country:'United States'}` (collision names stay cities: `'New York, USA'`). A new `US_TERRITORY_NAMES` map emits the display name verbatim (`'Puerto Rico'` bare → `{state:'Puerto Rico'}`, consistent with `'Virginia'` → `{state:'VA'}`) rather than a code. `normalizeUsState` strips periods so `D.C.`/`N.Y.` resolve to `DC`/`NY` — which also repairs comma-packed groups: `'Bristol, RI, Washington, D.C'` previously collapsed to one `city` blob when `D.C` failed the firm check, now splits into `{Bristol,RI}` + `{Washington,DC}`. Space-joined `'City ST'` labels split (`'Bristol RI'` → `{city:'Bristol', state:'RI'}`). Territory names count as US for implied-country and comma-group firmness.
+
+**Files:** `packages/common/src/utils/location-parser.ts`, `packages/common/__tests__/location-parser.spec.ts`, `.specify/specs/5130-location-parser-us-subdivision-recognition/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx jest packages/common` — 283 tests green (8 new spec-5130 cases); the 16 plugin suites whose fixtures carry affected labels — 181 tests green; `tsc --noEmit` on `packages/common` clean.
+
+---
+
 ## 2026-09-16 — Spec 5129 — Pinpoint nested department + SuccessFactors CSB department token (`pinpoint-and-successfactors-csb-department`)
 
 **Change:** Two adapters now emit `department` the feed already carries. `source-ats-pinpoint` resolves `department` from `job.department.name` (the nested `{ id, name }` object `postings.json` returns per posting — verified on 2 live boards: 191/191 and 36/36 postings) ahead of the legacy flat `department_name` / string-`department` keys. `source-ats-successfactors`' CSB reader also extracts the job-layout department token (`<span data-careersite-propertyid="dept">` — rendered on detail pages, absent from the schema.org microdata the parser was limited to) into `SfCsbDetail.department` and onto `JobPostDto.department`; tenants whose pages lack the token keep `department` unset. No OData-path, wire-shape, or URL changes.

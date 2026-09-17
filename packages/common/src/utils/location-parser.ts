@@ -127,6 +127,23 @@ const US_STATE_NAME_TO_CODE: Record<string, string> = {
 };
 
 /**
+ * US territory names — emitted verbatim as the subdivision (matching the
+ * generic 'City, Subdivision' convention for names like 'Ontario') rather
+ * than as a code most readers won't recognize ('PR').
+ */
+const US_TERRITORY_NAMES: Record<string, string> = {
+  'american samoa': 'American Samoa',
+  guam: 'Guam',
+  'northern mariana islands': 'Northern Mariana Islands',
+  'puerto rico': 'Puerto Rico',
+  'u.s. virgin islands': 'U.S. Virgin Islands',
+  'virgin islands': 'U.S. Virgin Islands',
+};
+
+/** Display names emitted for territories — count as US for merge/firm. */
+const US_TERRITORY_DISPLAY_NAMES = new Set(Object.values(US_TERRITORY_NAMES));
+
+/**
  * ISO-3166-1 alpha-3 display names for every country in COUNTRY_CONFIG, plus
  * `UAE` as an alias for `ARE` (boards write "UAE" often). `Intl.DisplayNames`
  * only accepts alpha-2 codes, so alpha-3 needs this explicit map.
@@ -294,9 +311,36 @@ export function normalizeCountryOnly(value: string): string | null {
 }
 
 export function normalizeUsState(value: string): string | null {
-  const code = value.trim().toUpperCase();
+  const trimmed = value.trim();
+  // periods are decorative in state codes: 'D.C.' -> 'DC', 'N.Y.' -> 'NY'
+  const code = trimmed.toUpperCase().replace(/\./g, '');
   if (US_STATE_AND_TERRITORY_CODES.has(code)) return code;
-  return US_STATE_NAME_TO_CODE[value.trim().toLowerCase()] ?? null;
+  return US_STATE_NAME_TO_CODE[trimmed.toLowerCase()] ?? null;
+}
+
+/** US state (code or name, emitted as code) or territory display name. */
+function usSubdivision(value: string): string | null {
+  return (
+    normalizeUsState(value) ??
+    US_TERRITORY_NAMES[value.trim().toLowerCase()] ??
+    null
+  );
+}
+
+/**
+ * 'Bristol RI' / 'San Juan PR' / 'Washington D.C' — a space-joined label
+ * ending in a US state code with a title-case city prefix. Returns null
+ * when the last token isn't a code (territory names are multi-word and are
+ * caught by usSubdivision before this runs).
+ */
+function bareLabelWithStateSuffix(
+  only: string,
+): { city: string; state: string } | null {
+  const m = /^(.+?)\s+([A-Za-z.]{2,6})$/.exec(only.trim());
+  if (!m) return null;
+  const st = normalizeUsState(m[2]);
+  if (!st || !isBareCityCandidate(m[1])) return null;
+  return { city: m[1].trim(), state: st };
 }
 
 /**
@@ -422,7 +466,7 @@ function parseSingleLabel(
     const geo = fused[1].trim();
     const c = normalizeCountryOnly(geo);
     if (c) return { location: new LocationDto({ country: c }), firm: true };
-    const st = normalizeUsState(geo);
+    const st = usSubdivision(geo);
     if (st) return { location: new LocationDto({ state: st }), firm: true };
   }
 
@@ -452,15 +496,22 @@ function parseSingleLabel(
 
   if (parts.length === 1 && !cleaned.includes(' - ')) {
     const only = parts[0];
-    if (
-      options?.allowBareStateProvince !== false &&
-      !BARE_STATE_NAME_COLLISIONS.has(only.toLowerCase())
-    ) {
-      const bareState = normalizeUsState(only);
-      if (bareState) {
+    if (options?.allowBareStateProvince !== false) {
+      if (!BARE_STATE_NAME_COLLISIONS.has(only.toLowerCase())) {
+        const bareState = usSubdivision(only);
+        if (bareState) {
+          return {
+            location: new LocationDto({ state: bareState }),
+            firm: true,
+          };
+        }
+      }
+      const split = bareLabelWithStateSuffix(only);
+      if (split) {
         return {
-          location: new LocationDto({ state: bareState }),
+          location: new LocationDto({ city: split.city, state: split.state }),
           firm: true,
+          blob: only,
         };
       }
     }
@@ -500,7 +551,7 @@ function parseCommaParts(
     const qf = /^(?:remote|hybrid|onsite|on-site|offsite)\s+(.+)$/i.exec(
       parts[i],
     );
-    if (qf && (normalizeCountryOnly(qf[1]) || normalizeUsState(qf[1]))) {
+    if (qf && (normalizeCountryOnly(qf[1]) || usSubdivision(qf[1]))) {
       parts[i] = qf[1].trim();
     }
     const d = /^(.*?)\s+-\s+(.+)$/.exec(parts[i]);
@@ -573,11 +624,11 @@ function parseCommaParts(
   // -> 'Clarksburg, MD')
   const blob = dedupeConsecutive(parts).join(', ');
 
-  // trailing US state
+  // trailing US subdivision (state code/name or territory name)
   let state: string | null = null;
   {
     const tail = parts[parts.length - 1];
-    const st = tail ? normalizeUsState(tail) : null;
+    const st = tail ? usSubdivision(tail) : null;
     if (st && parts.length >= 2) {
       state = st;
       parts.pop();
@@ -589,17 +640,35 @@ function parseCommaParts(
     const [city, sub] = parts;
     const c = normalizeCountryOnly(sub);
     if (c) {
-      // 'NY, USA' — a US-state code in the city slot is a state, not a city
-      if (US_STATE_AND_TERRITORY_CODES.has(city.toUpperCase())) {
-        return {
-          location: new LocationDto({
-            state: city.toUpperCase(),
-            country: c,
-            name: asSiteName(siteName),
-          }),
-          firm: true,
-          blob: city,
-        };
+      // 'NY, USA' / 'Arizona, USA' / 'Puerto Rico, USA' — a US subdivision
+      // in the city slot is a state, not a city. Collision names stay
+      // cities ('New York, USA').
+      if (!BARE_STATE_NAME_COLLISIONS.has(city.toLowerCase())) {
+        const cityState = usSubdivision(city);
+        if (cityState) {
+          return {
+            location: new LocationDto({
+              state: cityState,
+              country: c,
+              name: asSiteName(siteName),
+            }),
+            firm: true,
+            blob: city,
+          };
+        }
+        const split = bareLabelWithStateSuffix(city);
+        if (split) {
+          return {
+            location: new LocationDto({
+              city: split.city,
+              state: split.state,
+              country: c,
+              name: asSiteName(siteName),
+            }),
+            firm: true,
+            blob: city,
+          };
+        }
       }
       return {
         location: new LocationDto({
@@ -688,12 +757,28 @@ function parseCommaParts(
       !state &&
       options?.allowBareStateProvince !== false &&
       !BARE_STATE_NAME_COLLISIONS.has(only.toLowerCase())
-        ? normalizeUsState(only)
+        ? usSubdivision(only)
         : null;
     if (st) {
       return {
         location: new LocationDto({
           state: st,
+          country: country ?? undefined,
+          name: asSiteName(siteName),
+        }),
+        firm: true,
+        blob,
+      };
+    }
+    const split =
+      !state && options?.allowBareStateProvince !== false
+        ? bareLabelWithStateSuffix(only)
+        : null;
+    if (split) {
+      return {
+        location: new LocationDto({
+          city: split.city,
+          state: split.state,
           country: country ?? undefined,
           name: asSiteName(siteName),
         }),
@@ -824,7 +909,8 @@ function tryCommaGroupSplit(
     if (width === 2) {
       return Boolean(
         (parsed.location.state &&
-          US_STATE_AND_TERRITORY_CODES.has(parsed.location.state)) ||
+          (US_STATE_AND_TERRITORY_CODES.has(parsed.location.state) ||
+            US_TERRITORY_DISPLAY_NAMES.has(parsed.location.state))) ||
           parsed.location.country,
       );
     }
@@ -945,7 +1031,11 @@ export function parseLocationList(
   /** implied country per entry: explicit country, or US-state code -> US. */
   const impliedCountry = (loc: LocationDto): string | null => {
     if (loc.country) return loc.country;
-    if (loc.state && US_STATE_AND_TERRITORY_CODES.has(loc.state))
+    if (
+      loc.state &&
+      (US_STATE_AND_TERRITORY_CODES.has(loc.state) ||
+        US_TERRITORY_DISPLAY_NAMES.has(loc.state))
+    )
       return 'United States';
     return null;
   };
