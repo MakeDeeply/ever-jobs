@@ -1865,6 +1865,7 @@ module.exports = {
     '^@ever-jobs/source-company-hlaboratories$': '<rootDir>/packages/plugins/source-company-hlaboratories/src/index.ts',
     '^@ever-jobs/source-company-pulsespace$': '<rootDir>/packages/plugins/source-company-pulsespace/src/index.ts',
     '^@ever-jobs/source-company-renewmfgsol$': '<rootDir>/packages/plugins/source-company-renewmfgsol/src/index.ts',
+    '^@ever-jobs/source-ats-octbr_ai$': '<rootDir>/packages/plugins/source-ats-octbr_ai/src/index.ts',
     '^@ever-jobs/source-tesla$': '<rootDir>/packages/plugins/source-tesla/src/index.ts',
     '^@ever-jobs/source-tesla-playwright$': '<rootDir>/packages/plugins/source-tesla-playwright/src/index.ts',
   },
