@@ -268,3 +268,92 @@ describe('allowBareStateProvince (default on)', () => {
     });
   });
 });
+
+describe('US subdivision recognition (spec 5130)', () => {
+  it('resolves a state name in the city slot of "Name, Country"', () => {
+    expect(parseLocationText('Arizona, USA').location).toMatchObject({
+      state: 'AZ',
+      country: 'United States',
+    });
+  });
+
+  it('keeps collision names in the city slot ("New York, USA")', () => {
+    expect(parseLocationText('New York, USA').location).toMatchObject({
+      city: 'New York',
+      country: 'United States',
+    });
+    expect(parseLocationText('New York, USA').location?.state).toBeUndefined();
+  });
+
+  it('emits territory names verbatim as state, not codes', () => {
+    expect(parseLocationText('Puerto Rico, USA').location).toMatchObject({
+      state: 'Puerto Rico',
+      country: 'United States',
+    });
+    expect(parseLocationText('Puerto Rico').location).toMatchObject({
+      state: 'Puerto Rico',
+    });
+    expect(parseLocationText('X, Puerto Rico').location).toMatchObject({
+      city: 'X',
+      state: 'Puerto Rico',
+    });
+  });
+
+  it('normalizes dotted state codes (D.C., N.Y.)', () => {
+    expect(parseLocationText('Washington, D.C').location).toMatchObject({
+      city: 'Washington',
+      state: 'DC',
+    });
+    expect(parseLocationText('Washington, D.C.').location).toMatchObject({
+      city: 'Washington',
+      state: 'DC',
+    });
+    expect(parseLocationText('Albany, N.Y.').location).toMatchObject({
+      city: 'Albany',
+      state: 'NY',
+    });
+  });
+
+  it('splits an unseparated "City ST" label', () => {
+    expect(parseLocationText('Bristol RI').location).toMatchObject({
+      city: 'Bristol',
+      state: 'RI',
+    });
+    expect(parseLocationText('San Juan PR').location).toMatchObject({
+      city: 'San Juan',
+      state: 'PR',
+    });
+    expect(parseLocationText('Washington D.C').location).toMatchObject({
+      city: 'Washington',
+      state: 'DC',
+    });
+  });
+
+  it('splits "City ST" inside a comma pair with a country', () => {
+    expect(parseLocationText('Bristol RI, USA').location).toMatchObject({
+      city: 'Bristol',
+      state: 'RI',
+      country: 'United States',
+    });
+  });
+
+  it('splits a comma-packed pair ending in a dotted code into two sites', () => {
+    const parsed = parseLocationList(['Bristol, RI, Washington, D.C']);
+
+    expect(parsed.locations).toHaveLength(2);
+    expect(parsed.locations[0]).toMatchObject({
+      city: 'Bristol',
+      state: 'RI',
+    });
+    expect(parsed.locations[1]).toMatchObject({
+      city: 'Washington',
+      state: 'DC',
+    });
+  });
+
+  it('does not split a bare label whose tail is not a US code', () => {
+    expect(parseLocationText('Little Rock').location).toMatchObject({
+      city: 'Little Rock',
+    });
+  });
+});
