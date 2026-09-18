@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-09-17 — Spec 5133 — ADP requisition-list pagination (`adp-list-pagination`)
+
+**Change:** `source-ats-adp` no longer truncates boards to the first 20 requisitions. The list endpoint caps a response at 20 and reports the real total in `meta.totalNumber`; `fetchList` now walks `&$skip=N&$top=20` pages until the collected set covers the total, a page yields no fresh `itemID`s, or a page fetch fails (partial results kept, logged). `resultsWanted` still slices afterward. Four live tenants verified truncated pre-fix (`totalNumber` 160 / 230 / 67 / 36, all returning 20).
+
+**Files:** `packages/plugins/source-ats-adp/src/{adp.constants.ts,adp.service.ts}`, `packages/plugins/source-ats-adp/__tests__/adp.service.spec.ts`, `.specify/specs/5133-adp-list-pagination/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx jest source-ats-adp` — 11 tests green; live tenant returns 160 unique jobs post-fix (was 20).
+
+---
+
 ## 2026-09-17 — Spec 5132 — Source ATS plugin: Octbr (`source-ats-octbr_ai`)
 
 **Change:** New `source-ats-octbr_ai` plugin for Octbr, a multi-tenant ATS where each customer runs a `<slug>.octbr.ai` Laravel + Inertia careers app. The listing page's root div carries an Inertia `data-page` JSON prop; `props.jobsByDepartment` enumerates every open role (`id`, `title`, `slug`, `url`, `location`, `employment_type`, `location_type`) and `props.organisation.name` gives the company name. The plugin then GETs each `job.url` — another Inertia page — for `description`, `responsibilities`, `requirements` (HTML-stripped into the JD) and the absolute `posted_date` (the listing carries only relative dates). Detail fetches run via `Promise.allSettled`; a failed detail fetch keeps the job with a null description. The advertised `/feeds/jobs.json` feed returns an HTML error page on the observed tenant and is not used. `companySlug` addresses the tenant.

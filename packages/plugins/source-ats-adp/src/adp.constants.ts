@@ -17,10 +17,19 @@ const ADP_API_PATH =
 const ADP_RECRUITMENT_PATH =
   '/mascsr/default/mdf/recruitment/recruitment.html';
 
-/** Build the requisition-list endpoint for a host + company `cid`. */
-export function adpListUrl(host: string, cid: string): string {
-  return `https://${host}${ADP_API_PATH}?cid=${encodeURIComponent(cid)}`;
+/**
+ * Build the requisition-list endpoint for a host + company `cid`. The API
+ * caps each response at 20 requisitions (`meta.totalNumber` reports the real
+ * total); pages are addressed with `$skip`/`$top`.
+ */
+export function adpListUrl(host: string, cid: string, skip = 0): string {
+  const base =
+    `https://${host}${ADP_API_PATH}?cid=${encodeURIComponent(cid)}`;
+  return skip > 0 ? `${base}&$skip=${skip}&$top=${ADP_PAGE_SIZE}` : base;
 }
+
+/** ADP's server-enforced list page size (`$top` above it is ignored). */
+export const ADP_PAGE_SIZE = 20;
 
 /**
  * Build the per-requisition detail endpoint for a host + company `cid`. The list
