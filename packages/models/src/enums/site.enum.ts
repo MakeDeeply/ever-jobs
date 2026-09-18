@@ -3561,6 +3561,8 @@ export enum Site {
   PULSESPACE = 'pulsespace',
   // Phase 1694: Spec 5115 — Source Company Plugin: ReNEW Manufacturing Solutions (renewmfgsol.com)
   RENEWMFGSOL = 'renewmfgsol',
+  // Phase 1695: Spec 5132 — Octbr (octbr.ai) multi-tenant ATS plugin (Laravel/Inertia data-page props)
+  OCTBR_AI = 'octbr_ai',
 }
 
 /**

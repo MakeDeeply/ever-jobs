@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-09-17 — Spec 5132 — Source ATS plugin: Octbr (`source-ats-octbr_ai`)
+
+**Change:** New `source-ats-octbr_ai` plugin for Octbr, a multi-tenant ATS where each customer runs a `<slug>.octbr.ai` Laravel + Inertia careers app. The listing page's root div carries an Inertia `data-page` JSON prop; `props.jobsByDepartment` enumerates every open role (`id`, `title`, `slug`, `url`, `location`, `employment_type`, `location_type`) and `props.organisation.name` gives the company name. The plugin then GETs each `job.url` — another Inertia page — for `description`, `responsibilities`, `requirements` (HTML-stripped into the JD) and the absolute `posted_date` (the listing carries only relative dates). Detail fetches run via `Promise.allSettled`; a failed detail fetch keeps the job with a null description. The advertised `/feeds/jobs.json` feed returns an HTML error page on the observed tenant and is not used. `companySlug` addresses the tenant.
+
+**Files:** `packages/plugins/source-ats-octbr_ai/*`, `packages/models/src/enums/site.enum.ts` (`OCTBR_AI`), `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `.specify/specs/5132-source-ats-octbr_ai/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx jest packages/plugins/source-ats-octbr_ai` — 7 tests green; live scrape of the `starcloud` tenant returned 15 jobs with department, location, and descriptions.
+
+---
+
 ## 2026-09-17 — Spec 5131 — Location parser: dash-prefixed US-state sites (`dash-state-prefix-sites`)
 
 **Change:** `location-parser.ts` now claims `state` from a leading `'ST - X'`/`'ST-X'` US-code prefix before any country or site-name rule can misread it. Solo `'ST - X'` labels previously fell through to the ISO alpha-2 fallback on the leftover code — `'MA - Boston'` emitted Morocco, `'MD - Gaither Rd.'` Moldova (`'CA'`→Canada, `'IL'`→Israel, `'IN'`→India likewise); the dash suffix now lands in `city` (`'MA - Boston'` → `{city:'Boston', state:'MA'}`) or `name` when its tail is a street suffix (`'MD - Gaither Rd.'` → `{state:'MD', name:'Gaither Rd.'}` — a new ~12-entry `STREET_SUFFIX_RE` scoped to dash tails only, so `'Warsaw, PL'` still reads Poland). As a comma part the whole `'ST - X'` used to survive into `city` (`'MD - Gaither Rd., Rockville Corp Hqtrs'` → `city:'MD - Gaither Rd.'`); now the state is consumed and a remaining `'City <descriptor>'` part splits into `city`+`name` when `city` is free (`{city:'Rockville', state:'MD', name:'Gaither Rd. - Corp Hqtrs'}`) or joins `name` wholesale when the dash suffix already claimed it (`'MA - Boston, Corp Hqtrs'` → `{city:'Boston', state:'MA', name:'Corp Hqtrs'}`). The descriptor split reuses `SITE_DESCRIPTOR_RE` and is gated on a `'ST -'` state having been claimed — a bare `'Rockville Corp Hqtrs'` still emits `city` whole. Two guards: only the **first** comma part carries a state prefix (`'Austin, TX - Atlas'` keeps `city:'Austin', state:'TX', name:'Atlas'`), and unspaced `'ST-X'` needs a title-case suffix (`'CO-OP'`/`'T-Mobile'` stay whole).
