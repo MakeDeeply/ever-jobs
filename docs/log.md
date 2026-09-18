@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-09-17 — Spec 5131 — Location parser: dash-prefixed US-state sites (`dash-state-prefix-sites`)
+
+**Change:** `location-parser.ts` now claims `state` from a leading `'ST - X'`/`'ST-X'` US-code prefix before any country or site-name rule can misread it. Solo `'ST - X'` labels previously fell through to the ISO alpha-2 fallback on the leftover code — `'MA - Boston'` emitted Morocco, `'MD - Gaither Rd.'` Moldova (`'CA'`→Canada, `'IL'`→Israel, `'IN'`→India likewise); the dash suffix now lands in `city` (`'MA - Boston'` → `{city:'Boston', state:'MA'}`) or `name` when its tail is a street suffix (`'MD - Gaither Rd.'` → `{state:'MD', name:'Gaither Rd.'}` — a new ~12-entry `STREET_SUFFIX_RE` scoped to dash tails only, so `'Warsaw, PL'` still reads Poland). As a comma part the whole `'ST - X'` used to survive into `city` (`'MD - Gaither Rd., Rockville Corp Hqtrs'` → `city:'MD - Gaither Rd.'`); now the state is consumed and a remaining `'City <descriptor>'` part splits into `city`+`name` when `city` is free (`{city:'Rockville', state:'MD', name:'Gaither Rd. - Corp Hqtrs'}`) or joins `name` wholesale when the dash suffix already claimed it (`'MA - Boston, Corp Hqtrs'` → `{city:'Boston', state:'MA', name:'Corp Hqtrs'}`). The descriptor split reuses `SITE_DESCRIPTOR_RE` and is gated on a `'ST -'` state having been claimed — a bare `'Rockville Corp Hqtrs'` still emits `city` whole. Two guards: only the **first** comma part carries a state prefix (`'Austin, TX - Atlas'` keeps `city:'Austin', state:'TX', name:'Atlas'`), and unspaced `'ST-X'` needs a title-case suffix (`'CO-OP'`/`'T-Mobile'` stay whole).
+
+**Files:** `packages/common/src/utils/location-parser.ts`, `packages/common/__tests__/location-parser.spec.ts`, `.specify/specs/5131-dash-state-prefix-sites/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx jest packages/common` — 295 tests green (12 new spec-5131 cases); `npx jest packages/plugins` — green; `tsc --noEmit` on `packages/common` clean.
+
+---
+
 ## 2026-09-17 — Spec 5130 — Location parser: US state names, territories, and dotted codes (`location-parser-us-subdivision-recognition`)
 
 **Change:** `location-parser.ts` recognizes four more US-subdivision label shapes. The `'X, Country'` city slot now resolves state **names** and territory names, not just codes — `'Arizona, USA'` → `{state:'AZ', country:'United States'}`, `'Puerto Rico, USA'` → `{state:'Puerto Rico', country:'United States'}` (collision names stay cities: `'New York, USA'`). A new `US_TERRITORY_NAMES` map emits the display name verbatim (`'Puerto Rico'` bare → `{state:'Puerto Rico'}`, consistent with `'Virginia'` → `{state:'VA'}`) rather than a code. `normalizeUsState` strips periods so `D.C.`/`N.Y.` resolve to `DC`/`NY` — which also repairs comma-packed groups: `'Bristol, RI, Washington, D.C'` previously collapsed to one `city` blob when `D.C` failed the firm check, now splits into `{Bristol,RI}` + `{Washington,DC}`. Space-joined `'City ST'` labels split (`'Bristol RI'` → `{city:'Bristol', state:'RI'}`). Territory names count as US for implied-country and comma-group firmness.

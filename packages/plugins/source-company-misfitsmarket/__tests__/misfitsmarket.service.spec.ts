@@ -101,7 +101,9 @@ describe('MisfitsMarketService — Spec 098 / T04', () => {
       );
       expect(lo?.jobUrl).not.toContain('misfitsmarket.com');
       expect(lo?.department).toBe('Distribution');
-      expect(lo?.location?.city).toBe('Northlake IL');
+      // 'City ST' split (spec 5130): 'Northlake IL' -> city + state.
+      expect(lo?.location?.city).toBe('Northlake');
+      expect(lo?.location?.state).toBe('IL');
       expect(lo?.isRemote).toBe(false);
       // D-08 regression guard.
       expect(lo?.description).not.toContain('&lt;');

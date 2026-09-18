@@ -357,3 +357,118 @@ describe('US subdivision recognition (spec 5130)', () => {
     });
   });
 });
+
+describe('dash-prefixed US-state sites (spec 5131)', () => {
+  it('parses a spaced ST - City prefix', () => {
+    expect(parseLocationText('MA - Boston').location).toMatchObject({
+      city: 'Boston',
+      state: 'MA',
+    });
+  });
+
+  it('parses an unspaced ST-City prefix', () => {
+    expect(parseLocationText('MA-Boston').location).toMatchObject({
+      city: 'Boston',
+      state: 'MA',
+    });
+  });
+
+  it('does not stamp a country on a solo ST - street site', () => {
+    const loc = parseLocationText('MD - Gaither Rd.').location;
+    expect(loc).toMatchObject({ state: 'MD', name: 'Gaither Rd.' });
+    expect(loc?.country).toBeUndefined();
+  });
+
+  it('does not stamp a country on an unspaced ST-street site', () => {
+    const loc = parseLocationText('MD-Gaither Rd.').location;
+    expect(loc).toMatchObject({ state: 'MD', name: 'Gaither Rd.' });
+    expect(loc?.country).toBeUndefined();
+  });
+
+  it('splits ST - street, City <descriptor>', () => {
+    expect(
+      parseLocationText('MD - Gaither Rd., Rockville Corp Hqtrs').location,
+    ).toMatchObject({
+      city: 'Rockville',
+      state: 'MD',
+      name: 'Gaither Rd. - Corp Hqtrs',
+    });
+  });
+
+  it('keeps a ST - City as city and demotes the descriptor part to name', () => {
+    expect(
+      parseLocationText('MA - Boston, Rockville Corp Hqtrs').location,
+    ).toMatchObject({
+      city: 'Boston',
+      state: 'MA',
+      name: 'Rockville Corp Hqtrs',
+    });
+    expect(
+      parseLocationText('MA-Boston, Rockville Corp Hqtrs').location,
+    ).toMatchObject({
+      city: 'Boston',
+      state: 'MA',
+      name: 'Rockville Corp Hqtrs',
+    });
+  });
+
+  it('splits ST - street, City', () => {
+    expect(
+      parseLocationText('MD - Gaither Rd., Rockville').location,
+    ).toMatchObject({
+      city: 'Rockville',
+      state: 'MD',
+      name: 'Gaither Rd.',
+    });
+  });
+
+  it('pops a literal country tail after a ST - site', () => {
+    expect(
+      parseLocationText('MD - Gaither Rd., Rockville, United States').location,
+    ).toMatchObject({
+      city: 'Rockville',
+      state: 'MD',
+      name: 'Gaither Rd.',
+      country: 'United States',
+    });
+  });
+
+  it('keeps a bare City <descriptor> as city without a ST - prefix', () => {
+    expect(parseLocationText('Rockville Corp Hqtrs').location).toMatchObject({
+      city: 'Rockville Corp Hqtrs',
+    });
+  });
+
+  it('keeps a pure descriptor part as name after ST - City', () => {
+    expect(parseLocationText('MA - Boston, Corp Hqtrs').location).toMatchObject(
+      {
+        city: 'Boston',
+        state: 'MA',
+        name: 'Corp Hqtrs',
+      },
+    );
+  });
+
+  it('does not read comma-tail subdivision codes as street suffixes', () => {
+    expect(parseLocationText('Warsaw, PL').location).toMatchObject({
+      city: 'Warsaw',
+      country: 'Poland',
+    });
+  });
+
+  it('keeps hyphenates and non-US dash prefixes whole', () => {
+    expect(parseLocationText('CO-OP').location).toMatchObject({
+      city: 'CO-OP',
+    });
+    expect(parseLocationText('T-Mobile').location).toMatchObject({
+      city: 'T-Mobile',
+    });
+    expect(parseLocationText('MD - Remote').location).toMatchObject({
+      state: 'MD',
+    });
+    expect(parseLocationText('ON - Toronto').location).toMatchObject({
+      city: 'ON',
+      name: 'Toronto',
+    });
+  });
+});

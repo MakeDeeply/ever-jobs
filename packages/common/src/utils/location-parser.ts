@@ -242,6 +242,41 @@ const asSiteName = (v: string | null | undefined): string | undefined =>
 const SITE_DESCRIPTOR_RE =
   /\b(?:hq|hqtrs|headquarters|office|campus|corp(?:orate)?|site|plant|services|pvt|ltd|inc|factory|facility|works|on-?site|onsite|offsite)\b/i;
 
+/**
+ * Street-suffix tail words ('Gaither Rd.', 'Pennsylvania Avenue') — used
+ * ONLY inside a 'ST - X' dash suffix to tell a site/street name (→ `name`)
+ * from a city (→ `city`). Never applied to comma tails, so 'Warsaw, PL'
+ * still reads PL as Poland.
+ */
+const STREET_SUFFIX_RE =
+  /\b(?:st|street|rd|road|ave|avenue|blvd|dr|drive|ln|lane|ct|pkwy|hwy|way|cir|pl)\.?$/i;
+
+/**
+ * 'Rockville Corp Hqtrs' → { city: 'Rockville', name: 'Corp Hqtrs' } — the
+ * longest tail whose words are all site descriptors becomes `name`, the
+ * rest `city`. Returns null for a plain city ('Rockville').
+ */
+function splitCityDescriptor(
+  only: string,
+): { city: string; name: string } | null {
+  const words = only.split(/\s+/);
+  for (let cut = 1; cut < words.length; cut++) {
+    const tail = words.slice(cut);
+    if (!tail.every((w) => SITE_DESCRIPTOR_RE.test(w))) continue;
+    const city = words.slice(0, cut).join(' ');
+    if (isBareCityCandidate(city)) {
+      return { city, name: tail.join(' ') };
+    }
+  }
+  return null;
+}
+
+/** Every word is a site descriptor ('Corp Hqtrs', 'HQ') — a site, not a city. */
+function isSiteDescriptorOnly(only: string): boolean {
+  const words = only.split(/\s+/);
+  return words.length > 0 && words.every((w) => SITE_DESCRIPTOR_RE.test(w));
+}
+
 type WorkFromHomeType = 'Hybrid' | 'Remote' | 'Hybrid or Remote';
 
 export interface ParsedLocationText {
@@ -514,6 +549,32 @@ function parseSingleLabel(
           blob: only,
         };
       }
+      // 'MA-Boston' unspaced — a US-state code prefix claims `state`;
+      // the title-case rest is a site name on a street suffix, else city
+      const dashBare = /^([A-Z]{2})-(.+)$/.exec(only);
+      if (dashBare && US_STATE_AND_TERRITORY_CODES.has(dashBare[1])) {
+        const rest = dashBare[2].trim();
+        if (/^[A-Z][a-z]/.test(rest)) {
+          if (STREET_SUFFIX_RE.test(rest)) {
+            return {
+              location: new LocationDto({
+                state: dashBare[1],
+                name: asSiteName(rest),
+              }),
+              firm: true,
+              blob: only,
+            };
+          }
+          return {
+            location: new LocationDto({
+              city: rest,
+              state: dashBare[1],
+            }),
+            firm: true,
+            blob: only,
+          };
+        }
+      }
     }
     return { location: new LocationDto({ city: only }), firm: false };
   }
@@ -545,6 +606,9 @@ function parseCommaParts(
   //   last 'X - <other>'   -> 'X' + site name ('Chicago, IL - Atlas')
   let country: string | null = null;
   let siteName: string | null = null;
+  let dashPrefixState: string | null = null;
+  let dashCity: string | null = null;
+  const dashConsumed: string[] = [];
   for (let i = 0; i < parts.length; i++) {
     parts[i] = affixStrip(parts[i]); // 'Texas-Remote', 'Hybrid- Fremont'
     // 'Remote United States' — qualifier word fused inside a part
@@ -554,6 +618,43 @@ function parseCommaParts(
     if (qf && (normalizeCountryOnly(qf[1]) || usSubdivision(qf[1]))) {
       parts[i] = qf[1].trim();
     }
+
+    // 'MD - Gaither Rd.' / 'MA-Boston' — a US-state code prefix on the
+    // FIRST part claims `state` before any country/site read (a bare
+    // 'MA'/'MD' otherwise hits the alpha-2 country lookup ->
+    // Morocco/Moldova). The rest is a site name when its tail is a
+    // street suffix, else a provisional city. Later parts keep the
+    // 'X, ST - site' reading ('Austin, TX - Atlas'). Unspaced 'ST-X'
+    // requires a title-case suffix so 'CO-OP' / 'T-Mobile' survive.
+    const dashPre = /^([A-Z]{2})(?:\s+-\s+|-)(.+)$/.exec(parts[i]);
+    if (
+      dashPre &&
+      i === 0 &&
+      US_STATE_AND_TERRITORY_CODES.has(dashPre[1])
+    ) {
+      const spaced = parts[i].includes(' - ');
+      const rest = dashPre[2].trim();
+      if (spaced || /^[A-Z][a-z]/.test(rest)) {
+        dashConsumed.push(parts[i]);
+        dashPrefixState = dashPrefixState ?? dashPre[1];
+        const restCountry = normalizeCountryOnly(rest);
+        if (isWorkplaceQualifierOnly(rest, true)) {
+          // 'GA - Remote' — qualifier only; flags are read from the label
+        } else if (restCountry) {
+          country = country ?? restCountry;
+        } else if (STREET_SUFFIX_RE.test(rest)) {
+          siteName = [rest, siteName].filter(Boolean).join(' - ');
+        } else if (!dashCity) {
+          dashCity = rest;
+        } else {
+          siteName = [rest, siteName].filter(Boolean).join(' - ');
+        }
+        parts.splice(i, 1);
+        i--;
+        continue;
+      }
+    }
+
     const d = /^(.*?)\s+-\s+(.+)$/.exec(parts[i]);
     if (!d) continue;
     let prefixCountry: string | null = null;
@@ -589,11 +690,27 @@ function parseCommaParts(
     }
   }
 
+  // every comma part was a 'ST - X' site ('MA - Boston', 'MD - Gaither Rd.')
+  if (parts.length === 0 && dashPrefixState) {
+    return {
+      location: new LocationDto({
+        city: dashCity ?? undefined,
+        state: dashPrefixState,
+        country: country ?? undefined,
+        name: asSiteName(siteName),
+      }),
+      firm: true,
+      blob: dashConsumed.join(', '),
+    };
+  }
+
   // trailing country (name / alpha-2 / alpha-3) — in the tail slot a valid
   // ISO code wins over a US-state reading ('Toronto, Ontario, CA' -> Canada);
   // labels like 'X, County, GA' with a US-state tail do not occur as single
   // comma labels (only as list rows handled by the separators).
-  if (parts.length >= 3) {
+  // (a 'ST - X' prefix sets state early, so a 2-part '…, <country>' tail
+  // reaches this block instead of the 'City, Country' branch below)
+  if (parts.length >= 3 || (parts.length === 2 && dashPrefixState)) {
     const tail = parts[parts.length - 1];
     let c = country ?? normalizeCountryOnly(tail);
     // a 2-letter tail that is BOTH a US state and an ISO country ('CA','GA','IL')
@@ -619,13 +736,13 @@ function parseCommaParts(
     }
   }
 
-  // merged-blob label: parts as they stand with the country segment removed
-  // but before any state/qualifier consumption ('Clarksburg, MD, United States'
-  // -> 'Clarksburg, MD')
-  const blob = dedupeConsecutive(parts).join(', ');
+  // merged-blob label: consumed 'ST - X' parts lead, then the remaining
+  // parts minus the country segment ('Clarksburg, MD, United States' ->
+  // 'Clarksburg, MD')
+  const blob = [...dashConsumed, ...dedupeConsecutive(parts)].join(', ');
 
   // trailing US subdivision (state code/name or territory name)
-  let state: string | null = null;
+  let state: string | null = dashPrefixState;
   {
     const tail = parts[parts.length - 1];
     const st = tail ? usSubdivision(tail) : null;
@@ -779,6 +896,59 @@ function parseCommaParts(
         location: new LocationDto({
           city: split.city,
           state: split.state,
+          country: country ?? undefined,
+          name: asSiteName(siteName),
+        }),
+        firm: true,
+        blob,
+      };
+    }
+    // a 'ST - X' prefix was consumed — the leftover part is the site city
+    // ('Rockville'), a 'City <descriptor>' tail ('Rockville Corp Hqtrs'),
+    // or a pure site name when the dash suffix already claimed the city
+    if (dashPrefixState) {
+      if (dashCity) {
+        return {
+          location: new LocationDto({
+            city: dashCity,
+            state,
+            country: country ?? undefined,
+            name: asSiteName([siteName, only].filter(Boolean).join(' - ')),
+          }),
+          firm: true,
+          blob,
+        };
+      }
+      const desc = splitCityDescriptor(only);
+      if (desc) {
+        return {
+          location: new LocationDto({
+            city: desc.city,
+            state,
+            country: country ?? undefined,
+            name: asSiteName(
+              [siteName, desc.name].filter(Boolean).join(' - '),
+            ),
+          }),
+          firm: true,
+          blob,
+        };
+      }
+      if (isSiteDescriptorOnly(only)) {
+        return {
+          location: new LocationDto({
+            state,
+            country: country ?? undefined,
+            name: asSiteName([siteName, only].filter(Boolean).join(' - ')),
+          }),
+          firm: true,
+          blob,
+        };
+      }
+      return {
+        location: new LocationDto({
+          city: only,
+          state,
           country: country ?? undefined,
           name: asSiteName(siteName),
         }),
