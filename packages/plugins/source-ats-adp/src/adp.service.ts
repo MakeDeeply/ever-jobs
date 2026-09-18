@@ -29,6 +29,7 @@ import {
   ADP_DETAIL_CONCURRENCY,
   ADP_HEADERS,
   ADP_HOSTS,
+  ADP_PAGE_SIZE,
   adpCareersUrl,
   adpDetailUrl,
   adpListUrl,
@@ -129,7 +130,7 @@ export class AdpService implements IScraper {
         const response = await client.get<AdpResponse>(adpListUrl(host, cid));
         const data = response.data;
         if (data && Array.isArray(data.jobRequisitions)) {
-          return { host, jobs: data.jobRequisitions };
+          return { host, jobs: await this.fetchAllPages(client, host, cid, data) };
         }
         this.logger.warn(`ADP: unexpected payload from ${host} for ${cid}`);
       } catch (err: any) {
@@ -139,6 +140,46 @@ export class AdpService implements IScraper {
       }
     }
     return null;
+  }
+
+  /**
+   * Walk the remaining list pages: the API caps a response at `ADP_PAGE_SIZE`
+   * requisitions and reports the real total in `meta.totalNumber`. Pages are
+   * addressed by `$skip`/`$top`; the loop stops on the last page, an empty or
+   * fully-duplicate page, or a page fetch failure (partial results kept — a
+   * truncated list beats none).
+   */
+  private async fetchAllPages(
+    client: HttpClient,
+    host: string,
+    cid: string,
+    first: AdpResponse,
+  ): Promise<AdpJob[]> {
+    const jobs = [...(first.jobRequisitions ?? [])];
+    const total = first.meta?.totalNumber ?? jobs.length;
+    const seen = new Set(jobs.map((job) => job.itemID));
+
+    for (let skip = ADP_PAGE_SIZE; jobs.length < total; skip += ADP_PAGE_SIZE) {
+      let page: AdpJob[];
+      try {
+        const response = await client.get<AdpResponse>(
+          adpListUrl(host, cid, skip),
+        );
+        page = response.data?.jobRequisitions ?? [];
+      } catch (err: any) {
+        this.logger.warn(
+          `ADP: list page at $skip=${skip} failed for ${cid}: ${err.message}`,
+        );
+        break;
+      }
+      const fresh = page.filter((job) => !seen.has(job.itemID));
+      if (fresh.length === 0) break;
+      for (const job of fresh) {
+        seen.add(job.itemID);
+        jobs.push(job);
+      }
+    }
+    return jobs;
   }
 
   /**

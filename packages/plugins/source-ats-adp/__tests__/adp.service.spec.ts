@@ -21,7 +21,7 @@ jest.mock('@ever-jobs/common', () => {
 import { AdpService } from '../src/adp.service';
 import { AdpJob } from '../src/adp.types';
 
-const LIST_RE = /\/job-requisitions\?cid=([^&]+)$/;
+const LIST_RE = /\/job-requisitions\?cid=([^&]+)/;
 const DETAIL_RE = /\/job-requisitions\/([^/?]+)\?cid=/;
 
 function listing(overrides: Partial<AdpJob> = {}): AdpJob {
@@ -77,11 +77,48 @@ function mockApi(
       return Promise.resolve({ data: entry });
     }
     if (LIST_RE.test(url)) {
-      return Promise.resolve({ data: { jobRequisitions: jobs } });
+      return Promise.resolve({
+        data: { jobRequisitions: jobs, meta: { totalNumber: jobs.length } },
+      });
     }
     return Promise.reject(new Error(`unexpected url ${url}`));
   });
 }
+
+/**
+ * Paginated variant: `pages` is served in `$skip` order — request N returns
+ * `pages[N]` — and the first response carries `meta.totalNumber` (the full
+ * count), matching the live API.
+ */
+function mockApiPaged(pages: (AdpJob[] | Error)[], total: number) {
+  mockGet.mockImplementation((url: string) => {
+    if (!url.includes('workforcenow.adp.com')) {
+      return Promise.reject(new Error(`GET ${url} failed: 404`));
+    }
+    if (LIST_RE.test(url)) {
+      const skip = Number(/\$skip=(\d+)/.exec(url)?.[1] ?? 0);
+      const page = pages[skip / 20];
+      if (page instanceof Error) return Promise.reject(page);
+      return Promise.resolve({
+        data: {
+          jobRequisitions: page ?? [],
+          meta: skip === 0 ? { totalNumber: total } : {},
+        },
+      });
+    }
+    // details are not the subject here — return the bare requisition
+    const detailMatch = url.match(DETAIL_RE);
+    if (detailMatch) {
+      return Promise.resolve({ data: listing({ itemID: decodeURIComponent(detailMatch[1]) }) });
+    }
+    return Promise.reject(new Error(`unexpected url ${url}`));
+  });
+}
+
+const pageOf = (start: number, size: number): AdpJob[] =>
+  Array.from({ length: size }, (_, i) =>
+    listing({ itemID: `req-${start + i}`, requisitionTitle: `Job ${start + i}` }),
+  );
 
 function input(overrides: Partial<ScraperInputDto> = {}): ScraperInputDto {
   return {
@@ -231,6 +268,42 @@ describe('AdpService', () => {
       { country: 'United States', text: 'Remote, US' },
     ]);
     expect(res.jobs[0].isRemote).toBe(true);
+  });
+
+  // Spec 5133 — the list endpoint caps at 20 per response; walk $skip pages
+  // until meta.totalNumber is covered.
+  it('pages through the full requisition list', async () => {
+    mockApiPaged([pageOf(0, 20), pageOf(20, 20), pageOf(40, 5)], 45);
+
+    const res = await service.scrape(input({ resultsWanted: 9999 }));
+
+    expect(res.jobs).toHaveLength(45);
+    expect(mockGet).toHaveBeenCalledWith(expect.stringContaining('$skip=20'));
+    expect(mockGet).toHaveBeenCalledWith(expect.stringContaining('$skip=40'));
+  });
+
+  it('stops at resultsWanted before paging past the cap', async () => {
+    mockApiPaged([pageOf(0, 20), pageOf(20, 20)], 40);
+
+    const res = await service.scrape(input({ resultsWanted: 25 }));
+
+    expect(res.jobs).toHaveLength(25);
+  });
+
+  it('keeps partial results when a later page fetch fails', async () => {
+    mockApiPaged([pageOf(0, 20), new Error('boom'), pageOf(40, 5)], 45);
+
+    const res = await service.scrape(input({ resultsWanted: 9999 }));
+
+    expect(res.jobs).toHaveLength(20);
+  });
+
+  it('stops on an empty page even when totalNumber is higher', async () => {
+    mockApiPaged([pageOf(0, 20), []], 60);
+
+    const res = await service.scrape(input({ resultsWanted: 9999 }));
+
+    expect(res.jobs).toHaveLength(20);
   });
 
   it('returns empty when no host resolves the company', async () => {
