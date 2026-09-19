@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-09-19 — Spec 5134 — PulseSpace rendered-DOM scrape (`pulsespace-rendered-dom`)
+
+**Change:** `source-company-pulsespace` was returning 0 jobs after the site rebuilt — the careers bundle no longer carries a `wve` job-map literal (`wve` is now a React component name; role data lives in unrelated minified consts). The plugin now renders `pulsespace.com/careers` via `BrowserPool`, collects rendered `/careers/<slug>` links, and parses each rendered detail page: `main h1` title, badge `span`s identified by lucide icon (`map-pin` → location, `briefcase` → job type, `building2` → department, positional fallback), and `h2` sections composed into the description. `id`/`jobUrl` derive from the slug; no apply URL or posted date exists on the page.
+
+**Files:** `packages/plugins/source-company-pulsespace/src/{pulsespace.service.ts,pulsespace.constants.ts}`, `packages/plugins/source-company-pulsespace/__tests__/*`, `.specify/specs/5134-pulsespace-rendered-dom/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx jest source-company-pulsespace` — 9 tests green; live scrape returns the 1 live role (`principal-controls-engineering-architect`) with title, `Seattle, WA` location, `Engineering / Controls` department, and a ~4.3 KB description (was 0).
+
+---
+
 ## 2026-09-17 — Spec 5133 — ADP requisition-list pagination (`adp-list-pagination`)
 
 **Change:** `source-ats-adp` no longer truncates boards to the first 20 requisitions. The list endpoint caps a response at 20 and reports the real total in `meta.totalNumber`; `fetchList` now walks `&$skip=N&$top=20` pages until the collected set covers the total, a page yields no fresh `itemID`s, or a page fetch fails (partial results kept, logged). `resultsWanted` still slices afterward. Four live tenants verified truncated pre-fix (`totalNumber` 160 / 230 / 67 / 36, all returning 20).

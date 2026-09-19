@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, OnModuleDestroy } from '@nestjs/common';
 import * as cheerio from 'cheerio';
 import { SourcePlugin } from '@ever-jobs/plugin';
 import {
@@ -13,26 +13,26 @@ import {
   ScraperInputDto,
   Site,
 } from '@ever-jobs/models';
-import { createHttpClient } from '@ever-jobs/common';
+import { BrowserPool } from '@ever-jobs/common';
+import type { Page } from 'playwright';
 import {
   PULSESPACE_CAREERS_URL,
   PULSESPACE_COMPANY_NAME,
   PULSESPACE_DEFAULT_RESULTS,
   PULSESPACE_DEFAULT_TIMEOUT_SECONDS,
+  PULSESPACE_DETAIL_SELECTOR,
+  PULSESPACE_LIST_SELECTOR,
   PULSESPACE_ORIGIN,
+  PULSESPACE_READY_TIMEOUT_SECONDS,
 } from './pulsespace.constants';
 
-interface PulsespaceJobRecord {
+interface PulsespaceDetail {
   title: string;
-  location: string;
-  jobType: string;
-  department: string;
-  summary?: string | string[];
-  responsibilities?: string | string[];
-  basicQualifications?: string | string[];
-  preferredQualifications?: string | string[];
-  competencies?: string | string[];
-  closing?: string | string[];
+  subtitle: string;
+  locationText: string;
+  jobTypeText: string;
+  departmentText: string;
+  description: string;
 }
 
 @SourcePlugin({
@@ -42,8 +42,12 @@ interface PulsespaceJobRecord {
   companyDomains: ['pulsespace.com'],
 })
 @Injectable()
-export class PulsespaceService implements IScraper {
+export class PulsespaceService implements IScraper, OnModuleDestroy {
   private readonly logger = new Logger(PulsespaceService.name);
+
+  async onModuleDestroy(): Promise<void> {
+    await BrowserPool.close().catch(() => undefined);
+  }
 
   async scrape(input: ScraperInputDto): Promise<JobResponseDto> {
     try {
@@ -61,238 +65,244 @@ export class PulsespaceService implements IScraper {
   }
 
   private async fetchJobs(input: ScraperInputDto): Promise<JobPostDto[]> {
-    const client = createHttpClient({
-      proxies: input.proxies,
-      caCert: input.caCert,
-      requestTimeout: input.requestTimeout ?? PULSESPACE_DEFAULT_TIMEOUT_SECONDS,
+    const proxy = input.proxies?.[0];
+    const timeoutMs =
+      (input.requestTimeout ?? PULSESPACE_DEFAULT_TIMEOUT_SECONDS) * 1000;
+
+    const page = await BrowserPool.getPage({
+      proxy,
+      stealth: true,
+      headful: true,
     });
 
-    const fetchUrl = input.companyUrl || PULSESPACE_CAREERS_URL;
-    const companyUrl = input.companyUrl || PULSESPACE_ORIGIN;
-    const origin = new URL(fetchUrl).origin;
-
-    const listingRes = await client.get<string>(fetchUrl);
-    const $ = cheerio.load(listingRes.data);
-    const bundleUrl = this.resolveBundleUrl($, origin);
-    if (!bundleUrl) {
-      this.logger.warn('Pulsespace: no main JS bundle found in careers page');
-      return [];
-    }
-
-    const bundleRes = await client.get<string>(bundleUrl);
-    const wve = this.parseWveObject(bundleRes.data);
-    if (!wve || typeof wve !== 'object' || Array.isArray(wve)) {
-      this.logger.warn('Pulsespace: could not parse careers data from bundle');
-      return [];
-    }
-
-    const records = Object.entries(wve).sort(([a], [b]) => a.localeCompare(b));
-    return records
-      .map(([slug, record]) => this.buildJob(slug, record, origin, companyUrl))
-      .filter((job): job is JobPostDto => Boolean(job));
-  }
-
-  private resolveBundleUrl($: cheerio.CheerioAPI, origin: string): string | null {
-    const src = $('script[src*="/assets/index-"][src$=".js"]')
-      .first()
-      .attr('src');
-    if (!src) {
-      return null;
-    }
-    return this.resolveUrl(src, origin);
-  }
-
-  private parseWveObject(source: string): unknown {
-    const markers = ['const wve=', 'var wve=', 'let wve=', 'wve='];
-    for (const marker of markers) {
-      const parsed = this.parseJsObjectLiteral(source, marker);
-      if (parsed) {
-        return parsed;
-      }
-    }
-    return null;
-  }
-
-  private parseJsObjectLiteral(source: string, marker: string): unknown {
-    const markerIndex = source.indexOf(marker);
-    if (markerIndex === -1) {
-      return null;
-    }
-    const start = source.indexOf('{', markerIndex);
-    if (start === -1) {
-      return null;
-    }
-
-    let depth = 0;
-    let inString = false;
-    let escape = false;
-    let end = -1;
-    for (let i = start; i < source.length; i++) {
-      const c = source[i];
-      if (inString) {
-        if (escape) {
-          escape = false;
-        } else if (c === '\\') {
-          escape = true;
-        } else if (c === '"') {
-          inString = false;
-        }
-      } else {
-        if (c === '"') {
-          inString = true;
-        } else if (c === '{') {
-          depth++;
-        } else if (c === '}') {
-          depth--;
-          if (depth === 0) {
-            end = i;
-            break;
-          }
-        }
-      }
-    }
-    if (end === -1) {
-      return null;
-    }
-
-    const objectString = source.slice(start, end + 1);
     try {
-      const json = this.quoteUnquotedKeys(objectString);
-      return JSON.parse(json);
-    } catch {
-      return null;
+      const startUrl = input.companyUrl || PULSESPACE_CAREERS_URL;
+      const origin = new URL(startUrl).origin;
+      const companyUrl = input.companyUrl
+        ? new URL(input.companyUrl).origin
+        : PULSESPACE_ORIGIN;
+
+      const listHtml = await this.fetchHtml(
+        startUrl,
+        page,
+        timeoutMs,
+        PULSESPACE_LIST_SELECTOR,
+      );
+      const detailUrls = this.parseListLinks(listHtml, origin);
+      if (detailUrls.length === 0) {
+        this.logger.warn('Pulsespace: no /careers/<slug> links rendered');
+        return [];
+      }
+
+      const jobs: JobPostDto[] = [];
+      for (const detailUrl of detailUrls) {
+        const detailHtml = await this.fetchHtml(
+          detailUrl,
+          page,
+          timeoutMs,
+          PULSESPACE_DETAIL_SELECTOR,
+        );
+        const job = this.buildJob(detailUrl, detailHtml, companyUrl);
+        if (job) {
+          jobs.push(job);
+        }
+      }
+      return jobs;
+    } finally {
+      await page.close().catch(() => undefined);
     }
   }
 
-  private quoteUnquotedKeys(jsObject: string): string {
-    let out = '';
-    let inString = false;
-    let escape = false;
-    let i = 0;
-    while (i < jsObject.length) {
-      const c = jsObject[i];
-      if (inString) {
-        out += c;
-        if (escape) {
-          escape = false;
-        } else if (c === '\\') {
-          escape = true;
-        } else if (c === '"') {
-          inString = false;
-        }
-        i++;
-        continue;
-      }
-      if (c === '"') {
-        inString = true;
-        out += c;
-        i++;
-        continue;
-      }
-      if (/[A-Za-z_$]/.test(c)) {
-        let j = i + 1;
-        while (j < jsObject.length && /[A-Za-z0-9_$]/.test(jsObject[j])) {
-          j++;
-        }
-        const ident = jsObject.slice(i, j);
-        let k = j;
-        while (k < jsObject.length && /\s/.test(jsObject[k])) {
-          k++;
-        }
-        if (jsObject[k] === ':') {
-          out += `"${ident}":`;
-          i = k + 1;
-          continue;
-        }
-        out += ident;
-        i = j;
-        continue;
-      }
-      out += c;
-      i++;
+  protected async fetchHtml(
+    url: string,
+    page?: Page,
+    timeoutMs?: number,
+    waitSelector?: string,
+  ): Promise<string> {
+    const timeout = timeoutMs ?? PULSESPACE_DEFAULT_TIMEOUT_SECONDS * 1000;
+    const ready = waitSelector ?? 'main';
+
+    if (page) {
+      await page.goto(url, { waitUntil: 'domcontentloaded', timeout });
+      await page
+        .waitForSelector(ready, {
+          timeout: PULSESPACE_READY_TIMEOUT_SECONDS * 1000,
+        })
+        .catch(() => undefined);
+      return page.content();
     }
-    return out;
+
+    const p = await BrowserPool.getPage({ stealth: true, headful: true });
+    try {
+      await p.goto(url, { waitUntil: 'domcontentloaded', timeout });
+      await p
+        .waitForSelector(ready, {
+          timeout: PULSESPACE_READY_TIMEOUT_SECONDS * 1000,
+        })
+        .catch(() => undefined);
+      return p.content();
+    } finally {
+      await p.close().catch(() => undefined);
+    }
   }
 
-  private buildJob(
-    slug: string,
-    record: unknown,
-    origin: string,
-    companyUrl: string,
-  ): JobPostDto | null {
-    if (!this.isJobRecord(record)) {
-      return null;
-    }
+  private parseListLinks(html: string, origin: string): string[] {
+    const $ = cheerio.load(html);
+    const seen = new Set<string>();
+    const urls: string[] = [];
 
-    const title = this.normalize(record.title);
+    $('a[href]').each((_i, el) => {
+      const href = $(el).attr('href')?.trim() ?? '';
+      if (!/^\/careers\/[^/?#]+/.test(href) && !/^https?:\/\/[^/]+\/careers\/[^/?#]+/.test(href)) {
+        return;
+      }
+      const url = this.resolveUrl(href, origin);
+      if (url && !seen.has(url)) {
+        seen.add(url);
+        urls.push(url);
+      }
+    });
+
+    return urls;
+  }
+
+  private parseDetail(html: string): PulsespaceDetail | null {
+    const $ = cheerio.load(html);
+    const found = $('main').first();
+    const main = (found.length ? found : $('html').first()) as cheerio.Cheerio<any>;
+
+    const title = this.normalize(main.find('h1').first().text());
     if (!title) {
       return null;
     }
 
-    const jobUrl = this.resolveUrl(`/careers/${slug}`, origin);
-    if (!jobUrl) {
+    const subtitle = this.normalize(
+      main.find('h1').first().nextAll('p').first().text(),
+    );
+
+    // Icon badges: each span pairs a lucide svg with its text. Order on the
+    // page is location, employment type, department — the svg class names are
+    // the stable signal.
+    let locationText = '';
+    let jobTypeText = '';
+    let departmentText = '';
+    const fallback: string[] = [];
+    main.find('span').each((_i, el) => {
+      const span = $(el);
+      const svgClass = span.find('svg').first().attr('class') ?? '';
+      const text = this.normalize(span.clone().children().remove().end().text())
+        || this.normalize(span.text());
+      if (!text || !svgClass) {
+        return;
+      }
+      fallback.push(text);
+      if (/map-pin/i.test(svgClass)) {
+        locationText = locationText || text;
+      } else if (/briefcase/i.test(svgClass)) {
+        jobTypeText = jobTypeText || text;
+      } else if (/building2|building/i.test(svgClass)) {
+        departmentText = departmentText || text;
+      }
+    });
+    if (!locationText && fallback.length > 0) {
+      locationText = fallback[0];
+    }
+    if (!jobTypeText && fallback.length > 1) {
+      jobTypeText = fallback[1];
+    }
+    if (!departmentText && fallback.length > 2) {
+      departmentText = fallback[2];
+    }
+
+    // Body: each h2 heads a section whose container holds paragraphs or a ul.
+    const sections: string[] = [];
+    if (subtitle) {
+      sections.push(subtitle);
+    }
+    main.find('h2').each((_i, el) => {
+      const heading = this.normalize($(el).text());
+      if (!heading) {
+        return;
+      }
+      const container = $(el).next();
+      const items: string[] = [];
+      container.find('li').each((_j, li) => {
+        const text = this.normalize($(li).text());
+        if (text) {
+          items.push(`- ${text}`);
+        }
+      });
+      if (items.length === 0) {
+        container.find('p').each((_j, p) => {
+          const text = this.normalize($(p).text());
+          if (text) {
+            items.push(text);
+          }
+        });
+      }
+      if (items.length > 0) {
+        sections.push(`## ${heading}\n\n${items.join('\n\n')}`);
+      }
+    });
+
+    return {
+      title,
+      subtitle,
+      locationText,
+      jobTypeText,
+      departmentText,
+      description: sections.join('\n\n'),
+    };
+  }
+
+  private buildJob(
+    detailUrl: string,
+    html: string,
+    companyUrl: string,
+  ): JobPostDto | null {
+    const detail = this.parseDetail(html);
+    if (!detail) {
       return null;
     }
 
-    const jobTypes = this.buildJobTypes(record.jobType, title);
+    const slugMatch = detailUrl.match(/\/careers\/([^/?#]+)/);
+    const slug = slugMatch ? slugMatch[1] : this.slugify(detail.title);
+    if (!slug) {
+      return null;
+    }
+
+    const jobTypes = this.buildJobTypes(detail.jobTypeText, detail.title);
     const employmentType = this.buildEmploymentType(jobTypes);
-    const description = this.buildDescription(record);
     const { isRemote, workFromHomeType } = this.parseWorkFromHomeType(
-      [record.location, record.jobType, description].filter((t): t is string => Boolean(t)),
+      [detail.locationText, detail.jobTypeText, detail.description].filter(
+        (t): t is string => Boolean(t),
+      ),
     );
-    const location = this.parseLocation(record.location);
+    const location = this.parseLocation(detail.locationText);
 
     return new JobPostDto({
       id: `pulsespace-${slug}`,
       site: Site.PULSESPACE,
-      title,
+      title: detail.title,
       companyName: PULSESPACE_COMPANY_NAME,
       companyUrl,
-      jobUrl,
-      jobUrlDirect: jobUrl,
+      jobUrl: detailUrl,
+      jobUrlDirect: detailUrl,
       location,
       isRemote,
       workFromHomeType: workFromHomeType ?? undefined,
       jobType: jobTypes,
       employmentType,
-      department: this.normalize(record.department) || undefined,
-      description,
+      department: detail.departmentText || undefined,
+      description: detail.description,
     });
   }
 
-  private isJobRecord(value: unknown): value is PulsespaceJobRecord {
-    return (
-      typeof value === 'object' &&
-      value !== null &&
-      typeof (value as PulsespaceJobRecord).title === 'string' &&
-      typeof (value as PulsespaceJobRecord).location === 'string'
-    );
-  }
-
-  private buildDescription(record: PulsespaceJobRecord): string {
-    const sections: string[] = [];
-    const add = (heading: string, body?: string | string[]) => {
-      if (body === undefined || body === null) {
-        return;
-      }
-      const parts = Array.isArray(body) ? body : [body];
-      const lines = parts.map((p) => `- ${this.normalize(p)}`).filter(Boolean);
-      if (lines.length === 0) {
-        return;
-      }
-      sections.push(`## ${heading}\n\n${lines.join('\n\n')}`);
-    };
-
-    add('Position Summary', record.summary);
-    add('Key Responsibilities', record.responsibilities);
-    add('Basic Qualifications', record.basicQualifications);
-    add('Preferred Qualifications', record.preferredQualifications);
-    add('Competencies', record.competencies);
-    if (typeof record.closing === 'string' && record.closing.trim()) {
-      sections.push(`## Closing\n\n${this.normalize(record.closing)}`);
-    }
-
-    return this.normalize(sections.join('\n\n'));
+  private slugify(text: string): string {
+    return this.normalize(text)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
   }
 
   private parseWorkFromHomeType(texts: string[]): {
