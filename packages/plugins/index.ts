@@ -1148,6 +1148,7 @@ import { VelontraModule } from './source-company-velontra';
 import { SolideonModule } from './source-company-solideon';
 import { GaladyneIoModule } from './source-company-galadyne_io';
 import { OctbrAiModule } from './source-ats-octbr_ai';
+import { NodiGlobalModule } from './source-ats-nodi_global';
 import { GustoHostedModule } from './source-ats-gusto-hosted';
 import { ReelementtechModule } from './source-company-reelementtech';
 import { FlymotionusModule } from './source-company-flymotionus';
@@ -3711,4 +3712,5 @@ export const ALL_SOURCE_MODULES = [
   WeeztixModule,
   XSARUSModule,
   OctbrAiModule,
+  NodiGlobalModule,
 ];

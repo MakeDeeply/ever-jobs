@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-09-19 — Spec 5135 — Source ATS plugin: Nodi (`source-ats-nodi_global`)
+
+**Change:** New `source-ats-nodi_global` plugin for Nodi, a multi-tenant ATS where each customer board is `app.nodi.global/company/<slug>` (Next.js shell — the SSR page only renders a "0 positions" skeleton; jobs load client-side). The plugin calls the public JSON API instead: `api.nodi.global/job-offers/active/company/<slug>` returns every active offer in one call (`id`, `title`, `location`, `department`, `type`, `modality`, `seniority`, `min_salary`/`max_salary`/`currency`/`frequency`, `created_at`, `magic_link`, HTML `description`) — no detail fetches. `api.nodi.global/companies/by-name?name=<slug>` resolves `companyName`/`companyUrl`; its failure degrades to the slug without failing the scrape. `jobUrl`/`applyUrl` = `magic_link`; `modality` → `isRemote`/`workFromHomeType`; `type` → `jobType`/`employmentType`; salary → `compensation` (description fallback); `created_at` → `datePosted`; description HTML-stripped. `companySlug` addresses the tenant.
+
+**Files:** `packages/plugins/source-ats-nodi_global/*`, `packages/models/src/enums/site.enum.ts` (`NODI_GLOBAL`), `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `.specify/specs/5135-source-ats-nodi_global/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx jest source-ats-nodi_global` — 9 tests green; live `radical ai` board returns 8 jobs with salary ranges, departments, and descriptions.
+
+---
+
 ## 2026-09-19 — Spec 5134 — PulseSpace rendered-DOM scrape (`pulsespace-rendered-dom`)
 
 **Change:** `source-company-pulsespace` was returning 0 jobs after the site rebuilt — the careers bundle no longer carries a `wve` job-map literal (`wve` is now a React component name; role data lives in unrelated minified consts). The plugin now renders `pulsespace.com/careers` via `BrowserPool`, collects rendered `/careers/<slug>` links, and parses each rendered detail page: `main h1` title, badge `span`s identified by lucide icon (`map-pin` → location, `briefcase` → job type, `building2` → department, positional fallback), and `h2` sections composed into the description. `id`/`jobUrl` derive from the slug; no apply URL or posted date exists on the page.
