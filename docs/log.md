@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-09-20 — Spec 5136 — Canonical country names at the `LocationDto` boundary (`location-country-canonicalization`)
+
+**Change:** `LocationDto.country` mixed three spellings — parser output was already canonical (`'United States'`), but ~120 plugins stamped raw API tokens (`'US'`, `'us'`) and ~20 stamped `Country` enum members (`Country.USA` → serialized/rendered `'USA'`). The constructor now runs `normalizeCountryOnly` on any string `country`: resolvable tokens become the canonical English display name, with the replaced token preserved in `text` when `text` was empty (never overwrites caller-set `text`). Unresolvable strings and the `WORLDWIDE`/`US_CANADA` sentinels pass through verbatim. To let the DTO reach the normalizer, `normalizeCountryOnly`, `regionNameFromCode`, `countryDisplay`, and `COUNTRY_ALPHA3` moved from `common` to `models/enums/country-normalize.ts`; `@ever-jobs/common` re-exports them so existing plugin imports are unchanged. `launchpadbuild_ai`'s `input.location` filter now matches `displayLocation()` OR `location.text` — its `'UK'` query only matches the preserved raw token now that `country` renders `'United Kingdom'`.
+
+**Files:** `packages/models/src/enums/country-normalize.ts` (new), `packages/models/src/enums/index.ts`, `packages/models/src/dtos/location.dto.ts`, `packages/common/src/utils/location-parser.ts`, `packages/common/src/utils/country-name.ts`, `packages/models/__tests__/location-dto-country.spec.ts` (new), 12 `source-company-*` specs updated to canonical expectations, `packages/plugins/source-company-launchpadbuild_ai/src/launchpadbuild_ai.service.ts`, `.specify/specs/5136-*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** models 70/70, common 295/295, affected plugin suites 140/140 green; `tsc --noEmit` clean.
+
+---
+
 ## 2026-09-19 — Spec 5135 — Source ATS plugin: Nodi (`source-ats-nodi_global`)
 
 **Change:** New `source-ats-nodi_global` plugin for Nodi, a multi-tenant ATS where each customer board is `app.nodi.global/company/<slug>` (Next.js shell — the SSR page only renders a "0 positions" skeleton; jobs load client-side). The plugin calls the public JSON API instead: `api.nodi.global/job-offers/active/company/<slug>` returns every active offer in one call (`id`, `title`, `location`, `department`, `type`, `modality`, `seniority`, `min_salary`/`max_salary`/`currency`/`frequency`, `created_at`, `magic_link`, HTML `description`) — no detail fetches. `api.nodi.global/companies/by-name?name=<slug>` resolves `companyName`/`companyUrl`; its failure degrades to the slug without failing the scrape. `jobUrl`/`applyUrl` = `magic_link`; `modality` → `isRemote`/`workFromHomeType`; `type` → `jobType`/`employmentType`; salary → `compensation` (description fallback); `created_at` → `datePosted`; description HTML-stripped. `companySlug` addresses the tenant.

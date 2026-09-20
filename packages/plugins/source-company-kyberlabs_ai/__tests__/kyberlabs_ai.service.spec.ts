@@ -67,7 +67,7 @@ describe('KyberlabsAiService', () => {
     for (const job of response.jobs) {
       expect(job.location?.city).toBe('Brooklyn');
       expect(job.location?.state).toBe('NY');
-      expect(job.location?.country).toBe(Country.USA);
+      expect(job.location?.country).toBe('United States');
     }
   });
 

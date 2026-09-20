@@ -71,13 +71,13 @@ describe('TheSpaceportcompanyService', () => {
     const mechanical = response.jobs.find((job) => job.title === 'Mechanical Engineer')!;
     expect(mechanical.location?.city).toBe('Merritt Island');
     expect(mechanical.location?.state).toBe('FL');
-    expect(mechanical.location?.country).toBe('USA');
+    expect(mechanical.location?.country).toBe('United States');
     expect(mechanical.location?.displayLocation()).toMatch(/Merritt Island/);
 
     const naval = response.jobs.find((job) => job.title === 'Naval Architect')!;
     expect(naval.location?.city).toBe('Cocoa');
     expect(naval.location?.state).toBe('FL');
-    expect(naval.location?.country).toBe('USA');
+    expect(naval.location?.country).toBe('United States');
     expect(naval.location?.displayLocation()).toMatch(/Cocoa/);
   });
 

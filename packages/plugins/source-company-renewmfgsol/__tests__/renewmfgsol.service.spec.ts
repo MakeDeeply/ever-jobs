@@ -78,8 +78,8 @@ describe('RenewmfgsolService', () => {
     const welder = response.jobs[0];
     expect(welder.location?.city).toBe('Dalton');
     expect(welder.location?.state).toBe('GA');
-    expect(welder.location?.country).toBe(Country.USA);
-    expect(welder.location?.displayLocation()).toBe('Dalton, GA, USA');
+    expect(welder.location?.country).toBe('United States');
+    expect(welder.location?.displayLocation()).toBe('Dalton, GA, United States');
     expect(welder.jobType).toEqual([JobType.FULL_TIME]);
     expect(welder.employmentType).toBe('Full time');
     expect(welder.isRemote).toBe(false);

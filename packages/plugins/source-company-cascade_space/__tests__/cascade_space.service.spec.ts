@@ -77,7 +77,7 @@ describe('CascadeSpaceService', () => {
     const job = response.jobs[0];
     expect(job.location?.city).toBe('San Francisco');
     expect(job.location?.state).toBe('CA');
-    expect(job.location?.country).toBe(Country.USA);
+    expect(job.location?.country).toBe('United States');
     expect(job.jobType).toEqual([JobType.FULL_TIME]);
     expect(job.employmentType).toBe('Full time');
     expect(job.isRemote).toBe(false);

@@ -2,10 +2,13 @@ import { LocationDto } from '@ever-jobs/models';
 import {
   COUNTRY_CONFIG,
   Country,
+  countryDisplay,
   countryFromString,
   getIndeedDomain,
+  normalizeCountryOnly,
 } from '@ever-jobs/models';
-import { regionNameFromCode } from './country-name';
+// Re-exported for plugin callers that import it from '@ever-jobs/common'.
+export { normalizeCountryOnly };
 
 const US_STATE_AND_TERRITORY_CODES = new Set([
   'AA',
@@ -143,84 +146,7 @@ const US_TERRITORY_NAMES: Record<string, string> = {
 /** Display names emitted for territories — count as US for merge/firm. */
 const US_TERRITORY_DISPLAY_NAMES = new Set(Object.values(US_TERRITORY_NAMES));
 
-/**
- * ISO-3166-1 alpha-3 display names for every country in COUNTRY_CONFIG, plus
- * `UAE` as an alias for `ARE` (boards write "UAE" often). `Intl.DisplayNames`
- * only accepts alpha-2 codes, so alpha-3 needs this explicit map.
- */
-const COUNTRY_ALPHA3: Record<string, string> = {
-  ARE: 'United Arab Emirates',
-  ARG: 'Argentina',
-  AUS: 'Australia',
-  AUT: 'Austria',
-  BEL: 'Belgium',
-  BGR: 'Bulgaria',
-  BHR: 'Bahrain',
-  BRA: 'Brazil',
-  CAN: 'Canada',
-  CHE: 'Switzerland',
-  CHL: 'Chile',
-  CHN: 'China',
-  COL: 'Colombia',
-  CRI: 'Costa Rica',
-  CYP: 'Cyprus',
-  CZE: 'Czech Republic',
-  DEU: 'Germany',
-  DNK: 'Denmark',
-  ECU: 'Ecuador',
-  EGY: 'Egypt',
-  ESP: 'Spain',
-  EST: 'Estonia',
-  FIN: 'Finland',
-  FRA: 'France',
-  GBR: 'United Kingdom',
-  GRC: 'Greece',
-  HKG: 'Hong Kong',
-  HUN: 'Hungary',
-  IDN: 'Indonesia',
-  IND: 'India',
-  IRL: 'Ireland',
-  ISR: 'Israel',
-  ITA: 'Italy',
-  JPN: 'Japan',
-  KOR: 'South Korea',
-  KWT: 'Kuwait',
-  LTU: 'Lithuania',
-  LVA: 'Latvia',
-  LUX: 'Luxembourg',
-  MAR: 'Morocco',
-  MEX: 'Mexico',
-  MLT: 'Malta',
-  MYS: 'Malaysia',
-  NGA: 'Nigeria',
-  NLD: 'Netherlands',
-  NOR: 'Norway',
-  NZL: 'New Zealand',
-  OMN: 'Oman',
-  PAK: 'Pakistan',
-  PAN: 'Panama',
-  PER: 'Peru',
-  PHL: 'Philippines',
-  POL: 'Poland',
-  PRT: 'Portugal',
-  QAT: 'Qatar',
-  ROU: 'Romania',
-  SAU: 'Saudi Arabia',
-  SGP: 'Singapore',
-  SVK: 'Slovakia',
-  SVN: 'Slovenia',
-  SWE: 'Sweden',
-  THA: 'Thailand',
-  TUR: 'Turkey',
-  TWN: 'Taiwan',
-  UAE: 'United Arab Emirates',
-  UKR: 'Ukraine',
-  URY: 'Uruguay',
-  USA: 'United States',
-  VEN: 'Venezuela',
-  VNM: 'Vietnam',
-  ZAF: 'South Africa',
-};
+
 
 /**
  * State names that collide with prominent city names — a bare label is too
@@ -303,46 +229,6 @@ export interface ParseLocationOptions {
    * cover non-US subdivisions without another signature change.
    */
   allowBareStateProvince?: boolean;
-}
-
-function countryDisplay(country: Country): string | null {
-  try {
-    const code = getIndeedDomain(country).apiCountryCode;
-    const name = regionNameFromCode(code);
-    if (name) return name;
-  } catch {
-    /* fall through */
-  }
-  const first = (COUNTRY_CONFIG[country]?.names ?? '').split(',')[0].trim();
-  if (!first) return null;
-  return first.charAt(0).toUpperCase() + first.slice(1);
-}
-
-/**
- * Recognize a country token in country-slot context: COUNTRY_CONFIG names and
- * aliases, ISO alpha-2, explicit alpha-3 map, and the pragmatic `'korea'` alias
- * (job boards mean South Korea).
- */
-export function normalizeCountryOnly(value: string): string | null {
-  const normalized = value.trim().toLowerCase().replace(/\./g, '');
-  if (!normalized) return null;
-  if (normalized === 'korea') return 'South Korea';
-  try {
-    const country = countryFromString(normalized);
-    const display = countryDisplay(country);
-    if (display) return display;
-  } catch {
-    /* not a configured alias */
-  }
-  if (/^[a-z]{2}$/.test(normalized)) {
-    const name = regionNameFromCode(normalized.toUpperCase());
-    if (name) return name;
-  }
-  if (/^[a-z]{3}$/.test(normalized)) {
-    const name = COUNTRY_ALPHA3[normalized.toUpperCase()];
-    if (name) return name;
-  }
-  return null;
 }
 
 export function normalizeUsState(value: string): string | null {

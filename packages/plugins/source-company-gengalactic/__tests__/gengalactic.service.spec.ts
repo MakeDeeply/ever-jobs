@@ -80,7 +80,7 @@ describe('GengalacticService', () => {
     const job = response.jobs[0];
     expect(job.location?.city).toBe('El Segundo');
     expect(job.location?.state).toBe('CA');
-    expect(job.location?.country).toBe(Country.USA);
+    expect(job.location?.country).toBe('United States');
     expect(job.jobType).toEqual([JobType.FULL_TIME]);
     expect(job.employmentType).toBe('Full time');
     expect(job.isRemote).toBe(false);

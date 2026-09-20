@@ -79,8 +79,8 @@ describe('AtlasspaceService', () => {
     const pm = response.jobs.find((job) => job.title === 'Program Manager')!;
     expect(pm.location?.city).toBe('Traverse City');
     expect(pm.location?.state).toBe('MI');
-    expect(pm.location?.country).toBe('USA');
-    expect(pm.location?.displayLocation()).toBe('Traverse City, MI, USA');
+    expect(pm.location?.country).toBe('United States');
+    expect(pm.location?.displayLocation()).toBe('Traverse City, MI, United States');
     expect(pm.isRemote).toBe(false);
     expect(pm.workFromHomeType).toBe('On Site');
   });
@@ -93,7 +93,7 @@ describe('AtlasspaceService', () => {
     const director = response.jobs.find((job) => job.title === 'Director of Customer Solutions')!;
     expect(director.location?.city).toBe('Traverse City');
     expect(director.location?.state).toBe('MI');
-    expect(director.location?.displayLocation()).toBe('Traverse City, MI, USA');
+    expect(director.location?.displayLocation()).toBe('Traverse City, MI, United States');
   });
 
   it('parses annual salary ranges from the Salary and Salary Range sections', async () => {

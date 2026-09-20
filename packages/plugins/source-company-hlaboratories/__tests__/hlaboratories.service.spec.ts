@@ -67,7 +67,7 @@ describe('HlaboratoriesService', () => {
     for (const job of response.jobs) {
       expect(job.location?.city).toBe('Austin');
       expect(job.location?.state).toBe('TX');
-      expect(job.location?.country).toBe(Country.USA);
+      expect(job.location?.country).toBe('United States');
     }
   });
 

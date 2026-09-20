@@ -76,12 +76,12 @@ describe('DeftaiCoService', () => {
     const scientist = response.jobs.find((job) => job.title === 'Research Scientist')!;
     expect(scientist.location?.city).toBe('San Francisco');
     expect(scientist.location?.state).toBe('CA');
-    expect(scientist.location?.country).toBe(Country.USA);
+    expect(scientist.location?.country).toBe('United States');
 
     const gtm = response.jobs.find((job) => job.title === 'GTM Lead')!;
     expect(gtm.location?.city).toBe('San Francisco');
     expect(gtm.location?.state).toBe('CA');
-    expect(gtm.location?.country).toBe(Country.USA);
+    expect(gtm.location?.country).toBe('United States');
   });
 
   it('normalizes Tally URLs and converts the GTM Lead embed URL', async () => {

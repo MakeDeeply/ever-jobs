@@ -77,10 +77,10 @@ describe('LaunchpadbuildAiService', () => {
     const response = await service.scrape(new ScraperInputDto({ resultsWanted: 999 }));
 
     const ai = response.jobs.find((job) => job.title === 'AI & Data Engineer — Launchpad Build AI')!;
-    expect(ai.location?.country).toBe('UK');
+    expect(ai.location?.country).toBe('United Kingdom');
     expect(ai.location?.city).toBeUndefined();
     expect(ai.location?.state).toBeUndefined();
-    expect(ai.location?.displayLocation()).toBe('UK');
+    expect(ai.location?.displayLocation()).toBe('United Kingdom');
     expect(ai.workFromHomeType).toBe('Hybrid');
     expect(ai.isRemote).toBe(false);
   });
@@ -93,8 +93,8 @@ describe('LaunchpadbuildAiService', () => {
     const tech = response.jobs.find((job) => job.title === 'Technician I')!;
     expect(tech.location?.city).toBe('El Segundo');
     expect(tech.location?.state).toBe('CA');
-    expect(tech.location?.country).toBe('USA');
-    expect(tech.location?.displayLocation()).toBe('El Segundo, CA, USA');
+    expect(tech.location?.country).toBe('United States');
+    expect(tech.location?.displayLocation()).toBe('El Segundo, CA, United States');
     expect(tech.workFromHomeType).toBe('On Site');
     expect(tech.isRemote).toBe(false);
   });

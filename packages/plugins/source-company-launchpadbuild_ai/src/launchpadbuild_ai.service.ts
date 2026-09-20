@@ -478,10 +478,13 @@ export class LaunchpadbuildAiService implements IScraper {
 
     const locationTerm = this.normalize(input.location).toLowerCase();
     if (locationTerm) {
+      // Match the canonical display string AND the raw label (`text`): the
+      // LocationDto ctor canonicalizes 'UK' -> 'United Kingdom', so an input
+      // like 'UK' only matches via the preserved raw token.
       filtered = filtered.filter((job) =>
-        this.normalize(job.location?.displayLocation())
-          .toLowerCase()
-          .includes(locationTerm),
+        [job.location?.displayLocation(), job.location?.text]
+          .filter(Boolean)
+          .some((s) => this.normalize(s!).toLowerCase().includes(locationTerm)),
       );
     }
 

@@ -66,7 +66,7 @@ describe('SyncereService', () => {
     for (const job of response.jobs) {
       expect(job.location?.city).toBe('Palo Alto');
       expect(job.location?.state).toBe('CA');
-      expect(job.location?.displayLocation()).toBe('Palo Alto, CA, USA');
+      expect(job.location?.displayLocation()).toBe('Palo Alto, CA, United States');
       expect(job.isRemote).toBe(false);
       expect(job.workFromHomeType).toBe('On Site');
     }

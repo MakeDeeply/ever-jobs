@@ -1,4 +1,5 @@
 import { Country, getCountryDisplayName } from '../enums/country.enum';
+import { normalizeCountryOnly } from '../enums/country-normalize';
 
 export class LocationDto {
   /** The source's own label for the site (e.g. "Downtown Office", a hiring-entity name).
@@ -19,6 +20,21 @@ export class LocationDto {
 
   constructor(partial?: Partial<LocationDto>) {
     Object.assign(this, partial);
+    // Canonicalize a string country at the DTO boundary — plugins stamping raw
+    // API tokens ('US', 'USA', 'us') and Country enum members ('USA') all
+    // resolve to the English display name; the replaced token is preserved in
+    // `text` when `text` was empty. Unresolvable values pass through verbatim.
+    if (
+      typeof this.country === 'string' &&
+      this.country !== Country.US_CANADA &&
+      this.country !== Country.WORLDWIDE
+    ) {
+      const canonical = normalizeCountryOnly(this.country);
+      if (canonical && canonical !== this.country) {
+        if (!this.text) this.text = this.country;
+        this.country = canonical;
+      }
+    }
   }
 
   displayLocation(): string {

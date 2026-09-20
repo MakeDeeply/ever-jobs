@@ -83,8 +83,8 @@ describe('PulsespaceService', () => {
     const job = response.jobs[0];
     expect(job.location?.city).toBe('Seattle');
     expect(job.location?.state).toBe('WA');
-    expect(job.location?.country).toBe(Country.USA);
-    expect(job.location?.displayLocation()).toBe('Seattle, WA, USA');
+    expect(job.location?.country).toBe('United States');
+    expect(job.location?.displayLocation()).toBe('Seattle, WA, United States');
     expect(job.jobType).toEqual([JobType.FULL_TIME]);
     expect(job.employmentType).toBe('Full time');
     expect(job.isRemote).toBe(false);

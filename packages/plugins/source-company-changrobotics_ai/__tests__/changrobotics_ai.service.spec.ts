@@ -64,7 +64,7 @@ describe('ChangroboticsAiService', () => {
     expect(job!.location).toMatchObject({
       city: 'Jacksonville',
       state: 'FL',
-      country: Country.USA,
+      country: 'United States',
     });
   });
 
