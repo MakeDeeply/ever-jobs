@@ -100,7 +100,7 @@ describe('IcimsService', () => {
       description: 'Design flight-critical actuators.',
       isRemote: false,
     });
-    expect(jobs[0].location).toMatchObject({ city: 'Santa Cruz', state: 'CA', country: 'US' });
+    expect(jobs[0].location).toMatchObject({ city: 'Santa Cruz', state: 'CA', country: 'United States' });
     // job URL is stripped of the ?in_iframe=1 query
     expect(jobs[0].jobUrl).not.toContain('in_iframe');
   });
@@ -142,7 +142,7 @@ describe('IcimsService', () => {
     expect(remote.isRemote).toBe(true);
     expect(remote.location).toMatchObject({ city: 'Remote' });
     // a hyphenated city name survives the country-state-city split
-    expect(dashed.location).toMatchObject({ country: 'US', state: 'NC', city: 'Winston-Salem' });
+    expect(dashed.location).toMatchObject({ country: 'United States', state: 'NC', city: 'Winston-Salem' });
   });
 
   it('resolves the subdomain from a full icims companyUrl', async () => {

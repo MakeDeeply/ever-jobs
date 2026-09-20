@@ -239,13 +239,13 @@ describe('AdpService', () => {
       {
         city: 'Washington',
         state: 'DC',
-        country: 'US',
+        country: 'United States',
         text: 'Washington, DC, US',
       },
       {
         city: 'Arlington',
         state: 'VA',
-        country: 'US',
+        country: 'United States',
         text: 'Arlington, VA, US',
       },
     ]);

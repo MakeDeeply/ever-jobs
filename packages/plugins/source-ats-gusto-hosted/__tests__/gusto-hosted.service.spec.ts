@@ -181,7 +181,7 @@ describe('GustoHostedService', () => {
     expect(job.compensation?.maxAmount).toBe(200000);
     expect(job.emails).toContain('jobs@material.inc');
     expect(job.locations).toMatchObject([
-      { city: 'Miami', state: 'FL', country: 'US' },
+      { city: 'Miami', state: 'FL', country: 'United States' },
     ]);
   });
 
@@ -204,8 +204,8 @@ describe('GustoHostedService', () => {
     const job = (await service.scrape(input())).jobs[0];
     expect(job.location?.city).toBe('Miami');
     expect(job.locations).toMatchObject([
-      { city: 'Miami', state: 'FL', country: 'US' },
-      { city: 'Denver', state: 'CO', country: 'US' },
+      { city: 'Miami', state: 'FL', country: 'United States' },
+      { city: 'Denver', state: 'CO', country: 'United States' },
     ]);
   });
 

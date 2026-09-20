@@ -13,8 +13,8 @@ describe('JsonLdService locations', () => {
       false,
     );
     expect(locations).toHaveLength(2);
-    expect(locations[0]).toMatchObject({ city: 'Austin', state: 'TX', country: 'US', postalCode: '78701' });
-    expect(locations[1]).toMatchObject({ city: 'Denver', state: 'CO', country: 'US' });
+    expect(locations[0]).toMatchObject({ city: 'Austin', state: 'TX', country: 'United States', postalCode: '78701' });
+    expect(locations[1]).toMatchObject({ city: 'Denver', state: 'CO', country: 'United States' });
   });
 
   it('remote-only postings become a single Remote entry', () => {

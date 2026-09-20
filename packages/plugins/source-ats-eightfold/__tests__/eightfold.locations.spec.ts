@@ -24,7 +24,7 @@ describe('EightfoldService locations', () => {
       locations: [{ city: 'Austin', state: 'TX', country: 'US' }],
     } as unknown as EightfoldPosition;
     const locations = service.extractLocations(position);
-    expect(locations[0]).toMatchObject({ city: 'Austin', state: 'TX', country: 'US' });
+    expect(locations[0]).toMatchObject({ city: 'Austin', state: 'TX', country: 'United States' });
   });
 
   it('parses a string primaryLocation through the shared parser', () => {

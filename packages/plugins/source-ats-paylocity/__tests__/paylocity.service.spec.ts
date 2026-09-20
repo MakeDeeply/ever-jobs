@@ -95,7 +95,7 @@ describe('PaylocityService', () => {
     expect(tax!.title).toBe('Corporate Tax Director');
     expect(tax!.location?.city).toBe('Dallas');
     expect(tax!.location?.state).toBe('TX');
-    expect(tax!.location?.country).toBe('USA');
+    expect(tax!.location?.country).toBe('United States');
     expect(tax!.department).toBe('Finance');
     expect(tax!.employmentType).toBe('Full-time');
     expect(tax!.jobType).toEqual([JobType.FULL_TIME]);

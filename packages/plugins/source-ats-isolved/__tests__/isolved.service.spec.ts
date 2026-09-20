@@ -144,7 +144,7 @@ describe('IsolvedService', () => {
     expect(job.employmentType).toBe('Full Time');
     expect(job.isRemote).toBe(false);
     expect(job.location).toEqual(expect.objectContaining({
-      city: 'Manassas', state: 'VA', country: 'US',
+      city: 'Manassas', state: 'VA', country: 'United States',
     }));
     expect(job.jobUrl).toBe('https://electra.isolvedhire.com/jobs/1734294.html');
     expect(job.compensation).toBeDefined();
@@ -283,7 +283,7 @@ describe('IsolvedService', () => {
     expect(result.jobs).toEqual([]);
   });
 
-  it('normalises iso3 country code to iso2', async () => {
+  it('normalises an iso3 country code to the canonical name', async () => {
     setupMockGet({
       '/jobs/': BOARD_HTML,
       '/core/jobs/8543': makeApiResponse([makeApiJob({ iso3: 'CAN', city: 'Toronto', abbreviation: 'ON' })]),
@@ -293,7 +293,7 @@ describe('IsolvedService', () => {
       siteType: [Site.ISOLVED], companySlug: 'electra', resultsWanted: 5,
     });
     const result = await service.scrape(input);
-    expect(result.jobs[0].location?.country).toBe('CA');
+    expect(result.jobs[0].location?.country).toBe('Canada');
   });
 
   it('parses hourly pay interval', async () => {

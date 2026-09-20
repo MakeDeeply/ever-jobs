@@ -67,7 +67,7 @@ describe('RdwService', () => {
     expect(first.isRemote).toBe(true);
     expect(first.workFromHomeType).toBe('Remote');
     expect(first.location?.city).toBe('Remote');
-    expect(first.location?.country).toBe('US');
+    expect(first.location?.country).toBe('United States');
     expect(first.department).toBe('Human Resources');
     expect(first.atsId).toBe('3168');
 

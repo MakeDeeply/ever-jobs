@@ -167,7 +167,7 @@ describe('PrismhrService', () => {
     expect(j.jobUrl).toBe('https://acme-corp.prismhr-hire.com/job/111');
     expect(j.applyUrl).toBe('https://acme-corp.prismhr-hire.com/job/111');
     expect(j.datePosted).toBe('2026-06-08');
-    expect(j.location).toEqual(expect.objectContaining({ city: 'Houston', state: 'TX', country: 'US' }));
+    expect(j.location).toEqual(expect.objectContaining({ city: 'Houston', state: 'TX', country: 'United States' }));
     expect(j.isRemote).toBe(false);
     expect(j.companyName).toBe('Acme Corp');
   });

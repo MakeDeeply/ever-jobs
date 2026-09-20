@@ -14,8 +14,8 @@ describe('CornerstoneService locations', () => {
     } as unknown as CornerstoneRequisition;
     const locations = service.extractLocations(req);
     expect(locations).toHaveLength(2);
-    expect(locations[0]).toMatchObject({ city: 'Atlanta', state: 'GA', country: 'US' });
-    expect(locations[1]).toMatchObject({ city: 'Dallas', state: 'TX', country: 'US' });
+    expect(locations[0]).toMatchObject({ city: 'Atlanta', state: 'GA', country: 'United States' });
+    expect(locations[1]).toMatchObject({ city: 'Dallas', state: 'TX', country: 'United States' });
   });
 
   it('maps a single location object to a one-entry list', () => {
@@ -29,7 +29,7 @@ describe('CornerstoneService locations', () => {
     const byName = service.extractLocations({
       locations: [{ displayName: 'Atlanta, GA, US' }],
     } as unknown as CornerstoneRequisition);
-    expect(byName[0]).toMatchObject({ city: 'Atlanta', state: 'GA', country: 'US' });
+    expect(byName[0]).toMatchObject({ city: 'Atlanta', state: 'GA', country: 'United States' });
 
     const byDisplay = service.extractLocations({
       displayLocation: 'Austin, TX, US',
