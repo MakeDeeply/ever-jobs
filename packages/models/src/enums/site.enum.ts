@@ -3563,6 +3563,8 @@ export enum Site {
   RENEWMFGSOL = 'renewmfgsol',
   // Phase 1695: Spec 5132 — Octbr (octbr.ai) multi-tenant ATS plugin (Laravel/Inertia data-page props)
   OCTBR_AI = 'octbr_ai',
+  // Phase 1696: Spec 5135 — Nodi (nodi.global) multi-tenant ATS plugin (api.nodi.global JSON endpoints)
+  NODI_GLOBAL = 'nodi_global',
 }
 
 /**
