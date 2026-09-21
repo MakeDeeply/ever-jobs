@@ -149,7 +149,7 @@ jobs:
         run: npm ci
 
       - name: Run source scraper unit tests
-        run: npx jest --testPathPatterns 'packages/plugins/source-' --testPathIgnorePatterns 'e2e-spec' --shard=${{ matrix.shard }}/3 --maxWorkers=50% --workerIdleMemoryLimit=1G --testTimeout=30000 --passWithNoTests --verbose --reporters=default --reporters=github-actions
+        run: npx jest --testPathPatterns 'packages/plugins/source-' --testPathIgnorePatterns 'e2e-spec' --shard=${{ matrix.shard }}/3 --maxWorkers=75% --testTimeout=30000 --passWithNoTests --verbose --reporters=default --reporters=github-actions
 
   test-source-e2e:
     name: Test (Source Scrapers e2e ${{ matrix.shard }}/6)
