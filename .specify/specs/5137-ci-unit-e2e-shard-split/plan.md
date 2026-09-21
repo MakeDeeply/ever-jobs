@@ -1,5 +1,10 @@
 # Plan: 5137 — CI unit/e2e shard split
 
+| Field | Value |
+| ----- | ----- |
+| Status | Implemented |
+| Date | 2026-09-21 |
+
 ## Steps
 
 1. Edit `.github/workflows/ci.yml`: replace the comment block + `test-sources`
