@@ -1873,7 +1873,7 @@ module.exports = {
     '^.+\\.tsx?$': ['@swc/jest', {
       jsc: {
         parser: { syntax: 'typescript', decorators: true },
-        transform: { legacyDecorator: true, decoratorMetadata: true },
+        transform: { legacyDecorator: true, decoratorMetadata: true, useDefineForClassFields: false },
         target: 'es2021',
         keepClassNames: true,
       },
