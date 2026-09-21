@@ -58,6 +58,11 @@ jobs:
       - name: Type-check
         run: npx tsc --project apps/api/tsconfig.build.json --noEmit
 
+      # Specs are no longer type-checked at test time (swc transpiles only) —
+      # this keeps the coverage, earlier in the pipeline.
+      - name: Type-check sources and specs
+        run: npx tsc --project tsconfig.typecheck.json --noEmit
+
       - name: Build API
         run: npx nest build
 
@@ -126,7 +131,7 @@ jobs:
   # red only the e2e legs, never the unit legs).
   test-sources:
     name: Test (Source Scrapers unit ${{ matrix.shard }}/3)
-    runs-on: ${{ vars.RUNNER_LINUX_X64_4 || 'ubuntu-latest' }}
+    runs-on: ${{ vars.RUNNER_LINUX_X64_8 || 'ubuntu-latest' }}
     needs: build
     continue-on-error: true
     timeout-minutes: 180

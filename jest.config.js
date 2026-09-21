@@ -1,6 +1,5 @@
 /** @type {import('jest').Config} */
 module.exports = {
-  preset: 'ts-jest',
   testEnvironment: 'node',
   roots: ['<rootDir>/packages/', '<rootDir>/apps/', '<rootDir>/scripts/'],
   testMatch: ['**/__tests__/**/*.e2e-spec.ts', '**/__tests__/**/*.spec.ts'],
@@ -1871,7 +1870,16 @@ module.exports = {
     '^@ever-jobs/source-tesla-playwright$': '<rootDir>/packages/plugins/source-tesla-playwright/src/index.ts',
   },
   transform: {
-    '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.base.json' }],
+    '^.+\\.tsx?$': ['@swc/jest', {
+      jsc: {
+        parser: { syntax: 'typescript', decorators: true },
+        transform: { legacyDecorator: true, decoratorMetadata: true },
+        target: 'es2021',
+        keepClassNames: true,
+      },
+      module: { type: 'commonjs' },
+      sourceMaps: 'inline',
+    }],
     // Transform ESM-only packages (uuid v13+ ships as ESM .js)
     '[/\\\\]node_modules[/\\\\]uuid[/\\\\].+\\.js$': ['ts-jest', {
       tsconfig: 'tsconfig.base.json',
