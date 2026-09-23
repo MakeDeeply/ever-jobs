@@ -23,6 +23,7 @@ import {
 import {
   EIGHTFOLD_HOST_TEMPLATE,
   EIGHTFOLD_JOBS_PATH,
+  EIGHTFOLD_PCSX_SEARCH_PATH,
   EIGHTFOLD_PAGE_SIZE,
   EIGHTFOLD_MAX_CONCURRENCY,
   EIGHTFOLD_REQUEST_DELAY_MS,
@@ -31,6 +32,7 @@ import {
 import {
   EightfoldPosition,
   EightfoldJobsResponse,
+  EightfoldPcsxResponse,
   EightfoldLocationObject,
 } from './eightfold.types';
 
@@ -129,6 +131,14 @@ export class EightfoldService implements IScraper {
     }
   }
 
+  /**
+   * Endpoint the tenant answers on, resolved on the first page: some tenants
+   * gate `/api/apply/v2/jobs` behind authorization ("Not authorized for
+   * PCSX") while leaving `/api/pcsx/search` open. Remembered so later pages
+   * hit the working endpoint directly instead of paying a doomed request.
+   */
+  private jobsPath: string | null = null;
+
   /** Fetch one positions page; returns its positions and the tenant total count. */
   private async fetchPage(
     client: ReturnType<typeof createHttpClient>,
@@ -144,13 +154,41 @@ export class EightfoldService implements IScraper {
       num: String(EIGHTFOLD_PAGE_SIZE),
       sort_by: 'timestamp',
     });
-    const url = `${host}${EIGHTFOLD_JOBS_PATH}?${params.toString()}`;
-    const response = await client.get(url);
-    const data: EightfoldJobsResponse = response.data ?? {};
-    return {
-      positions: data.positions ?? [],
-      count: data.count ?? 0,
-    };
+    const paths = this.jobsPath
+      ? [this.jobsPath]
+      : [EIGHTFOLD_JOBS_PATH, EIGHTFOLD_PCSX_SEARCH_PATH];
+    for (const path of paths) {
+      const url = `${host}${path}?${params.toString()}`;
+      const response = await client.get(url);
+      const payload = this.unwrapPositionsAndCount(response.data);
+      if (payload) {
+        this.jobsPath = path;
+        return payload;
+      }
+    }
+    return { positions: [], count: 0 };
+  }
+
+  /**
+   * Positions + total count out of either endpoint's envelope:
+   * `{positions, count}` at top level (SmartApply) or nested under `data`
+   * (PCSX search). Returns null for bodies without a payload — an HTML
+   * shell or a `{"message": "Not authorized for PCSX"}` gate — so the
+   * caller can try the next endpoint.
+   */
+  private unwrapPositionsAndCount(
+    body: EightfoldJobsResponse | EightfoldPcsxResponse | unknown,
+  ): { positions: EightfoldPosition[]; count: number } | null {
+    if (!body || typeof body !== 'object') return null;
+    const top = body as EightfoldJobsResponse;
+    if (Array.isArray(top.positions) || typeof top.count === 'number') {
+      return { positions: top.positions ?? [], count: top.count ?? 0 };
+    }
+    const wrapped = (body as EightfoldPcsxResponse).data;
+    if (wrapped && (Array.isArray(wrapped.positions) || typeof wrapped.count === 'number')) {
+      return { positions: wrapped.positions ?? [], count: wrapped.count ?? 0 };
+    }
+    return null;
   }
 
   /** Map raw positions → JobPostDto, de-duplicating by ATS id within this run. */
