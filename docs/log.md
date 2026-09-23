@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-09-23 — Spec 5144 — docs-lint forbidden pipeline terms
+
+**Change:** New docs-lint check 8 guards docs/specs against leaking private discovery-pipeline vocabulary. `FORBIDDEN_TERM_RES` holds phrase-level regexes (no bare words — `block`, `tracker`, `job_host` all appear legitimately in repo text, e.g. `TrackerRmsModule` and `id_at_job_host`). `FORBIDDEN_TERMS_ALLOWLIST` is a per-file occurrence-count ratchet in the style of `DUPLICATE_NUMBER_ALLOWLIST`: the 22 pre-existing mentions across 16 files keep passing; any *new* occurrence — a file not in the map, or a file exceeding its recorded count — fails lint with `file:line → matched term`. `forbiddenTerms` added to `DocLintResult`, wired into `ok` and `formatResult`.
+
+**Files:** `scripts/docs-lint.ts`, `.specify/specs/5144-docs-lint-forbidden-pipeline-terms/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npm run lint:docs` green on the current tree (ratchet covers all pre-existing mentions plus the new spec's own vocabulary enumeration); `npx tsc --project tsconfig.typecheck.json --noEmit` clean.
+
+---
+
 ## 2026-09-23 — Spec 5142 — `source-company-mundane_co`: Mundane careers bundle extraction
 
 **Change:** New company plugin `source-company-mundane_co` (`Site.MUNDANE_CO = 'mundane_co'` — the Spec 5069 domain derivation of `mundane.co`, the `.co` TLD kept; `companyDomains: ['mundane.co']` declared to pre-claim the host). `mundane.co/join-us` is a ~3 KB React shell; the job list is a literal array embedded in the site's JS bundle — two static GETs (shell → `/assets/index-*.js`) yield entries of shape `{title, category, location, url}` matched by field shape + apply-URL host (Airtable shared form or LinkedIn post), not the minified array identifier. Ids derive `mundane_co-{linkedinJobId|airtableFormId|slug-title}`; LinkedIn tracking params stripped from `jobUrl`. Descriptions come from the Airtable shared forms (client-rendered hyperbase SPA) — each Airtable apply URL renders via `BrowserPool` and the form description block is extracted (selector list + longest-paragraph fallback); LinkedIn apply links are never fetched, those jobs ship without description. `category`→`department`; titles containing `intern` → `JobType.INTERNSHIP`. Zero entries or a missing bundle reference → `empty`; render failure emits the job sans description; no `datePosted`/`compensation` (not published). Every array entry is emitted unconditionally — including the genuinely-titled "VP, Teleportation".

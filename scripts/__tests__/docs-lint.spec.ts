@@ -412,6 +412,48 @@ describe('lintDocs', () => {
   });
 });
 
+describe('lintDocs — forbidden pipeline terms (check 8)', () => {
+  let tempRoot: string | null = null;
+
+  afterEach(async () => {
+    await rmRf(tempRoot);
+    tempRoot = null;
+  });
+
+  it('flags discovery-pipeline vocabulary in scanned docs (check 8)', async () => {
+    tempRoot = await makeRepo({
+      'docs/index.md': '# Index\n',
+      'docs/leak.md': '# Leak\n\nthe harvester detected 8 company-hosted job block(s)\n',
+    });
+    const r = await lintDocs(tempRoot);
+    expect(r.ok).toBe(false);
+    expect(r.forbiddenTerms).toEqual([
+      { from: 'docs/leak.md:3', term: 'company-hosted job block' },
+    ]);
+  });
+
+  it('flags the tool name and tracker field phrases, not bare words', async () => {
+    tempRoot = await makeRepo({
+      'docs/index.md': '# Index\n',
+      'docs/leak.md': '# Leak\n\nthe pipeline run read fetch1 rows\n',
+      'docs/fine.md': '# Fine\n\nthe TrackerRms id_at_job_host block renders\n',
+    });
+    const r = await lintDocs(tempRoot);
+    expect(r.forbiddenTerms).toEqual([
+      { from: 'docs/leak.md:3', term: 'fetch1' },
+    ]);
+  });
+
+  it('passes docs free of forbidden terms', async () => {
+    tempRoot = await makeRepo({
+      'docs/index.md': '# Index\n',
+      'docs/clean.md': '# Clean\n\nAll clear.\n',
+    });
+    const r = await lintDocs(tempRoot);
+    expect(r.forbiddenTerms).toEqual([]);
+  });
+});
+
 describe('formatResult', () => {
   it('emits the green-tick line when ok', () => {
     const out = formatResult({
@@ -423,6 +465,7 @@ describe('formatResult', () => {
       overlappingRanges: [],
       outOfBandSpecs: [],
       duplicateSpecNumbers: [],
+      forbiddenTerms: [],
       ok: true,
     });
     expect(out).toContain('Doc-lint passed');
@@ -440,6 +483,7 @@ describe('formatResult', () => {
       overlappingRanges: ['range "a" [1-5000] overlaps "b" [5000-5999]'],
       outOfBandSpecs: ['9001-foo (number 9001 is outside every reserved band)'],
       duplicateSpecNumbers: ['5090: 5090-first, 5090-second'],
+      forbiddenTerms: [{ from: 'docs/leak.md:9', term: 'x_id' }],
       ok: false,
     });
     expect(out).toContain('1 broken link(s)');
@@ -450,5 +494,7 @@ describe('formatResult', () => {
     expect(out).toContain('overlapping fork range');
     expect(out).toContain('outside every reserved range');
     expect(out).toContain('duplicate spec number');
+    expect(out).toContain('forbidden pipeline-term occurrence');
+    expect(out).toContain('docs/leak.md:9 → x_id');
   });
 });

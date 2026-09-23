@@ -16,6 +16,11 @@
  *   7. No two spec directories share the same leading number, except a small
  *      allow-list of numbers already duplicated across forks before this guard
  *      existed (inherited via an upstream merge; see DUPLICATE_NUMBER_ALLOWLIST).
+ *   8. Docs/specs must not leak private discovery-pipeline vocabulary
+ *      (FORBIDDEN_TERM_RES). Pre-existing mentions are grandfathered by a
+ *      per-file ratchet (FORBIDDEN_TERMS_ALLOWLIST): a file may contain at
+ *      most its recorded count; any new occurrence — in a new file, or
+ *      beyond the count — fails.
  *
  * Zero runtime deps — small regex parser. See Q-011 in `docs/questions.md`
  * for the trade-off vs `remark-parse` + `unified`.
@@ -36,6 +41,11 @@ export interface BrokenLink {
   to: string;
 }
 
+export interface ForbiddenTerm {
+  from: string;
+  term: string;
+}
+
 export interface DocLintResult {
   brokenLinks: BrokenLink[];
   unindexedDocs: string[];
@@ -45,6 +55,7 @@ export interface DocLintResult {
   overlappingRanges: string[];
   outOfBandSpecs: string[];
   duplicateSpecNumbers: string[];
+  forbiddenTerms: ForbiddenTerm[];
   ok: boolean;
 }
 
@@ -86,6 +97,50 @@ const TEMPLATE_PREFIX = '.specify/templates/';
 // both sides' dirs now coexist. New duplicates outside this set must fail; the
 // set shrinks as an inherited duplicate is renumbered away (delete its entry).
 const DUPLICATE_NUMBER_ALLOWLIST = new Set<number>([5024, 5025, 5026]);
+
+// Phrase-level vocabulary from the private discovery pipeline that must not
+// leak into repo docs/specs (Spec 5144). Phrases only — bare words like
+// `block`, `tracker`, or `job_host` legitimately appear here
+// (`TrackerRmsModule`, `id_at_job_host`, extractor blocks). `job_host` in
+// particular is excluded because `id_at_job_host` is a real field name; the
+// fetch-side field shows up in leaks as part of longer phrases covered by
+// the tracker-row terms.
+const FORBIDDEN_TERM_RES: RegExp[] = [
+  /fetch1/i,
+  /\bx_id\b/i,
+  /\bx_name\b/i,
+  /company-hosted job blocks?/i,
+  /find[-_]company[-_]ats/i,
+  /detect_company_hosted_job_blocks/i,
+  /job blocks? \(s\) detected/i,
+  /job blocks? detected/i,
+  /tracker (?:row|label|note|status)/i,
+];
+
+// Ratchet: files that already contained pipeline terms when check 8 landed,
+// with their occurrence count then. New files get a count of 0 — any hit
+// fails. Deleting a mention lowers usage without failing; tighten the count
+// by hand when cleaning a file up.
+const FORBIDDEN_TERMS_ALLOWLIST: Record<string, number> = {
+  '.specify/specs/5017-allencontrolsystems-ashby-delegation/spec.md': 1,
+  '.specify/specs/5032-paycom-real-api-mapping/plan.md': 1,
+  '.specify/specs/5032-paycom-real-api-mapping/spec.md': 1,
+  '.specify/specs/5033-dover-real-api-mapping/plan.md': 1,
+  '.specify/specs/5033-dover-real-api-mapping/spec.md': 2,
+  '.specify/specs/5070-accept-company-domain-or-site/spec.md': 1,
+  '.specify/specs/5076-browserpool-headful-persistent-context/spec.md': 1,
+  '.specify/specs/5077-gusto-hosted-headful-parsing/spec.md': 1,
+  '.specify/specs/5081-headful-company-plugins-zero-jobs/spec.md': 2,
+  '.specify/specs/5082-source-diagnostics-zero-reason/spec.md': 3,
+  '.specify/specs/5091-source-company-rdw/spec.md': 1,
+  '.specify/specs/5094-source-ats-dayforce-csrf/spec.md': 1,
+  '.specify/specs/5116-fix-gengalactic-careers-url/tasks.md': 1,
+  'docs/index.md': 1,
+  'docs/log.md': 2,
+  'docs/questions.md': 2,
+  // Spec 5144's own spec.md necessarily spells out the forbidden vocabulary.
+  '.specify/specs/5144-docs-lint-forbidden-pipeline-terms/spec.md': 7,
+};
 
 const INLINE_LINK_RE = /\[(?:[^\]\\]|\\.)*\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g;
 const INLINE_CODE_RE = /`[^`]+`/g;
@@ -309,6 +364,7 @@ export async function lintDocs(repoRoot: string): Promise<DocLintResult> {
     overlappingRanges: [],
     outOfBandSpecs: [],
     duplicateSpecNumbers: [],
+    forbiddenTerms: [],
     ok: true,
   };
 
@@ -424,6 +480,29 @@ export async function lintDocs(repoRoot: string): Promise<DocLintResult> {
   }
   result.duplicateSpecNumbers = dupes.sort();
 
+  // 8. Forbidden pipeline-terms check. Occurrences beyond a file's
+  // grandfathered count are reported (files absent from the allowlist may
+  // have none).
+  const budget = new Map<string, number>(Object.entries(FORBIDDEN_TERMS_ALLOWLIST));
+  for (const doc of docs) {
+    const lines = doc.body.split(/\r?\n/);
+    for (let i = 0; i < lines.length; i++) {
+      const match = FORBIDDEN_TERM_RES.map((re) => re.exec(lines[i])).find(
+        (m) => m !== null,
+      );
+      if (!match) continue;
+      const remaining = budget.get(doc.relPath) ?? 0;
+      if (remaining > 0) {
+        budget.set(doc.relPath, remaining - 1);
+        continue;
+      }
+      result.forbiddenTerms.push({
+        from: `${doc.relPath}:${i + 1}`,
+        term: match[0],
+      });
+    }
+  }
+
   result.ok =
     result.brokenLinks.length === 0 &&
     result.unindexedDocs.length === 0 &&
@@ -432,7 +511,8 @@ export async function lintDocs(repoRoot: string): Promise<DocLintResult> {
     result.missingFrontmatter.length === 0 &&
     result.overlappingRanges.length === 0 &&
     result.outOfBandSpecs.length === 0 &&
-    result.duplicateSpecNumbers.length === 0;
+    result.duplicateSpecNumbers.length === 0 &&
+    result.forbiddenTerms.length === 0;
 
   return result;
 }
@@ -464,6 +544,12 @@ export function formatResult(result: DocLintResult): string {
       `✗ ${result.missingFrontmatter.length} spec file(s) missing H1 + metadata table:`,
     );
     for (const m of result.missingFrontmatter) lines.push(`    ${m}`);
+  }
+  if (result.forbiddenTerms.length) {
+    lines.push(
+      `✗ ${result.forbiddenTerms.length} forbidden pipeline-term occurrence(s):`,
+    );
+    for (const f of result.forbiddenTerms) lines.push(`    ${f.from} → ${f.term}`);
   }
   if (result.overlappingRanges.length) {
     lines.push(
