@@ -1861,6 +1861,7 @@ import { WATCHVICELeingangECommerceModule } from './source-company-watchvicelein
 import { WEBBTradersModule } from './source-company-webbtraders';
 import { WeeztixModule } from './source-company-weeztix';
 import { XSARUSModule } from './source-company-xsarus';
+import { PowerUsModule } from './source-company-power_us';
 export const ALL_SOURCE_MODULES = [
   FourDayWeekModule,
   AcademiccareersModule,
@@ -3715,4 +3716,5 @@ export const ALL_SOURCE_MODULES = [
   OctbrAiModule,
   NodiGlobalModule,
   WellfoundAtsModule,
+  PowerUsModule,
 ];

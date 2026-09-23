@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-09-23 — Spec 5141 — `source-company-power_us`: Powerus careers JSON feed
+
+**Change:** New company plugin `source-company-power_us` (`Site.POWER_US = 'power_us'` — the Spec 5069 domain derivation of `power.us`, the `.us` TLD kept; `companyDomains: ['power.us']` declared to pre-claim the host). The careers page is a static shell; the job list comes from an open JSON endpoint — one anonymous `GET /api/careers` returns all 35 entries (`title`, `department`, `location`, `type`, `summary`, `responsibilities[]`, `qualifications[]`, `preferredSkills[]`, `linkedInUrl`). `id`/`atsId` derive from the LinkedIn job id (`power_us-{n}`, slug-from-title fallback); `jobUrl` is the LinkedIn detail link — never fetched (auth-gated). Description sections (`summary` + `Responsibilities:`/`Qualifications:`/`Preferred skills:`) emit only when populated — they are empty on all 35 live entries today. Zero jobs → `empty`; no `datePosted`/`compensation` (not in the payload).
+
+**Files:** `packages/plugins/source-company-power_us/` (new), `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `.specify/specs/5141-source-company-power_us/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx jest source-company-power_us` — 7 tests green (35-job mapping on the live fixture, linkedinJobId derivation + slug fallback, descriptions when populated / omitted when empty, `empty`, fetch failure, `resultsWanted`); `npx tsc --project tsconfig.typecheck.json --noEmit` clean. API verified live: 35 entries, anonymous, ~0.8 s.
+
+---
+
 ## 2026-09-23 — Spec 5139 — `source-ats-wellfound`: slug-keyed Wellfound company boards
 
 **Change:** New plugin `source-ats-wellfound` (`Site.WELLFOUND_ATS`, `category: 'ats'`, `isAts: true`) for employers whose careers page links out to a Wellfound-hosted board — e.g. `chipmotors.com/jobs` → `wellfound.com/company/chipmotors/jobs`, with postings that exist only on Wellfound. The aggregator plugin `source-wellfound` is a `searchTerm`→`wellfound.com/jobs?q=…` search scraper and cannot guarantee one company's full board, so this is a separate `source-ats-*` plugin keyed by board identity: `companyUrl` containing `/company/{slug}` or `companySlug`. Fetching is headless (`BrowserPool` stealth — plain HTTP gets the Cloudflare challenge), and job data comes from the SSR `__NEXT_DATA__` → `apolloState.data` normalized Apollo cache (`JobListing`/`Startup`/`JobListingRemoteConfig` nodes, shape verified against an archived live board). Pagination iterates `?page=N` collecting `JobListing` nodes by id until a page yields nothing new — safe whether the parameter is honored or ignored — capped by `resultsWanted` and a max-page guard, with a `totalPageCount` truncation warning. Challenge/missing payloads report `blocked`/`bad_input`/`empty` via `ScrapeDiagnostics`, never a silent zero. Mapping: `primaryRoleParent`→`department`, `compensation` string (`"$120k – $200k"`)→structured yearly min/max/currency, `remote`+`remoteConfig.kind`→`isRemote`, `liveStartAt` (epoch s)→`datePosted`, `jobUrl`=`/jobs/{id}-{slug}`, `descriptionSnippet`→`description` honoring `descriptionFormat`. Detail pages are not fetched (snippet + URL only).
