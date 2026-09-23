@@ -720,6 +720,29 @@ describe('JobsService', () => {
       expect((greenhouse.scrape as jest.Mock).mock.calls[0][0].companySlug).toBe('trueanomalyinc');
     });
 
+    it('should not leak a companyUrl-derived slug to a second provider (Spec 5096)', async () => {
+      // `companySlug` is shared by the whole fan-out, so a Greenhouse tenant
+      // must not be handed to Ashby just because both were selected.
+      const greenhouse = makeScraper([{ title: 'Greenhouse job' }]);
+      const ashby = makeScraper([{ title: 'Ashby job' }]);
+      const service = createService([
+        [Site.GREENHOUSE, greenhouse],
+        [Site.ASHBY, ashby],
+      ]);
+
+      const input = new ScraperInputDto({
+        searchTerm: 'engineer',
+        siteType: [Site.GREENHOUSE, Site.ASHBY],
+        companyUrl: 'https://boards.greenhouse.io/trueanomalyinc/jobs/123',
+      });
+      await service.searchJobsWithDiagnostics(input);
+
+      expect((ashby.scrape as jest.Mock).mock.calls[0][0].companySlug).toBeUndefined();
+      expect(
+        (greenhouse.scrape as jest.Mock).mock.calls[0][0].companySlug,
+      ).toBeUndefined();
+    });
+
     it('should still throw when companyDomain and companyUrl both fail to resolve (Spec 5096)', async () => {
       const greenhouse = makeScraper([{ title: 'Greenhouse job' }]);
       const service = createService([[Site.GREENHOUSE, greenhouse]]);

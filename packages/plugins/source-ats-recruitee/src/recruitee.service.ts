@@ -21,7 +21,11 @@ import {
   extractEmails,
   toDateOnly,
 } from '@ever-jobs/common';
-import { RECRUITEE_HEADERS, RECRUITEE_OFFICIAL_API_BASE } from './recruitee.constants';
+import {
+  RECRUITEE_HEADERS,
+  RECRUITEE_OFFICIAL_API_BASE,
+  isPubliclyRoutableBoardHost,
+} from './recruitee.constants';
 import { RecruiteeOffer, RecruiteeResponse } from './recruitee.types';
 
 @SourcePlugin({
@@ -125,7 +129,7 @@ export class RecruiteeService implements IScraper {
     if (rawUrl) {
       try {
         const url = new URL(rawUrl.startsWith('http') ? rawUrl : `https://${rawUrl}`);
-        return `${url.protocol}//${url.host}`;
+        return this.publicOrigin(url, `companyUrl \`${rawUrl}\``);
       } catch {
         this.logger.warn(`Invalid companyUrl for Recruitee: ${rawUrl}`);
         return null;
@@ -140,7 +144,7 @@ export class RecruiteeService implements IScraper {
     if (/^https?:\/\//i.test(slug)) {
       try {
         const url = new URL(slug);
-        return `${url.protocol}//${url.host}`;
+        return this.publicOrigin(url, `companySlug \`${slug}\``);
       } catch {
         this.logger.warn(`Invalid Recruitee companySlug as URL: ${slug}`);
         return null;
@@ -153,10 +157,34 @@ export class RecruiteeService implements IScraper {
     }
 
     if (slug.includes('.')) {
-      return `https://${slug}`;
+      return isPubliclyRoutableBoardHost(slug)
+        ? `https://${slug}`
+        : this.refuseHost(slug, `companySlug \`${slug}\``);
     }
 
     return `https://${encodeURIComponent(slug)}.recruitee.com`;
+  }
+
+  /**
+   * The origin of a caller-supplied board URL, or `null` when it is not a
+   * public http(s) host. A board on loopback or a private range is not a
+   * Recruitee board; it is our HTTP client being aimed somewhere internal.
+   */
+  private publicOrigin(url: URL, label: string): string | null {
+    if (url.protocol !== 'https:' && url.protocol !== 'http:') {
+      return this.refuseHost(url.protocol, label);
+    }
+    if (!isPubliclyRoutableBoardHost(url.hostname)) {
+      return this.refuseHost(url.hostname, label);
+    }
+    return `${url.protocol}//${url.host}`;
+  }
+
+  private refuseHost(host: string, label: string): null {
+    this.logger.warn(
+      `Recruitee: refusing ${label} — \`${host}\` is not a public board host`,
+    );
+    return null;
   }
 
   /**

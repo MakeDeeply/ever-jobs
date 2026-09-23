@@ -10,7 +10,7 @@
 
 ---
 
-## Q-091 — Rippling: `ScraperInputDto` filters are ignored (known gap, needs a spec)
+## Q-093 — Rippling: `ScraperInputDto` filters are ignored (known gap, needs a spec)
 
 **Context:** `source-ats-rippling` never reads `input.searchTerm`,
 `input.location`, `input.isRemote`, `input.jobType`, or `input.offset` — it
@@ -39,6 +39,80 @@ would silently under-return.
 tracked until someone writes the spec.
 
 **Resolution:** _open — awaiting spec + implementation._
+
+---
+
+||||||| 062a1346
+## Q-092 — `source-ats-avature` honours a verbatim `companyUrl` (pre-existing)
+
+**Context:** Spec 1688 closed the same shape in `source-ats-recruitee`, where Spec 5100 had let
+a caller name any origin that the plugin then fetched over `axios`. `source-ats-avature` has
+done this since Spec 006 / Q-022, long before the fork existed:
+
+> 'Custom-domain career portal URL (e.g., "https://careers.ibm.com" or
+> "https://bloomberg.avature.net"). When set, ATS scrapers prefer this over
+> `companySlug`-derived subdomain construction.'
+
+That is the documented feature, and Avature tenants genuinely do live on their own domains, so
+the fix cannot be a fixed host allowlist any more than it could for Recruitee.
+
+**Options:**
+
+- **A. Apply Spec 1688's `isPubliclyRoutableBoardHost` to Avature too**, promoting the predicate
+  to `@ever-jobs/common` now that a second caller exists (Spec 1688 D-05 anticipated this).
+- **B. Check at the HTTP client instead.** One guard in `createHttpClient` covers every plugin
+  present and future, including ones the fork has not written yet — but it is a shared-package
+  change that the fork also edits, and it would need an opt-out for any legitimately internal
+  caller.
+- **C. Resolution-time checks.** Only B or C closes DNS rebinding, where a public name resolves
+  to a private address; A and B-by-hostname do not.
+- **D. Leave it.** The API is cluster-internal with auth off by default, so the blast radius is
+  whoever can already reach the pod.
+
+**Default (proceeding):** **D for now** — Spec 1688 deliberately scoped itself to the plugin the
+fork had just widened, rather than expanding a fork-sync PR into a codebase-wide audit.
+
+**Resolution:** _pending review._ A is cheap and obvious; B is the one that actually scales.
+
+---
+
+## Q-091 — title-prefix stripping: does it require an explicit separator? (Specs 5091, 5092)
+
+**Context:** `source-company-rdw` and `source-company-trossenrobotics` share
+
+```ts
+/^(Contractor|Contract|Temporary|Internship|Intern|Hybrid|Remote|On[- ]?Site)\s*[,–—-]?\s+/i
+```
+
+to strip an employment/workplace prefix off a job title. The separator is optional, so the
+pattern also fires on ordinary titles whose first word happens to be one of those tokens.
+For an aerospace employer that is not hypothetical: **"Remote Sensing Engineer" becomes
+"Sensing Engineer"** and is tagged `workFromHomeType: Remote`; "Contract Manager" becomes
+"Manager" and is tagged `CONTRACT`.
+
+Requiring the separator fixes those, but the fork's own RDW fixture asserts the opposite:
+`"Temporary Instructional Designer"` (no separator) is expected to yield
+`title: "Instructional Designer"`, `jobType: [TEMPORARY]`. Both readings cannot hold.
+
+**Options:**
+
+- **A. Require the separator.** `"Remote Sensing Engineer"` survives intact; `"Temporary
+  Instructional Designer"` keeps its prefix and the fork's fixture assertion must change.
+- **B. Keep it optional.** The fork's fixture holds; real titles beginning with one of the eight
+  tokens keep being truncated, silently and irreversibly, since the original title is not stored.
+- **C. Split the two roles.** Never strip the workplace words (`Remote`, `Hybrid`, `On-Site`)
+  without a separator, since those collide with real title vocabulary, but keep stripping the
+  employment words without one. Still truncates `"Contract Manager"`.
+- **D. Strip only what a separator marks, but derive `jobType` from a leading employment word
+  either way.** `"Temporary Instructional Designer"` keeps its title *and* gains `TEMPORARY`;
+  `"Remote Sensing Engineer"` is untouched. Needs the fixture's title assertion changed, not its
+  `jobType` one.
+
+**Default (proceeding):** **B — unchanged.** Spec 1687 hardened these two plugins but left the
+regex alone: the fork authored the behaviour and encoded it in a fixture, so changing it here
+would silently redefine their intent and break their test. Flagged rather than fixed.
+
+**Resolution:** _pending review._ D looks strongest if the fork agrees.
 
 ---
 
