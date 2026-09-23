@@ -1870,6 +1870,7 @@ module.exports = {
     '^@ever-jobs/source-company-tau-robotics$': '<rootDir>/packages/plugins/source-company-tau-robotics/src/index.ts',
     '^@ever-jobs/source-company-power_us$': '<rootDir>/packages/plugins/source-company-power_us/src/index.ts',
     '^@ever-jobs/source-company-mundane_co$': '<rootDir>/packages/plugins/source-company-mundane_co/src/index.ts',
+    '^@ever-jobs/source-company-getmaxspace$': '<rootDir>/packages/plugins/source-company-getmaxspace/src/index.ts',
     '^@ever-jobs/source-tesla$': '<rootDir>/packages/plugins/source-tesla/src/index.ts',
     '^@ever-jobs/source-tesla-playwright$': '<rootDir>/packages/plugins/source-tesla-playwright/src/index.ts',
   },
