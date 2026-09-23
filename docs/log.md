@@ -183,7 +183,7 @@ Seventeen plugins that joined structured fields or whole `locations[]` arrays in
 
 ## 2026-09-14 — Spec 5119 — Rippling: structured per-site locations (`rippling-structured-locations`)
 
-**Change:** `source-ats-rippling` flattened each structured `locations[]` entry into a comma-joined label and re-parsed it through `parseLocationList`, so a hiring-entity `name` became `city` when `city` was empty, non-US `City, Country` pairs stayed undivided, duplicated `workLocations` strings survived as pseudo-sites, and a US+non-US mixed posting was stamped `country: "United States"` (only US tokens are country-recognized). Each wire entry now maps directly to a `LocationDto` from its own fields (`city`, `stateCode`/`state`, `countryCode`/`country`); `workLocations` and state-bearing `payRangeDetails[].location` labels are a parser fallback only when no structured entry carries geography; remote-marker and `companyName`-equal names are consumed as signals or dropped, other name-only entries are kept as `{name}` sites. Model additions: `JobPostDto.locations?: LocationDto[]` (per-site list; `location` stays the merged compat view, built by `mergeSites` with `country` omitted on disagreement) and `LocationDto.name` (shown by `displayLocation()` only when `city` is absent). `normalizeUsState` is exported from `location-parser`; `payRangeDetails[].isRemote` now feeds `hasRemoteWorkplaceType`; `department` is typed. The missing `searchTerm`/`location`/`isRemote`/`jobType`/`offset` filters are parked as Q-091.
+**Change:** `source-ats-rippling` flattened each structured `locations[]` entry into a comma-joined label and re-parsed it through `parseLocationList`, so a hiring-entity `name` became `city` when `city` was empty, non-US `City, Country` pairs stayed undivided, duplicated `workLocations` strings survived as pseudo-sites, and a US+non-US mixed posting was stamped `country: "United States"` (only US tokens are country-recognized). Each wire entry now maps directly to a `LocationDto` from its own fields (`city`, `stateCode`/`state`, `countryCode`/`country`); `workLocations` and state-bearing `payRangeDetails[].location` labels are a parser fallback only when no structured entry carries geography; remote-marker and `companyName`-equal names are consumed as signals or dropped, other name-only entries are kept as `{name}` sites. Model additions: `JobPostDto.locations?: LocationDto[]` (per-site list; `location` stays the merged compat view, built by `mergeSites` with `country` omitted on disagreement) and `LocationDto.name` (shown by `displayLocation()` only when `city` is absent). `normalizeUsState` is exported from `location-parser`; `payRangeDetails[].isRemote` now feeds `hasRemoteWorkplaceType`; `department` is typed. The missing `searchTerm`/`location`/`isRemote`/`jobType`/`offset` filters are parked as Q-093.
 
 **Files:** `packages/models/src/dtos/location.dto.ts`, `packages/models/src/dtos/job-post.dto.ts`, `packages/common/src/utils/location-parser.ts`, `packages/plugins/source-ats-rippling/src/rippling.service.ts`, `packages/plugins/source-ats-rippling/src/rippling.types.ts`, `packages/plugins/source-ats-rippling/__tests__/rippling.service.spec.ts`, `.specify/specs/5119-rippling-structured-locations/*`, `docs/index.md`, `docs/log.md`, `docs/questions.md`.
 
@@ -196,6 +196,67 @@ Seventeen plugins that joined structured fields or whole `locations[]` arrays in
 **Files:** `packages/models/src/dtos/job-post.dto.ts`, `packages/plugins/source-ats-lever/src/lever.service.ts`, `packages/plugins/source-ats-workday/src/workday.service.ts`, `packages/plugins/source-ats-lever/__tests__/lever.service.spec.ts`, `packages/plugins/source-ats-workday/__tests__/workday.service.spec.ts`, `.specify/specs/5118-ats-posting-country-code/*`, `docs/index.md`, `docs/log.md`.
 
 **Validation:** `npx jest packages/plugins/source-ats-lever packages/plugins/source-ats-workday` 67/67 pass; `tsc --noEmit` clean on `packages/models`, `source-ats-lever`, `source-ats-workday`; `npm run lint:docs` clean.
+
+||||||| 062a1346
+## 2026-09-13 — Spec 1688 — a Recruitee board is on the public internet, or it is not a board
+
+**Change:** Spec 5100 taught `source-ats-recruitee` to serve customers whose board sits on their
+own domain instead of `<slug>.recruitee.com`. Necessary feature; it also removed the only thing
+bounding where the plugin fetches. Three caller-controlled inputs now become the origin —
+`companyUrl`, a `companySlug` that starts with `http(s)://`, and any `companySlug` containing a
+dot — and `ScraperInputDto` validates `companyUrl` with `@IsString()` and nothing else while
+`POST /api/jobs/search` runs with `auth.enabled` false by default. So
+`{"siteType":["recruitee"],"companyUrl":"http://169.254.169.254"}` fetched
+`http://169.254.169.254/api/offers`.
+
+**This one is live, unlike Spec 1687's.** Those plugins drive `BrowserPool`, and the runtime
+image ships no browser, so they cannot launch in a deployed environment. This path is `axios`.
+
+- `isPubliclyRoutableBoardHost` asserts the weaker property that actually holds for a career
+  board. A fixed allowlist cannot work here the way #47's `submit4jobs.com` one could, because a
+  custom domain is by definition the customer's own — but nobody serves a board from loopback,
+  RFC1918, cloud link-local, CGNAT, benchmarking or multicast space, from IPv6 `::1`,
+  `fd00::/8` or `fe80::/10`, or from a name with no public suffix (`localhost`, `*.local`,
+  `*.internal`, or any dotless name the resolver would complete with a search domain).
+- `publicOrigin` gates the scheme first, so `file:` and friends cannot survive `new URL()`.
+- A refusal returns Spec 5100's existing `bad_input` diagnostic instead of substituting another
+  board. Spec 1687 could fall back to the plugin's own board because a *company* plugin has one;
+  an *ATS* plugin serving many tenants does not.
+- Every public custom domain still resolves, including public IP literals, and the near-misses
+  just outside the private blocks (`172.32.0.1`, `100.128.0.1`, `11.0.0.1`). The fork's own
+  `acme.recruitee.com` and `recruitee` inputs are untouched.
+
+The fork already had the pattern — its own `source-ats-dayforce` (Spec 5094, authored the same
+week) pins `jobs.dayforcehcm.com` before honouring `companyUrl`. Recruitee simply did not get the
+check, which is why this reads as an oversight rather than a design stance.
+
+**Deliberately not fixed:** `source-ats-avature`, which has honoured a verbatim `companyUrl`
+since Spec 006 / Q-022 — pre-existing, identical shape, and outside the scope of a fork-sync PR.
+Recorded as **Q-092**, where option B (guard in the shared HTTP client) is the one that scales.
+
+**Files:** `packages/plugins/source-ats-recruitee/src/{recruitee.constants.ts,recruitee.service.ts}`,
+`packages/plugins/source-ats-recruitee/__tests__/recruitee.board-host.spec.ts`,
+`.specify/specs/1688-recruitee-public-board-host/*`.
+
+**Review follow-ups (Greptile, PR #87) — both fixed in the same PR:**
+
+- **An IPv6 literal can still be an IPv4 address.** The first cut treated any colon-bearing host
+  as public unless it was `::1`, `fc00::/7` or `fe80::/10`, so `[::ffff:127.0.0.1]` and its hex
+  spelling `::ffff:7f00:1` reached loopback. Greptile verified the bypass end to end. Embedded
+  IPv4 — mapped and the deprecated compatible form, dotted or hex, compressed or expanded — is
+  now extracted and re-checked as IPv4; a mapped *public* address still resolves.
+- **A URL-derived slug belongs to one provider.** Their Spec 5096 writes the slug parsed from
+  `companyUrl` into `input.companySlug`, which the whole fan-out shares, whenever that provider
+  merely appeared among the selected sites. `siteType: [greenhouse, ashby]` with a Greenhouse
+  board URL therefore handed the Greenhouse tenant to Ashby. The write now requires that
+  provider to be the sole selection — the case Spec 5096 was written for.
+
+**Validation:** `source-ats-recruitee` 54/54 (their 20 plus 34 guard cases, 12 of them the
+IPv6-mapped bypass); `apps/api/src/jobs` 175/175 including their five Spec 5096 tests and a new
+cross-provider regression; `tsc --noEmit` clean for the package and for `tsconfig.base.json`;
+`lint:docs` clean.
+
+---
 
 ## 2026-09-08 — Spec 5117 — Refactor Pulse Space to extract jobs from the React JS bundle (`source-company-pulsespace-json`)
 
@@ -425,6 +486,63 @@ Seventeen plugins that joined structured fields or whole `locations[]` arrays in
 **Files:** `packages/common/src/http/http-client.ts`, `packages/common/__tests__/http-client-cookies.spec.ts`, `package.json`, `package-lock.json`, `docs/index.md`.
 
 **Validation:** `npx tsc --noEmit -p packages/common/tsconfig.json` clean; `npx jest --testPathPatterns http-client` passes (30/30).
+## 2026-09-03 — Spec 1687 — the browser goes where the plugin says, not where the caller says
+
+**Change:** the two headful company plugins merged from the fork in #83 — `source-company-rdw`
+(Spec 5091) and `source-company-trossenrobotics` (Spec 5092) — drove the shared `BrowserPool`
+Chromium to `input.companyUrl` verbatim, and followed absolute hrefs read off the fetched board
+page unchanged. `companyUrl` carries `@IsString()` and nothing else, and `POST /api/jobs/search`
+runs with `auth.enabled` false by default, so both values are attacker-controlled in the same
+sense the `source-ats-submit4jobs` embed host was in #47. Trossen made the consequence a *read*
+primitive: `extractDescription` falls back to the whole `<body>` of whatever was fetched and
+returns it in `description`.
+
+- Each plugin gains an `isAllowed…Url` predicate over its own registrable domain, called at both
+  places an untrusted string reaches the network. It parses with `URL` and reads `hostname`,
+  which is what rejects `https://evil.com/x.rdw.com`, `https://user@evil.com#.rdw.com` and
+  `file:///etc/passwd`; a raw-string suffix match does not. Fail closed, with a warning naming
+  the rejected value.
+- An off-domain `companyUrl` is ignored rather than fatal — a company plugin's own board is
+  always the right answer — and an off-site href is skipped while the rest of the board returns.
+- One failed detail navigation now costs one job instead of the board (per-card `try`/`catch`
+  plus the `N of M detail requests failed` summary Spec 5084 established), and RDW keeps the
+  pages it already harvested when a later search page fails.
+- RDW stops crawling once it holds `offset + resultsWanted`, but only when `searchTerm`,
+  `location`, `isRemote` and `jobType` are all absent, because `applyInput` filters after the
+  crawl and an early stop would otherwise drop the only matching job.
+- Stratolaunch's `decodeFully` is capped at 3 passes. Decoding to a fixpoint is quadratic in
+  nesting depth on remote input — measured against the real helper at ~0.2 s / ~1.5 s / ~5.4 s
+  for 10 / 30 / 60 KB of nested `&amp;amp;…`, all blocking the event loop — while the live board
+  fixture needs two, so a single pass would have changed output. Its board token must now match
+  `^[A-Za-z0-9_-]+$` before it is interpolated into the Greenhouse API path.
+- A bare SuccessFactors slug whose derived CSB portal is verified and read but lists nothing now
+  reports `empty` naming the portal, instead of `bad_input: missing companyUrl` (Spec 5087) —
+  the caller's input was the one thing that was not wrong.
+- Both new plugins report `empty` rather than a bare empty result (Spec 1683), and the Spec 5086
+  catalogue guard no longer reports a plugin as conflicting with *itself* when it declares both
+  `example.com` and `www.example.com`; `PluginRegistry.indexCompanyDomains` already tolerated it.
+
+Catching those failures created a new way to lie, caught by Greptile on PR #84: a page-one
+timeout returned `empty` ("this board has no jobs") and a half-harvested board returned no
+diagnostic at all, which `JobsService` scores as `ok`. `fetchJobs` now returns the failure
+alongside the jobs, so `scrape` reports the classified cause when nothing was harvested and a
+`N of M detail requests failed` detail when some were — the non-empty-plus-diagnostic pair
+`JobsService` already turns into `partial` (Spec 1680).
+
+**Deliberately not changed:** the shared title-prefix regex, whose optional separator strips the
+first word from ordinary titles ("Remote Sensing Engineer" → "Sensing Engineer"). The fork's own
+fixture asserts the opposite for "Temporary Instructional Designer", so both readings cannot
+hold — recorded as Q-091 rather than silently redefined.
+
+**Files:** `packages/plugins/source-company-{rdw,trossenrobotics}/src/*`,
+`packages/plugins/source-company-stratolaunch/src/stratolaunch.service.ts`,
+`packages/plugins/source-ats-successfactors/src/successfactors.service.ts`,
+`packages/plugin/__tests__/plugin-registry-domains.spec.ts`, three new `*.hardening.spec.ts`
+suites, `.specify/specs/1687-headful-plugin-navigation-allowlist/*`.
+
+**Validation:** `tsc --noEmit -p tsconfig.base.json` clean; `lint:docs` clean; `test:scripts`
+182/182; rdw 26/26, trossenrobotics 23/23, stratolaunch 24/24, successfactors 18/18,
+`packages/plugin` + `apps/api/src/jobs` + `site-from-domain` green.
 
 ---
 ## 2026-08-30 — Spec 5092 — Source Company Plugin: Trossen Robotics

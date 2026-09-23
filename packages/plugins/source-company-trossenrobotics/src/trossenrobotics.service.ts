@@ -9,12 +9,14 @@ import {
   JobResponseDto,
   JobType,
   LocationDto,
+  ScrapeDiagnostics,
   ScraperInputDto,
   Site,
 } from '@ever-jobs/models';
 import { BrowserPool, markdownConverter } from '@ever-jobs/common';
 import type { Page } from 'playwright';
 import {
+  TROSSENROBOTICS_ALLOWED_HOST,
   TROSSENROBOTICS_CAREERS_URL,
   TROSSENROBOTICS_COMPANY_NAME,
   TROSSENROBOTICS_DEFAULT_RESULTS,
@@ -23,8 +25,17 @@ import {
   TROSSENROBOTICS_LIST_SELECTOR,
   TROSSENROBOTICS_ORIGIN,
   TROSSENROBOTICS_READY_TIMEOUT_SECONDS,
+  isAllowedTrossenroboticsUrl,
 } from './trossenrobotics.constants';
 import { TrossenroboticsJobCard } from './trossenrobotics.types';
+
+/** Outcome of one careers-page crawl: what was harvested, and what failed. */
+interface TrossenroboticsCrawl {
+  jobs: JobPostDto[];
+  detailAttempted: number;
+  detailFailed: number;
+  lastDetailError?: unknown;
+}
 
 @SourcePlugin({
   site: Site.TROSSENROBOTICS,
@@ -44,10 +55,10 @@ export class TrossenroboticsService
 
   async scrape(input: ScraperInputDto): Promise<JobResponseDto> {
     try {
-      const jobs = await this.fetchJobs(input);
-      const out = this.applyInput(jobs, input);
+      const crawl = await this.fetchJobs(input);
+      const out = this.applyInput(crawl.jobs, input);
       this.logger.log(`Trossen Robotics: scraped ${out.length} jobs`);
-      return new JobResponseDto(out);
+      return new JobResponseDto(out, this.crawlDiagnostics(crawl, out));
     } catch (error: unknown) {
       const diagnostics = classifyScrapeError(error);
       this.logger.error(
@@ -57,7 +68,37 @@ export class TrossenroboticsService
     }
   }
 
-  private async fetchJobs(input: ScraperInputDto): Promise<JobPostDto[]> {
+  /**
+   * What a crawl produced, and what went wrong on the way.
+   *
+   * `JobsService` reports a source that returned jobs *and* a diagnostic as
+   * `partial` (Spec 1680), so a swallowed detail failure would hide a
+   * half-harvested board behind an `ok` row.
+   */
+  private crawlDiagnostics(
+    crawl: TrossenroboticsCrawl,
+    out: JobPostDto[],
+  ): ScrapeDiagnostics | undefined {
+    if (crawl.detailFailed > 0) {
+      const cause = classifyScrapeError(crawl.lastDetailError);
+      return new ScrapeDiagnostics(
+        cause.reason,
+        `${crawl.detailFailed} of ${crawl.detailAttempted} detail requests failed`,
+      );
+    }
+
+    // Spec 1683: a source that returns nothing still owes a reason.
+    return out.length
+      ? undefined
+      : new ScrapeDiagnostics(
+          'empty',
+          `no postings matched on ${TROSSENROBOTICS_CAREERS_URL}`,
+        );
+  }
+
+  private async fetchJobs(
+    input: ScraperInputDto,
+  ): Promise<TrossenroboticsCrawl> {
     const proxy = input.proxies?.[0];
     const timeoutMs =
       (input.requestTimeout ?? TROSSENROBOTICS_DEFAULT_TIMEOUT_SECONDS) * 1000;
@@ -69,7 +110,7 @@ export class TrossenroboticsService
     });
 
     try {
-      const startUrl = input.companyUrl || TROSSENROBOTICS_CAREERS_URL;
+      const startUrl = this.startUrl(input);
       const listHtml = await this.fetchHtml(
         startUrl,
         page,
@@ -79,6 +120,9 @@ export class TrossenroboticsService
       const cards = this.parseListPage(listHtml);
       const jobs: JobPostDto[] = [];
       const seen = new Set<string>();
+      let attempted = 0;
+      let failed = 0;
+      let lastDetailError: unknown;
 
       for (const card of cards) {
         if (seen.has(card.detailUrl)) {
@@ -86,18 +130,68 @@ export class TrossenroboticsService
         }
         seen.add(card.detailUrl);
 
-        const detailHtml = await this.fetchHtml(
-          card.detailUrl,
-          page,
-          timeoutMs,
-        );
-        jobs.push(this.toJobPost(card, detailHtml));
+        if (!isAllowedTrossenroboticsUrl(card.detailUrl)) {
+          this.logger.warn(
+            `Trossen Robotics: skipping off-site job link \`${card.detailUrl}\` — not on ${TROSSENROBOTICS_ALLOWED_HOST}`,
+          );
+          continue;
+        }
+
+        attempted += 1;
+        try {
+          const detailHtml = await this.fetchHtml(
+            card.detailUrl,
+            page,
+            timeoutMs,
+          );
+          jobs.push(this.toJobPost(card, detailHtml));
+        } catch (error: unknown) {
+          // One unreachable detail page must not discard the rest of the board.
+          failed += 1;
+          lastDetailError = error;
+          this.logger.warn(
+            `Trossen Robotics: detail fetch failed for ${card.detailUrl}: ${this.errorLabel(error)}`,
+          );
+        }
       }
 
-      return jobs;
+      if (failed > 0) {
+        this.logger.warn(
+          `Trossen Robotics: ${failed} of ${attempted} detail requests failed`,
+        );
+      }
+
+      return {
+        jobs,
+        detailAttempted: attempted,
+        detailFailed: failed,
+        lastDetailError,
+      };
     } finally {
       await page.close().catch(() => undefined);
     }
+  }
+
+  /**
+   * The careers URL to start from: the caller's `companyUrl` when it is on
+   * Trossen's own domain, otherwise this plugin's careers page.
+   *
+   * A company plugin exists to scrape one company, so an off-domain
+   * `companyUrl` is either a mistake or an attempt to aim the browser
+   * elsewhere. Neither deserves a failed scrape — ignore it and say so.
+   */
+  private startUrl(input: ScraperInputDto): string {
+    const requested = input.companyUrl?.trim();
+    if (!requested) {
+      return TROSSENROBOTICS_CAREERS_URL;
+    }
+    if (!isAllowedTrossenroboticsUrl(requested)) {
+      this.logger.warn(
+        `Trossen Robotics: ignoring companyUrl \`${requested}\` — not on ${TROSSENROBOTICS_ALLOWED_HOST}`,
+      );
+      return TROSSENROBOTICS_CAREERS_URL;
+    }
+    return requested;
   }
 
   protected async fetchHtml(
