@@ -1863,6 +1863,7 @@ import { WEBBTradersModule } from './source-company-webbtraders';
 import { WeeztixModule } from './source-company-weeztix';
 import { XSARUSModule } from './source-company-xsarus';
 import { PowerUsModule } from './source-company-power_us';
+import { MundaneCoModule } from './source-company-mundane_co';
 export const ALL_SOURCE_MODULES = [
   FourDayWeekModule,
   AcademiccareersModule,
@@ -3719,4 +3720,5 @@ export const ALL_SOURCE_MODULES = [
   WellfoundAtsModule,
   TauRoboticsModule,
   PowerUsModule,
+  MundaneCoModule,
 ];

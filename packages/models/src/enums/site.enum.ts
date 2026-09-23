@@ -3570,6 +3570,8 @@ export enum Site {
   TAU_ROBOTICS = 'tau-robotics',
   // Phase 1698: Spec 5141 — Source Company Plugin: Powerus (power.us) — public /api/careers JSON feed
   POWER_US = 'power_us',
+  // Phase 1699: Spec 5142 — Source Company Plugin: Mundane (mundane.co) — careers array embedded in JS bundle
+  MUNDANE_CO = 'mundane_co',
 }
 
 /**
