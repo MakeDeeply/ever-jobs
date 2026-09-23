@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-09-23 — Spec 5145 — `source-ats-eightfold`: HTTP-error endpoint fallback
+
+**Change:** `fetchPage` now wraps each candidate endpoint's `client.get` + `unwrapPositionsAndCount` in per-path try/catch. Spec 5138's PCSX fallback only fired when the gated `/api/apply/v2/jobs` request *succeeded* with a non-payload body; real gated tenants answer **403** (e.g. `careers.gf.com`), so `client.get` threw before the fallback ran and the whole scrape returned an empty diagnostic. Now an HTTP error on one candidate falls through to the next; when every candidate path throws, the **last** error is rethrown so a genuine outage still surfaces as a classified diagnostic rather than a silent empty board. Resolved-`jobsPath` behavior unchanged.
+
+**Files:** `packages/plugins/source-ats-eightfold/src/eightfold.service.ts`, `packages/plugins/source-ats-eightfold/__tests__/eightfold.endpoints.spec.ts`, `.specify/specs/5145-eightfold-http-error-fallback/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx jest source-ats-eightfold` — 14 tests green (new: apply/v2-403 → pcsx-200 yields positions + resolves `jobsPath`; all-paths-fail surfaces diagnostics; 5138 200-gate-JSON fallback regression covered); `npx tsc --project tsconfig.typecheck.json --noEmit` clean; `npm run lint:docs` clean. Live verification during triage: `careers.gf.com` apply/v2 → 403, `/api/pcsx/search` → 524 positions anonymous.
+
+---
+
 ## 2026-09-23 — Spec 5143 — `source-company-getmaxspace`: Max Space Webflow careers
 
 **Change:** New company plugin `source-company-getmaxspace` (`Site.GETMAXSPACE = 'getmaxspace'` — the Spec 5069 domain derivation of `getmaxspace.com`; `companyDomains: ['getmaxspace.com']` declared to pre-claim the host). `getmaxspace.com/careers` is a server-rendered Webflow CMS collection — one static GET yields all 5 roles as `a.career-jobs_cms-link` items; the `career-jobs_list-title is-1..is-4` column divs map to `title`, `department` (Engineering ×4, Business Development ×1), `employmentType` ("Permanent"), and `location` (all "Rockledge, Florida"). `jobUrl`/`jobUrlDirect` is the item's Indeed href (`indeed.com/job/{slug}-{hex}` or `indeed.com/viewjob?jk={hex}`, `&amp;` decoded); ids derive `getmaxspace-{hex|jk|slug-from-title}`. Indeed is never fetched — postings ship without descriptions, `datePosted`, or `compensation` (same sparse-row class as power_us). Zero items → `empty`; fetch failure → `classifyScrapeError`; `resultsWanted`/`searchTerm`/`location`/`offset` honored.

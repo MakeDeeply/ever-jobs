@@ -114,6 +114,37 @@ describe('EightfoldService endpoint resolution', () => {
     expect(getMock.mock.calls[0][0]).toContain(EIGHTFOLD_JOBS_PATH);
   });
 
+  it('falls back to PCSX search when SmartApply answers with an HTTP error', async () => {
+    // careers.gf.com behavior: apply/v2 → 403 (throws), pcsx/search → 200.
+    const err = Object.assign(new Error('Request failed with status code 403'), {
+      response: { status: 403 },
+    });
+    getMock.mockImplementation((url: string) => {
+      if (url.includes(EIGHTFOLD_JOBS_PATH)) return Promise.reject(err);
+      if (url.includes(EIGHTFOLD_PCSX_SEARCH_PATH)) {
+        return Promise.resolve({ data: pcsxBody() });
+      }
+      return Promise.reject(new Error('unexpected url ' + url));
+    });
+
+    const res = await service.scrape(input());
+
+    expect(res.jobs).toHaveLength(1);
+    expect(res.jobs[0].atsId).toBe('JR-2603147');
+    expect(getMock).toHaveBeenCalledTimes(2);
+    expect(getMock.mock.calls[1][0]).toContain(EIGHTFOLD_PCSX_SEARCH_PATH);
+  });
+
+  it('surfaces diagnostics when every endpoint errors', async () => {
+    getMock.mockRejectedValue(new Error('ECONNREFUSED'));
+
+    const res = await service.scrape(input());
+
+    expect(res.jobs).toHaveLength(0);
+    expect(res.diagnostics).toBeDefined();
+    expect(getMock).toHaveBeenCalledTimes(2);
+  });
+
   it('reuses the resolved endpoint for subsequent pages', async () => {
     // count > PAGE_SIZE forces a second page; gated primary + open PCSX.
     const page2 = { ...POSITION, displayJobId: 'JR-9999999', id: 2 };
