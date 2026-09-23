@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-09-23 — Spec 5142 — `source-company-mundane_co`: Mundane careers bundle extraction
+
+**Change:** New company plugin `source-company-mundane_co` (`Site.MUNDANE_CO = 'mundane_co'` — the Spec 5069 domain derivation of `mundane.co`, the `.co` TLD kept; `companyDomains: ['mundane.co']` declared to pre-claim the host). `mundane.co/join-us` is a ~3 KB React shell; the job list is a literal array embedded in the site's JS bundle — two static GETs (shell → `/assets/index-*.js`) yield entries of shape `{title, category, location, url}` matched by field shape + apply-URL host (Airtable shared form or LinkedIn post), not the minified array identifier. Ids derive `mundane_co-{linkedinJobId|airtableFormId|slug-title}`; LinkedIn tracking params stripped from `jobUrl`. Descriptions come from the Airtable shared forms (client-rendered hyperbase SPA) — each Airtable apply URL renders via `BrowserPool` and the form description block is extracted (selector list + longest-paragraph fallback); LinkedIn apply links are never fetched, those jobs ship without description. `category`→`department`; titles containing `intern` → `JobType.INTERNSHIP`. Zero entries or a missing bundle reference → `empty`; render failure emits the job sans description; no `datePosted`/`compensation` (not published). Every array entry is emitted unconditionally — including the genuinely-titled "VP, Teleportation".
+
+**Files:** `packages/plugins/source-company-mundane_co/` (new), `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `.specify/specs/5142-source-company-mundane_co/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx jest source-company-mundane_co` — 9 tests green (10-job mapping on a live-shape bundle fixture, id variants, department/intern mapping, Airtable description attach + render-failure fallback, `empty` diagnostics, fetch failure, `searchTerm`/`location`/`offset`/`resultsWanted`); `npx tsc --project tsconfig.typecheck.json --noEmit` clean; `npm run lint:docs` clean. Live site verified during outline: `/join-us` shell + bundle entries + Airtable apply forms confirmed 2026-09-23.
+
+---
+
 ## 2026-09-23 — Spec 5141 — `source-company-power_us`: Powerus careers JSON feed
 
 **Change:** New company plugin `source-company-power_us` (`Site.POWER_US = 'power_us'` — the Spec 5069 domain derivation of `power.us`, the `.us` TLD kept; `companyDomains: ['power.us']` declared to pre-claim the host). The careers page is a static shell; the job list comes from an open JSON endpoint — one anonymous `GET /api/careers` returns all 35 entries (`title`, `department`, `location`, `type`, `summary`, `responsibilities[]`, `qualifications[]`, `preferredSkills[]`, `linkedInUrl`). `id`/`atsId` derive from the LinkedIn job id (`power_us-{n}`, slug-from-title fallback); `jobUrl` is the LinkedIn detail link — never fetched (auth-gated). Description sections (`summary` + `Responsibilities:`/`Qualifications:`/`Preferred skills:`) emit only when populated — they are empty on all 35 live entries today. Zero jobs → `empty`; no `datePosted`/`compensation` (not in the payload).
