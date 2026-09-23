@@ -5,13 +5,23 @@
 
 ---
 
+## 2026-09-23 — Spec 5138 — Eightfold PCSX endpoint fallback (`eightfold-pcsx-endpoint-fallback`)
+
+**Change:** `source-ats-eightfold` fell back to zero jobs on tenants that gate `/api/apply/v2/jobs` behind authorization — the response is `{"message": "Not authorized for PCSX"}` (or the SPA HTML shell when `domain` is wrong), neither of which carries a positions payload. `fetchPage` now iterates the ordered endpoint list — resolved endpoint first, then `EIGHTFOLD_JOBS_PATH`, then `EIGHTFOLD_PCSX_SEARCH_PATH` — using a new `unwrapPositionsAndCount` helper that accepts either envelope (`{positions, count}` top-level or `{data: {positions, count}}` PCSX) and rejects payload-less bodies. The winning path is cached on `this.jobsPath` so later pages hit it directly — one doomed request per run, not per page. A present-but-empty `positions`/`count` counts as a valid response, so a legitimately empty board never re-queries. Verified live on `careers.gf.com`: SmartApply returns "Not authorized for PCSX" while `pcsx/search?domain=globalfoundries.com` serves 525 positions anonymously.
+
+**Files:** `packages/plugins/source-ats-eightfold/src/eightfold.service.ts`, `packages/plugins/source-ats-eightfold/__tests__/eightfold.endpoints.spec.ts`, `.specify/specs/5138-eightfold-pcsx-endpoint-fallback/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx jest source-ats-eightfold` — 12 tests green (5 new endpoint-resolution cases: primary-works, gated→PCSX, HTML→PCSX, empty-valid no-fallback, resolved-endpoint reuse); `npx tsc --noEmit -p packages/plugins/source-ats-eightfold/tsconfig.json` clean; live probe confirmed `careers.gf.com`/`globalfoundries.com` PCSX endpoint returns positions without auth.
+
+---
+
 ## 2026-09-21 — Spec 5137 — CI unit/e2e shard split (`ci-unit-e2e-shard-split`)
 
-**Change:** Split `Test (Source Scrapers N/6)` into two jobs in `.github/workflows/ci.yml`. `test-sources` becomes `Test (Source Scrapers unit N/3)` over the ~1,600 mocked unit suites with `--testPathIgnorePatterns 'e2e-spec'`, `--maxWorkers=50%`, `--workerIdleMemoryLimit=1G`, `--testTimeout=30000`, and the `github-actions` reporter (per-test check annotations); `EXA_API_KEY` is dropped from it. New `test-source-e2e` job runs the 253 live `*.e2e-spec.ts` suites in 6 shards, inheriting `maxWorkers: 1` and `testTimeout: 120_000` from `jest.config.js` and keeping `EXA_API_KEY`. Motivation: live-network timeouts (heyrecruit/paycor e2e) were redding unit shards on ~40% of recent develop merges, invisibly under `continue-on-error`; unit suites were paying for e2e-only globals. `jest.config.js` unchanged; `apps/*` e2e specs still run under `test-e2e`.
+**Change:** Split `Test (Source Scrapers N/6)` into two jobs in `.github/workflows/ci.yml`. `test-sources` becomes `Test (Source Scrapers unit N/3)` on `RUNNER_LINUX_X64_8` over the ~1,600 mocked unit suites with `--testPathIgnorePatterns 'e2e-spec' --shard=N/3 --maxWorkers=75% --testTimeout=30000` and the `github-actions` reporter; `EXA_API_KEY` is dropped from it. New `test-source-e2e` job runs the ~250 live `*.e2e-spec.ts` suites in 6 shards on `RUNNER_LINUX_X64_4`, inheriting `maxWorkers: 1` and `testTimeout: 120_000` from `jest.config.js` and keeping `EXA_API_KEY`. Motivation: live-network timeouts (heyrecruit/paycor e2e) were redding unit shards on ~40% of recent develop merges, invisibly under `continue-on-error`; unit legs now run ~9–12 min (was >60). Transform moved from ts-jest to `@swc/jest` (es2021, `legacyDecorator`+`decoratorMetadata`+`useDefineForClassFields: false`+`keepClassNames` — matching `tsconfig.base.json` assign semantics so tests emit production-shaped objects); `preset: 'ts-jest'` dropped, the uuid ESM entry stays on ts-jest, jest globals unchanged. Since swc transpiles without type-checking, `build` gains a `tsc --project tsconfig.typecheck.json --noEmit` step and an `up42` metadata canary guards decorator metadata; dayforce's `jest.mock` factory defers its const to avoid TDZ under swc hoisting.
 
-**Files:** `.github/workflows/ci.yml`, `.specify/specs/5137-ci-unit-e2e-shard-split/*`, `docs/index.md`, `docs/log.md`.
+**Files:** `.github/workflows/ci.yml`, `jest.config.js`, `package.json`/`package-lock.json` (`@swc/core`, `@swc/jest`), `tsconfig.typecheck.json`, `packages/plugins/source-ats-dayforce/__tests__/dayforce.service.spec.ts`, `packages/plugins/source-ats-up42/__tests__/up42.metadata-canary.spec.ts`, `.specify/specs/5137-ci-unit-e2e-shard-split/*`, `docs/index.md`, `docs/log.md`.
 
-**Validation:** `jest --listTests` partition verified — 1,600 unit + 253 e2e; YAML parses; shard counts are first-run estimates to resize from observed durations.
+**Validation:** `jest --listTests` partition verified — 1,600 unit + ~250 e2e; `tsc --project tsconfig.typecheck.json --noEmit` clean; 30-suite unit sample + dedup perf suites green under swc; CI unit legs 9–12 min.
 
 ---
 
