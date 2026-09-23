@@ -15,6 +15,16 @@
 
 ---
 
+## 2026-09-23 — Spec 5143 — `source-company-getmaxspace`: Max Space Webflow careers
+
+**Change:** New company plugin `source-company-getmaxspace` (`Site.GETMAXSPACE = 'getmaxspace'` — the Spec 5069 domain derivation of `getmaxspace.com`; `companyDomains: ['getmaxspace.com']` declared to pre-claim the host). `getmaxspace.com/careers` is a server-rendered Webflow CMS collection — one static GET yields all 5 roles as `a.career-jobs_cms-link` items; the `career-jobs_list-title is-1..is-4` column divs map to `title`, `department` (Engineering ×4, Business Development ×1), `employmentType` ("Permanent"), and `location` (all "Rockledge, Florida"). `jobUrl`/`jobUrlDirect` is the item's Indeed href (`indeed.com/job/{slug}-{hex}` or `indeed.com/viewjob?jk={hex}`, `&amp;` decoded); ids derive `getmaxspace-{hex|jk|slug-from-title}`. Indeed is never fetched — postings ship without descriptions, `datePosted`, or `compensation` (same sparse-row class as power_us). Zero items → `empty`; fetch failure → `classifyScrapeError`; `resultsWanted`/`searchTerm`/`location`/`offset` honored.
+
+**Files:** `packages/plugins/source-company-getmaxspace/` (new), `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `.specify/specs/5143-source-company-getmaxspace/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx jest source-company-getmaxspace` — 7 tests green (5-job mapping on the live-markup fixture, `/job/` hex + `jk=` + slug id fallbacks, `&amp;` decode, department mapping, `empty`, fetch failure, `resultsWanted`/`searchTerm`); `npx tsc --project tsconfig.typecheck.json --noEmit` clean; `npm run lint:docs` clean. Live site verified during outline: 5 Webflow collection items, Indeed apply links confirmed 2026-09-23.
+
+---
+
 ## 2026-09-23 — Spec 5142 — `source-company-mundane_co`: Mundane careers bundle extraction
 
 **Change:** New company plugin `source-company-mundane_co` (`Site.MUNDANE_CO = 'mundane_co'` — the Spec 5069 domain derivation of `mundane.co`, the `.co` TLD kept; `companyDomains: ['mundane.co']` declared to pre-claim the host). `mundane.co/join-us` is a ~3 KB React shell; the job list is a literal array embedded in the site's JS bundle — two static GETs (shell → `/assets/index-*.js`) yield entries of shape `{title, category, location, url}` matched by field shape + apply-URL host (Airtable shared form or LinkedIn post), not the minified array identifier. Ids derive `mundane_co-{linkedinJobId|airtableFormId|slug-title}`; LinkedIn tracking params stripped from `jobUrl`. Descriptions come from the Airtable shared forms (client-rendered hyperbase SPA) — each Airtable apply URL renders via `BrowserPool` and the form description block is extracted (selector list + longest-paragraph fallback); LinkedIn apply links are never fetched, those jobs ship without description. `category`→`department`; titles containing `intern` → `JobType.INTERNSHIP`. Zero entries or a missing bundle reference → `empty`; render failure emits the job sans description; no `datePosted`/`compensation` (not published). Every array entry is emitted unconditionally — including the genuinely-titled "VP, Teleportation".

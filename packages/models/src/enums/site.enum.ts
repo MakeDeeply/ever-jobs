@@ -3572,6 +3572,9 @@ export enum Site {
   POWER_US = 'power_us',
   // Phase 1699: Spec 5142 — Source Company Plugin: Mundane (mundane.co) — careers array embedded in JS bundle
   MUNDANE_CO = 'mundane_co',
+
+  // Phase 1700: Spec 5143 — Source Company Plugin: Max Space (getmaxspace.com) — Webflow CMS careers, Indeed apply links
+  GETMAXSPACE = 'getmaxspace',
 }
 
 /**
