@@ -1158,6 +1158,7 @@ import { HylIoModule } from './source-company-hyl_io';
 import { TrueMetalSupplyModule } from './source-company-truemetalsupply';
 import { FrameworkCoModule } from './source-company-framework_co';
 import { TerminusIndustrialsModule } from './source-company-terminusindustrials';
+import { TauRoboticsModule } from './source-company-tau-robotics';
 import { MaraIncModule } from './source-company-mara_inc';
 import { VightaeroModule } from './source-company-vightaero';
 import { AirwallexModule } from './source-company-airwallex';
@@ -3715,4 +3716,5 @@ export const ALL_SOURCE_MODULES = [
   OctbrAiModule,
   NodiGlobalModule,
   WellfoundAtsModule,
+  TauRoboticsModule,
 ];

@@ -3566,6 +3566,8 @@ export enum Site {
   OCTBR_AI = 'octbr_ai',
   // Phase 1696: Spec 5135 — Nodi (nodi.global) multi-tenant ATS plugin (api.nodi.global JSON endpoints)
   NODI_GLOBAL = 'nodi_global',
+  // Phase 1697: Spec 5140 — Source Company Plugin: Tau Robotics (tau-robotics.com)
+  TAU_ROBOTICS = 'tau-robotics',
 }
 
 /**
