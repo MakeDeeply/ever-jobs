@@ -58,6 +58,11 @@ jobs:
       - name: Type-check
         run: npx tsc --project apps/api/tsconfig.build.json --noEmit
 
+      # Specs are no longer type-checked at test time (swc transpiles only) —
+      # this keeps the coverage, earlier in the pipeline.
+      - name: Type-check sources and specs
+        run: npx tsc --project tsconfig.typecheck.json --noEmit
+
       - name: Build API
         run: npx nest build
 
@@ -119,27 +124,40 @@ jobs:
         run: npx jest --testPathPatterns 'apps/cli/__tests__' --verbose
         continue-on-error: true
 
-  # Sharded because the source-plugin corpus outgrew a single job. `jest
-  # --listTests` reports 1,815 suites under `packages/plugins/source-`, and at
-  # roughly 17 s of wall-clock apiece that is ~8.5 h — past GitHub's 360-minute
-  # job ceiling. It was NOT hanging: the last unsharded run logged PASS lines
-  # continuously from 11:32 to 17:25 and was killed mid-flight having completed
-  # 1,221 suites, so the remainder were never exercised and the job could never
-  # report a result at all.
-  #
-  # Six shards put each at ~300 suites for the same total runner time, and no
-  # single job can squat a pool slot for 6 h again. Verified locally that the
-  # shards partition cleanly: 303+303+303+302+302+302 = 1,815, no overlap and
-  # nothing dropped.
-  #
-  # The 180 min ceiling is set from observation, not estimate. Two runs of the
-  # identical six-way split came in very differently: 1h23m-1h43m across all six
-  # when the pool was quiet, but 2h+ for three of them when it was busy. Same
-  # shard count, so that spread is runner contention rather than the split, and
-  # a 120 min ceiling cancelled those three — killing the suites it exists to
-  # run. 180 min covers the contended case and is still half the platform's 6 h.
+  # Source-plugin tests split by kind: `test-sources` runs the ~1,600 mocked
+  # unit suites in 3 parallelized shards; `test-source-e2e` runs the ~250 live
+  # `*.e2e-spec.ts` suites in 6 serial shards (jest.config.js globals
+  # maxWorkers:1 / testTimeout:120s exist for them — live-network flakes now
+  # red only the e2e legs, never the unit legs).
   test-sources:
-    name: Test (Source Scrapers ${{ matrix.shard }}/6)
+    name: Test (Source Scrapers unit ${{ matrix.shard }}/3)
+    runs-on: ${{ vars.RUNNER_LINUX_X64_8 || 'ubuntu-latest' }}
+    needs: build
+    continue-on-error: true
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 20.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run source scraper unit tests
+        run: npx jest --testPathPatterns 'packages/plugins/source-' --testPathIgnorePatterns 'e2e-spec' --shard=${{ matrix.shard }}/3 --maxWorkers=75% --testTimeout=30000 --passWithNoTests --verbose --reporters=default --reporters=github-actions
+
+  test-source-e2e:
+    name: Test (Source Scrapers e2e ${{ matrix.shard }}/6)
     runs-on: ${{ vars.RUNNER_LINUX_X64_4 || 'ubuntu-latest' }}
     needs: build
     continue-on-error: true
@@ -162,8 +180,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run source scraper tests
-        run: npx jest --testPathPatterns 'packages/plugins/source-' --shard=${{ matrix.shard }}/6 --passWithNoTests --verbose
+      - name: Run source scraper e2e tests
+        run: npx jest --testPathPatterns 'source-.*e2e-spec' --shard=${{ matrix.shard }}/6 --passWithNoTests --verbose --reporters=default --reporters=github-actions
         env:
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
 

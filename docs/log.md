@@ -15,6 +15,16 @@
 
 ---
 
+## 2026-09-21 — Spec 5137 — CI unit/e2e shard split (`ci-unit-e2e-shard-split`)
+
+**Change:** Split `Test (Source Scrapers N/6)` into two jobs in `.github/workflows/ci.yml`. `test-sources` becomes `Test (Source Scrapers unit N/3)` on `RUNNER_LINUX_X64_8` over the ~1,600 mocked unit suites with `--testPathIgnorePatterns 'e2e-spec' --shard=N/3 --maxWorkers=75% --testTimeout=30000` and the `github-actions` reporter; `EXA_API_KEY` is dropped from it. New `test-source-e2e` job runs the ~250 live `*.e2e-spec.ts` suites in 6 shards on `RUNNER_LINUX_X64_4`, inheriting `maxWorkers: 1` and `testTimeout: 120_000` from `jest.config.js` and keeping `EXA_API_KEY`. Motivation: live-network timeouts (heyrecruit/paycor e2e) were redding unit shards on ~40% of recent develop merges, invisibly under `continue-on-error`; unit legs now run ~9–12 min (was >60). Transform moved from ts-jest to `@swc/jest` (es2021, `legacyDecorator`+`decoratorMetadata`+`useDefineForClassFields: false`+`keepClassNames` — matching `tsconfig.base.json` assign semantics so tests emit production-shaped objects); `preset: 'ts-jest'` dropped, the uuid ESM entry stays on ts-jest, jest globals unchanged. Since swc transpiles without type-checking, `build` gains a `tsc --project tsconfig.typecheck.json --noEmit` step and an `up42` metadata canary guards decorator metadata; dayforce's `jest.mock` factory defers its const to avoid TDZ under swc hoisting.
+
+**Files:** `.github/workflows/ci.yml`, `jest.config.js`, `package.json`/`package-lock.json` (`@swc/core`, `@swc/jest`), `tsconfig.typecheck.json`, `packages/plugins/source-ats-dayforce/__tests__/dayforce.service.spec.ts`, `packages/plugins/source-ats-up42/__tests__/up42.metadata-canary.spec.ts`, `.specify/specs/5137-ci-unit-e2e-shard-split/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `jest --listTests` partition verified — 1,600 unit + ~250 e2e; `tsc --project tsconfig.typecheck.json --noEmit` clean; 30-suite unit sample + dedup perf suites green under swc; CI unit legs 9–12 min.
+
+---
+
 ## 2026-09-19 — Spec 5135 — Source ATS plugin: Nodi (`source-ats-nodi_global`)
 
 **Change:** New `source-ats-nodi_global` plugin for Nodi, a multi-tenant ATS where each customer board is `app.nodi.global/company/<slug>` (Next.js shell — the SSR page only renders a "0 positions" skeleton; jobs load client-side). The plugin calls the public JSON API instead: `api.nodi.global/job-offers/active/company/<slug>` returns every active offer in one call (`id`, `title`, `location`, `department`, `type`, `modality`, `seniority`, `min_salary`/`max_salary`/`currency`/`frequency`, `created_at`, `magic_link`, HTML `description`) — no detail fetches. `api.nodi.global/companies/by-name?name=<slug>` resolves `companyName`/`companyUrl`; its failure degrades to the slug without failing the scrape. `jobUrl`/`applyUrl` = `magic_link`; `modality` → `isRemote`/`workFromHomeType`; `type` → `jobType`/`employmentType`; salary → `compensation` (description fallback); `created_at` → `datePosted`; description HTML-stripped. `companySlug` addresses the tenant.
