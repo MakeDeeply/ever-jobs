@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-09-23 — Spec 5138 — Eightfold PCSX endpoint fallback (`eightfold-pcsx-endpoint-fallback`)
+
+**Change:** `source-ats-eightfold` fell back to zero jobs on tenants that gate `/api/apply/v2/jobs` behind authorization — the response is `{"message": "Not authorized for PCSX"}` (or the SPA HTML shell when `domain` is wrong), neither of which carries a positions payload. `fetchPage` now iterates the ordered endpoint list — resolved endpoint first, then `EIGHTFOLD_JOBS_PATH`, then `EIGHTFOLD_PCSX_SEARCH_PATH` — using a new `unwrapPositionsAndCount` helper that accepts either envelope (`{positions, count}` top-level or `{data: {positions, count}}` PCSX) and rejects payload-less bodies. The winning path is cached on `this.jobsPath` so later pages hit it directly — one doomed request per run, not per page. A present-but-empty `positions`/`count` counts as a valid response, so a legitimately empty board never re-queries. Verified live on `careers.gf.com`: SmartApply returns "Not authorized for PCSX" while `pcsx/search?domain=globalfoundries.com` serves 525 positions anonymously.
+
+**Files:** `packages/plugins/source-ats-eightfold/src/eightfold.service.ts`, `packages/plugins/source-ats-eightfold/__tests__/eightfold.endpoints.spec.ts`, `.specify/specs/5138-eightfold-pcsx-endpoint-fallback/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx jest source-ats-eightfold` — 12 tests green (5 new endpoint-resolution cases: primary-works, gated→PCSX, HTML→PCSX, empty-valid no-fallback, resolved-endpoint reuse); `npx tsc --noEmit -p packages/plugins/source-ats-eightfold/tsconfig.json` clean; live probe confirmed `careers.gf.com`/`globalfoundries.com` PCSX endpoint returns positions without auth.
+
+---
+
 ## 2026-09-19 — Spec 5135 — Source ATS plugin: Nodi (`source-ats-nodi_global`)
 
 **Change:** New `source-ats-nodi_global` plugin for Nodi, a multi-tenant ATS where each customer board is `app.nodi.global/company/<slug>` (Next.js shell — the SSR page only renders a "0 positions" skeleton; jobs load client-side). The plugin calls the public JSON API instead: `api.nodi.global/job-offers/active/company/<slug>` returns every active offer in one call (`id`, `title`, `location`, `department`, `type`, `modality`, `seniority`, `min_salary`/`max_salary`/`currency`/`frequency`, `created_at`, `magic_link`, HTML `description`) — no detail fetches. `api.nodi.global/companies/by-name?name=<slug>` resolves `companyName`/`companyUrl`; its failure degrades to the slug without failing the scrape. `jobUrl`/`applyUrl` = `magic_link`; `modality` → `isRemote`/`workFromHomeType`; `type` → `jobType`/`employmentType`; salary → `compensation` (description fallback); `created_at` → `datePosted`; description HTML-stripped. `companySlug` addresses the tenant.
