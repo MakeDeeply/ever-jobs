@@ -3568,6 +3568,8 @@ export enum Site {
   NODI_GLOBAL = 'nodi_global',
   // Phase 1697: Spec 5140 — Source Company Plugin: Tau Robotics (tau-robotics.com)
   TAU_ROBOTICS = 'tau-robotics',
+  // Phase 1698: Spec 5141 — Source Company Plugin: Powerus (power.us) — public /api/careers JSON feed
+  POWER_US = 'power_us',
 }
 
 /**

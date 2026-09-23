@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-09-23 — Spec 5141 — `source-company-power_us`: Powerus careers JSON feed
+
+**Change:** New company plugin `source-company-power_us` (`Site.POWER_US = 'power_us'` — the Spec 5069 domain derivation of `power.us`, the `.us` TLD kept; `companyDomains: ['power.us']` declared to pre-claim the host). The careers page is a static shell; the job list comes from an open JSON endpoint — one anonymous `GET /api/careers` returns all 35 entries (`title`, `department`, `location`, `type`, `summary`, `responsibilities[]`, `qualifications[]`, `preferredSkills[]`, `linkedInUrl`). `id`/`atsId` derive from the LinkedIn job id (`power_us-{n}`, slug-from-title fallback); `jobUrl` is the LinkedIn detail link — never fetched (auth-gated). Description sections (`summary` + `Responsibilities:`/`Qualifications:`/`Preferred skills:`) emit only when populated — they are empty on all 35 live entries today. Zero jobs → `empty`; no `datePosted`/`compensation` (not in the payload).
+
+**Files:** `packages/plugins/source-company-power_us/` (new), `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `.specify/specs/5141-source-company-power_us/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx jest source-company-power_us` — 7 tests green (35-job mapping on the live fixture, linkedinJobId derivation + slug fallback, descriptions when populated / omitted when empty, `empty`, fetch failure, `resultsWanted`); `npx tsc --project tsconfig.typecheck.json --noEmit` clean. API verified live: 35 entries, anonymous, ~0.8 s.
+
+---
+
 ## 2026-09-23 — Spec 5140 — `source-company-tau-robotics`: Tau Robotics careers board
 
 **Change:** New company plugin `source-company-tau-robotics` (`Site.TAU_ROBOTICS = 'tau-robotics'` — the Spec 5069 domain derivation of `tau-robotics.com`, hyphens passing through `deriveSiteToken` unchanged; `companyDomains: ['tau-robotics.com']` declared to pre-claim the host). The site is fully static: two fetches cover the whole board — `careers.html` for the role list (`a[href*="apply.html?role="]` anchors → `.role__title`, `.role__meta` split on `·` → department/location/jobType) and `apply.js` for per-role detail (the apply page renders `#roleTitle`/`#roleMeta`/`#roleBody` from a `ROLES` literal keyed by slug). `ROLES` is extracted by balanced-brace slicing and a small single-quoted-literal parser — never `eval`. Descriptions emit `Responsibilities:`/`Requirements:` lists; a slug missing from the map (or `apply.js` unreachable) still yields the careers row, minus description. `open-application` is skipped as a non-role; zero anchors → `empty`. `datePosted`/`compensation` are absent by design — the site does not publish them.
@@ -217,7 +227,6 @@ Seventeen plugins that joined structured fields or whole `locations[]` arrays in
 
 **Validation:** `npx jest packages/plugins/source-ats-lever packages/plugins/source-ats-workday` 67/67 pass; `tsc --noEmit` clean on `packages/models`, `source-ats-lever`, `source-ats-workday`; `npm run lint:docs` clean.
 
-||||||| 062a1346
 ## 2026-09-13 — Spec 1688 — a Recruitee board is on the public internet, or it is not a board
 
 **Change:** Spec 5100 taught `source-ats-recruitee` to serve customers whose board sits on their

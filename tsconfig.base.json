@@ -1885,6 +1885,7 @@
       "@ever-jobs/source-ats-nodi_global": ["packages/plugins/source-ats-nodi_global/src/index.ts"],
       "@ever-jobs/source-ats-wellfound": ["packages/plugins/source-ats-wellfound/src/index.ts"],
       "@ever-jobs/source-company-tau-robotics": ["packages/plugins/source-company-tau-robotics/src/index.ts"],
+      "@ever-jobs/source-company-power_us": ["packages/plugins/source-company-power_us/src/index.ts"],
       "@ever-jobs/source-tesla": ["packages/plugins/source-tesla/src/index.ts"],
       "@ever-jobs/source-tesla-playwright": ["packages/plugins/source-tesla-playwright/src/index.ts"]
     }

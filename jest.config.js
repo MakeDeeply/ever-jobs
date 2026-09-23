@@ -1868,6 +1868,7 @@ module.exports = {
     '^@ever-jobs/source-ats-nodi_global$': '<rootDir>/packages/plugins/source-ats-nodi_global/src/index.ts',
     '^@ever-jobs/source-ats-wellfound$': '<rootDir>/packages/plugins/source-ats-wellfound/src/index.ts',
     '^@ever-jobs/source-company-tau-robotics$': '<rootDir>/packages/plugins/source-company-tau-robotics/src/index.ts',
+    '^@ever-jobs/source-company-power_us$': '<rootDir>/packages/plugins/source-company-power_us/src/index.ts',
     '^@ever-jobs/source-tesla$': '<rootDir>/packages/plugins/source-tesla/src/index.ts',
     '^@ever-jobs/source-tesla-playwright$': '<rootDir>/packages/plugins/source-tesla-playwright/src/index.ts',
   },
