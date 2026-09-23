@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-09-23 — Spec 5145 — `source-ats-eightfold`: HTTP-error endpoint fallback
+
+**Change:** `fetchPage` now wraps each candidate endpoint's `client.get` + `unwrapPositionsAndCount` in per-path try/catch. Spec 5138's PCSX fallback only fired when the gated `/api/apply/v2/jobs` request *succeeded* with a non-payload body; real gated tenants answer **403** (e.g. `careers.gf.com`), so `client.get` threw before the fallback ran and the whole scrape returned an empty diagnostic. Now an HTTP error on one candidate falls through to the next; when every candidate path throws, the **last** error is rethrown so a genuine outage still surfaces as a classified diagnostic rather than a silent empty board. Resolved-`jobsPath` behavior unchanged.
+
+**Files:** `packages/plugins/source-ats-eightfold/src/eightfold.service.ts`, `packages/plugins/source-ats-eightfold/__tests__/eightfold.endpoints.spec.ts`, `.specify/specs/5145-eightfold-http-error-fallback/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx jest source-ats-eightfold` — 14 tests green (new: apply/v2-403 → pcsx-200 yields positions + resolves `jobsPath`; all-paths-fail surfaces diagnostics; 5138 200-gate-JSON fallback regression covered); `npx tsc --project tsconfig.typecheck.json --noEmit` clean; `npm run lint:docs` clean. Live verification during triage: `careers.gf.com` apply/v2 → 403, `/api/pcsx/search` → 524 positions anonymous.
+
+---
+
 ## 2026-09-23 — Spec 5142 — `source-company-mundane_co`: Mundane careers bundle extraction
 
 **Change:** New company plugin `source-company-mundane_co` (`Site.MUNDANE_CO = 'mundane_co'` — the Spec 5069 domain derivation of `mundane.co`, the `.co` TLD kept; `companyDomains: ['mundane.co']` declared to pre-claim the host). `mundane.co/join-us` is a ~3 KB React shell; the job list is a literal array embedded in the site's JS bundle — two static GETs (shell → `/assets/index-*.js`) yield entries of shape `{title, category, location, url}` matched by field shape + apply-URL host (Airtable shared form or LinkedIn post), not the minified array identifier. Ids derive `mundane_co-{linkedinJobId|airtableFormId|slug-title}`; LinkedIn tracking params stripped from `jobUrl`. Descriptions come from the Airtable shared forms (client-rendered hyperbase SPA) — each Airtable apply URL renders via `BrowserPool` and the form description block is extracted (selector list + longest-paragraph fallback); LinkedIn apply links are never fetched, those jobs ship without description. `category`→`department`; titles containing `intern` → `JobType.INTERNSHIP`. Zero entries or a missing bundle reference → `empty`; render failure emits the job sans description; no `datePosted`/`compensation` (not published). Every array entry is emitted unconditionally — including the genuinely-titled "VP, Teleportation".

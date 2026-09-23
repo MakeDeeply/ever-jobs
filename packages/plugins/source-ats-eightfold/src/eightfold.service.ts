@@ -157,15 +157,23 @@ export class EightfoldService implements IScraper {
     const paths = this.jobsPath
       ? [this.jobsPath]
       : [EIGHTFOLD_JOBS_PATH, EIGHTFOLD_PCSX_SEARCH_PATH];
+    let lastError: unknown = null;
     for (const path of paths) {
       const url = `${host}${path}?${params.toString()}`;
-      const response = await client.get(url);
-      const payload = this.unwrapPositionsAndCount(response.data);
-      if (payload) {
-        this.jobsPath = path;
-        return payload;
+      try {
+        const response = await client.get(url);
+        const payload = this.unwrapPositionsAndCount(response.data);
+        if (payload) {
+          this.jobsPath = path;
+          return payload;
+        }
+      } catch (err) {
+        // A tenant can gate an endpoint behind an HTTP error (e.g. 403 on
+        // /api/apply/v2/jobs) while the other stays open — fall through.
+        lastError = err;
       }
     }
+    if (lastError) throw lastError;
     return { positions: [], count: 0 };
   }
 
