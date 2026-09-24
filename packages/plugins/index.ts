@@ -1874,6 +1874,7 @@ import { SoundryxModule } from './source-company-soundryx';
 import { XgsEnergyModule } from './source-company-xgsenergy';
 import { RevoyModule } from './source-company-revoy';
 import { XlightModule } from './source-company-xlight';
+import { IntDynModule } from './source-company-int-dyn';
 export const ALL_SOURCE_MODULES = [
   FourDayWeekModule,
   AcademiccareersModule,
@@ -3741,4 +3742,5 @@ export const ALL_SOURCE_MODULES = [
   XgsEnergyModule,
   RevoyModule,
   XlightModule,
+  IntDynModule,
 ];

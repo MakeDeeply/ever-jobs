@@ -1897,6 +1897,7 @@
       "@ever-jobs/source-company-xgsenergy": ["packages/plugins/source-company-xgsenergy/src/index.ts"],
       "@ever-jobs/source-company-revoy": ["packages/plugins/source-company-revoy/src/index.ts"],
       "@ever-jobs/source-company-xlight": ["packages/plugins/source-company-xlight/src/index.ts"],
+      "@ever-jobs/source-company-int-dyn": ["packages/plugins/source-company-int-dyn/src/index.ts"],
       "@ever-jobs/source-tesla": ["packages/plugins/source-tesla/src/index.ts"],
       "@ever-jobs/source-tesla-playwright": ["packages/plugins/source-tesla-playwright/src/index.ts"]
     }

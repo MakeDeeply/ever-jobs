@@ -1880,6 +1880,7 @@ module.exports = {
     '^@ever-jobs/source-company-xgsenergy$': '<rootDir>/packages/plugins/source-company-xgsenergy/src/index.ts',
     '^@ever-jobs/source-company-revoy$': '<rootDir>/packages/plugins/source-company-revoy/src/index.ts',
     '^@ever-jobs/source-company-xlight$': '<rootDir>/packages/plugins/source-company-xlight/src/index.ts',
+    '^@ever-jobs/source-company-int-dyn$': '<rootDir>/packages/plugins/source-company-int-dyn/src/index.ts',
     '^@ever-jobs/source-tesla$': '<rootDir>/packages/plugins/source-tesla/src/index.ts',
     '^@ever-jobs/source-tesla-playwright$': '<rootDir>/packages/plugins/source-tesla-playwright/src/index.ts',
   },
