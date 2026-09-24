@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-09-24 — Spec 5157 — `source-company-thoron_us`: Thoron careers plugin
+
+**Change:** New company plugin `source-company-thoron_us` (`Site.THORON_US = 'thoron_us'` per the Spec 5069 domain derivation of `thoron.us`; `companyDomains: ['thoron.us']` declared to pre-claim the host). `thoron.us` is a Vite-built SPA — two static GETs: `/careers` shell → `/assets/index-{hash}.js` (hash resolved at fetch time, never hardcoded) → the embedded `[{id,title,department,location,type,whatYoullDo,whatYouBring,niceToHaves}]` jobs array. The array anchor matches the full `{id:N,title:"…",department:"…",location:"…",type:"` entry run so sibling `{icon:…,title:…}` literals can't collide; sliced by balanced brackets, never evaluated. `department` → `department`; `location` → `parseLocationText`; `type` → `extractJobType` + raw `employmentType`; `description` composes "What you'll do / What you bring / Nice to have" bullet sections. Apply is a shared in-page form POST (`/api/job-applications`) with no per-role page or anchor — `jobUrl`/`jobUrlDirect`/`applyUrl` = `/careers`. Ids `thoron_us-{native id}`. No `datePosted`/`compensation`/`workFromHomeType` — not published. Zero entries → `empty`; fetch failure → `classifyScrapeError`; `resultsWanted`/`searchTerm`/`location`/`offset` honored.
+
+**Files:** `packages/plugins/source-company-thoron_us/*` (new), `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `.specify/specs/5157-source-company-thoron_us/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx jest source-company-thoron_us` — 8 tests green on live-fetched fixtures (3 entries, native ids, department/location/type mapping, composed descriptions, distractor-array rejection, no-bundle-link + fetch-error diagnostics, input filters); `npx tsc --project tsconfig.typecheck.json --noEmit` clean; `npm run lint:docs` clean. Verified live: `thoron.us` → 3 roles.
+
+---
+
 ## 2026-09-24 — Spec 5156 — `source-company-int-dyn`: Integrated Dynamics careers plugin
 
 **Change:** New company plugin `source-company-int-dyn` (`Site.INT_DYN = 'int-dyn'` — the dash stays literal per Spec 5069, which only converts dots; `companyDomains: ['int-dyn.com']` declared to pre-claim the host). `int-dyn.com` is a one-page Webflow site — one static GET. `div#Careers` scopes the board (careers cards reuse the site's pricing-cell component); each `div.efi-pr-07-pricing-cell` maps `h4.efi-h4-3` → `title`, `p.efi-big-paragraph-4` → tagline, `ul.list li.list-item` → bullets; `description` = tagline + `- `-bullets. The only apply target on the page is the generic `Contact → mailto:hmarkarian@int-dyn.com` — `applyUrl` uses it for both roles; `jobUrl`/`jobUrlDirect` = `…/#Careers`. `companyUrl` input is de-fragmented for the fetch (the board is an anchor on the one-pager). Ids `int-dyn-{slug}`. No location/department/datePosted/compensation/jobType — not published; location left unset rather than invented from HQ. Zero cards → `empty`; fetch failure → `classifyScrapeError`; `resultsWanted`/`searchTerm`/`offset` honored.
