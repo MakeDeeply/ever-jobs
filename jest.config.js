@@ -1876,6 +1876,7 @@ module.exports = {
     '^@ever-jobs/source-company-zennoastronautics$': '<rootDir>/packages/plugins/source-company-zennoastronautics/src/index.ts',
     '^@ever-jobs/source-company-thermwood$': '<rootDir>/packages/plugins/source-company-thermwood/src/index.ts',
     '^@ever-jobs/source-company-labs_actor$': '<rootDir>/packages/plugins/source-company-labs_actor/src/index.ts',
+    '^@ever-jobs/source-company-soundryx$': '<rootDir>/packages/plugins/source-company-soundryx/src/index.ts',
     '^@ever-jobs/source-tesla$': '<rootDir>/packages/plugins/source-tesla/src/index.ts',
     '^@ever-jobs/source-tesla-playwright$': '<rootDir>/packages/plugins/source-tesla-playwright/src/index.ts',
   },

@@ -3590,6 +3590,9 @@ export enum Site {
 
   // Phase 1705: Spec 5151 — Source Company Plugin: Actor (labs.actor) — careers array in lazy webpack chunk
   LABS_ACTOR = 'labs_actor',
+
+  // Phase 1706: Spec 5152 — Source Company Plugin: Soundryx (soundryx.com) — static Astro careers index + detail pages
+  SOUNDRYX = 'soundryx',
 }
 
 /**
