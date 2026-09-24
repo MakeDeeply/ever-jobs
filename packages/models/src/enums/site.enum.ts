@@ -3578,6 +3578,9 @@ export enum Site {
 
   // Phase 1701: Spec 5147 — Source Company Plugin: Ampflame / Accurate Metals (ampflame.com) — Next.js careers table
   AMPFLAME = 'ampflame',
+
+  // Phase 1702: Spec 5148 — Source Company Plugin: 4Earth (4earth.tech) — careers array embedded in Careers chunk
+  FOUR_EARTH_TECH = '4earth_tech',
 }
 
 /**
