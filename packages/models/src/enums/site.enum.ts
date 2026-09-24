@@ -3581,6 +3581,9 @@ export enum Site {
 
   // Phase 1702: Spec 5148 — Source Company Plugin: 4Earth (4earth.tech) — careers array embedded in Careers chunk
   FOUR_EARTH_TECH = '4earth_tech',
+
+  // Phase 1703: Spec 5149 — Source Company Plugin: Zenno Astronautics (zennoastronautics.com) — Sanity CMS query API
+  ZENNOASTRONAUTICS = 'zennoastronautics',
 }
 
 /**
