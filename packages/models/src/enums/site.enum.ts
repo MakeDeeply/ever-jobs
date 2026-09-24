@@ -3587,6 +3587,9 @@ export enum Site {
 
   // Phase 1704: Spec 5150 — Source Company Plugin: Thermwood (thermwood.com) — static job-card careers page
   THERMWOOD = 'thermwood',
+
+  // Phase 1705: Spec 5151 — Source Company Plugin: Actor (labs.actor) — careers array in lazy webpack chunk
+  LABS_ACTOR = 'labs_actor',
 }
 
 /**
