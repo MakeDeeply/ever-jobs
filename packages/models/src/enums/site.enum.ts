@@ -3584,6 +3584,9 @@ export enum Site {
 
   // Phase 1703: Spec 5149 — Source Company Plugin: Zenno Astronautics (zennoastronautics.com) — Sanity CMS query API
   ZENNOASTRONAUTICS = 'zennoastronautics',
+
+  // Phase 1704: Spec 5150 — Source Company Plugin: Thermwood (thermwood.com) — static job-card careers page
+  THERMWOOD = 'thermwood',
 }
 
 /**
