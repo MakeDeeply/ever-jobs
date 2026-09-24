@@ -1871,6 +1871,7 @@ import { ZennoAstronauticsModule } from './source-company-zennoastronautics';
 import { ThermwoodModule } from './source-company-thermwood';
 import { LabsActorModule } from './source-company-labs_actor';
 import { SoundryxModule } from './source-company-soundryx';
+import { XgsEnergyModule } from './source-company-xgsenergy';
 export const ALL_SOURCE_MODULES = [
   FourDayWeekModule,
   AcademiccareersModule,
@@ -3735,4 +3736,5 @@ export const ALL_SOURCE_MODULES = [
   ThermwoodModule,
   LabsActorModule,
   SoundryxModule,
+  XgsEnergyModule,
 ];

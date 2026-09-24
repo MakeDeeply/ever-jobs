@@ -3593,6 +3593,9 @@ export enum Site {
 
   // Phase 1706: Spec 5152 — Source Company Plugin: Soundryx (soundryx.com) — static Astro careers index + detail pages
   SOUNDRYX = 'soundryx',
+
+  // Phase 1707: Spec 5153 — Source Company Plugin: XGS Energy (xgsenergy.com) — WordPress/Elementor accordion careers page
+  XGSENERGY = 'xgsenergy',
 }
 
 /**
