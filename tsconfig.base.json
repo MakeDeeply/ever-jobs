@@ -1893,6 +1893,7 @@
       "@ever-jobs/source-company-zennoastronautics": ["packages/plugins/source-company-zennoastronautics/src/index.ts"],
       "@ever-jobs/source-company-thermwood": ["packages/plugins/source-company-thermwood/src/index.ts"],
       "@ever-jobs/source-company-labs_actor": ["packages/plugins/source-company-labs_actor/src/index.ts"],
+      "@ever-jobs/source-company-soundryx": ["packages/plugins/source-company-soundryx/src/index.ts"],
       "@ever-jobs/source-tesla": ["packages/plugins/source-tesla/src/index.ts"],
       "@ever-jobs/source-tesla-playwright": ["packages/plugins/source-tesla-playwright/src/index.ts"]
     }
