@@ -3602,6 +3602,9 @@ export enum Site {
 
   // Phase 1709: Spec 5155 — Source Company Plugin: xLight (xlight.com) — Webflow CMS list linking out to LinkedIn postings
   XLIGHT = 'xlight',
+
+  // Phase 1710: Spec 5156 — Source Company Plugin: Integrated Dynamics (int-dyn.com) — careers section on a one-page Webflow site
+  INT_DYN = 'int-dyn',
 }
 
 /**

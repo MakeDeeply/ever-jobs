@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-09-24 — Spec 5156 — `source-company-int-dyn`: Integrated Dynamics careers plugin
+
+**Change:** New company plugin `source-company-int-dyn` (`Site.INT_DYN = 'int-dyn'` — the dash stays literal per Spec 5069, which only converts dots; `companyDomains: ['int-dyn.com']` declared to pre-claim the host). `int-dyn.com` is a one-page Webflow site — one static GET. `div#Careers` scopes the board (careers cards reuse the site's pricing-cell component); each `div.efi-pr-07-pricing-cell` maps `h4.efi-h4-3` → `title`, `p.efi-big-paragraph-4` → tagline, `ul.list li.list-item` → bullets; `description` = tagline + `- `-bullets. The only apply target on the page is the generic `Contact → mailto:hmarkarian@int-dyn.com` — `applyUrl` uses it for both roles; `jobUrl`/`jobUrlDirect` = `…/#Careers`. `companyUrl` input is de-fragmented for the fetch (the board is an anchor on the one-pager). Ids `int-dyn-{slug}`. No location/department/datePosted/compensation/jobType — not published; location left unset rather than invented from HQ. Zero cards → `empty`; fetch failure → `classifyScrapeError`; `resultsWanted`/`searchTerm`/`offset` honored.
+
+**Files:** `packages/plugins/source-company-int-dyn/*` (new), `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `.specify/specs/5156-source-company-int-dyn/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx jest source-company-int-dyn` — 8 tests green on a live-fetched fixture (2 cards, tagline+bullet descriptions, slug ids, #Careers fragment stripped for fetch, unpublished fields unset, empty/error diagnostics, input filters); `npx tsc --project tsconfig.typecheck.json --noEmit` clean; `npm run lint:docs` clean. Verified live: `int-dyn.com` → 2 roles.
+
+---
+
 ## 2026-09-24 — Spec 5155 — `source-company-xlight`: xLight careers plugin
 
 **Change:** New company plugin `source-company-xlight` (`Site.XLIGHT = 'xlight'` — the Spec 5069 domain derivation of `xlight.com`; `companyDomains: ['xlight.com']` declared to pre-claim the host). `xlight.com/careers` is a Webflow CMS list — one static GET of the fully server-rendered page. Each `div.careers-item.w-dyn-item` card maps `h3.job-item-title` → `title` and the `div.job-item-info-label` run → a `|`-separated meta line (`Engineering | Full Time | Hybrid | Palo Alto`): first label → `department`, the middle label matching `remote|hybrid|on-?site` → `workFromHomeType`, the other middle → `employmentType` + `extractJobType` (hyphen-normalized), last → `parseLocationText`. `a.job-item-btn` carries `linkedin.com/jobs/view/{id}` — the role's canonical URL — → `applyUrl`/`jobUrlDirect`; `jobUrl` = the careers page (no per-role pages). Ids `xlight-{linkedinId}` with a title-slug fallback. No descriptions/datePosted/compensation — the site publishes none and the LinkedIn postings are not followed. Zero cards → `empty`; fetch failure → `classifyScrapeError`; `resultsWanted`/`searchTerm`/`location`/`offset` honored.
