@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-09-23 — Spec 5146 — `source-ats-eddy`: vanity-slug tenant resolution
+
+**Change:** `source-ats-eddy` previously addressed tenants by organization UUID only — a `companySlug` or `companyUrl` carrying the tenant's **vanity short name** (`hypercraftusa`, `/careers/hypercraftusa/preview/embed`) resolved to nothing and silently returned an empty board. The careers SPA itself resolves slugs first, via the public anonymous `GET /api/ds/organization/{slug}/id` → `{organizationUuid}`; the adapter now mirrors that. New `eddyOrganizationIdUrl` constant + `EddyOrganizationIdResponse` type; `scrape()` builds the HTTP client first and only issues the one lookup when no UUID was found in the input (bare non-UUID slug, or the first non-UUID `/careers/{…}` segment); unresolvable slugs still degrade to empty, never throw.
+
+**Files:** `packages/plugins/source-ats-eddy/src/eddy.{service,constants,types}.ts`, `packages/plugins/source-ats-eddy/__tests__/eddy.slug-resolution.spec.ts` (new), `.specify/specs/5146-eddy-vanity-slug-resolution/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx jest source-ats-eddy` — 12 tests green (7 new mocked: bare-slug + embed-URL + UUID-less-URL resolution, zero-lookup for UUID input, 404/non-UUID/non-Eddy → empty); `npx tsc --project tsconfig.typecheck.json --noEmit` clean; `npm run lint:docs` clean. Live-verified end-to-end: `hypercraftusa` (both input shapes) → `d7e3b662-b7f9-458c-8a91-34374094c69f` → 3 open roles.
+
+---
+
 ## 2026-09-23 — Spec 5145 — `source-ats-eightfold`: HTTP-error endpoint fallback
 
 **Change:** `fetchPage` now wraps each candidate endpoint's `client.get` + `unwrapPositionsAndCount` in per-path try/catch. Spec 5138's PCSX fallback only fired when the gated `/api/apply/v2/jobs` request *succeeded* with a non-payload body; real gated tenants answer **403** (e.g. `careers.gf.com`), so `client.get` threw before the fallback ran and the whole scrape returned an empty diagnostic. Now an HTTP error on one candidate falls through to the next; when every candidate path throws, the **last** error is rethrown so a genuine outage still surfaces as a classified diagnostic rather than a silent empty board. Resolved-`jobsPath` behavior unchanged.
