@@ -1869,6 +1869,7 @@ import { AmpflameModule } from './source-company-ampflame';
 import { FourEarthTechModule } from './source-company-4earth_tech';
 import { ZennoAstronauticsModule } from './source-company-zennoastronautics';
 import { ThermwoodModule } from './source-company-thermwood';
+import { LabsActorModule } from './source-company-labs_actor';
 export const ALL_SOURCE_MODULES = [
   FourDayWeekModule,
   AcademiccareersModule,
@@ -3731,4 +3732,5 @@ export const ALL_SOURCE_MODULES = [
   FourEarthTechModule,
   ZennoAstronauticsModule,
   ThermwoodModule,
+  LabsActorModule,
 ];
