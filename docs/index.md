@@ -1903,6 +1903,7 @@
 | 5142 | [source-company-mundane_co](../.specify/specs/5142-source-company-mundane_co/spec.md) -- [plan](../.specify/specs/5142-source-company-mundane_co/plan.md) -- [tasks](../.specify/specs/5142-source-company-mundane_co/tasks.md) | Done. New `source-company-mundane_co` (`Site.MUNDANE_CO`) for mundane.co's self-hosted board — jobs are a literal array embedded in the site's JS bundle (entries `{title, category, location, url}` matched by shape + apply-host), fetched in 2 static GETs (shell → bundle). Apply links split between Airtable shared forms (rendered via `BrowserPool` for the description) and LinkedIn posts (never fetched — no description). `category`→`department`, intern titles→`JobType.INTERNSHIP`, LinkedIn tracking params stripped. No `datePosted`/`compensation`. |
 | 5143 | [source-company-getmaxspace](../.specify/specs/5143-source-company-getmaxspace/spec.md) -- [plan](../.specify/specs/5143-source-company-getmaxspace/plan.md) -- [tasks](../.specify/specs/5143-source-company-getmaxspace/tasks.md) | Done. New `source-company-getmaxspace` (`Site.GETMAXSPACE`) for getmaxspace.com's self-hosted board — one static GET of the Webflow CMS careers page; each `a.career-jobs_cms-link` item maps `is-1..is-4` columns to title/department/employmentType/location. `jobUrl` is the Indeed posting (`/job/{slug}-{hex}` or `viewjob?jk={hex}`); ids derive `getmaxspace-{hex|slug}`. Indeed is never fetched — no descriptions, `datePosted`, or `compensation`. |
 | 5145 | [eightfold-http-error-fallback](../.specify/specs/5145-eightfold-http-error-fallback/spec.md) -- [plan](../.specify/specs/5145-eightfold-http-error-fallback/plan.md) -- [tasks](../.specify/specs/5145-eightfold-http-error-fallback/tasks.md) | Done. `source-ats-eightfold` `fetchPage` now wraps each candidate endpoint's `client.get` in try/catch: an HTTP error on `/api/apply/v2/jobs` (e.g. `careers.gf.com`'s 403 gate) falls through to `/api/pcsx/search` instead of aborting the scrape; the last error is rethrown when every path throws so genuine outages still classify as diagnostics. Spec 5138's 200-OK gate body fallback unchanged. |
+| 5146 | [eddy-vanity-slug-resolution](../.specify/specs/5146-eddy-vanity-slug-resolution/spec.md) -- [plan](../.specify/specs/5146-eddy-vanity-slug-resolution/plan.md) -- [tasks](../.specify/specs/5146-eddy-vanity-slug-resolution/tasks.md) | Done. `source-ats-eddy` resolves vanity short names (`hypercraftusa`, or `/careers/{slug}` + `/careers/{slug}/preview/embed` URLs) to the organization UUID via the public `GET /api/ds/organization/{slug}/id` lookup the careers SPA itself issues — UUID inputs unchanged and never trigger the lookup. Verified live: `hypercraftusa` → UUID → 3 open roles.
 
 ## 8. Templates
 
@@ -1914,5 +1915,5 @@
 
 ---
 
-_Last revised: 2026-09-23 (Spec 5145: eightfold HTTP-error endpoint fallback)._
+_Last revised: 2026-09-23 (Spec 5146: eddy vanity-slug resolution)._
 
