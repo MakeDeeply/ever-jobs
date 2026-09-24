@@ -3599,6 +3599,9 @@ export enum Site {
 
   // Phase 1708: Spec 5154 — Source Company Plugin: Revoy (revoy.com) — Google-Docs-linked roles on a Webflow splash
   REVOY = 'revoy',
+
+  // Phase 1709: Spec 5155 — Source Company Plugin: xLight (xlight.com) — Webflow CMS list linking out to LinkedIn postings
+  XLIGHT = 'xlight',
 }
 
 /**
