@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-09-24 — Spec 5155 — `source-company-xlight`: xLight careers plugin
+
+**Change:** New company plugin `source-company-xlight` (`Site.XLIGHT = 'xlight'` — the Spec 5069 domain derivation of `xlight.com`; `companyDomains: ['xlight.com']` declared to pre-claim the host). `xlight.com/careers` is a Webflow CMS list — one static GET of the fully server-rendered page. Each `div.careers-item.w-dyn-item` card maps `h3.job-item-title` → `title` and the `div.job-item-info-label` run → a `|`-separated meta line (`Engineering | Full Time | Hybrid | Palo Alto`): first label → `department`, the middle label matching `remote|hybrid|on-?site` → `workFromHomeType`, the other middle → `employmentType` + `extractJobType` (hyphen-normalized), last → `parseLocationText`. `a.job-item-btn` carries `linkedin.com/jobs/view/{id}` — the role's canonical URL — → `applyUrl`/`jobUrlDirect`; `jobUrl` = the careers page (no per-role pages). Ids `xlight-{linkedinId}` with a title-slug fallback. No descriptions/datePosted/compensation — the site publishes none and the LinkedIn postings are not followed. Zero cards → `empty`; fetch failure → `classifyScrapeError`; `resultsWanted`/`searchTerm`/`location`/`offset` honored.
+
+**Files:** `packages/plugins/source-company-xlight/*` (new), `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `.specify/specs/5155-source-company-xlight/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx jest source-company-xlight` — 9 tests green on a live-fetched fixture (22 cards mapped, LinkedIn-id keys, label-line split → department/type/work-mode/location, hybrid + on-site + part-time coverage, alternate companyUrl, empty/error diagnostics, input filters); `npx tsc --project tsconfig.typecheck.json --noEmit` clean; `npm run lint:docs` clean. Verified live: `xlight.com/careers` → 22 roles.
+
+---
+
 ## 2026-09-24 — Spec 5154 — `source-company-revoy`: Revoy careers plugin
 
 **Change:** New company plugin `source-company-revoy` (`Site.REVOY = 'revoy'` — the Spec 5069 domain derivation of `revoy.com`; `companyDomains: ['revoy.com']` declared to pre-claim the host). `revoy.com/join-the-team` is a Webflow splash page whose role rows are Google-Docs links — `a.link-12[href*="/document/d/"]` with link text as the title and a trailing ` — City, ST`. Each doc is world-readable via `export?format=txt`, so the plugin issues one index GET + one txt GET per doc (3 today). Labeled doc headers win over the link row: `Location:`/`LOCATION` → `parseLocationText` (live: doc's "Troutdale, OR (on-site)" overrides the link's "Portland, OR"; `(on-site)`/`(remote)`/`(hybrid)` qualifiers → `workFromHomeType`), `Department:`/`FUNCTION` → `department`, `Type:` → `employmentType` + `extractJobType` (hyphen-normalized). `description` = the doc's full plain-text body. `jobUrl`/`jobUrlDirect`/`applyUrl` = the doc link — it is the role's canonical URL and only apply target. Ids `revoy-{docId}` — doc ids are stable; title edits can't break them. A failed doc fetch degrades to link-only fields (title + link location) without aborting the scrape; no datePosted/compensation — the site/docs publish none. Zero links → `empty`; index failure → `classifyScrapeError`; `resultsWanted`/`searchTerm`/`location`/`offset` honored.

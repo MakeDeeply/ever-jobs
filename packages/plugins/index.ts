@@ -1873,6 +1873,7 @@ import { LabsActorModule } from './source-company-labs_actor';
 import { SoundryxModule } from './source-company-soundryx';
 import { XgsEnergyModule } from './source-company-xgsenergy';
 import { RevoyModule } from './source-company-revoy';
+import { XlightModule } from './source-company-xlight';
 export const ALL_SOURCE_MODULES = [
   FourDayWeekModule,
   AcademiccareersModule,
@@ -3739,4 +3740,5 @@ export const ALL_SOURCE_MODULES = [
   SoundryxModule,
   XgsEnergyModule,
   RevoyModule,
+  XlightModule,
 ];
