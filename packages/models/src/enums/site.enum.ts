@@ -3575,6 +3575,9 @@ export enum Site {
 
   // Phase 1700: Spec 5143 — Source Company Plugin: Max Space (getmaxspace.com) — Webflow CMS careers, Indeed apply links
   GETMAXSPACE = 'getmaxspace',
+
+  // Phase 1701: Spec 5147 — Source Company Plugin: Ampflame / Accurate Metals (ampflame.com) — Next.js careers table
+  AMPFLAME = 'ampflame',
 }
 
 /**
