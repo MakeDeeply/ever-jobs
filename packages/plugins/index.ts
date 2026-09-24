@@ -1865,6 +1865,7 @@ import { XSARUSModule } from './source-company-xsarus';
 import { PowerUsModule } from './source-company-power_us';
 import { MundaneCoModule } from './source-company-mundane_co';
 import { GetMaxSpaceModule } from './source-company-getmaxspace';
+import { AmpflameModule } from './source-company-ampflame';
 export const ALL_SOURCE_MODULES = [
   FourDayWeekModule,
   AcademiccareersModule,
@@ -3723,4 +3724,5 @@ export const ALL_SOURCE_MODULES = [
   PowerUsModule,
   MundaneCoModule,
   GetMaxSpaceModule,
+  AmpflameModule,
 ];

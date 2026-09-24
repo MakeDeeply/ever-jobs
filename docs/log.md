@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-09-24 — Spec 5147 — `source-company-ampflame`: Accurate Metals Next.js careers table
+
+**Change:** New company plugin `source-company-ampflame` (`Site.AMPFLAME = 'ampflame'` — the Spec 5069 domain derivation of `ampflame.com`; `companyDomains: ['ampflame.com']` declared to pre-claim the host). `ampflame.com/about/` is server-rendered Next.js — one static GET yields the "Join Our Team" listings as a `div[role="table"][aria-label="Open positions"]` whose `div[role="row"]` data rows carry `span[role="cell"][data-label]` cells keyed Department/Location/Position/Apply. Selectors target the ARIA/`data-label` attributes only — the `CareersSection_*` class names are hashed CSS modules and change per build. `jobUrl`/`jobUrlDirect` is the careers page (no per-role page exists); `applyUrl` is each row's Apply href resolved absolute (all roles share the generic `/accurate-metals-contact-us/` form). Ids derive `ampflame-{position-slug}-{location-slug}` since two roles share title + department across cities. No descriptions, `datePosted`, or `compensation` are published. Zero rows → `empty`; fetch failure → `classifyScrapeError`; `resultsWanted`/`searchTerm`/`location`/`offset` honored.
+
+**Files:** `packages/plugins/source-company-ampflame/*` (new), `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `.specify/specs/5147-source-company-ampflame/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx jest source-company-ampflame` — 9 tests green on the live-markup fixture (3 rows parsed, same-title dedupe via location slug, applyUrl absolutized, empty/error diagnostics, input filters); `npx tsc --project tsconfig.typecheck.json --noEmit` clean; `npm run lint:docs` clean.
+
+---
+
 ## 2026-09-23 — Spec 5146 — `source-ats-eddy`: vanity-slug tenant resolution
 
 **Change:** `source-ats-eddy` previously addressed tenants by organization UUID only — a `companySlug` or `companyUrl` carrying the tenant's **vanity short name** (`hypercraftusa`, `/careers/hypercraftusa/preview/embed`) resolved to nothing and silently returned an empty board. The careers SPA itself resolves slugs first, via the public anonymous `GET /api/ds/organization/{slug}/id` → `{organizationUuid}`; the adapter now mirrors that. New `eddyOrganizationIdUrl` constant + `EddyOrganizationIdResponse` type; `scrape()` builds the HTTP client first and only issues the one lookup when no UUID was found in the input (bare non-UUID slug, or the first non-UUID `/careers/{…}` segment); unresolvable slugs still degrade to empty, never throw.
