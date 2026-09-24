@@ -1905,6 +1905,7 @@
 | 5145 | [eightfold-http-error-fallback](../.specify/specs/5145-eightfold-http-error-fallback/spec.md) -- [plan](../.specify/specs/5145-eightfold-http-error-fallback/plan.md) -- [tasks](../.specify/specs/5145-eightfold-http-error-fallback/tasks.md) | Done. `source-ats-eightfold` `fetchPage` now wraps each candidate endpoint's `client.get` in try/catch: an HTTP error on `/api/apply/v2/jobs` (e.g. `careers.gf.com`'s 403 gate) falls through to `/api/pcsx/search` instead of aborting the scrape; the last error is rethrown when every path throws so genuine outages still classify as diagnostics. Spec 5138's 200-OK gate body fallback unchanged. |
 | 5146 | [eddy-vanity-slug-resolution](../.specify/specs/5146-eddy-vanity-slug-resolution/spec.md) -- [plan](../.specify/specs/5146-eddy-vanity-slug-resolution/plan.md) -- [tasks](../.specify/specs/5146-eddy-vanity-slug-resolution/tasks.md) | Done. `source-ats-eddy` resolves vanity short names (`hypercraftusa`, or `/careers/{slug}` + `/careers/{slug}/preview/embed` URLs) to the organization UUID via the public `GET /api/ds/organization/{slug}/id` lookup the careers SPA itself issues — UUID inputs unchanged and never trigger the lookup. Verified live: `hypercraftusa` → UUID → 3 open roles.
 | 5147 | [source-company-ampflame](../.specify/specs/5147-source-company-ampflame/spec.md) -- [plan](../.specify/specs/5147-source-company-ampflame/plan.md) -- [tasks](../.specify/specs/5147-source-company-ampflame/tasks.md) | Done. New `source-company-ampflame` (`Site.AMPFLAME`) for ampflame.com's self-hosted board — one static GET of the Next.js `/about/` page; the `div[aria-label="Open positions"]` table's rows map `data-label` cells to title/department/location. `jobUrl` is the board page (no per-role page exists); `applyUrl` is the generic contact form; ids `ampflame-{position-slug}-{location-slug}` dedupe same-title roles across cities. No descriptions, `datePosted`, or `compensation`. |
+| 5148 | [source-company-4earth_tech](../.specify/specs/5148-source-company-4earth_tech/spec.md) -- [plan](../.specify/specs/5148-source-company-4earth_tech/plan.md) -- [tasks](../.specify/specs/5148-source-company-4earth_tech/tasks.md) | Done. New `source-company-4earth_tech` (`Site.FOUR_EARTH_TECH`) for 4earth.tech's self-hosted board — 2 static GETs (careers shell → `/assets/Careers-{hash}.js`), jobs extracted from the embedded `=[{id:` array via balanced-bracket slicing (never evaluated). Entries carry full postings (`mission`/`roleIntro`/`roleSummary`/`rolePoints`/`sections`/`whySection`) composed into `description`; ids `4earth_tech-{entry.id}`; `jobUrl`/`applyUrl` are the careers page (details expand inline, apply is a modal). No `datePosted`/`compensation`/`department`. |
 
 ## 8. Templates
 
@@ -1916,5 +1917,5 @@
 
 ---
 
-_Last revised: 2026-09-24 (Spec 5147: ampflame company plugin)._
+_Last revised: 2026-09-24 (Spec 5148: 4earth_tech company plugin)._
 

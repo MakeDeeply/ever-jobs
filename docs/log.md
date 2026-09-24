@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-09-24 — Spec 5148 — `source-company-4earth_tech`: 4Earth careers chunk plugin
+
+**Change:** New company plugin `source-company-4earth_tech` (`Site.FOUR_EARTH_TECH = '4earth_tech'` — the Spec 5069 domain derivation of `4earth.tech`, `.tech` kept and dot → underscore; `companyDomains: ['4earth.tech']` declared to pre-claim the host). `4earth.tech/careers` is a React/Vercel site: the SSR cards are truncated, and the full postings live in a `=[{id:` array embedded in the `/assets/Careers-{hash}.js` chunk. Two plain GETs (careers shell → chunk, resolved from the modulepreload link each run); the array literal is extracted by balanced-bracket slicing and top-level comma splitting — never evaluated — and fields read by key (strings may be single- or double-quoted with escapes). `description` is composed from `mission` + `roleIntro` + `roleSummary` + `rolePoints` bullets + each `sections` heading with `{label, text}`/`isList` items + `whySection`. `type` ("Full-time (Onsite)") maps through `extractJobType` (hyphen-normalized) → `JobType.FULL_TIME` + raw `employmentType`; `jobUrl`/`jobUrlDirect`/`applyUrl` are the careers page — details expand inline and apply is an on-page Supabase modal, so no per-role URL exists. Ids derive `4earth_tech-{entry.id}` (native slugs). No `datePosted`/`compensation`/`department`. Zero entries → `empty`; fetch failure → `classifyScrapeError`; `resultsWanted`/`searchTerm`/`location`/`offset` honored.
+
+**Files:** `packages/plugins/source-company-4earth_tech/*` (new), `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `.specify/specs/5148-source-company-4earth_tech/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx jest source-company-4earth_tech` — 8 tests green on the live-fetched fixtures (2 roles parsed with full descriptions, ids, applyUrl, empty/error diagnostics, input filters); `npx tsc --project tsconfig.typecheck.json --noEmit` clean; `npm run lint:docs` clean. Verified live: `4earth.tech/careers` → 2 roles with ~3.8 KB descriptions each.
+
+---
+
 ## 2026-09-24 — Spec 5147 — `source-company-ampflame`: Accurate Metals Next.js careers table
 
 **Change:** New company plugin `source-company-ampflame` (`Site.AMPFLAME = 'ampflame'` — the Spec 5069 domain derivation of `ampflame.com`; `companyDomains: ['ampflame.com']` declared to pre-claim the host). `ampflame.com/about/` is server-rendered Next.js — one static GET yields the "Join Our Team" listings as a `div[role="table"][aria-label="Open positions"]` whose `div[role="row"]` data rows carry `span[role="cell"][data-label]` cells keyed Department/Location/Position/Apply. Selectors target the ARIA/`data-label` attributes only — the `CareersSection_*` class names are hashed CSS modules and change per build. `jobUrl`/`jobUrlDirect` is the careers page (no per-role page exists); `applyUrl` is each row's Apply href resolved absolute (all roles share the generic `/accurate-metals-contact-us/` form). Ids derive `ampflame-{position-slug}-{location-slug}` since two roles share title + department across cities. No descriptions, `datePosted`, or `compensation` are published. Zero rows → `empty`; fetch failure → `classifyScrapeError`; `resultsWanted`/`searchTerm`/`location`/`offset` honored.

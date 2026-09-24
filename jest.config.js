@@ -1872,6 +1872,7 @@ module.exports = {
     '^@ever-jobs/source-company-mundane_co$': '<rootDir>/packages/plugins/source-company-mundane_co/src/index.ts',
     '^@ever-jobs/source-company-getmaxspace$': '<rootDir>/packages/plugins/source-company-getmaxspace/src/index.ts',
     '^@ever-jobs/source-company-ampflame$': '<rootDir>/packages/plugins/source-company-ampflame/src/index.ts',
+    '^@ever-jobs/source-company-4earth_tech$': '<rootDir>/packages/plugins/source-company-4earth_tech/src/index.ts',
     '^@ever-jobs/source-tesla$': '<rootDir>/packages/plugins/source-tesla/src/index.ts',
     '^@ever-jobs/source-tesla-playwright$': '<rootDir>/packages/plugins/source-tesla-playwright/src/index.ts',
   },

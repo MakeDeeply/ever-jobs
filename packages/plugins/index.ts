@@ -1866,6 +1866,7 @@ import { PowerUsModule } from './source-company-power_us';
 import { MundaneCoModule } from './source-company-mundane_co';
 import { GetMaxSpaceModule } from './source-company-getmaxspace';
 import { AmpflameModule } from './source-company-ampflame';
+import { FourEarthTechModule } from './source-company-4earth_tech';
 export const ALL_SOURCE_MODULES = [
   FourDayWeekModule,
   AcademiccareersModule,
@@ -3725,4 +3726,5 @@ export const ALL_SOURCE_MODULES = [
   MundaneCoModule,
   GetMaxSpaceModule,
   AmpflameModule,
+  FourEarthTechModule,
 ];
