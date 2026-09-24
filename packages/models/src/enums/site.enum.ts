@@ -3596,6 +3596,9 @@ export enum Site {
 
   // Phase 1707: Spec 5153 — Source Company Plugin: XGS Energy (xgsenergy.com) — WordPress/Elementor accordion careers page
   XGSENERGY = 'xgsenergy',
+
+  // Phase 1708: Spec 5154 — Source Company Plugin: Revoy (revoy.com) — Google-Docs-linked roles on a Webflow splash
+  REVOY = 'revoy',
 }
 
 /**
