@@ -3605,6 +3605,9 @@ export enum Site {
 
   // Phase 1710: Spec 5156 — Source Company Plugin: Integrated Dynamics (int-dyn.com) — careers section on a one-page Webflow site
   INT_DYN = 'int-dyn',
+
+  // Phase 1711: Spec 5157 — Source Company Plugin: Thoron (thoron.us) — jobs array embedded in the SPA bundle
+  THORON_US = 'thoron_us',
 }
 
 /**
