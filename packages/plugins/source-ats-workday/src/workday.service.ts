@@ -24,6 +24,8 @@ import {
   WORKDAY_HEADERS,
   WORKDAY_PAGE_SIZE,
   WORKDAY_DETAIL_CONCURRENCY,
+  WORKDAY_CATEGORY_FACET,
+  WORKDAY_CATEGORY_FACET_CAP,
   parseWorkdaySlug,
   buildWorkdayUrl,
   buildWorkdayDetailUrl,
@@ -64,89 +66,234 @@ export class WorkdayService implements IScraper {
     client.setHeaders(WORKDAY_HEADERS);
 
     const resultsWanted = input.resultsWanted ?? 100;
-    const listingsToEnrich: WorkdayJobListItem[] = [];
-    const seenKeys = new Set<string>();
-    let offset = 0;
 
     try {
       this.logger.log(`Fetching Workday jobs for ${company} (wd${wdNumber}/${site})`);
 
-      while (listingsToEnrich.length < resultsWanted) {
-        const payload = {
-          appliedFacets: {},
-          limit: WORKDAY_PAGE_SIZE,
-          offset,
-          searchText: '',
-        };
+      // The unfiltered first page seeds both the posting set and the facet
+      // catalog, so enumerating the "Job Category" buckets costs no request.
+      const firstResponse = await client.post(apiUrl, {
+        appliedFacets: {},
+        limit: WORKDAY_PAGE_SIZE,
+        offset: 0,
+        searchText: '',
+      });
+      const firstPage: WorkdaySearchResponse = firstResponse.data ?? {};
+      const categories = this.jobCategoryFacets(firstPage, company, wdNumber, site);
 
-        const response = await client.post(apiUrl, payload);
-        const data: WorkdaySearchResponse = response.data ?? {};
-        const listings = data.jobPostings ?? [];
+      // Two coarse streams in parallel: the unfiltered list pass resumes after
+      // the seed page while the bucketed pass walks each category value. Each
+      // stream stays internally sequential behind the courtesy sleep — never
+      // more than ~2 list requests in flight.
+      const [listingsResult, categoriesResult] = await Promise.allSettled([
+        this.fetchListings(client, apiUrl, company, wdNumber, site, firstPage, resultsWanted),
+        this.fetchJobCategoryMap(client, apiUrl, company, wdNumber, site, categories),
+      ]);
 
-        if (listings.length === 0) break;
+      // The listing set is untrustworthy after a pagination failure, and
+      // enriching it would spend one detail request per accumulated entry on it.
+      if (listingsResult.status === 'rejected') throw listingsResult.reason;
 
-        this.logger.log(
-          `Workday: fetched ${listings.length} jobs at offset ${offset} for ${company}` +
-          `${data.total ? ` (total: ${data.total})` : ''}`,
+      const categoryMap =
+        categoriesResult.status === 'fulfilled'
+          ? categoriesResult.value
+          : new Map<string, string>();
+      if (categoriesResult.status === 'rejected') {
+        this.logger.warn(
+          `Workday: category facet pass failed for ${company} (wd${wdNumber}/${site}): ` +
+          `${categoriesResult.reason?.message ?? categoriesResult.reason}; ` +
+          'departments fall back to detail/subtitle fields',
         );
-
-        // Count distinct postings, not pushes: some tenants answer an out-of-range
-        // offset by re-serving page 1, and re-serving the same page must never look
-        // like progress toward resultsWanted.
-        let added = 0;
-        for (const listing of listings) {
-          if (listingsToEnrich.length >= resultsWanted) break;
-          const key = workdayListingKey(listing);
-          if (key && seenKeys.has(key)) continue;
-          if (key) seenKeys.add(key);
-          listingsToEnrich.push(listing);
-          added++;
-        }
-
-        const pageOffset = offset;
-        offset += listings.length;
-
-        if (added === 0) {
-          this.logger.warn(
-            `Workday: pagination not advancing for ${company} (wd${wdNumber}/${site}): ` +
-            `page at offset ${pageOffset} returned ${listings.length} jobs, 0 new ` +
-            `(server re-served an earlier page); stopping with ${listingsToEnrich.length} distinct jobs`,
-          );
-          break;
-        }
-
-        // If we got less than page size, no more results
-        if (listings.length < WORKDAY_PAGE_SIZE) break;
-
-        // A positive total ends paging before the first out-of-range request. Zero or
-        // absent is not a count: a real page can report total 0 on some tenants.
-        if (typeof data.total === 'number' && data.total > 0 && offset >= data.total) break;
-
-        // Respect rate limiting
-        await randomSleep(1000, 2000);
       }
+
+      return this.buildResponse(
+        client,
+        listingsResult.value,
+        categoryMap,
+        company,
+        wdNumber,
+        site,
+        input.descriptionFormat,
+      );
 
     } catch (err: any) {
       this.logger.error(`Workday scrape error for ${company}: ${err.message}`);
-
-      // The listing set is untrustworthy after a pagination failure, and enriching it
-      // would spend one detail request per accumulated entry on it.
       return new JobResponseDto([], classifyScrapeError(err));
     }
+  }
 
-    return this.buildResponse(
-      client,
-      listingsToEnrich,
-      company,
-      wdNumber,
-      site,
-      input.descriptionFormat,
+  /**
+   * The board's "Job Category" drop-down is the search endpoint's
+   * `jobFamilyGroup` facet — categories exist only as filter buckets, never on
+   * the per-job payloads. Extract the pageable values (id + display label).
+   */
+  private jobCategoryFacets(
+    data: WorkdaySearchResponse,
+    company: string,
+    wdNumber: string,
+    site: string,
+  ): Array<{ id: string; label: string }> {
+    const facet = data.facets?.find(
+      (f) => f.facetParameter === WORKDAY_CATEGORY_FACET,
     );
+    const values = (facet?.values ?? [])
+      .map((v) => ({ id: v.id?.trim() ?? '', label: v.descriptor?.trim() ?? '' }))
+      .filter((v) => v.id.length > 0 && v.label.length > 0);
+    if (values.length > WORKDAY_CATEGORY_FACET_CAP) {
+      this.logger.warn(
+        `Workday: ${values.length} ${WORKDAY_CATEGORY_FACET} facet values for ${company} ` +
+        `(wd${wdNumber}/${site}) exceeds cap ${WORKDAY_CATEGORY_FACET_CAP}; skipping category bucketing`,
+      );
+      return [];
+    }
+    return values;
+  }
+
+  /**
+   * Unfiltered list pagination, resuming from a seed page already fetched by
+   * the caller. Sequential with a courtesy sleep between requests.
+   */
+  private async fetchListings(
+    client: ReturnType<typeof createHttpClient>,
+    apiUrl: string,
+    company: string,
+    wdNumber: string,
+    site: string,
+    firstPage: WorkdaySearchResponse,
+    resultsWanted: number,
+  ): Promise<WorkdayJobListItem[]> {
+    const listingsToEnrich: WorkdayJobListItem[] = [];
+    const seenKeys = new Set<string>();
+    let offset = 0;
+    let page = firstPage;
+
+    while (listingsToEnrich.length < resultsWanted) {
+      const listings = page.jobPostings ?? [];
+      if (listings.length === 0) break;
+
+      this.logger.log(
+        `Workday: fetched ${listings.length} jobs at offset ${offset} for ${company}` +
+        `${page.total ? ` (total: ${page.total})` : ''}`,
+      );
+
+      // Count distinct postings, not pushes: some tenants answer an out-of-range
+      // offset by re-serving page 1, and re-serving the same page must never look
+      // like progress toward resultsWanted.
+      let added = 0;
+      for (const listing of listings) {
+        if (listingsToEnrich.length >= resultsWanted) break;
+        const key = workdayListingKey(listing);
+        if (key && seenKeys.has(key)) continue;
+        if (key) seenKeys.add(key);
+        listingsToEnrich.push(listing);
+        added++;
+      }
+
+      // The quota is checked before any further fetch — never request a page
+      // whose listings could not be consumed anyway.
+      if (listingsToEnrich.length >= resultsWanted) break;
+
+      const pageOffset = offset;
+      offset += listings.length;
+
+      if (added === 0) {
+        this.logger.warn(
+          `Workday: pagination not advancing for ${company} (wd${wdNumber}/${site}): ` +
+          `page at offset ${pageOffset} returned ${listings.length} jobs, 0 new ` +
+          `(server re-served an earlier page); stopping with ${listingsToEnrich.length} distinct jobs`,
+        );
+        break;
+      }
+
+      // If we got less than page size, no more results
+      if (listings.length < WORKDAY_PAGE_SIZE) break;
+
+      // A positive total ends paging before the first out-of-range request. Zero or
+      // absent is not a count: a real page can report total 0 on some tenants.
+      if (typeof page.total === 'number' && page.total > 0 && offset >= page.total) break;
+
+      // Respect rate limiting
+      await randomSleep(1000, 2000);
+
+      const response = await client.post(apiUrl, {
+        appliedFacets: {},
+        limit: WORKDAY_PAGE_SIZE,
+        offset,
+        searchText: '',
+      });
+      page = response.data ?? {};
+    }
+
+    return listingsToEnrich;
+  }
+
+  /**
+   * Bucketed pass: page through each category facet value to learn which
+   * bucket returns each posting → listingKey → category label. Sequential
+   * requests with the same courtesy sleep as the unfiltered pass. A failed
+   * bucket logs and yields its partial map; `jobFamilyGroup` is single-valued
+   * per posting, so a repeated key can only restate its own bucket.
+   */
+  private async fetchJobCategoryMap(
+    client: ReturnType<typeof createHttpClient>,
+    apiUrl: string,
+    company: string,
+    wdNumber: string,
+    site: string,
+    categories: Array<{ id: string; label: string }>,
+  ): Promise<Map<string, string>> {
+    const categoryMap = new Map<string, string>();
+
+    for (const category of categories) {
+      try {
+        let offset = 0;
+        while (true) {
+          const response = await client.post(apiUrl, {
+            appliedFacets: { [WORKDAY_CATEGORY_FACET]: [category.id] },
+            limit: WORKDAY_PAGE_SIZE,
+            offset,
+            searchText: '',
+          });
+          const data: WorkdaySearchResponse = response.data ?? {};
+          const listings = data.jobPostings ?? [];
+          if (listings.length === 0) break;
+
+          // Same re-served-page guard as the unfiltered pass: a page that adds
+          // no new keys cannot be making progress through the bucket.
+          let added = 0;
+          for (const listing of listings) {
+            const key = workdayListingKey(listing);
+            if (!key) continue;
+            if (!categoryMap.has(key)) added++;
+            categoryMap.set(key, category.label);
+          }
+          offset += listings.length;
+
+          if (added === 0) break;
+          if (listings.length < WORKDAY_PAGE_SIZE) break;
+          if (typeof data.total === 'number' && data.total > 0 && offset >= data.total) break;
+
+          // Respect rate limiting
+          await randomSleep(1000, 2000);
+        }
+      } catch (err: any) {
+        this.logger.warn(
+          `Workday: category bucket "${category.label}" failed for ${company} ` +
+          `(wd${wdNumber}/${site}): ${err.message}`,
+        );
+      }
+
+      // Same courtesy cadence between buckets as between pages.
+      await randomSleep(1000, 2000);
+    }
+
+    return categoryMap;
   }
 
   private async buildResponse(
     client: ReturnType<typeof createHttpClient>,
     listings: WorkdayJobListItem[],
+    categoryMap: Map<string, string>,
     company: string,
     wdNumber: string,
     site: string,
@@ -175,6 +322,7 @@ export class WorkdayService implements IScraper {
           return this.processListing(
             listing,
             details[index] ?? null,
+            categoryMap,
             company,
             wdNumber,
             site,
@@ -239,6 +387,7 @@ export class WorkdayService implements IScraper {
   private processListing(
     listing: WorkdayJobListItem,
     detail: WorkdayJobDetail | null,
+    categoryMap: Map<string, string>,
     company: string,
     wdNumber: string,
     site: string,
@@ -329,7 +478,14 @@ export class WorkdayService implements IScraper {
       countryCode: info?.jobRequisitionLocation?.country?.alpha2Code ?? null,
       atsId,
       atsType: 'workday',
-      department: info?.jobFamily?.[0]?.name ?? subtitleTexts[0] ?? null,
+      // Department precedence: the detail payload's own jobFamily, then the
+      // board's "Job Category" facet bucket the listing landed in, then the
+      // legacy subtitle heuristic.
+      department:
+        info?.jobFamily?.[0]?.name ??
+        categoryMap.get(workdayListingKey(listing) ?? '') ??
+        subtitleTexts[0] ??
+        null,
       employmentType: info?.timeType ?? info?.workerSubType ?? null,
     });
   }
