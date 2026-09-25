@@ -13,6 +13,17 @@ export const WORKDAY_PAGE_SIZE = 20;
 /** Maximum number of public CXS detail requests in flight at once. */
 export const WORKDAY_DETAIL_CONCURRENCY = 5;
 
+/**
+ * The search endpoint's `facetParameter` for the board's "Job Category"
+ * drop-down. The category is not carried per-job in CXS payloads; it is
+ * recovered by paginating each facet value (`appliedFacets`) and recording
+ * which bucket returns each posting.
+ */
+export const WORKDAY_CATEGORY_FACET = 'jobFamilyGroup';
+
+/** Safety bound on the number of category buckets paginated per scrape. */
+export const WORKDAY_CATEGORY_FACET_CAP = 50;
+
 /** Default headers for Workday API requests */
 export const WORKDAY_HEADERS: Record<string, string> = {
   Accept: 'application/json',

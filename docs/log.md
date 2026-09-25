@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-09-25 — Spec 5159 — `source-ats-workday`: department from the jobFamilyGroup search facet
+
+**Change:** `WorkdayService` now emits `department` from the board's "Job Category" drop-down — the `jobFamilyGroup` search facet. The category is never on the per-job payloads (list rows carry none, and `jobPostingInfo.jobFamily` is tenant-optional), but every list response carries the facet catalog with value ids and per-value counts, and the endpoint honors `appliedFacets: { jobFamilyGroup: [valueId] }`. The unfiltered seed page supplies both the first listings and the facet catalog at no extra cost; then two coarse streams run via `Promise.allSettled` — the existing unfiltered list pass (resuming after the seed page) in parallel with a new `fetchJobCategoryMap` that pages each category value into a listingKey→label map. Both streams stay internally sequential behind the 1–2s courtesy sleep (≤2 list requests in flight). `department` precedence: detail `jobFamily[0].name` → facet bucket → `subtitles[0]`. Guards: `WORKDAY_CATEGORY_FACET_CAP = 50` values; failed bucket logs and yields a partial map; whole bucketed-stream failure falls back silently — the scrape never fails over categories. Verified live (`recar:108:SLATEcareers`): 124 jobs, 35 departments emitted.
+
+**Files:** `packages/plugins/source-ats-workday/src/{workday.service.ts,workday.constants.ts,workday.types.ts}`, `packages/plugins/source-ats-workday/__tests__/workday.service.spec.ts`, `.specify/specs/5159-workday-job-category-facets/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx jest source-ats-workday` — 57 tests green (bucket→department mapping, appliedFacets payload assertion, jobFamily/subtitle precedence, uncategorized fallback, zero-extra-request facetless path, failed-bucket tolerance, cap skip); `npx tsc --project tsconfig.typecheck.json --noEmit` clean; `npm run lint:docs` clean.
+
+---
+
 ## 2026-09-24 — Spec 5158 — `source-company-wercomfg`: Werco Manufacturing careers plugin
 
 - New plugin `packages/plugins/source-company-wercomfg` (`Site.WERCOMFG`, `companyDomains: ['wercomfg.com']`).
