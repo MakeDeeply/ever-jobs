@@ -1876,6 +1876,7 @@ import { RevoyModule } from './source-company-revoy';
 import { XlightModule } from './source-company-xlight';
 import { IntDynModule } from './source-company-int-dyn';
 import { ThoronUsModule } from './source-company-thoron_us';
+import { WercoMfgModule } from './source-company-wercomfg';
 export const ALL_SOURCE_MODULES = [
   FourDayWeekModule,
   AcademiccareersModule,
@@ -3745,4 +3746,5 @@ export const ALL_SOURCE_MODULES = [
   XlightModule,
   IntDynModule,
   ThoronUsModule,
+  WercoMfgModule,
 ];

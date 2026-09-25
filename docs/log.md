@@ -5,6 +5,14 @@
 
 ---
 
+## 2026-09-24 — Spec 5158 — `source-company-wercomfg`: Werco Manufacturing careers plugin
+
+- New plugin `packages/plugins/source-company-wercomfg` (`Site.WERCOMFG`, `companyDomains: ['wercomfg.com']`).
+- The `/careers` index links 11 `/careers/{slug}` detail pages; each detail page embeds a full `JobPosting` JSON-LD block, so the plugin crawls the index's links and maps structured data only — no bespoke HTML scraping, no headless.
+- Mapping: `id`/`atsId` = `wercomfg-{identifier.value}` (URL-slug fallback); `datePosted`; `employmentType` → `jobType` + raw; `jobLocation.address` → `LocationDto`; `jobUrl`/`jobUrlDirect` = detail page; `applyUrl` = shared `info@wercomfg.com` mailto (only contact route on the site); `industry`/`occupationalCategory`/`workHours` appended to the description.
+- 8 unit tests on captured fixtures; verified live (11 jobs).
+- Registration: `site.enum.ts` (Phase 1712), `plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`.
+
 ## 2026-09-24 — Spec 5157 — `source-company-thoron_us`: Thoron careers plugin
 
 **Change:** New company plugin `source-company-thoron_us` (`Site.THORON_US = 'thoron_us'` per the Spec 5069 domain derivation of `thoron.us`; `companyDomains: ['thoron.us']` declared to pre-claim the host). `thoron.us` is a Vite-built SPA — two static GETs: `/careers` shell → `/assets/index-{hash}.js` (hash resolved at fetch time, never hardcoded) → the embedded `[{id,title,department,location,type,whatYoullDo,whatYouBring,niceToHaves}]` jobs array. The array anchor matches the full `{id:N,title:"…",department:"…",location:"…",type:"` entry run so sibling `{icon:…,title:…}` literals can't collide; sliced by balanced brackets, never evaluated. `department` → `department`; `location` → `parseLocationText`; `type` → `extractJobType` + raw `employmentType`; `description` composes "What you'll do / What you bring / Nice to have" bullet sections. Apply is a shared in-page form POST (`/api/job-applications`) with no per-role page or anchor — `jobUrl`/`jobUrlDirect`/`applyUrl` = `/careers`. Ids `thoron_us-{native id}`. No `datePosted`/`compensation`/`workFromHomeType` — not published. Zero entries → `empty`; fetch failure → `classifyScrapeError`; `resultsWanted`/`searchTerm`/`location`/`offset` honored.
