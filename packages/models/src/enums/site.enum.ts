@@ -3608,6 +3608,9 @@ export enum Site {
 
   // Phase 1711: Spec 5157 — Source Company Plugin: Thoron (thoron.us) — jobs array embedded in the SPA bundle
   THORON_US = 'thoron_us',
+
+  // Phase 1712: Spec 5158 — Source Company Plugin: Werco Manufacturing (wercomfg.com) — detail pages carry JobPosting JSON-LD
+  WERCOMFG = 'wercomfg',
 }
 
 /**

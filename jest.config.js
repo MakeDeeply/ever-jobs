@@ -1882,6 +1882,7 @@ module.exports = {
     '^@ever-jobs/source-company-xlight$': '<rootDir>/packages/plugins/source-company-xlight/src/index.ts',
     '^@ever-jobs/source-company-int-dyn$': '<rootDir>/packages/plugins/source-company-int-dyn/src/index.ts',
     '^@ever-jobs/source-company-thoron_us$': '<rootDir>/packages/plugins/source-company-thoron_us/src/index.ts',
+    '^@ever-jobs/source-company-wercomfg$': '<rootDir>/packages/plugins/source-company-wercomfg/src/index.ts',
     '^@ever-jobs/source-tesla$': '<rootDir>/packages/plugins/source-tesla/src/index.ts',
     '^@ever-jobs/source-tesla-playwright$': '<rootDir>/packages/plugins/source-tesla-playwright/src/index.ts',
   },
