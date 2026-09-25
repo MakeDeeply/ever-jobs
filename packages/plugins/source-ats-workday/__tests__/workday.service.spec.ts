@@ -628,7 +628,21 @@ describe('WorkdayService — Spec 720 / T05', () => {
    * which bucket returns each listing.
    */
   describe('jobFamilyGroup facet bucketing — Spec 5159', () => {
-    const LIST_PAGE_WITH_FACETS = {
+    const LIST_PAGE_WITH_FACETS: {
+      total: number;
+      jobPostings: Array<{
+        title: string;
+        externalPath: string;
+        locationsText: string;
+        postedOn: string;
+        subtitles?: Array<{ instances: Array<{ text: string }> }>;
+      }>;
+      facets: Array<{
+        facetParameter: string;
+        descriptor: string;
+        values: Array<{ descriptor: string; id: string; count: number }>;
+      }>;
+    } = {
       total: 3,
       jobPostings: [
         {
