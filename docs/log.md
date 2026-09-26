@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-09-26 — Spec 5160 — `source-ats-workday`: discover tenant-renamed category facets
+
+**Change:** Spec 5159 matched the category facet by the literal `facetParameter` `jobFamilyGroup`, but tenants rename it — live probes: `zekelman` uses `jobFamily` ("Job Family"), `wisk` uses `Department_Extended` ("Department"). Discovery is now a two-gate match: drop facets whose parameter is a known non-category field (explicit set: `workerSubType`, `timeType`, `locations`, `locationCountry`, `locationRegionStateProvince`, `jobReqId`, `remote`, `brands`, `company`; plus a `/location|site|brand|compan|remote|subtype|timetype/i` name guard), then keep any facet whose parameter **or** descriptor matches `/categor|famil|depart/i`. Facets nested inside facet groups are candidates too (`WorkdayFacetValue` gained `facetParameter`/`values`). Among qualifiers the largest `sum(values[].count)` wins rather than first-listed; the chosen parameter keys `appliedFacets`. Cap, partial-map-on-failure, and the two-stream shape from 5159 are unchanged. Verified live: `zekelman:12:Careers` 183 jobs → 180 departments (all 14 "Job Family" values); `wisk:108:Wisk_Careers` 7 jobs → 7 departments.
+
+**Files:** `packages/plugins/source-ats-workday/src/{workday.service.ts,workday.constants.ts,workday.types.ts}`, `packages/plugins/source-ats-workday/__tests__/workday.service.spec.ts`, `.specify/specs/5160-workday-category-facet-variants/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx jest source-ats-workday` — 62 tests green (renamed-parameter bucketing, omit-list suppression, coverage pick, nested-group discovery, plus the whole 5159 suite); `npx tsc --project tsconfig.typecheck.json --noEmit` clean; `npm run lint:docs` clean.
+
+---
+
 ## 2026-09-25 — Spec 5159 — `source-ats-workday`: department from the jobFamilyGroup search facet
 
 **Change:** `WorkdayService` now emits `department` from the board's "Job Category" drop-down — the `jobFamilyGroup` search facet. The category is never on the per-job payloads (list rows carry none, and `jobPostingInfo.jobFamily` is tenant-optional), but every list response carries the facet catalog with value ids and per-value counts, and the endpoint honors `appliedFacets: { jobFamilyGroup: [valueId] }`. The unfiltered seed page supplies both the first listings and the facet catalog at no extra cost; then two coarse streams run via `Promise.allSettled` — the existing unfiltered list pass (resuming after the seed page) in parallel with a new `fetchJobCategoryMap` that pages each category value into a listingKey→label map. Both streams stay internally sequential behind the 1–2s courtesy sleep (≤2 list requests in flight). `department` precedence: detail `jobFamily[0].name` → facet bucket → `subtitles[0]`. Guards: `WORKDAY_CATEGORY_FACET_CAP = 50` values; failed bucket logs and yields a partial map; whole bucketed-stream failure falls back silently — the scrape never fails over categories. Verified live (`recar:108:SLATEcareers`): 124 jobs, 35 departments emitted.

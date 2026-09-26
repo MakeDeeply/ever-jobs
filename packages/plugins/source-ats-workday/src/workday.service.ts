@@ -24,8 +24,10 @@ import {
   WORKDAY_HEADERS,
   WORKDAY_PAGE_SIZE,
   WORKDAY_DETAIL_CONCURRENCY,
-  WORKDAY_CATEGORY_FACET,
   WORKDAY_CATEGORY_FACET_CAP,
+  WORKDAY_CATEGORY_FACET_PATTERN,
+  WORKDAY_NON_CATEGORY_FACET_PARAMETERS,
+  WORKDAY_NON_CATEGORY_FACET_PATTERN,
   parseWorkdaySlug,
   buildWorkdayUrl,
   buildWorkdayDetailUrl,
@@ -33,6 +35,7 @@ import {
   workdayListingKey,
 } from './workday.constants';
 import {
+  WorkdayFacet,
   WorkdayJobDetail,
   WorkdayJobListItem,
   WorkdaySearchResponse,
@@ -79,7 +82,7 @@ export class WorkdayService implements IScraper {
         searchText: '',
       });
       const firstPage: WorkdaySearchResponse = firstResponse.data ?? {};
-      const categories = this.jobCategoryFacets(firstPage, company, wdNumber, site);
+      const categoryFacet = this.jobCategoryFacet(firstPage, company, wdNumber, site);
 
       // Two coarse streams in parallel: the unfiltered list pass resumes after
       // the seed page while the bucketed pass walks each category value. Each
@@ -87,7 +90,7 @@ export class WorkdayService implements IScraper {
       // more than ~2 list requests in flight.
       const [listingsResult, categoriesResult] = await Promise.allSettled([
         this.fetchListings(client, apiUrl, company, wdNumber, site, firstPage, resultsWanted),
-        this.fetchJobCategoryMap(client, apiUrl, company, wdNumber, site, categories),
+        this.fetchJobCategoryMap(client, apiUrl, company, wdNumber, site, categoryFacet),
       ]);
 
       // The listing set is untrustworthy after a pagination failure, and
@@ -123,30 +126,67 @@ export class WorkdayService implements IScraper {
   }
 
   /**
-   * The board's "Job Category" drop-down is the search endpoint's
-   * `jobFamilyGroup` facet — categories exist only as filter buckets, never on
-   * the per-job payloads. Extract the pageable values (id + display label).
+   * The board's "Job Category" drop-down is a search-endpoint facet whose
+   * `facetParameter` tenants rename (`jobFamilyGroup`, `jobFamily`,
+   * `Department_Extended`, …) — categories exist only as filter buckets,
+   * never on the per-job payloads. Qualifiers: a facet whose parameter or
+   * descriptor carries a category word and whose parameter is not a known
+   * non-category field. When several facets qualify, the one covering the
+   * most postings (largest sum of value counts) is chosen.
    */
-  private jobCategoryFacets(
+  private jobCategoryFacet(
     data: WorkdaySearchResponse,
     company: string,
     wdNumber: string,
     site: string,
-  ): Array<{ id: string; label: string }> {
-    const facet = data.facets?.find(
-      (f) => f.facetParameter === WORKDAY_CATEGORY_FACET,
-    );
-    const values = (facet?.values ?? [])
-      .map((v) => ({ id: v.id?.trim() ?? '', label: v.descriptor?.trim() ?? '' }))
-      .filter((v) => v.id.length > 0 && v.label.length > 0);
-    if (values.length > WORKDAY_CATEGORY_FACET_CAP) {
+  ): { parameter: string; values: Array<{ id: string; label: string }> } | null {
+    let best: { parameter: string; values: Array<{ id: string; label: string }>; coverage: number } | null =
+      null;
+
+    // Facet candidates: each top-level facet, plus nested facets when the
+    // endpoint wraps them in a facet group (values entries carrying their
+    // own facetParameter — the zekelman board nests locations this way).
+    const candidates = (data.facets ?? []).flatMap((facet) => [
+      facet,
+      ...(facet.values ?? []).filter(
+        (v): v is WorkdayFacet => v.facetParameter != null,
+      ),
+    ]);
+
+    for (const facet of candidates) {
+      const parameter = facet.facetParameter?.trim() ?? '';
+      if (
+        !parameter ||
+        WORKDAY_NON_CATEGORY_FACET_PARAMETERS.has(parameter) ||
+        WORKDAY_NON_CATEGORY_FACET_PATTERN.test(parameter)
+      ) {
+        continue;
+      }
+      if (
+        !WORKDAY_CATEGORY_FACET_PATTERN.test(parameter) &&
+        !WORKDAY_CATEGORY_FACET_PATTERN.test(facet.descriptor ?? '')
+      ) {
+        continue;
+      }
+      const values = (facet.values ?? [])
+        .map((v) => ({ id: v.id?.trim() ?? '', label: v.descriptor?.trim() ?? '', count: v.count ?? 0 }))
+        .filter((v) => v.id.length > 0 && v.label.length > 0);
+      if (values.length === 0) continue;
+      const coverage = values.reduce((sum, v) => sum + v.count, 0);
+      if (!best || coverage > best.coverage) {
+        best = { parameter, values, coverage };
+      }
+    }
+
+    if (!best) return null;
+    if (best.values.length > WORKDAY_CATEGORY_FACET_CAP) {
       this.logger.warn(
-        `Workday: ${values.length} ${WORKDAY_CATEGORY_FACET} facet values for ${company} ` +
+        `Workday: ${best.values.length} ${best.parameter} facet values for ${company} ` +
         `(wd${wdNumber}/${site}) exceeds cap ${WORKDAY_CATEGORY_FACET_CAP}; skipping category bucketing`,
       );
-      return [];
+      return null;
     }
-    return values;
+    return { parameter: best.parameter, values: best.values.map(({ id, label }) => ({ id, label })) };
   }
 
   /**
@@ -231,8 +271,9 @@ export class WorkdayService implements IScraper {
    * Bucketed pass: page through each category facet value to learn which
    * bucket returns each posting → listingKey → category label. Sequential
    * requests with the same courtesy sleep as the unfiltered pass. A failed
-   * bucket logs and yields its partial map; `jobFamilyGroup` is single-valued
-   * per posting, so a repeated key can only restate its own bucket.
+   * bucket logs and yields its partial map; the category facet is
+   * single-valued per posting, so a repeated key can only restate its own
+   * bucket.
    */
   private async fetchJobCategoryMap(
     client: ReturnType<typeof createHttpClient>,
@@ -240,16 +281,17 @@ export class WorkdayService implements IScraper {
     company: string,
     wdNumber: string,
     site: string,
-    categories: Array<{ id: string; label: string }>,
+    facet: { parameter: string; values: Array<{ id: string; label: string }> } | null,
   ): Promise<Map<string, string>> {
     const categoryMap = new Map<string, string>();
+    if (!facet) return categoryMap;
 
-    for (const category of categories) {
+    for (const category of facet.values) {
       try {
         let offset = 0;
         while (true) {
           const response = await client.post(apiUrl, {
-            appliedFacets: { [WORKDAY_CATEGORY_FACET]: [category.id] },
+            appliedFacets: { [facet.parameter]: [category.id] },
             limit: WORKDAY_PAGE_SIZE,
             offset,
             searchText: '',

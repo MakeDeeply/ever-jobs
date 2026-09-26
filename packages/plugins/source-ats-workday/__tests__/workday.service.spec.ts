@@ -622,13 +622,9 @@ describe('WorkdayService — Spec 720 / T05', () => {
   });
 
   /**
-   * Spec 5159 — the board's "Job Category" drop-down is the search facet
-   * `jobFamilyGroup`; the category never appears on per-job payloads, so it
-   * is recovered by paginating each facet value (appliedFacets) and recording
-   * which bucket returns each listing.
+   * List page carrying the search facets, shared by the 5159/5160 suites.
    */
-  describe('jobFamilyGroup facet bucketing — Spec 5159', () => {
-    const LIST_PAGE_WITH_FACETS: {
+  const LIST_PAGE_WITH_FACETS: {
       total: number;
       jobPostings: Array<{
         title: string;
@@ -679,8 +675,15 @@ describe('WorkdayService — Spec 720 / T05', () => {
           values: [{ descriptor: 'Full time', id: 'fid-ft', count: 3 }],
         },
       ],
-    };
+  };
 
+  /**
+   * Spec 5159 — the board's "Job Category" drop-down is the search facet
+   * `jobFamilyGroup`; the category never appears on per-job payloads, so it
+   * is recovered by paginating each facet value (appliedFacets) and recording
+   * which bucket returns each listing.
+   */
+  describe('jobFamilyGroup facet bucketing — Spec 5159', () => {
     /** Route POSTs by appliedFacets: unfiltered -> list page, else bucket page. */
     function routeByFacet(buckets: Record<string, { total: number; jobPostings: object[] } | Error>) {
       mockPost.mockImplementation((_url: string, payload: any) => {
@@ -797,6 +800,177 @@ describe('WorkdayService — Spec 720 / T05', () => {
 
       expect(result.jobs).toHaveLength(3);
       expect(mockPost).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  /**
+   * Spec 5160 — tenants rename the category facet's `facetParameter`
+   * (`jobFamily`, `Department_Extended`, …), so discovery is a category-word
+   * match on parameter/descriptor minus known non-category fields, choosing
+   * the qualifier with the largest coverage.
+   */
+  describe('tenant-renamed category facets — Spec 5160', () => {
+    function pageWithFacet(parameter: string, descriptor: string) {
+      const page = clone(LIST_PAGE_WITH_FACETS);
+      page.facets[0].facetParameter = parameter;
+      page.facets[0].descriptor = descriptor;
+      return page;
+    }
+
+    function scrape() {
+      return new WorkdayService().scrape({
+        siteType: [Site.WORKDAY],
+        companySlug: 'slate:108:SLATEcareers',
+        resultsWanted: 100,
+      } as ScraperInputDto);
+    }
+
+    it('buckets via a `jobFamily` facet (zekelman shape)', async () => {
+      const page = pageWithFacet('jobFamily', 'Job Family');
+      mockPost.mockImplementation((_url: string, payload: any) => {
+        const facetId = payload?.appliedFacets?.jobFamily?.[0];
+        if (facetId === 'fid-quality') {
+          return Promise.resolve({
+            data: { total: 1, jobPostings: [clone(page.jobPostings[0])] },
+          });
+        }
+        if (facetId === 'fid-brand') {
+          return Promise.resolve({
+            data: { total: 1, jobPostings: [clone(page.jobPostings[1])] },
+          });
+        }
+        return Promise.resolve({ data: page });
+      });
+
+      const result = await scrape();
+      const byTitle = new Map(result.jobs.map((j) => [j.title, j]));
+
+      expect(byTitle.get('Quality Engineer')?.department).toBe('Quality');
+      expect(byTitle.get('Brand Manager')?.department).toBe('Brand Marketing');
+    });
+
+    it('buckets via a `Department_Extended` facet (wisk shape)', async () => {
+      const page = pageWithFacet('Department_Extended', 'Department');
+      mockPost.mockImplementation((_url: string, payload: any) => {
+        const facetId = payload?.appliedFacets?.Department_Extended?.[0];
+        if (facetId === 'fid-quality') {
+          return Promise.resolve({
+            data: { total: 1, jobPostings: [clone(page.jobPostings[0])] },
+          });
+        }
+        if (facetId === 'fid-brand') {
+          return Promise.resolve({
+            data: { total: 1, jobPostings: [clone(page.jobPostings[1])] },
+          });
+        }
+        return Promise.resolve({ data: page });
+      });
+
+      const result = await scrape();
+      const byTitle = new Map(result.jobs.map((j) => [j.title, j]));
+
+      expect(byTitle.get('Quality Engineer')?.department).toBe('Quality');
+      expect(byTitle.get('Brand Manager')?.department).toBe('Brand Marketing');
+    });
+
+    it('never buckets a known field even when its label is category-worded', async () => {
+      const page = clone(LIST_PAGE_WITH_FACETS);
+      page.facets[0].facetParameter = 'workerSubType';
+      page.facets[0].descriptor = 'Job Family';
+      mockPost.mockResolvedValueOnce({ data: page });
+
+      const result = await scrape();
+
+      expect(result.jobs).toHaveLength(3);
+      // Seed page only — the omit-list suppresses bucketed requests.
+      expect(mockPost).toHaveBeenCalledTimes(1);
+      expect(result.jobs.every((j) => j.department == null)).toBe(true);
+    });
+
+    it('picks the qualifier covering the most postings', async () => {
+      const page = clone(LIST_PAGE_WITH_FACETS);
+      // Small-coverage qualifier first, larger second — first-listed must lose.
+      page.facets[0] = {
+        facetParameter: 'jobFamily',
+        descriptor: 'Job Family',
+        values: [{ descriptor: 'Quality', id: 'fid-quality', count: 1 }],
+      };
+      page.facets.push({
+        facetParameter: 'Department_Extended',
+        descriptor: 'Department',
+        values: [
+          { descriptor: 'Quality', id: 'fid-quality', count: 2 },
+          { descriptor: 'Brand Marketing', id: 'fid-brand', count: 1 },
+        ],
+      });
+      const bucketed = new Set<string>();
+      mockPost.mockImplementation((_url: string, payload: any) => {
+        for (const key of ['jobFamily', 'Department_Extended']) {
+          const facetId = payload?.appliedFacets?.[key]?.[0];
+          if (facetId) {
+            bucketed.add(key);
+            return Promise.resolve({ data: { total: 0, jobPostings: [] } });
+          }
+        }
+        return Promise.resolve({ data: page });
+      });
+
+      const result = await scrape();
+
+      expect(result.jobs).toHaveLength(3);
+      expect(bucketed.has('Department_Extended')).toBe(true);
+      expect(bucketed.has('jobFamily')).toBe(false);
+    });
+
+    it('finds the category facet nested inside a facet group', async () => {
+      const page = clone(LIST_PAGE_WITH_FACETS);
+      page.facets = [
+        {
+          facetParameter: 'locationFacetGroup',
+          descriptor: 'Locations',
+          values: [
+            {
+              facetParameter: 'locations',
+              descriptor: 'City',
+              values: [{ descriptor: 'Warsaw', id: 'loc-1', count: 3 }],
+            } as any,
+          ],
+        } as any,
+        {
+          facetParameter: 'otherGroup',
+          descriptor: 'Job Groupings',
+          values: [
+            {
+              facetParameter: 'jobFamily',
+              descriptor: 'Job Family',
+              values: [
+                { descriptor: 'Quality', id: 'fid-quality', count: 1 },
+                { descriptor: 'Brand Marketing', id: 'fid-brand', count: 1 },
+              ],
+            } as any,
+          ],
+        } as any,
+      ];
+      mockPost.mockImplementation((_url: string, payload: any) => {
+        const facetId = payload?.appliedFacets?.jobFamily?.[0];
+        if (facetId === 'fid-quality') {
+          return Promise.resolve({
+            data: { total: 1, jobPostings: [clone(page.jobPostings[0])] },
+          });
+        }
+        if (facetId === 'fid-brand') {
+          return Promise.resolve({
+            data: { total: 1, jobPostings: [clone(page.jobPostings[1])] },
+          });
+        }
+        return Promise.resolve({ data: page });
+      });
+
+      const result = await scrape();
+      const byTitle = new Map(result.jobs.map((j) => [j.title, j]));
+
+      expect(byTitle.get('Quality Engineer')?.department).toBe('Quality');
+      expect(byTitle.get('Brand Manager')?.department).toBe('Brand Marketing');
     });
   });
 });
