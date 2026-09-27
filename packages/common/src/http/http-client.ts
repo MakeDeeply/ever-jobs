@@ -1,38 +1,30 @@
 import { Injectable, Logger } from '@nestjs/common';
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import type { RawCaptureSink, RawHttpEntry } from '@ever-jobs/models';
 import { CookieJar } from 'tough-cookie';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { SocksProxyAgent } from 'socks-proxy-agent';
 
-import { getRequestId } from '../context';
+import { getRawCapture, getRequestId } from '../context';
+import {
+  captureRequestBody,
+  normalizeBody,
+  pushRawEntry,
+  redactUrl,
+  retainBody,
+  sanitizeErrorText,
+} from './raw-capture';
 
 const RETRYABLE_STATUSES = [429, 500, 502, 503, 504];
 
-/**
- * Query-string keys whose values must never reach a log line. Several sources
- * authenticate by query parameter (`source-ats-ceipal` `api_key`,
- * `source-ats-jazzhr` `apikey`, `source-ats-teamtailor` / `source-ats-talentera`
- * / `source-ats-comeet` `token`), so naming the raw URL on retry would copy
- * those credentials into the pod logs.
- */
-const SENSITIVE_QUERY_KEYS =
-  /^(?:api[-_]?key|access[-_]?token|token|secret|password|passwd|pwd|auth|authorization|signature|sig|session|credentials?)$/i;
-
-/**
- * Hosts that carry a credential in the URL *path* rather than the query string,
- * mapped to the zero-based index of the offending path segment. Ceipal routes
- * every tenant call through `https://api.ceipal.com/{apiKey}/job-postings/`, so
- * the first segment is the tenant's career-portal key — `CeipalService` already
- * masks it in its own logs (`maskKey`), and the shared retry line must not undo
- * that. `source-ats-ceipal` is currently the only plugin that builds a URL this
- * way; add a row here if another one appears.
- */
-const SENSITIVE_PATH_SEGMENTS: Record<string, number> = {
-  'api.ceipal.com': 0,
-};
-
-/** Scheme + authority of an absolute URL, e.g. `https://api.ceipal.com:443`. */
-const URL_AUTHORITY = /^[a-z][a-z0-9+.-]*:\/\/([^/?#]*)/i;
+/** Axios header values may be arrays/numbers/null — coerce to a plain string. */
+function headerString(response: AxiosResponse, name: string): string | undefined {
+  const value = response.headers?.[name];
+  if (typeof value === 'string') return value;
+  if (Array.isArray(value)) return value.join(', ');
+  if (value === null || value === undefined) return undefined;
+  return String(value);
+}
 
 export interface HttpClientOptions {
   proxies?: string[];
@@ -231,11 +223,31 @@ export class HttpClient {
       config.httpsAgent = agent;
     }
 
+    // Spec 5161 — read the capture sink once per call; AsyncLocalStorage
+    // keeps it in scope across the awaits below.
+    const sink = getRawCapture();
+
     let lastError: Error | null = null;
     for (let attempt = 0; attempt <= this.maxRetries; attempt++) {
+      const entry = sink
+        ? pushRawEntry(sink, {
+            attempt,
+            method: (config.method ?? 'GET').toUpperCase(),
+            url: config.url ? redactUrl(config.url) : '(no url)',
+            status: null,
+            elapsed_ms: 0,
+            body_bytes: 0,
+            truncated: false,
+            request_body: captureRequestBody(config.data),
+          })
+        : null;
+      const startedAt = Date.now();
       try {
-        return await this.client.request<T>(config);
+        const response = await this.client.request<T>(config);
+        if (sink && entry) this.recordResponse(sink, entry, response, startedAt);
+        return response;
       } catch (error: any) {
+        if (sink && entry) this.recordError(sink, entry, error, startedAt);
         lastError = error;
         const status = error.response?.status;
         if (status && RETRYABLE_STATUSES.includes(status) && attempt < this.maxRetries) {
@@ -284,64 +296,53 @@ export class HttpClient {
 
   /**
    * Strip credentials out of a URL before it reaches a log line, leaving the
-   * rest intact so the message still names its target. Splits on delimiters
-   * rather than parsing, so a relative or malformed URL degrades to "unchanged"
-   * instead of throwing inside a logging path.
+   * rest intact so the message still names its target.
    */
   private redactUrl(url: string): string {
-    return this.redactQuery(this.redactPathCredential(url));
+    return redactUrl(url);
   }
 
   /**
-   * Replace a credential carried as a path segment (see
-   * `SENSITIVE_PATH_SEGMENTS`) with `REDACTED`. Relative URLs and hosts with no
-   * rule are returned unchanged.
+   * Spec 5161 — record a settled response into the capture sink. Non-2xx
+   * never reaches here (axios throws), so this handles success bodies only.
    */
-  private redactPathCredential(url: string): string {
-    const authority = URL_AUTHORITY.exec(url);
-    if (!authority) return url;
-
-    const host = authority[1].replace(/^.*@/, '').replace(/:\d+$/, '').toLowerCase();
-    const index = SENSITIVE_PATH_SEGMENTS[host];
-    if (index === undefined) return url;
-
-    const pathStart = authority[0].length;
-    const query = url.indexOf('?', pathStart);
-    const fragment = url.indexOf('#', pathStart);
-    const ends = [query, fragment].filter((i) => i !== -1);
-    const pathEnd = ends.length ? Math.min(...ends) : url.length;
-
-    // A path that starts with `/` splits to a leading empty segment, so the
-    // first real segment is at index 1.
-    const segments = url.slice(pathStart, pathEnd).split('/');
-    const target = index + 1;
-    if (target >= segments.length || !segments[target]) return url;
-
-    segments[target] = 'REDACTED';
-    return url.slice(0, pathStart) + segments.join('/') + url.slice(pathEnd);
+  private recordResponse(
+    sink: RawCaptureSink,
+    entry: RawHttpEntry,
+    response: AxiosResponse,
+    startedAt: number,
+  ): void {
+    entry.status = response.status;
+    entry.elapsed_ms = Date.now() - startedAt;
+    entry.content_type = headerString(response, 'content-type');
+    const finalUrl = response.request?.res?.responseUrl as string | undefined;
+    if (finalUrl && finalUrl !== entry.url) {
+      entry.final_url = redactUrl(finalUrl);
+    }
+    retainBody(sink, entry, normalizeBody(response.data, entry.content_type));
   }
 
-  /**
-   * Replace the value of every credential-bearing query parameter with
-   * `REDACTED`.
-   */
-  private redactQuery(url: string): string {
-    const start = url.indexOf('?');
-    if (start === -1) return url;
-
-    const [query, ...fragment] = url.slice(start + 1).split('#');
-    const redacted = query
-      .split('&')
-      .map((pair) => {
-        const eq = pair.indexOf('=');
-        if (eq === -1) return pair;
-        const key = pair.slice(0, eq);
-        return SENSITIVE_QUERY_KEYS.test(key) ? `${key}=REDACTED` : pair;
-      })
-      .join('&');
-
-    const hash = fragment.length ? `#${fragment.join('#')}` : '';
-    return `${url.slice(0, start)}?${redacted}${hash}`;
+  /** Spec 5161 — record a thrown attempt: HTTP errors carry `response`; network errors don't. */
+  private recordError(
+    sink: RawCaptureSink,
+    entry: RawHttpEntry,
+    error: any,
+    startedAt: number,
+  ): void {
+    entry.elapsed_ms = Date.now() - startedAt;
+    const response = error.response as AxiosResponse | undefined;
+    if (response) {
+      entry.status = response.status;
+      entry.content_type = headerString(response, 'content-type');
+      const finalUrl = response.request?.res?.responseUrl as string | undefined;
+      if (finalUrl && finalUrl !== entry.url) {
+        entry.final_url = redactUrl(finalUrl);
+      }
+      // Error payloads usually carry the actual diagnostic — capture the body.
+      retainBody(sink, entry, normalizeBody(response.data, entry.content_type));
+    }
+    const message = typeof error?.message === 'string' ? error.message : String(error);
+    entry.error = sanitizeErrorText(message);
   }
 
   /** `Retry-After` as milliseconds: delta-seconds or an HTTP-date. Null when absent/unparseable. */

@@ -7,7 +7,9 @@ import {
 } from '@ever-jobs/models';
 import {
   extractSalary, convertToAnnual, siteFromDomain, deriveSiteToken, resolveCompanyUrl,
+  createRawCaptureSink, drainRawCapture, runWithRawCapture,
 } from '@ever-jobs/common';
+import type { RawCaptureSink, RawHttpEntry } from '@ever-jobs/models';
 import { ConfigService } from '@nestjs/config';
 import { PluginRegistry, CircuitBreakerInterceptor } from '@ever-jobs/plugin';
 import { MetricsService } from '../metrics/metrics.service';
@@ -167,7 +169,17 @@ export class JobsService implements OnModuleInit {
    */
   async searchJobsWithDiagnostics(
     input: ScraperInputDto,
-  ): Promise<{ jobs: JobPostDto[]; perSource: SourceDiagnosticDto[] }> {
+    options?: { captureRaw?: boolean },
+  ): Promise<{
+    jobs: JobPostDto[];
+    perSource: SourceDiagnosticDto[];
+    rawBySource: Record<string, RawHttpEntry[]>;
+  }> {
+    // Spec 5161 — `captureRaw` arrives as an options parameter, never a
+    // `ScraperInputDto` field: `input` is spread into the controller's
+    // `cacheParams` and into every plugin's `scraperInput`, so a field would
+    // leak into the cache key and reach plugins.
+    const captureRaw = options?.captureRaw === true;
     const atsSites = new Set<Site>(this.registry.listAtsSites());
     const { resolved: resolvedSites, unresolved: unresolvedDomains } =
       this.resolveCompanyDomains(input.companyDomain);
@@ -228,9 +240,18 @@ export class JobsService implements OnModuleInit {
       }
     }
 
+    // Spec 5161 — the single-source check must run BEFORE the zero-source
+    // early return, or a `include_raw` request resolving to no source would
+    // return an empty 200 instead of the documented 400.
+    if (captureRaw && selectedScrapers.length !== 1) {
+      throw new BadRequestException(
+        `include_raw requires exactly one source; got ${selectedScrapers.length}`,
+      );
+    }
+
     if (selectedScrapers.length === 0) {
       this.logger.warn('No valid scrapers selected');
-      return { jobs: [], perSource: [] };
+      return { jobs: [], perSource: [], rawBySource: {} };
     }
 
     // Spec 5026 — bounded fan-out. Previously this was a bare
@@ -267,6 +288,7 @@ export class JobsService implements OnModuleInit {
     const results: PromiseSettledResult<JobResponseDto>[] = new Array(
       selectedScrapers.length,
     );
+    const sinks: (RawCaptureSink | undefined)[] = new Array(selectedScrapers.length);
     let cursor = 0;
     let skipped = 0;
 
@@ -295,6 +317,13 @@ export class JobsService implements OnModuleInit {
           continue;
         }
 
+        // Spec 5161 — sinks live in the worker, not inside `scrapeOne`: the
+        // deadline path and the rejected path both need the sink, and neither
+        // can see `scrapeOne`'s locals. A deadline-skipped source never gets
+        // a sink, which is what keeps it out of `rawBySource` entirely.
+        const sink = captureRaw ? createRawCaptureSink() : undefined;
+        sinks[index] = sink;
+
         try {
           // Race against the deadline as well as checking it before starting:
           // a source that never settles would otherwise keep this worker (and
@@ -302,7 +331,7 @@ export class JobsService implements OnModuleInit {
           results[index] = {
             status: 'fulfilled',
             value: await withDeadline(
-              this.scrapeOne(site, scraper, input),
+              this.scrapeOne(site, scraper, input, sink),
               deadlineAt,
               site,
             ),
@@ -375,6 +404,20 @@ export class JobsService implements OnModuleInit {
       return dateB - dateA;
     });
 
+    // Spec 5161 — drain, close, and snapshot each sink that ran. A timed-out
+    // scrape keeps writing to its sink after `withDeadline` rejects, and
+    // browser plugins often leave the final response's body read pending when
+    // they return — the bounded drain is what keeps that body.
+    const rawBySource: Record<string, RawHttpEntry[]> = {};
+    if (captureRaw) {
+      for (let index = 0; index < sinks.length; index++) {
+        const sink = sinks[index];
+        if (!sink) continue;
+        await drainRawCapture(sink);
+        rawBySource[selectedScrapers[index].site] = sink.entries.slice();
+      }
+    }
+
     // Surface `companyDomain` values that did not map to a registered Site token as
     // diagnostics when the request still had at least one valid explicit selector (Spec 5095).
     for (const domain of unresolvedDomains) {
@@ -389,7 +432,7 @@ export class JobsService implements OnModuleInit {
     }
 
     this.logger.log(`Total aggregated jobs: ${allJobs.length}`);
-    return { jobs: allJobs, perSource };
+    return { jobs: allJobs, perSource, rawBySource };
   }
 
   /**
@@ -401,6 +444,7 @@ export class JobsService implements OnModuleInit {
     site: Site,
     scraper: IScraper,
     input: ScraperInputDto,
+    sink?: RawCaptureSink,
   ): Promise<JobResponseDto> {
     // Resolve retry policy for this source
     const globalRetry = this.configService.get('retry');
@@ -423,9 +467,15 @@ export class JobsService implements OnModuleInit {
       // we surface as a `circuit_open` metric status (not `error`) so
       // operators can distinguish "source down" from "we stopped
       // calling source" on the dashboard.
+      // Spec 5161 — the capture context wraps only the scrape call, inside
+      // the breaker lambda, so plugin HTTP + delegated scrapes inherit the sink.
+      const invoke = (): Promise<JobResponseDto> =>
+        sink
+          ? runWithRawCapture(sink, () => scraper.scrape(scraperInput))
+          : scraper.scrape(scraperInput);
       const response = this.circuitBreaker
-        ? await this.circuitBreaker.wrap(site, () => scraper.scrape(scraperInput))
-        : await scraper.scrape(scraperInput);
+        ? await this.circuitBreaker.wrap(site, invoke)
+        : await invoke();
       scraperStop();
       // Derive the metric from the diagnostic rather than from the promise
       // settling. A plugin that swallows its error resolves normally, so a

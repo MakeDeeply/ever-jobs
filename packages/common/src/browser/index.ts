@@ -1,1 +1,1 @@
-export { BrowserPool } from './browser-pool';
+export { BrowserPool, attachRawCapture } from './browser-pool';

@@ -29,6 +29,7 @@ import {
   type ILivenessChecker,
   type ILegitimacyChecker,
   type LegitimacyInput,
+  type RawHttpEntry,
 } from '@ever-jobs/models';
 import { ConfigService } from '@nestjs/config';
 import { JobsService } from './jobs.service';
@@ -100,6 +101,13 @@ export class JobsController {
     type: Number,
     description: 'Cap on returned per_source rows (default 200). Non-positive means no cap.',
   })
+  @ApiQuery({
+    name: 'include_raw',
+    required: false,
+    type: Boolean,
+    description:
+      'Raw HTTP capture for a single source (Spec 5161). Valid only when the request resolves to exactly one source; otherwise 400. Skips the cache read and adds `raw_by_source` to the response.',
+  })
   @ApiResponse({ status: 200, description: 'Job search results' })
   @ApiResponse({ status: 429, description: 'Rate limit exceeded' })
   async searchJobs(
@@ -118,6 +126,7 @@ export class JobsController {
     // directly), and inserting ahead of `res` silently shifts it.
     @Query('diagnostics') diagnosticsRaw?: string,
     @Query('diagnostics_limit') diagnosticsLimitRaw?: string,
+    @Query('include_raw') includeRawRaw?: string,
   ) {
     this.logger.log(
       `Search request: sites=${input.siteType?.join(',') ?? 'all'}, term="${input.searchTerm}", location="${input.location}"`,
@@ -163,23 +172,36 @@ export class JobsController {
       return 'off';
     };
 
+    // Spec 5161 — raw HTTP capture is a debugging aid for one source at a
+    // time; the service 400s when the selection resolves to anything else.
+    const includeRaw = parseBool(includeRawRaw);
+
     // ── Cache check (cache stores RAW fan-out — dedup runs per-request) ──
+    // `include_raw` skips the read: a hit ran no scrapers, so there would be
+    // nothing to capture. The write is unchanged — it stores only the
+    // `JobPostDto[]` fan-out, which never carries capture data.
     const cacheParams = { ...input, endpoint: 'search' };
-    const cached = await this.cacheService.get<JobPostDto[]>(cacheParams);
+    const cached = includeRaw
+      ? undefined
+      : await this.cacheService.get<JobPostDto[]>(cacheParams);
     let rawJobs: JobPostDto[];
     let fromCache = false;
     // Per-source outcome breakdown (Spec 5082). Only meaningful on a fresh
     // fan-out — a cache hit ran no scrapers, so it stays empty.
     let perSource: SourceDiagnosticDto[] = [];
+    let rawBySource: Record<string, RawHttpEntry[]> = {};
 
     if (cached) {
       rawJobs = cached;
       fromCache = true;
       this.logger.log(`Cache hit — returning ${rawJobs.length} cached results`);
     } else {
-      const result = await this.jobsService.searchJobsWithDiagnostics(input);
+      const result = await this.jobsService.searchJobsWithDiagnostics(input, {
+        captureRaw: includeRaw,
+      });
       rawJobs = result.jobs;
       perSource = result.perSource;
+      rawBySource = result.rawBySource;
       await this.cacheService.set(cacheParams, rawJobs);
     }
 
@@ -261,6 +283,7 @@ export class JobsController {
         dedup_metrics: aggregated.dedupMetrics,
         per_source: diagnostics.rows,
         per_source_summary: diagnostics.summary,
+        ...(includeRaw ? { raw_by_source: rawBySource } : {}),
         next_page: page < totalPages ? page + 1 : null,
         previous_page: page > 1 ? page - 1 : null,
       };
@@ -279,6 +302,7 @@ export class JobsController {
       dedup_metrics: aggregated.dedupMetrics,
       per_source: diagnostics.rows,
       per_source_summary: diagnostics.summary,
+      ...(includeRaw ? { raw_by_source: rawBySource } : {}),
     };
   }
 
