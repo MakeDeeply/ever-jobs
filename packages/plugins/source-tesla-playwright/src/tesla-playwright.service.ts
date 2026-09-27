@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { SourcePlugin } from '@ever-jobs/plugin';
-import { parseLocationList } from '@ever-jobs/common';
+import { attachRawCapture, parseLocationList } from '@ever-jobs/common';
 import {
   classifyScrapeError,
   IScraper,
@@ -103,6 +103,7 @@ export class TeslaPlaywrightService implements IScraper {
         args: [...TESLA_PLAYWRIGHT_LAUNCH_ARGS],
       });
       const page = await browser.newPage();
+      attachRawCapture(page);
 
       const navOk = await this.openCareersPage(page);
       if (!navOk) {

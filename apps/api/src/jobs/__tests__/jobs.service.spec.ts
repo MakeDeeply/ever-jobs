@@ -15,7 +15,8 @@ import {
   SourceDiagnosticDto,
 } from '@ever-jobs/models';
 import { PluginRegistry } from '@ever-jobs/plugin';
-import { normalizeCompanyHost } from '@ever-jobs/common';
+import { getRawCapture, normalizeCompanyHost } from '@ever-jobs/common';
+import type { RawHttpEntry } from '@ever-jobs/models';
 
 // ---------------------------------------------------------------------------
 // Mock ALL source packages before importing JobsService.
@@ -1258,5 +1259,144 @@ describe('JobsService', () => {
         expect.objectContaining({ status: 'success' }),
       );
     });
+
+    describe('raw HTTP capture — Spec 5161', () => {
+      const rawEntry = (url: string): RawHttpEntry => ({
+        seq: 0,
+        attempt: 0,
+        method: 'GET',
+        url,
+        status: 200,
+        elapsed_ms: 5,
+        body_bytes: 3,
+        truncated: false,
+        body: 'ok',
+      });
+
+      /** A scraper that records through whatever sink is in context. */
+      function capturingScraper(
+        jobs: Partial<JobPostDto>[] = [],
+        urls: string[] = ['https://acme.example.com/jobs'],
+      ): IScraper {
+        return {
+          scrape: jest.fn().mockImplementation(async () => {
+            const sink = getRawCapture();
+            urls.forEach((u, i) => sink?.entries.push({ ...rawEntry(u), seq: i }));
+            return new JobResponseDto(
+              jobs.map(
+                (j) =>
+                  new JobPostDto({
+                    id: j.id ?? 'job-1',
+                    title: j.title ?? 'Engineer',
+                    companyName: 'Acme',
+                    jobUrl: 'https://acme.example.com/j/1',
+                  }),
+              ),
+            );
+          }),
+        };
+      }
+
+      const oneSource = new ScraperInputDto({ siteType: [Site.LINKEDIN] });
+
+      it('400s when the request resolves to zero sources', async () => {
+        const service = createService([[Site.LINKEDIN, capturingScraper()]]);
+        // A domain that resolves to nothing leaves selectedScrapers empty.
+        await expect(
+          service.searchJobsWithDiagnostics(
+            new ScraperInputDto({ companyDomain: ['nope.invalid'] }),
+            { captureRaw: true },
+          ),
+        ).rejects.toThrow(BadRequestException);
+      });
+
+      it('400s when the request resolves to more than one source', async () => {
+        const service = createService([
+          [Site.LINKEDIN, capturingScraper()],
+          [Site.INDEED, capturingScraper()],
+        ]);
+        await expect(
+          service.searchJobsWithDiagnostics(
+            new ScraperInputDto({ siteType: [Site.LINKEDIN, Site.INDEED] }),
+            { captureRaw: true },
+          ),
+        ).rejects.toThrow('include_raw requires exactly one source; got 2');
+      });
+
+      it('returns captured entries under the source site key', async () => {
+        const service = createService([[Site.LINKEDIN, capturingScraper([{ title: 'X' }])]]);
+        const result = await service.searchJobsWithDiagnostics(oneSource, {
+          captureRaw: true,
+        });
+        expect(result.rawBySource[Site.LINKEDIN]).toHaveLength(1);
+        expect(result.rawBySource[Site.LINKEDIN][0].url).toBe(
+          'https://acme.example.com/jobs',
+        );
+      });
+
+      it('returns an empty rawBySource when captureRaw is not set', async () => {
+        const service = createService([[Site.LINKEDIN, capturingScraper()]]);
+        const result = await service.searchJobsWithDiagnostics(oneSource);
+        expect(result.rawBySource).toEqual({});
+      });
+
+      it('surfaces captured entries even when the scrape throws', async () => {
+        const failing: IScraper = {
+          scrape: jest.fn().mockImplementation(async () => {
+            getRawCapture()?.entries.push(rawEntry('https://acme.example.com/jobs'));
+            throw new Error('boom');
+          }),
+        };
+        const service = createService([[Site.LINKEDIN, failing]]);
+        const result = await service.searchJobsWithDiagnostics(oneSource, {
+          captureRaw: true,
+        });
+        expect(result.rawBySource[Site.LINKEDIN]).toHaveLength(1);
+        expect(result.perSource[0].site).toBe(Site.LINKEDIN);
+      });
+
+      it('lands a delegated ATS scrape under the company source key', async () => {
+        // A thin company plugin calls registry.getScraper(Site.ASHBY).scrape()
+        // inside its own scrape; the capture context must follow the delegate.
+        const ashby: IScraper = {
+          scrape: jest.fn().mockImplementation(async () => {
+            getRawCapture()?.entries.push(rawEntry('https://api.ashbyhq.com/jobs'));
+            return new JobResponseDto([]);
+          }),
+        };
+        let registryRef: { getScraper: (s: Site) => IScraper | undefined };
+        const company: IScraper = {
+          scrape: jest.fn().mockImplementation(async (input: ScraperInputDto) => {
+            const inner = registryRef.getScraper(Site.ASHBY);
+            return inner!.scrape(input);
+          }),
+        };
+        const service = createService([
+          [Site.AMAZON, company],
+          [Site.ASHBY, ashby, true],
+        ]);
+        registryRef = (service as unknown as { registry: typeof registryRef }).registry;
+
+        const result = await service.searchJobsWithDiagnostics(
+          new ScraperInputDto({ siteType: [Site.AMAZON] }),
+          { captureRaw: true },
+        );
+        expect(Object.keys(result.rawBySource)).toEqual([Site.AMAZON]);
+        expect(result.rawBySource[Site.AMAZON][0].url).toContain('ashbyhq');
+      });
+
+      it('gives diagnostic-only selectors no key in rawBySource', async () => {
+        const service = createService([[Site.LINKEDIN, capturingScraper()]]);
+        const result = await service.searchJobsWithDiagnostics(
+          new ScraperInputDto({
+            siteType: [Site.LINKEDIN],
+            companyDomain: ['nope.invalid'],
+          }),
+          { captureRaw: true },
+        );
+        expect(Object.keys(result.rawBySource)).toEqual([Site.LINKEDIN]);
+      });
+    });
   });
 });
+

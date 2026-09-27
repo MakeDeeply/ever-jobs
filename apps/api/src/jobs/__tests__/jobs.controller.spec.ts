@@ -563,5 +563,92 @@ describe('JobsController', () => {
       expect(result.per_source).toHaveLength(5);
       expect(result.per_source_summary.truncated).toBe(0);
     });
-  });
+    describe('include_raw — Spec 5161', () => {
+      const entry = {
+        seq: 0,
+        attempt: 0,
+        method: 'GET',
+        url: 'https://acme.example.com/jobs',
+        status: 200,
+        elapsed_ms: 12,
+        body_bytes: 9,
+        truncated: false,
+        body: { jobs: [] },
+      };
+
+      it('passes captureRaw to the service and returns raw_by_source', async () => {
+        const { controller, jobsService } = createController({ jobs: [makeJob()] });
+        jobsService.searchJobsWithDiagnostics.mockResolvedValue({
+          jobs: [makeJob()],
+          perSource: [],
+          rawBySource: { linkedin: [entry] },
+        });
+
+        // include_raw is the 12th positional query param.
+        const result = (await controller.searchJobs(
+          new ScraperInputDto({ siteType: ['linkedin' as never] }),
+          undefined, undefined, undefined, undefined, undefined, undefined, undefined,
+          undefined, undefined, undefined,
+          'true',
+        )) as any;
+
+        expect(jobsService.searchJobsWithDiagnostics).toHaveBeenCalledWith(
+          expect.any(ScraperInputDto),
+          { captureRaw: true },
+        );
+        expect(result.raw_by_source).toEqual({ linkedin: [entry] });
+      });
+
+      it('skips the cache read when include_raw is set', async () => {
+        const { controller, cacheService } = createController({
+          jobs: [makeJob()],
+          cachedValue: [makeJob()],
+        });
+        await controller.searchJobs(
+          new ScraperInputDto({ siteType: ['linkedin' as never] }),
+          undefined, undefined, undefined, undefined, undefined, undefined, undefined,
+          undefined, undefined, undefined,
+          'true',
+        );
+        expect(cacheService.get).not.toHaveBeenCalled();
+      });
+
+      it('omits raw_by_source entirely when the flag is absent', async () => {
+        const { controller } = createController({ jobs: [makeJob()] });
+        const result = (await controller.searchJobs(
+          new ScraperInputDto({ siteType: ['linkedin' as never] }),
+        )) as any;
+        expect('raw_by_source' in result).toBe(false);
+      });
+
+      it('returns no raw_by_source on a later request without the flag (cache round-trip)', async () => {
+        const jobs = [makeJob()];
+        const { controller, jobsService, cacheService } = createController({ jobs });
+        jobsService.searchJobsWithDiagnostics.mockResolvedValue({
+          jobs,
+          perSource: [],
+          rawBySource: { linkedin: [entry] },
+        });
+
+        // First request: capture on, writes the raw job list to cache.
+        await controller.searchJobs(
+          new ScraperInputDto({ siteType: ['linkedin' as never] }),
+          undefined, undefined, undefined, undefined, undefined, undefined, undefined,
+          undefined, undefined, undefined,
+          'true',
+        );
+        const cachedWrite = cacheService.set.mock.calls[0][1];
+        expect(cachedWrite).toBe(jobs);
+        expect(cachedWrite.raw_by_source).toBeUndefined();
+
+        // Second request: flag off, cache hit — response carries no capture key.
+        cacheService.get.mockReturnValueOnce(cachedWrite);
+        const result = (await controller.searchJobs(
+          new ScraperInputDto({ siteType: ['linkedin' as never] }),
+        )) as any;
+        expect(result.cached).toBe(true);
+        expect('raw_by_source' in result).toBe(false);
+      });
+    });
+   });
 });
