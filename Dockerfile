@@ -87,8 +87,9 @@ ENV RATE_LIMIT_ENABLED=false
 ENV RATE_LIMIT_REQUESTS=100
 ENV RATE_LIMIT_TIMEFRAME=3600
 
-# Caching
-ENV ENABLE_CACHE=true
+# Caching — off by default, like the app default (configuration.ts); set
+# ENABLE_CACHE=true to cache raw search results for CACHE_EXPIRY seconds.
+ENV ENABLE_CACHE=false
 ENV CACHE_EXPIRY=3600
 
 # Logging

@@ -27,7 +27,7 @@ services:
       RATE_LIMIT_TIMEFRAME: ${RATE_LIMIT_TIMEFRAME:-3600}
 
       # Caching
-      ENABLE_CACHE: ${ENABLE_CACHE:-true}
+      ENABLE_CACHE: ${ENABLE_CACHE:-false}
       CACHE_EXPIRY: ${CACHE_EXPIRY:-3600}
 
       # Logging
