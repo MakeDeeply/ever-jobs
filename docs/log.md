@@ -13,6 +13,7 @@
 
 **Validation:** `npx jest` on the touched specs — 161 green (22 new capture cases: per-attempt entries, redaction, byte caps, drain/close semantics, browser events incl. redirect-collapse and body-read races; service cases: 400 gating, failed-scrape entries, delegate-key landing, diagnostic-only selectors excluded; controller cases: flag plumbing, cache-read skip, no `raw_by_source` on flagless cache hit); `npx tsc --project tsconfig.typecheck.json --noEmit` clean; `npm run lint:docs` clean.
 
+
 ---
 
 ## 2026-09-26 — Spec 5160 — `source-ats-workday`: discover tenant-renamed category facets
@@ -32,6 +33,16 @@
 **Files:** `packages/plugins/source-ats-workday/src/{workday.service.ts,workday.constants.ts,workday.types.ts}`, `packages/plugins/source-ats-workday/__tests__/workday.service.spec.ts`, `.specify/specs/5159-workday-job-category-facets/*`, `docs/index.md`, `docs/log.md`.
 
 **Validation:** `npx jest source-ats-workday` — 57 tests green (bucket→department mapping, appliedFacets payload assertion, jobFamily/subtitle precedence, uncategorized fallback, zero-extra-request facetless path, failed-bucket tolerance, cap skip); `npx tsc --project tsconfig.typecheck.json --noEmit` clean; `npm run lint:docs` clean.
+
+---
+
+## 2026-09-24 — Spec 5162 — `normalizeJobPost`: aggregated-result whitespace cleanup
+
+**Change:** New `normalizeJobPost(job)` in `packages/common/src/utils` returns a cleaned copy of a `JobPostDto`: edge-trims an extended whitespace set (`\s`, zero-width \u200B-\u200D, \uFEFF), maps blank → `null` so `??` fallbacks engage (the existing `nonEmptyString`-style convention), collapses interior whitespace runs in `title`/`companyName`/location text parts (`name`, `text`, `city`, `state`, `streetAddress`), trims ends only on ids/URLs/`description` and the other string fields, cleans + dedupes `emails[]`/`skills[]`, cleans `compensation.currency`/`interval`, and leaves `site` untouched. `searchJobsWithDiagnostics` applies it once over the aggregated results after `postProcessSalary` (so `salarySource` is cleaned) and before sorting. Pure, deterministic, idempotent; plugins are unchanged.
+
+**Files:** `packages/common/src/utils/{job-post-normalize.ts,index.ts}`, `apps/api/src/jobs/jobs.service.ts`, `packages/common/__tests__/job-post-normalize.spec.ts`, `.specify/specs/5162-job-post-normalize/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx jest packages/common/__tests__/job-post-normalize.spec.ts` — 13 green (edge/zero-width trim, blank→null, collapse vs preserve, arrays, locations, compensation, `site` untouched, non-mutation, idempotency); `npx tsc --noEmit` on `packages/common` and `apps/api` clean; `npm run lint:docs` clean.
 
 ---
 

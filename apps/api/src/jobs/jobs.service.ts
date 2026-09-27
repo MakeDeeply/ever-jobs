@@ -7,7 +7,7 @@ import {
 } from '@ever-jobs/models';
 import {
   extractSalary, convertToAnnual, siteFromDomain, deriveSiteToken, resolveCompanyUrl,
-  createRawCaptureSink, drainRawCapture, runWithRawCapture,
+  createRawCaptureSink, drainRawCapture, runWithRawCapture, normalizeJobPost,
 } from '@ever-jobs/common';
 import type { RawCaptureSink, RawHttpEntry } from '@ever-jobs/models';
 import { ConfigService } from '@nestjs/config';
@@ -392,6 +392,14 @@ export class JobsService implements OnModuleInit {
     // Post-processing: salary enrichment (mirrors Python __init__.py logic)
     for (const job of allJobs) {
       this.postProcessSalary(job, input);
+    }
+
+    // Spec 5162 — one normalize pass over the aggregated results: trim edge
+    // whitespace/zero-width chars, collapse interior runs in display names,
+    // blank -> null. Runs AFTER postProcessSalary so the fields it writes
+    // (e.g. salarySource) get cleaned too.
+    for (let i = 0; i < allJobs.length; i++) {
+      allJobs[i] = normalizeJobPost(allJobs[i]);
     }
 
     // Sort by site name then by date (most recent first)
