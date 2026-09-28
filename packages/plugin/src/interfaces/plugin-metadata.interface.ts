@@ -63,6 +63,36 @@ export interface IPluginMetadata {
   minRequestIntervalMs?: number;
 
   /**
+   * The `minIntervalFloorMs` (milliseconds) the plugin passes to
+   * `createHttpClient` (Spec 1715, audit F5): a spacing between request starts in
+   * its rate-limit bucket that no crawl-policy layer shortens — not a caller, not
+   * an operator `sites` / `hosts` entry. Declared here only so the crawl-policy API
+   * (`GET /api/sources/:site/crawl-policy`, `meta.clientMinIntervalFloorMs`) can
+   * show it; the plugin's own client option is what enforces it, and the plugin's
+   * own switch turns it off (Softy: `SOFTY_LEGACY=no-interval-floor`).
+   * Unset = the plugin sets no floor. This is the DECLARED default; when the
+   * plugin's switch can change it, also set `clientMinIntervalFloor`.
+   */
+  clientMinIntervalFloorMs?: number;
+
+  /**
+   * The floor the plugin's client uses NOW, ms (Spec 1715 review round 2): read
+   * from the plugin's own configuration each time it is called, so the crawl-policy
+   * API reports the EFFECTIVE floor — `0` after the plugin's switch removed it
+   * (Softy: `() => readSoftyConfig().minIntervalFloorMs`, `0` under
+   * `SOFTY_LEGACY=no-interval-floor`). Wins over `clientMinIntervalFloorMs` in the
+   * API. Must be cheap and must not throw (a throw falls back to the declared value).
+   */
+  clientMinIntervalFloor?: () => number;
+
+  /**
+   * The switch that removes the client floor, as an operator types it (e.g.
+   * `SOFTY_LEGACY=no-interval-floor`); shown by the crawl-policy API next to the
+   * floor (`meta.clientMinIntervalFloorSwitch`).
+   */
+  clientMinIntervalFloorSwitch?: string;
+
+  /**
    * Optional description of the plugin's capabilities or limitations.
    */
   description?: string;
@@ -74,7 +104,15 @@ export interface IPluginMetadata {
    * A plugin that sets `userAgentMode: 'plugin'` must explain why in
    * `userAgentReason` (e.g. the API requires a registered e-mail as its UA).
    *
-   * @example { rateLimitScope: 'domain', maxConcurrentPerHost: 1, minIntervalMs: 1000 }
+   * `callerOverrides` (Spec 1714) is the site owner's LOCK: `'stricter'` means a
+   * search caller may only make this source's traffic more polite, `'none'` that
+   * a caller may change nothing — even when the operator's global
+   * `EVER_JOBS_CRAWL_CALLER_OVERRIDES` is `any`. It tightens, never loosens, the
+   * global mode; only the operator can loosen it again, with a per-site / per-host
+   * `callerOverrides` in `EVER_JOBS_CRAWL_POLICIES`. Use it only when the site's
+   * operator asked for a pace (e.g. Softy, Spec 1715).
+   *
+   * @example { rateLimitScope: 'domain', maxConcurrentPerHost: 1, minIntervalMs: 1000, callerOverrides: 'stricter' }
    */
   crawl?: PluginCrawlPolicy;
 }

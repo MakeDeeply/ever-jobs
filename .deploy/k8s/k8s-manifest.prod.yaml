@@ -86,8 +86,9 @@ spec:
               value: "false"
             - name: RATE_LIMIT_ENABLED
               value: "false"
+            # Off, like the app default: every search runs the fan-out.
             - name: ENABLE_CACHE
-              value: "true"
+              value: "false"
             # ── Store retention (Spec 5024) ──────────────────────────────
             # `EVER_JOBS_STORE` is unset, which resolves to the `memory` backend —
             # documented as "dev / tests, no persistence". Combined with

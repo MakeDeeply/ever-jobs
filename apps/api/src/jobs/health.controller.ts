@@ -30,14 +30,30 @@ import {
   SourceHealth,
 } from '@ever-jobs/models';
 import {
+  CallerOverridePolicy,
+  CallerOverridesSource,
+  CrawlCallerProxyRotation,
+  CrawlCooldownBeforeRelease,
   CrawlPolicyOverride,
+  CrawlProxyPinScope,
+  CrawlStricterRules,
   PluginCrawlPolicy,
+  RateLimitScope,
   ResolvedCrawlPolicy,
+  crawlBuiltinHostsDisabled,
+  crawlCallerProxyRotation,
+  crawlCooldownBeforeRelease,
+  crawlFleetSize,
+  crawlPaceRedirectsEnabled,
+  crawlProxyPinScope,
+  crawlRobotsBackoffEnabled,
+  crawlStricterRules,
+  effectiveProxyPinScope,
   explainCrawlPolicy,
   normalizeCrawlHostName,
   readCrawlPolicyEnv,
 } from '@ever-jobs/common';
-import { PluginRegistry } from '@ever-jobs/plugin';
+import { IPluginMetadata, PluginRegistry } from '@ever-jobs/plugin';
 import { AdminAuth } from '../auth/admin-auth.decorator';
 import { CRAWL_PSEUDO_SITES } from './crawl-policy.mapping';
 
@@ -54,7 +70,72 @@ export type SourceCrawlPolicyResponse = ResolvedCrawlPolicy & {
   userAgentReason?: string;
   meta: {
     preset: string;
-    callerOverrides: string;
+    /**
+     * The EFFECTIVE caller-override mode a search caller's `crawl` is filtered with
+     * for this site (and host): the global `EVER_JOBS_CRAWL_CALLER_OVERRIDES`
+     * tightened by a site owner's lock (plugin manifest or builtin host policy), or
+     * an operator per-site / per-host value (Spec 1714 FR-3). Equal to
+     * `globalCallerOverrides` for every source without a lock.
+     */
+    callerOverrides: CallerOverridePolicy;
+    /** The layer that decided `callerOverrides` (Spec 1714 FR-3). */
+    callerOverridesProvenance: CallerOverridesSource;
+    /** `EVER_JOBS_CRAWL_CALLER_OVERRIDES` (or its default `any`). */
+    globalCallerOverrides: CallerOverridePolicy;
+    /** Builtin host policy patterns applied (e.g. `["*.softy.pro"]`), least specific first (Spec 1714 FR-8). */
+    builtinHostPatterns: string[];
+    /**
+     * `EVER_JOBS_CRAWL_BUILTIN_HOSTS_DISABLE`: the builtin host patterns the operator
+     * switched off (e.g. `["*.softy.pro", "softy.pro"]`), whatever the host; `[]` when
+     * none (Spec 1715 review F3). A disabled pattern never appears in `builtinHostPatterns`.
+     */
+    builtinHostsDisabled: string[];
+    /**
+     * The spacing between request starts, ms, that the plugin's own HTTP client
+     * enforces as a floor (`createHttpClient({ minIntervalFloorMs })`) NOW, or `null`
+     * (none) — Spec 1715 review F5, EFFECTIVE since review round 2: the plugin's
+     * `clientMinIntervalFloor()` when it declares one (Softy: `null` once
+     * `SOFTY_LEGACY=no-interval-floor` removed it), else its declared
+     * `clientMinIntervalFloorMs`. No crawl-policy layer shortens it — not a caller,
+     * not an operator `sites` / `hosts` entry — so the top-level `minIntervalMs` can
+     * read lower than what goes on the wire. Only the plugin's own switch
+     * (`clientMinIntervalFloorSwitch`) removes it; like `minIntervalMs` it is
+     * multiplied by `fleetSize`.
+     */
+    clientMinIntervalFloorMs: number | null;
+    /** The plugin's switch that removes its client floor (Softy: `SOFTY_LEGACY=no-interval-floor`), or `null`. */
+    clientMinIntervalFloorSwitch: string | null;
+    /**
+     * The process-wide Spec 1714 / 1715 restore switches as they are in force (review
+     * round 2), each at its default unless set — the `legacy` preset flips each to its
+     * pre-1714 value unless it is set explicitly:
+     * `EVER_JOBS_CRAWL_STRICTER_RULES`, `_PROXY_PIN_SCOPE`, `_ROBOTS_BACKOFF`,
+     * `_PACE_REDIRECTS`, `_CALLER_PROXY_ROTATION`, `_COOLDOWN_BEFORE_RELEASE`.
+     */
+    switches: {
+      stricterRules: CrawlStricterRules;
+      proxyPinScope: CrawlProxyPinScope;
+      robotsBackoff: boolean;
+      paceRedirects: boolean;
+      callerProxyRotation: CrawlCallerProxyRotation;
+      cooldownBeforeRelease: CrawlCooldownBeforeRelease;
+    };
+    /**
+     * What the `per-host` proxy pick of a request to this site (and host) keys on —
+     * the rule `HttpClient` applies (Spec 1714 FR-6, Spec 1715 audit C3): `scope` is
+     * `switches.proxyPinScope` under a caller lock or a site owner's builtin host
+     * lock, else `bucket` (the pre-1714 pick); `keyedOn` the rate-limit scope of the
+     * key (`domain` when `scope` is `base` and the scope resolved without the caller
+     * is `domain`, else the request's own `rateLimitScope`). Without a caller preview,
+     * the pick of a request whose caller sends no `crawl`.
+     */
+    proxyPin: { scope: CrawlProxyPinScope; keyedOn: RateLimitScope };
+    /**
+     * `EVER_JOBS_CRAWL_FLEET_SIZE`: processes sharing one egress; this process
+     * multiplies `minIntervalMs` and `minGapMs` by it (Spec 1714 FR-11). The
+     * top-level policy shows the per-policy values, not the multiplied ones.
+     */
+    fleetSize: number;
     abortOnDeadline: boolean;
     /** How many proxies the env supplies (the list itself may carry credentials). */
     envProxyCount: number;
@@ -69,6 +150,35 @@ export type SourceCrawlPolicyResponse = ResolvedCrawlPolicy & {
   /** Env parse warnings and resolution notes (credentials redacted). */
   warnings: string[];
 };
+
+/**
+ * A plugin's declared `clientMinIntervalFloorMs` as reported by the crawl-policy
+ * API: a finite, positive number of milliseconds, else `null` (unset, 0 or junk
+ * declares no floor).
+ */
+export function clientMinIntervalFloorMs(value: unknown): number | null {
+  return typeof value === 'number' && Number.isFinite(value) && value > 0 ? value : null;
+}
+
+/**
+ * The client floor the crawl-policy API reports for a plugin (Spec 1715 review round
+ * 2): what its `clientMinIntervalFloor()` says NOW (the floor its client is built
+ * with — e.g. `0`, reported `null`, under `SOFTY_LEGACY=no-interval-floor`), else
+ * its declared `clientMinIntervalFloorMs`; `null` for none, `0` or junk. A resolver
+ * that throws falls back to the declared value.
+ */
+export function effectiveClientMinIntervalFloorMs(
+  meta: Pick<IPluginMetadata, 'clientMinIntervalFloorMs' | 'clientMinIntervalFloor'> | undefined,
+): number | null {
+  if (typeof meta?.clientMinIntervalFloor === 'function') {
+    try {
+      return clientMinIntervalFloorMs(meta.clientMinIntervalFloor());
+    } catch {
+      // fall back to the declared value
+    }
+  }
+  return clientMinIntervalFloorMs(meta?.clientMinIntervalFloorMs);
+}
 
 /**
  * Hide `user:password@` in anything echoed back (e.g. proxy URLs in warnings).
@@ -303,8 +413,19 @@ export class SourcesHealthController {
    * - `host` (optional): a hostname or URL; selects the builtin-host and
    *   operator-host layers. Without it the site-level policy is returned.
    * - `crawl` (optional): a JSON caller override to preview, e.g.
-   *   `{"maxConcurrentPerHost":1}`; fields refused by
-   *   `EVER_JOBS_CRAWL_CALLER_OVERRIDES` are listed in `meta.caller.rejected`.
+   *   `{"maxConcurrentPerHost":1}`; fields refused by the effective
+   *   caller-override mode are listed in `meta.caller.rejected`.
+   *
+   * Spec 1714: `meta.callerOverrides` is the EFFECTIVE mode (a site owner's lock
+   * — Softy's `stricter` — can tighten the global
+   * `EVER_JOBS_CRAWL_CALLER_OVERRIDES`; an operator per-site/host value replaces
+   * it), with `meta.callerOverridesProvenance`, `meta.globalCallerOverrides`,
+   * `meta.builtinHostPatterns` and `meta.fleetSize`. Spec 1715: `meta.builtinHostsDisabled`
+   * (`EVER_JOBS_CRAWL_BUILTIN_HOSTS_DISABLE`) and `meta.clientMinIntervalFloorMs` (the
+   * plugin client's spacing floor in force, which no policy layer shortens, with
+   * `meta.clientMinIntervalFloorSwitch`); review round 2: `meta.switches` (the
+   * process-wide restore switches in force) and `meta.proxyPin` (what the proxy pick
+   * of this request keys on).
    *
    * 404 for a site that is neither a known `Site`, a registered plugin, nor a
    * crawl pseudo-site (`liveness-http`, or a `sites` key of the operator policy);
@@ -316,7 +437,18 @@ export class SourcesHealthController {
     description:
       'Returns the effective crawl policy (identity, pacing, proxy rotation, retries, robots.txt, ' +
       'egress guard, discovery) for the source, and optionally one host, with the layer that set ' +
-      "each field (`provenance`), the plugin's UA reason, and configuration warnings (Spec 1690).",
+      "each field (`provenance`), the plugin's UA reason, and configuration warnings (Spec 1690). " +
+      '`meta.callerOverrides` is the effective caller-override mode: a site owner can lock what a ' +
+      'search caller may change (e.g. Softy: `stricter`, callers may only make its traffic more polite), ' +
+      'and an operator per-site/host `callerOverrides` replaces it; `meta.callerOverridesProvenance` ' +
+      'names the deciding layer, `meta.fleetSize` the EVER_JOBS_CRAWL_FLEET_SIZE multiplier (Spec 1714). ' +
+      '`meta.builtinHostsDisabled` lists the builtin host patterns EVER_JOBS_CRAWL_BUILTIN_HOSTS_DISABLE switches off; ' +
+      "`meta.clientMinIntervalFloorMs` is the plugin client's own spacing floor in force (e.g. Softy: 1000; null " +
+      'after SOFTY_LEGACY=no-interval-floor), which no policy layer shortens, and ' +
+      '`meta.clientMinIntervalFloorSwitch` the switch that removes it (Spec 1715). `meta.switches` shows the ' +
+      'process-wide restore switches in force (EVER_JOBS_CRAWL_STRICTER_RULES, _PROXY_PIN_SCOPE, _ROBOTS_BACKOFF, ' +
+      '_PACE_REDIRECTS, _CALLER_PROXY_ROTATION, _COOLDOWN_BEFORE_RELEASE) and `meta.proxyPin` what the per-host ' +
+      'proxy pick keys on.',
   })
   @ApiParam({ name: 'site', description: 'Source key, e.g. "softy"' })
   @ApiQuery({
@@ -387,6 +519,33 @@ export class SourcesHealthController {
       meta: {
         preset: explanation.preset,
         callerOverrides: explanation.callerOverrides,
+        callerOverridesProvenance: explanation.callerOverridesSource,
+        globalCallerOverrides: explanation.globalCallerOverrides,
+        builtinHostPatterns: explanation.builtinHostPatterns,
+        builtinHostsDisabled: crawlBuiltinHostsDisabled(env),
+        clientMinIntervalFloorMs: effectiveClientMinIntervalFloorMs(meta),
+        clientMinIntervalFloorSwitch:
+          typeof meta?.clientMinIntervalFloorSwitch === 'string' && meta.clientMinIntervalFloorSwitch.trim()
+            ? meta.clientMinIntervalFloorSwitch.trim()
+            : null,
+        switches: {
+          stricterRules: crawlStricterRules(env),
+          proxyPinScope: crawlProxyPinScope(env),
+          robotsBackoff: crawlRobotsBackoffEnabled(env),
+          paceRedirects: crawlPaceRedirectsEnabled(env),
+          callerProxyRotation: crawlCallerProxyRotation(env),
+          cooldownBeforeRelease: crawlCooldownBeforeRelease(env),
+        },
+        proxyPin: (() => {
+          const scope = effectiveProxyPinScope(
+            { callerOverrides: explanation.callerOverrides, builtinHostPatterns: explanation.builtinHostPatterns },
+            env,
+          );
+          const keyedOn: RateLimitScope =
+            scope !== 'bucket' && explanation.baseRateLimitScope === 'domain' ? 'domain' : explanation.policy.rateLimitScope;
+          return { scope, keyedOn };
+        })(),
+        fleetSize: crawlFleetSize(env),
         abortOnDeadline: env.abortOnDeadline,
         envProxyCount: env.proxies.length,
         plugin: plugin ?? null,

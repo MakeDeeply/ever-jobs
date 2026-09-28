@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { CookieJar } from 'tough-cookie';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { SocksProxyAgent } from 'socks-proxy-agent';
@@ -16,7 +16,19 @@ import {
   getGuardedAgents,
   isEgressAllowListed,
 } from './crawl/egress-guard';
-import { crawlPluginManifestsEnabled, expandUserAgent, readCrawlPolicyEnv } from './crawl/env';
+import { DEFAULT_REQUEST_TIMEOUT_SECONDS, gateCallerRequestTimeout } from './crawl/caller-lock';
+import {
+  CRAWL_EXTRA_ENV,
+  crawlCallerProxiesAllowedFor,
+  crawlCooldownBeforeRelease,
+  crawlFleetSize,
+  crawlPaceRedirectsEnabled,
+  crawlPluginManifestsEnabled,
+  crawlRobotsBackoffEnabled,
+  crawlStricterRules,
+  expandUserAgent,
+  readCrawlPolicyEnv,
+} from './crawl/env';
 import { CrawlPolicyError, HostCoolingDownError, RobotsDisallowedError } from './crawl/errors';
 import {
   HostLimiter,
@@ -29,12 +41,28 @@ import { sanitizeHeaderValue } from './crawl/policy-schema';
 import {
   ProxyRotationState,
   createProxyRotationState,
+  proxyPinKeyFor,
   scrapeProxyRotationState,
   selectProxy,
 } from './crawl/proxy-selector';
+import { builtinHostLockApplies, crawlLockApplies, effectiveProxyPinScope, isPolicyOwnedHost } from './crawl/resolve';
 import { RobotsFetcher, RobotsTxtCache, getRobotsTxtCache } from './crawl/robots';
-import { getEffectiveCrawlPolicy, getEffectiveProxies, getScrapeContext, runWithScrapeContext } from './crawl/scrape-context';
-import { CrawlPolicy, CrawlPolicyOverride, HostLimiterAcquireOptions, ResolvedCrawlPolicy, ScrapeContext } from './crawl/types';
+import {
+  EffectiveCrawlResolution,
+  getEffectiveCrawlResolution,
+  getEffectiveProxies,
+  getScrapeContext,
+  resolveCrawlInContext,
+  runWithScrapeContext,
+} from './crawl/scrape-context';
+import {
+  CrawlPolicy,
+  CrawlPolicyEnvConfig,
+  CrawlPolicyOverride,
+  HostLimiterAcquireOptions,
+  ResolvedCrawlPolicy,
+  ScrapeContext,
+} from './crawl/types';
 
 /**
  * Query-string keys whose values must never reach a log line. Several sources
@@ -163,6 +191,15 @@ export function redirectPinGuard(
 
 export interface HttpClientOptions {
   proxies?: string[];
+  /**
+   * `proxies` came from a search caller (Spec 1714 FR-5): set by
+   * `clientOptionsFromScraperInput` (the DTO branch of `createHttpClient`, where a
+   * plugin hands over the caller's `ScraperInputDto`). Such proxies are dropped for
+   * a request to a host whose effective caller-override lock refuses caller
+   * proxies (`crawlCallerProxiesAllowedFor`); the operator's env proxies apply
+   * instead. A plugin's own proxy list (without this marker) is never dropped.
+   */
+  proxiesFromCaller?: boolean;
   caCert?: string;
   /**
    * A User-Agent this client's plugin *declares* (Spec 1690 §4.2) — recorded
@@ -186,6 +223,17 @@ export interface HttpClientOptions {
    * than 10 seconds. The retry delays above are milliseconds; this one is not.
    */
   timeout?: number;
+  /**
+   * `timeout` came from a search caller (Spec 1715, audit C0): set by
+   * `clientOptionsFromScraperInput` when it fills `timeout` from a real
+   * `ScraperInputDto`'s `requestTimeout` (the plugin handed over the caller's DTO).
+   * A caller's timeout is gated per request host with that host's
+   * effective caller-override mode (`gateCallerRequestTimeout`), and a caller's
+   * timeout shorter than `DEFAULT_REQUEST_TIMEOUT_SECONDS` never counts as a
+   * struggling server. Inside a scrape, a timeout equal to the context's
+   * `callerRequestTimeout` is the caller's too, marker or not.
+   */
+  timeoutFromCaller?: boolean;
   /**
    * Minimum delay between requests in seconds (rate limiting). Enforced per
    * rate-limit bucket through the process-wide limiter (`minIntervalMs` =
@@ -270,11 +318,123 @@ interface WireIdentity {
 interface RequestPlan {
   target: URL | null;
   policy: ResolvedCrawlPolicy;
+  /** The effective caller-override mode and the pre-caller scope (Spec 1714). */
+  resolution: EffectiveCrawlResolution;
   site: string | undefined;
   bucket: string | undefined;
   signal: AbortSignal | undefined;
   axiosSignal: AxiosRequestConfig['signal'];
   identity: WireIdentity;
+  /** The scrape context the request was made in (a redirect hook runs outside it). */
+  ctx: ScrapeContext | undefined;
+  /** The per-request `crawl` override (`CrawlRequestConfig`), carried to a re-issued redirect hop. */
+  requestCrawl: CrawlPolicyOverride | undefined;
+  /**
+   * Redirect hops already followed on the way to this request (Spec 1715 audit A0):
+   * 0 for a caller's request; a hop re-issued under its own policy carries the
+   * count so far, so the chain never exceeds the request's `maxRedirects`.
+   */
+  redirectHops: number;
+}
+
+/**
+ * Hops a redirect chain may take when the request sets no `maxRedirects`: the
+ * default of follow-redirects, which axios uses when its own option is unset.
+ */
+export const DEFAULT_MAX_REDIRECTS = 21;
+
+/**
+ * Thrown from the `beforeRedirect` hook to stop following a hop inside the current
+ * limiter slot (Spec 1715 audit A0): `HttpClient` catches it (follow-redirects and
+ * axios wrap it, as `cause`), releases the slot and re-issues the hop through
+ * `request()`. Never escapes `HttpClient`.
+ */
+class DeferredRedirect extends Error {
+  constructor(
+    /** The hop's absolute URL. */
+    readonly href: string,
+    /** The hop's method as follow-redirects prepared it (GET after a 301/302 POST or a 303). */
+    readonly method: string,
+    /** The redirect answer's status. */
+    readonly status: number | undefined,
+    /** The redirect answer's headers (fed to the limiter like any answer). */
+    readonly responseHeaders: unknown,
+    /** Header names follow-redirects / axios dropped for this hop (lower-case). */
+    readonly droppedHeaders: readonly string[],
+    /** The hop leaves the origin of the URL it redirects from (axios then drops `auth`). */
+    readonly crossOrigin: boolean,
+    /** Hops of the chain so far, this one included. */
+    readonly hops: number,
+  ) {
+    super(`redirect to ${describeUrlForLog(href)} re-issued under its own crawl policy`);
+    this.name = 'DeferredRedirect';
+  }
+}
+
+/** Thrown from the `beforeRedirect` hook when a chain of re-issued hops exceeds `maxRedirects`. */
+class RedirectLimitReached extends Error {
+  constructor() {
+    super('Maximum number of redirects exceeded');
+    this.name = 'RedirectLimitReached';
+  }
+}
+
+/** The `ctor` instance behind `err` (itself, or up to five `cause` links down), if any. */
+function findCause<E>(err: unknown, ctor: new (...args: never[]) => E): E | undefined {
+  let current: unknown = err;
+  for (let depth = 0; depth < 6 && current && typeof current === 'object'; depth++) {
+    if (current instanceof ctor) return current;
+    current = (current as { cause?: unknown }).cause;
+  }
+  return undefined;
+}
+
+/**
+ * Whether a request body can be sent again for a hop that keeps the method (307 /
+ * 308): nothing, a string, a buffer / typed array, `URLSearchParams` or a plain
+ * object. A stream (already consumed) or anything exotic keeps the in-slot follow,
+ * where follow-redirects replays its own buffered copy.
+ */
+function isReplayableBody(data: unknown): boolean {
+  if (data === undefined || data === null || typeof data === 'string') return true;
+  if (typeof data !== 'object') return true;
+  if (Buffer.isBuffer(data) || ArrayBuffer.isView(data) || data instanceof ArrayBuffer) return true;
+  if (typeof URLSearchParams !== 'undefined' && data instanceof URLSearchParams) return true;
+  const proto = Object.getPrototypeOf(data);
+  return proto === Object.prototype || proto === null || Array.isArray(data);
+}
+
+/** Header names (lower-case) of a plain header object or an `AxiosHeaders`. */
+function headerNamesOf(headers: unknown): Set<string> {
+  const names = new Set<string>();
+  if (!headers || typeof headers !== 'object') return names;
+  const json =
+    typeof (headers as { toJSON?: unknown }).toJSON === 'function'
+      ? ((headers as { toJSON: () => Record<string, unknown> }).toJSON() ?? {})
+      : (headers as Record<string, unknown>);
+  for (const key of Object.keys(json)) names.add(key.toLowerCase());
+  return names;
+}
+
+/** What `HttpClient` decided about the timeout of one request (Spec 1715 audit C0). */
+interface TimeoutPlan {
+  /** The timeout in force, seconds (0 = none). */
+  seconds: number;
+  /** It is the search caller's (and the C0 gate is on). */
+  fromCaller: boolean;
+  /** The axios `timeout` (ms) to send instead of the configured one, when the gate changed it. */
+  overrideMs?: number;
+}
+
+/**
+ * Whether `err` is axios' own client-side timeout (no answer; `ECONNABORTED`, or
+ * `ETIMEDOUT` under `transitional.clarifyTimeoutError`).
+ */
+function isClientTimeout(err: unknown): boolean {
+  if (!err || typeof err !== 'object') return false;
+  const e = err as { response?: unknown; code?: unknown };
+  if (e.response) return false;
+  return e.code === 'ECONNABORTED' || e.code === 'ETIMEDOUT';
 }
 
 /** Input to `selectWireUserAgent`. */
@@ -386,6 +546,7 @@ export function isScraperInputDto(value: unknown): boolean {
 /** Keys `createHttpClient` copies from whatever object it is given. */
 const CLIENT_OPTION_KEYS: readonly (keyof HttpClientOptions)[] = [
   'proxies',
+  'proxiesFromCaller',
   'caCert',
   'userAgent',
   'retries',
@@ -393,6 +554,7 @@ const CLIENT_OPTION_KEYS: readonly (keyof HttpClientOptions)[] = [
   'retryBackoff',
   'retryMaxDelay',
   'timeout',
+  'timeoutFromCaller',
   'rateDelayMin',
   'rateDelayMax',
   'minIntervalFloorMs',
@@ -437,7 +599,18 @@ export function clientOptionsFromScraperInput(source: Record<string, any>): Http
   for (const key of CLIENT_OPTION_KEYS) {
     if (source[key] !== undefined) record[key] = source[key];
   }
-  if (options.timeout === undefined && source.requestTimeout !== undefined) options.timeout = source.requestTimeout;
+  const fromDto = isScraperInputDto(source);
+  if (options.timeout === undefined && source.requestTimeout !== undefined) {
+    options.timeout = source.requestTimeout;
+    // Spec 1715 audit C0: a real DTO's `requestTimeout` is the search caller's. An
+    // object literal's (`createHttpClient({ requestTimeout: 10 })`) is the plugin's
+    // own choice; inside a scrape it still counts as the caller's when it equals
+    // the context's `callerRequestTimeout`.
+    if (fromDto && options.timeoutFromCaller === undefined) options.timeoutFromCaller = true;
+  }
+  // Spec 1714 FR-5: proxies handed over through the DTO branch are the search
+  // caller's (`ScraperInputDto.proxies`) unless the object says otherwise.
+  if (options.proxies !== undefined && options.proxiesFromCaller === undefined) options.proxiesFromCaller = true;
   if (isScraperInputDto(source) && getScrapeContext() !== undefined) {
     for (const key of DTO_CALLER_FIELDS) delete record[key];
   }
@@ -587,16 +760,62 @@ export interface AnswerOutcome {
   giveUpAfterMs?: number;
   /** Set when the (paced) bucket backs off this long after a 429/503. */
   backOffMs?: number;
+  /** Set when a 500/502/504 cooled the bucket for this long (`serverErrorCooldownMs`, Spec 1714 FR-10). */
+  serverErrorCooldownMs?: number;
+}
+
+/**
+ * Answers that mean the server is struggling (Spec 1714 FR-10): with
+ * `serverErrorCooldownMs` > 0 they cool the whole bucket. 503 is not here: it is a
+ * throttle answer (`THROTTLE_STATUSES`) with its own back-off.
+ */
+export const SERVER_ERROR_STATUSES: ReadonlySet<number> = new Set([500, 502, 504]);
+
+/** Transport failures that mean a slow or overloaded server: timeouts and connection resets. */
+const STRUGGLING_NETWORK_CODES: ReadonlySet<string> = new Set([
+  'ECONNABORTED',
+  'ETIMEDOUT',
+  'ESOCKETTIMEDOUT',
+  'ERR_SOCKET_CONNECTION_TIMEOUT',
+  'UND_ERR_CONNECT_TIMEOUT',
+  'ECONNRESET',
+  'UND_ERR_SOCKET',
+]);
+
+/**
+ * Whether an answer (`status`) or a failure without one (`err`) says the server
+ * is struggling (Spec 1714 FR-10): a 500/502/504, or — with no HTTP answer — a
+ * timeout (`ECONNABORTED`, `ETIMEDOUT`, `ESOCKETTIMEDOUT`,
+ * `ERR_SOCKET_CONNECTION_TIMEOUT`, `UND_ERR_CONNECT_TIMEOUT`) or a connection reset
+ * (`ECONNRESET`, `UND_ERR_SOCKET`, "socket hang up"). Never our own abort
+ * (`ERR_CANCELED` / `AbortError`), a crawl-policy refusal, or a DNS failure.
+ */
+export function isServerStruggling(status: number | undefined, err?: unknown): boolean {
+  if (typeof status === 'number') return SERVER_ERROR_STATUSES.has(status);
+  if (!err || typeof err !== 'object') return false;
+  const e = err as { response?: unknown; code?: unknown; name?: unknown; message?: unknown; cause?: { code?: unknown } };
+  if (e.response) {
+    const answered = statusOf(err);
+    return answered !== undefined && SERVER_ERROR_STATUSES.has(answered);
+  }
+  if (e.code === 'ERR_CANCELED' || e.name === 'CanceledError' || e.name === 'AbortError') return false;
+  if (findCrawlPolicyError(err)) return false;
+  const code = typeof e.code === 'string' ? e.code : typeof e.cause?.code === 'string' ? e.cause.code : undefined;
+  if (code !== undefined && STRUGGLING_NETWORK_CODES.has(code)) return true;
+  if (code === 'ENOTFOUND' || code === 'EAI_AGAIN') return false;
+  return typeof e.message === 'string' && /socket hang up/i.test(e.message);
 }
 
 /**
  * Feed an answer that is handed back to its caller rather than retried — an
- * axios response accepted through `validateStatus`, or a browser navigation
- * (`BrowserPool.navigate`) — to the limiter (Spec 1690 §4.5): a 429/503 counts
- * as throttling (adaptive slow-down) and backs the bucket off — the full
- * `Retry-After` when it exceeds `maxRetryAfterMs` under `give-up`, else the
- * back-off (never less than the throttle floor) when the bucket is paced
- * (`penalizesBucket`); any other status is an `ok` outcome.
+ * axios response accepted through `validateStatus`, a browser navigation
+ * (`BrowserPool.navigate`) or a robots.txt answer (Spec 1714 FR-12) — to the
+ * limiter (Spec 1690 §4.5): a 429/503 counts as throttling (adaptive slow-down)
+ * and backs the bucket off — the full `Retry-After` when it exceeds
+ * `maxRetryAfterMs` under `give-up`, else the back-off (never less than the
+ * throttle floor) when the bucket is paced (`penalizesBucket`); any other status
+ * is an `ok` outcome, and a 500/502/504 additionally cools the bucket for
+ * `serverErrorCooldownMs` when that is on (Spec 1714 FR-10).
  */
 export function recordAnswerOutcome(
   limiter: HostLimiter,
@@ -608,6 +827,11 @@ export function recordAnswerOutcome(
 ): AnswerOutcome {
   if (status === undefined || !THROTTLE_STATUSES.has(status)) {
     limiter.recordOutcome(bucket, 'ok');
+    const cooldown = serverErrorCooldownOf(policy);
+    if (cooldown > 0 && isServerStruggling(status)) {
+      limiter.penalize(bucket, cooldown);
+      return { throttled: false, serverErrorCooldownMs: cooldown };
+    }
     return { throttled: false };
   }
   limiter.recordOutcome(bucket, 'throttled');
@@ -631,21 +855,37 @@ export function recordAnswerOutcome(
  * With no `maxQueueWaitMs`, a request still never waits out a bucket cool-down
  * longer than `maxRetryAfterMs` — the most it would ever wait for the server
  * itself — and fails fast with `HostCoolingDownError` instead.
+ *
+ * Spec 1714: `minGapMs` (the idle gap after completion) is passed when set, and
+ * both the start-to-start spacing (`max(minIntervalMs, crawlDelayMs)`) and the
+ * gap are multiplied by `fleetSize` (`EVER_JOBS_CRAWL_FLEET_SIZE`, default 1 =
+ * unchanged), so N processes sharing one egress stay within one policy. Jitter,
+ * cool-downs and concurrency are not multiplied.
  */
 export function crawlAcquireOptions(
   policy: CrawlPolicy,
   signal?: AbortSignal,
   crawlDelayMs = 0,
+  fleetSize: number = crawlFleetSize(readCrawlPolicyEnv()),
 ): HostLimiterAcquireOptions & HostLimiterAcquireExtraOptions {
+  const fleet = typeof fleetSize === 'number' && Number.isFinite(fleetSize) && fleetSize > 1 ? Math.floor(fleetSize) : 1;
+  const minGapMs = typeof policy.minGapMs === 'number' && policy.minGapMs > 0 ? policy.minGapMs * fleet : 0;
   return {
     maxConcurrent: policy.maxConcurrentPerHost,
-    minIntervalMs: Math.max(policy.minIntervalMs, crawlDelayMs),
+    minIntervalMs: Math.max(policy.minIntervalMs, crawlDelayMs) * fleet,
     jitterMs: policy.jitterMs,
     maxWaitMs: policy.maxQueueWaitMs,
     adaptive: policy.adaptiveThrottle,
     maxCoolDownWaitMs: policy.maxQueueWaitMs > 0 ? 0 : Math.max(1, policy.maxRetryAfterMs),
+    ...(minGapMs > 0 ? { minGapMs } : {}),
     ...(signal ? { signal } : {}),
   };
+}
+
+/** `policy.serverErrorCooldownMs` as a usable number (0 when off or absent on a hand-built policy). */
+function serverErrorCooldownOf(policy: Partial<Pick<CrawlPolicy, 'serverErrorCooldownMs'>>): number {
+  const value = policy.serverErrorCooldownMs;
+  return typeof value === 'number' && Number.isFinite(value) && value > 0 ? value : 0;
 }
 
 /**
@@ -783,6 +1023,8 @@ export class HttpClient {
   private readonly client: AxiosInstance;
   /** Proxies this client was given; empty = the scrape context's, else the env's (`getEffectiveProxies`). */
   private readonly proxies: string[];
+  /** `proxies` came from the search caller (the DTO branch, Spec 1714 FR-5). */
+  private readonly proxiesFromCaller: boolean;
   /**
    * Per-client rotation state: `per-request` round-robin, and the `per-scrape`
    * pin when no scrape context is in scope (inside one, the context's
@@ -802,6 +1044,10 @@ export class HttpClient {
   private readonly rateDelayMax: number;
   /** `minIntervalFloorMs`: a spacing floor no policy layer shortens (0 = none). */
   private readonly minIntervalFloorMs: number;
+  /** The client's timeout, SECONDS (the `timeout` option, default 60; 0 = none). */
+  private readonly timeoutSeconds: number;
+  /** `timeout` came from the search caller (`timeoutFromCaller`, Spec 1715 audit C0). */
+  private readonly timeoutFromCaller: boolean;
   private readonly cookieJar?: CookieJar;
   private readonly caCert?: string;
   private readonly site?: string;
@@ -832,6 +1078,7 @@ export class HttpClient {
       : options ?? {};
 
     this.proxies = opts.proxies ?? [];
+    this.proxiesFromCaller = opts.proxiesFromCaller === true;
     this.maxRetries = opts.retries ?? 3;
     this.retryDelay = opts.retryDelay ?? 1000;
     this.retryBackoff = opts.retryBackoff ?? 'linear';
@@ -842,6 +1089,8 @@ export class HttpClient {
       typeof opts.minIntervalFloorMs === 'number' && Number.isFinite(opts.minIntervalFloorMs) && opts.minIntervalFloorMs > 0
         ? opts.minIntervalFloorMs
         : 0;
+    this.timeoutSeconds = opts.timeout ?? 60;
+    this.timeoutFromCaller = opts.timeoutFromCaller === true;
     this.caCert = opts.caCert;
     this.site = typeof opts.site === 'string' && opts.site.trim() ? opts.site.trim() : undefined;
     this.explicit = crawlOverrideFromClientOptions(opts);
@@ -866,7 +1115,7 @@ export class HttpClient {
         : undefined;
     this.allowedRedirectHosts = this.redirectPin ? [...(opts.allowedRedirectHosts ?? [])] : undefined;
     this.client = axios.create({
-      timeout: (opts.timeout ?? 60) * 1000,
+      timeout: this.timeoutSeconds * 1000,
       ...(this.defaultHttpsAgent ? { httpsAgent: this.defaultHttpsAgent } : {}),
       // Spec 1689: the instance default, so a call straight through
       // `getAxiosInstance()` is pinned too. A per-request `beforeRedirect`
@@ -996,10 +1245,20 @@ export class HttpClient {
    * client's jar here (a no-op without a jar).
    */
   async request<T = any>(config: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+    return this.send<T>(config, 0);
+  }
+
+  /**
+   * `request()` for a request that is `redirectHops` hops into a redirect chain:
+   * 0 for a caller's own request, more for a hop re-issued under its own crawl
+   * policy (Spec 1715 audit A0, `followDeferredRedirect`).
+   */
+  private async send<T = any>(config: AxiosRequestConfig, redirectHops: number): Promise<AxiosResponse<T>> {
     const { crawl: requestCrawl, ...axiosConfig } = config as CrawlRequestConfig;
     const ctx = getScrapeContext();
     const target = resolveTargetUrl(axiosConfig);
-    const policy = this.resolvePolicy(target?.hostname, ctx, requestCrawl);
+    const resolution = this.resolveCrawl(target?.hostname, ctx, requestCrawl);
+    const policy = resolution.policy;
     const site = ctx?.site ?? this.site;
     const bucket = target ? bucketKeyFor(target.href, policy.rateLimitScope, site) : undefined;
     // The caller's own signal and the scrape's deadline signal both cancel the
@@ -1013,8 +1272,26 @@ export class HttpClient {
 
     if (target && policy.blockPrivateNetworks) assertPublicHostname(target.hostname, this.egressOptions);
 
-    const plan: RequestPlan = { target, policy, site, bucket, signal, axiosSignal, identity };
-    if (!this.memoable(axiosConfig)) return this.sendUnderPolicy<T>(axiosConfig, plan);
+    const plan: RequestPlan = {
+      target,
+      policy,
+      resolution,
+      site,
+      bucket,
+      signal,
+      axiosSignal,
+      identity,
+      ctx,
+      requestCrawl,
+      redirectHops,
+    };
+    // A re-issued redirect hop (Spec 1715 audit A0) never consults the memo: the
+    // request that started the chain holds the memo entry for the whole chain, and a
+    // chain that comes back to a URL it already visited (A -> B -> A, or a same-URL
+    // bounce on a host-owned policy) would find that entry still pending — its own
+    // ancestor, waiting on this very hop — and wait on itself forever instead of
+    // failing with "Maximum number of redirects exceeded" (review round 2).
+    if (!this.memoable(axiosConfig) || redirectHops > 0) return this.sendUnderPolicy<T>(axiosConfig, plan);
     // An aborted scrape gets no answer, not even from the memo — the same error
     // the limiter would have rejected a real request with.
     if (signal?.aborted) throw abortReasonOf(signal);
@@ -1068,7 +1345,7 @@ export class HttpClient {
 
   /** Everything after the memo (Spec 1690): proxy, robots.txt, limiter, retries. */
   private async sendUnderPolicy<T = any>(axiosConfig: AxiosRequestConfig, plan: RequestPlan): Promise<AxiosResponse<T>> {
-    const { target, policy, site, bucket, signal, axiosSignal, identity } = plan;
+    const { target, policy, resolution, site, bucket, signal, axiosSignal, identity } = plan;
 
     // Chosen once per request, so retries reuse it (as before Spec 1690). Under
     // `per-scrape` the pin lives in the scrape context, so every client of one
@@ -1076,17 +1353,45 @@ export class HttpClient {
     // any scrape context it is per client, as before. (A memo hit never gets
     // here, so it consumes no pick.)
     const ctx = getScrapeContext();
-    const proxies = getEffectiveProxies(this.proxies);
+    const env = readCrawlPolicyEnv();
+    // Spec 1714 FR-5: a host whose lock refuses caller proxies (e.g. `*.softy.pro`,
+    // reached by any plugin) gets neither the scrape context's caller proxies nor a
+    // DTO-branch client's; the plugin's own list and the operator's env list apply.
+    const proxies = crawlCallerProxiesAllowedFor(resolution.callerOverrides, env)
+      ? getEffectiveProxies(this.proxies)
+      : getEffectiveProxies(this.proxiesFromCaller ? undefined : this.proxies, { ignoreCallerProxies: true });
     const rotation =
       policy.proxyRotation === 'per-scrape' && ctx?.proxyPin ? scrapeProxyRotationState(ctx.proxyPin, proxies) : this.rotation;
-    const proxy = selectProxy(proxies, policy.proxyRotation, rotation, bucket ?? '');
+    // Spec 1714 FR-6: `per-host` keys on the registrable domain when the scope
+    // resolved without the caller is `domain` (EVER_JOBS_CRAWL_PROXY_PIN_SCOPE=bucket
+    // restores the pre-1714 key: the request's bucket) — Spec 1715 audit C3: only
+    // under a caller lock (effective mode not `any`) or on a host whose builtin
+    // policy carries a site owner's lock (`*.softy.pro`, even when an operator set
+    // `callerOverrides: 'any'` for it). Every other request keeps the pre-1714 key,
+    // byte for byte — a source without a lock, a bulk-API builtin host included.
+    const pinScope = effectiveProxyPinScope(
+      { callerOverrides: resolution.callerOverrides.mode, builtinHostPatterns: resolution.builtinHostPatterns },
+      env,
+    );
+    const pinKey = target
+      ? proxyPinKeyFor(target.href, policy.rateLimitScope, resolution.baseRateLimitScope, site, pinScope)
+      : '';
+    const proxy = selectProxy(proxies, policy.proxyRotation, rotation, pinKey);
     const transport = this.transportFor(proxy, policy, axiosConfig, target);
     const limiter = this.hostLimiter;
+    // Spec 1715 audit C0: a search caller's timeout, gated for THIS host.
+    const timing = this.timeoutPlan(axiosConfig.timeout, plan, env);
+    const clientTiming = axiosConfig.timeout === undefined ? timing : this.timeoutPlan(undefined, plan, env);
+    const timeoutOverride: Partial<AxiosRequestConfig> = timing.overrideMs !== undefined ? { timeout: timing.overrideMs } : {};
+    // Spec 1715 audit A0 (EVER_JOBS_CRAWL_PACE_REDIRECTS): hops reaching a host-owned
+    // policy, or leaving the bucket under a caller lock, are re-issued, not followed
+    // in this slot (`pacedRedirectHook`); an unlocked chain is followed in the slot.
+    const paceRedirects = bucket !== undefined && axiosConfig.maxRedirects !== 0 && crawlPaceRedirectsEnabled(env);
 
     let crawlDelayMs = 0;
     if (target && policy.robotsTxt !== 'off') {
       const fetcher: RobotsFetcher = (robotsUrl) =>
-        this.fetchRobotsTxt(robotsUrl, policy, site, transport, signal, axiosSignal);
+        this.fetchRobotsTxt(robotsUrl, policy, site, transport, signal, axiosSignal, clientTiming);
       const decision = await this.robotsTxtCache.check(target.href, identity.userAgent, policy.robotsTxt, fetcher);
       if (!decision.allowed) throw new RobotsDisallowedError(this.redactUrl(target.href));
       // A site's Crawl-delay is honoured up to the limiter's cool-down ceiling.
@@ -1098,78 +1403,356 @@ export class HttpClient {
     // Pre-1690 (`legacy`) retried a 0 ms back-off immediately; every other preset
     // waits at least MIN_RETRY_DELAY_MS between a failure and its retry.
     const minRetryDelay = readCrawlPolicyEnv().preset === 'legacy' ? 0 : MIN_RETRY_DELAY_MS;
+    // Review of PR #105 (EVER_JOBS_CRAWL_COOLDOWN_BEFORE_RELEASE): a failed attempt of a
+    // request under a lock (`locked`, the default — every request to `*.softy.pro`
+    // included), or of every request (`all`), keeps its slot until its outcome and
+    // cool-down are recorded. Freeing it first pumps the queue, which can grant a
+    // waiting request at once — before the 429 / 503 / server-error cool-down is set,
+    // so that request starts inside it. `off` (and any other request under `locked`)
+    // frees the slot first: the pre-fix order, byte for byte.
+    const cooldownMode = crawlCooldownBeforeRelease(env);
+    const holdSlotOnFailure =
+      bucket !== undefined &&
+      (cooldownMode === 'all' ||
+        (cooldownMode === 'locked' &&
+          crawlLockApplies({
+            callerOverrides: resolution.callerOverrides.mode,
+            builtinHostPatterns: resolution.builtinHostPatterns,
+          })));
 
     for (let attempt = 0; ; attempt++) {
       const release = bucket ? await limiter.acquire(bucket, limits) : undefined;
       let error: unknown;
+      let failed = false;
+      // A fresh hook per attempt: it counts the hops of this attempt only.
+      const redirectHook: Partial<AxiosRequestConfig> = paceRedirects
+        ? this.pacedRedirectHook(transport, axiosConfig, plan, env)
+        : {};
       try {
         const response = await this.client.request<T>({
           ...axiosConfig,
           ...transport,
+          ...timeoutOverride,
+          ...redirectHook,
           ...(axiosSignal ? { signal: axiosSignal } : {}),
           [IDENTITY_KEY]: identity,
         } as AxiosRequestConfig);
         if (bucket) this.recordResponse(bucket, policy, attempt, response, axiosConfig);
         return response;
       } catch (err) {
+        failed = true;
         error = err;
       } finally {
-        release?.();
+        if (!(failed && holdSlotOnFailure)) release?.();
       }
 
-      const refusal = findCrawlPolicyError(error);
-      if (refusal) throw refusal;
-      if (signal?.aborted || (axiosSignal as { aborted?: boolean } | undefined)?.aborted) throw error;
-
-      const status = statusOf(error);
-      const throttled = status === 429 || status === 503;
-      if (bucket) limiter.recordOutcome(bucket, throttled ? 'throttled' : status !== undefined && status < 500 ? 'ok' : 'error');
-
-      const retryable =
-        status !== undefined ? policy.retryStatuses.includes(status) : policy.retryOnNetworkError && isRetryableNetworkError(error);
-      const retryAfter =
-        status !== undefined && policy.respectRetryAfter
-          ? this.retryAfterMs((error as { response?: { headers?: unknown } }).response?.headers)
-          : null;
-      // A 429/503 gets the throttle floor (`throttleRetryDelayMs`) under its wait;
-      // any retry at least `MIN_RETRY_DELAY_MS` when the configured delays are ~0.
-      const decision = retryDecision(policy, attempt, retryAfter, undefined, status, minRetryDelay);
-      const willRetry = retryable && attempt < retries;
-
-      if ('giveUpAfterMs' in decision) {
-        // A Retry-After on an answer we would neither retry nor call throttling
-        // (e.g. a 404) is not a back-off request.
-        if (!retryable && !throttled) throw error;
-        // The server asked for longer than we wait: never retry early, and hold
-        // every request of the bucket for the full Retry-After (up to the
-        // limiter's `maxCooldownMs`). The bucket is cooled whether or not a retry
-        // was left, so the request always fails with `HostCoolingDownError`
-        // (diagnostic `rate_limited`, the raw answer as its `cause`) — with
-        // `retries: 0` or on the last attempt too.
-        if (bucket) limiter.penalize(bucket, decision.giveUpAfterMs);
-        this.logger.warn(
-          `${this.describeRequest(axiosConfig)} failed ${status}, Retry-After ${decision.giveUpAfterMs}ms exceeds ` +
-            `maxRetryAfterMs ${policy.maxRetryAfterMs}ms; not retrying (${bucket ?? 'no bucket'} cooling down)`,
-        );
-        const coolingDown = new HostCoolingDownError(bucket ?? target?.host ?? '(unknown host)', decision.giveUpAfterMs, status);
-        Object.defineProperty(coolingDown, 'cause', { value: error, enumerable: false, configurable: true, writable: true });
-        throw coolingDown;
+      // Everything below records this attempt's outcome and decides what comes next;
+      // under `holdSlotOnFailure` the slot is freed only once that is done (`finally`).
+      let deferred: DeferredRedirect | undefined;
+      let delay = 0;
+      try {
+        // Spec 1715 audit A0: the redirect answer is this slot's outcome; the hop
+        // goes out as a request of its own, under its own policy (after the slot is freed).
+        deferred = findCause(error, DeferredRedirect);
+        if (deferred) {
+          if (bucket) recordAnswerOutcome(limiter, bucket, policy, attempt, deferred.status, deferred.responseHeaders);
+        } else {
+          delay = this.settleFailedAttempt(error, attempt, retries, minRetryDelay, plan, axiosConfig, timing);
+        }
+      } finally {
+        if (holdSlotOnFailure) release?.();
       }
-
-      const delay = decision.delayMs;
-      // Any 429/503 backs off the whole bucket, not just this request — whenever
-      // the bucket is paced at all (`penalizesBucket`; the unpaced `legacy`
-      // preset never did) — for at least the throttle floor.
-      if (throttled && bucket && penalizesBucket(policy)) limiter.penalize(bucket, delay);
-      if (!willRetry) throw error;
-
-      const what = status ?? (error as { code?: unknown })?.code ?? 'network error';
-      this.logger.warn(
-        `${this.describeRequest(axiosConfig)} failed ${what}, retry ${attempt + 1}/${retries} in ${delay}ms` +
-          (bucket ? ` (${bucket})` : ''),
-      );
+      if (deferred) return this.followDeferredRedirect<T>(axiosConfig, plan, deferred);
       await this.sleep(delay, signal);
     }
+  }
+
+  /**
+   * One failed attempt of `sendUnderPolicy` (Spec 1690 §4.5, Spec 1714 FR-10): feed the
+   * limiter (outcome, server-error cool-down, 429/503 back-off, a `Retry-After` over
+   * `maxRetryAfterMs`), then throw when the request is over — a crawl-policy refusal, an
+   * abort, an answer that is not retried, the last attempt — or return how long to
+   * sleep before the retry. The caller frees the slot before or after this, per
+   * `EVER_JOBS_CRAWL_COOLDOWN_BEFORE_RELEASE`.
+   */
+  private settleFailedAttempt(
+    failure: unknown,
+    attempt: number,
+    retries: number,
+    minRetryDelay: number,
+    plan: RequestPlan,
+    axiosConfig: AxiosRequestConfig,
+    timing: TimeoutPlan,
+  ): number {
+    const { target, policy, bucket, signal, axiosSignal } = plan;
+    const limiter = this.hostLimiter;
+    let error = failure;
+    if (findCause(error, RedirectLimitReached)) error = this.redirectLimitError(error, axiosConfig);
+
+    const refusal = findCrawlPolicyError(error);
+    if (refusal) throw refusal;
+    if (signal?.aborted || (axiosSignal as { aborted?: boolean } | undefined)?.aborted) throw error;
+
+    const status = statusOf(error);
+    const throttled = status === 429 || status === 503;
+    if (bucket) limiter.recordOutcome(bucket, throttled ? 'throttled' : status !== undefined && status < 500 ? 'ok' : 'error');
+    // Spec 1714 FR-10: a server that answers 500/502/504, times out or resets the
+    // connection cools the whole bucket (`serverErrorCooldownMs`; 0 = off), before
+    // any retry sleep — the retry then waits for the cool-down too. Spec 1715
+    // audit C0: not when the "timeout" was a search caller's short one.
+    const cooldown = serverErrorCooldownOf(policy);
+    if (bucket && cooldown > 0 && isServerStruggling(status, error) && !this.isCallersShortTimeout(error, timing)) {
+      limiter.penalize(bucket, cooldown);
+      this.logger.debug(
+        `${this.describeRequest(axiosConfig)} failed ${status ?? (error as { code?: unknown })?.code ?? 'network error'}; ` +
+          `${bucket} cools down ${cooldown}ms (serverErrorCooldownMs)`,
+      );
+    }
+
+    const retryable =
+      status !== undefined ? policy.retryStatuses.includes(status) : policy.retryOnNetworkError && isRetryableNetworkError(error);
+    const retryAfter =
+      status !== undefined && policy.respectRetryAfter
+        ? this.retryAfterMs((error as { response?: { headers?: unknown } }).response?.headers)
+        : null;
+    // A 429/503 gets the throttle floor (`throttleRetryDelayMs`) under its wait;
+    // any retry at least `MIN_RETRY_DELAY_MS` when the configured delays are ~0.
+    const decision = retryDecision(policy, attempt, retryAfter, undefined, status, minRetryDelay);
+    const willRetry = retryable && attempt < retries;
+
+    if ('giveUpAfterMs' in decision) {
+      // A Retry-After on an answer we would neither retry nor call throttling
+      // (e.g. a 404) is not a back-off request.
+      if (!retryable && !throttled) throw error;
+      // The server asked for longer than we wait: never retry early, and hold
+      // every request of the bucket for the full Retry-After (up to the
+      // limiter's `maxCooldownMs`). The bucket is cooled whether or not a retry
+      // was left, so the request always fails with `HostCoolingDownError`
+      // (diagnostic `rate_limited`, the raw answer as its `cause`) — with
+      // `retries: 0` or on the last attempt too.
+      if (bucket) limiter.penalize(bucket, decision.giveUpAfterMs);
+      this.logger.warn(
+        `${this.describeRequest(axiosConfig)} failed ${status}, Retry-After ${decision.giveUpAfterMs}ms exceeds ` +
+          `maxRetryAfterMs ${policy.maxRetryAfterMs}ms; not retrying (${bucket ?? 'no bucket'} cooling down)`,
+      );
+      const coolingDown = new HostCoolingDownError(bucket ?? target?.host ?? '(unknown host)', decision.giveUpAfterMs, status);
+      Object.defineProperty(coolingDown, 'cause', { value: error, enumerable: false, configurable: true, writable: true });
+      throw coolingDown;
+    }
+
+    const delay = decision.delayMs;
+    // Any 429/503 backs off the whole bucket, not just this request — whenever
+    // the bucket is paced at all (`penalizesBucket`; the unpaced `legacy`
+    // preset never did) — for at least the throttle floor.
+    if (throttled && bucket && penalizesBucket(policy)) limiter.penalize(bucket, delay);
+    if (!willRetry) throw error;
+
+    const what = status ?? (error as { code?: unknown })?.code ?? 'network error';
+    this.logger.warn(
+      `${this.describeRequest(axiosConfig)} failed ${what}, retry ${attempt + 1}/${retries} in ${delay}ms` +
+        (bucket ? ` (${bucket})` : ''),
+    );
+    return delay;
+  }
+
+  // ── redirect pacing (Spec 1715 audit A0) ────────────────────────────────────
+
+  /**
+   * The `beforeRedirect` of one attempt when redirect pacing is on
+   * (`EVER_JOBS_CRAWL_PACE_REDIRECTS`). Per hop, in this order:
+   *
+   * 1. a chain of re-issued hops longer than the request's `maxRedirects`
+   *    (default `DEFAULT_MAX_REDIRECTS`) stops with "Maximum number of redirects
+   *    exceeded" — follow-redirects counts only the hops of one request;
+   * 2. the request's guards run as before — the redirect pin, the egress check and
+   *    the request's own hook (`transportFor`), so a refused hop is still refused;
+   * 3. a hop whose host carries a host-owned policy (`isPolicyOwnedHost`: a builtin
+   *    / operator host entry with a caller lock or a `domain` scope, e.g.
+   *    `*.softy.pro`; or an applied builtin pattern with a site owner's lock), or a
+   *    hop to a DIFFERENT rate-limit bucket (its own resolved scope) while the
+   *    request or the hop is under a caller lock (effective caller-override mode not
+   *    `any`), is not followed inside this slot: the hook throws `DeferredRedirect`
+   *    and `sendUnderPolicy` re-issues the hop (`followDeferredRedirect`). Any other
+   *    hop is followed here, as before — a cross-host hop of a source WITHOUT a lock
+   *    included (Spec 1714 product rule 3: an unlocked source keeps its pre-1714
+   *    slot, proxy and pacing on the whole chain; review round 2) — and so is a hop
+   *    that keeps the method (307/308) with a body that cannot be sent again (a stream).
+   *
+   * The hop's policy is resolved against the scrape context the REQUEST was made
+   * in (`plan.ctx`): the hook runs in a socket callback, whose async context may be
+   * another request's.
+   */
+  private pacedRedirectHook(
+    transport: Partial<AxiosRequestConfig>,
+    config: AxiosRequestConfig,
+    plan: RequestPlan,
+    env: CrawlPolicyEnvConfig,
+  ): Pick<AxiosRequestConfig, 'beforeRedirect'> {
+    type BeforeRedirect = NonNullable<AxiosRequestConfig['beforeRedirect']>;
+    const guards = transport.beforeRedirect ?? config.beforeRedirect;
+    const budget =
+      typeof config.maxRedirects === 'number' && Number.isFinite(config.maxRedirects) && config.maxRedirects >= 0
+        ? config.maxRedirects
+        : DEFAULT_MAX_REDIRECTS;
+    const method = String(config.method ?? 'get').toUpperCase();
+    const replayable = isReplayableBody(config.data);
+    const explicit = this.explicitLayer(plan.requestCrawl);
+    const ctx = this.site && !plan.ctx?.site ? { ...plan.ctx, site: this.site } : plan.ctx;
+    let hops = 0;
+    const hook = ((...args: Parameters<BeforeRedirect>) => {
+      const [options, response, request] = args as unknown as [
+        Record<string, unknown>,
+        { headers?: unknown; statusCode?: number } | undefined,
+        { url?: string; headers?: unknown } | undefined,
+      ];
+      hops++;
+      const total = plan.redirectHops + hops;
+      if (plan.redirectHops > 0 && total > budget) throw new RedirectLimitReached();
+      guards?.(...args);
+
+      let hop: URL;
+      try {
+        hop = new URL(typeof options.href === 'string' ? options.href : '');
+      } catch {
+        return;
+      }
+      const hopMethod = String(options.method ?? method).toUpperCase();
+      if (hopMethod === method && !replayable) return;
+      const resolution = resolveCrawlInContext(ctx, hop.hostname, explicit);
+      const hostOwned = isPolicyOwnedHost(hop.hostname, env) || builtinHostLockApplies(resolution.builtinHostPatterns);
+      if (!hostOwned) {
+        // No host policy of its own: re-issued only when it leaves the bucket AND a
+        // caller lock applies to the request or the hop. An unlocked chain keeps the
+        // pre-1714 in-slot follow — one slot, one proxy, one pacing (review round 2).
+        const locked = plan.resolution.callerOverrides.mode !== 'any' || resolution.callerOverrides.mode !== 'any';
+        if (!locked) return;
+        const hopBucket = bucketKeyFor(hop.href, resolution.policy.rateLimitScope, plan.site);
+        if (hopBucket === plan.bucket) return;
+      }
+
+      const sent = headerNamesOf(request?.headers);
+      const next = headerNamesOf(options.headers);
+      const dropped = [...sent].filter((name) => name !== 'host' && !next.has(name));
+      let crossOrigin = true;
+      try {
+        crossOrigin = !request?.url || new URL(request.url).origin !== hop.origin;
+      } catch {
+        crossOrigin = true;
+      }
+      throw new DeferredRedirect(hop.href, hopMethod, response?.statusCode, response?.headers, dropped, crossOrigin, total);
+    }) as BeforeRedirect;
+    return { beforeRedirect: hook };
+  }
+
+  /**
+   * Re-issue a deferred redirect hop through the whole crawl pipeline (Spec 1715
+   * audit A0): robots.txt, lock, proxy pick, limiter slot, cool-down check and
+   * retries — exactly like a request of its own, except the multi-location memo
+   * (`send` skips it for a hop: the chain's first request holds the memo entry, and a
+   * loop would wait on its own ancestor; review round 2). What
+   * follow-redirects would have changed for the hop is kept: the method (GET after
+   * a 301/302 POST or a 303, then without a body), the headers it dropped
+   * (`Content-*` with the body; `Cookie` / `Authorization` / `Proxy-Authorization`
+   * off-domain — they are sent as `false`, so a client default of that name is not
+   * merged back in; a cookie jar adds the hop URL's own cookies) and axios' `auth`
+   * (off-origin). The URL is absolute, so `baseURL` and `params` are dropped (the
+   * query is in it); the per-request `crawl` override is carried along.
+   */
+  private followDeferredRedirect<T>(
+    config: AxiosRequestConfig,
+    plan: RequestPlan,
+    hop: DeferredRedirect,
+  ): Promise<AxiosResponse<T>> {
+    const next: CrawlRequestConfig = { ...config, url: hop.href };
+    delete next.baseURL;
+    delete next.params;
+    if (hop.method !== String(config.method ?? 'get').toUpperCase()) {
+      next.method = hop.method.toLowerCase() as AxiosRequestConfig['method'];
+      delete next.data;
+    }
+    if (hop.droppedHeaders.length > 0) {
+      const headers: Record<string, unknown> =
+        config.headers && typeof (config.headers as { toJSON?: unknown }).toJSON === 'function'
+          ? { ...(config.headers as { toJSON: () => Record<string, unknown> }).toJSON() }
+          : { ...((config.headers as Record<string, unknown> | undefined) ?? {}) };
+      for (const name of hop.droppedHeaders) {
+        for (const key of Object.keys(headers)) if (key.toLowerCase() === name) delete headers[key];
+        headers[name] = false;
+      }
+      next.headers = headers as AxiosRequestConfig['headers'];
+    }
+    if (hop.crossOrigin) delete next.auth;
+    if (plan.requestCrawl && typeof plan.requestCrawl === 'object') next.crawl = plan.requestCrawl;
+    this.logger.debug(
+      `${this.describeRequest(config)} redirects (${hop.status ?? '3xx'}) to ${this.redactUrl(hop.href)}; ` +
+        `re-issued under its own crawl policy (hop ${hop.hops}, ${CRAWL_EXTRA_ENV.PACE_REDIRECTS})`,
+    );
+    return this.send<T>(next, hop.hops);
+  }
+
+  /** The error follow-redirects raises for a chain past `maxRedirects`, for a chain of re-issued hops. */
+  private redirectLimitError(error: unknown, config: AxiosRequestConfig): unknown {
+    const e = error as Partial<AxiosError> | undefined;
+    const cause = Object.assign(new Error('Maximum number of redirects exceeded'), { code: 'ERR_FR_TOO_MANY_REDIRECTS' });
+    return AxiosError.from(
+      cause,
+      'ERR_FR_TOO_MANY_REDIRECTS',
+      (e?.config ?? config) as InternalAxiosRequestConfig,
+      e?.request,
+    );
+  }
+
+  // ── caller timeouts (Spec 1715 audit C0) ─────────────────────────────────────
+
+  /**
+   * The timeout one request goes out with. A timeout is the search caller's when
+   * the client took it from a DTO's `requestTimeout` (`timeoutFromCaller`) or it
+   * equals the scrape's `callerRequestTimeout` (seconds; a per-request `timeout` in
+   * ms is compared × 1000). A caller's timeout is gated with the effective
+   * caller-override mode of THIS request's host (`gateCallerRequestTimeout`):
+   * unchanged under `any` (every source and host without a lock), at least
+   * `DEFAULT_REQUEST_TIMEOUT_SECONDS` under `stricter`, the default under `none`.
+   * `EVER_JOBS_CRAWL_STRICTER_RULES=1690` (the `legacy` preset's default) turns the
+   * gate off — the pre-fix behaviour.
+   */
+  private timeoutPlan(perRequest: unknown, plan: RequestPlan, env: CrawlPolicyEnvConfig): TimeoutPlan {
+    const ctxSeconds = plan.ctx?.callerRequestTimeout;
+    const known = typeof ctxSeconds === 'number' && Number.isFinite(ctxSeconds);
+    let seconds: number;
+    let fromCaller: boolean;
+    if (typeof perRequest === 'number' && Number.isFinite(perRequest)) {
+      seconds = perRequest / 1000;
+      fromCaller = known && perRequest === (ctxSeconds as number) * 1000;
+    } else {
+      seconds = Number(this.timeoutSeconds);
+      fromCaller = this.timeoutFromCaller || (known && seconds === ctxSeconds);
+    }
+    if (!fromCaller || crawlStricterRules(env) === '1690') return { seconds, fromCaller: false };
+    const decision = gateCallerRequestTimeout(seconds, plan.resolution.callerOverrides.mode, DEFAULT_REQUEST_TIMEOUT_SECONDS);
+    if (decision.accepted || typeof decision.value !== 'number') return { seconds, fromCaller: true };
+    if (plan.target) {
+      this.logger.debug(
+        `${this.redactUrl(plan.target.href)}: ${decision.note ?? 'requestTimeout replaced by the default'} ` +
+          `(${plan.resolution.callerOverrides.source} lock for this host)`,
+      );
+    }
+    return { seconds: decision.value, fromCaller: true, overrideMs: decision.value * 1000 };
+  }
+
+  /**
+   * A timeout that says nothing about the server (Spec 1715 audit C0): axios'
+   * own client-side timeout, when the timeout in force was the search caller's and
+   * shorter than `DEFAULT_REQUEST_TIMEOUT_SECONDS`. It never cools the bucket
+   * (`serverErrorCooldownMs`), so a caller cannot put a host into a cool-down by
+   * asking for a tiny timeout. A 5xx, a reset or a timeout of our own still counts.
+   */
+  private isCallersShortTimeout(error: unknown, timing: TimeoutPlan): boolean {
+    return (
+      timing.fromCaller &&
+      timing.seconds > 0 &&
+      timing.seconds < DEFAULT_REQUEST_TIMEOUT_SECONDS &&
+      isClientTimeout(error)
+    );
   }
 
   /** Update default headers for this client instance */
@@ -1208,9 +1791,11 @@ export class HttpClient {
     signal: AbortSignal | undefined,
     crawlDelayMs = 0,
   ): HostLimiterAcquireOptions & HostLimiterAcquireExtraOptions {
-    const options = crawlAcquireOptions(policy, signal, crawlDelayMs);
-    // The client's floor (`minIntervalFloorMs`) bounds every layer, a caller's included.
-    return { ...options, minIntervalMs: Math.max(options.minIntervalMs, this.minIntervalFloorMs) };
+    const fleetSize = crawlFleetSize(readCrawlPolicyEnv());
+    const options = crawlAcquireOptions(policy, signal, crawlDelayMs, fleetSize);
+    // The client's floor (`minIntervalFloorMs`) bounds every layer, a caller's
+    // included; like the policy's interval it is multiplied by the fleet size (Spec 1714).
+    return { ...options, minIntervalMs: Math.max(options.minIntervalMs, this.minIntervalFloorMs * fleetSize) };
   }
 
   /**
@@ -1237,6 +1822,10 @@ export class HttpClient {
       );
     } else if (outcome.backOffMs !== undefined) {
       this.logger.debug(`${this.describeRequest(config)} answered ${status}; ${bucket} backs off ${outcome.backOffMs}ms`);
+    } else if (outcome.serverErrorCooldownMs !== undefined) {
+      this.logger.debug(
+        `${this.describeRequest(config)} answered ${status}; ${bucket} cools down ${outcome.serverErrorCooldownMs}ms (serverErrorCooldownMs)`,
+      );
     }
   }
 
@@ -1253,14 +1842,24 @@ export class HttpClient {
     ctx: ScrapeContext | undefined,
     requestCrawl?: CrawlPolicyOverride,
   ): ResolvedCrawlPolicy {
-    const explicit =
-      requestCrawl && typeof requestCrawl === 'object'
-        ? { ...this.explicit, ...requestCrawl }
-        : this.hasExplicit
-          ? this.explicit
-          : undefined;
-    const resolve = () => getEffectiveCrawlPolicy(hostname, explicit);
+    return this.resolveCrawl(hostname, ctx, requestCrawl).policy;
+  }
+
+  /** The policy of one request plus its effective caller-override mode and pre-caller scope (Spec 1714). */
+  private resolveCrawl(
+    hostname: string | undefined,
+    ctx: ScrapeContext | undefined,
+    requestCrawl?: CrawlPolicyOverride,
+  ): EffectiveCrawlResolution {
+    const explicit = this.explicitLayer(requestCrawl);
+    const resolve = () => getEffectiveCrawlResolution(hostname, explicit);
     return this.site && !ctx?.site ? runWithScrapeContext({ site: this.site }, resolve) : resolve();
+  }
+
+  /** The plugin layer of one request: the client's options, then its per-request `crawl` override. */
+  private explicitLayer(requestCrawl: CrawlPolicyOverride | undefined): CrawlPolicyOverride | undefined {
+    if (requestCrawl && typeof requestCrawl === 'object') return { ...this.explicit, ...requestCrawl };
+    return this.hasExplicit ? this.explicit : undefined;
   }
 
   private identityFor(
@@ -1435,6 +2034,13 @@ export class HttpClient {
    * robots.txt fetcher (Spec 1690 §4.7): straight through the axios instance
    * (not `request()`, so no robots recursion), with the configured UA, a slot
    * from the limiter, and the request's proxy / agents / redirect guard / signal.
+   *
+   * Spec 1714 FR-12 (`EVER_JOBS_CRAWL_ROBOTS_BACKOFF`, default on): the answer
+   * feeds the limiter like any request (`recordAnswerOutcome`) — a 429/503
+   * throttles and cools the bucket, so the page request waits; a `Retry-After`
+   * over `maxRetryAfterMs` (`give-up`) fails it with `HostCoolingDownError` (a
+   * local failure the robots cache does not store); a 500/502/504, a timeout or a
+   * reset applies `serverErrorCooldownMs`. `false` = the pre-1714 behaviour.
    */
   private async fetchRobotsTxt(
     robotsUrl: string,
@@ -1443,25 +2049,49 @@ export class HttpClient {
     transport: Partial<AxiosRequestConfig>,
     signal: AbortSignal | undefined,
     axiosSignal: AxiosRequestConfig['signal'],
+    timing: TimeoutPlan = { seconds: Number(this.timeoutSeconds), fromCaller: false },
   ): Promise<{ status: number; body: string } | null> {
     const bucket = bucketKeyFor(robotsUrl, policy.rateLimitScope, site);
-    const release = await this.hostLimiter.acquire(bucket, this.acquireOptions(policy, signal));
+    const limiter = this.hostLimiter;
+    const backoff = crawlRobotsBackoffEnabled(readCrawlPolicyEnv());
+    const release = await limiter.acquire(bucket, this.acquireOptions(policy, signal));
     try {
       const identity: WireIdentity = { userAgent: policy.userAgent, stripClientHints: policy.stripClientHints };
       if (policy.from) identity.from = policy.from;
-      const response = await this.client.request({
-        url: robotsUrl,
-        method: 'GET',
-        headers: { Accept: 'text/plain, */*;q=0.5' },
-        responseType: 'text',
-        maxContentLength: ROBOTS_MAX_DOWNLOAD_BYTES,
-        validateStatus: () => true,
-        ...transport,
-        ...(axiosSignal ? { signal: axiosSignal } : {}),
-        [IDENTITY_KEY]: identity,
-      } as AxiosRequestConfig);
+      let response: AxiosResponse;
+      try {
+        response = await this.client.request({
+          url: robotsUrl,
+          method: 'GET',
+          headers: { Accept: 'text/plain, */*;q=0.5' },
+          responseType: 'text',
+          maxContentLength: ROBOTS_MAX_DOWNLOAD_BYTES,
+          validateStatus: () => true,
+          ...transport,
+          ...(timing.overrideMs !== undefined ? { timeout: timing.overrideMs } : {}),
+          ...(axiosSignal ? { signal: axiosSignal } : {}),
+          [IDENTITY_KEY]: identity,
+        } as AxiosRequestConfig);
+      } catch (err) {
+        const cooldown = serverErrorCooldownOf(policy);
+        // Spec 1715 audit C0: a search caller's short timeout says nothing about the server.
+        if (backoff && cooldown > 0 && isServerStruggling(undefined, err) && !this.isCallersShortTimeout(err, timing)) {
+          limiter.penalize(bucket, cooldown);
+        }
+        throw err;
+      }
       const body = typeof response.data === 'string' ? response.data : response.data == null ? '' : String(response.data);
       this.logger.debug(`robots.txt ${robotsUrl} → ${response.status}`);
+      if (backoff) {
+        const outcome = recordAnswerOutcome(limiter, bucket, policy, 0, response.status, response.headers);
+        if (outcome.giveUpAfterMs !== undefined) {
+          this.logger.warn(
+            `robots.txt ${robotsUrl} answered ${response.status}, Retry-After ${outcome.giveUpAfterMs}ms exceeds ` +
+              `maxRetryAfterMs ${policy.maxRetryAfterMs}ms; not requesting the page (${bucket} cooling down)`,
+          );
+          throw new HostCoolingDownError(bucket, outcome.giveUpAfterMs, response.status);
+        }
+      }
       return { status: response.status, body };
     } finally {
       release();
