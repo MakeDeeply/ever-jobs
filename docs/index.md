@@ -1923,6 +1923,7 @@
 
 | 5162 | [job-post-normalize](../.specify/specs/5162-job-post-normalize/spec.md) -- [plan](../.specify/specs/5162-job-post-normalize/plan.md) -- [tasks](../.specify/specs/5162-job-post-normalize/tasks.md) | Done. `normalizeJobPost` (`packages/common/src/utils`) cleans aggregated `JobPostDto` strings once in `searchJobsWithDiagnostics` — edge-trims `\s` + zero-width \u200B-\u200D + \uFEFF, blank → `null` (so `??` fallbacks act), collapses interior runs in `title`/`companyName`/location text parts, preserves interior in ids/URLs/`description`, cleans + dedupes `emails[]`/`skills[]`, touches `compensation.currency`/`interval`, leaves `site` alone; pure and idempotent. |
 | 5163 | [adp-detail-throttle-recovery](../.specify/specs/5163-adp-detail-throttle-recovery/spec.md) -- [plan](../.specify/specs/5163-adp-detail-throttle-recovery/plan.md) -- [tasks](../.specify/specs/5163-adp-detail-throttle-recovery/tasks.md) | Done. `source-ats-adp` detail fan-out no longer feeds the rate limiter: detail calls run on a dedicated `retries: 0` client so a rejected request fails fast instead of firing 3 more calls into the blocked window, `ADP_DETAIL_CONCURRENCY` dropped 5 → 4, and rejected indices are retried serially — `ADP_DETAIL_RETRY_COOLDOWN_MS` (30 s) then one-at-a-time with `ADP_DETAIL_RETRY_GAP_MS` (300 ms), up to `ADP_DETAIL_RETRY_ROUNDS` (2). `logger.warn` reports `N of M detail fetches failed` and the post-recovery remainder; jobs whose details never recover still emit (list fields only, `description: null`). |
+| 5164 | [search-deadline-override](../.specify/specs/5164-search-deadline-override/spec.md) -- [plan](../.specify/specs/5164-search-deadline-override/plan.md) -- [tasks](../.specify/specs/5164-search-deadline-override/tasks.md) | Done. Per-request fan-out deadline via `POST /api/jobs/search?deadline_ms=` — replaces `EVER_JOBS_SEARCH_DEADLINE_MS` for that call (`0` disables), single-source requests only (400 otherwise, same gate as `include_raw`), non-numeric/negative → 400. New `EVER_JOBS_SEARCH_DEADLINE_MAX_MS` ceiling: unset = uncapped; when set, `0` or `>max` → 400 naming the max (reject, not clamp). Plumbing is an options arg on `searchJobsWithDiagnostics`, never a DTO field, so it stays out of `cacheParams` and plugin input. Cache keeps normal semantics — but a single-source result whose `per_source` reason isn't `ok`/`empty` no longer writes to cache (failed/abandoned scrapes can no longer poison an hour of retries with `[]`). Deadline-exceeded warning now mentions `?deadline_ms`. GraphQL stays config-only. |
 
 ## 8. Templates
 
@@ -1934,5 +1935,5 @@
 
 ---
 
-_Last revised: 2026-09-28 (Spec 5163: ADP detail-fetch throttle recovery — fail-fast detail client + serial retry pass)._
+_Last revised: 2026-09-28 (Spec 5164: per-request `?deadline_ms` search deadline + `EVER_JOBS_SEARCH_DEADLINE_MAX_MS` ceiling + failed-single-source cache-write guard)._
 

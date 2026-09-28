@@ -75,6 +75,12 @@ export default () => {
        * Defaults to the Hust client's own 120 s abort.
        */
       deadlineMs: parseInt(process.env.EVER_JOBS_SEARCH_DEADLINE_MS, 120_000),
+      /**
+       * Server-side ceiling for the per-request `?deadline_ms` override
+       * (Spec 5164). `0`/unset = uncapped; when set, a request deadline of
+       * `0` (unbounded) or above this value is rejected 400.
+       */
+      deadlineMaxMs: parseInt(process.env.EVER_JOBS_SEARCH_DEADLINE_MAX_MS, 0),
     },
     // Persistence (Spec 5024 — bounded retention on the interactive path)
     store: {
