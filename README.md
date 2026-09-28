@@ -7,6 +7,8 @@
 [![NestJS](https://img.shields.io/badge/NestJS-10.x-e0234e.svg)](https://nestjs.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
+> **Run a website and saw `EverJobs/1.0` in your logs?** See [For website operators](#for-website-operators): what it is, how it paces itself, and how to reach us.
+
 ## ⭐️ Overview
 
 **Ever® Jobs™** searches job postings from **160+ sources** concurrently and returns aggregated, normalized results through a single REST API, **GraphQL API**, **CLI**, or **MCP server** for AI assistants. Sources span search-based job boards, ATS (Applicant Tracking System) boards, and company-specific career APIs. Each source is an independent, reusable NestJS package — making it easy to add new sources, consume individual packages in other projects, or deploy the full API.
@@ -223,6 +225,56 @@ Direct integrations with major tech companies' career APIs.
 
 ---
 
+## For website operators
+
+If your server logs show requests with a User-Agent like
+
+```text
+Mozilla/5.0 (compatible; EverJobs/1.0; +https://github.com/ever-jobs/ever-jobs)
+```
+
+they come from an installation of Ever Jobs, this open-source job aggregator.
+
+- **What `EverJobs/1.0` means.** The name and version of the crawler, with a link to
+  this page. It reads only public, unauthenticated job pages (boards, offer pages,
+  sitemaps). An installation may add its own contact to the UA
+  (`EVER_JOBS_CRAWL_CONTACT`) and a `From:` header with an e-mail address
+  (`EVER_JOBS_CRAWL_FROM`); if you see one, that is the fastest way to reach whoever runs it.
+- **Many people run it.** The code is MIT-licensed and self-hosted: anyone can run
+  their own copy, and every copy sends the same UA. Traffic with this UA is therefore
+  not necessarily ours. Our own hosted deployment, for example, does not read Softy
+  (`*.softy.pro`) boards at all.
+- **How it paces itself by default.** Per host: at most 4 requests in flight and at
+  least 100 ms between request starts (a source or a site-owner policy may be slower; a
+  few bulk job-board APIs allow more in flight). A `429` or `503` makes it back off (at
+  least 5 s, then longer), `Retry-After` is always honoured, and a `Retry-After` longer
+  than it is willing to wait (60 s) makes it give up and hold back every request to that
+  host for that long (up to an hour). It never contacts private or internal addresses.
+  robots.txt is honoured when the installation turns it on. Every knob is documented in
+  [`docs/CRAWL_POLICY.md`](docs/CRAWL_POLICY.md).
+- **Want less traffic now?** Answer `429` (or `503`) with a `Retry-After`: an
+  installation on its default settings does not ask your host again before that time,
+  and a value over 60 s pauses every request to your host for the whole period (up to
+  an hour at a time, in each process that received it). Then tell us, or the
+  installation's contact, what pace you need.
+- **How to reach the project.** Open an issue at
+  <https://github.com/ever-jobs/ever-jobs/issues>: name the host, the time window, and
+  the User-Agent and `From:` header you saw, and say what you would like us to change.
+- **A policy for your site, in every installation.** We can ship a site-owner policy
+  for your hosts, as we did for Softy (one shared server for all its clients): one
+  request at a time across the whole domain, at least 1 s between requests and 0.5 s of
+  idle time after each answer, one stable IP, a stop at the first `401`/`403`, `429`/`503`
+  (after at most one retry) or server error, and offers read from `/sitemap.xml` instead
+  of list pages. The pace and back-off apply to every request to your hosts (a redirect
+  into them included), whichever part of the code makes it, and the person calling the
+  API of an installation can only
+  make them stricter
+  ([`docs/CRAWL_POLICY.md`](docs/CRAWL_POLICY.md) §6.4 and §21). Installations pick it up
+  when they upgrade; each installation's operator keeps the final say over their own copy.
+  Ask for it in an issue with the pace your server needs.
+
+---
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -382,7 +434,7 @@ All settings are configurable via environment variables. Copy `.env.example` to 
 | `ENABLE_SWAGGER`       | `true`      | Enable Swagger UI              |
 | `PORT`                 | `3001`      | Server port                    |
 | `EVER_JOBS_CLASSIFY_CAREER_LEVEL` | `true` | Attach `careerLevel` to every returned job; `false` removes it ([Career level](#career-level)) |
-| `EVER_JOBS_CRAWL_PRESET` | `polite`  | Crawl behaviour preset: `polite`, `legacy` (exact pre-1690 behaviour), `strict` |
+| `EVER_JOBS_CRAWL_PRESET` | `polite`  | Crawl behaviour preset: `polite`, `legacy` (pre-1690 crawl behaviour, plus the pre-1714 defaults of the Spec 1714/1715 switches; what it leaves alone is listed in [`docs/CRAWL_POLICY.md`](docs/CRAWL_POLICY.md) §16), `strict` |
 | `EVER_JOBS_CRAWL_USER_AGENT` | `default` | User-Agent; `default` = honest Ever Jobs UA, `browser` = pre-1690 Chrome UA, or any string |
 | `EVER_JOBS_CRAWL_USER_AGENT_MODE` | `identify` | `identify`, `strict`, `plugin` — who decides the UA on the wire |
 | `EVER_JOBS_CRAWL_CONTACT` | (empty) | Contact (e-mail/URL) inserted into the default UA so site operators can reach you |
@@ -397,7 +449,15 @@ All settings are configurable via environment variables. Copy `.env.example` to 
 | `EVER_JOBS_CRAWL_ROBOTS_TXT` | `off` | `off`, `crawl-delay`, `respect`                        |
 | `EVER_JOBS_CRAWL_BLOCK_PRIVATE_NETWORKS` | `true` | Refuse private/internal destinations (set `false` for local mocks) |
 | `EVER_JOBS_CRAWL_POLICIES` | (empty) | JSON per-site / per-host policies (`{"sites":{…},"hosts":{…}}`) |
-| `EVER_JOBS_CRAWL_CALLER_OVERRIDES` | `any` | What a request's `crawl` may change: `any`, `stricter`, `none` |
+| `EVER_JOBS_CRAWL_CALLER_OVERRIDES` | `any` | What a request's `crawl` may change: `any`, `stricter`, `none`. A site owner's lock can only tighten it (Softy: `stricter`); an operator per-site/host `callerOverrides` replaces it |
+| `EVER_JOBS_CRAWL_MIN_GAP_MS` | `0` | Idle time after an answer before the host's next request, on top of the interval (Softy: 500) |
+| `EVER_JOBS_CRAWL_SERVER_ERROR_COOLDOWN_MS` | `0` | Cool the whole host down this long after a `500`/`502`/`504`, timeout or reset (Softy: 30000) |
+| `EVER_JOBS_CRAWL_FLEET_SIZE` | `1` | Processes sharing one egress IP; each multiplies its spacing by it so together they keep one policy |
+| `EVER_JOBS_CRAWL_PACE_REDIRECTS` | `true` | A redirect hop to a host with its own policy (Softy), or to another host bucket under a caller lock, goes out as a request of its own under that host's pace, lock and robots.txt (a source without a lock follows its hops as before); `false` = follow every hop inside the first request's slot (pre-1715; the `legacy` default) |
+| `EVER_JOBS_CRAWL_CALLER_PROXY_ROTATION` | `base` | Under a `stricter` lock (Softy) a caller's `proxyRotation` must equal the resolved one (`off` only when no proxy list is configured), so a caller never moves a locked site to another origin; `ranked` = the earlier order (the `legacy` default) |
+| `EVER_JOBS_CRAWL_COOLDOWN_BEFORE_RELEASE` | `locked` | A failed request under a lock (Softy's hosts, or a caller lock) records its back-off or cool-down before it frees its slot, so no queued request starts inside it; `all` = every request, `off` = the earlier order (the `legacy` default) |
+| `EVER_JOBS_CRAWL_BUILTIN_HOSTS` | `true` | Builtin host policies: the Greenhouse / Lever / Ashby / SmartRecruiters API limits and the site-owner entries (`*.softy.pro`, `softy.pro`); `false` under `legacy` |
+| `EVER_JOBS_CRAWL_BUILTIN_HOSTS_DISABLE` | (empty) | Comma list of builtin host patterns to skip, e.g. `*.softy.pro,softy.pro` (the others keep applying) |
 
 See [`.env.example`](.env.example) for the full list, and [`docs/CRAWL_POLICY.md`](docs/CRAWL_POLICY.md) for every crawl-policy variable, presets, precedence and per-site/per-host examples.
 
@@ -710,13 +770,19 @@ curl -X POST http://localhost:3001/api/jobs/search \
 
 `?liveness=true` probes each returned posting URL with the `liveness-http` plugin and attaches
 `liveness: { state: active|expired|uncertain, checkedAt }`; `?legitimacy=true` attaches an
-in-process `legitimacy: { state, reasons }`. Both are **off unless requested**. The operator
-controls liveness server-side (Spec 1723):
+in-process `legitimacy: { state, reasons }`. Both are **off unless requested**. A job whose
+source already vouched for it is marked `active` without a probe and its `liveness` carries a
+`reason`: `fresh-fetch` (the source fetched `jobUrl` during this request, `jobUrlFetchedAt`) or
+`listed` (the source's own index, e.g. a Softy sitemap or list page, listed it at most 10
+minutes ago, `jobUrlListedAt` — also on a search-cache hit). The operator controls liveness server-side
+(Specs 1723, 1714, 1715):
 
 | Variable | Default | Effect |
 | -------- | ------- | ------ |
 | `EVER_JOBS_LIVENESS_ENABLED` | `true` | `true` honours `?liveness=true`; `false` never probes — the response carries no `liveness` even when requested |
-| `EVER_JOBS_LIVENESS_MAX_URLS` | `100` | probes per request; the first N jobs in output order are probed, the rest carry no `liveness`. `0` = no cap. 100 is the `page_size` ceiling, so paginated requests are never truncated |
+| `EVER_JOBS_LIVENESS_MAX_URLS` | `100` | probes per request; the first N jobs in output order are probed, the rest carry no `liveness`. `0` = no cap. 100 is the `page_size` ceiling, so paginated requests are never truncated. A job marked `active` without a probe (`reason: "fresh-fetch"` or `"listed"`) costs no probe and does not count: the cap takes the first N of the jobs still needing one (JSON, CSV and NDJSON alike) |
+| `EVER_JOBS_LIVENESS_TRUST_FRESH_FETCH` | `true` | trust `jobUrlFetchedAt` (`reason: "fresh-fetch"`); `false` = the pre-1714 behaviour for this evidence (`false` under `EVER_JOBS_CRAWL_PRESET=legacy`) |
+| `EVER_JOBS_LIVENESS_TRUST_LISTED_MAX_AGE_MS` | `600000` | trust a `jobUrlListedAt` at most this old, measured against now (`reason: "listed"`); `0` = off (the pre-1715 behaviour, and the `legacy` default). Every URL is probed only with this at `0` and the switch above `false`. An invalid value keeps the default and is logged once |
 
 #### Fan-out deadline
 
@@ -817,14 +883,14 @@ All parameters are optional. When `siteType` is omitted, search + company scrape
 | `enforceAnnualSalary`      | `boolean`  | `false`    | Convert all wages to annual equivalent                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | `rateDelayMin`             | `number`   | —          | Minimum delay between requests in seconds. Maps to `crawl.minIntervalMs` (× 1000), enforced per host bucket across concurrent requests |
 | `rateDelayMax`             | `number`   | —          | Maximum delay between requests in seconds. Maps to `crawl.jitterMs` = (max − min) × 1000 |
-| `requestTimeout`           | `number`   | `60`       | Request timeout in seconds                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| `proxies`                  | `string[]` | —          | Proxy URLs (`host:port` or `user:pass@host:port`). Which one a request uses follows `crawl.proxyRotation` (default: one stable proxy per host); the operator may refuse caller proxies (`EVER_JOBS_CRAWL_CALLER_PROXIES=none`) |
+| `requestTimeout`           | `number`   | `60`       | Request timeout in seconds. Gated by the source's effective caller-override mode (Spec 1714): under `stricter` (Softy's lock, or the operator's global setting) a value below 60 is replaced by 60; under `none` it is ignored |
+| `proxies`                  | `string[]` | —          | Proxy URLs (`host:port` or `user:pass@host:port`). Which one a request uses follows `crawl.proxyRotation` (default: one stable proxy per host); the operator may refuse caller proxies (`EVER_JOBS_CRAWL_CALLER_PROXIES=none`), and a site owner's lock refuses them for its hosts (Softy: the installation's own proxies still apply) |
 | `caCert`                   | `string`   | —          | Path to CA certificate for proxies                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | `userAgent`                | `string`   | —          | Custom User-Agent string. Maps to `crawl.userAgent`, and to `crawl.userAgentMode: "strict"` unless that is set, so this UA is what goes out |
 | `clientIp`                 | `string`   | —          | Client IP address for sources that require it (e.g. CareerJet). Also useful for proxy rotation strategies                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | `careerLevels`             | `string[]` | —          | Keep only jobs whose server-computed `careerLevel.level` is in the list: `internship`, `new_grad`, `entry`, `mid`, `senior`, `staff`, `principal`, `manager`, `director`, `executive`, `unknown`. Unknown values → 400. See [Career level](#career-level) |
 | `retries` / `retryDelay` / `retryBackoff` / `retryMaxDelay` | `number` / `number` / `string` / `number` | — | Pre-1690 retry fields; when sent they map to `crawl.retries` / `retryBaseDelayMs` / `retryBackoff` / `retryMaxDelayMs` |
-| `crawl`                    | `object`   | —          | Per-request crawl policy (identity, pacing, proxy rotation, retries, robots.txt, discovery). Any subset of the fields below; subject to the operator's `EVER_JOBS_CRAWL_CALLER_OVERRIDES`. Wins over the flat fields above |
+| `crawl`                    | `object`   | —          | Per-request crawl policy (identity, pacing, proxy rotation, retries, robots.txt, discovery). Any subset of the fields below; subject to the operator's `EVER_JOBS_CRAWL_CALLER_OVERRIDES` and to a site owner's lock (Softy: only values that make its traffic more polite are kept). Wins over the flat fields above |
 
 #### `crawl` fields
 
@@ -840,6 +906,8 @@ All parameters are optional. When `siteType` is omitted, search + company scrape
 | `minIntervalMs` / `jitterMs` | `integer` | `100` / `0` | Gap between request starts, plus random jitter |
 | `maxQueueWaitMs` | `integer` | `0` | Longest wait for a slot before failing fast (0 = no limit) |
 | `adaptiveThrottle` | `boolean` | `true` | Slow a host down after 429/503, recover on success |
+| `minGapMs` | `integer` | `0` | Idle time after an answer before the bucket's next start, on top of `minIntervalMs` (0 = off) |
+| `serverErrorCooldownMs` | `integer` | `0` | Cool the whole bucket down after a `500`/`502`/`504`, a timeout or a reset (0 = off) |
 | `retries` / `retryStatuses` | `integer` / `integer[]` | `2` / `[429,502,503,504]` | Retry count (0–10) and statuses |
 | `retryBackoff` | `string` | `exponential` | `exponential`, `linear`, `constant` |
 | `retryBaseDelayMs` / `retryMaxDelayMs` | `integer` | `1000` / `30000` | Back-off base and cap |
@@ -895,6 +963,8 @@ JobPost
 ├── atsType                      (ATS scrapers)
 ├── employmentType               (ATS, Company scrapers)
 ├── applyUrl                     (ATS scrapers)
+├── jobUrlFetchedAt              (Softy: when this search fetched jobUrl; ?liveness=true skips it)
+├── jobUrlListedAt               (Softy: when the sitemap or list page listing the offer was fetched, also on a cache hit; ?liveness=true trusts it for 10 min)
 │
 ├── jobLevel                     (LinkedIn)
 ├── jobFunction                  (LinkedIn)
@@ -1036,7 +1106,8 @@ After searching, the orchestrator applies post-processing:
 A custom `HttpClient` wraps Axios. Every request is governed by a **crawl policy** ([Spec 1690](.specify/specs/1690-crawl-policy/spec.md), operator guide [`docs/CRAWL_POLICY.md`](docs/CRAWL_POLICY.md)) resolved per request from a preset, environment variables, builtin limits for bulk ATS APIs, the plugin's manifest, operator per-site/per-host policies, and the search request's `crawl` object:
 
 - **Honest identity** — By default a User-Agent that names the project and links to it (`Mozilla/5.0 (compatible; EverJobs/1.0; +https://github.com/ever-jobs/ever-jobs)`), optionally with your contact (`EVER_JOBS_CRAWL_CONTACT`) and a `From:` header. Plugins send their own UA only when their API requires it and they say why (USAJobs, HeadHunter). The pre-1690 browser UA is `EVER_JOBS_CRAWL_USER_AGENT=browser`.
-- **Per-host pacing** — A process-wide limiter caps requests in flight and spaces request starts per host (or registrable domain, or site): 4 in flight and 100 ms by default, higher builtin limits for the Greenhouse, Lever, Ashby and SmartRecruiters APIs, adaptive slow-down after 429/503. `rateDelayMin`/`rateDelayMax` are enforced through it.
+- **Per-host pacing** — A process-wide limiter caps requests in flight and spaces request starts per host (or registrable domain, or site): 4 in flight and 100 ms by default, higher builtin limits for the Greenhouse, Lever, Ashby and SmartRecruiters APIs, adaptive slow-down after 429/503. `rateDelayMin`/`rateDelayMax` are enforced through it. Optional idle gap after each answer (`minGapMs`), whole-host cool-down after a server error (`serverErrorCooldownMs`), and `EVER_JOBS_CRAWL_FLEET_SIZE` to keep several replicas within one policy (Spec 1714).
+- **Site-owner policies** — A host's own pace applies to every request to it, whichever plugin makes it (liveness probes and redirect hops included): `*.softy.pro` runs one request at a time across the domain, 1 s apart plus 0.5 s idle, and is locked so an API caller can only make it more polite; the operator can still override it per site or host ([Spec 1714](.specify/specs/1714-crawl-caller-lock-and-host-policies/spec.md), [For website operators](#for-website-operators)).
 - **Proxy rotation modes** — HTTP/HTTPS/SOCKS5 proxies with `per-host` (default: one stable proxy per site), `per-scrape`, `per-request` (round-robin, the pre-1690 behaviour) or `off`.
 - **Back-off that honours the server** — Retries with exponential back-off and jitter (default 2 on 429/502/503/504); never earlier than `Retry-After`; a `Retry-After` over 60 s gives up and cools the whole host.
 - **robots.txt** — Opt-in (`crawl-delay` or `respect`).
@@ -1044,7 +1115,7 @@ A custom `HttpClient` wraps Axios. Every request is governed by a **crawl policy
 - **Custom CA certificates** — For enterprise proxy setups
 - **Configurable timeouts** — Per-request and global timeout settings
 
-`EVER_JOBS_CRAWL_PRESET=legacy` reproduces the pre-1690 behaviour exactly (browser UA, round-robin proxies, no pacing, linear retries); `strict` is the most conservative preset.
+`EVER_JOBS_CRAWL_PRESET=legacy` reproduces the pre-1690 crawl behaviour (browser UA, round-robin proxies, no policy pacing, linear retries) and the pre-1714 defaults of the newer switches; a plugin's own settings, such as Softy's `SOFTY_*` variables and its 1 s client floor, have their own switches ([`docs/CRAWL_POLICY.md`](docs/CRAWL_POLICY.md) §16). `strict` is the most conservative preset.
 
 ---
 
@@ -1253,7 +1324,7 @@ Indeed searches job descriptions too. Use `-` to exclude terms and `""` for exac
 You've been rate-limited. Solutions:
 
 - Use `rateDelayMin` and `rateDelayMax` to add configurable delay between requests
-- Use the `proxies` parameter to rotate IPs
+- Use the `proxies` parameter to rotate IPs (not for sources whose site owner asked for one stable origin, such as Softy: a lock ignores caller proxies there)
 - Reduce `resultsWanted`
 - Since Spec 1690 Ever Jobs already backs off on 429 and honours `Retry-After` (a long one cools the whole host and is reported as `rate_limited` in the search diagnostics). The polite fix is to slow down for that host — `crawl.maxConcurrentPerHost` / `crawl.minIntervalMs` per request, or an operator host policy — rather than to rotate IPs past the site's limit. See [`docs/CRAWL_POLICY.md`](docs/CRAWL_POLICY.md) §18.
 
