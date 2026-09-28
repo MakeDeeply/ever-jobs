@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-09-28 — Spec 5164 — Per-request search deadline (`?deadline_ms`) + ceiling + cache-write guard
+
+**Change:** `POST /api/jobs/search` accepts `?deadline_ms=<ms>` — a per-request replacement for `EVER_JOBS_SEARCH_DEADLINE_MS` (`0` disables the deadline for that call). Single-source requests only; a request resolving to 0 or >1 sources gets 400, same gate as `include_raw`. New `EVER_JOBS_SEARCH_DEADLINE_MAX_MS` operator ceiling: unset = uncapped; when set, `0` (infinite) or a value above the max is rejected 400 naming the max — reject, not clamp, so a caller is never silently shortened. The override travels as `searchJobsWithDiagnostics(input, { captureRaw, deadlineMs })`, never a `ScraperInputDto` field, keeping it out of `cacheParams` and plugin input. Cache keeps normal semantics (a `deadline_ms` request can still be served from cache), but the unconditional write now guards failed results: a single-source response whose `per_source` reason isn't `ok`/`empty` skips `cacheService.set`, so a deadline-abandoned or otherwise failed scrape can no longer cache `[]` for the full TTL (`partial` is excluded too). Guard is single-source only — fan-out searches always have some failure reason, so a wide rule would disable caching. The deadline-exceeded warn now names `?deadline_ms`.
+
+**Files:** `apps/api/src/config/configuration.ts`, `apps/api/src/jobs/jobs.controller.ts`, `apps/api/src/jobs/jobs.service.ts`, `apps/api/src/jobs/__tests__/{jobs.controller,jobs.service}.spec.ts`, `.specify/specs/5164-search-deadline-override/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `npx jest` on the two touched spec files — 106 green (17 new: absent→default, override passes through, `0` survives, `0`/`>max`→400 with ceiling, invalid→400, not-in-cacheParams, cache-hit still served, failed/`partial`/`ok`/multi-source cache-write matrix, service-side override completes a slow scrape + multi-source 400); `npx tsc --project tsconfig.typecheck.json --noEmit` clean; `npm run lint:docs` clean.
+
+---
+
 ## 2026-09-28 — Spec 5163 — ADP detail-fetch throttle recovery
 
 **Change:** `source-ats-adp` no longer loses the tail of a large board's descriptions to ADP's rate limiter (~200 detail requests per rolling window, verified live: a 236-request burst got 429 on every call past the threshold, and the block cleared within ~2 minutes). Detail calls now run on a dedicated `createHttpClient({ retries: 0 })` so a 429 fails fast instead of firing up to 3 more retries into the same blocked window; `ADP_DETAIL_CONCURRENCY` dropped 5 → 4. After the bulk pass, rejected indices (fulfilled-null is not counted as failed) are retried serially: `ADP_DETAIL_RETRY_COOLDOWN_MS` (30 s) pause, then one request at a time with `ADP_DETAIL_RETRY_GAP_MS` (300 ms), up to `ADP_DETAIL_RETRY_ROUNDS` (2). `logger.warn` reports `N of M detail fetches failed` after the bulk pass and the still-failing count after recovery. Fail-safe semantics unchanged — jobs whose details never recover still emit with `description: null`.

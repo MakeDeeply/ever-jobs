@@ -169,7 +169,7 @@ export class JobsService implements OnModuleInit {
    */
   async searchJobsWithDiagnostics(
     input: ScraperInputDto,
-    options?: { captureRaw?: boolean },
+    options?: { captureRaw?: boolean; deadlineMs?: number },
   ): Promise<{
     jobs: JobPostDto[];
     perSource: SourceDiagnosticDto[];
@@ -180,6 +180,10 @@ export class JobsService implements OnModuleInit {
     // `cacheParams` and into every plugin's `scraperInput`, so a field would
     // leak into the cache key and reach plugins.
     const captureRaw = options?.captureRaw === true;
+    // Spec 5164 — a per-request deadline override arrives the same way
+    // (options, never a DTO field) so it stays out of `cacheParams` and out
+    // of every plugin's input.
+    const deadlineOverride = options?.deadlineMs;
     const atsSites = new Set<Site>(this.registry.listAtsSites());
     const { resolved: resolvedSites, unresolved: unresolvedDomains } =
       this.resolveCompanyDomains(input.companyDomain);
@@ -249,6 +253,15 @@ export class JobsService implements OnModuleInit {
       );
     }
 
+    // Spec 5164 — same gate as include_raw: a caller-supplied deadline bounds
+    // the fan-out's width as well as its duration, so it is accepted only for
+    // a single-source request.
+    if (deadlineOverride !== undefined && selectedScrapers.length !== 1) {
+      throw new BadRequestException(
+        `deadline_ms requires exactly one source; got ${selectedScrapers.length}`,
+      );
+    }
+
     if (selectedScrapers.length === 0) {
       this.logger.warn('No valid scrapers selected');
       return { jobs: [], perSource: [], rawBySource: {} };
@@ -272,10 +285,12 @@ export class JobsService implements OnModuleInit {
     const concurrency = clampConcurrency(
       this.configService.get<number>('search.concurrency', DEFAULT_SEARCH_CONCURRENCY),
     );
-    const deadlineMs = this.configService.get<number>(
-      'search.deadlineMs',
-      DEFAULT_SEARCH_DEADLINE_MS,
-    );
+    const deadlineMs =
+      deadlineOverride ??
+      this.configService.get<number>(
+        'search.deadlineMs',
+        DEFAULT_SEARCH_DEADLINE_MS,
+      );
     const deadlineAt =
       deadlineMs > 0 ? Date.now() + deadlineMs : Number.POSITIVE_INFINITY;
 
@@ -351,8 +366,9 @@ export class JobsService implements OnModuleInit {
     if (skipped > 0) {
       this.logger.warn(
         `Search deadline (${deadlineMs}ms) exceeded — skipped ${skipped} of ` +
-          `${selectedScrapers.length} sources. Raise EVER_JOBS_SEARCH_DEADLINE_MS ` +
-          `or narrow siteType to cover more of the catalogue.`,
+          `${selectedScrapers.length} sources. Raise EVER_JOBS_SEARCH_DEADLINE_MS, ` +
+          `pass ?deadline_ms on a single-source request, or narrow siteType ` +
+          `to cover more of the catalogue.`,
       );
     }
     // Aggregate results from fulfilled searches + derive a per-source outcome

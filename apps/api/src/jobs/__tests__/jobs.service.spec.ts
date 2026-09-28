@@ -871,6 +871,57 @@ describe('JobsService', () => {
       expect(tracker.started).toBe(8);
     });
 
+    it('options.deadlineMs overrides the configured deadline (Spec 5164)', async () => {
+      // Config gives a 60ms budget but the single source needs ~150ms: under
+      // the config deadline it would be abandoned mid-flight; the per-call
+      // override lets it finish.
+      const tracker: Tracker = { inFlight: 0, peak: 0, started: 0 };
+      const sites = nSites(1);
+      const service = createService(
+        sites.map((s) => [s, trackingScraper(tracker, 150)] as [Site, IScraper]),
+        { deadlineMs: 60 },
+      );
+
+      const { jobs } = await service.searchJobsWithDiagnostics(
+        new ScraperInputDto({ searchTerm: 'node', siteType: sites }),
+        { deadlineMs: 5_000 },
+      );
+
+      expect(tracker.started).toBe(1);
+      expect(jobs).toHaveLength(1);
+    });
+
+    it('options.deadlineMs=0 disables the deadline for that call (Spec 5164)', async () => {
+      const tracker: Tracker = { inFlight: 0, peak: 0, started: 0 };
+      const sites = nSites(1);
+      const service = createService(
+        sites.map((s) => [s, trackingScraper(tracker, 150)] as [Site, IScraper]),
+        { deadlineMs: 60 },
+      );
+
+      const { jobs } = await service.searchJobsWithDiagnostics(
+        new ScraperInputDto({ searchTerm: 'node', siteType: sites }),
+        { deadlineMs: 0 },
+      );
+
+      expect(jobs).toHaveLength(1);
+    });
+
+    it('options.deadlineMs on a multi-source request → 400 (Spec 5164)', async () => {
+      const tracker: Tracker = { inFlight: 0, peak: 0, started: 0 };
+      const sites = nSites(2);
+      const service = createService(
+        sites.map((s) => [s, trackingScraper(tracker, 1)] as [Site, IScraper]),
+      );
+
+      await expect(
+        service.searchJobsWithDiagnostics(
+          new ScraperInputDto({ searchTerm: 'node', siteType: sites }),
+          { deadlineMs: 5_000 },
+        ),
+      ).rejects.toThrow('deadline_ms requires exactly one source; got 2');
+    });
+
     it('a source that never settles cannot pin the handler past the deadline', async () => {
       // Greptile P1 on #29: the pre-start deadline check alone left an
       // in-flight hung scraper holding its worker forever, so

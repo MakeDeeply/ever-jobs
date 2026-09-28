@@ -8,6 +8,7 @@ import {
   StreamableFile,
   Optional,
   Inject,
+  BadRequestException,
 } from '@nestjs/common';
 import {
   ApiOperation,
@@ -108,6 +109,13 @@ export class JobsController {
     description:
       'Raw HTTP capture for a single source (Spec 5161). Valid only when the request resolves to exactly one source; otherwise 400. Skips the cache read and adds `raw_by_source` to the response.',
   })
+  @ApiQuery({
+    name: 'deadline_ms',
+    required: false,
+    type: Number,
+    description:
+      'Per-request fan-out wall-clock budget in ms (Spec 5164). Valid only when the request resolves to exactly one source; otherwise 400. `0` disables the deadline for this call. Replaces EVER_JOBS_SEARCH_DEADLINE_MS for this request only; capped by EVER_JOBS_SEARCH_DEADLINE_MAX_MS when the operator sets it (`0` or a value above the cap returns 400).',
+  })
   @ApiResponse({ status: 200, description: 'Job search results' })
   @ApiResponse({ status: 429, description: 'Rate limit exceeded' })
   async searchJobs(
@@ -127,6 +135,7 @@ export class JobsController {
     @Query('diagnostics') diagnosticsRaw?: string,
     @Query('diagnostics_limit') diagnosticsLimitRaw?: string,
     @Query('include_raw') includeRawRaw?: string,
+    @Query('deadline_ms') deadlineMsRaw?: string,
   ) {
     this.logger.log(
       `Search request: sites=${input.siteType?.join(',') ?? 'all'}, term="${input.searchTerm}", location="${input.location}"`,
@@ -176,6 +185,33 @@ export class JobsController {
     // time; the service 400s when the selection resolves to anything else.
     const includeRaw = parseBool(includeRawRaw);
 
+    // Spec 5164 — per-request deadline override. Deliberately not `parseNum`
+    // (which folds `0` into the default): `0` is meaningful here — it
+    // disables the deadline for this call, mirroring the config semantics.
+    // Non-numeric and negative input are rejected outright rather than
+    // silently rewritten.
+    let deadlineMs: number | undefined;
+    if (deadlineMsRaw !== undefined) {
+      const n = Number(deadlineMsRaw);
+      if (!Number.isFinite(n) || n < 0) {
+        throw new BadRequestException(
+          `deadline_ms must be a non-negative number of milliseconds; got "${deadlineMsRaw}"`,
+        );
+      }
+      deadlineMs = n;
+      // Operator ceiling: `0` means "infinite deadline", i.e. above any max,
+      // so it rejects alongside over-max values when a cap is configured.
+      const deadlineMax = this.configService.get<number>(
+        'search.deadlineMaxMs',
+        0,
+      );
+      if (deadlineMax > 0 && (deadlineMs === 0 || deadlineMs > deadlineMax)) {
+        throw new BadRequestException(
+          `deadline_ms exceeds the server maximum of ${deadlineMax}ms`,
+        );
+      }
+    }
+
     // ── Cache check (cache stores RAW fan-out — dedup runs per-request) ──
     // `include_raw` skips the read: a hit ran no scrapers, so there would be
     // nothing to capture. The write is unchanged — it stores only the
@@ -198,11 +234,24 @@ export class JobsController {
     } else {
       const result = await this.jobsService.searchJobsWithDiagnostics(input, {
         captureRaw: includeRaw,
+        deadlineMs,
       });
       rawJobs = result.jobs;
       perSource = result.perSource;
       rawBySource = result.rawBySource;
-      await this.cacheService.set(cacheParams, rawJobs);
+      // Spec 5164 — a failed single-source result must not poison the cache:
+      // a deadline-abandoned scrape caches `[]` for the full TTL and every
+      // repeat call returns it instead of re-scraping. Single-source only —
+      // on a fan-out at least one failure is normal (e.g. browser_unavailable
+      // on browser-less deployments), so a wide rule would disable caching.
+      if (
+        !(
+          perSource.length === 1 &&
+          !['ok', 'empty'].includes(perSource[0].reason)
+        )
+      ) {
+        await this.cacheService.set(cacheParams, rawJobs);
+      }
     }
 
     // ── Dedup (Spec 003 / FR-1) ───────────
