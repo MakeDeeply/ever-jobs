@@ -23,10 +23,14 @@ import {
   parseLocationList,
   parseLocationText,
   resolveCompensation,
+  sleep,
   toDateOnly,
 } from '@ever-jobs/common';
 import {
   ADP_DETAIL_CONCURRENCY,
+  ADP_DETAIL_RETRY_COOLDOWN_MS,
+  ADP_DETAIL_RETRY_GAP_MS,
+  ADP_DETAIL_RETRY_ROUNDS,
   ADP_HEADERS,
   ADP_HOSTS,
   ADP_PAGE_SIZE,
@@ -71,6 +75,18 @@ export class AdpService implements IScraper {
     });
     client.setHeaders(ADP_HEADERS);
 
+    // Details run on a separate client with retries disabled: when ADP's
+    // limiter trips mid-run, in-client retries would fire several more calls
+    // into the same blocked window per rejected request. The serial recovery
+    // pass in `fetchDetails` owns retrying instead.
+    const detailClient = createHttpClient({
+      proxies: input.proxies,
+      caCert: input.caCert,
+      timeout: input.requestTimeout,
+      retries: 0,
+    });
+    detailClient.setHeaders(ADP_HEADERS);
+
     const listing = await this.fetchList(client, cid);
     if (!listing) {
       this.logger.error(
@@ -90,7 +106,12 @@ export class AdpService implements IScraper {
     // The list feed omits the posting body; `requisitionDescription` lives only
     // on the per-requisition detail endpoint. Overlay the wanted slice.
     const wanted = listing.jobs.slice(0, resultsWanted);
-    const details = await this.fetchDetails(client, listing.host, cid, wanted);
+    const details = await this.fetchDetails(
+      detailClient,
+      listing.host,
+      cid,
+      wanted,
+    );
 
     const jobPosts: JobPostDto[] = [];
     let diagnostics: ScrapeDiagnostics | undefined;
@@ -186,6 +207,10 @@ export class AdpService implements IScraper {
    * Overlay each listing with its per-requisition detail payload under bounded
    * concurrency. Fail-safe: a failed or empty detail fetch yields `null` for
    * that index (the batch is never nuked), so the job still maps from the list.
+   * ADP throttles the detail endpoint to ~200 requests per rolling window, so
+   * on large boards the tail of the fan-out can 429 — rejected indices are
+   * retried serially after a cooldown rather than feeding the limiter more
+   * parallel requests.
    */
   private async fetchDetails(
     client: HttpClient,
@@ -194,6 +219,7 @@ export class AdpService implements IScraper {
     jobs: AdpJob[],
   ): Promise<(AdpJob | null)[]> {
     const details: (AdpJob | null)[] = new Array(jobs.length).fill(null);
+    const failed = new Set<number>();
     for (let index = 0; index < jobs.length; index += ADP_DETAIL_CONCURRENCY) {
       const batch = jobs.slice(index, index + ADP_DETAIL_CONCURRENCY);
       const settled = await Promise.allSettled(
@@ -202,8 +228,42 @@ export class AdpService implements IScraper {
       settled.forEach((result, batchIndex) => {
         if (result.status === 'fulfilled') {
           details[index + batchIndex] = result.value;
+        } else {
+          failed.add(index + batchIndex);
         }
       });
+    }
+
+    if (failed.size === 0) return details;
+    this.logger.warn(
+      `ADP: ${failed.size} of ${jobs.length} detail fetches failed for ${cid}; ` +
+        `retrying serially after a cooldown`,
+    );
+
+    for (let round = 0; round < ADP_DETAIL_RETRY_ROUNDS; round++) {
+      await sleep(ADP_DETAIL_RETRY_COOLDOWN_MS);
+      for (const index of failed) {
+        try {
+          details[index] = await this.fetchDetail(
+            client,
+            host,
+            cid,
+            jobs[index].itemID,
+          );
+          failed.delete(index);
+        } catch {
+          // still throttled — leaves the index in `failed` for the next round
+        }
+        await sleep(ADP_DETAIL_RETRY_GAP_MS);
+      }
+      if (failed.size === 0) break;
+    }
+
+    if (failed.size > 0) {
+      this.logger.warn(
+        `ADP: ${failed.size} detail fetches still failing after ` +
+          `${ADP_DETAIL_RETRY_ROUNDS} recovery rounds for ${cid}`,
+      );
     }
     return details;
   }
