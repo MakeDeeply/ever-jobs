@@ -5,8 +5,20 @@ import {
   resolveResultCaps,
 } from './search-config';
 import { resolvePersistSearch } from './store-config';
-import { readCrawlPolicyEnv, resolveCrawlPolicy } from '@ever-jobs/common';
+import {
+  crawlBuiltinHostsDisabled,
+  crawlFleetSize,
+  crawlCallerProxyRotation,
+  crawlCooldownBeforeRelease,
+  crawlPaceRedirectsEnabled,
+  crawlProxyPinScope,
+  crawlRobotsBackoffEnabled,
+  crawlStricterRules,
+  readCrawlPolicyEnv,
+  resolveCrawlPolicy,
+} from '@ever-jobs/common';
 import { CircuitBreakerService } from '@ever-jobs/plugin';
+import { livenessTrustFreshFetch, livenessTrustListedMaxAgeMs, searchStopOn503 } from '../jobs/crawl-policy.mapping';
 
 /**
  * Central configuration factory.
@@ -153,6 +165,28 @@ export default () => {
         policies: env.policies,
         /** Count only — proxy URLs may carry credentials. */
         proxyCount: env.proxies.length,
+        /** EVER_JOBS_CRAWL_FLEET_SIZE — processes sharing one egress (Spec 1714; 1 = pre-1714). */
+        fleetSize: crawlFleetSize(env),
+        /** EVER_JOBS_CRAWL_STRICTER_RULES — `stricter` comparators (Spec 1714; `1690` = pre-1714). */
+        stricterRules: crawlStricterRules(env),
+        /** EVER_JOBS_CRAWL_PACE_REDIRECTS — redirect hops paced by the hop's own policy (Spec 1715; `false` = pre-fix). */
+        paceRedirects: crawlPaceRedirectsEnabled(env),
+        /** EVER_JOBS_CRAWL_PROXY_PIN_SCOPE — what a locked request's per-host proxy pick keys on (Spec 1714; `bucket` = pre-1714). */
+        proxyPinScope: crawlProxyPinScope(env),
+        /** EVER_JOBS_CRAWL_ROBOTS_BACKOFF — robots.txt answers feed the host limiter (Spec 1714; `false` = pre-1714). */
+        robotsBackoff: crawlRobotsBackoffEnabled(env),
+        /**
+         * EVER_JOBS_CRAWL_CALLER_PROXY_ROTATION — a `stricter` caller's proxyRotation (Spec 1715 review round 2;
+         * `ranked` = pre-fix).
+         */
+        callerProxyRotation: crawlCallerProxyRotation(env),
+        /**
+         * EVER_JOBS_CRAWL_COOLDOWN_BEFORE_RELEASE — which failed requests record their cool-down before freeing
+         * their limiter slot (review of PR #105; `off` = pre-fix).
+         */
+        cooldownBeforeRelease: crawlCooldownBeforeRelease(env),
+        /** EVER_JOBS_CRAWL_BUILTIN_HOSTS_DISABLE — builtin host patterns switched off (Spec 1715; `[]` = none). */
+        builtinHostsDisabled: crawlBuiltinHostsDisabled(env),
         warnings: env.warnings,
         /** The policy a request gets before plugin, host and caller layers apply. */
         effective: resolveCrawlPolicy({}, env),
@@ -162,6 +196,27 @@ export default () => {
     // Circuit breaker (Spec 005; cap configurable since Spec 1690) — mirror.
     circuit: {
       maxSites: CircuitBreakerService.readMaxSites(process.env),
+      /**
+       * EVER_JOBS_BREAKER_COUNT_REFUSALS (Spec 1714): a resolved result with 0 jobs and a
+       * rate_limited / blocked diagnostic counts as a breaker failure. `false` = pre-1714.
+       */
+      countRefusals: CircuitBreakerService.readCountRefusals(process.env),
+    },
+
+    // Spec 1714 API switches — READ-ONLY mirrors; the code reads the env variables
+    // directly per search (JobsService / JobsController), so set those to change them.
+    // Unset, each takes its pre-1714 value under EVER_JOBS_CRAWL_PRESET=legacy (Spec 1715
+    // review F7); an invalid value is logged once, here at startup (review F8).
+    searchSwitches: {
+      /** EVER_JOBS_SEARCH_STOP_ON_503: a 503 stops a source's remaining locations (`false` = pre-1714). */
+      stopOn503: searchStopOn503(process.env),
+      /** EVER_JOBS_LIVENESS_TRUST_FRESH_FETCH: ?liveness=true skips freshly fetched pages (`false` = pre-1714). */
+      livenessTrustFreshFetch: livenessTrustFreshFetch(process.env),
+      /**
+       * EVER_JOBS_LIVENESS_TRUST_LISTED_MAX_AGE_MS: ?liveness=true skips a posting its source listed in an
+       * index fetched at most this long ago, ms (default 600000; `0` = off, the pre-fix behaviour).
+       */
+      livenessTrustListedMaxAgeMs: livenessTrustListedMaxAgeMs(process.env),
     },
 
     // GraphQL
