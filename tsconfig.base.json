@@ -1138,6 +1138,7 @@
       "@ever-jobs/source-monster": ["packages/plugins/source-monster/src/index.ts"],
       "@ever-jobs/source-careerbuilder": ["packages/plugins/source-careerbuilder/src/index.ts"],
       "@ever-jobs/source-ats-icims": ["packages/plugins/source-ats-icims/src/index.ts"],
+      "@ever-jobs/source-ats-jibe": ["packages/plugins/source-ats-jibe/src/index.ts"],
       "@ever-jobs/source-ats-taleo": ["packages/plugins/source-ats-taleo/src/index.ts"],
       "@ever-jobs/source-ats-successfactors": ["packages/plugins/source-ats-successfactors/src/index.ts"],
       "@ever-jobs/source-ats-jobvite": ["packages/plugins/source-ats-jobvite/src/index.ts"],

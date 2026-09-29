@@ -32,6 +32,7 @@ import { GreenhouseModule } from './source-ats-greenhouse';
 import { HiringThingModule } from './source-ats-hiringthing';
 import { HomerunModule } from './source-ats-homerun';
 import { IcimsModule } from './source-ats-icims';
+import { JibeModule } from './source-ats-jibe';
 import { ISmartRecruitModule } from './source-ats-ismartrecruit';
 import { JazzHRModule } from './source-ats-jazzhr';
 import { JobScoreModule } from './source-ats-jobscore';
@@ -1904,6 +1905,7 @@ export const ALL_SOURCE_MODULES = [
   HiringThingModule,
   HomerunModule,
   IcimsModule,
+  JibeModule,
   ISmartRecruitModule,
   JazzHRModule,
   JobScoreModule,

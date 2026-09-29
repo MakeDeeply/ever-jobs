@@ -1122,6 +1122,7 @@ module.exports = {
     '^@ever-jobs/source-monster$': '<rootDir>/packages/plugins/source-monster/src/index.ts',
     '^@ever-jobs/source-careerbuilder$': '<rootDir>/packages/plugins/source-careerbuilder/src/index.ts',
     '^@ever-jobs/source-ats-icims$': '<rootDir>/packages/plugins/source-ats-icims/src/index.ts',
+    '^@ever-jobs/source-ats-jibe$': '<rootDir>/packages/plugins/source-ats-jibe/src/index.ts',
     '^@ever-jobs/source-ats-taleo$': '<rootDir>/packages/plugins/source-ats-taleo/src/index.ts',
     '^@ever-jobs/source-ats-successfactors$': '<rootDir>/packages/plugins/source-ats-successfactors/src/index.ts',
     '^@ever-jobs/source-ats-jobvite$': '<rootDir>/packages/plugins/source-ats-jobvite/src/index.ts',
