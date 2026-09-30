@@ -7,9 +7,12 @@
  * board endpoint, per-job detail endpoint, and the canonical
  * `https://www.tesla.com/careers/search/job/<slug>-<id>` URL pattern.
  *
- * **HTTP-only by design.** No `playwright` reference anywhere in this
- * file — Akamai bypass is a feature of the OPTIONAL companion plugin
- * `@ever-jobs/source-tesla-playwright` (Spec 013 / FR-13).
+ * **HTTP-first with a lazy browser fallback** (Spec 5167): when the plain
+ * board GET is Akamai-challenged, the service retries the same endpoints
+ * through an in-page `fetch()` inside a lazily imported headless Chromium.
+ * No `playwright` reference at module scope — a workspace without the dep
+ * still boots clean; the OPTIONAL `source-tesla-playwright` companion
+ * remains for operators who want browser-first.
  */
 
 /** Public Tesla origin used for both API + careers-portal URLs. */
@@ -88,3 +91,35 @@ export const TESLA_AKAMAI_STATUS_CODES: ReadonlySet<number> = new Set([
  */
 export const TESLA_ERR_AKAMAI_CHALLENGE = 'ERR_TESLA_AKAMAI_CHALLENGE';
 export const TESLA_ERR_FETCH_FAILED = 'ERR_TESLA_FETCH_FAILED';
+
+/**
+ * Spec 5167 — browser-fallback constants.
+ *
+ * `TESLA_CAREERS_PAGE`: landing URL the fallback session navigates to before
+ * any in-page `fetch()` — loading the careers SPA is what lets Akamai's
+ * challenge JS resolve and plant its cookies on the browser context.
+ */
+export const TESLA_CAREERS_PAGE = `${TESLA_BASE_URL}/careers/search/`;
+
+/**
+ * Chromium launch flags. `--disable-blink-features=AutomationControlled` is
+ * load-bearing for Akamai bypass — without it the gateway detects the
+ * headless browser via the `webdriver` property within a few hundred ms.
+ * The other two are belt-and-braces for sandboxed CI environments.
+ */
+export const TESLA_LAUNCH_ARGS: readonly string[] = [
+  '--disable-blink-features=AutomationControlled',
+  '--disable-dev-shm-usage',
+  '--no-sandbox',
+] as const;
+
+/** Settle time after the careers-page `goto` — Akamai's challenge JS can take 2-4 s to resolve. */
+export const TESLA_SETTLE_MS = 5_000;
+
+/** Careers-page navigation timeout (ms). */
+export const TESLA_GOTO_TIMEOUT_MS = 60_000;
+
+/** Sentinel error codes for the browser-fallback path (Spec 5167). */
+export const TESLA_ERR_BROWSER_UNAVAILABLE = 'ERR_TESLA_BROWSER_UNAVAILABLE';
+export const TESLA_ERR_BROWSER_NAV = 'ERR_TESLA_BROWSER_NAV';
+export const TESLA_ERR_BROWSER_FETCH_FAILED = 'ERR_TESLA_BROWSER_FETCH_FAILED';

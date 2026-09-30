@@ -5,6 +5,14 @@
 
 ---
 
+## 2026-10-01 — Spec 5167 — `source-tesla` lazy browser fallback on Akamai challenge
+
+**Change:** the default Tesla scraper is no longer hard-fail when Akamai's Bot Manager challenges the plain-HTTP board GET (`GET /cua-api/apps/careers/state` → 403/503 or a non-JSON challenge body). On `fetchBoard === null`, `scrape()` now retries the identical flow inside a lazily imported headless Chromium session: launch with `--disable-blink-features=AutomationControlled` → `goto /careers/search/` (networkidle, 60 s) → 5 s settle so the challenge JS resolves and plants its cookies → in-page `fetch()` of the same board + detail JSON endpoints (browser-native cookies/TLS, `credentials: 'include'`). The browser only fetches JSON — no card scraping — so the fallback stays cheap at catalogue scale. Listings emit `site: Site.TESLA` regardless of path, so identity/dedup are unchanged; `descriptionDepth` budgets apply to in-page detail fetches exactly as before. `playwright` is imported through a Function-wrapped `import()` inside the fallback only — no module-scope import, so workspaces without the dep boot clean (`ERR_TESLA_BROWSER_UNAVAILABLE` → empty DTO). New sentinels: `ERR_TESLA_BROWSER_NAV`, `ERR_TESLA_BROWSER_FETCH_FAILED`. `source-tesla-playwright` is unchanged and remains the opt-in browser-first companion; plugins do not import each other, so the fallback reimplements the companion's proven flow in-package.
+
+**Files:** `packages/plugins/source-tesla/src/{tesla.service,tesla.constants}.ts`, `packages/plugins/source-tesla/__tests__/tesla.service.spec.ts` (+5 fallback cases), `.specify/specs/5167-tesla-browser-fallback/*`, `docs/index.md`, `docs/log.md`.
+
+---
+
 ## 2026-09-30 — Spec 5166 — `source-ats-clearcompany` per-site (widget) feed
 
 **Change:** the plugin now accepts a ClearCompany **careers siteId** and reads the feed the tenant's embedded widget renders — `GET https://careers-api.clearcompany.com/v1/{siteId}` → `{results, totalCount}`. SiteId resolves from `siteNumber` (the shared per-site field), a GUID-shaped `companySlug`, or `?siteId=` on `companyUrl` (the embed-snippet shape). Motivation: the legacy `API-ShortName` careers-page feed under-reports — postings published only to the widget portal are absent from it (observed live: 127 vs 158 jobs for the same tenant, a strict subset). The widget feed is also richer: structured `locations[]` (city/subdivisionFullName/country/postalCode/isRemote/isNationwide), absolute `applyLink`, `brandName`, `postedDate`, `departmentName`/`jobFunctionName`. `jobUrl` derives from `applyLink` minus the trailing `/apply`. When the site feed errors or returns empty and a slug is also known, the scraper falls back to the legacy feed; slug-only callers are unaffected.
