@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-09-30 — Spec 5166 — `source-ats-clearcompany` per-site (widget) feed
+
+**Change:** the plugin now accepts a ClearCompany **careers siteId** and reads the feed the tenant's embedded widget renders — `GET https://careers-api.clearcompany.com/v1/{siteId}` → `{results, totalCount}`. SiteId resolves from `siteNumber` (the shared per-site field), a GUID-shaped `companySlug`, or `?siteId=` on `companyUrl` (the embed-snippet shape). Motivation: the legacy `API-ShortName` careers-page feed under-reports — postings published only to the widget portal are absent from it (observed live: 127 vs 158 jobs for the same tenant, a strict subset). The widget feed is also richer: structured `locations[]` (city/subdivisionFullName/country/postalCode/isRemote/isNationwide), absolute `applyLink`, `brandName`, `postedDate`, `departmentName`/`jobFunctionName`. `jobUrl` derives from `applyLink` minus the trailing `/apply`. When the site feed errors or returns empty and a slug is also known, the scraper falls back to the legacy feed; slug-only callers are unaffected.
+
+**Files:** `packages/plugins/source-ats-clearcompany/src/{clearcompany.service,clearcompany.constants,clearcompany.types}.ts`, `packages/plugins/source-ats-clearcompany/__tests__/{clearcompany.service.spec.ts,fixtures/site-jobs.json}`, `.specify/specs/5166-clearcompany-siteid-feed/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `jest packages/plugins/source-ats-clearcompany` — 8 new green (GUID slug → site feed, `siteNumber`, `?siteId=` URL, field mapping incl. multi-location + `jobFunctionName`/`postedDate` fallbacks, empty-site→slug fallback, slug-only path unchanged, unknown-site 404→empty); `tsc --noEmit` clean. Verified live: `careers-api.clearcompany.com/v1/00ed92c3-…` → `totalCount: 158` vs 127 via `API-ShortName: firefly` (158 is a strict superset).
+
+---
+
 ## 2026-09-29 — Spec 5165 — `source-ats-jibe` plugin (Jibe / iCIMS Talent Cloud careers sites)
 
 **Change:** new ATS plugin `packages/plugins/source-ats-jibe` (`Site.JIBE`, category `ats`, `isAts`). Jibe careers sites are client-rendered SPAs whose listings live behind a same-origin JSON feed — `GET {origin}/api/jobs?page={n}` → `{jobs[].data, totalCount}`, a fixed 10 jobs per page (`pageSize` ignored). Verified live: `careers.rivian.com/api/jobs` reports `totalCount: 794`. Tenants whose classic `*.icims.com` board has been replaced by a Jibe front-end answer the iframe board URL with a frame-buster redirect, so `source-ats-icims` harvests 0 for them — this plugin covers that gap. Tenant addressing: `companyUrl` (any Jibe page; its mount path becomes the detail-URL base — `…/careers-home/jobs` → `…/careers-home/jobs/{slug}`) or `companySlug` (site host or full/partial URL; bare hosts use `{origin}/jobs/{slug}`, which Jibe sites redirect to the mounted detail). Maps `req_id`→`atsId`, `apply_url`→`applyUrl`/`jobUrlDirect` (usually the real ATS's apply link, e.g. icims), city/state/country, `employment_type`, `posted_date`/`create_date`→`datePosted`, `category`→`department`, `description`, `hiring_organization`→`companyName` with a host-derived fallback, remote from `location_type`/`remote` text. `req_id` dedup across pages; non-JSON bodies, 4xx, and unknown tenants degrade to empty/partial rather than throwing.
