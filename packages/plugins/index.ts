@@ -1878,6 +1878,7 @@ import { XlightModule } from './source-company-xlight';
 import { IntDynModule } from './source-company-int-dyn';
 import { ThoronUsModule } from './source-company-thoron_us';
 import { WercoMfgModule } from './source-company-wercomfg';
+import { CommaAiModule } from './source-company-comma_ai';
 export const ALL_SOURCE_MODULES = [
   FourDayWeekModule,
   AcademiccareersModule,
@@ -3749,4 +3750,5 @@ export const ALL_SOURCE_MODULES = [
   IntDynModule,
   ThoronUsModule,
   WercoMfgModule,
+  CommaAiModule,
 ];

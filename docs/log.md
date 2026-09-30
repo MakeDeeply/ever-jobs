@@ -15,6 +15,16 @@
 
 ---
 
+## 2026-09-30 — Spec 5168 — `source-company-comma_ai` plugin
+
+**Change:** new company plugin for comma.ai (`Site.COMMA_AI = 'comma_ai'`, `companyDomains: ['comma.ai']`). The `/jobs` page is a Svelte site whose accordion detail renders on click, but the full dataset — `title`, `team`, `location`, `description` (template literal), `qualifications[]`, `howToApply` — ships as a plain JS array in the page's SvelteKit node chunk (`/_app/immutable/nodes/{id}.{hash}.js`). The plugin fetches the careers page over plain HTTP, extracts node-chunk URLs (hashes rotate per deploy), finds the chunk carrying the `=[{title:"` + `qualifications:` array, and parses it with a balanced-slice scanner that also treats backticks as quote delimiters — never `eval`. Job URLs and applyUrl are the site's own share anchors (`comma.ai/jobs#{kebab-slug}`, matching the page's `article` ids); `team` → `department` when present (absent on e.g. "Internships / Co-op"); the `On-site in `/`Paid and on-site in ` prefix is stripped before `parseLocationText` (`San Diego, CA` → city/state). Description = bundle description + `Qualifications:` list + `howToApply` (which carries the `mailto:work@comma.ai` apply path).
+
+**Files:** `packages/plugins/source-company-comma_ai/{src/,__tests__/}` (service, module, index, constants, types, spec, fixtures/jobs.html + node-chunk.js), `packages/models/src/enums/site.enum.ts`, `packages/plugins/index.ts`, `tsconfig.base.json`, `jest.config.js`, `.specify/specs/5168-source-company-comma_ai/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** `jest packages/plugins/source-company-comma_ai` — 7 green (10 jobs from the real chunk fixture; slug derivation incl. `/` titles; team optional; `San Diego, CA` → city/state; description composition; no-chunk → `empty` diagnostics); `tsc --noEmit` clean; `npm run lint:docs` clean. Verified live: `comma.ai/jobs` serves 10 `job-item` articles matching the chunk's array.
+
+---
+
 ## 2026-09-30 — Spec 5166 — `source-ats-clearcompany` per-site (widget) feed
 
 **Change:** the plugin now accepts a ClearCompany **careers siteId** and reads the feed the tenant's embedded widget renders — `GET https://careers-api.clearcompany.com/v1/{siteId}` → `{results, totalCount}`. SiteId resolves from `siteNumber` (the shared per-site field), a GUID-shaped `companySlug`, or `?siteId=` on `companyUrl` (the embed-snippet shape). Motivation: the legacy `API-ShortName` careers-page feed under-reports — postings published only to the widget portal are absent from it (observed live: 127 vs 158 jobs for the same tenant, a strict subset). The widget feed is also richer: structured `locations[]` (city/subdivisionFullName/country/postalCode/isRemote/isNationwide), absolute `applyLink`, `brandName`, `postedDate`, `departmentName`/`jobFunctionName`. `jobUrl` derives from `applyLink` minus the trailing `/apply`. When the site feed errors or returns empty and a slug is also known, the scraper falls back to the legacy feed; slug-only callers are unaffected.
