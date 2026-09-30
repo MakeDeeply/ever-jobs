@@ -8,7 +8,11 @@ import {
   ScraperInputDto,
   Site,
 } from '@ever-jobs/models';
-import { createHttpClient, parseLocationList } from '@ever-jobs/common';
+import {
+  attachRawCapture,
+  createHttpClient,
+  parseLocationList,
+} from '@ever-jobs/common';
 import {
   TESLA_AKAMAI_STATUS_CODES,
   TESLA_BASE_URL,
@@ -47,11 +51,11 @@ import {
  * population requires follow-up GETs to `/cua-api/careers/job/{id}`,
  * budgeted by `input.descriptionDepth` per Q-031 / FR-11:
  *
- *   - `'board'` (0 follow-ups) — descriptions stay null.
- *   - `'detail-25'` (default; 25 follow-ups) — first 25 jobs (by
+ *   - `'board'` (default; 0 follow-ups) — descriptions stay null.
+ *   - `'detail-25'` (25 follow-ups) — first 25 jobs (by
  *     board-emit order) get descriptions, remainder stay null.
  *   - `'detail-all'` (∞ follow-ups) — every job gets a description;
- *     opt-in only because it busts NFR-2's 12 s ceiling.
+ *     opt-in only because it is ~8k+ sequential requests (Spec 5167).
  *
  * Akamai handling (FR-12):
  *   - Board GET returning HTTP 403 / 503 → empty `JobResponseDto`
@@ -264,6 +268,7 @@ export class TeslaService implements IScraper {
         args: [...TESLA_LAUNCH_ARGS],
       });
       const page = await browser.newPage();
+      attachRawCapture(page);
 
       if (!(await this.openCareersPage(page))) {
         return null;
