@@ -542,6 +542,38 @@ describe('TeslaService browser fallback (Spec 5167)', () => {
     expect(fakeBrowser.close).toHaveBeenCalled();
   });
 
+  it('escalates to a headed window when the headless session is still blocked', async () => {
+    mockGet.mockRejectedValueOnce(akamai403());
+    jest
+      .spyOn(TeslaService.prototype as any, 'loadPlaywright')
+      .mockResolvedValue(fakePlaywright);
+    jest
+      .spyOn(TeslaService.prototype as any, 'openCareersPage')
+      .mockResolvedValue(true);
+    jest
+      .spyOn(TeslaService.prototype as any, 'fetchInPage')
+      // headless attempt: all 3 in-page board polls still challenged
+      .mockResolvedValueOnce(null)
+      .mockResolvedValueOnce(null)
+      .mockResolvedValueOnce(null)
+      // headed attempt: unblocked on the first try
+      .mockResolvedValue(BOARD_FIXTURE);
+
+    const service = new TeslaService();
+    const result = await service.scrape({
+      siteType: [Site.TESLA],
+      descriptionDepth: 'board',
+      resultsWanted: 2,
+    } as ScraperInputDto);
+
+    expect(result.jobs).toHaveLength(2);
+    expect(fakePlaywright.chromium.launch).toHaveBeenCalledTimes(2);
+    const launchCalls = fakePlaywright.chromium.launch.mock.calls as any[];
+    expect(launchCalls[0][0].headless).toBe(true);
+    expect(launchCalls[1][0].headless).toBe(false);
+    expect(fakeBrowser.close).toHaveBeenCalledTimes(2);
+  });
+
   it('honours the detail budget with in-page detail fetches', async () => {
     mockGet.mockRejectedValueOnce(akamai403());
     jest

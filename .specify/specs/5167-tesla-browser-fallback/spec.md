@@ -30,12 +30,18 @@ detail `fetch()` calls **in-page** — browser-native credentials included.
 Behaviour:
 
 - HTTP succeeds → identical output to today (zero browser cost).
-- HTTP fails + `playwright` installed → one headless Chromium session:
+- HTTP fails + `playwright` installed → browser session:
   `goto careers-search (networkidle, 60 s)` → 5 s settle → in-page
   `fetch(board)` → in-page `fetch(detail)` per the existing
   `descriptionDepth` budget. Listings emit with `site: Site.TESLA`, so
   identity and dedup are unchanged whether the fast path or the fallback
   produced them.
+- Headless first, headed once: Akamai fingerprints headless shells harder
+  than a windowed Chrome (verified: headless → edge "Access Denied", 0
+  cookies; headed → challenge resolves, board JSON returns 200). If the
+  headless attempt is still blocked, the plugin relaunches headed once —
+  on a host without a display the headed launch throws instantly and the
+  scrape degrades to the same empty DTO.
 - HTTP fails + `playwright` NOT installed → warn sentinel
   `ERR_TESLA_BROWSER_UNAVAILABLE`, empty response (same as today).
 - Navigation or browser-session failure → sentinel + empty response;

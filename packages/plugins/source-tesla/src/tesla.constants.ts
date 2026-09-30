@@ -119,6 +119,9 @@ export const TESLA_SETTLE_MS = 5_000;
 /** Careers-page navigation timeout (ms). */
 export const TESLA_GOTO_TIMEOUT_MS = 60_000;
 
+/** Gap between in-page board-fetch retries while the challenge JS finishes (ms). */
+export const TESLA_BOARD_RETRY_MS = 4_000;
+
 /** Sentinel error codes for the browser-fallback path (Spec 5167). */
 export const TESLA_ERR_BROWSER_UNAVAILABLE = 'ERR_TESLA_BROWSER_UNAVAILABLE';
 export const TESLA_ERR_BROWSER_NAV = 'ERR_TESLA_BROWSER_NAV';

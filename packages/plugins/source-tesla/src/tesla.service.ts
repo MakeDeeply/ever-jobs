@@ -13,6 +13,7 @@ import {
   TESLA_AKAMAI_STATUS_CODES,
   TESLA_BASE_URL,
   TESLA_BOARD_PATH,
+  TESLA_BOARD_RETRY_MS,
   TESLA_CAREERS_PAGE,
   TESLA_DEFAULT_DESCRIPTION_DEPTH,
   TESLA_DEFAULT_RESULTS_WANTED,
@@ -196,9 +197,17 @@ export class TeslaService implements IScraper {
 
   /**
    * Spec 5167 — browser fallback. Runs the identical board+detail flow
-   * through an in-page `fetch()` inside headless Chromium after the plain
-   * HTTP board GET failed. Emits `Site.TESLA` like the fast path so
+   * through an in-page `fetch()` inside a real Chromium session after the
+   * plain HTTP board GET failed. Emits `Site.TESLA` like the fast path so
    * identity/dedup are indifferent to which path produced the jobs.
+   *
+   * Akamai fingerprints headless shells more aggressively than a real
+   * windowed Chrome (verified live: headless gets "Access Denied" at the
+   * edge with zero cookies, headed passes the challenge and the in-page
+   * board fetch returns the full JSON). So the fallback tries headless
+   * first — cheaper — and escalates to a headed window exactly once when
+   * the headless session is still blocked. A headed launch without a
+   * display throws instantly and degrades to the same empty DTO.
    * Always resolves with a `JobResponseDto` — never throws.
    */
   private async scrapeViaBrowser(
@@ -211,31 +220,73 @@ export class TeslaService implements IScraper {
       return new JobResponseDto([]);
     }
 
+    for (const headless of [true, false]) {
+      const result = await this.browserAttempt(
+        playwrightModule,
+        headless,
+        depthKey,
+        resultsWanted,
+        detailBudget,
+      );
+      if (result !== null) {
+        return result;
+      }
+      if (headless) {
+        this.logger.debug(
+          'TeslaService: headless session still blocked — retrying with a headed window',
+        );
+      }
+    }
+    this.logger.warn(
+      `TeslaService: ${TESLA_ERR_BROWSER_FETCH_FAILED} — browser fallback exhausted (headless + headed)`,
+    );
+    return new JobResponseDto([]);
+  }
+
+  /**
+   * One browser attempt: launch (headless or headed) → open the careers
+   * page → in-page board fetch → in-page detail fetches per budget.
+   * Returns `null` on ANY failure so the caller can escalate headless →
+   * headed; an empty `listings[]` returns an empty DTO (a genuinely empty
+   * board is a result, not a challenge).
+   */
+  private async browserAttempt(
+    playwrightModule: any,
+    headless: boolean,
+    depthKey: string,
+    resultsWanted: number,
+    detailBudget: number,
+  ): Promise<JobResponseDto | null> {
     let browser: any = null;
     try {
       browser = await playwrightModule.chromium.launch({
-        headless: true,
+        headless,
         args: [...TESLA_LAUNCH_ARGS],
       });
       const page = await browser.newPage();
 
-      const navOk = await this.openCareersPage(page);
-      if (!navOk) {
-        return new JobResponseDto([]);
+      if (!(await this.openCareersPage(page))) {
+        return null;
       }
 
-      const board = await this.fetchInPage<TeslaBoardResponse>(
-        page,
-        `${TESLA_BASE_URL}${TESLA_BOARD_PATH}`,
-      );
-      if (!board || !Array.isArray(board.listings)) {
-        this.logger.warn(
-          `TeslaService: ${TESLA_ERR_BROWSER_FETCH_FAILED} — in-page board response missing listings[]`,
+      // Akamai's challenge JS can still be resolving after the settle —
+      // poll the board fetch a few times in the same page before giving
+      // this mode up for a relaunch.
+      let board: TeslaBoardResponse | null = null;
+      for (let i = 0; i < 3; i++) {
+        board = await this.fetchInPage<TeslaBoardResponse>(
+          page,
+          `${TESLA_BASE_URL}${TESLA_BOARD_PATH}`,
         );
-        return new JobResponseDto([]);
+        if (board && Array.isArray(board.listings)) break;
+        board = null;
+        if (i < 2) await this.sleep(TESLA_BOARD_RETRY_MS);
+      }
+      if (!board) {
+        return null;
       }
 
-      const listings = board.listings.slice(0, resultsWanted);
+      const listings = (board.listings ?? []).slice(0, resultsWanted);
       const lookup = board.lookup ?? {};
       const detailFetchCount = Math.min(
         listings.length,
@@ -253,14 +304,14 @@ export class TeslaService implements IScraper {
       }
 
       this.logger.log(
-        `TeslaService: ${jobs.length} jobs via browser fallback (descriptionDepth=${depthKey}, detailFetched=${detailFetchCount}, resultsWanted=${resultsWanted})`,
+        `TeslaService: ${jobs.length} jobs via browser fallback (${headless ? 'headless' : 'headed'}, descriptionDepth=${depthKey}, detailFetched=${detailFetchCount}, resultsWanted=${resultsWanted})`,
       );
       return new JobResponseDto(jobs);
     } catch (err: any) {
-      this.logger.warn(
-        `TeslaService: ${TESLA_ERR_BROWSER_FETCH_FAILED} — unexpected error during browser fallback: ${err?.message ?? err}`,
+      this.logger.debug(
+        `TeslaService: browser attempt (${headless ? 'headless' : 'headed'}) failed: ${err?.message ?? err}`,
       );
-      return new JobResponseDto([]);
+      return null;
     } finally {
       if (browser) {
         try {
@@ -301,7 +352,10 @@ export class TeslaService implements IScraper {
   private async openCareersPage(page: any): Promise<boolean> {
     try {
       await page.goto(TESLA_CAREERS_PAGE, {
-        waitUntil: 'networkidle',
+        // 'domcontentloaded', not 'networkidle' — the careers SPA keeps
+        // telemetry/asset connections open and networkidle never settles
+        // inside the timeout on a real (headed) page.
+        waitUntil: 'domcontentloaded',
         timeout: TESLA_GOTO_TIMEOUT_MS,
       });
       await this.sleep(TESLA_SETTLE_MS);
