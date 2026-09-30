@@ -67,13 +67,13 @@ import {
  *     detail-page poison the whole catalogue.
  *
  * **HTTP-first with a lazy browser fallback** (Spec 5167). When the plain
- * board GET is challenged, `scrape()` re-runs the same flow through an
- * in-page `fetch()` inside a lazily imported headless Chromium session —
- * the browser solves Akamai's cookie/TLS challenge, then the same
- * cua-api JSON endpoints are consumed. `playwright` is imported lazily
- * inside the fallback only (no module-scope import), so installs without
- * it still boot clean; `source-tesla-playwright` remains for operators
- * who want browser-first.
+ * board GET fails for any reason (4xx/5xx, non-JSON body, network error),
+ * `scrape()` re-runs the same flow through an in-page `fetch()` inside a
+ * lazily imported Chromium session — the browser carries real cookies/TLS,
+ * then the same cua-api JSON endpoints are consumed. `playwright` is
+ * imported lazily inside the fallback only (no module-scope import), so
+ * installs without it still boot clean; `source-tesla-playwright` remains
+ * for operators who want browser-first.
  */
 @SourcePlugin({
   site: Site.TESLA,
@@ -100,8 +100,8 @@ export class TeslaService implements IScraper {
 
     const board = await this.fetchBoard(client);
     if (board === null) {
-      // HTTP was challenged (or failed) — retry the identical flow through a
-      // real browser so Akamai's cookie/TLS challenge resolves first.
+      // Plain HTTP failed — retry the identical flow through a real
+      // browser so the site's cookie/TLS gating resolves first.
       return this.scrapeViaBrowser(depthKey, resultsWanted, detailBudget);
     }
 
@@ -131,7 +131,7 @@ export class TeslaService implements IScraper {
 
   /**
    * Resolve `input.descriptionDepth` against the documented enum,
-   * defaulting to `'detail-25'` per Q-031 when undefined or invalid.
+   * defaulting to `'board'` per Spec 5167 when undefined or invalid.
    */
   private resolveDepth(raw: string | undefined): string {
     if (raw && raw in TESLA_DESCRIPTION_BUDGET) {
@@ -201,13 +201,13 @@ export class TeslaService implements IScraper {
    * plain HTTP board GET failed. Emits `Site.TESLA` like the fast path so
    * identity/dedup are indifferent to which path produced the jobs.
    *
-   * Akamai fingerprints headless shells more aggressively than a real
-   * windowed Chrome (verified live: headless gets "Access Denied" at the
-   * edge with zero cookies, headed passes the challenge and the in-page
-   * board fetch returns the full JSON). So the fallback tries headless
-   * first — cheaper — and escalates to a headed window exactly once when
-   * the headless session is still blocked. A headed launch without a
-   * display throws instantly and degrades to the same empty DTO.
+   * Headless first, headed once (observed live: a headless session can be
+   * denied at the edge — "Access Denied", zero cookies — while a headed
+   * window loads the page and the in-page board fetch returns the full
+   * JSON). The fallback tries headless first — cheaper — and escalates to
+   * a headed window exactly once when the headless session still cannot
+   * read the board. A headed launch without a display throws instantly
+   * and degrades to the same empty DTO.
    * Always resolves with a `JobResponseDto` — never throws.
    */
   private async scrapeViaBrowser(
@@ -233,7 +233,7 @@ export class TeslaService implements IScraper {
       }
       if (headless) {
         this.logger.debug(
-          'TeslaService: headless session still blocked — retrying with a headed window',
+          'TeslaService: headless session could not read the board — retrying with a headed window',
         );
       }
     }
@@ -269,7 +269,7 @@ export class TeslaService implements IScraper {
         return null;
       }
 
-      // Akamai's challenge JS can still be resolving after the settle —
+      // The site's protection JS can still be resolving after the settle —
       // poll the board fetch a few times in the same page before giving
       // this mode up for a relaunch.
       let board: TeslaBoardResponse | null = null;
@@ -347,7 +347,7 @@ export class TeslaService implements IScraper {
 
   /**
    * Navigate to the careers-search landing page and settle long enough
-   * for Akamai's challenge JS to resolve its cookies. `true` on success.
+   * for the site's protection JS to resolve its cookies. `true` on success.
    */
   private async openCareersPage(page: any): Promise<boolean> {
     try {

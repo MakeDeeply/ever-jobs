@@ -8,11 +8,12 @@
  * `https://www.tesla.com/careers/search/job/<slug>-<id>` URL pattern.
  *
  * **HTTP-first with a lazy browser fallback** (Spec 5167): when the plain
- * board GET is Akamai-challenged, the service retries the same endpoints
- * through an in-page `fetch()` inside a lazily imported headless Chromium.
- * No `playwright` reference at module scope — a workspace without the dep
- * still boots clean; the OPTIONAL `source-tesla-playwright` companion
- * remains for operators who want browser-first.
+ * board GET fails for any reason (4xx/5xx, non-JSON body, network error),
+ * the service retries the same endpoints through an in-page `fetch()`
+ * inside a lazily imported Chromium session. No `playwright` reference at
+ * module scope — a workspace without the dep still boots clean; the
+ * OPTIONAL `source-tesla-playwright` companion remains for operators who
+ * want browser-first.
  */
 
 /** Public Tesla origin used for both API + careers-portal URLs. */
@@ -42,10 +43,12 @@ export const TESLA_DEFAULT_RESULTS_WANTED = 100;
 
 /**
  * Per-job detail-fetch budget map (Spec 013 / Q-031 / FR-11).
- * `'detail-25'` is the default — caps follow-up GETs at 25 to honour
- * NFR-2 (`< 12 s` on the happy path). `'board'` skips detail entirely
- * (description stays null). `'detail-all'` exposes the full corpus
- * latency for operators who want every description.
+ * `'board'` skips detail fetches entirely (descriptions stay null).
+ * `'detail-25'` caps follow-ups at the first 25 listings.
+ * `'detail-all'` exposes the full corpus for operators who want every
+ * description — at catalogue scale that is one request per listing
+ * (~8k+ sequential GETs, tens of minutes, and likely to trip per-IP
+ * request-rate limits partway).
  */
 export const TESLA_DESCRIPTION_BUDGET: Record<string, number> = {
   board: 0,
@@ -53,8 +56,14 @@ export const TESLA_DESCRIPTION_BUDGET: Record<string, number> = {
   'detail-all': Number.POSITIVE_INFINITY,
 };
 
-/** Default budget key — matches `ScraperInputDto.descriptionDepth` default. */
-export const TESLA_DEFAULT_DESCRIPTION_DEPTH = 'detail-25';
+/**
+ * Default budget key. `'board'` rather than `'detail-all'`: the complete
+ * corpus costs ~8k+ sequential detail requests and would routinely blow
+ * latency and per-IP rate limits; `'detail-25'` yields an arbitrary
+ * partial set. Callers who want descriptions opt into `detail-all`
+ * explicitly (Spec 5167).
+ */
+export const TESLA_DEFAULT_DESCRIPTION_DEPTH = 'board';
 
 /**
  * Browser-shaped headers. Same UA the upstream Python launches
@@ -96,8 +105,8 @@ export const TESLA_ERR_FETCH_FAILED = 'ERR_TESLA_FETCH_FAILED';
  * Spec 5167 — browser-fallback constants.
  *
  * `TESLA_CAREERS_PAGE`: landing URL the fallback session navigates to before
- * any in-page `fetch()` — loading the careers SPA is what lets Akamai's
- * challenge JS resolve and plant its cookies on the browser context.
+ * any in-page `fetch()` — loading the careers SPA is what lets the site's
+ * protection JS resolve and plant its cookies on the browser context.
  */
 export const TESLA_CAREERS_PAGE = `${TESLA_BASE_URL}/careers/search/`;
 
@@ -113,13 +122,13 @@ export const TESLA_LAUNCH_ARGS: readonly string[] = [
   '--no-sandbox',
 ] as const;
 
-/** Settle time after the careers-page `goto` — Akamai's challenge JS can take 2-4 s to resolve. */
+/** Settle time after the careers-page `goto` — the site's protection JS can take a few seconds to resolve. */
 export const TESLA_SETTLE_MS = 5_000;
 
 /** Careers-page navigation timeout (ms). */
 export const TESLA_GOTO_TIMEOUT_MS = 60_000;
 
-/** Gap between in-page board-fetch retries while the challenge JS finishes (ms). */
+/** Gap between in-page board-fetch retries while the protection JS finishes (ms). */
 export const TESLA_BOARD_RETRY_MS = 4_000;
 
 /** Sentinel error codes for the browser-fallback path (Spec 5167). */

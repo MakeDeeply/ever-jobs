@@ -38,7 +38,10 @@ import {
  *
  * Operators opt in by manually importing `TeslaPlaywrightModule`
  * alongside their preferred set in their `JobsModule` — this plugin
- * is NOT auto-registered via `ALL_SOURCE_MODULES` per Q-028 / FR-13.
+ * is NOT auto-registered via `ALL_SOURCE_MODULES` per Q-028 / FR-13,
+ * is not importable by callers, and is kept primarily as reference /
+ * sample code: `source-tesla` (Spec 5167) now carries its own lazy
+ * browser fallback for the same flow.
  * The `playwright` dependency is declared as a `peerDependency` +
  * `peerDependenciesMeta.optional` on this package's `package.json`,
  * so an `npm install` without the operator-driven `npm i playwright`
@@ -162,7 +165,7 @@ export class TeslaPlaywrightService implements IScraper {
 
   /**
    * Resolve `input.descriptionDepth` against the documented enum,
-   * defaulting to `'detail-25'` per Q-031 when undefined or invalid.
+   * defaulting to `'board'` per Spec 5167 when undefined or invalid.
    */
   private resolveDepth(raw: string | undefined): string {
     if (raw && raw in TESLA_PLAYWRIGHT_DESCRIPTION_BUDGET) {

@@ -142,8 +142,8 @@ describe('TeslaService (Spec 013 / T07 + T08 — pure-HTTP board + detail)', () 
     expect(Site.TESLA).toBe('tesla');
   });
 
-  it('exports the documented descriptionDepth budget map (board=0, detail-25=25, detail-all=Infinity)', () => {
-    expect(TESLA_DEFAULT_DESCRIPTION_DEPTH).toBe('detail-25');
+  it('exports the documented descriptionDepth budget map (default=board, detail-25=25, detail-all=Infinity)', () => {
+    expect(TESLA_DEFAULT_DESCRIPTION_DEPTH).toBe('board');
     expect(TESLA_DESCRIPTION_BUDGET.board).toBe(0);
     expect(TESLA_DESCRIPTION_BUDGET['detail-25']).toBe(25);
     expect(TESLA_DESCRIPTION_BUDGET['detail-all']).toBe(
@@ -231,6 +231,7 @@ describe('TeslaService (Spec 013 / T07 + T08 — pure-HTTP board + detail)', () 
       const input: ScraperInputDto = {
         siteType: [Site.TESLA],
         resultsWanted: 5,
+        descriptionDepth: 'detail-25',
       } as ScraperInputDto;
 
       const result = await service.scrape(input);
@@ -372,6 +373,7 @@ describe('TeslaService (Spec 013 / T07 + T08 — pure-HTTP board + detail)', () 
       const input: ScraperInputDto = {
         siteType: [Site.TESLA],
         resultsWanted: 2,
+        descriptionDepth: 'detail-25',
       } as ScraperInputDto;
 
       const result = await service.scrape(input);
@@ -449,7 +451,8 @@ describe('TeslaService (Spec 013 / T07 + T08 — pure-HTTP board + detail)', () 
  *   2. HTTP 403 + nav failure ⇒ empty DTO, browser closed.
  *   3. HTTP 403 + in-page board ⇒ jobs emitted with `site === Site.TESLA`
  *      (identical identity to the fast path); browser closed.
- *   4. detail-25 depth ⇒ in-page detail fetches honoured per the budget.
+ *   4. detail-25 depth ⇒ in-page detail fetches honoured per the budget
+ *      (explicit depth; the default is now 'board' per Spec 5167).
  *   5. HTTP success ⇒ fallback never touched (loadPlaywright not called).
  */
 describe('TeslaService browser fallback (Spec 5167)', () => {
