@@ -177,18 +177,17 @@ describe('ClearCompanyService — per-site (widget) feed', () => {
   });
 
   it('treats an unknown site id as empty, not an error', async () => {
+    // siteId feed 404s; the fallback slug feed 400s on the same GUID-shaped
+    // "slug" — both are known-tenant-miss statuses and degrade to empty.
     getMock.mockImplementation((url: string) => {
-      if (url.includes('careers-api.clearcompany.com')) {
-        const err: any = new Error('Not Found');
-        err.response = { status: 404 };
-        return Promise.reject(err);
-      }
-      return Promise.reject(new Error('unexpected url ' + url));
+      const err: any = new Error('Not Found');
+      err.response = { status: url.includes('careers-api.') ? 404 : 400 };
+      return Promise.reject(err);
     });
 
     const res = await service.scrape(new ScraperInputDto({ companySlug: SITE_ID }));
 
     expect(res.jobs).toHaveLength(0);
-    expect(res.reason).toBeUndefined();
+    expect(res.diagnostics).toBeUndefined();
   });
 });
