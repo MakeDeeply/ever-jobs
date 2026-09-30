@@ -3612,6 +3612,9 @@ export enum Site {
 
   // Phase 1712: Spec 5158 — Source Company Plugin: Werco Manufacturing (wercomfg.com) — detail pages carry JobPosting JSON-LD
   WERCOMFG = 'wercomfg',
+
+  // Phase 1713: Spec 5168 — Source Company Plugin: comma.ai (comma.ai) — jobs array in the careers page's SvelteKit node chunk
+  COMMA_AI = 'comma_ai',
 }
 
 /**
