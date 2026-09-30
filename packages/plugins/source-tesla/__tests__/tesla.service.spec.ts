@@ -552,7 +552,8 @@ describe('TeslaService browser fallback (Spec 5167)', () => {
       .mockResolvedValue(true);
     const fetchInPage = jest
       .spyOn(TeslaService.prototype as any, 'fetchInPage')
-      .mockImplementation(async (_page: any, url: string) => {
+      .mockImplementation(async (...args: unknown[]) => {
+        const url = args[1] as string;
         if (url.includes(TESLA_BOARD_PATH)) return BOARD_FIXTURE;
         if (url.includes('/200001')) return DETAIL_200001;
         if (url.includes('/200002')) return DETAIL_200002;
