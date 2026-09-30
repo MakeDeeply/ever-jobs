@@ -48,6 +48,7 @@ export enum Site {
   MONSTER = 'monster',
   CAREERBUILDER = 'careerbuilder',
   ICIMS = 'icims',
+  JIBE = 'jibe',
   TALEO = 'taleo',
   SUCCESSFACTORS = 'successfactors',
   JOBVITE = 'jobvite',
