@@ -5,6 +5,12 @@ on:
     branches: [main, develop]
   pull_request:
     branches: [main, develop]
+  # Spec 1715 (FR-19, Q-123): the live Softy e2e sends real requests to a Softy tenant,
+  # so it runs only on this weekly schedule and on a manual dispatch (or when the
+  # EVER_JOBS_LIVE_SOFTY repository variable is 1) — never on a push or pull request.
+  workflow_dispatch:
+  schedule:
+    - cron: '23 4 * * 1'
 
 jobs:
   docs-lint:
@@ -31,7 +37,13 @@ jobs:
           expect-vip: ${{ vars.RUNNER_LINUX_X64_4 != '' }}
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          # node-gyp gets the headers setup-node already installed, so a native
+          # module with no prebuilt binary (better-sqlite3) compiles offline. The
+          # headers download from nodejs.org times out from the ARC runners and
+          # was failing whole jobs (Spec 1689).
+          export npm_config_nodedir="$(dirname "$(dirname "$(command -v node)")")"
+          npm ci
 
       - name: Run docs-lint
         run: npm run lint:docs
@@ -69,7 +81,13 @@ jobs:
           expect-vip: ${{ vars.RUNNER_LINUX_X64_4 != '' }}
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          # node-gyp gets the headers setup-node already installed, so a native
+          # module with no prebuilt binary (better-sqlite3) compiles offline. The
+          # headers download from nodejs.org times out from the ARC runners and
+          # was failing whole jobs (Spec 1689).
+          export npm_config_nodedir="$(dirname "$(dirname "$(command -v node)")")"
+          npm ci
 
       - name: Type-check
         run: npx tsc --project apps/api/tsconfig.build.json --noEmit
@@ -115,10 +133,65 @@ jobs:
           expect-vip: ${{ vars.RUNNER_LINUX_X64_4 != '' }}
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          # node-gyp gets the headers setup-node already installed, so a native
+          # module with no prebuilt binary (better-sqlite3) compiles offline. The
+          # headers download from nodejs.org times out from the ARC runners and
+          # was failing whole jobs (Spec 1689).
+          export npm_config_nodedir="$(dirname "$(dirname "$(command -v node)")")"
+          npm ci
 
       - name: Run health endpoint tests
         run: npx jest --testPathPatterns 'apps/api/__tests__/health' --verbose
+
+  # Hermetic core suites (Spec 1689): packages/{common,plugin,models,analytics},
+  # apps/api/src, apps/api/__tests__/{jobs,integration}, apps/mcp and the
+  # apps/cli unit specs (crawl-options, Spec 1690; the CLI e2e spec stays in
+  # test-e2e). None of them ran in any job before — `test-fast` covers only
+  # the apps/api health spec and `test-e2e` the live search/analyze/CLI specs
+  # — so two apps/api suites sat red unnoticed (a stale JobsService stub, and
+  # a Gem call count from before Spec 5035). BLOCKING: no continue-on-error.
+  #
+  # The path list lives in the `test:core` npm script so a local
+  # `npm run test:core` and this job cannot drift. `*.e2e-spec.ts` is excluded,
+  # and every suite in the set was run with outbound sockets blocked and opened
+  # none. The worker count is a repo variable sized to the runner's cgroup CPU
+  # limit — never a `%`, which jest resolves against the HOST's CPUs.
+  test-core:
+    name: Test (Core)
+    runs-on: ${{ vars.RUNNER_LINUX_X64_4 || 'ubuntu-latest' }}
+    timeout-minutes: 45
+    needs: build
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 20.x
+          cache: npm
+
+      - name: Configure Registry
+        uses: ever-co/ever-gauzy/.github/actions/configure-registry@aa4ee19926fabcf820aa1294385a76aec6bdb548
+        with:
+          verdaccio-registry: ${{ vars.VERDACCIO_REGISTRY }}
+          verdaccio-token: ${{ secrets.VERDACCIO_TOKEN }}
+          force-public: ${{ vars.VERDACCIO_FORCE_PUBLIC }}
+          expect-vip: ${{ vars.RUNNER_LINUX_X64_4 != '' }}
+
+      - name: Install dependencies
+        run: |
+          # node-gyp gets the headers setup-node already installed, so a native
+          # module with no prebuilt binary (better-sqlite3) compiles offline. The
+          # headers download from nodejs.org times out from the ARC runners and
+          # was failing whole jobs (Spec 1689).
+          export npm_config_nodedir="$(dirname "$(dirname "$(command -v node)")")"
+          npm ci
+
+      - name: Run core unit & hermetic integration tests
+        run: npm run test:core -- --maxWorkers=${{ vars.JEST_CORE_MAX_WORKERS || '3' }} --verbose --reporters=default --reporters=github-actions
 
   test-e2e:
     name: Test (E2E - Live APIs)
@@ -146,7 +219,13 @@ jobs:
           expect-vip: ${{ vars.RUNNER_LINUX_X64_8 != '' }}
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          # node-gyp gets the headers setup-node already installed, so a native
+          # module with no prebuilt binary (better-sqlite3) compiles offline. The
+          # headers download from nodejs.org times out from the ARC runners and
+          # was failing whole jobs (Spec 1689).
+          export npm_config_nodedir="$(dirname "$(dirname "$(command -v node)")")"
+          npm ci
 
       - name: Run API search & analyze E2E tests
         run: npx jest --testPathPatterns 'apps/api/__tests__/(search|analyze)' --verbose
@@ -161,9 +240,25 @@ jobs:
   # `*.e2e-spec.ts` suites in 6 serial shards (jest.config.js globals
   # maxWorkers:1 / testTimeout:120s exist for them — live-network flakes now
   # red only the e2e legs, never the unit legs).
+  #
+  # Why sharded at all: the corpus outgrew a single job. Unsharded, it ran past
+  # GitHub's 360-minute ceiling (killed mid-flight after 1,221 suites, so the
+  # rest never ran and the job could never report). The 180 min per-shard
+  # ceiling is from observation, not estimate: identical shards took 1h23m-1h43m
+  # on a quiet pool but 2h+ on a busy one, and a 120 min ceiling cancelled the
+  # contended legs — killing the suites it exists to run.
+  #
+  # Unit-shard sizing (Spec 1689): our self-hosted ARC runners are
+  # cgroup-limited (6 CPU on the x64-8 pool) while jest sizes a `%` against the
+  # HOST's CPUs, so `--maxWorkers=75%` meant up to ~27 workers throttled onto 6
+  # CPUs with 30 s per-test timeouts. Both knobs are repo variables instead:
+  #   JEST_SOURCE_UNIT_MAX_WORKERS — worker count per shard (default 5, one
+  #     under the 6-CPU limit);
+  #   RUNNER_SOURCE_UNIT — runner for the unit shards, so they can move pools
+  #     without a workflow edit (default: RUNNER_LINUX_X64_8, then ubuntu-latest).
   test-sources:
     name: Test (Source Scrapers unit ${{ matrix.shard }}/3)
-    runs-on: ${{ vars.RUNNER_LINUX_X64_8 || 'ubuntu-latest' }}
+    runs-on: ${{ vars.RUNNER_SOURCE_UNIT || vars.RUNNER_LINUX_X64_8 || 'ubuntu-latest' }}
     needs: build
     continue-on-error: true
     timeout-minutes: 180
@@ -188,13 +283,19 @@ jobs:
           verdaccio-registry: ${{ vars.VERDACCIO_REGISTRY }}
           verdaccio-token: ${{ secrets.VERDACCIO_TOKEN }}
           force-public: ${{ vars.VERDACCIO_FORCE_PUBLIC }}
-          expect-vip: ${{ vars.RUNNER_LINUX_X64_8 != '' }}
+          expect-vip: ${{ (vars.RUNNER_SOURCE_UNIT || vars.RUNNER_LINUX_X64_8) != '' }}
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          # node-gyp gets the headers setup-node already installed, so a native
+          # module with no prebuilt binary (better-sqlite3) compiles offline. The
+          # headers download from nodejs.org times out from the ARC runners and
+          # was failing whole jobs (Spec 1689).
+          export npm_config_nodedir="$(dirname "$(dirname "$(command -v node)")")"
+          npm ci
 
       - name: Run source scraper unit tests
-        run: npx jest --testPathPatterns 'packages/plugins/source-' --testPathIgnorePatterns 'e2e-spec' --shard=${{ matrix.shard }}/3 --maxWorkers=75% --testTimeout=30000 --passWithNoTests --verbose --reporters=default --reporters=github-actions
+        run: npx jest --testPathPatterns 'packages/plugins/source-' --testPathIgnorePatterns 'e2e-spec' --shard=${{ matrix.shard }}/3 --maxWorkers=${{ vars.JEST_SOURCE_UNIT_MAX_WORKERS || '5' }} --testTimeout=30000 --passWithNoTests --verbose --reporters=default --reporters=github-actions
 
   test-source-e2e:
     name: Test (Source Scrapers e2e ${{ matrix.shard }}/6)
@@ -226,12 +327,34 @@ jobs:
           expect-vip: ${{ vars.RUNNER_LINUX_X64_4 != '' }}
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          # node-gyp gets the headers setup-node already installed, so a native
+          # module with no prebuilt binary (better-sqlite3) compiles offline. The
+          # headers download from nodejs.org times out from the ARC runners and
+          # was failing whole jobs (Spec 1689).
+          export npm_config_nodedir="$(dirname "$(dirname "$(command -v node)")")"
+          npm ci
+
+      # Spec 1715 (FR-19, audit G26/G30): the live Softy e2e is gated on
+      # EVER_JOBS_LIVE_SOFTY=1 — set on schedule / workflow_dispatch (or through the
+      # EVER_JOBS_LIVE_SOFTY repository variable). Otherwise the spec skips its live
+      # tests with a visible reason; this notice says so in the run summary.
+      - name: Live Softy e2e gate
+        if: ${{ matrix.shard == 1 }}
+        env:
+          EVER_JOBS_LIVE_SOFTY: ${{ (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && '1' || vars.EVER_JOBS_LIVE_SOFTY || '0' }}
+        run: |
+          if [ "$EVER_JOBS_LIVE_SOFTY" = "1" ]; then
+            echo "::notice title=Live Softy e2e::runs this time (EVER_JOBS_LIVE_SOFTY=1, event ${{ github.event_name }})"
+          else
+            echo "::notice title=Live Softy e2e skipped::EVER_JOBS_LIVE_SOFTY is not 1 on a ${{ github.event_name }} run; it runs on the weekly schedule, on workflow_dispatch, or with the EVER_JOBS_LIVE_SOFTY repository variable (Spec 1715)"
+          fi
 
       - name: Run source scraper e2e tests
         run: npx jest --testPathPatterns 'source-.*e2e-spec' --shard=${{ matrix.shard }}/6 --passWithNoTests --verbose --reporters=default --reporters=github-actions
         env:
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+          EVER_JOBS_LIVE_SOFTY: ${{ (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && '1' || vars.EVER_JOBS_LIVE_SOFTY || '0' }}
 
   test-feature-plugins:
     name: Test (Feature Plugins)
@@ -258,7 +381,13 @@ jobs:
           expect-vip: ${{ vars.RUNNER_LINUX_X64_4 != '' }}
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          # node-gyp gets the headers setup-node already installed, so a native
+          # module with no prebuilt binary (better-sqlite3) compiles offline. The
+          # headers download from nodejs.org times out from the ARC runners and
+          # was failing whole jobs (Spec 1689).
+          export npm_config_nodedir="$(dirname "$(dirname "$(command -v node)")")"
+          npm ci
 
       # Hermetic offline suites (no live APIs) — these gate the build.
       # Perf budgets are relaxed for shared-runner variance via the suites'
@@ -276,8 +405,21 @@ jobs:
       #     gating job on warm-up rather than on a regression. 4 000 ms leaves ~2.7x
       #     headroom over the worst observation while still catching a gross
       #     regression. Sharing one knob would force the real gate loose.
+      # legitimacy-detector (pure, hermetic) joined in Spec 1689 — it ran in no
+      # job before, although corpus-signals uses it for real.
+      # store-sqlite-drizzle and store-postgres-prisma (Spec 1722): the batched write
+      # path, the conformance suite and the module wiring. Hermetic: SQLite runs
+      # in-process on :memory: (better-sqlite3 compiles against the headers above)
+      # and the Postgres suite uses a structural fake client; its real-database
+      # block stays gated on RUN_PG_TESTS=1. They ran in no job before.
+      # career-level-classifier (Spec 1730): the fixture precision / recall thresholds, the
+      # misclassification regression gate and the cost tripwires. Its throughput gate is a
+      # ratio against a same-process reference workload, so it needs no runner override.
+      # Its API wiring (the careerLevels filter through the production ValidationPipe on
+      # REST and GraphQL, aggregator, resolver, NDJSON) is hermetic and lives under
+      # apps/api/src and apps/api/__tests__/integration, so Test (Core) runs it.
       - name: Run feature plugin tests
-        run: npx jest --testPathPatterns 'packages/plugins/(dedup-hybrid|merge-default|store-memory|liveness-http)/' --verbose
+        run: npx jest --testPathPatterns 'packages/plugins/(dedup-hybrid|merge-default|store-memory|store-sqlite-drizzle|store-postgres-prisma|liveness-http|legitimacy-detector|career-level-classifier)/' --verbose
         env:
           DEDUP_PERF_NFR1_MS: '1000'
           DEDUP_PERF_NFR2_MS: '8000'

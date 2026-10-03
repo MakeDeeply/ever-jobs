@@ -1,5 +1,8 @@
 import 'reflect-metadata';
+import { StreamableFile } from '@nestjs/common';
 import {
+  DatePostedBasis,
+  DatePostedPrecision,
   ScraperInputDto,
   JobPostDto,
   JobAnalysisDto,
@@ -146,9 +149,11 @@ describe('JobsController', () => {
 
       await controller.searchJobs(new ScraperInputDto({ searchTerm: 'node' }));
 
+      // Spec 1721 / FR-19 — one entry holds the raw set (and its completeness
+      // record when the service reports one; this stub reports none).
       expect(cacheService.set).toHaveBeenCalledWith(
         expect.any(Object),
-        jobs,
+        { jobs },
       );
     });
   });
@@ -243,6 +248,40 @@ describe('JobsController', () => {
       // Result should be a StreamableFile
       expect(result).toBeDefined();
     });
+
+    it('carries the Spec 1696 posted-time columns, empty for a job without them', async () => {
+      const jobs = [
+        makeJob({
+          id: 'li-1',
+          datePosted: '2026-09-24',
+          datePostedAt: '2026-09-24T19:34:00.000Z',
+          datePostedPrecision: DatePostedPrecision.MINUTE,
+          datePostedBasis: DatePostedBasis.RELATIVE,
+        }),
+        makeJob({ id: 'lever-1', datePosted: '2026-09-20' }),
+      ];
+      const { controller } = createController({ jobs });
+      const file = await controller.searchJobs(
+        new ScraperInputDto({ searchTerm: 'node' }),
+        'csv',
+        undefined, undefined, undefined, undefined, undefined, undefined,
+        { setHeader: jest.fn() } as any,
+      ) as StreamableFile;
+
+      const chunks: Buffer[] = [];
+      for await (const chunk of file.getStream()) chunks.push(Buffer.from(chunk));
+      const [header, first, second] = Buffer.concat(chunks).toString('utf8').trimEnd().split('\n');
+      const columns = header.split(',');
+      const cell = (row: string, name: string) => row.split(',')[columns.indexOf(name)];
+      for (const name of ['datePostedAt', 'datePostedPrecision', 'datePostedBasis']) {
+        expect(columns).toContain(name);
+      }
+      expect(cell(first, 'datePostedAt')).toBe('2026-09-24T19:34:00.000Z');
+      expect(cell(first, 'datePostedPrecision')).toBe('minute');
+      expect(cell(first, 'datePostedBasis')).toBe('relative');
+      expect(cell(second, 'datePostedAt')).toBe('');
+      expect(cell(second, 'datePosted')).toBe('2026-09-20');
+    });
   });
 
   describe('POST /search — persist flag (Spec 5024)', () => {
@@ -275,6 +314,7 @@ describe('JobsController', () => {
       expect(aggregator.aggregateRaw).toHaveBeenCalledWith(jobs, {
         dedup: true,
         persist: true,
+        deferCareerLevel: true,
       });
     });
 
@@ -287,6 +327,7 @@ describe('JobsController', () => {
       expect(aggregator.aggregateRaw).toHaveBeenCalledWith(jobs, {
         dedup: true,
         persist: false,
+        deferCareerLevel: true,
       });
     });
 
@@ -306,6 +347,7 @@ describe('JobsController', () => {
       expect(aggregator.aggregateRaw).toHaveBeenCalledWith(jobs, {
         dedup: false,
         persist: false,
+        deferCareerLevel: true,
       });
     });
   });
@@ -319,7 +361,7 @@ describe('JobsController', () => {
         new ScraperInputDto({ searchTerm: 'node' }),
       );
 
-      expect(aggregator.aggregateRaw).toHaveBeenCalledWith(jobs, { dedup: true, persist: true });
+      expect(aggregator.aggregateRaw).toHaveBeenCalledWith(jobs, { dedup: true, persist: true, deferCareerLevel: true });
     });
 
     it('honours dedup=false explicitly', async () => {
@@ -335,7 +377,7 @@ describe('JobsController', () => {
         'false',      // dedup
       );
 
-      expect(aggregator.aggregateRaw).toHaveBeenCalledWith(jobs, { dedup: false, persist: true });
+      expect(aggregator.aggregateRaw).toHaveBeenCalledWith(jobs, { dedup: false, persist: true, deferCareerLevel: true });
     });
 
     it('honours dedup=0 explicitly', async () => {
@@ -351,7 +393,7 @@ describe('JobsController', () => {
         '0',
       );
 
-      expect(aggregator.aggregateRaw).toHaveBeenCalledWith(jobs, { dedup: false, persist: true });
+      expect(aggregator.aggregateRaw).toHaveBeenCalledWith(jobs, { dedup: false, persist: true, deferCareerLevel: true });
     });
 
     it('honours dedup=true explicitly', async () => {
@@ -367,7 +409,7 @@ describe('JobsController', () => {
         'true',
       );
 
-      expect(aggregator.aggregateRaw).toHaveBeenCalledWith(jobs, { dedup: true, persist: true });
+      expect(aggregator.aggregateRaw).toHaveBeenCalledWith(jobs, { dedup: true, persist: true, deferCareerLevel: true });
     });
 
     it('falls back to dedup=true on garbage values', async () => {
@@ -383,7 +425,7 @@ describe('JobsController', () => {
         'not-a-bool',
       );
 
-      expect(aggregator.aggregateRaw).toHaveBeenCalledWith(jobs, { dedup: true, persist: true });
+      expect(aggregator.aggregateRaw).toHaveBeenCalledWith(jobs, { dedup: true, persist: true, deferCareerLevel: true });
     });
 
     it('runs dedup on cached responses too', async () => {
@@ -395,7 +437,7 @@ describe('JobsController', () => {
       );
 
       expect(jobsService.searchJobs).not.toHaveBeenCalled();
-      expect(aggregator.aggregateRaw).toHaveBeenCalledWith(cachedJobs, { dedup: true, persist: true });
+      expect(aggregator.aggregateRaw).toHaveBeenCalledWith(cachedJobs, { dedup: true, persist: true, deferCareerLevel: true });
     });
 
     it('caches RAW jobs (pre-dedup) so cache invalidation is independent of engine version', async () => {
@@ -404,8 +446,9 @@ describe('JobsController', () => {
 
       await controller.searchJobs(new ScraperInputDto({ searchTerm: 'node' }));
 
-      // Cache write should hold the unmodified raw list
-      expect(cacheService.set).toHaveBeenCalledWith(expect.any(Object), jobs);
+      // Cache write should hold the unmodified raw list (Spec 1721 / FR-19: in
+      // the one entry that also carries the completeness record).
+      expect(cacheService.set).toHaveBeenCalledWith(expect.any(Object), { jobs });
     });
 
     it('returns dedup_metrics when the engine ran', async () => {
@@ -649,7 +692,7 @@ describe('JobsController', () => {
           'true',
         );
         const cachedWrite = cacheService.set.mock.calls[0][1];
-        expect(cachedWrite).toBe(jobs);
+        expect(cachedWrite.jobs).toBe(jobs);
         expect(cachedWrite.raw_by_source).toBeUndefined();
 
         // Second request: flag off, cache hit — response carries no capture key.
@@ -786,7 +829,7 @@ describe('JobsController', () => {
           rawBySource: {},
         });
         await search(controller, '300000');
-        expect(cacheService.set).toHaveBeenCalledWith(expect.any(Object), jobs);
+        expect(cacheService.set).toHaveBeenCalledWith(expect.any(Object), { jobs });
       });
 
       it('a multi-source search with a failing source still writes to cache', async () => {
@@ -801,7 +844,7 @@ describe('JobsController', () => {
           rawBySource: {},
         });
         await search(controller, '300000');
-        expect(cacheService.set).toHaveBeenCalledWith(expect.any(Object), jobs);
+        expect(cacheService.set).toHaveBeenCalledWith(expect.any(Object), { jobs });
       });
     });
    });

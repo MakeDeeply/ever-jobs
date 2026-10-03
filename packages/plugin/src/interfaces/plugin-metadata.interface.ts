@@ -1,4 +1,5 @@
-import { Site } from '@ever-jobs/models';
+import type { PluginCrawlPolicy } from '@ever-jobs/common';
+import { Site, SiteCategory } from '@ever-jobs/models';
 
 /**
  * Metadata describing a source plugin.
@@ -40,17 +41,85 @@ export interface IPluginMetadata {
   companyDomains?: string[];
 
   /**
+   * The source cannot list anything without a keyword (Spec 1720) — e.g. it
+   * puts the term in the URL path. In list mode (no `searchTerm`) the
+   * orchestrator does not dispatch it and reports an `empty` diagnostic
+   * instead of sending a malformed request.
+   * @default false
+   */
+  requiresSearchTerm?: boolean;
+
+  /**
+   * Smallest gap, milliseconds, the plugin keeps between two requests to its
+   * host (Spec 1700). A plugin paces requests only inside one `scrape()` call,
+   * so the first request of the next call is unpaced; a multi-location search
+   * calls a source once per location and waits at least this long between
+   * those calls. Unset means only the operator's location interval applies.
+   *
+   * Not a crawl-policy field: the per-host limiter paces every request from
+   * `crawl.minIntervalMs` (below) and the layers around it (Spec 1690). This
+   * one only spaces a multi-location search's calls to the source.
+   */
+  minRequestIntervalMs?: number;
+
+  /**
+   * The `minIntervalFloorMs` (milliseconds) the plugin passes to
+   * `createHttpClient` (Spec 1715, audit F5): a spacing between request starts in
+   * its rate-limit bucket that no crawl-policy layer shortens — not a caller, not
+   * an operator `sites` / `hosts` entry. Declared here only so the crawl-policy API
+   * (`GET /api/sources/:site/crawl-policy`, `meta.clientMinIntervalFloorMs`) can
+   * show it; the plugin's own client option is what enforces it, and the plugin's
+   * own switch turns it off (Softy: `SOFTY_LEGACY=no-interval-floor`).
+   * Unset = the plugin sets no floor. This is the DECLARED default; when the
+   * plugin's switch can change it, also set `clientMinIntervalFloor`.
+   */
+  clientMinIntervalFloorMs?: number;
+
+  /**
+   * The floor the plugin's client uses NOW, ms (Spec 1715 review round 2): read
+   * from the plugin's own configuration each time it is called, so the crawl-policy
+   * API reports the EFFECTIVE floor — `0` after the plugin's switch removed it
+   * (Softy: `() => readSoftyConfig().minIntervalFloorMs`, `0` under
+   * `SOFTY_LEGACY=no-interval-floor`). Wins over `clientMinIntervalFloorMs` in the
+   * API. Must be cheap and must not throw (a throw falls back to the declared value).
+   */
+  clientMinIntervalFloor?: () => number;
+
+  /**
+   * The switch that removes the client floor, as an operator types it (e.g.
+   * `SOFTY_LEGACY=no-interval-floor`); shown by the crawl-policy API next to the
+   * floor (`meta.clientMinIntervalFloorSwitch`).
+   */
+  clientMinIntervalFloorSwitch?: string;
+
+  /**
    * Optional description of the plugin's capabilities or limitations.
    */
   description?: string;
+
+  /**
+   * How this source should be crawled (Spec 1690): pacing, identity, proxy
+   * rotation, retries, discovery. These are the plugin's *defaults* — operators
+   * (`EVER_JOBS_CRAWL_POLICIES`) and search callers (`crawl`) can override them.
+   * A plugin that sets `userAgentMode: 'plugin'` must explain why in
+   * `userAgentReason` (e.g. the API requires a registered e-mail as its UA).
+   *
+   * `callerOverrides` (Spec 1714) is the site owner's LOCK: `'stricter'` means a
+   * search caller may only make this source's traffic more polite, `'none'` that
+   * a caller may change nothing — even when the operator's global
+   * `EVER_JOBS_CRAWL_CALLER_OVERRIDES` is `any`. It tightens, never loosens, the
+   * global mode; only the operator can loosen it again, with a per-site / per-host
+   * `callerOverrides` in `EVER_JOBS_CRAWL_POLICIES`. Use it only when the site's
+   * operator asked for a pace (e.g. Softy, Spec 1715).
+   *
+   * @example { rateLimitScope: 'domain', maxConcurrentPerHost: 1, minIntervalMs: 1000, callerOverrides: 'stricter' }
+   */
+  crawl?: PluginCrawlPolicy;
 }
 
-export type PluginCategory =
-  | 'job-board'
-  | 'ats'
-  | 'company'
-  | 'niche'
-  | 'government'
-  | 'remote'
-  | 'regional'
-  | 'freelance';
+/**
+ * Category of a source plugin. Alias of `SiteCategory` in `@ever-jobs/models`
+ * (Spec 1720), which is the single list the search API validates
+ * `siteCategories` against.
+ */
+export type PluginCategory = SiteCategory;

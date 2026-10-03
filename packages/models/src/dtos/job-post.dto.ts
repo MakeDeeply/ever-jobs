@@ -1,7 +1,26 @@
 import { JobType } from '../enums/job-type.enum';
+import { DatePostedBasis, DatePostedPrecision } from '../enums/date-posted.enum';
 import { LocationDto } from './location.dto';
 import { OfficeDto } from './office.dto';
 import { CompensationDto } from './compensation.dto';
+import type { CareerLevelVerdict } from '../interfaces/career-level-classifier.interface';
+
+/**
+ * `liveness.reason` of a job marked `active` because its plugin fetched `jobUrl`
+ * during this very request (`jobUrlFetchedAt`), so it was not probed again (Spec 1714 FR-16).
+ */
+export const JOB_LIVENESS_REASON_FRESH_FETCH = 'fresh-fetch';
+
+/**
+ * `liveness.reason` of a job marked `active` because the source listed it in an
+ * index (a sitemap, a list page) fetched from the network not long ago (`jobUrlListedAt`, within
+ * `EVER_JOBS_LIVENESS_TRUST_LISTED_MAX_AGE_MS` of now), so it was not probed again
+ * (Spec 1715, audit A3). Applies to cache hits too: the age is measured against now.
+ */
+export const JOB_LIVENESS_REASON_LISTED = 'listed';
+
+/** The `liveness.reason` values the API sets on a verdict made without a probe. */
+export type JobLivenessReason = typeof JOB_LIVENESS_REASON_FRESH_FETCH | typeof JOB_LIVENESS_REASON_LISTED;
 
 export class JobPostDto {
   id?: string | null;
@@ -31,6 +50,16 @@ export class JobPostDto {
   jobType?: JobType[] | null;
   compensation?: CompensationDto | null;
   datePosted?: Date | string | null;
+
+  /** Posting instant, ISO-8601 UTC (`...Z`). Present only when the source gives
+   *  finer-than-day information (Spec 1696). `datePosted` stays the date-only
+   *  canonical value. */
+  datePostedAt?: string | null;
+  /** Granularity of the posting time (how wide the error bar is). */
+  datePostedPrecision?: DatePostedPrecision | null;
+  /** Where the posting time came from. `relative` = estimated from an age label at fetch time. */
+  datePostedBasis?: DatePostedBasis | null;
+
   emails?: string[] | null;
   isRemote?: boolean | null;
   listingType?: string | null;
@@ -51,6 +80,18 @@ export class JobPostDto {
 
   // LinkedIn only
   jobFunction?: string | null;
+
+  // LinkedIn detail page (Spec 1701); other sources may fill them later.
+  /** The source's own numeric company id (LinkedIn `meta[name=companyId]`). */
+  companySourceId?: string | null;
+  /** Applicant count shown on the posting. */
+  applicantsCount?: number | null;
+  /** How `applicantsCount` bounds the real number: "154 applicants" = exact, "Over 200" = min, "Be among the first 25" = max. */
+  applicantsCountBound?: 'exact' | 'min' | 'max' | null;
+
+  // Level (jobsbylevel.com) AI-centrality rating, 1-4 - not seniority (Spec 1693).
+  // `JOBSBYLEVEL_EMIT_AI_LEVEL=false` leaves it off.
+  aiLevel?: number | null;
 
   // originally for Naukri; may be be used by others
   skills?: string[] | null;
@@ -74,16 +115,63 @@ export class JobPostDto {
   // Site identifier (filled in during aggregation)
   site?: string | null;
 
+  /**
+   * ISO-8601 UTC instant at which the source plugin itself fetched `jobUrl` and got
+   * a 2xx page it could parse, during the scrape that produced this record (Spec
+   * 1714 FR-16). Unset when the page came from a plugin cache, was not fetched, or
+   * failed. `?liveness=true` trusts a value not older than the request (and not later
+   * than now) instead of probing the URL again (`EVER_JOBS_LIVENESS_TRUST_FRESH_FETCH=false`
+   * probes it anyway).
+   */
+  jobUrlFetchedAt?: string | null;
+
+  /**
+   * ISO-8601 UTC instant at which the source's own index that listed this posting —
+   * a sitemap, or (Softy, review round 2) the list page or legacy index carrying its
+   * card — was fetched from the network (Spec 1715, audit A3): by this request, or,
+   * for a sitemap, by an earlier one whose answer the source still holds in its cache
+   * (list pages are never cached). It says the site LISTED the posting at that time,
+   * not that `jobUrl` itself was fetched. Unset when the posting did not come from
+   * such an index. `?liveness=true` trusts a value
+   * not older than `EVER_JOBS_LIVENESS_TRUST_LISTED_MAX_AGE_MS` (default 600000 =
+   * 10 min; `0` = never, the pre-fix behaviour) and marks the job
+   * `{ state: 'active', checkedAt: jobUrlListedAt, reason: JOB_LIVENESS_REASON_LISTED }`
+   * instead of probing it.
+   */
+  jobUrlListedAt?: string | null;
+
+  /**
+   * Stable cross-source identity of the posting (Spec 1721): sha-256 of the
+   * normalised `company|title|location` triple — the same `canonicalJobId` the
+   * dedup engine clusters on. The same posting seen via different sources or
+   * on different runs gets the same key. Stamped on every returned job.
+   */
+  dedupKey?: string | null;
+
   // Corpus signals (Spec 740) — opt-in via ?liveness=true / ?legitimacy=true; absent by default.
   // Shapes mirror what the Hust frontend already consumes (forward-compatible).
   liveness?: {
     state: 'active' | 'expired' | 'uncertain';
     checkedAt?: string;
+    /**
+     * Why the state was set without a probe (`JobLivenessReason`):
+     * `JOB_LIVENESS_REASON_FRESH_FETCH` (`'fresh-fetch'`: the plugin fetched the page
+     * during this request, Spec 1714) or `JOB_LIVENESS_REASON_LISTED` (`'listed'`: a
+     * sitemap fetched within `EVER_JOBS_LIVENESS_TRUST_LISTED_MAX_AGE_MS` listed it,
+     * Spec 1715 audit A3). Unset on a probe verdict. Typed `string` so a client keeps
+     * reading reasons added later.
+     */
+    reason?: string;
   } | null;
   legitimacy?: {
     state: 'verified' | 'likely' | 'uncertain';
     reasons?: string[];
   } | null;
+
+  // Career level (Spec 1730, contract C7) — computed server-side after dedup by the bound
+  // `ICareerLevelClassifier`; on by default, off with EVER_JOBS_CLASSIFY_CAREER_LEVEL=false.
+  // Derived from title / description / the source fields above, which it never mutates.
+  careerLevel?: CareerLevelVerdict | null;
 
   constructor(partial?: Partial<JobPostDto>) {
     Object.assign(this, partial);

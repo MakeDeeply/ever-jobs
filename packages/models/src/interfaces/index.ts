@@ -11,3 +11,4 @@ export * from './job-store-query.interface';
 export * from './job-store.interface';
 export * from './health-snapshot-store.interface';
 export * from './raw-capture.interface';
+export * from './career-level-classifier.interface';

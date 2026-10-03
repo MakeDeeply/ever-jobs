@@ -30,6 +30,11 @@ import { StepStoneJsonLd } from './stepstone.types';
   site: Site.STEPSTONE,
   name: 'StepStone',
   category: 'regional',
+  // Spec 1720 / FR-11 — the term is a URL path segment (`/jobs/<term>`) and,
+  // without one, this scraper searches "developer". In list mode that would be
+  // a silent keyword search, so it is not dispatched until a keyword-less
+  // listing URL is verified live.
+  requiresSearchTerm: true,
 })
 @Injectable()
 export class StepStoneService implements IScraper, OnModuleDestroy {
@@ -50,7 +55,7 @@ export class StepStoneService implements IScraper, OnModuleDestroy {
       const searchUrl = `https://${domain}/jobs/${encodeURIComponent(searchTerm)}`;
 
       this.logger.log(`StepStone: navigating to ${searchUrl}`);
-      await page.goto(searchUrl, {
+      await BrowserPool.navigate(page, searchUrl, {
         waitUntil: 'domcontentloaded',
         timeout: timeoutMs,
       });

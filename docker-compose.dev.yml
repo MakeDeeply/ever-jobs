@@ -24,7 +24,7 @@ services:
       RATE_LIMIT_ENABLED: ${RATE_LIMIT_ENABLED:-true}
       RATE_LIMIT_REQUESTS: ${RATE_LIMIT_REQUESTS:-50}
       RATE_LIMIT_TIMEFRAME: ${RATE_LIMIT_TIMEFRAME:-60}
-      ENABLE_CACHE: ${ENABLE_CACHE:-true}
+      ENABLE_CACHE: ${ENABLE_CACHE:-false}
       CACHE_EXPIRY: ${CACHE_EXPIRY:-300}
     volumes:
       # Mount source for hot-reload

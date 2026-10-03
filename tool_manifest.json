@@ -12,13 +12,13 @@
     "job_search": {
       "description": "Search for jobs across multiple job boards simultaneously",
       "supported_sites": {
-        "job_boards": ["linkedin", "indeed", "glassdoor", "zip_recruiter", "google", "bayt", "naukri", "bdjobs", "internshala", "exa", "upwork", "dice", "simplyhired", "wellfound", "stepstone", "monster", "careerbuilder", "builtin", "snagajob", "dribbble", "solidjobs"],
+        "job_boards": ["linkedin", "indeed", "glassdoor", "zip_recruiter", "google", "bayt", "naukri", "bdjobs", "internshala", "exa", "upwork", "dice", "simplyhired", "wellfound", "stepstone", "monster", "careerbuilder", "builtin", "snagajob", "dribbble", "solidjobs", "jobsbylevel", "simplifyjobs"],
         "remote_boards": ["remoteok", "remotive", "weworkremotely", "jobicy", "himalayas", "arbeitnow"],
-        "ats_platforms": ["greenhouse", "lever", "ashby", "workable", "smartrecruiters", "jobvite", "workday", "successfactors", "taleo", "icims", "adp", "ukg", "rippling", "recruitee", "teamtailor", "bamboohr", "personio", "jazzhr"],
+        "ats_platforms": ["greenhouse", "lever", "ashby", "workable", "smartrecruiters", "jobvite", "workday", "successfactors", "taleo", "icims", "adp", "ukg", "rippling", "recruitee", "teamtailor", "bamboohr", "personio", "jazzhr", "inhire"],
         "company_pages": ["amazon", "apple", "microsoft", "nvidia", "tiktok", "uber", "cursor", "google_careers", "meta", "netflix", "stripe", "openai"],
         "aggregators": ["usajobs", "adzuna", "reed", "jooble", "careerjet"]
       },
-      "output_formats": ["json", "csv", "table", "summary"],
+      "output_formats": ["json", "csv", "ndjson", "table", "summary"],
       "features": [
         "Multi-board concurrent searching (65+ sources)",
         "Country-aware domain resolution (65+ countries)",
@@ -26,14 +26,25 @@
         "Company-specific career page scraping",
         "Salary extraction from descriptions",
         "Annual salary normalization",
-        "Proxy rotation (HTTP/HTTPS/SOCKS5)",
+        "Proxy rotation (HTTP/HTTPS/SOCKS5; per-host stable by default, per-scrape, per-request or off)",
         "Rate limiting",
+        "Polite crawling by default: honest configurable User-Agent, per-host pacing, Retry-After-respecting back-off, optional robots.txt, egress guard (crawl policy, configurable per request via `crawl`)",
+        "Softy sitemap discovery with sequential detail fetches",
         "Remote job filtering",
         "Job type filtering",
+        "Multi-location search in one request (sequential per source, same-source duplicates removed)",
+        "Title / keyword / preset exclusion filters (whole-word, negation-aware, never regex)",
         "HTTP job-posting liveness verification (active/expired/uncertain verdicts)",
         "Description format selection (markdown, html, plain)",
         "Analytics (summary stats, company intelligence, site comparison)",
-        "MCP server for AI assistant integration"
+        "MCP server for AI assistant integration",
+        "List mode: omit searchTerm to get every job each selected source can list (Spec 1720)",
+        "Source selection by plugin category via siteCategories (Spec 1720)",
+        "NDJSON streaming of the full result set via ?format=ndjson (Spec 1721) - the way to fetch a list-mode result; ?paginate=true re-runs the whole fan-out per page unless the raw set is cached (ENABLE_CACHE=true and within EVER_JOBS_CACHE_MAX_JOBS)",
+        "NDJSON end line reports crawl completeness: complete, stopReason (deadline | job_ceiling), sourcesSkipped, sourcesFailed (Spec 1721 / FR-15)",
+        "NDJSON end line lists the sources whose postings must not be expired: sourcesPartial, problemSources [{site, reason}] (max 2500, the whole catalogue fits), problemSourcesTotal; decide expiry per source from a dedup=false crawl; incomplete crawls are never cached (Spec 1721 / FR-20, FR-21)",
+        "Stable cross-source dedupKey on every job (Spec 1721)",
+        "Optional persistence to memory, SQLite or Postgres selected by EVER_JOBS_STORE (Spec 1722)"
       ]
     }
   },
@@ -55,12 +66,22 @@
     "properties": {
       "searchTerm": {
         "type": "string",
-        "description": "Job search keywords (e.g., 'software engineer')"
+        "description": "Job search keywords (e.g., 'software engineer'). Omit (or send null / empty / whitespace) for list mode: every selected source returns what it can list without a keyword, up to resultsWanted per source."
       },
       "siteType": {
         "type": "array",
         "items": { "type": "string" },
         "description": "Sites to search. Omit (and omit companyDomain) to search all search + company sources. Provide companySlug for ATS sources."
+      },
+      "siteCategories": {
+        "type": "array",
+        "items": { "type": "string", "enum": ["job-board", "niche", "regional", "remote", "government", "freelance", "company", "ats"] },
+        "description": "Restrict the default fan-out to these plugin categories. Ignored when siteType is set. ATS sources still need companySlug. Unknown values return HTTP 400."
+      },
+      "careerLevels": {
+        "type": "array",
+        "items": { "type": "string", "enum": ["internship", "new_grad", "entry", "mid", "senior", "staff", "principal", "manager", "director", "executive", "unknown"] },
+        "description": "Keep only jobs whose server-computed careerLevel.level is in this list (Spec 1730). Applied after dedup and exclusions; omit or [] for no filter. Fails closed: HTTP 503 when the filter cannot be applied. Unknown values return HTTP 400."
       },
       "companyDomain": {
         "type": "array",
@@ -75,10 +96,33 @@
         "type": "string",
         "description": "Location to search near (e.g., 'San Francisco, CA')"
       },
+      "locations": {
+        "type": "array",
+        "items": { "type": "string", "maxLength": 200 },
+        "maxItems": 25,
+        "description": "Several locations searched in one request (e.g., ['New York, NY', 'Chicago, IL']). Each source runs once per location, one after another, with its own resultsWanted; same-source duplicates are removed. 'location', when also set, is searched first. The server searches the first EVER_JOBS_SEARCH_MAX_LOCATIONS (default 10) and reports the rest as bad_input diagnostics."
+      },
       "resultsWanted": {
         "type": "integer",
         "default": 15,
-        "description": "Number of results per site"
+        "description": "Number of results per site (and per location when 'locations' is set; also in list mode). The server clamps it to EVER_JOBS_MAX_RESULTS_WANTED (default 1000)."
+      },
+      "excludeTitleTerms": {
+        "type": "array",
+        "items": { "type": "string", "maxLength": 100 },
+        "maxItems": 50,
+        "description": "Drop jobs whose title contains any of these words or phrases (e.g., ['senior', 'lead*']). Whole-word, case- and accent-insensitive, trailing * = prefix, literal text (never a regex); negated mentions are ignored. Applied after dedup; the cache and stored corpus are unaffected."
+      },
+      "excludeKeywords": {
+        "type": "array",
+        "items": { "type": "string", "maxLength": 100 },
+        "maxItems": 50,
+        "description": "Drop jobs whose title or description contains any of these words or phrases (e.g., ['security clearance', 'ts/sci']). Same matching rules as excludeTitleTerms."
+      },
+      "excludePresets": {
+        "type": "array",
+        "items": { "type": "string", "enum": ["security_clearance"] },
+        "description": "Curated exclusion lists matched against title + description. security_clearance drops roles that require (or ask the candidate to obtain) a security clearance or vetting."
       },
       "country": {
         "type": "string",
@@ -96,7 +140,7 @@
       },
       "jobType": {
         "type": "string",
-        "enum": ["fulltime", "parttime", "internship", "contract"],
+        "enum": ["fulltime", "parttime", "contract", "temporary", "internship", "perdiem", "nights", "other", "summer", "volunteer", "permanent", "apprenticeship"],
         "description": "Filter by job type"
       },
       "descriptionFormat": {
@@ -112,11 +156,11 @@
       },
       "rateDelayMin": {
         "type": "number",
-        "description": "Minimum delay between requests in seconds"
+        "description": "Minimum delay between requests in seconds (maps to crawl.minIntervalMs, enforced per host bucket)"
       },
       "rateDelayMax": {
         "type": "number",
-        "description": "Maximum delay between requests in seconds"
+        "description": "Maximum delay between requests in seconds (maps to crawl.jitterMs = (max - min) x 1000)"
       },
       "linkedinFetchDescription": {
         "type": "boolean",
@@ -131,7 +175,201 @@
       "proxies": {
         "type": "array",
         "items": { "type": "string" },
-        "description": "Proxy URLs for rotation"
+        "description": "Proxy URLs for rotation. Which proxy a request uses follows crawl.proxyRotation (default: one stable proxy per host); the operator may refuse caller proxies (EVER_JOBS_CRAWL_CALLER_PROXIES=none), and a source or host with a site owner's lock ignores them (Spec 1714: e.g. Softy; the operator's own proxies still apply)."
+      },
+      "userAgent": {
+        "type": "string",
+        "description": "Custom User-Agent. Maps to crawl.userAgent and, unless crawl.userAgentMode is set, crawl.userAgentMode=strict so this UA is what goes out."
+      },
+      "crawl": {
+        "type": "object",
+        "description": "Per-request crawl policy (Spec 1690): identity, pacing, proxy rotation, retries, robots.txt, egress guard and discovery. Every field optional; the highest-precedence layer, subject to the operator setting EVER_JOBS_CRAWL_CALLER_OVERRIDES (any | stricter | none) and to a site owner's lock (Spec 1714: a plugin or builtin host policy may set callerOverrides, e.g. Softy is 'stricter', so a caller can only make its traffic more polite; GET /api/sources/{site}/crawl-policy shows the effective mode). The preset (EVER_JOBS_CRAWL_PRESET) is process-wide. Defaults below are the polite preset; plugins and operators may set others. See docs/CRAWL_POLICY.md.",
+        "additionalProperties": false,
+        "properties": {
+          "userAgent": {
+            "type": "string",
+            "description": "User-Agent to send. Keywords: default/everjobs (honest Ever Jobs UA), browser/legacy (pre-1690 Chrome/120 UA)."
+          },
+          "userAgentMode": {
+            "type": "string",
+            "enum": [
+              "identify",
+              "strict",
+              "plugin"
+            ],
+            "description": "Which UA goes on the wire: identify (default; our UA unless a plugin states why it needs its own), strict (our UA always), plugin (the plugin's declared UA)."
+          },
+          "from": {
+            "type": "string",
+            "description": "Value of a From: request header (contact e-mail)."
+          },
+          "stripClientHints": {
+            "type": "boolean",
+            "default": true,
+            "description": "Drop sec-ch-ua* headers when our UA is sent."
+          },
+          "proxyRotation": {
+            "type": "string",
+            "enum": [
+              "per-host",
+              "per-scrape",
+              "per-request",
+              "off"
+            ],
+            "description": "per-host (default): one stable proxy per host bucket; per-scrape; per-request (round-robin, pre-1690); off."
+          },
+          "rateLimitScope": {
+            "type": "string",
+            "enum": [
+              "host",
+              "domain",
+              "site"
+            ],
+            "description": "Pacing bucket: host (default), domain (registrable domain), site."
+          },
+          "maxConcurrentPerHost": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Max requests in flight per bucket; 0 = unlimited.",
+            "default": 4
+          },
+          "minIntervalMs": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Minimum gap between request starts in a bucket, ms.",
+            "default": 100
+          },
+          "jitterMs": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Random extra 0..jitterMs per gap, ms.",
+            "default": 0
+          },
+          "maxQueueWaitMs": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Longest wait for a slot before failing fast, ms; 0 = no limit.",
+            "default": 0
+          },
+          "adaptiveThrottle": {
+            "type": "boolean",
+            "default": true,
+            "description": "Slow a bucket down after 429/503 and recover on success."
+          },
+          "minGapMs": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Minimum idle time after a request of the bucket completes before the next one starts, ms, on top of minIntervalMs (start to start); 0 = off (Spec 1714).",
+            "default": 0
+          },
+          "serverErrorCooldownMs": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Whole-bucket cool-down after a 500/502/504, a timeout or a connection reset, ms; 0 = off (Spec 1714).",
+            "default": 0
+          },
+          "retries": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10,
+            "description": "Retries per request on a retryable status, 0-10 (a larger value is rejected).",
+            "default": 2
+          },
+          "retryStatuses": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 100,
+              "maximum": 599
+            },
+            "default": [
+              429,
+              502,
+              503,
+              504
+            ],
+            "description": "HTTP statuses that are retried."
+          },
+          "retryBackoff": {
+            "type": "string",
+            "enum": [
+              "exponential",
+              "linear",
+              "constant"
+            ],
+            "description": "Back-off shape (default exponential)."
+          },
+          "retryBaseDelayMs": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Base retry delay, ms.",
+            "default": 1000
+          },
+          "retryMaxDelayMs": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Cap on one computed retry delay, ms.",
+            "default": 30000
+          },
+          "retryJitter": {
+            "type": "boolean",
+            "default": true,
+            "description": "Full jitter on the back-off."
+          },
+          "retryOnNetworkError": {
+            "type": "boolean",
+            "default": false,
+            "description": "Also retry connection resets / timeouts."
+          },
+          "respectRetryAfter": {
+            "type": "boolean",
+            "default": true,
+            "description": "Never retry earlier than the server's Retry-After."
+          },
+          "maxRetryAfterMs": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "A Retry-After longer than this triggers retryAfterOverMax, ms.",
+            "default": 60000
+          },
+          "retryAfterOverMax": {
+            "type": "string",
+            "enum": [
+              "give-up",
+              "cap"
+            ],
+            "description": "give-up (default): no retry, cool the whole host; cap: wait maxRetryAfterMs then retry (pre-1690)."
+          },
+          "throttleRetryDelayMs": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Back-off floor after a 429/503, ms: retry n waits at least this x 2^n (capped at max(retryMaxDelayMs, this)) unless Retry-After asks for longer; also the minimum whole-host cool-down. 0 = no floor (pre-1690).",
+            "default": 5000
+          },
+          "robotsTxt": {
+            "type": "string",
+            "enum": [
+              "off",
+              "crawl-delay",
+              "respect"
+            ],
+            "description": "robots.txt handling (default off)."
+          },
+          "blockPrivateNetworks": {
+            "type": "boolean",
+            "default": true,
+            "description": "Egress guard; a request may turn it on, never off."
+          },
+          "discovery": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "sitemap",
+              "listing"
+            ],
+            "description": "Discovery strategy for plugins that have several (e.g. Softy); default auto."
+          }
+        }
       }
     },
     "required": []
@@ -148,7 +386,18 @@
           "type": "object",
           "properties": {
             "id": { "type": "string" },
+            "dedupKey": { "type": "string", "description": "Stable cross-source key (sha-256 of normalised company|title|location); the same posting from any source or run has the same key. With dedup=true a posting whose employment class is not full-time or unknown (internship, contract, part-time, ...) carries a key scoped by that class, so it never shares a key with a full-time posting of the same title, company and location; with dedup=false the key is class-free." },
             "site": { "type": "string" },
+            "careerLevel": {
+              "type": "object",
+              "description": "Server-computed career level (Spec 1730), from the title, the opening of the description and the structured type fields. Absent when EVER_JOBS_CLASSIFY_CAREER_LEVEL=false.",
+              "properties": {
+                "level": { "type": "string", "enum": ["internship", "new_grad", "entry", "mid", "senior", "staff", "principal", "manager", "director", "executive", "unknown"] },
+                "confidence": { "type": "string", "enum": ["high", "medium", "low"] },
+                "reasons": { "type": "array", "items": { "type": "string" }, "maxItems": 5 }
+              },
+              "required": ["level", "confidence", "reasons"]
+            },
             "title": { "type": "string" },
             "companyName": { "type": "string" },
             "companyUrl": { "type": "string" },
@@ -164,6 +413,21 @@
             },
             "description": { "type": "string" },
             "datePosted": { "type": "string", "format": "date" },
+            "datePostedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Posting instant, ISO-8601 UTC. Present only when the source gives finer-than-day time (precision exact, minute or hour); datePosted stays the date."
+            },
+            "datePostedPrecision": {
+              "type": "string",
+              "enum": ["exact", "minute", "hour", "day", "week", "month", "year"],
+              "description": "Granularity of the posting time. Present only when the source supports it."
+            },
+            "datePostedBasis": {
+              "type": "string",
+              "enum": ["timestamp", "date", "relative"],
+              "description": "Where the posting time came from; relative = estimated from an age label at fetch time."
+            },
             "isRemote": { "type": "boolean" },
             "jobType": { "type": "array", "items": { "type": "string" } },
             "compensation": {
@@ -175,7 +439,17 @@
                 "currency": { "type": "string" }
               }
             },
-            "emails": { "type": "array", "items": { "type": "string" } }
+            "emails": { "type": "array", "items": { "type": "string" } },
+            "jobUrlFetchedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "ISO-8601 UTC instant at which the source plugin itself fetched jobUrl and parsed a 2xx page during the scrape that produced this record (Spec 1714). Absent when the page came from a plugin cache, was not fetched, or failed."
+            },
+            "jobUrlListedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "ISO-8601 UTC instant at which the source's own index that lists this posting (e.g. a Softy tenant's /sitemap.xml, or the list page carrying its card) was fetched from the network, by this search or an earlier one whose answer the source still caches (Spec 1715). Says the posting was listed then, not that jobUrl itself was fetched. With liveness=true a value at most EVER_JOBS_LIVENESS_TRUST_LISTED_MAX_AGE_MS old (default 10 min) marks the job active without a probe (liveness.reason 'listed'). Absent when the posting did not come from such an index."
+            }
           }
         }
       }
@@ -202,6 +476,25 @@
       }
     },
     {
+      "name": "One query in several cities",
+      "input": {
+        "searchTerm": "backend engineer",
+        "siteType": ["themuse", "dice"],
+        "locations": ["New York, NY", "Chicago, IL"],
+        "resultsWanted": 10
+      }
+    },
+    {
+      "name": "Exclude senior roles and roles that need a clearance",
+      "input": {
+        "searchTerm": "software engineer",
+        "siteType": ["greenhouse"],
+        "companySlug": "acme",
+        "excludeTitleTerms": ["senior", "lead*", "principal"],
+        "excludePresets": ["security_clearance"]
+      }
+    },
+    {
       "name": "Business development intelligence",
       "input": {
         "searchTerm": "VP engineering",
@@ -210,6 +503,15 @@
         "resultsWanted": 50,
         "linkedinFetchDescription": true,
         "descriptionFormat": "plain"
+      }
+    },
+    {
+      "name": "Polite crawl of a fragile ATS (per-request crawl policy)",
+      "input": {
+        "siteType": ["softy"],
+        "companySlug": "acme",
+        "resultsWanted": 10,
+        "crawl": { "maxConcurrentPerHost": 1, "minIntervalMs": 2000, "discovery": "sitemap" }
       }
     }
   ]

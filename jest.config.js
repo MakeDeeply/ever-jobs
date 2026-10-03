@@ -1,5 +1,40 @@
+// ── TypeScript test transformer (Spec 1689) ─────────────────────────────────
+// Two supported ways to run the suites, picked by `JEST_TRANSFORMER`:
+//
+//   swc     (default) @swc/jest transpiles only — fast, but specs are NOT
+//           type-checked while they run. CI's `tsc --project
+//           tsconfig.typecheck.json` step covers type errors instead.
+//   ts-jest the pre-fork-sync transform (`preset: 'ts-jest'` + ts-jest over
+//           tsconfig.base.json): every spec is type-checked as it runs, so a
+//           type error fails the test. Slower. `npm run test:typed` sets it.
+//
+// An unrecognised value throws instead of silently falling back, so a typo
+// can never make a "typed" run quietly skip the type-check.
+const TS_TRANSFORMERS = {
+  swc: ['@swc/jest', {
+    jsc: {
+      parser: { syntax: 'typescript', decorators: true },
+      transform: { legacyDecorator: true, decoratorMetadata: true, useDefineForClassFields: false },
+      target: 'es2021',
+      keepClassNames: true,
+    },
+    module: { type: 'commonjs' },
+    sourceMaps: 'inline',
+  }],
+  'ts-jest': ['ts-jest', { tsconfig: 'tsconfig.base.json' }],
+};
+const requestedTransformer = (process.env.JEST_TRANSFORMER || '').trim().toLowerCase();
+const tsTransformer = requestedTransformer || 'swc';
+if (!Object.prototype.hasOwnProperty.call(TS_TRANSFORMERS, tsTransformer)) {
+  throw new Error(
+    `Unknown JEST_TRANSFORMER "${process.env.JEST_TRANSFORMER}" — expected one of: ${Object.keys(TS_TRANSFORMERS).join(', ')}`,
+  );
+}
+
 /** @type {import('jest').Config} */
 module.exports = {
+  // ts-jest mode restores the full pre-fork-sync config, preset included.
+  ...(tsTransformer === 'ts-jest' ? { preset: 'ts-jest' } : {}),
   testEnvironment: 'node',
   roots: ['<rootDir>/packages/', '<rootDir>/apps/', '<rootDir>/scripts/'],
   testMatch: ['**/__tests__/**/*.e2e-spec.ts', '**/__tests__/**/*.spec.ts'],
@@ -980,6 +1015,7 @@ module.exports = {
     '^@ever-jobs/source-solidjobs$': '<rootDir>/packages/plugins/source-solidjobs/src/index.ts',
     '^@ever-jobs/liveness-http$': '<rootDir>/packages/plugins/liveness-http/src/index.ts',
     '^@ever-jobs/legitimacy-detector$': '<rootDir>/packages/plugins/legitimacy-detector/src/index.ts',
+    '^@ever-jobs/career-level-classifier$': '<rootDir>/packages/plugins/career-level-classifier/src/index.ts',
     '^@ever-jobs/source-company-nebius$': '<rootDir>/packages/plugins/source-company-nebius/src/index.ts',
     '^@ever-jobs/source-company-coreweave$': '<rootDir>/packages/plugins/source-company-coreweave/src/index.ts',
     '^@ever-jobs/source-company-solidpower$': '<rootDir>/packages/plugins/source-company-solidpower/src/index.ts',
@@ -1886,20 +1922,99 @@ module.exports = {
     '^@ever-jobs/source-company-wercomfg$': '<rootDir>/packages/plugins/source-company-wercomfg/src/index.ts',
     '^@ever-jobs/source-company-comma_ai$': '<rootDir>/packages/plugins/source-company-comma_ai/src/index.ts',
     '^@ever-jobs/source-company-buildnebula$': '<rootDir>/packages/plugins/source-company-buildnebula/src/index.ts',
+    '^@ever-jobs/source-ats-inhire$': '<rootDir>/packages/plugins/source-ats-inhire/src/index.ts',
+    '^@ever-jobs/source-jobsbylevel$': '<rootDir>/packages/plugins/source-jobsbylevel/src/index.ts',
+    '^@ever-jobs/source-simplifyjobs$': '<rootDir>/packages/plugins/source-simplifyjobs/src/index.ts',
+    '^@ever-jobs/source-company-salesforce$': '<rootDir>/packages/plugins/source-company-salesforce/src/index.ts',
+    '^@ever-jobs/source-company-adobe$': '<rootDir>/packages/plugins/source-company-adobe/src/index.ts',
+    '^@ever-jobs/source-company-intel$': '<rootDir>/packages/plugins/source-company-intel/src/index.ts',
+    '^@ever-jobs/source-company-hp$': '<rootDir>/packages/plugins/source-company-hp/src/index.ts',
+    '^@ever-jobs/source-company-hpe$': '<rootDir>/packages/plugins/source-company-hpe/src/index.ts',
+    '^@ever-jobs/source-company-mastercard$': '<rootDir>/packages/plugins/source-company-mastercard/src/index.ts',
+    '^@ever-jobs/source-company-paypal$': '<rootDir>/packages/plugins/source-company-paypal/src/index.ts',
+    '^@ever-jobs/source-company-capitalone$': '<rootDir>/packages/plugins/source-company-capitalone/src/index.ts',
+    '^@ever-jobs/source-company-walmart$': '<rootDir>/packages/plugins/source-company-walmart/src/index.ts',
+    '^@ever-jobs/source-company-target$': '<rootDir>/packages/plugins/source-company-target/src/index.ts',
+    '^@ever-jobs/source-company-northropgrumman$': '<rootDir>/packages/plugins/source-company-northropgrumman/src/index.ts',
+    '^@ever-jobs/source-company-boozallen$': '<rootDir>/packages/plugins/source-company-boozallen/src/index.ts',
+    '^@ever-jobs/source-company-caci$': '<rootDir>/packages/plugins/source-company-caci/src/index.ts',
+    '^@ever-jobs/source-company-gdit$': '<rootDir>/packages/plugins/source-company-gdit/src/index.ts',
+    '^@ever-jobs/source-company-leidos$': '<rootDir>/packages/plugins/source-company-leidos/src/index.ts',
+    '^@ever-jobs/source-company-blueorigin$': '<rootDir>/packages/plugins/source-company-blueorigin/src/index.ts',
+    '^@ever-jobs/source-company-redhat$': '<rootDir>/packages/plugins/source-company-redhat/src/index.ts',
+    '^@ever-jobs/source-company-motorolasolutions$': '<rootDir>/packages/plugins/source-company-motorolasolutions/src/index.ts',
+    '^@ever-jobs/source-company-stryker$': '<rootDir>/packages/plugins/source-company-stryker/src/index.ts',
+    '^@ever-jobs/source-company-jnj$': '<rootDir>/packages/plugins/source-company-jnj/src/index.ts',
+    '^@ever-jobs/source-company-philips$': '<rootDir>/packages/plugins/source-company-philips/src/index.ts',
+    '^@ever-jobs/source-company-mckesson$': '<rootDir>/packages/plugins/source-company-mckesson/src/index.ts',
+    '^@ever-jobs/source-company-workdayinc$': '<rootDir>/packages/plugins/source-company-workdayinc/src/index.ts',
+    '^@ever-jobs/source-company-micron$': '<rootDir>/packages/plugins/source-company-micron/src/index.ts',
+    '^@ever-jobs/source-company-analogdevices$': '<rootDir>/packages/plugins/source-company-analogdevices/src/index.ts',
+    '^@ever-jobs/source-company-tmobile$': '<rootDir>/packages/plugins/source-company-tmobile/src/index.ts',
+    '^@ever-jobs/source-company-comcast$': '<rootDir>/packages/plugins/source-company-comcast/src/index.ts',
+    '^@ever-jobs/source-company-disney$': '<rootDir>/packages/plugins/source-company-disney/src/index.ts',
+    '^@ever-jobs/source-company-nike$': '<rootDir>/packages/plugins/source-company-nike/src/index.ts',
+    '^@ever-jobs/source-company-fidelity$': '<rootDir>/packages/plugins/source-company-fidelity/src/index.ts',
+    '^@ever-jobs/source-company-statestreet$': '<rootDir>/packages/plugins/source-company-statestreet/src/index.ts',
+    '^@ever-jobs/source-company-blackrock$': '<rootDir>/packages/plugins/source-company-blackrock/src/index.ts',
+    '^@ever-jobs/source-company-autodesk$': '<rootDir>/packages/plugins/source-company-autodesk/src/index.ts',
+    '^@ever-jobs/source-company-zillow$': '<rootDir>/packages/plugins/source-company-zillow/src/index.ts',
+    '^@ever-jobs/source-company-expediagroup$': '<rootDir>/packages/plugins/source-company-expediagroup/src/index.ts',
+    '^@ever-jobs/source-company-3m$': '<rootDir>/packages/plugins/source-company-3m/src/index.ts',
+    '^@ever-jobs/source-company-rtx$': '<rootDir>/packages/plugins/source-company-rtx/src/index.ts',
+    '^@ever-jobs/source-company-humana$': '<rootDir>/packages/plugins/source-company-humana/src/index.ts',
+    '^@ever-jobs/source-company-cvshealth$': '<rootDir>/packages/plugins/source-company-cvshealth/src/index.ts',
+    '^@ever-jobs/source-company-chevron$': '<rootDir>/packages/plugins/source-company-chevron/src/index.ts',
+    '^@ever-jobs/source-company-visa$': '<rootDir>/packages/plugins/source-company-visa/src/index.ts',
+    '^@ever-jobs/source-company-geaerospace$': '<rootDir>/packages/plugins/source-company-geaerospace/src/index.ts',
+    '^@ever-jobs/source-company-wellsfargo$': '<rootDir>/packages/plugins/source-company-wellsfargo/src/index.ts',
+    '^@ever-jobs/source-company-snap$': '<rootDir>/packages/plugins/source-company-snap/src/index.ts',
+    '^@ever-jobs/source-company-morganstanley$': '<rootDir>/packages/plugins/source-company-morganstanley/src/index.ts',
+    '^@ever-jobs/source-company-copart$': '<rootDir>/packages/plugins/source-company-copart/src/index.ts',
+    '^@ever-jobs/source-company-coxenterprises$': '<rootDir>/packages/plugins/source-company-coxenterprises/src/index.ts',
+    '^@ever-jobs/source-company-broadcom$': '<rootDir>/packages/plugins/source-company-broadcom/src/index.ts',
+    '^@ever-jobs/source-company-pfizer$': '<rootDir>/packages/plugins/source-company-pfizer/src/index.ts',
+    '^@ever-jobs/source-company-marvell$': '<rootDir>/packages/plugins/source-company-marvell/src/index.ts',
+    '^@ever-jobs/source-company-generalmotors$': '<rootDir>/packages/plugins/source-company-generalmotors/src/index.ts',
+    '^@ever-jobs/source-company-warnerbrosdiscovery$': '<rootDir>/packages/plugins/source-company-warnerbrosdiscovery/src/index.ts',
+    '^@ever-jobs/source-company-moderna$': '<rootDir>/packages/plugins/source-company-moderna/src/index.ts',
+    '^@ever-jobs/source-company-hudsonrivertrading$': '<rootDir>/packages/plugins/source-company-hudsonrivertrading/src/index.ts',
+    '^@ever-jobs/source-company-jumptrading$': '<rootDir>/packages/plugins/source-company-jumptrading/src/index.ts',
+    '^@ever-jobs/source-company-optiver$': '<rootDir>/packages/plugins/source-company-optiver/src/index.ts',
+    '^@ever-jobs/source-company-drw$': '<rootDir>/packages/plugins/source-company-drw/src/index.ts',
+    '^@ever-jobs/source-company-akunacapital$': '<rootDir>/packages/plugins/source-company-akunacapital/src/index.ts',
+    '^@ever-jobs/source-company-fiverings$': '<rootDir>/packages/plugins/source-company-fiverings/src/index.ts',
+    '^@ever-jobs/source-company-oldmissioncapital$': '<rootDir>/packages/plugins/source-company-oldmissioncapital/src/index.ts',
+    '^@ever-jobs/source-company-xtxmarkets$': '<rootDir>/packages/plugins/source-company-xtxmarkets/src/index.ts',
+    '^@ever-jobs/source-company-point72$': '<rootDir>/packages/plugins/source-company-point72/src/index.ts',
+    '^@ever-jobs/source-company-bridgewater$': '<rootDir>/packages/plugins/source-company-bridgewater/src/index.ts',
+    '^@ever-jobs/source-company-radixtrading$': '<rootDir>/packages/plugins/source-company-radixtrading/src/index.ts',
+    '^@ever-jobs/source-company-headlandstech$': '<rootDir>/packages/plugins/source-company-headlandstech/src/index.ts',
+    '^@ever-jobs/source-company-belvederetrading$': '<rootDir>/packages/plugins/source-company-belvederetrading/src/index.ts',
+    '^@ever-jobs/source-company-chicagotrading$': '<rootDir>/packages/plugins/source-company-chicagotrading/src/index.ts',
+    '^@ever-jobs/source-company-flowtraders$': '<rootDir>/packages/plugins/source-company-flowtraders/src/index.ts',
+    '^@ever-jobs/source-company-mavensecurities$': '<rootDir>/packages/plugins/source-company-mavensecurities/src/index.ts',
+    '^@ever-jobs/source-company-qube_rt$': '<rootDir>/packages/plugins/source-company-qube_rt/src/index.ts',
+    '^@ever-jobs/source-company-gresearch$': '<rootDir>/packages/plugins/source-company-gresearch/src/index.ts',
+    '^@ever-jobs/source-company-arrowstreetcapital$': '<rootDir>/packages/plugins/source-company-arrowstreetcapital/src/index.ts',
+    '^@ever-jobs/source-company-voleon$': '<rootDir>/packages/plugins/source-company-voleon/src/index.ts',
+    '^@ever-jobs/source-company-worldquant$': '<rootDir>/packages/plugins/source-company-worldquant/src/index.ts',
+    '^@ever-jobs/source-company-schonfeld$': '<rootDir>/packages/plugins/source-company-schonfeld/src/index.ts',
+    '^@ever-jobs/source-company-genevatrading$': '<rootDir>/packages/plugins/source-company-genevatrading/src/index.ts',
+    '^@ever-jobs/source-company-vaticlabs$': '<rootDir>/packages/plugins/source-company-vaticlabs/src/index.ts',
+    '^@ever-jobs/source-company-sig$': '<rootDir>/packages/plugins/source-company-sig/src/index.ts',
+    '^@ever-jobs/source-company-towerresearchcapital$': '<rootDir>/packages/plugins/source-company-towerresearchcapital/src/index.ts',
+    '^@ever-jobs/source-company-imc$': '<rootDir>/packages/plugins/source-company-imc/src/index.ts',
+    '^@ever-jobs/source-company-janestreet$': '<rootDir>/packages/plugins/source-company-janestreet/src/index.ts',
+    '^@ever-jobs/source-company-squarepoint$': '<rootDir>/packages/plugins/source-company-squarepoint/src/index.ts',
+    '^@ever-jobs/source-company-virtu$': '<rootDir>/packages/plugins/source-company-virtu/src/index.ts',
+    '^@ever-jobs/source-company-gravitonresearchcapital$': '<rootDir>/packages/plugins/source-company-gravitonresearchcapital/src/index.ts',
     '^@ever-jobs/source-tesla$': '<rootDir>/packages/plugins/source-tesla/src/index.ts',
     '^@ever-jobs/source-tesla-playwright$': '<rootDir>/packages/plugins/source-tesla-playwright/src/index.ts',
   },
   transform: {
-    '^.+\\.tsx?$': ['@swc/jest', {
-      jsc: {
-        parser: { syntax: 'typescript', decorators: true },
-        transform: { legacyDecorator: true, decoratorMetadata: true, useDefineForClassFields: false },
-        target: 'es2021',
-        keepClassNames: true,
-      },
-      module: { type: 'commonjs' },
-      sourceMaps: 'inline',
-    }],
+    // `swc` by default; `JEST_TRANSFORMER=ts-jest` for type-checked runs (see top).
+    '^.+\\.tsx?$': TS_TRANSFORMERS[tsTransformer],
     // Transform ESM-only packages (uuid v13+ ships as ESM .js)
     '[/\\\\]node_modules[/\\\\]uuid[/\\\\].+\\.js$': ['ts-jest', {
       tsconfig: 'tsconfig.base.json',

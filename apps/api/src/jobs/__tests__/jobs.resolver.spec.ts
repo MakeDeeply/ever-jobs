@@ -1,7 +1,7 @@
 import 'reflect-metadata';
-import { JobPostDto, Site } from '@ever-jobs/models';
+import { Country, JobPostDto, Site } from '@ever-jobs/models';
 import { JobsResolver } from '../jobs.resolver';
-import { SearchJobsInput } from '../gql-types';
+import { SearchJobsInput, resolveSearchCountry } from '../gql-types';
 
 // ---------------------------------------------------------------------------
 // Mocks (mirrors apps/api/src/jobs/__tests__/jobs.controller.spec.ts patterns
@@ -9,7 +9,7 @@ import { SearchJobsInput } from '../gql-types';
 // ---------------------------------------------------------------------------
 
 function makeJobsService(jobs: JobPostDto[] = []) {
-  return { searchJobs: jest.fn().mockResolvedValue(jobs) };
+  return { searchJobsWithDiagnostics: jest.fn().mockResolvedValue({ jobs, perSource: [] }) };
 }
 
 function makeCacheService(cachedValue: any = null) {
@@ -113,7 +113,7 @@ describe('JobsResolver', () => {
         cached: true,
         rawCount: 1,
       });
-      expect(jobsService.searchJobs).not.toHaveBeenCalled();
+      expect(jobsService.searchJobsWithDiagnostics).not.toHaveBeenCalled();
     });
 
     it('caches raw jobs on miss', async () => {
@@ -174,7 +174,7 @@ describe('JobsResolver', () => {
 
       await resolver.searchJobs(makeInput());
 
-      expect(jobsService.searchJobs).not.toHaveBeenCalled();
+      expect(jobsService.searchJobsWithDiagnostics).not.toHaveBeenCalled();
       expect(aggregator.aggregateRaw).toHaveBeenCalledWith(cachedJobs, { dedup: true, persist: true });
     });
 
@@ -260,7 +260,7 @@ describe('JobsResolver', () => {
         }),
       );
 
-      expect(jobsService.searchJobs).toHaveBeenCalledWith(
+      expect(jobsService.searchJobsWithDiagnostics).toHaveBeenCalledWith(
         expect.objectContaining({
           searchTerm: 'engineer',
           location: 'NYC',
@@ -274,18 +274,62 @@ describe('JobsResolver', () => {
       );
     });
 
+    it.each([
+      ['USA', Country.USA],
+      ['germany', Country.GERMANY],
+      ['DE', Country.GERMANY],
+      ['GB', Country.UK],
+      ['uk', Country.UK],
+      ['United States', Country.USA],
+      [' us ', Country.USA],
+    ])('maps the GraphQL country %j to the Country enum (Spec 1689)', async (raw, expected) => {
+      const { resolver, jobsService } = createResolver({ jobs: [makeJob()] });
+
+      await resolver.searchJobs(makeInput({ country: raw }));
+
+      expect(jobsService.searchJobsWithDiagnostics).toHaveBeenCalledWith(
+        expect.objectContaining({ country: expected }),
+      );
+    });
+
+    it('drops an unrecognised country instead of passing it to the sources (Spec 1689)', async () => {
+      const { resolver, jobsService } = createResolver({ jobs: [makeJob()] });
+      const warn = jest
+        .spyOn((resolver as unknown as { logger: { warn: (m: string) => void } }).logger, 'warn')
+        .mockImplementation(() => undefined);
+
+      await resolver.searchJobs(makeInput({ country: 'Atlantis' }));
+
+      expect(jobsService.searchJobsWithDiagnostics.mock.calls[0][0].country).toBeUndefined();
+      expect(warn).toHaveBeenCalledWith(expect.stringContaining('"Atlantis"'));
+    });
+
     it('defaults resultsWanted to 20 and descriptionFormat to markdown', async () => {
       const jobs = [makeJob()];
       const { resolver, jobsService } = createResolver({ jobs });
 
       await resolver.searchJobs(makeInput());
 
-      expect(jobsService.searchJobs).toHaveBeenCalledWith(
+      expect(jobsService.searchJobsWithDiagnostics).toHaveBeenCalledWith(
         expect.objectContaining({
           resultsWanted: 20,
           descriptionFormat: 'markdown',
         }),
       );
+    });
+  });
+
+  describe('resolveSearchCountry (Spec 1689)', () => {
+    it('resolves every Country enum value to itself', () => {
+      for (const country of Object.values(Country)) {
+        expect(resolveSearchCountry(country)).toBe(country);
+      }
+    });
+
+    it('returns undefined for empty, unknown and non-country input', () => {
+      for (const raw of [undefined, null, '', '   ', 'XX', 'Atlantis', 'Berlin']) {
+        expect(resolveSearchCountry(raw)).toBeUndefined();
+      }
     });
   });
 
