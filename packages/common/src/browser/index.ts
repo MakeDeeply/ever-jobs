@@ -1,1 +1,14 @@
-export { BrowserPool, attachRawCapture } from './browser-pool';
+export {
+  BrowserPool,
+  attachRawCapture,
+  BROWSER_POOL_DEFAULT_USER_AGENT,
+  isLegacyBrowserIdentity,
+  redactBrowserIdentityKey,
+  resolveBrowserUserAgent,
+} from './browser-pool';
+export type {
+  BrowserNavigateOptions,
+  BrowserPageOptions,
+  BrowserUserAgentChoice,
+  BrowserUserAgentSource,
+} from './browser-pool';

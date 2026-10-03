@@ -1,3 +1,25 @@
+import {
+  resolveCacheMaxJobs,
+  resolveFanoutDeadlineMs,
+  resolveLivenessConfig,
+  resolveResultCaps,
+} from './search-config';
+import { resolvePersistSearch } from './store-config';
+import {
+  crawlBuiltinHostsDisabled,
+  crawlFleetSize,
+  crawlCallerProxyRotation,
+  crawlCooldownBeforeRelease,
+  crawlPaceRedirectsEnabled,
+  crawlProxyPinScope,
+  crawlRobotsBackoffEnabled,
+  crawlStricterRules,
+  readCrawlPolicyEnv,
+  resolveCrawlPolicy,
+} from '@ever-jobs/common';
+import { CircuitBreakerService } from '@ever-jobs/plugin';
+import { livenessTrustFreshFetch, livenessTrustListedMaxAgeMs, searchStopOn503 } from '../jobs/crawl-policy.mapping';
+
 /**
  * Central configuration factory.
  * Maps every environment variable to a typed config object.
@@ -60,6 +82,11 @@ export default () => {
       expirySec: parseInt(process.env.CACHE_EXPIRY, 3600),
       redisUrl: process.env.REDIS_URL || null,
       maxItems: parseInt(process.env.CACHE_MAX_ITEMS, 500),
+      /**
+       * Spec 1720 / FR-13 — `EVER_JOBS_CACHE_MAX_JOBS` (default 5000): a raw
+       * fan-out larger than this is served but not cached; `0` never caches.
+       */
+      maxJobs: resolveCacheMaxJobs(process.env),
     },
 
     // Search fan-out bounds (Spec 5026)
@@ -73,26 +100,37 @@ export default () => {
        * Wall-clock budget for one fan-out, ms. Once exceeded, no further
        * sources are STARTED (in-flight ones finish). `0` disables.
        * Defaults to the Hust client's own 120 s abort.
+       * Spec 1721: `EVER_JOBS_FANOUT_DEADLINE_MS`, falling back to
+       * `EVER_JOBS_SEARCH_DEADLINE_MS`.
        */
-      deadlineMs: parseInt(process.env.EVER_JOBS_SEARCH_DEADLINE_MS, 120_000),
+      deadlineMs: resolveFanoutDeadlineMs(process.env),
       /**
        * Server-side ceiling for the per-request `?deadline_ms` override
        * (Spec 5164). `0`/unset = uncapped; when set, a request deadline of
        * `0` (unbounded) or above this value is rejected 400.
        */
       deadlineMaxMs: parseInt(process.env.EVER_JOBS_SEARCH_DEADLINE_MAX_MS, 0),
+      /**
+       * Spec 1720 / FR-12 — `EVER_JOBS_MAX_RESULTS_WANTED` (default 1000)
+       * clamps `resultsWanted` per source; `EVER_JOBS_MAX_JOBS_PER_SEARCH`
+       * (default 40000 since FR-13) stops starting sources once that many raw
+       * jobs are in. `0` disables either.
+       */
+      ...resolveResultCaps(process.env),
     },
+    // Liveness server gate + per-request cap (Spec 1723)
+    liveness: resolveLivenessConfig(process.env),
     // Persistence (Spec 5024 — bounded retention on the interactive path)
     store: {
       /**
        * Persist the post-dedup canonical corpus on every `/api/jobs/search`
-       * (and the GraphQL equivalent). Defaults to `true` — the historical
-       * behaviour. Operators running the `memory` backend SHOULD set
-       * `EVER_JOBS_PERSIST_SEARCH=false`: with an in-process store the write
-       * is a pure sink (nothing in `apps/api` reads the corpus back) and it
-       * pins every job description for the process lifetime.
+       * (and the GraphQL equivalent). Spec 1722: an explicit
+       * `EVER_JOBS_PERSIST_SEARCH` always wins; unset, it is `false` for the
+       * `memory` backend (a pure heap sink nothing reads back) and `true`
+       * when a durable backend is explicitly selected via `EVER_JOBS_STORE`
+       * (`sqlite` / `postgres`).
        */
-      persistSearch: parseBool(process.env.EVER_JOBS_PERSIST_SEARCH, true),
+      persistSearch: resolvePersistSearch(process.env),
       /**
        * Hard ceiling on rows retained by an in-process store backend.
        * Bounds RSS regardless of {@link persistSearch}; see
@@ -115,6 +153,78 @@ export default () => {
       })(),
     },
 
+    // Crawl policy (Spec 1690) — a READ-ONLY mirror, snapshotted at boot, so the
+    // effective settings are visible next to the rest of the config. The
+    // authority is `readCrawlPolicyEnv()` in @ever-jobs/common, which
+    // HttpClient / BrowserPool / JobsService read directly (plugins build their
+    // HTTP clients without DI, so they cannot use ConfigService). Changing a
+    // value here changes nothing; set the EVER_JOBS_CRAWL_* variables.
+    crawl: (() => {
+      const env = readCrawlPolicyEnv();
+      return {
+        preset: env.preset,
+        callerOverrides: env.callerOverrides,
+        abortOnDeadline: env.abortOnDeadline,
+        /** EVER_JOBS_CRAWL_* (and explicitly set RETRY_DEFAULT_*) overrides. */
+        global: env.global,
+        /** Operator per-site / per-host policies (EVER_JOBS_CRAWL_POLICIES / _POLICY_FILE / RETRY_PER_SOURCE). */
+        policies: env.policies,
+        /** Count only — proxy URLs may carry credentials. */
+        proxyCount: env.proxies.length,
+        /** EVER_JOBS_CRAWL_FLEET_SIZE — processes sharing one egress (Spec 1714; 1 = pre-1714). */
+        fleetSize: crawlFleetSize(env),
+        /** EVER_JOBS_CRAWL_STRICTER_RULES — `stricter` comparators (Spec 1714; `1690` = pre-1714). */
+        stricterRules: crawlStricterRules(env),
+        /** EVER_JOBS_CRAWL_PACE_REDIRECTS — redirect hops paced by the hop's own policy (Spec 1715; `false` = pre-fix). */
+        paceRedirects: crawlPaceRedirectsEnabled(env),
+        /** EVER_JOBS_CRAWL_PROXY_PIN_SCOPE — what a locked request's per-host proxy pick keys on (Spec 1714; `bucket` = pre-1714). */
+        proxyPinScope: crawlProxyPinScope(env),
+        /** EVER_JOBS_CRAWL_ROBOTS_BACKOFF — robots.txt answers feed the host limiter (Spec 1714; `false` = pre-1714). */
+        robotsBackoff: crawlRobotsBackoffEnabled(env),
+        /**
+         * EVER_JOBS_CRAWL_CALLER_PROXY_ROTATION — a `stricter` caller's proxyRotation (Spec 1715 review round 2;
+         * `ranked` = pre-fix).
+         */
+        callerProxyRotation: crawlCallerProxyRotation(env),
+        /**
+         * EVER_JOBS_CRAWL_COOLDOWN_BEFORE_RELEASE — which failed requests record their cool-down before freeing
+         * their limiter slot (review of PR #105; `off` = pre-fix).
+         */
+        cooldownBeforeRelease: crawlCooldownBeforeRelease(env),
+        /** EVER_JOBS_CRAWL_BUILTIN_HOSTS_DISABLE — builtin host patterns switched off (Spec 1715; `[]` = none). */
+        builtinHostsDisabled: crawlBuiltinHostsDisabled(env),
+        warnings: env.warnings,
+        /** The policy a request gets before plugin, host and caller layers apply. */
+        effective: resolveCrawlPolicy({}, env),
+      };
+    })(),
+
+    // Circuit breaker (Spec 005; cap configurable since Spec 1690) — mirror.
+    circuit: {
+      maxSites: CircuitBreakerService.readMaxSites(process.env),
+      /**
+       * EVER_JOBS_BREAKER_COUNT_REFUSALS (Spec 1714): a resolved result with 0 jobs and a
+       * rate_limited / blocked diagnostic counts as a breaker failure. `false` = pre-1714.
+       */
+      countRefusals: CircuitBreakerService.readCountRefusals(process.env),
+    },
+
+    // Spec 1714 API switches — READ-ONLY mirrors; the code reads the env variables
+    // directly per search (JobsService / JobsController), so set those to change them.
+    // Unset, each takes its pre-1714 value under EVER_JOBS_CRAWL_PRESET=legacy (Spec 1715
+    // review F7); an invalid value is logged once, here at startup (review F8).
+    searchSwitches: {
+      /** EVER_JOBS_SEARCH_STOP_ON_503: a 503 stops a source's remaining locations (`false` = pre-1714). */
+      stopOn503: searchStopOn503(process.env),
+      /** EVER_JOBS_LIVENESS_TRUST_FRESH_FETCH: ?liveness=true skips freshly fetched pages (`false` = pre-1714). */
+      livenessTrustFreshFetch: livenessTrustFreshFetch(process.env),
+      /**
+       * EVER_JOBS_LIVENESS_TRUST_LISTED_MAX_AGE_MS: ?liveness=true skips a posting its source listed in an
+       * index fetched at most this long ago, ms (default 600000; `0` = off, the pre-fix behaviour).
+       */
+      livenessTrustListedMaxAgeMs: livenessTrustListedMaxAgeMs(process.env),
+    },
+
     // GraphQL
     graphql: {
       enabled: parseBool(process.env.ENABLE_GRAPHQL, true),
@@ -131,6 +241,16 @@ export default () => {
     plugins: {
       enabled: parseBool(process.env.ENABLE_PLUGINS, false),
       dir: process.env.PLUGINS_DIR || null,
+    },
+
+    // Career level (Spec 1730, contract C7)
+    careerLevel: {
+      /**
+       * Attach `careerLevel` ({ level, confidence, reasons }) to every job the search returns,
+       * computed in-process after dedup. Default `true`; `false` removes the field from every
+       * response. An explicit `careerLevels` request filter is still honoured when `false`.
+       */
+      classify: parseBool(process.env.EVER_JOBS_CLASSIFY_CAREER_LEVEL, true),
     },
 
     // Logging

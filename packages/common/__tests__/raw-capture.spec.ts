@@ -7,6 +7,10 @@ jest.mock('axios', () => ({
     create: jest.fn(() => ({
       request: mockAxiosRequest,
       defaults: { headers: { common: {} } },
+      interceptors: {
+        request: { use: jest.fn() },
+        response: { use: jest.fn() },
+      },
     })),
   },
 }));
@@ -23,6 +27,9 @@ import {
 import { attachRawCapture } from '../src/browser/browser-pool';
 import { runWithRawCapture, getRawCapture } from '../src/context';
 import type { RawCaptureSink, RawHttpEntry } from '@ever-jobs/models';
+import { resetCrawlPolicyEnvCache } from '../src/http/crawl/env';
+import { resetHostLimiter } from '../src/http/crawl/host-limiter';
+import { resetEffectiveCrawlPolicyCache } from '../src/http/crawl/scrape-context';
 
 function settle<T>(promise: Promise<T>): Promise<T | Error> {
   return promise.catch((err: Error) => err);
@@ -154,11 +161,17 @@ describe('drainRawCapture — Spec 5161', () => {
 describe('HttpClient raw capture — Spec 5161', () => {
   beforeEach(() => {
     mockAxiosRequest.mockReset();
+    // Spec 1690 state is process-wide: a throttled bucket in one test would
+    // pace (or cool down) the next test's requests.
+    resetCrawlPolicyEnvCache();
+    resetEffectiveCrawlPolicyCache();
+    resetHostLimiter();
     jest.useFakeTimers();
   });
 
   afterEach(() => {
     jest.useRealTimers();
+    resetHostLimiter();
   });
 
   async function run<T>(promise: Promise<T>): Promise<T | Error> {

@@ -10,14 +10,16 @@ import {
   SourceHealth,
   SourceHealthError,
 } from '@ever-jobs/models';
+import { readCrawlPolicyEnv } from '@ever-jobs/common';
 
 /**
  * Per-site state held by {@link CircuitBreakerService}. One record is created
  * lazily on first call for a `Site`; the record is reused thereafter.
  *
  * Memory budget is enforced two ways:
- *   - the {@link CircuitBreakerService.MAX_SITES} cap stops unbounded growth
- *     in the unlikely event a typo or test fixture pushes new `Site` values;
+ *   - the max-sites cap ({@link DEFAULT_CIRCUIT_MAX_SITES}, configurable via
+ *     {@link CIRCUIT_MAX_SITES_ENV_VAR}) stops unbounded growth in the unlikely
+ *     event a typo or test fixture pushes new `Site` values;
  *   - the {@link MAX_SAMPLES} ring buffer caps the per-site latency/outcome
  *     window (entries also expire by wall-clock when `rollingWindowMs`
  *     elapses).
@@ -39,8 +41,164 @@ interface Sample {
   latencyMs: number;
 }
 
-/** Hard memory bound — see Spec 005 / NFR-3 (< 1 KB/site → ~250 KB ceiling). */
-const MAX_SITES = 250;
+/**
+ * Environment variable that sets the max number of sites the breaker tracks
+ * (Spec 1690 §4.9). Past the cap every call for an untracked site gets a
+ * throwaway entry, so that site can never trip.
+ */
+export const CIRCUIT_MAX_SITES_ENV_VAR = 'EVER_JOBS_CIRCUIT_MAX_SITES';
+
+/**
+ * Default max tracked sites (Spec 1690 §4.9). The pre-1690 hard cap was 250
+ * (Spec 005 / NFR-3, < 1 KB/site), which the ~1,850-source catalogue outgrew:
+ * sites past the 250th could never trip. 4096 keeps every current source
+ * trackable at a ~4 MB ceiling. Set `EVER_JOBS_CIRCUIT_MAX_SITES=250` for the
+ * old bound, or `0` for no cap.
+ */
+export const DEFAULT_CIRCUIT_MAX_SITES = 4096;
+
+/** The pre-1690 hard cap, kept so the old bound stays one setting away. */
+export const LEGACY_CIRCUIT_MAX_SITES = 250;
+
+/**
+ * Parse {@link CIRCUIT_MAX_SITES_ENV_VAR}. A non-negative integer; `0` means no
+ * cap. Unset, empty or invalid values fall back to
+ * {@link DEFAULT_CIRCUIT_MAX_SITES} (an invalid value is reported through
+ * `onInvalid`, never thrown).
+ */
+export function readCircuitMaxSites(
+  env: NodeJS.ProcessEnv = process.env,
+  onInvalid?: (raw: string) => void,
+): number {
+  const raw = env[CIRCUIT_MAX_SITES_ENV_VAR];
+  if (raw === undefined || raw.trim() === '') return DEFAULT_CIRCUIT_MAX_SITES;
+  const trimmed = raw.trim();
+  const n = Number(trimmed);
+  if (!/^\d+$/.test(trimmed) || !Number.isSafeInteger(n)) {
+    onInvalid?.(raw);
+    return DEFAULT_CIRCUIT_MAX_SITES;
+  }
+  return n;
+}
+
+/**
+ * Own property that marks a thrown value as *circuit-neutral*: the call did
+ * not fail because of the source, so it must count neither as a failure nor as
+ * a success (Spec 1690 §4.6 — a scrape aborted because the whole search hit
+ * its deadline says nothing about the source's health).
+ */
+export const CIRCUIT_NEUTRAL_ERROR_KEY = 'circuitNeutral';
+
+/** True when `err` carries {@link CIRCUIT_NEUTRAL_ERROR_KEY} `=== true`. */
+export function isCircuitNeutralError(err: unknown): boolean {
+  return (
+    !!err &&
+    typeof err === 'object' &&
+    (err as Record<string, unknown>)[CIRCUIT_NEUTRAL_ERROR_KEY] === true
+  );
+}
+
+/**
+ * Mark `err` circuit-neutral and return it. An object is tagged in place (so
+ * the original error, stack and `code` reach the caller unchanged); a thrown
+ * primitive, or a frozen object that cannot be tagged, is wrapped in an
+ * `Error` first.
+ */
+export function markCircuitNeutral(err: unknown): unknown {
+  const tag = (target: object): boolean => {
+    try {
+      Object.defineProperty(target, CIRCUIT_NEUTRAL_ERROR_KEY, {
+        value: true,
+        enumerable: false,
+        configurable: true,
+        writable: true,
+      });
+      return isCircuitNeutralError(target);
+    } catch {
+      return false;
+    }
+  };
+  if (err && typeof err === 'object' && tag(err)) return err;
+  const message =
+    err && typeof err === 'object' && typeof (err as { message?: unknown }).message === 'string'
+      ? (err as { message: string }).message
+      : String(err);
+  const wrapped = new Error(message);
+  tag(wrapped);
+  return wrapped;
+}
+
+/**
+ * Environment variable: count a *refused empty result* as a breaker failure
+ * (Spec 1714 FR-15, audit K2). A plugin that turns its own failures into a
+ * resolved response (jobs `[]` plus a `rate_limited` / `blocked` diagnostic —
+ * Softy does, so one refused tenant never throws) used to be recorded as a
+ * success, so its breaker could never open however often the host said stop.
+ *
+ * Default `true`; `false` under `EVER_JOBS_CRAWL_PRESET=legacy` (which restores
+ * the pre-1714 defaults of the Spec 1714 switches; an explicit value wins).
+ * **`false` restores the pre-1714 behaviour** (every resolved call is a success).
+ * Read once at construction, like {@link CIRCUIT_MAX_SITES_ENV_VAR};
+ * `setCountRefusals()` changes it at runtime.
+ */
+export const BREAKER_COUNT_REFUSALS_ENV = 'EVER_JOBS_BREAKER_COUNT_REFUSALS';
+
+/** Diagnostic reasons of a resolved, empty result that count as a failure (Spec 1714 FR-15). */
+export const BREAKER_REFUSAL_REASONS: readonly string[] = Object.freeze(['rate_limited', 'blocked']);
+
+/** `code` of the synthetic error recorded as `lastError` for a refused empty result. */
+export const ERR_SOURCE_REFUSED = 'ERR_SOURCE_REFUSED';
+
+/**
+ * Parse {@link BREAKER_COUNT_REFUSALS_ENV}: `true` / `1` / `yes` / `on` → true,
+ * `false` / `0` / `no` / `off` → false (case-insensitive). Unset or empty → the
+ * default: `true`, or `false` when `EVER_JOBS_CRAWL_PRESET` resolves to `legacy`
+ * (read through `readCrawlPolicyEnv`, so it agrees with the crawl layer). Anything
+ * else → that default, reported through `onInvalid(raw, used)` (never thrown).
+ */
+export function readBreakerCountRefusals(
+  env: NodeJS.ProcessEnv = process.env,
+  onInvalid?: (raw: string, used: boolean) => void,
+): boolean {
+  const fallback = readCrawlPolicyEnv(env).preset !== 'legacy';
+  const raw = env[BREAKER_COUNT_REFUSALS_ENV];
+  if (raw === undefined || raw.trim() === '') return fallback;
+  const value = raw.trim().toLowerCase();
+  if (['true', '1', 'yes', 'on'].includes(value)) return true;
+  if (['false', '0', 'no', 'off'].includes(value)) return false;
+  onInvalid?.(raw, fallback);
+  return fallback;
+}
+
+/**
+ * Is `result` a *refused empty result* (Spec 1714 FR-15): an object whose `jobs`
+ * is an empty array and whose `diagnostics.reason` is one of
+ * {@link BREAKER_REFUSAL_REASONS}? Returns that reason and the diagnostic's
+ * `detail`, else `undefined`. A result with jobs (a `partial` scrape), a
+ * `fetch_error`, an `empty` board or any other shape is not a refusal.
+ */
+export function refusedEmptyResult(result: unknown): { reason: string; detail?: string } | undefined {
+  if (!result || typeof result !== 'object') return undefined;
+  const { jobs, diagnostics } = result as { jobs?: unknown; diagnostics?: unknown };
+  if (!Array.isArray(jobs) || jobs.length !== 0) return undefined;
+  if (!diagnostics || typeof diagnostics !== 'object') return undefined;
+  const { reason, detail } = diagnostics as { reason?: unknown; detail?: unknown };
+  if (typeof reason !== 'string' || !BREAKER_REFUSAL_REASONS.includes(reason)) return undefined;
+  return typeof detail === 'string' && detail !== '' ? { reason, detail } : { reason };
+}
+
+/**
+ * The synthetic failure recorded for a refused empty result (Spec 1714 §7.6):
+ * `Error('<site>: resolved with 0 jobs and diagnostic <reason>: <detail>')`, with
+ * `code` {@link ERR_SOURCE_REFUSED}. The scrape's own result is still returned.
+ */
+function refusedResultError(site: Site, refusal: { reason: string; detail?: string }): Error & { code: string } {
+  const suffix = refusal.detail !== undefined ? `: ${refusal.detail}` : '';
+  return Object.assign(new Error(`${site}: resolved with 0 jobs and diagnostic ${refusal.reason}${suffix}`), {
+    code: ERR_SOURCE_REFUSED,
+  });
+}
+
 /** Per-site sample ring-buffer cap (~600 / 60 s = 10 RPS ceiling per site). */
 const MAX_SAMPLES = 600;
 
@@ -73,6 +231,21 @@ export class CircuitBreakerService implements ICircuitBreakerService {
   /** Public DI token mirror for ergonomic imports in NestJS modules. */
   static readonly TOKEN = CIRCUIT_BREAKER_TOKEN;
 
+  /**
+   * Mirrors of the module-level helpers (Spec 1690), reachable through the
+   * package's existing `CircuitBreakerService` export.
+   */
+  static readonly MAX_SITES_ENV_VAR = CIRCUIT_MAX_SITES_ENV_VAR;
+  static readonly DEFAULT_MAX_SITES = DEFAULT_CIRCUIT_MAX_SITES;
+  static readonly NEUTRAL_ERROR_KEY = CIRCUIT_NEUTRAL_ERROR_KEY;
+  static readonly readMaxSites = readCircuitMaxSites;
+  static readonly isNeutralError = isCircuitNeutralError;
+  static readonly markNeutral = markCircuitNeutral;
+  /** Mirrors of the Spec 1714 refused-result helpers. */
+  static readonly COUNT_REFUSALS_ENV_VAR = BREAKER_COUNT_REFUSALS_ENV;
+  static readonly readCountRefusals = readBreakerCountRefusals;
+  static readonly refusedEmptyResult = refusedEmptyResult;
+
   private readonly logger = new Logger(CircuitBreakerService.name);
   private readonly entries = new Map<Site, BreakerEntry>();
 
@@ -81,6 +254,63 @@ export class CircuitBreakerService implements ICircuitBreakerService {
    * deterministic time advancement in unit tests.
    */
   private clock: () => number = Date.now;
+
+  /**
+   * Max tracked sites; `0` = no cap. Read once from
+   * {@link CIRCUIT_MAX_SITES_ENV_VAR} at construction (Spec 1690 §4.9).
+   */
+  private maxSites: number;
+
+  /**
+   * Whether a resolved result with 0 jobs and a `rate_limited` / `blocked`
+   * diagnostic counts as a failure (Spec 1714 FR-15). Read once from
+   * {@link BREAKER_COUNT_REFUSALS_ENV} at construction (default `false` under the
+   * `legacy` crawl preset); `false` = pre-1714.
+   */
+  private countRefusals: boolean;
+
+  constructor() {
+    this.maxSites = readCircuitMaxSites(process.env, (raw) =>
+      this.logger.warn(
+        `${CIRCUIT_MAX_SITES_ENV_VAR}=${JSON.stringify(raw)} is not a non-negative integer; using ${DEFAULT_CIRCUIT_MAX_SITES}`,
+      ),
+    );
+    this.countRefusals = readBreakerCountRefusals(process.env, (raw, used) =>
+      this.logger.warn(
+        `${BREAKER_COUNT_REFUSALS_ENV}=${JSON.stringify(raw)} is not a boolean; using ${used} ` +
+          `(${used ? 'count' : 'do not count'} refused empty results)`,
+      ),
+    );
+  }
+
+  /** The max number of sites this breaker tracks (`0` = no cap). */
+  getMaxSites(): number {
+    return this.maxSites;
+  }
+
+  /** Whether refused empty results count as failures (Spec 1714 FR-15). */
+  getCountRefusals(): boolean {
+    return this.countRefusals;
+  }
+
+  /**
+   * Change {@link getCountRefusals} at runtime (`false` = the pre-1714 behaviour:
+   * every resolved call is a success).
+   */
+  setCountRefusals(countRefusals: boolean): void {
+    this.countRefusals = countRefusals === true;
+  }
+
+  /**
+   * Change the tracked-site cap at runtime (`0` = no cap). Already-tracked
+   * sites are kept; only new sites are refused once the cap is reached.
+   */
+  setMaxSites(maxSites: number): void {
+    if (!Number.isSafeInteger(maxSites) || maxSites < 0) {
+      throw new RangeError(`maxSites must be a non-negative integer, got ${maxSites}`);
+    }
+    this.maxSites = maxSites;
+  }
 
   /** Replace the wall-clock provider — testing only. */
   setClock(clock: () => number): void {
@@ -101,7 +331,11 @@ export class CircuitBreakerService implements ICircuitBreakerService {
    *   1. transition `open → half-open` if cooldown elapsed (probe gate);
    *   2. short-circuit when still `open` (or already-issued half-open probe
    *      quota is spent);
-   *   3. invoke `fn`, time it, record outcome.
+   *   3. invoke `fn`, time it, record outcome. A resolved value that is a
+   *      *refused empty result* ({@link refusedEmptyResult}: jobs `[]` and a
+   *      `rate_limited` / `blocked` diagnostic) is recorded as a failure — and
+   *      still returned unchanged — unless `EVER_JOBS_BREAKER_COUNT_REFUSALS=false`
+   *      (Spec 1714 FR-15). Half-open probes follow the same rule.
    */
   async exec<T>(site: Site, fn: () => Promise<T>): Promise<T> {
     const entry = this.getOrCreate(site);
@@ -140,14 +374,28 @@ export class CircuitBreakerService implements ICircuitBreakerService {
       entry.halfOpenInFlight += 1;
     }
     const startedAt = now;
+    let result: T;
     try {
-      const result = await fn();
-      this.onSuccess(site, entry, this.clock() - startedAt);
-      return result;
+      result = await fn();
     } catch (err) {
+      if (isCircuitNeutralError(err)) {
+        // Spec 1690 §4.6 — e.g. a scrape we aborted at the search deadline.
+        // Not the source's fault: record nothing, and hand a half-open probe
+        // slot back so the next call can still probe.
+        this.onNeutral(entry);
+        throw err;
+      }
       this.onFailure(site, entry, this.clock() - startedAt, err);
       throw err;
     }
+    // Spec 1714 FR-15 — the plugin swallowed a refusal into an empty response.
+    const refusal = this.countRefusals ? refusedEmptyResult(result) : undefined;
+    if (refusal) {
+      this.onFailure(site, entry, this.clock() - startedAt, refusedResultError(site, refusal));
+    } else {
+      this.onSuccess(site, entry, this.clock() - startedAt);
+    }
+    return result;
   }
 
   state(site: Site): CircuitState {
@@ -212,12 +460,12 @@ export class CircuitBreakerService implements ICircuitBreakerService {
   private getOrCreate(site: Site): BreakerEntry {
     const existing = this.entries.get(site);
     if (existing) return existing;
-    if (this.entries.size >= MAX_SITES) {
-      // Hard cap — refuse to grow further. Return a transient "ghost"
-      // entry so the caller path doesn't crash; this should never happen
-      // outside a misconfigured fixture (we currently track ~190 sites).
+    if (this.maxSites > 0 && this.entries.size >= this.maxSites) {
+      // Cap reached — refuse to grow further. Return a transient "ghost"
+      // entry so the caller path doesn't crash. Raise
+      // EVER_JOBS_CIRCUIT_MAX_SITES (0 = no cap) if the catalogue outgrows it.
       this.logger.error(
-        `MAX_SITES (${MAX_SITES}) reached — refusing to track new site ${site}; using ephemeral entry`,
+        `MAX_SITES (${this.maxSites}) reached — refusing to track new site ${site}; using ephemeral entry (raise ${CIRCUIT_MAX_SITES_ENV_VAR})`,
       );
       return this.makeEntry();
     }
@@ -249,6 +497,14 @@ export class CircuitBreakerService implements ICircuitBreakerService {
       this.logger.log(`circuit ${site}: half-open → closed (probe success)`);
     }
     this.recordSample(entry, { at: now, success: true, latencyMs });
+  }
+
+  /** A circuit-neutral outcome: no sample, no failure count, probe slot returned. */
+  private onNeutral(entry: BreakerEntry): void {
+    if (entry.state === 'half-open') {
+      entry.halfOpenInFlight = Math.max(0, entry.halfOpenInFlight - 1);
+      entry.halfOpenAttempts = Math.max(0, entry.halfOpenAttempts - 1);
+    }
   }
 
   private onFailure(

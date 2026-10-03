@@ -1,5 +1,21 @@
 import { createHash } from 'crypto';
+import { Logger } from '@nestjs/common';
 import { normalizeCompany, normalizeLocation, normalizeTitle } from './normalize';
+import { canonicalCountryName, normalizeUsState } from './utils/location-parser';
+
+const logger = new Logger('CanonicalKey');
+
+/** A per-site location as the key sees it — `LocationDto` is assignable. */
+export interface CanonicalKeySite {
+  city?: string | null;
+  state?: string | null;
+  /** Country in any form: name, ISO alpha-2/3, or a `Country` enum value. */
+  country?: string | null;
+  /** Site label; only read for remote tokens ('Remote', 'Work from home'). */
+  name?: string | null;
+  /** Verbatim source label; only read for remote tokens. */
+  text?: string | null;
+}
 
 /**
  * Triple of normalised fields that, joined with `|`, defines the canonical
@@ -16,13 +32,127 @@ export interface CanonicalKeyInput {
    * available — instead of the flattened `location` string. The string is
    * the fallback for sources without per-site data.
    */
-  readonly locations?:
-    | ReadonlyArray<{
-        city?: string | null;
-        state?: string | null;
-        country?: string | null;
-      }>
-    | null;
+  readonly locations?: ReadonlyArray<CanonicalKeySite> | null;
+  /**
+   * The posting's remote flag (`JobPostDto.isRemote`). With no concrete site
+   * (city/state), a remote job keys to the `remote` bucket — the same bucket
+   * `normalizeLocation` gives any label with a remote token — so a parsed
+   * 'Remote' / 'Remote - US' posting still merges with a source that emits
+   * `{ city: 'Remote' }`.
+   */
+  readonly isRemote?: boolean | null;
+}
+
+/** Key-shape options; unset fields take their `EVER_JOBS_CANONICAL_KEY_*` env default. */
+export interface CanonicalKeyOptions {
+  /**
+   * Key a posting with no concrete site to `remote` when it is remote
+   * (`isRemote`, or a remote token in the flat label or a site's
+   * city/name/text). Default true. False restores the Spec 5123 key, where a
+   * parsed 'Remote' keyed to '' and 'Remote - US' to 'united states'.
+   * Env: `EVER_JOBS_CANONICAL_KEY_REMOTE_BUCKET`.
+   */
+  remoteBucket?: boolean;
+  /**
+   * Rewrite every country ('US', 'USA', 'United States', 'Country.USA') to
+   * one canonical name before hashing, in site triples and in the flat
+   * label's trailing part, so 'Austin, TX, USA' and
+   * `{ city: 'Austin', state: 'TX', country: 'US' }` share a key. Default
+   * true. False keeps countries verbatim (the pre-hardening key).
+   * Env: `EVER_JOBS_CANONICAL_KEY_NORMALIZE_COUNTRY`.
+   */
+  normalizeCountry?: boolean;
+}
+
+/** Environment variables that set the key's process-wide defaults. */
+export const CANONICAL_KEY_ENV = {
+  remoteBucket: 'EVER_JOBS_CANONICAL_KEY_REMOTE_BUCKET',
+  normalizeCountry: 'EVER_JOBS_CANONICAL_KEY_NORMALIZE_COUNTRY',
+} as const;
+
+type ResolvedCanonicalKeyOptions = Required<CanonicalKeyOptions>;
+
+let cachedEnvDefaults: ResolvedCanonicalKeyOptions | null = null;
+
+function readBooleanEnv(name: string, fallback: boolean): boolean {
+  const raw = process.env[name];
+  if (raw === undefined || raw.trim() === '') return fallback;
+  const value = raw.trim().toLowerCase();
+  if (value === 'true' || value === '1' || value === 'yes' || value === 'on') {
+    return true;
+  }
+  if (value === 'false' || value === '0' || value === 'no' || value === 'off') {
+    return false;
+  }
+  logger.warn(
+    `Ignoring ${name}=${JSON.stringify(raw)} (expected true/false); using ${fallback}`,
+  );
+  return fallback;
+}
+
+function resolveOptions(
+  options?: CanonicalKeyOptions,
+): ResolvedCanonicalKeyOptions {
+  if (!cachedEnvDefaults) {
+    cachedEnvDefaults = {
+      remoteBucket: readBooleanEnv(CANONICAL_KEY_ENV.remoteBucket, true),
+      normalizeCountry: readBooleanEnv(CANONICAL_KEY_ENV.normalizeCountry, true),
+    };
+  }
+  if (!options) return cachedEnvDefaults;
+  return {
+    remoteBucket: options.remoteBucket ?? cachedEnvDefaults.remoteBucket,
+    normalizeCountry:
+      options.normalizeCountry ?? cachedEnvDefaults.normalizeCountry,
+  };
+}
+
+/**
+ * Forget the cached `EVER_JOBS_CANONICAL_KEY_*` defaults so the next key
+ * re-reads the environment (read once per process otherwise).
+ */
+export function resetCanonicalKeyEnvCache(): void {
+  cachedEnvDefaults = null;
+}
+
+const REMOTE_KEY = 'remote';
+const TWO_LETTER_RE = /^[A-Za-z]{2}$/;
+
+/** 'CA' / 'tx' — a 2-letter US state/territory code (never read as a country here). */
+function isUsStateCode(value: string): boolean {
+  return TWO_LETTER_RE.test(value) && normalizeUsState(value) !== null;
+}
+
+function siteCountry(
+  country: string | null | undefined,
+  opts: ResolvedCanonicalKeyOptions,
+): string | null | undefined {
+  if (!opts.normalizeCountry || !country) return country;
+  return canonicalCountryName(country) ?? country;
+}
+
+/**
+ * Canonical country in the flat label's trailing comma part. A 2-letter tail
+ * that is a US state code is left alone ('San Francisco, CA' keeps meaning
+ * California — `normalizeLocation` expands it).
+ */
+function flatWithCanonicalCountry(location: string): string {
+  const cut = location.lastIndexOf(',');
+  const tail = location.slice(cut + 1).trim();
+  if (!tail || isUsStateCode(tail)) return location;
+  const country = canonicalCountryName(tail);
+  if (!country) return location;
+  return cut < 0 ? country : `${location.slice(0, cut)}, ${country}`;
+}
+
+/** A flat label naming only a country ('United States', 'USA') — no site. */
+function isCountryOnlyLabel(location: string): boolean {
+  const trimmed = location.trim();
+  return !isUsStateCode(trimmed) && canonicalCountryName(trimmed) !== null;
+}
+
+function hasRemoteToken(value: string | null | undefined): boolean {
+  return Boolean(value) && normalizeLocation(value) === REMOTE_KEY;
 }
 
 /**
@@ -34,26 +164,67 @@ export interface CanonicalKeyInput {
  * identity of a posting. When no site yields a triple, the flattened
  * `location` string is the fallback — keeping mixed batches (rows with and
  * without `locations[]`) mergeable.
+ *
+ * Remote bucket: a posting that is remote — `isRemote`, a remote token in the
+ * flat label (`normalizeLocation` semantics), or a site that is itself
+ * 'Remote' — and has NO concrete site (city/state) keys to `remote`, exactly
+ * as `normalizeLocation('Remote, US')` does. So a parsed 'Remote' (no
+ * location) or 'Remote - US' (`{ country }` only) matches a source emitting
+ * `{ city: 'Remote' }`. With a concrete site the site set wins.
  */
 function locationKeyComponent(
-  location: string | null | undefined,
-  locations: CanonicalKeyInput['locations'],
+  input: CanonicalKeyInput,
+  opts: ResolvedCanonicalKeyOptions,
 ): string {
+  const { locations } = input;
+  const flat = input.location ?? '';
+  // normalizeLocation is the costly step (NFKD) — computed only when needed
+  const flatKey = (): string =>
+    normalizeLocation(opts.normalizeCountry ? flatWithCanonicalCountry(flat) : flat);
+
   if (locations && locations.length > 0) {
     const triples = new Set<string>();
+    let concreteSite = false;
+    let remoteSite = false;
     for (const site of locations) {
       const triple = normalizeLocation(
-        [site.city, site.state, site.country].filter(Boolean).join(', '),
+        [site.city, site.state, siteCountry(site.country, opts)]
+          .filter(Boolean)
+          .join(', '),
       );
-      if (triple) triples.add(triple);
+      if (!triple) continue;
+      triples.add(triple);
+      if (triple === REMOTE_KEY) remoteSite = true;
+      else if (site.city || site.state) concreteSite = true;
     }
-    if (triples.size > 0) return Array.from(triples).sort().join(';');
+    if (triples.size > 0) {
+      const siteKey = Array.from(triples).sort().join(';');
+      if (!opts.remoteBucket || concreteSite) return siteKey;
+      // only country-level (or 'Remote') sites: the remote bucket when the
+      // posting, its flat label or any site says remote
+      const remote =
+        remoteSite ||
+        input.isRemote === true ||
+        locations.some((s) => hasRemoteToken(s.text) || hasRemoteToken(s.name)) ||
+        flatKey() === REMOTE_KEY;
+      return remote ? REMOTE_KEY : siteKey;
+    }
   }
-  return normalizeLocation(location ?? '');
+
+  // flat fallback (no per-site geography)
+  const key = flatKey();
+  if (!opts.remoteBucket || key === REMOTE_KEY) return key;
+  const remote =
+    input.isRemote === true ||
+    (locations ?? []).some((s) => hasRemoteToken(s.text) || hasRemoteToken(s.name));
+  // the flat label is a concrete site unless it is empty or names only a country
+  if (remote && (!key || isCountryOnlyLabel(flat))) return REMOTE_KEY;
+  return key;
 }
 
 /**
- * Build the canonical-key string for a raw job. Pure & deterministic.
+ * Build the canonical-key string for a raw job. Pure & deterministic (for a
+ * given set of options / env defaults).
  *
  *   canonicalKey({ company: "Acme, Inc.", title: "Sr. SWE", location: "Remote" })
  *   //=> "acme|senior swe|remote"
@@ -63,10 +234,14 @@ function locationKeyComponent(
  * already replaces them with spaces — so pipes can never appear inside a
  * normalised title; companies and locations never contain pipes).
  */
-export function canonicalKey(input: CanonicalKeyInput): string {
+export function canonicalKey(
+  input: CanonicalKeyInput,
+  options?: CanonicalKeyOptions,
+): string {
+  const opts = resolveOptions(options);
   const company = normalizeCompany(input.company ?? '');
   const title = normalizeTitle(input.title ?? '');
-  const location = locationKeyComponent(input.location, input.locations);
+  const location = locationKeyComponent(input, opts);
   return `${company}|${title}|${location}`;
 }
 
@@ -74,6 +249,101 @@ export function canonicalKey(input: CanonicalKeyInput): string {
  * Stable sha-256 (lower-case hex) of the canonical key. This is the
  * `CanonicalJob.canonicalJobId` produced by the dedup engine.
  */
-export function canonicalJobId(input: CanonicalKeyInput): string {
-  return createHash('sha256').update(canonicalKey(input), 'utf8').digest('hex');
+export function canonicalJobId(
+  input: CanonicalKeyInput,
+  options?: CanonicalKeyOptions,
+): string {
+  return createHash('sha256')
+    .update(canonicalKey(input, options), 'utf8')
+    .digest('hex');
+}
+
+/**
+ * Structural location shape accepted by {@link formatJobLocation}: a
+ * `LocationDto` instance *or* the plain object it becomes after a JSON / Redis
+ * cache round-trip (which drops the `displayLocation()` method).
+ */
+export interface JobLocationLike {
+  readonly city?: string | null;
+  readonly state?: string | null;
+  readonly country?: unknown;
+  readonly displayLocation?: () => string;
+}
+
+/**
+ * Render a job location into the flat `"city, state, country"` string the
+ * canonicaliser expects (Spec 003; shared since Spec 1721 so the dedup engine
+ * and the API's `dedupKey` can never disagree).
+ *
+ * Prefers `displayLocation()` when present (the user-visible rendering);
+ * otherwise joins the parts in the same order. `Country` is a string enum, so
+ * both branches produce identical output for the same data — which is what
+ * makes a key computed from a cached plain object equal the one computed from
+ * the live DTO.
+ */
+export function formatJobLocation(loc: JobLocationLike | null | undefined): string {
+  if (!loc) return '';
+  if (typeof loc.displayLocation === 'function') {
+    return loc.displayLocation();
+  }
+  const parts: string[] = [];
+  if (loc.city) parts.push(loc.city);
+  if (loc.state) parts.push(loc.state);
+  if (loc.country) parts.push(typeof loc.country === 'string' ? loc.country : String(loc.country));
+  return parts.join(', ');
+}
+
+/**
+ * The job fields the canonical key reads — `JobPostDto` is assignable, and so
+ * is the plain object a JSON / Redis cache round-trip turns it into.
+ */
+export interface CanonicalKeyJob {
+  readonly title?: string | null;
+  readonly companyName?: string | null;
+  readonly location?: JobLocationLike | null;
+  /** Per-site locations (Spec 5123) — the key's location component when present. */
+  readonly locations?: ReadonlyArray<CanonicalKeySite> | null;
+  /** Feeds the key's remote bucket (Spec 1689). */
+  readonly isRemote?: boolean | null;
+}
+
+/**
+ * The ONE place a job becomes a {@link CanonicalKeyInput} (Spec 1721 / FR-10).
+ *
+ * The dedup engine builds `canonicalJobId` from it and {@link dedupKeyForJob}
+ * builds the API's `dedupKey` from it, so the two can never read different
+ * fields again. (Until this helper, `dedupKeyForJob` passed only
+ * title/company/location while the engine also passed `locations` and
+ * `isRemote`, so a remote country-only or a multi-location posting got a
+ * `dedupKey` that differed from its cluster id.)
+ */
+export function canonicalKeyInputForJob(job: CanonicalKeyJob): CanonicalKeyInput {
+  return {
+    title: job.title ?? '',
+    company: job.companyName ?? '',
+    location: formatJobLocation(job.location),
+    locations: job.locations,
+    isRemote: job.isRemote,
+  };
+}
+
+/** The job fields {@link dedupKeyForJob} reads. */
+export type DedupKeyJobInput = CanonicalKeyJob;
+
+/**
+ * Stable cross-source key for one job posting (Spec 1721 / contract C9):
+ * `canonicalJobId(canonicalKeyInputForJob(job))` — the exact key the dedup
+ * engine buckets on (company, title, flat location, per-site `locations[]` and
+ * the remote flag). Independent of `site`, source id, URL, letter case,
+ * punctuation and legal-suffix noise, so the same posting seen on a job board
+ * and on the company's ATS, today and tomorrow, gets the same key.
+ *
+ * Returns `undefined` when the job has neither a title nor a company — such a
+ * key would collide across unrelated postings.
+ */
+export function dedupKeyForJob(job: DedupKeyJobInput): string | undefined {
+  const title = job.title ?? '';
+  const company = job.companyName ?? '';
+  if (title.trim() === '' && company.trim() === '') return undefined;
+  return canonicalJobId(canonicalKeyInputForJob(job));
 }
