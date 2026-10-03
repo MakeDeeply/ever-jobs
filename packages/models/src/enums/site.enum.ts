@@ -3615,6 +3615,9 @@ export enum Site {
 
   // Phase 1713: Spec 5168 — Source Company Plugin: comma.ai (comma.ai) — jobs array in the careers page's SvelteKit node chunk
   COMMA_AI = 'comma_ai',
+
+  // Phase 1714: Spec 5169 — Source Company Plugin: Nebula (buildnebula.com) — first-party /api/careers/listings JSON feed
+  BUILDNEBULA = 'buildnebula',
 }
 
 /**

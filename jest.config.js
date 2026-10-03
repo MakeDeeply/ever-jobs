@@ -1885,6 +1885,7 @@ module.exports = {
     '^@ever-jobs/source-company-thoron_us$': '<rootDir>/packages/plugins/source-company-thoron_us/src/index.ts',
     '^@ever-jobs/source-company-wercomfg$': '<rootDir>/packages/plugins/source-company-wercomfg/src/index.ts',
     '^@ever-jobs/source-company-comma_ai$': '<rootDir>/packages/plugins/source-company-comma_ai/src/index.ts',
+    '^@ever-jobs/source-company-buildnebula$': '<rootDir>/packages/plugins/source-company-buildnebula/src/index.ts',
     '^@ever-jobs/source-tesla$': '<rootDir>/packages/plugins/source-tesla/src/index.ts',
     '^@ever-jobs/source-tesla-playwright$': '<rootDir>/packages/plugins/source-tesla-playwright/src/index.ts',
   },
