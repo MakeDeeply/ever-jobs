@@ -1880,6 +1880,7 @@ import { ThoronUsModule } from './source-company-thoron_us';
 import { WercoMfgModule } from './source-company-wercomfg';
 import { CommaAiModule } from './source-company-comma_ai';
 import { BuildnebulaModule } from './source-company-buildnebula';
+import { MinervaHumanoidsModule } from './source-company-minervahumanoids';
 import { InhireModule } from './source-ats-inhire';
 import { JobsByLevelModule } from './source-jobsbylevel';
 import { SimplifyJobsModule } from './source-simplifyjobs';
@@ -3840,6 +3841,7 @@ export const ALL_SOURCE_MODULES = [
   WercoMfgModule,
   CommaAiModule,
   BuildnebulaModule,
+  MinervaHumanoidsModule,
   InhireModule,
   JobsByLevelModule,
   SimplifyJobsModule,

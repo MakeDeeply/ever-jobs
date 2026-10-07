@@ -1904,6 +1904,7 @@
       "@ever-jobs/source-company-wercomfg": ["packages/plugins/source-company-wercomfg/src/index.ts"],
       "@ever-jobs/source-company-comma_ai": ["packages/plugins/source-company-comma_ai/src/index.ts"],
       "@ever-jobs/source-company-buildnebula": ["packages/plugins/source-company-buildnebula/src/index.ts"],
+      "@ever-jobs/source-company-minervahumanoids": ["packages/plugins/source-company-minervahumanoids/src/index.ts"],
       "@ever-jobs/source-ats-inhire": ["packages/plugins/source-ats-inhire/src/index.ts"],
       "@ever-jobs/source-jobsbylevel": ["packages/plugins/source-jobsbylevel/src/index.ts"],
       "@ever-jobs/source-simplifyjobs": ["packages/plugins/source-simplifyjobs/src/index.ts"],
