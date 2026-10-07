@@ -3619,6 +3619,9 @@ export enum Site {
   // Phase 1714: Spec 5169 — Source Company Plugin: Nebula (buildnebula.com) — first-party /api/careers/listings JSON feed
   BUILDNEBULA = 'buildnebula',
 
+  // Phase 1715: Spec 5170 — Source Company Plugin: Minerva Humanoids (minervahumanoids.com) — jobs in the window.__minervaContent data file
+  MINERVAHUMANOIDS = 'minervahumanoids',
+
   // Phase 1692: Spec 1692 — Source ATS Plugin: InHire (inhire.app) — public job-posts JSON API keyed by X-Tenant header
   INHIRE = 'inhire',
 

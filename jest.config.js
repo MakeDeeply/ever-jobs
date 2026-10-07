@@ -1922,6 +1922,7 @@ module.exports = {
     '^@ever-jobs/source-company-wercomfg$': '<rootDir>/packages/plugins/source-company-wercomfg/src/index.ts',
     '^@ever-jobs/source-company-comma_ai$': '<rootDir>/packages/plugins/source-company-comma_ai/src/index.ts',
     '^@ever-jobs/source-company-buildnebula$': '<rootDir>/packages/plugins/source-company-buildnebula/src/index.ts',
+    '^@ever-jobs/source-company-minervahumanoids$': '<rootDir>/packages/plugins/source-company-minervahumanoids/src/index.ts',
     '^@ever-jobs/source-ats-inhire$': '<rootDir>/packages/plugins/source-ats-inhire/src/index.ts',
     '^@ever-jobs/source-jobsbylevel$': '<rootDir>/packages/plugins/source-jobsbylevel/src/index.ts',
     '^@ever-jobs/source-simplifyjobs$': '<rootDir>/packages/plugins/source-simplifyjobs/src/index.ts',
