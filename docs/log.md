@@ -5,6 +5,40 @@
 
 ---
 
+## 2026-10-09 — Spec 5173 — JSON-API plugins adopt `toLocationDtos`
+
+**Change:** four JSON-API plugins whose structured location objects were
+hand-mapped adopt the spec-5171 mapper with per-feed options. **gem**:
+`toLocationDtos(posting.locations, { textKeys: ['name'], parseTextFallback: true })`
+— `locations[]` now fills from every site (deliberate `dedupKey` change;
+`location` = first result; remote checks unchanged). **recruitly**:
+`toLocationDto(item.location, { aliases: { state: ['regionName'] } })` —
+recovers `postCode`, `addressLine`, `latitude`/`longitude` (→ `extras`); the
+mapped DTO rides the normalised job so recovered fields reach
+`JobPostDto.location`. **arbeitsagentur**:
+`toLocationDto(entry.arbeitsort, { aliases: { state: ['region'] } })` —
+recovers `plz` → `postalCode` and `koordinaten` → `extras`; `homeOffice` →
+`isRemote` unchanged. **cornerstone**:
+`toLocationDtos(requisition.locations ?? requisition.location, { textKeys: ['displayName'], parseTextFallback: true })`
+— `displayName` claimed into `text` and parsed (country canonicalized, e.g.
+`US` → `United States` — deliberate key change); the bespoke
+`locationFromObject` comma-split is deleted; the `displayLocation` fallback
+fires only when the mapper yields nothing; `detectRemote` unchanged.
+Deferred: adp (bespoke per-loc dedup loop), clearcompany (flag-bearing
+location rows), hrone (zero gain — every location field already claimed).
+**Files:** `packages/plugins/source-ats-gem`,
+`packages/plugins/source-ats-recruitly`,
+`packages/plugins/source-arbeitsagentur`,
+`packages/plugins/source-ats-cornerstone` (+ `__tests__`/`fixtures`),
+`.specify/specs/5173-api-location-object-adoption/*`, `docs/index.md`,
+`docs/log.md`.
+
+**Validation:** all existing suites pass; two assertions re-pinned to the
+deliberate new output (gem remote posting now emits a text/country dto;
+cornerstone `US` → `United States`); new captured fixtures for recruitly +
+arbeitsagentur; cornerstone union-input/fallback tests;
+`tsc --noEmit -p tsconfig.typecheck.json` clean; `npm run lint:docs` clean.
+
 ## 2026-10-09 — Spec 5172 — cohort-1 JSON-LD plugins adopt `toLocationDtos`
 
 **Change:** mechanical adoption of the spec-5171 mapper in the 29 plugins whose
