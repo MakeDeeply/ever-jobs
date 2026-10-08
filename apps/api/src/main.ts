@@ -6,11 +6,21 @@ import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
 import { requestContextMiddleware } from './middleware/request-context.middleware';
 import { createGlobalValidationPipe } from './pipes/global-validation.pipe';
+import { installGracefulShutdown } from './shutdown/graceful-shutdown';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = app.get(ConfigService);
   const logger = new Logger('Bootstrap');
+
+  // ── Graceful shutdown (Spec 1753) ──────
+  // SIGTERM fails GET /ready, refuses new requests, waits for in-flight
+  // searches (EVER_JOBS_SHUTDOWN_DRAIN_TIMEOUT_MS), then runs the shutdown
+  // hooks and exits. Installed first so a refused request costs nothing.
+  const drain = installGracefulShutdown(app);
+  logger.log(
+    `Graceful shutdown: SIGTERM drains in-flight requests for up to ${Math.round(drain.drainTimeoutMs / 1000)}s`,
+  );
 
   // ── Request correlation id ─────────────
   app.use(requestContextMiddleware);

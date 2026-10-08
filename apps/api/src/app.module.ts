@@ -16,6 +16,8 @@ import { ApiKeyGuard } from './auth/api-key.guard';
 import { LoggingInterceptor } from './interceptors/logging.interceptor';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { resolveStoreBootstrap, resolveStoreProviders } from './jobs/store-bootstrap.factory';
+import { ReadinessController } from './shutdown/readiness.controller';
+import { ShutdownDrainService } from './shutdown/shutdown-drain.service';
 
 /**
  * Spec 004 / T12 — `EVER_JOBS_STORE` env-var honoured at bootstrap.
@@ -108,7 +110,14 @@ const ACTIVE_STORE_PROVIDERS = resolveStoreProviders(ACTIVE_STORE.id);
 
 
   ],
+  // Spec 1753 — `GET /ready` and the SIGTERM drain. Both stay in THIS module:
+  // Nest runs the root module's teardown hooks before every other module's,
+  // so the drain (`ShutdownDrainService.onModuleDestroy`) finishes while the
+  // plugins' browsers and the store's connection are still up. Moving them
+  // into an imported module would let those close under a draining search.
+  controllers: [ReadinessController],
   providers: [
+    ShutdownDrainService,
     // Global API key guard
     {
       provide: APP_GUARD,
