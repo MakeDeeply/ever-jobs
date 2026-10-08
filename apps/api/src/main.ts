@@ -6,6 +6,7 @@ import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
 import { requestContextMiddleware } from './middleware/request-context.middleware';
 import { createGlobalValidationPipe } from './pipes/global-validation.pipe';
+import { installGracefulShutdown } from './shutdown/graceful-shutdown';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -31,6 +32,17 @@ async function bootstrap() {
     ],
   });
   logger.log(`CORS enabled for origins: ${corsOrigins.join(', ')}`);
+
+  // ── Graceful shutdown (Spec 1753) ──────
+  // SIGTERM fails GET /ready, refuses new requests, waits for in-flight
+  // searches (EVER_JOBS_SHUTDOWN_DRAIN_TIMEOUT_MS), then runs the shutdown
+  // hooks and exits. After CORS, so a browser can read a refusal (and CORS
+  // answers preflights before they reach the drain); before the docs and
+  // every route, so a refusal costs nothing more.
+  const drain = installGracefulShutdown(app);
+  logger.log(
+    `Graceful shutdown: SIGTERM drains in-flight requests for up to ${Math.round(drain.drainTimeoutMs / 1000)}s`,
+  );
 
   // ── API Documentation ──────────────────
   const swaggerEnabled = config.get<boolean>('swagger.enabled', true);

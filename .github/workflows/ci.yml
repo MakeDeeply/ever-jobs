@@ -12,6 +12,17 @@ on:
   schedule:
     - cron: '23 4 * * 1'
 
+# A new push to a pull request cancels that PR's run still in progress: one PR
+# run takes ~11 runners, and superseded runs were being cancelled by hand.
+# Every other event (a push to develop / main, the schedule, a manual dispatch)
+# gets a group of its own run id, so it is never cancelled — nor queued: GitHub
+# keeps one pending run per group and cancels an older pending one, so a group
+# shared by every push to a branch (`github.ref`) would still drop a push that
+# lands while two runs are ahead of it.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   docs-lint:
     name: Docs Lint
@@ -405,6 +416,16 @@ jobs:
       #     gating job on warm-up rather than on a regression. 4 000 ms leaves ~2.7x
       #     headroom over the worst observation while still catching a gross
       #     regression. Sharing one knob would force the real gate loose.
+      #   DEDUP_LOOP_MAX_STALL_MS — dedup-event-loop.spec.ts, the worst gap between
+      #     two event-loop turns while dedup() runs a 2 500-job batch (local default
+      #     250 ms; ~18 ms observed locally). On a loaded runner one slice measured
+      #     339 ms and failed a gating run (PR #101 attempt 1), while the same tree
+      #     minus two unrelated files passed. 1 000 ms leaves ~2.9x headroom over
+      #     that and stays 15x under the 15 s liveness-probe timeout the gate
+      #     protects. The regression it exists for (no cooperative yields) is still
+      #     caught twice over: its gap is the whole pass (1 331 ms locally, longer
+      #     on a runner), and the spec's `ticks > 10` assertion reads 0 whatever
+      #     this budget is.
       # legitimacy-detector (pure, hermetic) joined in Spec 1689 — it ran in no
       # job before, although corpus-signals uses it for real.
       # store-sqlite-drizzle and store-postgres-prisma (Spec 1722): the batched write
@@ -424,6 +445,7 @@ jobs:
           DEDUP_PERF_NFR1_MS: '1000'
           DEDUP_PERF_NFR2_MS: '8000'
           DEDUP_COLD_NFR1_MS: '4000'
+          DEDUP_LOOP_MAX_STALL_MS: '1000'
 
   docker:
     name: Docker Build

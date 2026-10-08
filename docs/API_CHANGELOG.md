@@ -1,5 +1,18 @@
 # API Changelog
 
+### [Unreleased] - 2026-10-08 (Spec 1753)
+
+SIGTERM used to cut every open request: no shutdown hooks ran, and the image's `node` (PID 1, no init process) ignored the signal, so each rollout waited out the pod's grace period and was SIGKILLed with list-mode NDJSON crawls still streaming. The API now drains. Deployment guide: [`DEPLOYMENT.md`](./DEPLOYMENT.md#graceful-shutdown-spec-1753).
+
+#### Added
+
+- **`GET /ready`** (readiness probe): `200 {"status":"ready","inFlightRequests":n,"timestamp":…}`, or `503` with `"status":"draining"` once a SIGTERM has started the drain. `GET /health` is unchanged and keeps answering 200 during the drain (it is the liveness probe).
+- **`EVER_JOBS_SHUTDOWN_DRAIN_TIMEOUT_MS`**: the longest a SIGTERM waits for in-flight requests. Unset, blank or non-numeric → the fan-out deadline (`EVER_JOBS_FANOUT_DEADLINE_MS`, else `EVER_JOBS_SEARCH_DEADLINE_MS`, else 120 000) + 30 000, i.e. 150 000 by default and 430 000 with `EVER_JOBS_FANOUT_DEADLINE_MS=400000`. `0` or negative → do not wait.
+
+#### Changed
+
+- **SIGTERM drains.** In order: `/ready` answers 503; every new request except `/health`, `/ping`, `/ready` and `/metrics` gets `503` with `Retry-After: 1` and `Connection: close`; requests already running (open NDJSON streams included) finish, up to the drain timeout, after which the connections still open are closed; then Nest's shutdown hooks run (plugins' browser pools, the store client), the HTTP server closes and the process exits with code `0`. With nothing in flight the exit is immediate. SIGINT and a plain `app.close()` do not wait.
+
 ### [Unreleased] - 2026-09-26, review round 2 2026-09-27 (Specs 1714, 1715)
 
 The operator of the Softy ATS (`*.softy.pro`, one shared server for all its client tenants) asked for an honest User-Agent, one request at a time at about 1 per second, no proxy rotation, back-off on 429 / `Retry-After` and on server errors, and discovery from `/sitemap.xml`. Specs 1690/1691 made those the defaults; an audit (2026-09-26) found request paths that still broke them. These two specs close them; a review of the work (2026-09-27, round 2) closed the paths it found left over (redirect hops, a caller's `resultsWanted`, a caller's timeout on another plugin, nested-sitemap server errors, liveness after cache hits) and made every restore switch restore exactly. Every changed default keeps the old behaviour behind the switch named below. Operator guide: [`CRAWL_POLICY.md`](./CRAWL_POLICY.md).
@@ -69,6 +82,95 @@ The operator of the Softy ATS (`*.softy.pro`, one shared server for all its clie
 | Other Softy behaviours | `SOFTY_LEGACY=<token>[,<token>...]` or `SOFTY_LEGACY=all` |
 
 Open questions with the defaults the build proceeds with: [Q-120..Q-128](./questions.md) (Q-126: the caller-override default for every other source; Q-127: fleet size and a crawler contact in our own deployments; Q-128: Softy's retry and back-off numbers).
+
+### [Unreleased] - 2026-09-26 (Specs 1720-1752)
+
+Merged to `develop` in PR #101 (with #98, #99, #100) on 2026-09-26; written up 2026-10-08. A search can run without a keyword and stream its whole result as NDJSON, ending with a record of whether the crawl was complete. Every job carries `dedupKey` and `careerLevel`. The server bounds result size and liveness probing. The store backend is chosen from the environment, and persistence is off by default. 84 company sources are added, and several plugins stop linking to API resources. Two existing setups need action: `GREENHOUSE_API_KEY` users (set `GREENHOUSE_HARVEST_BOARD`) and ReliefWeb users (set `RELIEFWEB_APPNAME`). See [`UPGRADE_GUIDE.md`](./UPGRADE_GUIDE.md).
+
+#### Added
+
+- **List mode** (Spec 1720): omit `searchTerm`, or send `null`, `""` or whitespace (whitespace used to be passed to plugins as given). Every selected source then returns what it can list without a keyword, up to `resultsWanted` per source. `searchTerm` and `googleSearchTerm` are normalised once, before caching, logging and dispatch, so all these spellings share one cache entry and the log prints `term=<none>`. A source whose plugin metadata sets the new `requiresSearchTerm` (`naukri`, `stepstone`, `careeronestop`) is not called in list mode; its `per_source` row reads `empty` with the detail `requires a searchTerm; not queried in list mode (Spec 1720)`. Use `?format=ndjson` for list mode: each `?paginate=true` page is a separate search unless the raw set is in the cache.
+- **`siteCategories`** (Spec 1720) on `POST /api/jobs/search` and GraphQL `SearchJobsInput` (whose `searchTerm` is now nullable): narrows the default fan-out to plugins whose `category` is one of `job-board`, `niche`, `regional`, `remote`, `government`, `freelance`, `company`, `ats`. Ignored when `siteType` or `companyDomain` selects a site; ATS plugins still need `companySlug`, so `["ats"]` alone selects nothing; an unknown value is a 400; part of the cache key.
+- **Result-size bounds** (Spec 1720), applied in `JobsService` for every entry point (on REST before the cache key):
+  - `EVER_JOBS_MAX_RESULTS_WANTED` (default `1000`; `0` = no cap) clamps `resultsWanted` per source and logs a warning.
+  - `EVER_JOBS_MAX_JOBS_PER_SEARCH` (default `40000`; `0` = no cap) stops *starting* sources once the fan-out holds that many raw jobs; in-flight sources finish. Each skipped source gets a `per_source` row `skipped: per-search job ceiling reached (EVER_JOBS_MAX_JOBS_PER_SEARCH)`.
+  - `EVER_JOBS_CACHE_MAX_JOBS` (default `5000`; `0` = never cache): a larger raw fan-out is served in full but not cached (REST and GraphQL).
+  - Peak raw jobs per request ≤ `EVER_JOBS_MAX_JOBS_PER_SEARCH` + `EVER_JOBS_SEARCH_CONCURRENCY` × `EVER_JOBS_MAX_RESULTS_WANTED`. Measured sizing: Spec 1720 FR-13 (d).
+- **`?format=ndjson` on `POST /api/jobs/search`** (Spec 1721). Status `201`, as for JSON. Headers: `Content-Type: application/x-ndjson; charset=utf-8`, `Cache-Control: no-cache`, `X-Accel-Buffering: no`. One JSON object per line:
+  - `{"type":"progress","sourcesDone":n,"sourcesTotal":m,"jobs":k}`: first `0/0/0`, written before the cache lookup so the headers flush on a cache hit too; again at fan-out start with the real `sourcesTotal`; then at most every 10 s until the first job line.
+  - `{"type":"job","data":{…}}`: one per job, same order and same per-job JSON as the unpaginated JSON response.
+  - `{"type":"end",…}`: exactly once, last (fields below).
+  - `{"type":"error","message":"…"}`: any failure after the headers were sent. The stream then closes with **no** `end` line; treat a missing `end` as a truncated result. Ignore unknown line types.
+  - `paginate`, `page` and `page_size` are ignored; `dedup`, `liveness`, `legitimacy`, `careerLevels` and the cache behave as for JSON. Lines are written one at a time, with back-pressure.
+  - Input rejected before scraping (an unknown `siteCategories` value, a `companyDomain` that maps to no plugin) is a plain 400 before any line is sent.
+  - If the client disconnects, the fan-out stops starting sources (in-flight ones finish); the partial result is not cached, deduped or persisted.
+- **NDJSON `end` line** (Spec 1721):
+
+  | Field | Meaning |
+  |---|---|
+  | `total` | number of `job` lines (after dedup, exclusions and `careerLevels`) |
+  | `deduped` | whether dedup ran |
+  | `durationMs` | ms since the stream started |
+  | `complete` | `false` exactly when `stopReason` is set: the fan-out deadline or the job ceiling left a selected source unscraped. Source failures never make a crawl incomplete |
+  | `stopReason` | `"deadline"` \| `"job_ceiling"` \| `null`: the bound that tripped first |
+  | `sourcesSkipped` | selected sources not started because of a bound, or abandoned mid-flight at the deadline (keyword-only sources list mode did not call are not counted) |
+  | `sourcesFailed` | sources that ran and ended with any reason except `ok`, `empty`, `partial` (so `rate_limited` counts); a skipped source is never also counted as failed |
+  | `sourcesPartial` | sources that returned jobs and then failed |
+  | `problemSources` | `[{site, reason}]` in fan-out order, at most 2500: every selected source whose result must not be used to expire its postings. Reasons: a failure reason, `partial`, `skipped`, `results_wanted` (returned at least `resultsWanted` jobs), `keyword_required` (not queried in list mode) |
+  | `problemSourcesTotal` | uncapped count; larger than `problemSources.length` means the list was truncated: expire nothing |
+
+  The completeness fields (`complete` through `problemSourcesTotal`) are left out, never guessed, when the service reports none, so a missing `complete` means "not known to be complete". Decide expiry per source, on a `dedup=false` crawl. An incomplete crawl is never cached (REST or GraphQL); a cache hit reports the record of the crawl that produced it, and on NDJSON a hit without a valid record re-runs the fan-out.
+- **`EVER_JOBS_FANOUT_DEADLINE_MS`** (Spec 1721): the fan-out deadline. Precedence: `EVER_JOBS_FANOUT_DEADLINE_MS`, then `EVER_JOBS_SEARCH_DEADLINE_MS`, then `120000`; blank or non-numeric falls through to the next; `0` or negative = no deadline.
+- **Job field `dedupKey`** (Specs 1721, 1724) in JSON, CSV (column), NDJSON and GraphQL (`JobPostGql.dedupKey`): sha-256 of the normalised company, title and location, the location built from `location`, `locations[]` and `isRemote` by the helper the dedup engine uses (so it equals the engine's `canonicalJobId`). Absent only when a job has neither title nor company. With `dedup=true`, a posting whose employment class is not full-time or unknown gets a class-scoped key, and two kept jobs that would still share a key each carry their cluster id; with `dedup=false` it is always the class-free per-job key.
+- **Job field `careerLevel`** `{ level, confidence, reasons }` (Spec 1730): `level` one of `internship`, `new_grad`, `entry`, `mid`, `senior`, `staff`, `principal`, `manager`, `director`, `executive`, `unknown`; `confidence` `high` \| `medium` \| `low`; at most 5 `reasons`. Deterministic and in-process (new plugin `@ever-jobs/career-level-classifier`), computed after dedup, in JSON, CSV (`careerLevel.level` / `.confidence` / `.reasons`), NDJSON and GraphQL (`JobPostGql.careerLevel`). Without a filter only the jobs a response returns are classified (the page, every job of unpaginated JSON or CSV, each 256-job NDJSON chunk as it is written). `EVER_JOBS_CLASSIFY_CAREER_LEVEL=false` removes the field.
+- **`careerLevels` filter** (Spec 1730) on `ScraperInputDto` and GraphQL `SearchJobsInput`: keeps only jobs whose `careerLevel.level` is listed; an unknown value is a 400. Applied after dedup, exclusions and the cache, not part of the cache key; `count` and the `end` line's `total` count after it. Honoured even with `EVER_JOBS_CLASSIFY_CAREER_LEVEL=false`. Fails closed: a 503 when it cannot be applied (on NDJSON, an `error` line). Not exposed by the MCP server or the CLI.
+- **Liveness server gate and cap** (Spec 1723), for JSON, CSV and NDJSON alike: `EVER_JOBS_LIVENESS_ENABLED` (default `true`, which honours `?liveness=true`; `false`, `0`, `no` or `off` never probes and no job gets a `liveness` field); `EVER_JOBS_LIVENESS_MAX_URLS` (default `100`; `0` = no cap): the first N jobs that need a probe, in output order, are probed, the rest carry no `liveness`, and a warning logs `probed N of M`.
+- **Store backend from the environment** (Spec 1722): `EVER_JOBS_STORE` = `memory` (default), `sqlite`, `postgres`, or the package names `store-memory`, `store-sqlite-drizzle`, `store-postgres-prisma` (optionally `@ever-jobs/`-prefixed); `EVER_JOBS_STORE_PLUGIN` is an alias (both set to different backends fails the boot). `sqlite` requires `EVER_JOBS_STORE_SQLITE_PATH` (or `EVER_JOBS_SQLITE_PATH`); `postgres` requires `EVER_JOBS_STORE_DATABASE_URL` (or `DATABASE_URL`) as a `postgres(ql)://` URL and connects at boot. Write tuning: `EVER_JOBS_STORE_BATCH_SIZE` (500, 1..5000), `EVER_JOBS_STORE_TX_TIMEOUT_MS` (30000), `EVER_JOBS_STORE_TX_MAX_WAIT_MS` (10000). Boot errors: `ERR_STORE_NOT_FOUND`, `ERR_STORE_CONFLICT`, `ERR_STORE_CONFIG_MISSING`, `ERR_STORE_CONFIG_INVALID`, `ERR_STORE_BACKEND_DOWN`. Schema: `npm run store:postgres:generate`, `store:postgres:migrate`, `store:postgres:status`. The image runs `prisma generate` best-effort and ships `openssl`.
+- **84 company sources** (Specs 1735-1737), all `category: "company"`, each delegating to an existing ATS adapter and re-stamping the company name and the id prefix (`<key>-`): 53 large US employers on Workday (Spec 1736) and 31 quant and trading firms (Spec 1737: 26 on Greenhouse, 2 on Workday — `gresearch`, `arrowstreetcapital` — 1 Lever, 1 Ashby, 1 iCIMS). All run in the default fan-out except `sig`, which runs only when selected (`siteType: ["sig"]` or `companyDomain: ["sig.com"]`) because its careers host's robots.txt disallows all crawlers. A caller's `auth` is never forwarded to these boards. The source count is now **1 950 source modules** (`ALL_SOURCE_MODULES`; 1 866 before) and 1 951 `Site` values (1 867 before).
+- **Workday per-scrape bounds** (Spec 1736 §8): `WORKDAY_MAX_DETAIL_FETCHES` (default `50`; `0` = none) detail requests per board scrape, and `WORKDAY_SCRAPE_TIME_BUDGET_MS` (default `90000`; `0` = none) over listing and enrichment, counted from that board's own scrape start and capped at 3/4 of the fan-out deadline. Postings past either limit are returned at list level (no description, compensation, emails or employment type); a budget spent while listing reports `partial`.
+- **Metrics:** `ever_jobs_scraper_requests_total` gains `status="job_cap_skipped"` (Spec 1720) and `status="cancelled_skipped"` (NDJSON disconnect, Spec 1721).
+
+#### Changed
+
+- **Persistence is off by default** (Spec 1722). With `EVER_JOBS_PERSIST_SEARCH` unset, the `memory` backend no longer persists (before, every search wrote its whole corpus into the heap and nothing read it back). It defaults on only for an explicitly selected `sqlite` or `postgres` store; an explicit value always wins. `EVER_JOBS_STORE=sqlite` no longer silently runs on `:memory:`, and `EVER_JOBS_STORE=postgres` boots without code changes.
+- **Image default** (PR #104, 2026-09-27): the published image (`ENV ENABLE_CACHE=false`), both compose files (`${ENABLE_CACHE:-false}`) and `.deploy/k8s/k8s-manifest.prod.yaml` no longer switch the cache on; they match the app default `false`. Set `ENABLE_CACHE=true` to keep caching. The base image is still `node:20-alpine`.
+- **REST search cache entry** (Spec 1721): one entry `{ jobs, completeness }` under `endpoint: "search-v2"` (was `search`); old entries are never read again and expire on their TTL. `careerLevels` is not in the REST or GraphQL cache key; `siteCategories` is.
+- **Dedup merge gate** (Spec 1724, `dedup-hybrid`): a merge proposed by the hash or MinHash stage goes through only when the locations are compatible (same normalised place, one side names none, or one posting's sites cover the other's; `remote` matches only `remote`) **and** the employment types don't conflict (non-overlapping classes among `fulltime`, `parttime`, `internship`, `contract`, `temporary`, `volunteer`, `apprenticeship`, or two different `employmentType` labels from one source). A role posted once per office comes back once per office (a live Jane Street board: 20 of 30 postings before, 30 now). The kept job carries the union of the cluster's `locations[]`.
+- **`resultsWanted` above 1000 is clamped, and the fan-out stops starting sources at 40 000 raw jobs** (Spec 1720), unless the operator changes the bounds.
+- **`?liveness=true` probes at most 100 URLs per request** by default (Spec 1723); paginated requests are unaffected.
+- **Workday adapter** (`source-ats-workday`; Spec 1735 §4.6, Spec 1736 §8 / §8.1), also for direct `workday` + `companySlug` callers: the keyword is sent as `searchText` (it was always `''`, so a board returned its newest postings whatever the keyword); detail requests 1 in flight with a 250-500 ms pause (was 5, no pause); `companyName` is the tenant token for every posting (was the detail's `hiringOrganization.name`; part of the dedup key); a list-level `jobUrl` includes the career-site segment; a relative "Posted N days ago" on a list-level posting is dated on the board's own calendar, or `datePosted: null` when no enriched posting dates the board.
+- **The Greenhouse Harvest key only applies to its own board** (Spec 1735 §4.5): `GREENHOUSE_API_KEY` is used only when `GREENHOUSE_HARVEST_BOARD` names the requested board token (case-insensitive); otherwise the public board is read and one warning is logged. Before, an env key made every Greenhouse board — the delegating company plugins included — return the key owner's own Harvest jobs (confidential ones included) under another company's name. A per-request `auth.greenhouse.apiKey` is honoured as before.
+- **ReliefWeb on API v2** (Spec 1752): `https://api.reliefweb.int/v2/jobs` (v1 answers 410, so the source had returned nothing). ReliefWeb serves only pre-approved app names since 2025-11-01: set `RELIEFWEB_APPNAME`. Unset, the plugin sends `ever-jobs`, warns at start-up, and ReliefWeb's 403 is reported as `bad_input` naming the app name, the variable and the URL (any other 403 stays `blocked`).
+- **Job links no longer point at an API** (Specs 1750, 1751): new `@ever-jobs/common` helpers `API_URL_PATTERN`, `isApiLikeUrl()`, `firstPublicUrl()`, and a static guard (`scripts/__tests__/plugin-job-url-hosts.spec.ts`) that fails CI when a plugin's `jobUrl`, `jobUrlDirect` or `applyUrl` is built from an API reference; five named exceptions (Bullhorn, Ceipal, HiringThing, Loxo, Zwayam).
+- **Keys, ids and URLs that change once.** Postings stored downstream, in the cache or in saved references reappear under the new value once after deploy:
+
+  | Source / field | Old | New | Restore |
+  |---|---|---|---|
+  | SmartRecruiters (`smartrecruiters` and its 217 delegating company plugins), `jobUrl` (1750) | `job.ref` (`https://api.smartrecruiters.com/v1/companies/<Co>/postings/<id>`, JSON) | the API's `postingUrl` when public, else `https://jobs.smartrecruiters.com/<company.identifier>/<id>`; `applyUrl` only from the API's `applyUrl`; a posting without an id is skipped | none |
+  | NAV (`navjobs`), `jobUrl` (1751) | `applicationUrl ?? sourceurl ?? item.url` (fallback: the API path `/api/v1/feedentry/<uuid>`) | `applicationUrl` or `sourceurl` when public http(s), else `https://arbeidsplassen.nav.no/stillinger/stilling/<uuid>`; new `applyUrl` = public `applicationUrl`; `id` unchanged | none |
+  | ReliefWeb, `jobUrl` (1751/1752) | `fields.url ?? entry.href` (the API resource) | `url_alias`, then `url`, then `https://reliefweb.int/node/<id>` | none |
+  | HiringThing, Loxo, Bullhorn, Ceipal, `jobUrl` (1751) | the API / REST link | the first public candidate (`url`, `apply_url`, the caller's `companyUrl`); the API link only as a last resort | none |
+  | Workday, `id` / `atsId` of a posting without a detail response (1736 §8) | `wd-<tenant>-<externalPath>` | `wd-<tenant>-<requisition id>`, the same as its enriched copy (`<key>-<reqId>` in the company plugins). Upsert Workday postings on `id` | none |
+  | Workday, `companyName` (1736 §8.1) | the detail's `hiringOrganization.name` | the tenant token (company plugins re-stamp their display name) | none |
+  | `dedupKey` of multi-location and remote country-only postings (1721 FR-10) — only if you ran a pre-merge build of the #98-#101 stack | title, company and flat location only | equal to the engine cluster id (`locations[]`, `isRemote`) | none |
+  | `dedupKey` with `dedup=true`, postings that are not full-time (1724 FR-5) — pre-merge builds only | per-job key | class-scoped key | `?dedup=false` returns the class-free key |
+
+#### Restore switches
+
+| Change | Restore with |
+|---|---|
+| Persistence off for the memory store | `EVER_JOBS_PERSIST_SEARCH=true` |
+| `resultsWanted` clamp / raw-job ceiling | `EVER_JOBS_MAX_RESULTS_WANTED=0` / `EVER_JOBS_MAX_JOBS_PER_SEARCH=0` (size the heap first: Spec 1720 FR-13 (d)) |
+| Large raw sets not cached | a large `EVER_JOBS_CACHE_MAX_JOBS` (`0` means never cache) |
+| Liveness probe cap | `EVER_JOBS_LIVENESS_MAX_URLS=0` |
+| `careerLevel` on every job | `EVER_JOBS_CLASSIFY_CAREER_LEVEL=false` (removes the field; an explicit filter still works) |
+| Workday detail cap and time budget | `WORKDAY_MAX_DETAIL_FETCHES` ≥ `resultsWanted` and `WORKDAY_SCRAPE_TIME_BUDGET_MS=0` (the ids, `jobUrl`, `companyName`, `searchText` and 1-in-flight changes stay) |
+| The 55 Workday-backed company plugins in the default fan-out | `EVER_JOBS_DISABLED_SOURCES` with the 55 tokens listed in [`DEPLOYMENT.md`](./DEPLOYMENT.md) (restart required) |
+| Greenhouse env Harvest key | `GREENHOUSE_HARVEST_BOARD=<your board token>`, for that board only; nothing restores an unscoped key |
+| Cache on in the shipped image / compose / manifest | `ENABLE_CACHE=true` |
+| Fan-out deadline name | `EVER_JOBS_SEARCH_DEADLINE_MS` is still read when `EVER_JOBS_FANOUT_DEADLINE_MS` is unset |
+
+No switch restores list-mode normalisation, the dedup merge gate, the link fixes, ReliefWeb v1, or Workday's `searchText`, detail pacing and `companyName`. Open questions with their defaults: Q-100..Q-111 in [`questions.md`](./questions.md).
 
 ### [Unreleased] - 2026-09-25 (Specs 1692-1713)
 

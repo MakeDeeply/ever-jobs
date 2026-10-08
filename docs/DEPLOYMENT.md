@@ -72,10 +72,16 @@ spec:
             periodSeconds: 30
           readinessProbe:
             httpGet:
-              path: /ping
+              path: /ready          # 503 while draining for a shutdown (Spec 1753)
               port: 3001
             initialDelaySeconds: 5
             periodSeconds: 10
+          lifecycle:
+            preStop:
+              sleep:                # Kubernetes >= 1.30; older: exec: { command: ["sleep", "10"] }
+                seconds: 10         # let endpoint removal propagate before SIGTERM
+      # >= preStop + EVER_JOBS_SHUTDOWN_DRAIN_TIMEOUT_MS + ~20 s (see "Graceful shutdown")
+      terminationGracePeriodSeconds: 180
 ---
 apiVersion: v1
 kind: Service
@@ -89,6 +95,31 @@ spec:
       targetPort: 3001
   type: LoadBalancer
 ```
+
+## Graceful shutdown (Spec 1753)
+
+On SIGTERM the API drains instead of dying mid-request:
+
+1. `GET /ready` answers 503 (`{"status":"draining"}`); `GET /health` keeps answering 200, so a
+   liveness probe on it never kills a draining pod.
+2. New requests (all but `/health`, `/ping`, `/ready`, `/metrics`) get 503 with `Retry-After: 1`
+   and `Connection: close`. Requests already running, open NDJSON streams included, carry on.
+3. Once none is left, or `EVER_JOBS_SHUTDOWN_DRAIN_TIMEOUT_MS` passes (default: the fan-out
+   deadline + 30 s, so 150 s by default and 430 s with `EVER_JOBS_FANOUT_DEADLINE_MS=400000`),
+   the app runs its shutdown hooks, closes and exits 0. On timeout the connections still open
+   are closed.
+
+What the orchestrator must give it:
+
+| Setting | Value |
+| ------- | ----- |
+| Kubernetes `terminationGracePeriodSeconds` | ≥ preStop + drain timeout + ~20 s (with a 400 s fan-out deadline and a 10 s preStop: 460) |
+| Kubernetes `lifecycle.preStop` | a short sleep (5-10 s): the Service stops routing to the pod before SIGTERM arrives |
+| Kubernetes `readinessProbe` | `GET /ready`; keep `livenessProbe` on `/health` |
+| docker compose `stop_grace_period` | same sizing as the grace period (compose's default is 10 s) |
+
+`EVER_JOBS_SHUTDOWN_DRAIN_TIMEOUT_MS=0` keeps the readiness flip and the refusals but does not
+wait. SIGINT (Ctrl-C) is not drained.
 
 ## Environment Variables
 
