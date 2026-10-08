@@ -315,7 +315,37 @@ describe('installGracefulShutdown (Spec 1753)', () => {
     expect(proc.listenerCount(DRAIN_SIGNAL)).toBe(0); // one-shot
   });
 
+  it('removes its SIGTERM listener when the app shuts down without a signal', () => {
+    const drain = service(1000);
+    const app = { get: () => drain, use: jest.fn(), enableShutdownHooks: jest.fn() };
+    const proc = new EventEmitter();
+
+    installGracefulShutdown(app as never, { processRef: proc });
+    expect(proc.listenerCount(DRAIN_SIGNAL)).toBe(1);
+
+    drain.onApplicationShutdown(); // what a plain app.close() ends with
+    expect(proc.listenerCount(DRAIN_SIGNAL)).toBe(0);
+    proc.emit(DRAIN_SIGNAL);
+    expect(drain.isDraining()).toBe(false); // a closed app is never drained by a later signal
+  });
+
   it('drains on SIGTERM only', () => {
     expect(DRAIN_SIGNAL).toBe('SIGTERM');
+  });
+});
+
+describe('ShutdownDrainService.onApplicationShutdown (Spec 1753)', () => {
+  it('runs every registered cleanup once, even when one throws', () => {
+    const drain = service(1000);
+    const calls: string[] = [];
+    drain.onShutdown(() => calls.push('a'));
+    drain.onShutdown(() => {
+      throw new Error('boom');
+    });
+    drain.onShutdown(() => calls.push('c'));
+
+    drain.onApplicationShutdown();
+    drain.onApplicationShutdown();
+    expect(calls).toEqual(['a', 'c']);
   });
 });

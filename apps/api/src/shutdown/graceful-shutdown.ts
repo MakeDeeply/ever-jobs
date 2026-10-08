@@ -6,16 +6,19 @@ export const DRAIN_SIGNAL = 'SIGTERM';
 
 export interface GracefulShutdownOptions {
   /** Where the drain listener is registered. Defaults to `process`; tests pass a stand-in. */
-  readonly processRef?: Pick<NodeJS.EventEmitter, 'once'>;
+  readonly processRef?: Pick<NodeJS.EventEmitter, 'once' | 'removeListener'>;
 }
 
 /**
- * Wire the SIGTERM drain into an app (Spec 1753). Call before `app.listen()`.
+ * Wire the SIGTERM drain into an app (Spec 1753). Call before `app.listen()`,
+ * after `app.enableCors()` (so a browser can read a refusal).
  *
  * 1. `app.use(drain.middleware)` — counts in-flight requests and refuses new
- *    ones once draining. First in the chain, so a refusal costs nothing.
+ *    ones once draining.
  * 2. A one-shot SIGTERM listener that flips readiness (`beginDrain()`),
- *    registered BEFORE Nest's, so it runs first when the signal arrives.
+ *    registered BEFORE Nest's, so it runs first when the signal arrives. It is
+ *    removed when the app shuts down without a signal (`app.close()`), so a
+ *    closed app is never held by `process` or drained by a later signal.
  * 3. `app.enableShutdownHooks([SIGTERM], { useProcessExit: true })` — Nest
  *    runs the teardown hooks (the drain waits in the first of them, see
  *    {@link ShutdownDrainService}), closes the HTTP server, runs
@@ -35,7 +38,9 @@ export function installGracefulShutdown(
   const drain = app.get(ShutdownDrainService);
   app.use(drain.middleware);
   const proc = options.processRef ?? process;
-  proc.once(DRAIN_SIGNAL, () => drain.beginDrain(DRAIN_SIGNAL));
+  const onSignal = (): void => drain.beginDrain(DRAIN_SIGNAL);
+  proc.once(DRAIN_SIGNAL, onSignal);
+  drain.onShutdown(() => proc.removeListener(DRAIN_SIGNAL, onSignal));
   app.enableShutdownHooks([DRAIN_SIGNAL], { useProcessExit: true });
   return drain;
 }

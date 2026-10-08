@@ -104,9 +104,9 @@ interface Reply {
 }
 
 /** One GET on a fresh connection (no agent pooling). */
-function get(port: number, path: string): Promise<Reply> {
+function get(port: number, path: string, headers: http.OutgoingHttpHeaders = {}): Promise<Reply> {
   return new Promise((resolve, reject) => {
-    const req = http.get({ host: '127.0.0.1', port, path, agent: false }, (res) => {
+    const req = http.get({ host: '127.0.0.1', port, path, headers, agent: false }, (res) => {
       let data = '';
       res.setEncoding('utf8');
       res.on('data', (chunk) => (data += chunk));
@@ -123,6 +123,8 @@ interface Started {
   app: INestApplication;
   port: number;
   drain: ShutdownDrainService;
+  /** The stand-in our listener is registered on, so a real signal never reaches it. */
+  fakeProcess: EventEmitter;
   /** Our listener, registered on a stand-in so a real signal never reaches it. */
   signalOurs: () => void;
   /** Nest's SIGTERM handler (async; resolves once the whole shutdown ran). */
@@ -132,6 +134,8 @@ interface Started {
 async function start(drainTimeoutMs: number): Promise<Started> {
   const app = await NestFactory.create(rootModule(drainTimeoutMs), { logger: false });
   startedApp = app;
+  // As in main.ts: CORS first, so a browser can read a refusal.
+  app.enableCors({ origin: '*' });
   const fakeProcess = new EventEmitter();
   const before = process.listeners(DRAIN_SIGNAL);
   const drain = installGracefulShutdown(app, { processRef: fakeProcess });
@@ -143,6 +147,7 @@ async function start(drainTimeoutMs: number): Promise<Started> {
     app,
     port,
     drain,
+    fakeProcess,
     signalOurs: () => fakeProcess.emit(DRAIN_SIGNAL),
     signalNest: () => {
       pendingShutdown = (added[0] as (signal: string) => Promise<void>)(DRAIN_SIGNAL);
@@ -167,7 +172,12 @@ describe('graceful shutdown on SIGTERM (Spec 1753, integration)', () => {
     gate.release();
     if (pendingShutdown) {
       // Let a shutdown a failed assertion left running finish against the stub, never the real exit.
-      await Promise.race([pendingShutdown, new Promise((resolve) => setTimeout(resolve, 15_000))]);
+      let timer: ReturnType<typeof setTimeout> | undefined;
+      try {
+        await Promise.race([pendingShutdown, new Promise((resolve) => (timer = setTimeout(resolve, 15_000)))]);
+      } finally {
+        if (timer !== undefined) clearTimeout(timer);
+      }
     } else if (startedApp) {
       await startedApp.close();
     }
@@ -199,9 +209,10 @@ describe('graceful shutdown on SIGTERM (Spec 1753, integration)', () => {
     expect(readyDuring.body).toMatchObject({ status: 'draining', inFlightRequests: 1 });
     expect((await get(port, '/health')).status).toBe(200);
 
-    // A new request is refused so the client retries elsewhere.
-    const refused = await get(port, '/slow');
+    // A new request is refused so the client retries elsewhere — readable by a browser (CORS).
+    const refused = await get(port, '/slow', { Origin: 'https://app.example' });
     expect(refused.status).toBe(503);
+    expect(refused.headers['access-control-allow-origin']).toBe('*');
     expect(refused.headers['retry-after']).toBe('1');
     expect(refused.headers.connection).toBe('close');
     expect(refused.body).toMatchObject({ statusCode: 503, reason: 'SIGTERM' });
@@ -246,6 +257,20 @@ describe('graceful shutdown on SIGTERM (Spec 1753, integration)', () => {
     expect(await inFlight).toMatch(/^error:/);
     expect(events).toEqual(['resource:onModuleDestroy', `resource:onApplicationShutdown:${DRAIN_SIGNAL}`]);
     expect(exit).toHaveBeenCalledWith(0);
+  }, 30_000);
+
+  it('app.close() without a signal does not wait and removes both SIGTERM listeners', async () => {
+    const { app, fakeProcess, drain } = await start(60_000);
+    expect(fakeProcess.listenerCount(DRAIN_SIGNAL)).toBe(1);
+
+    await app.close();
+    startedApp = undefined;
+
+    expect(fakeProcess.listenerCount(DRAIN_SIGNAL)).toBe(0); // ours
+    expect(process.listeners(DRAIN_SIGNAL)).toEqual(listenersBefore); // Nest's
+    expect(drain.isDraining()).toBe(false);
+    expect(events).toEqual(['resource:onModuleDestroy', 'resource:onApplicationShutdown:undefined']);
+    expect(exit).not.toHaveBeenCalled();
   }, 30_000);
 
   it('with nothing in flight the shutdown does not wait', async () => {

@@ -56,7 +56,8 @@ sends the pod SIGTERM, and the API did nothing useful with it:
 | FR-5  | The wait ends when no request is in flight or the timeout passes. On timeout, a warning names the count still open and the remaining connections are closed, so the HTTP server's close does not wait past the bound. | must |
 | FR-6  | Only after the drain do the other modules' teardown hooks run (`onModuleDestroy`, `beforeApplicationShutdown`), then the HTTP server closes, then `onApplicationShutdown`, then the process exits with code 0 (`process.exit`, not a re-raised signal — PID 1 would ignore that). | must |
 | FR-7  | A request counts as in flight from the middleware until its response emits `finish` or `close` (a client that leaves releases its slot); a streamed NDJSON response stays counted until its last line. | must |
-| FR-8  | `app.close()` without a SIGTERM does not wait (tests, embedding). | must |
+| FR-8  | `app.close()` without a SIGTERM does not wait (tests, embedding), and removes the SIGTERM listener it added, so a closed app is neither held by `process` nor drained by a later signal. | must |
+| FR-10 | The drain middleware runs after CORS, so a browser client can read a refusal (CORS also answers preflights before they reach the drain). | should |
 | FR-9  | The drain logs when it starts (timeout, in-flight count), every 30 s while waiting, and when it ends (drained, or timed out with N open). | should |
 
 ## 5. Contracts
@@ -77,13 +78,16 @@ export class ShutdownDrainService implements OnModuleDestroy {
   waitForInFlight(timeoutMs?): Promise<DrainOutcome>;
   drain(): Promise<DrainOutcome>;                 // memoised; closes connections on timeout
   onModuleDestroy(): Promise<void>;               // waits only once draining
+  onShutdown(dispose: () => void): void;          // cleanup run by onApplicationShutdown
+  onApplicationShutdown(): void;                  // runs the cleanups once
 }
 export interface DrainOutcome { drained: boolean; remaining: number; waitedMs: number }
 
 // apps/api/src/shutdown/readiness.controller.ts — GET /ready (root AppModule)
 // apps/api/src/shutdown/graceful-shutdown.ts
 export function installGracefulShutdown(app, { processRef? }): ShutdownDrainService;
-//   app.use(drain.middleware); process.once('SIGTERM', beginDrain);
+//   (after app.enableCors) app.use(drain.middleware); process.once('SIGTERM', beginDrain),
+//   removed again on shutdown;
 //   app.enableShutdownHooks(['SIGTERM'], { useProcessExit: true })
 ```
 
@@ -107,7 +111,8 @@ search still uses. A test pins the provider and the controller to `AppModule`.
   socket and Nest's own SIGTERM handler: `/ready` 503 and `/health` 200 during the drain, a new
   request refused, the in-flight request completes 200, the imported module's `onModuleDestroy`
   runs only after it, `process.exit(0)`; a stuck request is cut at the timeout and teardown
-  follows; nothing in flight → no wait. Mutation check: removing the wait from
+  follows; `app.close()` without a signal does not wait and leaves no SIGTERM listener;
+  nothing in flight → no wait; a refusal carries the CORS header. Mutation check: removing the wait from
   `onModuleDestroy` fails two of the three.
 - `apps/api/__tests__/health.e2e-spec.ts` (full `AppModule`): `GET /ready` 200, then 503 after
   `beginDrain()` with `/health` still 200; the service and controller are declared on `AppModule`.

@@ -1,4 +1,10 @@
-import { Injectable, Logger, OnModuleDestroy, Optional } from '@nestjs/common';
+import {
+  Injectable,
+  Logger,
+  OnApplicationShutdown,
+  OnModuleDestroy,
+  Optional,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { HttpAdapterHost } from '@nestjs/core';
 import { NextFunction, Request, Response } from 'express';
@@ -65,7 +71,7 @@ function requestPath(req: Request): string {
  * only runs once `beginDrain()` was called.
  */
 @Injectable()
-export class ShutdownDrainService implements OnModuleDestroy {
+export class ShutdownDrainService implements OnModuleDestroy, OnApplicationShutdown {
   private readonly logger = new Logger(ShutdownDrainService.name);
 
   /** Upper bound on the wait for in-flight requests, ms (`0` = do not wait). */
@@ -76,6 +82,7 @@ export class ShutdownDrainService implements OnModuleDestroy {
   private inFlight = 0;
   private idleWaiters: Array<() => void> = [];
   private drainPromise: Promise<DrainOutcome> | undefined;
+  private readonly disposers: Array<() => void> = [];
 
   constructor(
     @Optional() config?: ConfigService,
@@ -220,6 +227,25 @@ export class ShutdownDrainService implements OnModuleDestroy {
   async onModuleDestroy(): Promise<void> {
     if (!this.draining) return;
     await this.drain();
+  }
+
+  /**
+   * Register cleanup for when the app has shut down — {@link installGracefulShutdown}
+   * removes its SIGTERM listener here, so a closed app is not held by `process`.
+   */
+  onShutdown(dispose: () => void): void {
+    this.disposers.push(dispose);
+  }
+
+  /** Nest's last teardown hook: run the registered cleanups, once. */
+  onApplicationShutdown(): void {
+    for (const dispose of this.disposers.splice(0)) {
+      try {
+        dispose();
+      } catch (err) {
+        this.logger.warn(`Shutdown cleanup failed: ${(err as Error).message}`);
+      }
+    }
   }
 
   private refuse(res: Response): void {
