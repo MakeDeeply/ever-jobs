@@ -5,6 +5,38 @@
 
 ---
 
+## 2026-10-09 — Spec 5172 — cohort-1 JSON-LD plugins adopt `toLocationDtos`
+
+**Change:** mechanical adoption of the spec-5171 mapper in the 29 plugins whose
+bespoke `application/ld+json` extractors hand-mapped `jobLocation.address.*`
+(`addressLocality`/`addressRegion`/`addressCountry`/`postalCode`/
+`streetAddress`). Each swap passes the plugin's `jobLocation` (Place or Place[])
+to `toLocationDtos`/`toLocationDto` — never the whole posting, never a parser
+rewrite. `location` = first mapped result; `locations[]` shape unchanged
+(per-site emitters bizneo/exacthire/hreasily/inrecruiting/pcrecruiter/prescreen
+keep `dtos`; single-element `[location]` emitters keep one element); every
+`??`/label/`og:`/listing-text fallback chain preserved when the mapper returns
+nothing; `dedupKey` untouched (canonical-key reads `city|state|country`
+triples). Dead `firstAddress`/`countryName` helpers removed only where fully
+unused — kept wherever `detectRemote` or a fallback still reads raw address
+parts (hireful, keka, mindscope, namely, pageup, paychex, scouttalent,
+snaphunt). isolved and stepstone excluded: no structured `jobLocation` branch
+exists (isolved's location comes from the jobs API; stepstone's from DOM text
+via `parseLocationList`) — feeding `jobLocation` in would be a new data source,
+not a mechanical swap. Adopted: akkencloud, arcoro, bizneo, brassring,
+careerplug, cezanne, concludis, exacthire, expr3ss, hireful, hreasily, hron,
+inrecruiting, jobtrain, keka, mindscope, namely, otys, pageup, paychex,
+pcrecruiter, peoplestrong, prescreen, rexx, scouttalent, snaphunt, taleez,
+vivahr, workforce.
+
+**Files:** `packages/plugins/source-*/src/*.service.ts` (29 plugins),
+`.specify/specs/5172-jsonld-joblocation-mapper/*`, `docs/index.md`,
+`docs/log.md`.
+
+**Validation:** every touched plugin's existing jest suite passes unmodified
+(29 plugins, ~160 tests); `tsc --noEmit -p tsconfig.typecheck.json` clean;
+`npm run lint:docs` clean.
+
 ## 2026-10-08 — Spec 5171 — generic location-object mapper + `LocationDto.extras`
 
 **Change:** structured location *objects* get a shared mapping path — `toLocationDtos(input, opts?)`/`toLocationDto` in `@ever-jobs/common` (`utils/location-object.ts`). Reads own runtime keys (feed type declarations irrelevant), so field coverage no longer depends on how completely somebody typed a payload. `LocationDto` gains `extras?: Record<string,unknown>` — a verbatim, informational-only bag for source fields with no DTO slot (ids, coordinates, location types); `OfficeDto` inherits. Behavior: `opts.in` dotted selector paths (ordered fallbacks; the whole posting is never mapped); only `address`/`postalAddress` auto-descend (root slots win, address fills missing, conflicts → extras; address arrays expand); case-insensitive alias sets per slot; coercion (strings; numbers only for `postalCode`; object leaves `.alpha2Code`/`.name`/`.descriptor`/`.code` for `country`, `.name`/`.descriptor` for `city`/`state`); agreement via `canonicalCountryName`/`normalizeUsState`, conflicts resolve `prefer` → scalar canonical field → slot unset (alternates survive in extras); ambiguous label keys (`officeName`/`siteName`/`displayName`/`descriptor`/`label`/`title`) carry no default → extras, `locationName`/`libelle` → `text`; carry-all `extras` with `keep`/`drop`/`extrasLimits` (4KiB/depth 3/2000 nodes); exact-duplicate dedup over fields + extras. Adopters: `source-ats-dayforce` (`postingLocations`/`PostingLocations` → all sites into `locations[]`, recovering `cityName`/`isoCountryCode`/`formattedAddress`/`coordinates`/`locationId`/`locationType` the old hand-rolled map dropped; flat-field fallback preserved) and shared `mapLocations` in `jsonld.ts` for every JSON-LD plugin (`state`→`region`, label join, `addressCountry.name` conflict preference).
