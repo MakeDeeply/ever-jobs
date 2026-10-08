@@ -2,6 +2,7 @@ export * from './helpers';
 export * from './html-utils';
 export * from './experience-extractor';
 export * from './location-parser';
+export * from './location-object';
 export * from './country-name';
 export * from './iso3166';
 export * from './jsonld';
