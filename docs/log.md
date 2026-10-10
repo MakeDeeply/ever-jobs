@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-10-10 — Spec 5175 — Factorial board apex rebrand (`factorialhr.com` → `factorial.com`) + first unit suite
+
+**Change:** Factorial rebranded its tenant career-board domain: `{slug}.factorialhr.com` now 301-redirects to `{slug}.factorial.com`, and `data-job-postings-url` values on the index page are absolute on the new apex. Verified live 2026-10-10 (`jobs-tendencys`). `FACTORIAL_APEX` is now `factorial.com`; the single `FACTORIAL_HOST_TEMPLATE` became ordered `FACTORIAL_HOST_TEMPLATES` — the canonical apex is tried first and the legacy (301-redirecting) sub-domain kept as a fallback for lagging tenants; the sitemap is fetched from whichever host served the index. The e2e spec's stale `jobUrl.includes('factorialhr.com')` literal (the observed CI break) is replaced by a `/job_posting/` path-shape assertion — custom-domain tenants make any host literal brittle. No field-mapping changes: `dedupKey` is `company|title|location` and `atsId` is the numeric path token, so legacy jobs keep their keys. Constants/types/e2e docblocks updated to the new apex.
+
+**Files:** `packages/plugins/source-ats-factorial/src/{factorial.constants.ts,factorial.service.ts,factorial.types.ts}`, `packages/plugins/source-ats-factorial/__tests__/{factorial.e2e-spec.ts,factorial.service.spec.ts,fixtures/factorial-index.html,fixtures/factorial-detail.html,fixtures/factorial-sitemap.xml}`, `.specify/specs/5175-factorial-apex-rebrand/*`, `docs/index.md`, `docs/log.md`.
+
+**Validation:** new unit suite 7/7 green (fixture mapping incl. `applyUrl`/sitemap dates/sidebar location+team, canonical-host-first, legacy fallback, both-hosts-down → `[]`, `companyUrl` slug resolution, no-input → `[]` without fetch, `resultsWanted`); `npx tsc --project tsconfig.typecheck.json --noEmit` clean; `npm run lint:docs` clean.
+
+---
+
 ## 2026-10-10 — Spec 5174 — comeet careers-page `COMPANY_POSITIONS_DATA`
 
 **Change:** `source-ats-comeet` had never returned a job — its careers-api
