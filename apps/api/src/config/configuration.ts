@@ -5,6 +5,7 @@ import {
   resolveResultCaps,
 } from './search-config';
 import { resolvePersistSearch } from './store-config';
+import { resolveShutdownDrainTimeoutMs } from './shutdown-config';
 import {
   crawlBuiltinHostsDisabled,
   crawlFleetSize,
@@ -117,6 +118,12 @@ export default () => {
        * jobs are in. `0` disables either.
        */
       ...resolveResultCaps(process.env),
+    },
+    // Graceful shutdown (Spec 1753): how long a SIGTERM waits for in-flight
+    // requests before the app closes — `EVER_JOBS_SHUTDOWN_DRAIN_TIMEOUT_MS`,
+    // default the fan-out deadline + 30 s; `0` closes without waiting.
+    shutdown: {
+      drainTimeoutMs: resolveShutdownDrainTimeoutMs(process.env),
     },
     // Liveness server gate + per-request cap (Spec 1723)
     liveness: resolveLivenessConfig(process.env),
