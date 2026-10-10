@@ -5,6 +5,40 @@
 
 ---
 
+## 2026-10-10 — Spec 5174 — comeet careers-page `COMPANY_POSITIONS_DATA`
+
+**Change:** `source-ats-comeet` had never returned a job — its careers-api
+call (`company/{companySlug}/positions?token=`) sent an empty token and the
+board slug where `company_uid` belongs; live response
+`{"status":400,"Token is missing"}` → `classifyScrapeError` → `[]` on every
+scrape. Rewritten: fetch the careers page (`input.companyUrl` when set, else
+`https://www.comeet.com/jobs/{slug}`; redirects carry slug→uid anyway) and
+parse the embedded `COMPANY_POSITIONS_DATA`/`COMPANY_DATA` assignments
+(string-aware bracket-balanced `JSON.parse` — strict JSON in page). Per
+position: `name`→title, `uid`→atsId/id, `url_active_page`→jobUrl+applyUrl,
+`company_name` (→`COMPANY_DATA.name`→slug), `department`,
+`time_updated`→datePosted, `custom_fields.details[].value`→stripHtmlTags
+description (same `[{name,value}]` shape the API used). Location via
+`toLocationDto(position.location, {textKeys:['name'], parseTextFallback:true})`
+— `city`/`state`/`country`/`postal_code` direct-map, `timezone`/`location_uid`/
+`is_remote`/`street_name` ride `extras`; `locations:[dto]` when non-null.
+`isRemote` = `location.is_remote === true` or `workplace_type` ~ /\bremote\b/i
+(replaces the label string-match); `employmentType` = `employment_type`.
+Marker-free page → `JobResponseDto([])` + warn (soft-404 board, not a
+classified error); `resultsWanted`, `classifyScrapeError`, resolve-not-throw
+catch, `companySlug` requirement preserved. No careers-api fallback —
+embedded payload is complete.
+
+**Files:** `packages/plugins/source-ats-comeet/src/comeet.service.ts`
+(rewrite), `packages/plugins/source-ats-comeet/__tests__/` (new — plugin's
+first suite), `.specify/specs/5174-comeet-careers-page-positions/*`,
+`docs/index.md`, `docs/log.md`.
+
+**Validation:** 11 greens on the new suite (captured-page fixture with 2
+real positions — full field mapping, structured-location extras, isRemote
+both paths, companyUrl, resultsWanted, marker-free → [], fetch failure →
+diagnostics); `npx tsc --noEmit -p tsconfig.typecheck.json` clean.
+
 ## 2026-10-09 — Spec 5173 — JSON-API plugins adopt `toLocationDtos`
 
 **Change:** four JSON-API plugins whose structured location objects were
